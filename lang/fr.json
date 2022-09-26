@@ -1,0 +1,21 @@
+{
+    "ACTOR": {
+        "TypeCharacter": "Joueur"
+    },
+
+    "CO": {
+        "label": {
+            "base": "Base",
+            "specie": "Espèce",
+            "bonus": "Bonus",
+            "value": "Valeur",
+            "mod": "MOD",
+            "name": "Nom",
+            "level": "Niveau",
+            "profile": "Profil",
+            "sheet-character": "Fiche de personnage CO"
+
+        }
+    }
+    
+}

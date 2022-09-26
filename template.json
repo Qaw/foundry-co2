@@ -1,0 +1,116 @@
+{
+  "Actor": {
+    "types": ["character"],
+    "templates": {
+      "characteristics": {
+        "characteristics": {
+          "str": {
+            "base": 10,
+            "bonus": 0,
+            "superior": false,
+            "modifiers": []
+          },
+          "dex": {
+            "base": 10,
+            "bonus": 0,
+            "superior": false,
+            "modifiers": []
+          },
+          "con": {
+            "base": 10,
+            "bonus": 0,
+            "superior": false,
+            "modifiers": []
+          },
+          "int": {
+            "base": 10,
+            "bonus": 0,
+            "superior": false,
+            "modifiers": []
+          },
+          "wis": {
+            "base": 10,
+            "bonus": 0,
+            "superior": false,
+            "modifiers": []
+          },
+          "cha": {
+            "base": 10,
+            "bonus": 0,
+            "superior": false,
+            "modifiers": []
+          }
+        }
+      },
+      "attacks": {
+        "attacks": {
+          "melee": {
+            "base": 0,
+            "bonuses": {
+              "attack": "",
+              "damage": ""
+            },
+            "modifiers": []
+          },
+          "ranged": {
+            "base": 0,
+            "bonuses": {
+              "attack": "",
+              "damage": ""
+            },
+            "modifiers": []
+          },
+          "magic": {
+            "base": 0,
+            "bonuses": {
+              "attack": "",
+              "damage": ""
+            },
+            "modifiers": []
+          }
+        }
+      },
+      "attributes": {
+        "xp": {
+          "level": {
+            "value": 1,
+            "max": 20,
+            "history": []
+          },
+          "points": {
+            "value": 0,
+            "max": 0
+          }
+        }
+      },
+      "common": {
+        "description": "",
+        "details": {
+          "gender": "",
+          "age": "",
+          "height": "",
+          "weight": "",          
+          "eyes": "",
+          "hair": "",
+          "size": "",
+          "senses": "",
+          "languages": []
+        },
+        "moduleData": {}
+      }
+    },
+    "character": {
+      "templates": ["characteristics", "attacks", "attributes"]
+    }
+  },
+  "Item": {
+    "types": ["specie"],
+    "templates": {
+      "base": {
+        "key": "",
+        "description": "",
+        "moduleData": {}
+      }
+    }
+  }
+}
