@@ -35,7 +35,7 @@ export default class CoActor extends Actor {
   /** @override */
   _prepareCharacterDerivedData() {
     for (const [key, characteristic] of Object.entries(this.system.characteristics)) {
-      characteristic.value = characteristic.base + characteristic.specie + characteristic.bonus;
+      characteristic.value = characteristic.base + characteristic.specie + characteristic.bonus + characteristic.otherBonus;
       characteristic.mod = Characteristic.getModFromValue(characteristic.value);
     }
   }

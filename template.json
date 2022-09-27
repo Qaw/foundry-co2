@@ -7,36 +7,42 @@
           "str": {
             "base": 10,
             "bonus": 0,
+            "otherBonus": 0,
             "superior": false,
             "modifiers": []
           },
           "dex": {
             "base": 10,
             "bonus": 0,
+            "otherBonus": 0,
             "superior": false,
             "modifiers": []
           },
           "con": {
             "base": 10,
             "bonus": 0,
+            "otherBonus": 0,
             "superior": false,
             "modifiers": []
           },
           "int": {
             "base": 10,
             "bonus": 0,
+            "otherBonus": 0,
             "superior": false,
             "modifiers": []
           },
           "wis": {
             "base": 10,
             "bonus": 0,
+            "otherBonus": 0,
             "superior": false,
             "modifiers": []
           },
           "cha": {
             "base": 10,
             "bonus": 0,
+            "otherBonus": 0,
             "superior": false,
             "modifiers": []
           }

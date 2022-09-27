@@ -6,7 +6,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["co", "sheet", "actor", "character"],
-      width: 600,
+      width: 1600,
       height: 600,
     });
   }

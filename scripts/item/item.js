@@ -5,8 +5,16 @@
  */
 export class CoItem extends Item {
 
-    hasModifiers() {
-        return this.modifiers.length > 0;
+    /**
+     * 
+     * @returns true if 
+     */
+    /**
+   * Test if the items has modifiers
+   * @type {boolean}
+   */
+    get hasModifiers() {
+        return this.system.modifiers.length > 0;
     }
 
     /**
@@ -16,7 +24,7 @@ export class CoItem extends Item {
      * @returns the value of the bonus
      */
     getTotalModifiersByTypeAndTarget(type, target) {
-        if (this.system.modifiers.length == 0) return 0;
+        if (!this.hasModifiers) return 0;
         return this.system.modifiers.filter(m => m.type == type && m.target == target).map(i => i.bonus).reduce((acc, curr) => acc + curr, 0);
     }
 }

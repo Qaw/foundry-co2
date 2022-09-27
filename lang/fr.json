@@ -5,6 +5,7 @@
 
     "CO": {
         "label": {
+            "superior": "Avantage",
             "base": "Base",
             "specie": "Espèce",
             "bonus": "Bonus",
