@@ -14,7 +14,20 @@
             "name": "Nom",
             "level": "Niveau",
             "profile": "Profil",
-            "sheet-character": "Fiche de personnage CO"
+            "sheet-character": "Fiche de personnage CO",
+            "item-character": "Fiche d'objet personnage CO",
+            "capacity": "Capacités",
+            "capacities": "Capacités",
+            "rank": "rang",
+            "add": "Aj.",
+            "noCapacitySelected": "Aucune capacité sélectionnée",
+            "edit": "Editer",
+            "delete": "Supprimer"
+
+        },
+        "tabs": {
+            "description": "Description",
+            "details": "Détails"
 
         }
     }

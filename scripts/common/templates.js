@@ -10,10 +10,17 @@
 		// ACTOR		
 		'systems/co/templates/actors/character-sheet.hbs',
         'systems/co/templates/actors/parts/character-characteristics.hbs',
-		'systems/co/templates/actors/parts/character-details.hbs'
-
+		'systems/co/templates/actors/parts/character-details.hbs',
+		'systems/co/templates/actors/parts/character-tabs.hbs',
+		'systems/co/templates/actors/parts/character-paths.hbs',
+		'systems/co/templates/actors/parts/character-capacities.hbs',
+ 
+		// ITEM
+		'systems/co/templates/items/item-sheet.hbs',
+		'systems/co/templates/items/parts/details/path-details.hbs',
+		'systems/co/templates/items/parts/details/capacity-details.hbs'
 	];
 
 	// Load the template parts
 	return loadTemplates(templatePaths);
-};
+}; 

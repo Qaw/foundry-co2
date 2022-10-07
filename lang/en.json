@@ -14,7 +14,8 @@
             "name": "Nom",
             "level": "Niveau",
             "profile": "Profil",
-            "sheet-character": "Fiche de personnage CO"
+            "sheet-character": "Fiche de personnage CO",
+            "item-character": "Fiche d'objet personnage CO"
 
         }
     }

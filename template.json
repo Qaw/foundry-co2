@@ -110,13 +110,6 @@
     }
   },
   "Item": {
-    "types": ["specie"],
-    "templates": {
-      "base": {
-        "key": "",
-        "description": "",
-        "moduleData": {}
-      }
-    }
+    "types": ["specie","profile","path","capacity"]
   }
 }

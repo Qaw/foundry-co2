@@ -1,0 +1,42 @@
+<form class="{{cssClass}}" autocomplete="off">
+    {{log 'item' this}}
+    <header class="sheet-header flexrow header-background no-wrap">
+        <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img">
+        <div class="header-details flexrow">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
+            </h1>
+        </div>
+    </header>
+
+    <nav class="sheet-navigation tabs" data-group="primary">
+        <a class="item active" data-tab="description">{{localize "CO.tabs.description"}}</a>
+        <a class="item" data-tab="details">{{localize "CO.tabs.details"}}</a>
+    </nav>
+
+    <section class="sheet-body">
+        <div class="tab flexrow active" data-group="primary" data-tab="description">
+            {{editor system.description target="system.description" button=true owner=owner editable=editable}}
+        </div>
+
+         <div class="tab details" data-group="primary" data-tab="details">
+            {{log 'item.type' item.type}}
+                {{#if (eq item.type "item")}}
+                    {{> "systems/cof/templates/items/parts/details/item-details.hbs"}}
+                {{/if}}
+                {{#if (eq item.type "capacity")}}
+                    {{> "systems/co/templates/items/parts/details/capacity-details.hbs"}}
+                {{/if}}
+                {{#if (eq item.type "path")}}
+                    {{log 'eq path'}}
+                    {{> "systems/co/templates/items/parts/details/path-details.hbs"}}
+                {{/if}}
+                {{#if (eq item.type "profile")}}
+                    {{> "systems/cof/templates/items/parts/details/profile-details.hbs"}}
+                {{/if}}
+                {{#if (eq item.type "species")}}
+                    {{> "systems/cof/templates/items/parts/details/specie-details.hbs"}}
+                {{/if}}
+            </div>
+    </section>
+</form>

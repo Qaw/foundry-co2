@@ -1,0 +1,24 @@
+{{#if (eq capacities.count 0)}}
+  <p class="empty">{{localize "CO.label.noCapacitySelected"}}</p>
+{{else}}
+  <li class="inventory-header flexrow">
+    <div class="item-detail">{{localize "CO.label.rank"}}</div>
+    <div class="item-controls">
+      <a class="item-control item-create cof-compendium-pack" data-pack="capacities" data-open="0" title="{{localize 'COF.capacity.add'}}"><i class="fas fa-plus"></i>&nbsp;
+        {{localize "COF.ui.add"}}</a>
+    </div>
+
+  </li>
+  {{#each capacities as |capacity id|}}
+    {{log 'capacity' this}}
+    <div class="item flexrow" data-item-type="capacity" data-open-type="embeddedId" data-item-id="{{capacity._id}}" data-item-source="{{capacity.source}}" data-capacity-name="{{capacity.name}}">
+      <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>
+      <h4>{{capacity.name}}</h4>
+      <div class="item-controls">
+        <a class="item-control item-edit" title="{{localize 'CO.label.edit'}}"><i class="fas fa-edit"></i></a>
+        <a class="item-control item-delete" title="{{localize "CO.label.delete"}}"><i class="fas fa-trash"></i></a>
+      </div>
+    </div>
+
+  {{/each}}
+{{/if}}

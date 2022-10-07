@@ -11,7 +11,37 @@ export const MODIFIER_TARGET = {
     DEX: "dex",
     CON: "con",
     INT: "int",
-    CON: "con",
+    WIS: "wis",
     CHA: "cha"
-}
+};
 
+export const MAGIC_ATTACK_TYPE = {
+    INT: "int",
+    WIS: "wis",
+    CHA: "cha"
+};
+
+export const PATH_TYPE = {
+    PROFILE: "profile",
+    SPECIE: "specie",
+    CULTURAL: "cultural",
+    PRESTIGE: "prestige",
+    ENCOUNTER: "encounter"
+};
+
+export const PATH_MAX_RANK = 5;
+
+export const ITEM_TYPE = {
+    SPECIE: "specie",
+    PATH: "path",
+    CAPACITY: "capacity"
+};
+
+export const ACTOR_TYPE = {
+    CHARACTER: "character"
+};
+
+export const OPEN_TYPE = {
+    SOURCE: "source",
+    EMBEDDED_ID: "embeddedId"
+};

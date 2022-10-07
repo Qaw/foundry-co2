@@ -2,23 +2,17 @@ export default class CoBaseActorSheet extends ActorSheet {
   //#region Context preparation
 
   /** @override */
-  async getData(options) {
-    const actorData = this.actor.toObject(false);
-
+  getData(options) {
     const context = super.getData(options);
     context.logoPath = this._getPathRoot() + this._getLogoPath();
-    context.system = actorData.system;
-    context.xp = actorData.system.xp;
-    context.characteristics = actorData.system.characteristics;
-
     return context;
   }
 
   /**
    * @name getPathRoot
-   * @description obtenir le chemin du système ou module
+   * @description get the path of the system or module
    *
-   * @returns {String} le chemin
+   * @returns {String} The path
    */
   _getPathRoot() {
     return "systems/co/";
@@ -26,9 +20,9 @@ export default class CoBaseActorSheet extends ActorSheet {
 
   /**
    * @name getLogoPath
-   * @description obtenir l'url de l'image du logo
+   * @description get the url of logo's image
    *
-   * @returns {String} L'url du logo après le PathRoot
+   * @returns {String} Logo's url after PathRoot
    */
   _getLogoPath() {
     return "/ui/logo-banner.webp";
