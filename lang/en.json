@@ -1,23 +1,143 @@
 {
     "ACTOR": {
-        "TypeCharacter": "Joueur"
+        "TypeCharacter": "Personnage",
+        "TypeEncounter": "Rencontre",
+        "TypeVendor": "Vendeur/Trésor",
+        "TypeVehicle": "Véhicule",
+        "TypeMarker": "Marqueur"
+    },
+
+    "ITEM" : {
+        "TypeItem": "Objet",
+        "TypeEquipment": "Équipement",
+        "TypeFeature": "Feature",
+        "TypeTrait": "Trait",
+        "TypeProfile": "Profil",
+        "TypeConsumable": "Consommable/Munition",
+        "TypeLoot": "Butin/Trésor",
+        "TypeCurrency": "Monnaie",
+        "TypeContainer": "Conteneur",
+        "TypeAction": "Action",
+        "TypePath": "Voie",
+        "TypeCapacity": "Capacité"
     },
 
     "CO": {
+        "sheet" : {
+            "character": "Fiche de personnage",
+            "item": "Fiche d'objet personnage"
+        },
+        "notif" : {
+            "ready" : "Système Chroniques Oubliées initialisé",
+            "noCapacitySelected": "Aucune capacité sélectionnée"
+        },
         "label": {
-            "superior": "Avantage",
-            "base": "Base",
-            "specie": "Espèce",
-            "bonus": "Bonus",
-            "value": "Valeur",
-            "mod": "MOD",
-            "name": "Nom",
-            "level": "Niveau",
-            "profile": "Profil",
-            "sheet-character": "Fiche de personnage CO",
-            "item-character": "Fiche d'objet personnage CO"
-
+            "long" : {
+                "stat": "Caractéristique",
+                "superior": "Supérieur",
+                "base": "Base",
+                "specie": "Espèce",
+                "bonus": "Bonus",
+                "malus": "Malus",
+                "value": "Valeur",
+                "mod": "Modificateur",
+                "name": "Nom",
+                "level": "Niveau",
+                "profile": "Profil",
+                "capacity": "Capacité",
+                "capacities": "Capacités",
+                "critrange": "Critique",
+                "rank": "rang",
+                "add": "Ajouter",
+                "edit": "Editer",
+                "delete": "Supprimer",
+                "difficulty" : "Difficulté",
+                "effects" : "Effets"
+            },
+            "short" : {
+                "stat": "Carac.",
+                "superior": "Sup.",
+                "base": "Base",
+                "specie": "Espèce",
+                "bonus": "Bonus",
+                "malus": "Malus",
+                "value": "Val.",
+                "mod": "Mod",
+                "name": "Nom",
+                "level": "Niv.",
+                "profile": "Profil",
+                "capacity": "Capacité",
+                "capacities": "Capacités",
+                "critrange": "Crit.",
+                "rank": "rang",
+                "add": "Aj.",
+                "edit": "Edit.",
+                "delete": "Suppr.",
+                "difficulty" : "Diff.",
+                "effects" : "FX"
+            }
+        },
+        "ui" : {
+            "submit" : "OK",
+            "cancel" : "Annuler",
+            "diceType" : "Type de dé",
+            "kh" : "Gadrer le plus haut",
+            "kl" : "Gadrer le plus bas",
+            "duration" : "Durée",
+            "action" : "Action"
+        },
+        "abilities": {
+            "long" : {
+                "str": "Force",
+                "dex": "Dextérité",
+                "con": "Constitution",
+                "int": "Intelligence",
+                "wis": "Sagesse",
+                "cha": "Charisme"
+            },
+            "short" : {
+                "str": "FOR",
+                "dex": "DEX",
+                "con": "CON",
+                "int": "INT",
+                "wis": "SAG",
+                "cha": "CHA"
+            }
+        },
+        "combat": {
+            "long" : {
+                "melee": "Attaque de contact",
+                "ranged": "Attaque à distance",
+                "magic": "Attaque magique",
+                "init": "Initiative",
+                "def": "Défense"
+            },
+            "short" : {
+                "melee": "ATC",
+                "ranged": "ATD",
+                "magic": "ATM",
+                "init": "Init.",
+                "def": "DEF"
+            }
+        },
+        "tabs": {
+            "bio": "Biographie",
+            "stats": "Caractéristiques",
+            "actions": "Actions",
+            "inventory": "Inventaire",
+            "capacities": "Voies & Capacités",
+            "description" : "Description",
+            "details" : "Détails",
+            "effects" : "Effets"
+        },
+        "dialogs" : {
+            "skillCheck" : "Test de compétence"
+        },
+        "roll" : {
+            "critical" : "Succès critique",
+            "success" : "Succès",
+            "fumble" : "Échec critique",
+            "failure" : "Échec"
         }
     }
-    
 }

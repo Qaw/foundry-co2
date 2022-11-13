@@ -15,9 +15,9 @@
         "name": "Zigmund"
       }
     ],
-    "esmodules": ["scripts/co.js"],
+    "esmodules": ["module/co.mjs"],
     "scripts": [],
-    "styles": ["styles/co.css"],
+    "styles": ["css/co.css"],
     "packs": [],
     "languages": [
        {
@@ -31,7 +31,7 @@
         "path": "lang/en.json"
       }
     ],
-    "gridDistance": 1,
+    "gridDistance": 1.5,
     "gridUnits": "m",
     "primaryTokenAttribute": "hp",
     "initiative": "1d20",

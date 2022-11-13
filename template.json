@@ -1,115 +1,419 @@
 {
   "Actor": {
-    "types": ["character"],
+    "types": ["character", "encounter", "vendor", "vehicle", "marker"],
     "templates": {
-      "characteristics": {
-        "characteristics": {
+      "abilities": {
+        "abilities": {
           "str": {
-            "base": 10,
-            "bonus": 0,
-            "otherBonus": 0,
             "superior": false,
-            "modifiers": []
+            "baseMod": 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
           },
           "dex": {
-            "base": 10,
-            "bonus": 0,
-            "otherBonus": 0,
             "superior": false,
-            "modifiers": []
+            "baseMod": 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
           },
           "con": {
-            "base": 10,
-            "bonus": 0,
-            "otherBonus": 0,
             "superior": false,
-            "modifiers": []
+            "baseMod": 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
           },
           "int": {
-            "base": 10,
-            "bonus": 0,
-            "otherBonus": 0,
             "superior": false,
-            "modifiers": []
+            "baseMod": 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
           },
           "wis": {
-            "base": 10,
-            "bonus": 0,
-            "otherBonus": 0,
             "superior": false,
-            "modifiers": []
+            "baseMod": 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
           },
           "cha": {
-            "base": 10,
-            "bonus": 0,
-            "otherBonus": 0,
             "superior": false,
-            "modifiers": []
+            "baseMod": 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
           }
         }
       },
-      "attacks": {
-        "attacks": {
-          "melee": {
-            "base": 0,
-            "bonuses": {
-              "attack": "",
-              "damage": ""
-            },
-            "modifiers": []
+      "combat": {
+        "combat": {
+          "init": {
+            "ability": "dex",
+            "base": 10,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
           },
-          "ranged": {
-            "base": 0,
-            "bonuses": {
-              "attack": "",
-              "damage": ""
-            },
-            "modifiers": []
-          },
-          "magic": {
-            "base": 0,
-            "bonuses": {
-              "attack": "",
-              "damage": ""
-            },
-            "modifiers": []
+          "def": {
+            "ability": "dex",
+            "base": 10,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
           }
         }
       },
-      "attributes": {
-        "xp": {
+      "attributes" : {
+        "attributes": {
+          "hp": {
+            "base": 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            },
+            "min": 0,
+            "max": 0,
+            "temp": null,
+            "tempmax": null
+          },
+          "size": "medium",
+          "movement": {
+            "value": 10,
+            "units": "m"
+          },
           "level": {
             "value": 1,
             "max": 20,
             "history": []
-          },
-          "points": {
-            "value": 0,
-            "max": 0
           }
         }
       },
-      "common": {
-        "description": "",
+      "resources": {
+        "resources": {
+          "recovery": {
+            "base": 5,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            },
+            "max": 5
+          },
+          "fortune": {
+            "base": 3,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            },
+            "max": 5
+          },
+          "mana": {
+            "base": 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            },
+            "max": 0
+          },
+          "primary": {
+            "base": null,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            },
+            "max": null,
+            "label": ""
+          },
+          "secondary": {
+            "base": null,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            },
+            "max": null,
+            "label": ""
+          },
+          "tertiary": {
+            "base": null,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            },
+            "max": null,
+            "label": ""
+          }
+        }
+      },
+      "details" : {
         "details": {
-          "gender": "",
-          "age": "",
-          "height": "",
-          "weight": "",          
-          "eyes": "",
-          "hair": "",
-          "size": "",
-          "senses": "",
-          "languages": []
-        },
-        "moduleData": {}
+          "biography": {
+            "private": "",
+            "public": ""
+          },
+          "appearance": {
+            "private": "",
+            "public": ""
+          },
+          "languages": ""
+        }
       }
     },
     "character": {
-      "templates": ["characteristics", "attacks", "attributes"]
+      "templates": ["combat", "attributes", "resources", "details"],
+      "abilities": {
+        "str": {
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        },
+        "dex": {
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        },
+        "con": {
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        },
+        "int": {
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        },
+        "wis": {
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        },
+        "cha": {
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        }
+      },
+      "combat": {
+        "melee": {
+          "ability": "str",
+          "base": 0,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        },
+        "ranged": {
+          "ability": "dex",
+          "base": 0,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        },
+        "magic": {
+          "ability": "int",
+          "base": 0,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        }
+      },
+      "attributes": {
+        "encumbrance": {
+          "value": 0,
+          "encumbered": false
+        },
+        "xp": {
+          "value": 0,
+          "max": 0
+        }
+      }
+    },
+    "encounter": {
+      "templates": ["abilities", "combat", "attributes", "details"]
+    },
+    "vendor": {
+      "templates": ["attributes", "details"]
+    },
+    "vehicle": {
+      "templates": ["abilities", "combat", "attributes", "resources", "details"]
+    },
+    "marker": {
+      "templates": ["resources", "details"]
     }
   },
   "Item": {
-    "types": ["specie","profile","path","capacity"]
+    "types": ["equipment", "feature", "trait", "profile", "consumable", "loot", "currency", "action", "path", "capacity"],
+    "templates": {
+      "itemDescription": {
+        "description": {
+          "value": "",
+          "chat": ""
+        },
+        "source": "",
+        "slug": ""
+      },
+      "physicalItem": {
+        "subtype": "",
+        "quantity": 1,
+        "weight": 0,
+        "price": 0,
+        "equipable": false,
+        "equipped": false,
+        "usage": 0
+      },
+      "activatedEffect": {
+        "activation": {
+          "type": "",
+          "cost": 0,
+          "condition": ""
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": null,
+          "width": null,
+          "units": "",
+          "type": ""
+        },
+        "range": {
+          "value": null,
+          "long": null,
+          "units": ""
+        },
+        "uses": {
+          "value": null,
+          "max": "",
+          "per": null,
+          "recovery": ""
+        },
+        "consume": {
+          "type": "",
+          "target": null,
+          "amount": null
+        }
+      },
+      "action": {
+        "properties" : {
+          "attack" : false,
+          "heal" : false,
+          "buff" : false
+        },
+        "ability": null,
+        "actionType": null,
+        "attackBonus": 0,
+        "chatFlavor": "",
+        "critical": {
+          "threshold": null,
+          "damage": ""
+        },
+        "damage": {
+          "parts": [],
+          "versatile": ""
+        },
+        "formula": "",
+        "save": {
+          "ability": "",
+          "dc": null,
+          "scaling": "spell"
+        }
+      },
+      "passiveEffect": {
+        "activation": {
+          "type": "",
+          "condition": ""
+        },
+        "modifiers": [{"type": "", "target": "", "bonus": 0}]
+      }
+    },
+    "equipment": {
+      "templates": ["itemDescription", "physicalItem", "activatedEffect", "action"],
+      "protection": {
+        "type": "armor",
+        "value": null
+      },
+      "baseItem": "",
+      "speed": {
+        "value": null,
+        "conditions": ""
+      },
+      "strength": 0,
+      "stealth": false
+    },
+    "consumable": {
+      "templates": ["itemDescription", "physicalItem", "activatedEffect", "action"],
+      "consumableType": "potion",
+      "uses": {
+        "autoDestroy": false
+      }
+    },
+    "loot": {
+      "templates": ["itemDescription", "physicalItem"]
+    },
+    "currency": {
+      "templates": ["itemDescription", "physicalItem"]
+    },
+    "feature" : {
+      "templates": ["itemDescription", "activatedEffect"],
+      "modifiers": [{"type": "", "target": "", "bonus": 0}],
+      "traits": [],
+      "capacities": []
+    },
+    "trait" : {
+      "templates": ["itemDescription", "passiveEffect"]
+    },
+    "profile" : {
+      "templates": ["itemDescription"],
+      "hd": "1d4",
+      "proficiencies": [],
+      "spellcasting": null
+    },
+    "capacity": {
+      "templates": ["itemDescription", "activatedEffect", "action"],
+      "path" : null,
+      "rank" : null
+    },
+    "path": {
+      "templates": ["itemDescription"],
+      "capacities" : [],
+      "profiles": [],
+      "traits": [],
+      "properties": {
+        "prestige": false,
+        "trait": false,
+        "alternative": false,
+        "creature": false
+      }
+    }
   }
 }

@@ -1,0 +1,184 @@
+@colorOlive: #4b4a44;
+:root {
+    --color-shadow-primary: white;
+    --color-shadow-highlight: #ff6400;
+    --color-shadow-dark: #000;
+}
+.co.sheet {
+    &.actor {
+        .window-content {
+            padding: 0;
+            form.editable {
+                padding: 0;
+                margin: 0;
+                .sidebar {
+                    flex: 0;
+                    padding: 10px;
+                    .portrait {
+                        cursor: pointer;
+                        background: lightgray;
+                        border: 3px solid white;
+                        box-shadow: 5px 5px 10px black;
+                        flex: 0;
+                        padding: 0;
+                        margin: 5px;
+                        img {
+                            border: none;
+                            width: 150px;
+                            max-width: 150px;
+                            min-width: 150px;
+                        }
+                    }
+                    .features {
+                        list-style-type: none;
+
+                        .featured-item {
+                            border: 2px groove #eeede0;
+                            padding: 3px;
+                            margin-bottom: 3px;
+                            color: @colorOlive;
+                        }
+                    }
+                }
+                .main {
+                    .header {
+                        flex: 0;
+                        flex-wrap: nowrap;
+                        .details {
+                            padding: 5px;
+                            display: grid;
+                            grid-template-columns: 1fr 6fr;
+                            grid-gap: 10px;
+                            grid-auto-columns: minmax(100px, auto);
+                            .form-label {
+                                justify-self: end;
+                                align-self: center;
+                            }
+                            .form-value {
+                                align-self: center;
+                                flex: 1;
+                            }
+                            .nav {
+                                grid-column: 1 / 3;
+                                align-self: center;
+                                flex: 1;
+                                .tabs {
+                                    padding: 0;
+                                    margin: 0;
+                                    justify-content: end;
+                                    border: none;
+                                    .item {
+                                        border: 3px solid white;
+                                        border-radius: 30px;
+                                        color: white;
+                                        background: darkslategray;
+                                        margin-left: 3px;
+                                        box-shadow: 3px 3px 10px gray;
+                                        &.active {
+                                            //text-shadow: 0 0 10px white;
+                                            border: 3px solid darkslategray;
+                                            background: white;
+                                            color: darkslategray;
+                                            box-shadow: 0px 0px 10px gray;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .content {
+                        flex: 1;
+                        padding: 5px;
+                        margin: 0;
+                        .sheet-body {
+                            .stats {
+                                height: 100%;
+                                .abilities-container {
+                                    width: 50%;
+                                    display: grid;
+                                    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+                                    grid-gap: 3px;
+                                    grid-auto-columns: minmax(20px, 50px);
+                                    .cell {
+                                        justify-self: center;
+                                        align-self: center;
+                                        min-width: 40px;
+                                        .field-value {
+                                            max-width: 40px;
+                                        }
+                                        .header {
+                                            color: darkslategray;
+                                            font-weight: bold;
+                                        }
+                                    }
+                                }
+                                .combat-container {
+                                    width: 50%;
+                                    display: grid;
+                                    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+                                    grid-gap: 3px;
+                                    grid-auto-columns: minmax(20px, 50px);
+                                    .cell {
+                                        justify-self: center;
+                                        align-self: center;
+                                        min-width: 40px;
+                                        .field-value {
+                                            max-width: 40px;
+                                        }
+                                        .header {
+                                            color: darkslategray;
+                                            font-weight: bold;
+                                        }
+                                    }
+                                }
+
+                            }
+                            .actions {
+                                height: 100%;
+                                .actions-container {
+                                    width: 50%;
+                                    display: grid;
+                                    grid-template-columns: 1fr 1fr 1fr 1fr;
+                                    grid-gap: 3px;
+                                    grid-auto-columns: minmax(20px, 50px);
+                                    .cell {
+                                        justify-self: center;
+                                        align-self: center;
+                                        .field-value {
+                                            max-width: 40px;
+                                        }
+                                    }
+                                }
+                            }
+                            .inventory {}
+                            .capacities {}
+                            .effects {}
+                            .bio {}
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.item {
+        .window-content {
+            padding: 0;
+            form.editable {
+                padding: 0;
+                margin: 0;
+                .sheet-header {
+                    background: red;
+                    flex: 0
+                }
+                .sheet-navigation {
+                    background: green;
+                    flex: 0
+                }
+                .sheet-body {
+                    background: blue;
+                    flex: 1
+                }
+            }
+        }
+    }
+}

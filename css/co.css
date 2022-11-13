@@ -1,0 +1,166 @@
+:root {
+  --color-shadow-primary: white;
+  --color-shadow-highlight: #ff6400;
+  --color-shadow-dark: #000;
+}
+.co.sheet.actor .window-content {
+  padding: 0;
+}
+.co.sheet.actor .window-content form.editable {
+  padding: 0;
+  margin: 0;
+}
+.co.sheet.actor .window-content form.editable .sidebar {
+  flex: 0;
+  padding: 10px;
+}
+.co.sheet.actor .window-content form.editable .sidebar .portrait {
+  cursor: pointer;
+  background: lightgray;
+  border: 3px solid white;
+  box-shadow: 5px 5px 10px black;
+  flex: 0;
+  padding: 0;
+  margin: 5px;
+}
+.co.sheet.actor .window-content form.editable .sidebar .portrait img {
+  border: none;
+  width: 150px;
+  max-width: 150px;
+  min-width: 150px;
+}
+.co.sheet.actor .window-content form.editable .sidebar .features {
+  list-style-type: none;
+}
+.co.sheet.actor .window-content form.editable .sidebar .features .featured-item {
+  border: 2px groove #eeede0;
+  padding: 3px;
+  margin-bottom: 3px;
+  color: #4b4a44;
+}
+.co.sheet.actor .window-content form.editable .main .header {
+  flex: 0;
+  flex-wrap: nowrap;
+}
+.co.sheet.actor .window-content form.editable .main .header .details {
+  padding: 5px;
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+  grid-gap: 10px;
+  grid-auto-columns: minmax(100px, auto);
+}
+.co.sheet.actor .window-content form.editable .main .header .details .form-label {
+  justify-self: end;
+  align-self: center;
+}
+.co.sheet.actor .window-content form.editable .main .header .details .form-value {
+  align-self: center;
+  flex: 1;
+}
+.co.sheet.actor .window-content form.editable .main .header .details .nav {
+  grid-column: 1 / 3;
+  align-self: center;
+  flex: 1;
+}
+.co.sheet.actor .window-content form.editable .main .header .details .nav .tabs {
+  padding: 0;
+  margin: 0;
+  justify-content: end;
+  border: none;
+}
+.co.sheet.actor .window-content form.editable .main .header .details .nav .tabs .item {
+  border: 3px solid white;
+  border-radius: 30px;
+  color: white;
+  background: darkslategray;
+  margin-left: 3px;
+  box-shadow: 3px 3px 10px gray;
+}
+.co.sheet.actor .window-content form.editable .main .header .details .nav .tabs .item.active {
+  border: 3px solid darkslategray;
+  background: white;
+  color: darkslategray;
+  box-shadow: 0px 0px 10px gray;
+}
+.co.sheet.actor .window-content form.editable .main .content {
+  flex: 1;
+  padding: 5px;
+  margin: 0;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats {
+  height: 100%;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .abilities-container {
+  width: 50%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 3px;
+  grid-auto-columns: minmax(20px, 50px);
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .abilities-container .cell {
+  justify-self: center;
+  align-self: center;
+  min-width: 40px;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .abilities-container .cell .field-value {
+  max-width: 40px;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .abilities-container .cell .header {
+  color: darkslategray;
+  font-weight: bold;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .combat-container {
+  width: 50%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 3px;
+  grid-auto-columns: minmax(20px, 50px);
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .combat-container .cell {
+  justify-self: center;
+  align-self: center;
+  min-width: 40px;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .combat-container .cell .field-value {
+  max-width: 40px;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .combat-container .cell .header {
+  color: darkslategray;
+  font-weight: bold;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .actions {
+  height: 100%;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .actions .actions-container {
+  width: 50%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 3px;
+  grid-auto-columns: minmax(20px, 50px);
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .actions .actions-container .cell {
+  justify-self: center;
+  align-self: center;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .actions .actions-container .cell .field-value {
+  max-width: 40px;
+}
+.co.sheet.item .window-content {
+  padding: 0;
+}
+.co.sheet.item .window-content form.editable {
+  padding: 0;
+  margin: 0;
+}
+.co.sheet.item .window-content form.editable .sheet-header {
+  background: red;
+  flex: 0;
+}
+.co.sheet.item .window-content form.editable .sheet-navigation {
+  background: green;
+  flex: 0;
+}
+.co.sheet.item .window-content form.editable .sheet-body {
+  background: blue;
+  flex: 1;
+}
