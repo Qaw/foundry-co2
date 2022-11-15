@@ -15,7 +15,9 @@ export default class CoBaseActorSheet extends ActorSheet {
     const dataset = element.dataset
     const rollType = dataset.rollType
     const rolling = dataset.rolling
+
     Log.debug(rolling);
+    
     switch(rollType){
       case "skillcheck" : new CoSkillCheck().init(event, this.actor, rolling);
       case "combatcheck" : break;

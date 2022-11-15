@@ -15,14 +15,14 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
 
   /** @override */
   getData(options) {
-    const actorData = this.actor.toObject(false);
     const context = super.getData(options);
-    context.system = actorData.system;
-    context.abilities = actorData.system.abilities;
-    context.combat = actorData.system.combat;
-    context.attributes = actorData.system.attributes;
-    context.resources = actorData.system.resources;
-    context.details = actorData.system.details;
+
+    context.system = this.actor.system;
+    context.abilities = this.actor.system.abilities;
+    context.combat = this.actor.system.combat;
+    context.attributes = this.actor.system.attributes;
+    context.resources = this.actor.system.resources;
+    context.details = this.actor.system.details;
     // context.paths = context.items.filter((item) => item.type === ITEM_TYPE.PATH);
     // context.profile = context.items.find((item) => item.type === ITEM_TYPE.PROFILE);
     // context.capacities = context.items.filter((item) => item.type === ITEM_TYPE.CAPACITY);

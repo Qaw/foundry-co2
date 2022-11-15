@@ -34,7 +34,7 @@
                 <input class="field-value" name="system.abilities.{{id}}.bonuses.sheet" type="string" value="{{numberFormat ability.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number"/>
             </div>
             <div class="cell readonly">
-                <input class="field-value" name="system.abilities.{{id}}.value" type="string" readonly="true" value="{{ability.value}}" data-dtype="Number"/>
+                <input class="field-value" name="system.abilities.{{id}}.value" type="string" readonly="true" value="{{ability.value}}" data-dtype="Number" data-tooltip="{{ability.tooltip}}"/>
             </div>
             <div class="cell readonly">
                 <input class="field-value" name="system.abilities.{{id}}.mod" readonly="true" type="string" value="{{numberFormat ability.mod decimals=0 sign=true}}" data-dtype="Number"/>
@@ -77,7 +77,7 @@
             </div>
             <div class="cell readonly">
                 {{#if field.value}}
-                    <input class="field-value" name="system.combat.{{id}}.value" readonly="true" type="string" value="{{field.value}}" data-dtype="Number"/>
+                    <input class="field-value" name="system.combat.{{id}}.value" readonly="true" type="string" value="{{field.value}}" data-dtype="Number" data-tooltip="{{field.tooltip}}"/>
                 {{/if}}
             </div>
             <div class="cell readonly">

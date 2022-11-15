@@ -1,3 +1,4 @@
+import { ITEM_TYPE } from "../system/constants.mjs";
 /**
  * Extend the base Item entity
  * @extends {Item}
@@ -19,14 +20,18 @@ export class CoItem extends Item {
   //   this.system.maxRank = PATH_MAX_RANK;
   // }
 
-  // /**
-  //  * @returns undefined if the item is not a specie, true if the item has modifiers
-  //  * @type {boolean}
-  //  */
-  // get hasModifiers() {
-  //   if (!this.type == ITEM_TYPE.SPECIE) return undefined;
-  //   return this.system.modifiers?.length > 0;
-  // }
+  /**
+  * @returns undefined if the item is not a trait, true if the item has modifiers
+  * @type {boolean}
+  */
+  get hasModifiers() {
+    if (![ITEM_TYPE.TRAIT, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined;
+    return this.system.modifiers?.length > 0;
+  }
+
+  get modifiers() {
+    if (this.hasModifiers) return this.system.modifiers;
+  }
 
   // /**
   //  * @returns undefined if the tiem is not a specie or a path, null if there is no capacities already, all the capacities
@@ -39,20 +44,33 @@ export class CoItem extends Item {
   //   return this.system.capacities;
   // }
 
-  // /**
-  //  * @description Calculate the sum of all bonus for a specific type and target
-  //  * @param {*} type specie
-  //  * @param {*} target For specie type, target are str, dex, etc...
-  //  * @returns the value of the bonus
-  //  */
-  // getTotalModifiersByTypeAndTarget(type, target) {
-  //   if (!this.type == ITEM_TYPE.SPECIE) return undefined;
-  //   if (!this.hasModifiers) return 0;
-  //   return this.system.modifiers
-  //     .filter((m) => m.type == type && m.target == target)
-  //     .map((i) => i.bonus)
-  //     .reduce((acc, curr) => acc + curr, 0);
-  // }
+   /**
+    * @description Calculate the sum of all bonus for a specific type and target
+    * @param {*} type      MODIFIER_TYPE
+    * @param {*} subtype   MODIFIER_SUBTYPE
+    * @param {*} target    MODIFIER_TARGET
+    * @returns the value of the bonus
+    */
+   getTotalModifiersByTypeSubtypeAndTarget(type, subtype, target) {
+     if (![ITEM_TYPE.TRAIT, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined;
+     if (!this.hasModifiers) return 0;
+     return this.system.modifiers
+       .filter(m => m.type == type && m.subtype == subtype && m.target == target)
+       .map(i => i.modifier)
+       .reduce((acc, curr) => acc + curr, 0);
+   }
+
+      /**
+    * @description Calculate the sum of all bonus for a specific type and target
+    * @param {*} type trait
+    * @param {*} target For trait type, target are str, dex, etc...
+    * @returns the value of the bonus
+    */
+       getModifiersByTypeAndSubtype(type, subtype) {
+        if (![ITEM_TYPE.TRAIT, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined;
+        if (!this.hasModifiers) return 0;
+        return this.system.modifiers.filter((m) => m.type == type && m.subtype == subtype);
+      }
 
   // /**
   //  *

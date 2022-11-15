@@ -353,7 +353,7 @@
           "type": "",
           "condition": ""
         },
-        "modifiers": [{"type": "", "target": "", "bonus": 0}]
+        "modifiers": []
       }
     },
     "equipment": {
@@ -385,7 +385,7 @@
     },
     "feature" : {
       "templates": ["itemDescription", "activatedEffect"],
-      "modifiers": [{"type": "", "target": "", "bonus": 0}],
+      "modifiers": [],
       "traits": [],
       "capacities": []
     },

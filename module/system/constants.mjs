@@ -2,8 +2,16 @@ export const SYSTEM_NAME = 'co';
 export const SYSTEM_DESCRIPTION = "Chroniques Oubliées";
 
 export const MODIFIER_TYPE = {
-    SPECIE: "specie"
+    TRAIT: "trait",
+    PROFILE: "profile",
+    CAPACITY: "capacity"
 };
+
+export const MODIFIER_SUBTYPE = {
+    ABILITY: "ability",
+    COMBAT: "combat",
+    ATTRIBUTE: "attribute"
+}
 
 export const MODIFIER_TARGET = {
     STR: "str",
@@ -11,10 +19,15 @@ export const MODIFIER_TARGET = {
     CON: "con",
     INT: "int",
     WIS: "wis",
-    CHA: "cha"
+    CHA: "cha",
+    MELEE: 'melee',
+    RANGED: 'ranged',
+    MAGIC: 'magic',
+    INIT: 'init',
+    DEF: 'def'
 };
 
-export const ABILITY = {
+export const COMBAT = {
     MELEE: 'melee',
     RANGED: 'ranged',
     MAGIC: 'magic',

@@ -17,7 +17,7 @@
 
     <section class="sheet-body">
         <div class="tab flexrow active" data-group="primary" data-tab="description">
-            {{editor system.description.value target="system.description.value" button=true owner=owner editable=editable}}
+            {{editor enrichedDescription target="system.description.value" button=true owner=owner editable=editable}}
         </div>
          <div class="tab details" data-group="primary" data-tab="details">
          {{> (concat (concat "systems/co/templates/items/parts/" item.type) "-partial.hbs") }}

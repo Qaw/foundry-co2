@@ -7,6 +7,7 @@ import { SpecieModel, ProfileModel, PathModel, CapacityModel } from './system/mo
 import { CoItem } from './item/item.mjs';
 import { registerHandlebarsHelpers } from './ui/helpers.mjs';
 import {Log} from "./utils/log.mjs";
+import { Modifier } from './system/modifiers.js';
 
 Hooks.once("init", async function () {
 
@@ -17,6 +18,9 @@ Hooks.once("init", async function () {
     CONFIG.Actor.documentClass = CoActor;
     CONFIG.Item.documentClass = CoItem;
 
+    game.co = {
+        Modifier: Modifier
+    }
     // CONFIG.Item.systemDataModels["specie"] = SpecieModel;
     // CONFIG.Item.systemDataModels["profile"] = ProfileModel;
     // CONFIG.Item.systemDataModels["path"] = PathModel;
