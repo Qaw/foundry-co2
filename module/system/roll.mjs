@@ -1,12 +1,13 @@
 import {Log} from "../utils/log.mjs";
 import {Utils} from "./utils.mjs";
-
+import { CoChat } from "../ui/chat.mjs";
 class CoRoll {
     init(event, actor, args){}
     dialog(label){}
     roll(){}
     chat(){}
 }
+
 export class CoSkillCheck extends CoRoll {
     options() {
         return { classes: ["co", "dialog"] };
@@ -22,6 +23,8 @@ export class CoSkillCheck extends CoRoll {
         let parts = rolling.replace("@", "").split(".");
         const rollingLabel = game.i18n.localize("CO.dialogs.skillCheck") + " - " + game.i18n.localize("CO."+ parts[0] + ".long." + parts[1]);
 
+        const mod = eval('actor.system.abilities.' + parts[1] + '.mod');
+
         const dialogTpl = 'systems/co/templates/dialogs/skillcheck-dialog.hbs';
         const tplData = {
             label : rollingLabel,
@@ -29,7 +32,7 @@ export class CoSkillCheck extends CoRoll {
             skill : rollingSkill,
             bonus : 0,
             malus : 0,
-            mod : 0,
+            mod : mod,
             critrange : 20,
             superior : false,
             weakened : false,
@@ -75,6 +78,7 @@ export class CoSkillCheck extends CoRoll {
         let r = new CoSkillRoll(label, dice, mod, bonus, malus, difficulty, critrange);
         r.roll(actor);
     }
+
     chat(){
         const rollMessageTpl = 'systems/co/templates/chat/skillcheck-card.hbs';
         const tplData = {
@@ -127,6 +131,11 @@ export class CoSkillRoll {
         this._isSuccess = false;
     }
 
+    /**
+     * 
+     * @param {*} actor 
+     * @returns 
+     */
     async roll(actor){
         let r = new Roll(this._formula);
         await r.roll({"async": true});
@@ -137,13 +146,21 @@ export class CoSkillRoll {
         if(this._difficulty){
             this._isSuccess = r.total >= this._difficulty;
         }
-        this._buildRollMessage().then(msgFlavor => {
-            r.toMessage({
-                user: game.user.id,
-                flavor: msgFlavor,
-                speaker: ChatMessage.getSpeaker({actor: actor})
-            });
-        })
+
+        let chatMessage = await new CoChat(actor)
+            .withTemplate('systems/co/templates/chat/skillcheck-card.hbs')
+            .withData({
+                label : this._label,
+                difficulty : this._difficulty,
+                showDifficulty : !!this._difficulty,
+                isCritical : this._isCritical,
+                isFumble : this._isFumble,
+                isSuccess : this._isSuccess,
+                isFailure : !this._isSuccess
+            })
+            .withRoll(r)
+            .create();
+
         return r;
     }
 
@@ -174,17 +191,4 @@ export class CoSkillRoll {
         }
     }
 
-    _buildRollMessage() {
-        const rollMessageTpl = 'systems/co/templates/chat/skillcheck-card.hbs';
-        const tplData = {
-            label : this._label,
-            difficulty : this._difficulty,
-            showDifficulty : !!this._difficulty,
-            isCritical : this._isCritical,
-            isFumble : this._isFumble,
-            isSuccess : this._isSuccess,
-            isFailure : !this._isSuccess
-        };
-        return renderTemplate(rollMessageTpl, tplData);
-    }
 }

@@ -81,8 +81,8 @@
             "submit" : "OK",
             "cancel" : "Annuler",
             "diceType" : "Type de dé",
-            "kh" : "Gadrer le plus haut",
-            "kl" : "Gadrer le plus bas",
+            "kh" : "Garder le plus haut",
+            "kl" : "Garder le plus bas",
             "duration" : "Durée",
             "action" : "Action"
         },
