@@ -279,7 +279,8 @@
           "chat": ""
         },
         "source": "",
-        "slug": ""
+        "slug": "",
+        "modifiers": []
       },
       "physicalItem": {
         "subtype": "",
@@ -352,8 +353,7 @@
         "activation": {
           "type": "",
           "condition": ""
-        },
-        "modifiers": []
+        }
       }
     },
     "equipment": {
@@ -385,7 +385,6 @@
     },
     "feature" : {
       "templates": ["itemDescription", "activatedEffect"],
-      "modifiers": [],
       "traits": [],
       "capacities": []
     },

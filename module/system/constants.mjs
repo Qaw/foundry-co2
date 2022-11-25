@@ -1,3 +1,5 @@
+import {CO} from "./config.mjs";
+
 export const SYSTEM_NAME = 'co';
 export const SYSTEM_DESCRIPTION = "Chroniques Oubliées";
 
@@ -76,4 +78,10 @@ export const ACTOR_TYPE = {
 export const OPEN_TYPE = {
     SOURCE: "source",
     EMBEDDED_ID: "embeddedId"
+};
+
+CO.MODIFIER_TYPE = {
+    TRAIT: "ITEM.TypeTrait",
+    PROFILE: "ITEM.TypeProfile",
+    CAPACITY: "ITEM.TypeCapacity"
 };

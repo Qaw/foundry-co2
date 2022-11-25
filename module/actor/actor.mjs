@@ -1,6 +1,6 @@
 import { Stats } from "../system/stats.mjs";
 import { COMBAT, ITEM_TYPE, MODIFIER_SUBTYPE, MODIFIER_TYPE } from "../system/constants.mjs";
-import { Modifiers } from "../system/modifiers.js"
+import { Modifiers } from "../system/modifiers.mjs"
 
 /**
  * Extend the base Actor entity

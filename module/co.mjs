@@ -7,7 +7,7 @@ import { SpecieModel, ProfileModel, PathModel, CapacityModel } from './system/mo
 import { CoItem } from './item/item.mjs';
 import { registerHandlebarsHelpers } from './ui/helpers.mjs';
 import {Log} from "./utils/log.mjs";
-import { Modifier } from './system/modifiers.js';
+import { Modifier } from './system/modifiers.mjs';
 
 Hooks.once("init", async function () {
 

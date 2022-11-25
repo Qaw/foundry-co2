@@ -32,6 +32,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/" + SYSTEM_NAME + "/templates/items/parts/action-partial.hbs",
     "systems/" + SYSTEM_NAME + "/templates/items/parts/path-partial.hbs",
     "systems/" + SYSTEM_NAME + "/templates/items/parts/capacity-partial.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/items/parts/modifiers-partial.hbs",
     "systems/" + SYSTEM_NAME + "/templates/items/parts/trait-partial.hbs",
   ];
 

@@ -1,3 +1,5 @@
+import {MODIFIER_SUBTYPE, MODIFIER_TARGET, MODIFIER_TYPE} from "./constants.mjs";
+
 export class Modifiers {
 
     /**
@@ -8,20 +10,22 @@ export class Modifiers {
     * @returns {Modifier[]} all the modifiers
     */
    static getModifiersByTypeSubtype(items, type, subtype) {
-    if (items.size == 0) return [];
+    // if (items.size == 0) return [];
 
     // FIXME Je repasse par un état intermeédiaire parce que via macro je n'avais plus un Array de Modifier mais un Array de Object, et donc l'appel à evaluate() merdait plus loin
-    let modifiers = [];
-    let newMod = [];
-    items.forEach(element => {
-       newMod.push(...element.system.modifiers.filter(m => m.type === type && m.subtype === subtype));      
-    });
-    newMod.forEach(element => {
-      let elt = new Modifier(element.type, element.subtype, element.source, element.target, element.value);
-      modifiers.push(elt);
-    });
-
-    return modifiers;
+    // let modifiers = [];
+    // let newMod = [];
+    return items.reduce((mods, item) => mods.concat(item.system.modifers), [])
+        .filter(m => m.type === type && m.subtype === subtype)
+        .map(m => new Modifier(m.type, m.subtype, m.source, m.target, m.value));
+    // items.forEach(element => {
+    //    newMod.push(...element.system.modifiers.filter(m => m.type === type && m.subtype === subtype));
+    // });
+    // newMod.forEach(element => {
+    //   let elt = new Modifier(element.type, element.subtype, element.source, element.target, element.value);
+    //   modifiers.push(elt);
+    // });
+    // return modifiers;
   }
 
   // Modifiers : 
@@ -52,9 +56,7 @@ export class Modifiers {
 
   // source : uuid
   static _getNameBySource(modifier) {
-    const item = fromUuidSync(modifier.source);
-    if (!item) return "";
-    return item.name;
+    return fromUuid(modifier.source).then(item => item ? item.name : "")
   }
 
 }
@@ -69,7 +71,7 @@ export class Modifier {
    * @param {*} target    MODIFIER_TARGET
    * @param {*} value     +/- X or custom like 2*@rank
    */
-  constructor(type, subtype, source, target, value) {
+  constructor(type=MODIFIER_TYPE.CAPACITY, subtype=MODIFIER_SUBTYPE.ABILITY, source=null, target=MODIFIER_TARGET.STR, value=null) {
     this.type = type;
     this.subtype = subtype;
     this.source = source;

@@ -1,4 +1,5 @@
 import CoBaseItemSheet from "./base-item-sheet.mjs";
+import {Modifier} from "../../system/modifiers.mjs";
 
 export default class CoItemSheet extends CoBaseItemSheet {
 
@@ -119,6 +120,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
     /** @override */
     getData(options) {
         const context = super.getData(options);
+        console.log(context);
         return context;
     }
 
@@ -127,6 +129,8 @@ export default class CoItemSheet extends CoBaseItemSheet {
         super.activateListeners(html);
         html.find(".item-delete").click(this._onDeleteItem.bind(this));
         html.find(".item-edit").click(this._onEditItem.bind(this));
+        html.find(".mod-add").click(this._onAddModifier.bind(this));
+        html.find(".mod-delete").click(this._onDeleteModifier.bind(this));
     }
 
     /**
@@ -155,7 +159,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
      * @param event
      * @private
      */
-    async _onEditItem(event) {
+    _onEditItem(event) {
         event.preventDefault();
         const li = $(event.currentTarget).closest(".item");
         const itemType = li.data("itemType");
@@ -164,13 +168,48 @@ export default class CoItemSheet extends CoBaseItemSheet {
             case "capacity": {
                 const rank = li.data("rank");
                 const item = this.item.system.capacities[rank - 1];
-
-                let document = await fromUuid(item.source);
-
-                return document.sheet.render(true);
+                return fromUuid(item.source).then(document => document.sheet.render(true))
             }
             default :
                 break;
         }
     }
+
+    /**
+     *
+     * @param {*} event
+     * @returns
+     */
+    _onAddModifier(event) {
+        event.preventDefault();
+        // const li = $(event.currentTarget).closest(".item");
+        // const itemType = li.data("itemType");
+        let data = duplicate(this.item);
+        if(!data.system.modifiers) data.system.modifiers = [];
+        data.system.modifiers.push(new Modifier())
+        return this.item.update(data);
+    }
+
+    /**
+     *
+     * @param {*} event
+     * @returns
+     */
+    _onDeleteModifier(event) {
+        event.preventDefault();
+        // const li = $(event.currentTarget).closest(".item");
+        // const itemType = li.data("itemType");
+        let data = duplicate(this.item);
+        //
+        // switch (itemType) {
+        //     case "capacity": {
+        //         const rank = li.data("rank");
+        //         data.system.capacities.splice(rank - 1, 1);
+        //     }
+        //         break;
+        // }
+        return this.item.update(data);
+    }
+
+
 }

@@ -1,20 +1,24 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
     {{log item.type this}}
     <header class="sheet-header flexrow header-background no-wrap">
-        <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img">
-        <div class="header-details flexrow">
-            <h1 class="charname">
-                <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
-            </h1>
+        <div class="header-picture">
+            <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img">
         </div>
+        <div class="header-top">
+            <div class="header-details flexrow">
+                <h1 class="charname">
+                    <input name="name" type="text" value="{{item.name}}" placeholder="Item Name"/>
+                </h1>
+            </div>
+        </div>
+        <div class="header-bottom"></div>
     </header>
-
     <nav class="sheet-navigation tabs" data-group="primary">
         <a class="item active" data-tab="description">{{localize "CO.tabs.description"}}</a>
         <a class="item" data-tab="details">{{localize "CO.tabs.details"}}</a>
+        <a class="item" data-tab="modifiers">{{localize "CO.tabs.modifiers"}}</a>
         <a class="item" data-tab="effets">{{localize "CO.tabs.effects"}}</a>
     </nav>
-
     <section class="sheet-body">
         <div class="tab flexrow active" data-group="primary" data-tab="description">
             {{editor enrichedDescription target="system.description.value" button=true owner=owner editable=editable}}
@@ -22,7 +26,10 @@
          <div class="tab details" data-group="primary" data-tab="details">
          {{> (concat (concat "systems/co/templates/items/parts/" item.type) "-partial.hbs") }}
         </div>
-        <div class="tab" data-group="primary" data-tab="effets">
+        <div class="tab modifiers" data-group="primary" data-tab="modifiers">
+            {{> "systems/co/templates/items/parts/modifiers-partial.hbs"}}
+        </div>
+        <div class="tab effects" data-group="primary" data-tab="effets">
             {{> "systems/co/templates/effects/effects.hbs"}}
         </div>
     </section>

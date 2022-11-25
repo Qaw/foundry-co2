@@ -16,7 +16,6 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   /** @override */
   getData(options) {
     const context = super.getData(options);
-
     context.system = this.actor.system;
     context.abilities = this.actor.system.abilities;
     context.combat = this.actor.system.combat;
