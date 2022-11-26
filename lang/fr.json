@@ -149,6 +149,18 @@
       "success": "Succès",
       "fumble": "Échec critique",
       "failure": "Échec"
+    },
+    "modifier": {
+      "type": {
+        "trait": "Trait",
+        "profile": "Profil",
+        "capacity": "Capacité"
+      },
+      "subtype": {
+        "ability": "Caractéristique",
+        "combat": "Combat",
+        "attribute": "Attribut"
+      }
     }
   }
 }

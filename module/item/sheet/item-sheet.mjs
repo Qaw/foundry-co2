@@ -182,12 +182,9 @@ export default class CoItemSheet extends CoBaseItemSheet {
      */
     _onAddModifier(event) {
         event.preventDefault();
-        // const li = $(event.currentTarget).closest(".item");
-        // const itemType = li.data("itemType");
-        let data = duplicate(this.item);
-        if(!data.system.modifiers) data.system.modifiers = [];
-        data.system.modifiers.push(new Modifier())
-        return this.item.update(data);
+        let newModifiers = foundry.utils.deepClone(this.item.modifiers); 
+        newModifiers.push(new Modifier(this.item.uuid));
+        return this.item.update({"system.modifiers": newModifiers});
     }
 
     /**
@@ -197,18 +194,11 @@ export default class CoItemSheet extends CoBaseItemSheet {
      */
     _onDeleteModifier(event) {
         event.preventDefault();
-        // const li = $(event.currentTarget).closest(".item");
-        // const itemType = li.data("itemType");
-        let data = duplicate(this.item);
-        //
-        // switch (itemType) {
-        //     case "capacity": {
-        //         const rank = li.data("rank");
-        //         data.system.capacities.splice(rank - 1, 1);
-        //     }
-        //         break;
-        // }
-        return this.item.update(data);
+        const li = $(event.currentTarget).closest(".modifier-row");
+        const rowId = li.data("itemId");
+        let newModifiers = foundry.utils.deepClone(this.item.modifiers); 
+        newModifiers.splice(rowId, 1);
+        return this.item.update({"system.modifiers": newModifiers});
     }
 
 

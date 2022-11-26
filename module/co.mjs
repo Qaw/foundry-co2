@@ -14,12 +14,13 @@ Hooks.once("init", async function () {
     Log.debug("Initializing...");
 
     // Configuration
-    CONFIG.CO = CO;
+    //CONFIG.CO = CO;
     CONFIG.Actor.documentClass = CoActor;
     CONFIG.Item.documentClass = CoItem;
 
     game.co = {
-        Modifier: Modifier
+        Modifier: Modifier,
+        config: CO
     }
     // CONFIG.Item.systemDataModels["specie"] = SpecieModel;
     // CONFIG.Item.systemDataModels["profile"] = ProfileModel;

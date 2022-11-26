@@ -79,9 +79,3 @@ export const OPEN_TYPE = {
     SOURCE: "source",
     EMBEDDED_ID: "embeddedId"
 };
-
-CO.MODIFIER_TYPE = {
-    TRAIT: "ITEM.TypeTrait",
-    PROFILE: "ITEM.TypeProfile",
-    CAPACITY: "ITEM.TypeCapacity"
-};

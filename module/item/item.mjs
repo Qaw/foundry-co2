@@ -26,11 +26,20 @@ export class CoItem extends Item {
   */
   get hasModifiers() {
     if (![ITEM_TYPE.TRAIT, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined;
-    return this.system.modifiers?.length > 0;
+
+    // Array
+    if (this.system.modifiers?.length > 0) return true;
+    // Object
+    if (this.system.modifiers !== null) return true;
   }
 
+  /**
+   * Return an array of Modifiers
+   */
   get modifiers() {
-    if (this.hasModifiers) return this.system.modifiers;
+    if (!this.hasModifiers) return [];
+    if (this.system.modifiers instanceof Array) return this.system.modifiers;
+    return Object.values(this.system.modifiers);
   }
 
   // /**
