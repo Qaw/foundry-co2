@@ -9,23 +9,26 @@ export class Modifiers {
    * @returns {Modifier[]} all the modifiers
    */
   static getModifiersByTypeSubtype(items, type, subtype) {
-    // if (items.size == 0) return [];
+    if (items.size == 0) return [];
 
-    // FIXME Je repasse par un état intermeédiaire parce que via macro je n'avais plus un Array de Modifier mais un Array de Object, et donc l'appel à evaluate() merdait plus loin
-    // let modifiers = [];
-    // let newMod = [];
-    return items
-      .reduce((mods, item) => mods.concat(item.system.modifers), [])
+    /* FIXME Je repasse par un état intermeédiaire parce que via macro je n'avais plus un Array de Modifier mais un Array de Object, et donc l'appel à evaluate() merdait plus loin
+    let modifiers = [];
+    let newMod = [];
+    
+    items.forEach(element => {
+        newMod.push(...element.modifiers.filter(m => m.type === type && m.subtype === subtype));
+     });
+     newMod.forEach(element => {
+       let elt = new Modifier(element.type, element.subtype, element.source, element.target, element.value);
+       modifiers.push(elt);
+     });
+     return modifiers;
+     */
+    let result = items
+      .reduce((mods, item) => mods.concat(item.modifiers), [])
       .filter((m) => m.type === type && m.subtype === subtype)
       .map((m) => new Modifier(m.source, m.type, m.subtype, m.target, m.value));
-    // items.forEach(element => {
-    //    newMod.push(...element.system.modifiers.filter(m => m.type === type && m.subtype === subtype));
-    // });
-    // newMod.forEach(element => {
-    //   let elt = new Modifier(element.type, element.subtype, element.source, element.target, element.value);
-    //   modifiers.push(elt);
-    // });
-    // return modifiers;
+    return result;
   }
 
   // Modifiers :
@@ -50,14 +53,16 @@ export class Modifiers {
     let tooltip = "";
     modifiersByTarget.forEach((element) => {
       let name = this._getNameBySource(element);
-      if (name !== "") tooltip += name + " : " + (element.value > 0 ? "+" + element.value : element.value) + " ";
+      if (name !== "") tooltip += name + " : " + element.value + " ";
     });
     return tooltip;
   }
 
   // source : uuid
   static _getNameBySource(modifier) {
-    return fromUuid(modifier.source).then((item) => (item ? item.name : ""));
+    const item = fromUuidSync(modifier.source);
+    if (item) return item.name;
+    return "";
   }
 }
 

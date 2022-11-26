@@ -1,5 +1,6 @@
 import CoBaseItemSheet from "./base-item-sheet.mjs";
-import {Modifier} from "../../system/modifiers.mjs";
+import { Modifier } from "../../system/modifiers.mjs";
+import { ITEM_TYPE } from "../../system/constants.mjs";
 
 export default class CoItemSheet extends CoBaseItemSheet {
 
@@ -8,46 +9,45 @@ export default class CoItemSheet extends CoBaseItemSheet {
         return mergeObject(super.defaultOptions, {
             width: 600,
             height: 600,
-            template: "systems/co/templates/items/item-sheet.hbs",
             classes: ["co", "sheet", "item"],
             tabs: [{navSelector: ".sheet-navigation", contentSelector: ".sheet-body", initial: "description"}],
             dragDrop: [{dragSelector: ".item-list .item", dropSelector: null}],
         });
     }
 
-    // /** @override */
-    // get template() {
-    //     return "systems/co/templates/items/item-sheet.hbs";
-    // }
+    /** @override */
+    get template() {
+         return "systems/co/templates/items/item-sheet.hbs";
+    }
 
     /** @inheritdoc */
-    // async _onDrop(event) {
-    //     const data = TextEditor.getDragEventData(event);
-    //     const item = this.item;
-    //
-    //     /**
-    //      * A hook event that fires when some useful data is dropped onto an ItemSheet.
-    //      * @function dropActorSheetData
-    //      * @memberof hookEvents
-    //      * @param {Item} item      The Item
-    //      * @param {ItemSheet} sheet The ItemSheet application
-    //      * @param {object} data      The data that has been dropped onto the sheet
-    //      */
-    //     const allowed = Hooks.call("dropItemSheetData", item, this, data);
-    //     if (allowed === false) return;
-    //
-    //     // Handle different data types
-    //     switch (data.type) {
-    //         case "ActiveEffect":
-    //             return; //this._onDropActiveEffect(event, data);
-    //         case "Actor":
-    //             return; //this._onDropActor(event, data);
-    //         case "Item":
-    //             return this._onDropItem(event, data);
-    //         case "Folder":
-    //             return; //this._onDropFolder(event, data);
-    //     }
-    // }
+     async _onDrop(event) {
+         const data = TextEditor.getDragEventData(event);
+         const item = this.item;
+    
+         /**
+          * A hook event that fires when some useful data is dropped onto an ItemSheet.
+          * @function dropActorSheetData
+          * @memberof hookEvents
+          * @param {Item} item      The Item
+          * @param {ItemSheet} sheet The ItemSheet application
+          * @param {object} data      The data that has been dropped onto the sheet
+          */
+         const allowed = Hooks.call("dropItemSheetData", item, this, data);
+         if (allowed === false) return;
+    
+         // Handle different data types
+         switch (data.type) {
+             case "ActiveEffect":
+                 return; //this._onDropActiveEffect(event, data);
+             case "Actor":
+                 return; //this._onDropActor(event, data);
+             case "Item":
+                 return this._onDropItem(event, data);
+             case "Folder":
+                 return; //this._onDropFolder(event, data);
+         }
+     }
 
     /**
      * @param {DragEvent} event            The concluding DragEvent which contains drop data
@@ -55,27 +55,34 @@ export default class CoItemSheet extends CoBaseItemSheet {
      * @returns {Promise<Item[]|boolean>}  The created or updated Item instances, or false if the drop was not permitted.
      * @protected
      */
-    // async _onDropItem(event, data) {
-    //     if (!this.item.isOwner) return false;
-    //     const item = await Item.implementation.fromDropData(data);
-    //     //const itemData = item.toObject();
-    //
-    //     // Handle item sorting within the same Actor
-    //     // if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, itemData);
-    //
-    //     // Create the owned item
-    //     // return this._onDropItemCreate(itemData);
-    //     switch (item.type) {
-    //         case "path":
-    //             return;//this._onDropPathItem(event, itemData);
-    //         case "capacity":
-    //             return this._onDropCapacityItem(item);
-    //         case "profile":
-    //         case "species":
-    //         default:
-    //             return false;
-    //     }
-    // }
+     async _onDropItem(event, data) {
+         if (!this.item.isOwner) return false;
+         const item = await Item.implementation.fromDropData(data);
+         //const itemData = item.toObject();
+    
+         // Handle item sorting within the same Actor
+         // if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, itemData);
+    
+         // Create the owned item
+         // return this._onDropItemCreate(itemData);
+         switch (item.type) {
+            case ITEM_TYPE.TRAIT:
+                return this._onDropTraitItem(item);
+            case ITEM_TYPE.PATH:
+                 return;//this._onDropPathItem(event, itemData);
+             case ITEM_TYPE.CAPACITY:
+                 //return this._onDropCapacityItem(item);
+             case ITEM_TYPE.PROFILE:
+             default:
+                 return false;
+         }
+     }
+     
+     _onDropTraitItem(item) {
+        const itemData = item.toObject();
+        itemData = itemData instanceof Array ? itemData : [itemData];
+        return this.actor.createEmbeddedDocuments("Item", itemData);
+     }
 
     /**
      *
