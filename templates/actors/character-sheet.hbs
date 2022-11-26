@@ -5,10 +5,9 @@
             <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
         </div>
         <ul class="features">
-            <li class="featured-item">Humain</li>
-            <li class="featured-item">Aventurier</li>
-            <li class="featured-item">Monture</li>
-            <li class="featured-item">Résistant</li>
+            {{#each traits as |trait id|}}
+                <li class="featured-item" data-item-id="{{trait._id}}">{{trait.name}}</li>
+            {{/each}}       
         </ul>
     </div>
     <div class="main flexcol">

@@ -31,7 +31,6 @@ export class Modifiers {
     return result;
   }
 
-  // Modifiers :
   /**
    *
    * @param {*} modifiers array of Modifier
