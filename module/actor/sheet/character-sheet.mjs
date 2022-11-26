@@ -24,8 +24,8 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     context.details = this.actor.system.details;
     // context.paths = context.items.filter((item) => item.type === ITEM_TYPE.PATH);
     // context.profile = context.items.find((item) => item.type === ITEM_TYPE.PROFILE);
-    // context.capacities = context.items.filter((item) => item.type === ITEM_TYPE.CAPACITY);
-    // context.traits = context.items.filter((item) => item.type === ITEM_TYPE.TRAIT);
+    context.capacities = context.items.filter((item) => item.type === ITEM_TYPE.CAPACITY);
+    context.traits = context.items.filter((item) => item.type === ITEM_TYPE.TRAIT);
     // context.features = context.items.filter((item) => item.type === ITEM_TYPE.FEATURE);
     return context;
   }

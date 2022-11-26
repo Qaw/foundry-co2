@@ -55,14 +55,15 @@ export class CoSkillCheck extends CoRoll {
                         submit: {
                             icon: '<i class="fas fa-check"></i>',
                             label: game.i18n.localize("CO.ui.submit"),
-                            callback: (html) => {
+                            callback: async (html) => {
                                 const dice = html.find("#dice").val();
                                 const difficulty = html.find('#difficulty').val();
                                 const critrange = html.find('input#critrange').val();
                                 const mod = html.find('input#mod').val();
                                 const bonus = html.find('input#bonus').val();
                                 const malus = html.find('input#malus').val();
-                                this.roll(actor, rollingLabel, dice, mod, bonus, malus, difficulty, critrange);
+                                let roll = await this.roll(actor, rollingLabel, dice, mod, bonus, malus, difficulty, critrange);
+                                await this.chat(actor, roll);
                             }
                         }
                     },
@@ -76,12 +77,12 @@ export class CoSkillCheck extends CoRoll {
 
     roll(actor, label, dice, mod, bonus, malus, difficulty, critrange){
         let r = new CoSkillRoll(label, dice, mod, bonus, malus, difficulty, critrange);
-        r.roll(actor);
+        return r.roll(actor);
     }
 
-    chat(){
-        const rollMessageTpl = 'systems/co/templates/chat/skillcheck-card.hbs';
-        const tplData = {
+    async chat(actor, roll){
+        //const rollMessageTpl = 'systems/co/templates/chat/skillcheck-card.hbs';
+        //const tplData = {
             // label : this._label,
             // difficulty : this._difficulty,
             // showDifficulty : !!this._difficulty,
@@ -91,9 +92,21 @@ export class CoSkillCheck extends CoRoll {
             // isFailure : !this._isSuccess,
             // hasDescription : this._description && this._description.length > 0,
             // description : this._description
-        };
-        return renderTemplate(rollMessageTpl, tplData);
-
+        //};
+        //return renderTemplate(rollMessageTpl, tplData);
+        await new CoChat(actor)
+            .withTemplate('systems/co/templates/chat/skillcheck-card.hbs')
+            .withData({
+                label : roll._label,
+                difficulty : roll._difficulty,
+                showDifficulty : !!roll._difficulty,
+                isCritical : roll._isCritical,
+                isFumble : roll._isFumble,
+                isSuccess : roll._isSuccess,
+                isFailure : !roll._isSuccess
+            })
+            .withRoll(roll)
+            .create();
     }
 }
 
@@ -147,6 +160,7 @@ export class CoSkillRoll {
             this._isSuccess = r.total >= this._difficulty;
         }
 
+        /*
         let chatMessage = await new CoChat(actor)
             .withTemplate('systems/co/templates/chat/skillcheck-card.hbs')
             .withData({
@@ -160,6 +174,7 @@ export class CoSkillRoll {
             })
             .withRoll(r)
             .create();
+            */
 
         return r;
     }

@@ -1,0 +1,40 @@
+<div class="items-container">
+  {{log "items" this}}
+
+  <h1 class="field-label header">Les traits</h1>
+  <!--
+        <div class="cell">
+            <span class="field-label header">{{ localize "CO.label.short.stat" }}</span>
+        </div>
+        <div class="cell">
+            <span class="field-label header">{{ localize "CO.label.short.base" }}</span>
+        </div>
+        <div class="cell">
+            <span class="field-label header">{{ localize "CO.label.short.bonus" }}</span>
+        </div>
+        <div class="cell">
+            <span class="field-label header">{{ localize "CO.label.short.value" }}</span>
+        </div>
+        <div class="cell">
+            <span class="field-label header">{{ localize "CO.label.short.mod" }}</span>
+        </div>
+        <div class="cell"></div>-->
+
+  {{#each traits as |trait id|}}
+    {{log (concat "Chroniques Oubliées | " id) trait}}
+    <div class="cell item" data-item-id="{{trait._id}}"">
+      <span class="field-value">{{trait.name}}</span>
+      <span class="item-delete"><i class="fas fa-trash"></i></span>
+    </div>
+  {{/each}}
+
+  <h1 class="field-label header">Les capacités</h1>
+
+  {{#each capacities as |capacity id|}}
+    {{log (concat "Chroniques Oubliées | " id) capacity}}
+    <div class="cell item" data-item-id="{{capacity._id}}">
+      <span class="field-value">{{capacity.name}}</span>
+      <span class="item-delete"><i class="fas fa-trash"></i></span>
+    </div>
+  {{/each}}
+</div>

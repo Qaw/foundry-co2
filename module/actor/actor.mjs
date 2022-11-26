@@ -1,6 +1,6 @@
 import { Stats } from "../system/stats.mjs";
 import { COMBAT, ITEM_TYPE, MODIFIER_SUBTYPE, MODIFIER_TYPE } from "../system/constants.mjs";
-import { Modifiers } from "../system/modifiers.mjs"
+import { Modifiers } from "../system/modifiers.mjs";
 
 /**
  * Extend the base Actor entity
@@ -28,25 +28,24 @@ export default class CoActor extends Actor {
 
   /** @override */
   _prepareCharacterDerivedData() {
-
     for (const [key, ability] of Object.entries(this.system.abilities)) {
       // Log.debug(ability);
       const bonuses = Object.values(ability.bonuses).reduce((prev, curr) => prev + curr);
-      const abilityModifiers =  Modifiers.computeTotalModifiersByTarget(this, this.abilitiesModifiers, key);
+      const abilityModifiers = Modifiers.computeTotalModifiersByTarget(this, this.abilitiesModifiers, key);
 
       ability.value = ability.base + bonuses + abilityModifiers;
-      ability.tooltip = Modifiers.getTooltipModifiersByTarget(this.abilitiesModifiers, key);      
+      ability.tooltip = Modifiers.getTooltipModifiersByTarget(this.abilitiesModifiers, key);
 
       ability.mod = Stats.getModFromValue(ability.value);
     }
 
     for (const [key, skill] of Object.entries(this.system.combat)) {
       // Log.debug(skill);
-      const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr)
-      const abilityBonus = (skill.ability && this.system.abilities[skill.ability].mod) ? this.system.abilities[skill.ability].mod : 0;
+      const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr);
+      const abilityBonus = skill.ability && this.system.abilities[skill.ability].mod ? this.system.abilities[skill.ability].mod : 0;
 
-      if ([COMBAT.MELEE, COMBAT.RANGED, COMBAT.MAGIC].includes(key)){
-        const levelBonus = (this.system.attributes.level.value ? this.system.attributes.level.value : 0);
+      if ([COMBAT.MELEE, COMBAT.RANGED, COMBAT.MAGIC].includes(key)) {
+        const levelBonus = this.system.attributes.level.value ? this.system.attributes.level.value : 0;
         const combatModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
         // skill.value = skill.base + abilityBonus + levelBonus;
         skill.base = abilityBonus + levelBonus;
@@ -61,7 +60,7 @@ export default class CoActor extends Actor {
       }
 
       if (key === COMBAT.INIT) {
-        const abilityValue = (skill.ability && this.system.abilities[skill.ability].value) ? this.system.abilities[skill.ability].value : 0;
+        const abilityValue = skill.ability && this.system.abilities[skill.ability].value ? this.system.abilities[skill.ability].value : 0;
         const initModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
         skill.base = abilityValue;
         skill.value = skill.base + bonuses + initModifiers;
@@ -82,8 +81,7 @@ export default class CoActor extends Actor {
    * @returns {Modifier[]} All the modifiers from Items of type Trait, Path or Capacity
    */
   get abilitiesModifiers() {
-   
-    let modifiers = []
+    let modifiers = [];
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.ABILITY));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.paths, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.ABILITY));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.ABILITY));
@@ -96,11 +94,10 @@ export default class CoActor extends Actor {
   }
 
   /**
- * @returns {Modifier[]} All the modifiers from Items of type Trait, Path or Capacity
- */
-    get combatModifiers() {
-  
-    let modifiers = []
+   * @returns {Modifier[]} All the modifiers from Items of type Trait, Path or Capacity
+   */
+  get combatModifiers() {
+    let modifiers = [];
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.COMBAT));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.paths, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.COMBAT));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.COMBAT));
@@ -115,21 +112,21 @@ export default class CoActor extends Actor {
   // Returns items
   get traits() {
     if (this.items.size == 0) return [];
-    return this.items.filter(item => item.type == ITEM_TYPE.TRAIT);
+    return this.items.filter((item) => item.type == ITEM_TYPE.TRAIT);
   }
 
   get paths() {
     if (this.items.size == 0) return [];
-    return this.items.filter(item => item.type == ITEM_TYPE.PATH);
+    return this.items.filter((item) => item.type == ITEM_TYPE.PATH);
   }
 
   get capacities() {
     if (this.items.size == 0) return [];
-    return this.items.filter(item => item.type == ITEM_TYPE.CAPACITY);
+    return this.items.filter((item) => item.type == ITEM_TYPE.CAPACITY);
   }
 
   getEmbeddedItemByKey(key) {
-    return this.items.find(item => item.system.key == key);
+    return this.items.find((item) => item.system.key == key);
   }
 
   // toggleCapacity(pathId, capacityKey, status) {
@@ -199,4 +196,14 @@ export default class CoActor extends Actor {
   //       }
   //   }
   // }
+  deleteItem(itemId) {
+    const item = this.items.find((item) => item.id === itemId);
+
+    switch (item.type) {
+      case ITEM_TYPE.TRAIT:
+        return this.deleteEmbeddedDocuments("Item", [itemId]);
+      case ITEM_TYPE.CAPACITY:
+        return this.deleteEmbeddedDocuments("Item", [itemId]);
+    }
+  }
 }
