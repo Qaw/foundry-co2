@@ -34,7 +34,7 @@ export default class CoActor extends Actor {
       const abilityModifiers = Modifiers.computeTotalModifiersByTarget(this, this.abilitiesModifiers, key);
 
       ability.value = ability.base + bonuses + abilityModifiers;
-      ability.tooltip = Modifiers.getTooltipModifiersByTarget(this.abilitiesModifiers, key);
+      ability.tooltip = Modifiers.getTooltipModifiersByTarget(this, this.abilitiesModifiers, key);
 
       ability.mod = Stats.getModFromValue(ability.value);
     }
@@ -50,13 +50,13 @@ export default class CoActor extends Actor {
         // skill.value = skill.base + abilityBonus + levelBonus;
         skill.base = abilityBonus + levelBonus;
         skill.mod = skill.base + bonuses + combatModifiers;
-        skill.tooltip = Modifiers.getTooltipModifiersByTarget(this.combatModifiers, key);
+        skill.tooltip = Modifiers.getTooltipModifiersByTarget(this, this.combatModifiers, key);
       }
 
       if (key === COMBAT.DEF) {
         const defModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
         skill.value = skill.base + abilityBonus + bonuses + defModifiers;
-        skill.tooltip = Modifiers.getTooltipModifiersByTarget(this.combatModifiers, key);
+        skill.tooltip = Modifiers.getTooltipModifiersByTarget(this, this.combatModifiers, key);
       }
 
       if (key === COMBAT.INIT) {
@@ -64,7 +64,7 @@ export default class CoActor extends Actor {
         const initModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
         skill.base = abilityValue;
         skill.value = skill.base + bonuses + initModifiers;
-        skill.tooltip = Modifiers.getTooltipModifiersByTarget(this.combatModifiers, key);
+        skill.tooltip = Modifiers.getTooltipModifiersByTarget(this, this.combatModifiers, key);
       }
     }
   }

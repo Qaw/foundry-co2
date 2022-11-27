@@ -81,19 +81,6 @@ export class CoSkillCheck extends CoRoll {
     }
 
     async chat(actor, roll){
-        //const rollMessageTpl = 'systems/co/templates/chat/skillcheck-card.hbs';
-        //const tplData = {
-            // label : this._label,
-            // difficulty : this._difficulty,
-            // showDifficulty : !!this._difficulty,
-            // isCritical : this._isCritical,
-            // isFumble : this._isFumble,
-            // isSuccess : this._isSuccess,
-            // isFailure : !this._isSuccess,
-            // hasDescription : this._description && this._description.length > 0,
-            // description : this._description
-        //};
-        //return renderTemplate(rollMessageTpl, tplData);
         await new CoChat(actor)
             .withTemplate('systems/co/templates/chat/skillcheck-card.hbs')
             .withData({
@@ -105,7 +92,7 @@ export class CoSkillCheck extends CoRoll {
                 isSuccess : roll._isSuccess,
                 isFailure : !roll._isSuccess
             })
-            .withRoll(roll)
+            .withRoll(roll._roll)
             .create();
     }
 }
@@ -142,6 +129,7 @@ export class CoSkillRoll {
         this._isCritical = false;
         this._isFumble = false;
         this._isSuccess = false;
+        this._roll = null;
     }
 
     /**
@@ -159,24 +147,8 @@ export class CoSkillRoll {
         if(this._difficulty){
             this._isSuccess = r.total >= this._difficulty;
         }
-
-        /*
-        let chatMessage = await new CoChat(actor)
-            .withTemplate('systems/co/templates/chat/skillcheck-card.hbs')
-            .withData({
-                label : this._label,
-                difficulty : this._difficulty,
-                showDifficulty : !!this._difficulty,
-                isCritical : this._isCritical,
-                isFumble : this._isFumble,
-                isSuccess : this._isSuccess,
-                isFailure : !this._isSuccess
-            })
-            .withRoll(r)
-            .create();
-            */
-
-        return r;
+        this._roll = r;
+        return this;
     }
 
     /**

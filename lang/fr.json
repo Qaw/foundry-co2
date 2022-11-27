@@ -145,6 +145,7 @@
       "skillCheck": "Test de compétence"
     },
     "roll": {
+      "skillcheck": "Test de compétence",
       "critical": "Succès critique",
       "success": "Succès",
       "fumble": "Échec critique",
