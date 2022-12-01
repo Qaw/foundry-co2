@@ -67,9 +67,9 @@
             </div>
             <div class="cell">
                 {{#if field.mod}}
-                    <input class="field-value" name="system.combat.{{id}}.base" type="string" value="{{numberFormat field.base decimals=0 sign=true}}" data-dtype="Number"/>
+                    <input class="field-value" name="system.combat.{{id}}.base" readonly="true" type="string" value="{{numberFormat field.base decimals=0 sign=true}}" data-dtype="Number" data-tooltip="{{field.tooltipBase}}"/>
                 {{else}}
-                    <input class="field-value" name="system.combat.{{id}}.base" type="string" value="{{field.base}}" data-dtype="Number"/>
+                    <input class="field-value" name="system.combat.{{id}}.base" readonly="true" type="string" value="{{field.base}}" data-dtype="Number" data-tooltip="{{field.tooltipBase}}"/>
                 {{/if}}
             </div>
             <div class="cell">
@@ -77,12 +77,12 @@
             </div>
             <div class="cell readonly">
                 {{#if field.value}}
-                    <input class="field-value" name="system.combat.{{id}}.value" readonly="true" type="string" value="{{field.value}}" data-dtype="Number" data-tooltip="{{field.tooltip}}"/>
+                    <input class="field-value" name="system.combat.{{id}}.value" readonly="true" type="string" value="{{field.value}}" data-dtype="Number" data-tooltip="{{field.tooltipValue}}"/>
                 {{/if}}
             </div>
             <div class="cell readonly">
                 {{#if field.mod}}
-                    <input class="field-value" name="system.combat.{{id}}.mod" readonly="true" type="string" value="{{numberFormat field.mod decimals=0 sign=true}}" data-dtype="Number"/>
+                    <input class="field-value" name="system.combat.{{id}}.mod" readonly="true" type="string" value="{{numberFormat field.mod decimals=0 sign=true}}" data-dtype="Number" data-tooltip="{{field.tooltipMod}}"/>
                 {{/if}}
             </div>
             <div class="cell">

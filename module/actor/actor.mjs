@@ -1,7 +1,8 @@
 import { Stats } from "../system/stats.mjs";
-import { ATTRIBUTE, COMBAT, ITEM_TYPE, MODIFIER_SUBTYPE, MODIFIER_TYPE } from "../system/constants.mjs";
+import { ATTRIBUTE, COMBAT, EQUIPMENT_SUBTYPE, ITEM_TYPE, MODIFIER_SUBTYPE, MODIFIER_TYPE } from "../system/constants.mjs";
 import { Modifiers } from "../system/modifiers.mjs";
 import { Log } from "../utils/log.mjs";
+import { Utils } from "../system/utils.mjs";
 
 /**
  * Extend the base Actor entity
@@ -34,8 +35,8 @@ export default class CoActor extends Actor {
       const bonuses = Object.values(ability.bonuses).reduce((prev, curr) => prev + curr);
       const abilityModifiers = Modifiers.computeTotalModifiersByTarget(this, this.abilitiesModifiers, key);
 
-      ability.value = ability.base + bonuses + abilityModifiers;
-      ability.tooltip = Modifiers.getTooltipModifiersByTarget(this, this.abilitiesModifiers, key);
+      ability.value = ability.base + bonuses + abilityModifiers.total;
+      ability.tooltip = abilityModifiers.tooltip;
 
       ability.mod = Stats.getModFromValue(ability.value);
     }
@@ -50,14 +51,9 @@ export default class CoActor extends Actor {
         const combatModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
         // skill.value = skill.base + abilityBonus + levelBonus;
         skill.base = abilityBonus + levelBonus;
-        skill.mod = skill.base + bonuses + combatModifiers;
-        skill.tooltip = Modifiers.getTooltipModifiersByTarget(this, this.combatModifiers, key);
-      }
-
-      if (key === COMBAT.DEF) {
-        const defModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
-        skill.value = skill.base + abilityBonus + bonuses + defModifiers;
-        skill.tooltip = Modifiers.getTooltipModifiersByTarget(this, this.combatModifiers, key);
+        skill.tooltipBase = Utils.getTooltip(game.i18n.localize('CO.label.long.level'),levelBonus) + Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus);
+        skill.mod = skill.base + bonuses + combatModifiers.total;
+        skill.tooltipMod = combatModifiers.tooltip;
       }
 
       if (key === COMBAT.INIT) {
@@ -65,16 +61,27 @@ export default class CoActor extends Actor {
         const initModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
         const malus = this.getMalusToInitiative();
         skill.base = abilityValue;
-        skill.value = skill.base + bonuses + initModifiers + malus;
-        skill.tooltip = Modifiers.getTooltipModifiersByTarget(this, this.combatModifiers, key);
+        skill.value = skill.base + bonuses + initModifiers.total + malus;
+        skill.tooltipBase = Utils.getTooltip(Utils.getAbilityName(skill.ability),abilityValue);
+        skill.tooltipValue = initModifiers.tooltip;
       }
+
+      if (key === COMBAT.DEF) {
+        const defModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
+        const protection = this.getDefenceFromArmorAndShield();
+        skill.base = 10 + abilityBonus;
+        skill.value = skill.base + bonuses + defModifiers.total + protection;
+        skill.tooltipBase  = Utils.getTooltip("Base", 10) + Utils.getTooltip(Utils.getAbilityName(skill.ability),abilityBonus);
+        skill.tooltipValue = defModifiers.tooltip;
+      }
+
     }
 
     // HP Max
     const hpMaxBonuses = Object.values(this.system.attributes.hp.bonuses).reduce((prev, curr) => prev + curr);
     const hpMaxModifiers = Modifiers.computeTotalModifiersByTarget(this, this.attributeModifiers, ATTRIBUTE.HP);
-    this.system.attributes.hp.max = this.system.attributes.hp.base + hpMaxBonuses + hpMaxModifiers;
-    this.system.attributes.hp.tooltip = "Base : " + this.system.attributes.hp.base + " " + Modifiers.getTooltipModifiersByTarget(this, this.attributeModifiers, ATTRIBUTE.HP);
+    this.system.attributes.hp.max = this.system.attributes.hp.base + hpMaxBonuses + hpMaxModifiers.total;
+    this.system.attributes.hp.tooltip = Utils.getTooltip("Base",this.system.attributes.hp.base) + hpMaxModifiers.tooltip;
   }
 
   /**
@@ -133,20 +140,32 @@ export default class CoActor extends Actor {
     return modifiers;
   }
 
-  // Returns items
   get traits() {
-    if (this.items.size == 0) return [];
     return this.items.filter((item) => item.type == ITEM_TYPE.TRAIT);
   }
 
   get paths() {
-    if (this.items.size == 0) return [];
     return this.items.filter((item) => item.type == ITEM_TYPE.PATH);
   }
 
   get capacities() {
-    if (this.items.size == 0) return [];
     return this.items.filter((item) => item.type == ITEM_TYPE.CAPACITY);
+  }
+
+  get armors() {
+    return this.items.filter((item) => item.type == ITEM_TYPE.EQUIPMENT && item.system.subtype == EQUIPMENT_SUBTYPE.ARMOR);
+  }
+
+  get shields() {
+    return this.items.filter((item) => item.type == ITEM_TYPE.EQUIPMENT && item.system.subtype == EQUIPMENT_SUBTYPE.SHIELD);
+  }
+
+  get equippedArmors() {
+    return this.armors.filter((item) => item.system.equipped);
+  }
+
+  get equippedShields() {
+    return this.shields.filter((item) => item.system.equipped);
   }
 
   getEmbeddedItemByKey(key) {
@@ -186,6 +205,38 @@ export default class CoActor extends Actor {
     return 0;
   }
 
+  /**
+   * @name getDefenceFromArmorAndShield
+   * @description calcule la défense de l'armure et du bouclier équipés
+   * @returns {Int} la somme des DEF
+   */
+  getDefenceFromArmorAndShield() {
+    return this.getDefenceFromArmor() + this.getDefenceFromShield();
+  }
+
+  /**
+   * @name getDefenceFromArmor
+   * @description calcule la défense de l'armure équipée
+   * @returns {Int} la valeur de défense
+   */
+  getDefenceFromArmor() {
+    let protections = this.equippedArmors.map((i) => i.system.def);
+    return this._addAllValues(protections);
+  }
+
+  /**
+   * @name getDefenceFromShield
+   * @description calcule la défense du bouclier équipé
+   * @returns {Int} la valeur de défense
+   */
+  getDefenceFromShield() {
+    let protections = this.equippedShields.map((i) => i.system.def);
+    return this._addAllValues(protections);
+  }
+
+  _addAllValues(array) {
+    return array.length > 0 ? array.reduce((acc, curr) => acc + curr, 0) : 0;
+  }
   // toggleCapacity(pathId, capacityKey, status) {
   //   const path = this.items.get(pathId);
   //   let capacities = duplicate(path.system.capacities);
@@ -253,6 +304,7 @@ export default class CoActor extends Actor {
   //       }
   //   }
   // }
+
   deleteItem(itemId) {
     const item = this.items.find((item) => item.id === itemId);
 

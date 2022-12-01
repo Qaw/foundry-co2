@@ -1,4 +1,5 @@
 import { MODIFIER_SUBTYPE, MODIFIER_TARGET, MODIFIER_TYPE } from "./constants.mjs";
+import { Utils } from "./utils.mjs";
 
 export class Modifiers {
   /**
@@ -38,38 +39,20 @@ export class Modifiers {
    * @returns the sum of the modifier value for each Modifier
    */
   static computeTotalModifiersByTarget(actor, modifiers, target) {
-    if (!modifiers) return 0;
-    let total = modifiers
-      .filter((m) => m.target === target)
-      .map((i) => i.evaluate(actor))
-      .reduce((acc, curr) => acc + curr, 0);
-    return total;
-  }
-
-  /**
-   * 
-   * @param {*} actor 
-   * @param {*} modifiers array of Modifier objects
-   * @param {MODIFIER_TARGET} target 
-   * @returns the tooltip which aggregates all modifiers if the value is > 0
-   */
-  static getTooltipModifiersByTarget(actor, modifiers, target) {
-    if (!modifiers) return "";
+    if (!modifiers) return {total: 0, tooltip: ""};
     let modifiersByTarget = modifiers.filter((m) => m.target === target);
+
+    let total = modifiersByTarget.map((i) => i.evaluate(actor))
+      .reduce((acc, curr) => acc + curr, 0);
+
     let tooltip = "";
     modifiersByTarget.forEach((modifier) => {
-
-      /*let name = this._getNameBySource(element);
-      if (name !== "" && element.evaluate(actor) > 0) {
-        tooltip += name + " : " + element.evaluate(actor) + " ";
-      }*/
       let partialTooltip = modifier.getTooltip(actor);
       if (partialTooltip !== null) tooltip += partialTooltip;
     });
-    return tooltip;
-  }
 
-  
+    return {total: total, tooltip: tooltip};
+  }  
 }
 
 export class Modifier {
@@ -136,10 +119,8 @@ export class Modifier {
   getTooltip(actor) {
     let name = this._getNameBySource();
     let value = this.evaluate(actor);
-    if (name !== "" &&  value > 0) {
-      return name + " : " + value + " ";
-    }
-    return null;
+
+    return Utils.getTooltip(name, value);
   }
 
   /**
