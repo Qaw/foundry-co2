@@ -1,6 +1,7 @@
 import { Stats } from "../system/stats.mjs";
-import { COMBAT, ITEM_TYPE, MODIFIER_SUBTYPE, MODIFIER_TYPE } from "../system/constants.mjs";
+import { ATTRIBUTE, COMBAT, ITEM_TYPE, MODIFIER_SUBTYPE, MODIFIER_TYPE } from "../system/constants.mjs";
 import { Modifiers } from "../system/modifiers.mjs";
+import { Log } from "../utils/log.mjs";
 
 /**
  * Extend the base Actor entity
@@ -62,11 +63,18 @@ export default class CoActor extends Actor {
       if (key === COMBAT.INIT) {
         const abilityValue = skill.ability && this.system.abilities[skill.ability].value ? this.system.abilities[skill.ability].value : 0;
         const initModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
+        const malus = this.getMalusToInitiative();
         skill.base = abilityValue;
-        skill.value = skill.base + bonuses + initModifiers;
+        skill.value = skill.base + bonuses + initModifiers + malus;
         skill.tooltip = Modifiers.getTooltipModifiersByTarget(this, this.combatModifiers, key);
       }
     }
+
+    // HP Max
+    const hpMaxBonuses = Object.values(this.system.attributes.hp.bonuses).reduce((prev, curr) => prev + curr);
+    const hpMaxModifiers = Modifiers.computeTotalModifiersByTarget(this, this.attributeModifiers, ATTRIBUTE.HP);
+    this.system.attributes.hp.max = this.system.attributes.hp.base + hpMaxBonuses + hpMaxModifiers;
+    this.system.attributes.hp.tooltip = "Base : " + this.system.attributes.hp.base + " " + Modifiers.getTooltipModifiersByTarget(this, this.attributeModifiers, ATTRIBUTE.HP);
   }
 
   /**
@@ -109,6 +117,22 @@ export default class CoActor extends Actor {
     return modifiers;
   }
 
+  /**
+   * @returns {Modifier[]} All the modifiers from Items of type Trait, Path or Capacity
+   */
+  get attributeModifiers() {
+    let modifiers = [];
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.ATTRIBUTE));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.paths, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.ATTRIBUTE));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.ATTRIBUTE));
+
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ATTRIBUTE));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.paths, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ATTRIBUTE));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ATTRIBUTE));
+
+    return modifiers;
+  }
+
   // Returns items
   get traits() {
     if (this.items.size == 0) return [];
@@ -127,6 +151,39 @@ export default class CoActor extends Actor {
 
   getEmbeddedItemByKey(key) {
     return this.items.find((item) => item.system.key == key);
+  }
+
+  /**
+   * @name getMalusToInitiative
+   * @description Retourne le malus à l'initiative lié à l'armure et à l'incompétence armes/armures
+   * @public
+   *
+   * @returns {int} retourne le malus (négatif) ou 0
+   */
+  getMalusToInitiative() {
+    return this.getOverloadMalusToInitiative() + this.getIncompetentMalusToInitiative();
+  }
+
+  /**
+   * @name getOverloadMalusToInitiative
+   * @description Retourne le malus à l'initiative lié à l'armure
+   * @public
+   *
+   * @returns {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
+   */
+  getOverloadMalusToInitiative() {
+    return 0;
+  }
+
+  /**
+   * @name getIncompetentMalusToInitiative
+   * @description Retourne le malus à l'initiative lié à l'incompétence armes/armures
+   * @public
+   *
+   * @returns {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
+   */
+  getIncompetentMalusToInitiative() {
+    return 0;
   }
 
   // toggleCapacity(pathId, capacityKey, status) {

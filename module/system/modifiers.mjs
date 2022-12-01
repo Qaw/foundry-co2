@@ -111,20 +111,24 @@ export class Modifier {
   _evaluateCustom(actor) {
     let value = 0;
     if (!this.value.includes("@")) return value;
-    // @levek
+    // @level
     if (this.value.includes("@level")) {
       let formula = this.value.replace("@level", actor.system.attributes.level.value);
       value += eval(formula);
     }
-    // @rank
-    if (this.value.includes("@rank")){
-      // @rank{+1,0,+1,0,0}
+    // @rank{+1,0,+1,0,0}
+    if (this.value.includes("@rank")){     
       let startRank = this.value.substring(this.value.indexOf("@rank"));
       let extract = startRank.substring(this.value.indexOf("{") +1, this.value.indexOf("}"));
       let ranks = extract.split(',');
       let itemSource = fromUuidSync(this.source);
       let rank = itemSource.system.rank;
-      value = parseInt(ranks[rank-1]);
+      value += parseInt(ranks[rank-1]);
+    }
+    // @mod{str}
+    if (this.value.includes("@mod")){
+      let ability = this.value.substring(this.value.indexOf("{") +1, this.value.indexOf("}"));
+      value += eval ('actor.system.abilities.' + ability + '.mod');
     }
     return value;
   }
@@ -144,8 +148,7 @@ export class Modifier {
    */
   _getNameBySource() {
     const item = this._getItemFromSource();
-    if (item) return item.name;
-    return "";
+    return item ? item.name : "";
   }
 
   _getItemFromSource() { 

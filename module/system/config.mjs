@@ -35,6 +35,7 @@ CO.ASCII = `
       ranged: "CO.combat.long.ranged",
       magic: "CO.combat.long.magic",
       init: "CO.combat.long.init",
-      def: "CO.combat.long.def"
+      def: "CO.combat.long.def",
+      hp: "CO.label.long.hp"
    }
  }

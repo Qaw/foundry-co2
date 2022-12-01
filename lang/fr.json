@@ -52,7 +52,8 @@
         "delete": "Supprimer",
         "difficulty": "Difficulté",
         "effects": "Effets",
-        "properties": "Propriétés"
+        "properties": "Propriétés",
+        "hp": "Points de vie"
       },
       "short": {
         "stat": "Carac.",
@@ -76,7 +77,8 @@
         "delete": "Suppr.",
         "difficulty": "Diff.",
         "effects": "FX",
-        "properties": "Props"
+        "properties": "Props",
+        "hp": "PV"
       }
     },
     "ui": {

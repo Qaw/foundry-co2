@@ -26,7 +26,8 @@ export const MODIFIER_TARGET = {
     RANGED: 'ranged',
     MAGIC: 'magic',
     INIT: 'init',
-    DEF: 'def'
+    DEF: 'def',
+    HP: 'hp'
 };
 
 export const COMBAT = {
@@ -35,7 +36,11 @@ export const COMBAT = {
     MAGIC: 'magic',
     INIT: 'init',
     DEF: 'def'
-}
+};
+
+export const ATTRIBUTE = {
+    HP: 'hp'
+};
 
 export const MAGIC_ATTACK_TYPE = {
     INT: "int",

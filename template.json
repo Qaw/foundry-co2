@@ -86,8 +86,7 @@
             "max": 0,
             "temp": null,
             "tempmax": null
-          },
-          "size": "medium",
+          },          
           "movement": {
             "value": 10,
             "units": "m"
@@ -164,6 +163,7 @@
             "private": "",
             "public": ""
           },
+          "size": "medium",
           "languages": ""
         }
       }
