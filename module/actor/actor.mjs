@@ -68,10 +68,15 @@ export default class CoActor extends Actor {
 
       if (key === COMBAT.DEF) {
         const defModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
-        const protection = this.getDefenceFromArmorAndShield();
-        skill.base = 10 + abilityBonus;
+        const protection = this.getDefenceFromArmorAndShield();        
+        
+        skill.base = game.settings.get("co", "baseDef")
+        skill.tooltipBase = Utils.getTooltip("Base", skill.base);
+        
+        skill.base += abilityBonus;
+        skill.tooltipBase += Utils.getTooltip(Utils.getAbilityName(skill.ability),abilityBonus);
+
         skill.value = skill.base + bonuses + defModifiers.total + protection;
-        skill.tooltipBase  = Utils.getTooltip("Base", 10) + Utils.getTooltip(Utils.getAbilityName(skill.ability),abilityBonus);
         skill.tooltipValue = defModifiers.tooltip;
       }
 

@@ -8,6 +8,7 @@ import { CoItem } from './item/item.mjs';
 import { registerHandlebarsHelpers } from './ui/helpers.mjs';
 import {Log} from "./utils/log.mjs";
 import { Modifier } from './system/modifiers.mjs';
+import { registerSystemSettings } from './system/settings.js';
 
 Hooks.once("init", async function () {
 
@@ -22,10 +23,6 @@ Hooks.once("init", async function () {
         Modifier: Modifier,
         config: CO
     }
-    // CONFIG.Item.systemDataModels["specie"] = SpecieModel;
-    // CONFIG.Item.systemDataModels["profile"] = ProfileModel;
-    // CONFIG.Item.systemDataModels["path"] = PathModel;
-    // CONFIG.Item.systemDataModels["capacity"] = CapacityModel;
 
     // Unregister legacy sheets
     Actors.unregisterSheet("core", ActorSheet);
@@ -45,6 +42,9 @@ Hooks.once("init", async function () {
 
     // Register Handlebars helpers
     registerHandlebarsHelpers();
+
+    // Register System Settings
+	registerSystemSettings();
 });
 
 Hooks.once("ready", async function () {

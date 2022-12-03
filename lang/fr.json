@@ -165,5 +165,9 @@
         "attribute": "Attribut"
       }
     }
+  },
+  "SETTINGS": {
+    "BaseDef": "Valeur de défense de base",
+    "BaseDefHint": "Valeur de la base de la défense"
   }
 }

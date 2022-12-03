@@ -11,20 +11,6 @@ export class Modifiers {
    */
   static getModifiersByTypeSubtype(items, type, subtype) {
     if (items.size == 0) return [];
-
-    /* FIXME Je repasse par un état intermeédiaire parce que via macro je n'avais plus un Array de Modifier mais un Array de Object, et donc l'appel à evaluate() merdait plus loin
-    let modifiers = [];
-    let newMod = [];
-    
-    items.forEach(element => {
-        newMod.push(...element.modifiers.filter(m => m.type === type && m.subtype === subtype));
-     });
-     newMod.forEach(element => {
-       let elt = new Modifier(element.type, element.subtype, element.source, element.target, element.value);
-       modifiers.push(elt);
-     });
-     return modifiers;
-     */
     let result = items
       .reduce((mods, item) => mods.concat(item.modifiers), [])
       .filter((m) => m.type === type && m.subtype === subtype)
