@@ -51,7 +51,7 @@ export default class CoActor extends Actor {
         const combatModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
         // skill.value = skill.base + abilityBonus + levelBonus;
         skill.base = abilityBonus + levelBonus;
-        skill.tooltipBase = Utils.getTooltip(game.i18n.localize('CO.label.long.level'),levelBonus) + Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus);
+        skill.tooltipBase = Utils.getTooltip(game.i18n.localize("CO.label.long.level"), levelBonus) + Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus);
         skill.mod = skill.base + bonuses + combatModifiers.total;
         skill.tooltipMod = combatModifiers.tooltip;
       }
@@ -62,31 +62,30 @@ export default class CoActor extends Actor {
         const malus = this.getMalusToInitiative();
         skill.base = abilityValue;
         skill.value = skill.base + bonuses + initModifiers.total + malus;
-        skill.tooltipBase = Utils.getTooltip(Utils.getAbilityName(skill.ability),abilityValue);
+        skill.tooltipBase = Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityValue);
         skill.tooltipValue = initModifiers.tooltip;
       }
 
       if (key === COMBAT.DEF) {
         const defModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
-        const protection = this.getDefenceFromArmorAndShield();        
-        
-        skill.base = game.settings.get("co", "baseDef")
+        const protection = this.getDefenceFromArmorAndShield();
+
+        skill.base = game.settings.get("co", "baseDef");
         skill.tooltipBase = Utils.getTooltip("Base", skill.base);
-        
+
         skill.base += abilityBonus;
-        skill.tooltipBase += Utils.getTooltip(Utils.getAbilityName(skill.ability),abilityBonus);
+        skill.tooltipBase += Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus);
 
         skill.value = skill.base + bonuses + defModifiers.total + protection;
         skill.tooltipValue = defModifiers.tooltip;
       }
-
     }
 
     // HP Max
     const hpMaxBonuses = Object.values(this.system.attributes.hp.bonuses).reduce((prev, curr) => prev + curr);
     const hpMaxModifiers = Modifiers.computeTotalModifiersByTarget(this, this.attributeModifiers, ATTRIBUTE.HP);
     this.system.attributes.hp.max = this.system.attributes.hp.base + hpMaxBonuses + hpMaxModifiers.total;
-    this.system.attributes.hp.tooltip = Utils.getTooltip("Base",this.system.attributes.hp.base) + hpMaxModifiers.tooltip;
+    this.system.attributes.hp.tooltip = Utils.getTooltip("Base", this.system.attributes.hp.base) + hpMaxModifiers.tooltip;
   }
 
   /**
@@ -114,7 +113,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @returns {Modifier[]} All the modifiers from Items of type Trait, Path or Capacity
+   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Combat
    */
   get combatModifiers() {
     let modifiers = [];
@@ -130,7 +129,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @returns {Modifier[]} All the modifiers from Items of type Trait, Path or Capacity
+   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Attribute
    */
   get attributeModifiers() {
     let modifiers = [];
@@ -141,6 +140,22 @@ export default class CoActor extends Actor {
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ATTRIBUTE));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.paths, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ATTRIBUTE));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ATTRIBUTE));
+
+    return modifiers;
+  }
+
+  /**
+ * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Skill
+ */
+    get skillModifiers() {
+    let modifiers = [];
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.SKILL));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.paths, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.SKILL));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.SKILL));
+
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.SKILL));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.paths, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.SKILL));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.SKILL));
 
     return modifiers;
   }
@@ -171,6 +186,20 @@ export default class CoActor extends Actor {
 
   get equippedShields() {
     return this.shields.filter((item) => item.system.equipped);
+  }
+
+  /**
+   * Return all skill modifiers
+   * @param {String} ability str, dex ...
+   * @returns {Object} Name, value, description
+   */
+  getSkillBonuses(ability) {
+    const modifiersByTarget = this.skillModifiers.filter((m) => m.target === ability);
+    let bonuses = [];
+    modifiersByTarget.forEach(modifier => {
+      bonuses.push({name: modifier.sourceName, value: modifier.evaluate(this), description: modifier.sourceDescription});
+    });
+    return bonuses;
   }
 
   getEmbeddedItemByKey(key) {

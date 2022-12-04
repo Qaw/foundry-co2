@@ -22,7 +22,8 @@ CO.ASCII = `
    subtype: {
       ability: "CO.modifier.subtype.ability",
       combat: "CO.modifier.subtype.combat",
-      attribute: "CO.modifier.subtype.attribute"
+      attribute: "CO.modifier.subtype.attribute",
+      skill: "CO.modifier.subtype.skill"
    },
    target: {
       str: "CO.abilities.long.str",

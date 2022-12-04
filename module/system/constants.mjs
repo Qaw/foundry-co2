@@ -12,7 +12,8 @@ export const MODIFIER_TYPE = {
 export const MODIFIER_SUBTYPE = {
     ABILITY: "ability",
     COMBAT: "combat",
-    ATTRIBUTE: "attribute"
+    ATTRIBUTE: "attribute",
+    SKILL: "skill"
 }
 
 export const MODIFIER_TARGET = {

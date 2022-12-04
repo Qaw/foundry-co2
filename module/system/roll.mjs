@@ -19,7 +19,7 @@ export class CoSkillCheck extends CoRoll {
 
     dialog(event, actor, rolling) {
 
-        const rollingSkill = eval("actor."+Utils.shortcutResolve(rolling));
+        const rollingSkill = eval("actor." + Utils.shortcutResolve(rolling));
         let parts = rolling.replace("@", "").split(".");
         const rollingLabel = game.i18n.localize("CO.dialogs.skillCheck") + " - " + game.i18n.localize("CO."+ parts[0] + ".long." + parts[1]);
 
@@ -37,7 +37,8 @@ export class CoSkillCheck extends CoRoll {
             superior : false,
             weakened : false,
             difficulty : 10,
-            showDifficulty : true
+            showDifficulty : true,
+            skillBonuses: actor.getSkillBonuses(parts[1])
         };
 
         return renderTemplate(dialogTpl, tplData).then((dialogContent) => {

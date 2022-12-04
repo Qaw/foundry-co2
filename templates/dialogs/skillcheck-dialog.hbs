@@ -54,6 +54,19 @@
                 <input class="field-value" id="malus" name="malus" type="text" value="{{numberFormat malus decimals=0 sign=true}}" data-dtype="Number"/>
             </div>
         </div>
+        <hr/>
+        <div class="row flexrow table-header red">
+            <div class="flex1 center">
+                <h3>Bonus divers</h3>
+            </div>            
+        </div>
+      
+        {{#each skillBonuses as |bonus id|}}
+            <div class="row flexrow" style="margin-bottom: 1px;"></div>
+                {{numberFormat bonus.value decimals=0 sign=true}} {{bonus.name}} {{{bonus.description}}}
+            </div>
+        {{/each}}
+        
         {{#if showDifficulty}}
             <hr/>
             <!-- DIFFICULTY -->

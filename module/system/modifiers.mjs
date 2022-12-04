@@ -19,17 +19,16 @@ export class Modifiers {
   }
 
   /**
-   * @param {*} actor 
+   * @param {*} actor
    * @param {*} modifiers array of Modifier objects
    * @param {MODIFIER_TARGET} target
    * @returns the sum of the modifier value for each Modifier
    */
   static computeTotalModifiersByTarget(actor, modifiers, target) {
-    if (!modifiers) return {total: 0, tooltip: ""};
+    if (!modifiers) return { total: 0, tooltip: "" };
     let modifiersByTarget = modifiers.filter((m) => m.target === target);
 
-    let total = modifiersByTarget.map((i) => i.evaluate(actor))
-      .reduce((acc, curr) => acc + curr, 0);
+    let total = modifiersByTarget.map((i) => i.evaluate(actor)).reduce((acc, curr) => acc + curr, 0);
 
     let tooltip = "";
     modifiersByTarget.forEach((modifier) => {
@@ -37,8 +36,8 @@ export class Modifiers {
       if (partialTooltip !== null) tooltip += partialTooltip;
     });
 
-    return {total: total, tooltip: tooltip};
-  }  
+    return { total: total, tooltip: tooltip };
+  }
 }
 
 export class Modifier {
@@ -59,13 +58,13 @@ export class Modifier {
   }
 
   /**
-   * 
-   * @param {*} actor 
+   *
+   * @param {*} actor
    * @returns {int} the modifier's value
    */
   evaluate(actor) {
     if (this.value === "") return 0;
-    if (this.value.includes("@")) return this._evaluateCustom(actor);
+    if (this.value.includes("@") || this.value.includes("#")) return this._evaluateCustom(actor);
     const resultat = parseInt(this.value);
     if (isNaN(resultat)) return 0;
     return resultat;
@@ -73,52 +72,73 @@ export class Modifier {
 
   /**
    * @description Evaluate a custom value
-   * It could be @rank{x,x,x,x,x} or @level
-   * @param {*} actor 
+   * @param {*} actor
    * @returns {int} the modifier's value
    */
   _evaluateCustom(actor) {
+    if (!this.value.includes("@") && !this.value.includes("#")) return value;
     let value = 0;
-    if (!this.value.includes("@")) return value;
-    // @level
-    if (this.value.includes("@level")) {
-      let formula = this.value.replace("@level", actor.system.attributes.level.value);
-      value += eval(formula);
+
+    // #level
+    if (this.value.includes("#level")) {
+      let formula = this.value.replace("#level", actor.system.attributes.level.value);
+      let val = eval(formula);
+      if (val) value += val;
     }
-    // @rank{+1,0,+1,0,0}
-    if (this.value.includes("@rank")){     
-      let startRank = this.value.substring(this.value.indexOf("@rank"));
-      let extract = startRank.substring(this.value.indexOf("{") +1, this.value.indexOf("}"));
-      let ranks = extract.split(',');
+
+    // #rank{+1,0,+1,0,0}
+    if (this.value.includes("#rank")) {
+      let startRank = this.value.substring(this.value.indexOf("#rank"));
+      let extract = startRank.substring(this.value.indexOf("{") + 1, this.value.indexOf("}"));
+      let ranks = extract.split(",");
       let itemSource = fromUuidSync(this.source);
       let rank = itemSource.system.rank;
-      value += parseInt(ranks[rank-1]);
+      let total = 0;
+      for (let index = 0; index < rank; index++) {
+        const element = ranks[index];
+        let val = parseInt(element);
+        if (val) total += val;
+      }
+      value += total;
     }
-    // @mod{str}
-    if (this.value.includes("@mod")){
-      let ability = this.value.substring(this.value.indexOf("{") +1, this.value.indexOf("}"));
-      value += eval ('actor.system.abilities.' + ability + '.mod');
+
+    // #mod{str}
+    if (this.value.includes("#mod")) {
+      let ability = this.value.substring(this.value.indexOf("{") + 1, this.value.indexOf("}"));
+      let val = eval("actor.system.abilities." + ability + ".mod");
+      if (val) value += val;
+    }
+
+    // @abilities.str.value
+    if (this.value.includes("@")) {
+      let val = eval("actor." + Utils.shortcutResolve(this.value));
+      if (val) value += val;
     }
     return value;
   }
 
   getTooltip(actor) {
-    let name = this._getNameBySource();
+    let name = this.sourceName;
     let value = this.evaluate(actor);
 
     return Utils.getTooltip(name, value);
   }
 
   /**
-   * 
-   * @returns {String} the item's name or an empty string
-   */
-  _getNameBySource() {
+ *
+ * @returns {String} the item's name or an empty string
+ */
+  get sourceName() {
     const item = this._getItemFromSource();
     return item ? item.name : "";
   }
 
-  _getItemFromSource() { 
+  get sourceDescription() {
+    const item = this._getItemFromSource();
+    return item ? item.system.description.value : "";
+  }
+
+  _getItemFromSource() {
     return fromUuidSync(this.source);
   }
 }
