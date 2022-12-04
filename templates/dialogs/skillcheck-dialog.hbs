@@ -4,7 +4,7 @@
     <section class="sheet-body">
         <div class="row flexrow table-header red">
             <div class="flex1 center">
-                <h3>{{localize 'CO.dialogs.skillCheck'}}</h3>
+                <h3>{{label}}</h3>
             </div>
         </div>
         <div class="flexrow" style="margin-bottom: 1px;">
@@ -62,11 +62,23 @@
         </div>
       
         {{#each skillBonuses as |bonus id|}}
-            <div class="row flexrow" style="margin-bottom: 1px;"></div>
-                {{numberFormat bonus.value decimals=0 sign=true}} {{bonus.name}} {{{bonus.description}}}
+            {{log 'skillBonuses' bonus id}}
+            <input class="skillcheck" type="checkbox" data-value="{{bonus.value}}"/>
+            <div class="row flexrow" style="margin-bottom: 1px;">
+                {{numberFormat bonus.value decimals=0 sign=true}} {{bonus.name}}
             </div>
+             {{{bonus.description}}}
         {{/each}}
         
+        <div class="row flexrow" style="margin-bottom: 5px;">
+            <div class="flex1 center bg-darkslate">
+                    <span class="field-label">Total des bonus divers : </span>
+                </div>
+                <div class="flex1 center cell">
+                    <input class="field-value" id="totalSkillBonuses" name="totalSkillBonuses" type="text" value="{{totalSkillBonuses}}" data-dtype="Number"/>
+                </div>
+        </div>
+
         {{#if showDifficulty}}
             <hr/>
             <!-- DIFFICULTY -->

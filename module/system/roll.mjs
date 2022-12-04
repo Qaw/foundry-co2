@@ -1,7 +1,9 @@
 import {Log} from "../utils/log.mjs";
 import {Utils} from "./utils.mjs";
 import { CoChat } from "../ui/chat.mjs";
+import { CoSkillRollDialog } from "../dialogs/dialog-roll.mjs";
 class CoRoll {
+    constructor() {}
     init(event, actor, args){}
     dialog(label){}
     roll(){}
@@ -9,27 +11,31 @@ class CoRoll {
 }
 
 export class CoSkillCheck extends CoRoll {
-    options() {
-        return { classes: ["co", "dialog"] };
+    constructor(actor) {
+        super(actor);
+        this.actor = actor;
     }
 
-    init(event, actor, rolling) {
-        return this.dialog(event, actor, rolling);
+    init(event, rolling) {
+        return this.dialog(event, this.actor, rolling);
     }
 
-    dialog(event, actor, rolling) {
+    async dialog(event, actor, rolling) {
 
+        // 
         const rollingSkill = eval("actor." + Utils.shortcutResolve(rolling));
         let parts = rolling.replace("@", "").split(".");
+        
+        // 
         const rollingLabel = game.i18n.localize("CO.dialogs.skillCheck") + " - " + game.i18n.localize("CO."+ parts[0] + ".long." + parts[1]);
 
         const mod = eval('actor.system.abilities.' + parts[1] + '.mod');
 
-        const dialogTpl = 'systems/co/templates/dialogs/skillcheck-dialog.hbs';
-        const tplData = {
-            label : rollingLabel,
-            actor : actor,
-            skill : rollingSkill,
+        // CoSkillRollDialog
+        this.label = rollingLabel;
+        this.skill = rollingSkill;
+        const dialogData = {
+            label: rollingLabel,
             bonus : 0,
             malus : 0,
             mod : mod,
@@ -38,51 +44,21 @@ export class CoSkillCheck extends CoRoll {
             weakened : false,
             difficulty : 10,
             showDifficulty : true,
-            skillBonuses: actor.getSkillBonuses(parts[1])
+            skillBonuses: actor.getSkillBonuses(parts[1]),
+            totalSkillBonuses: 0
         };
 
-        return renderTemplate(dialogTpl, tplData).then((dialogContent) => {
-            return new Dialog(
-                {
-                    title: rollingLabel,
-                    content: dialogContent,
-                    buttons: {
-                        cancel: {
-                            icon: '<i class="fas fa-times"></i>',
-                            label: game.i18n.localize("CO.ui.cancel"),
-                            callback: () => {
-                            }
-                        },
-                        submit: {
-                            icon: '<i class="fas fa-check"></i>',
-                            label: game.i18n.localize("CO.ui.submit"),
-                            callback: async (html) => {
-                                const dice = html.find("#dice").val();
-                                const difficulty = html.find('#difficulty').val();
-                                const critrange = html.find('input#critrange').val();
-                                const mod = html.find('input#mod').val();
-                                const bonus = html.find('input#bonus').val();
-                                const malus = html.find('input#malus').val();
-                                let roll = await this.roll(actor, rollingLabel, dice, mod, bonus, malus, difficulty, critrange);
-                                await this.chat(actor, roll);
-                            }
-                        }
-                    },
-                    default: "submit",
-                    close: () => {
-                    }
-                }, this.options()
-            ).render(true);
-        });
+        let rollDialog = await CoSkillRollDialog.create(this, dialogData);
+        rollDialog.render(true);
     }
 
-    roll(actor, label, dice, mod, bonus, malus, difficulty, critrange){
-        let r = new CoSkillRoll(label, dice, mod, bonus, malus, difficulty, critrange);
-        return r.roll(actor);
+    roll(label, dice, mod, bonus, malus, totalSkillBonuses, difficulty, critrange){
+        let r = new CoSkillRoll(label, dice, mod, bonus, malus, totalSkillBonuses, difficulty, critrange);
+        return r.roll(this.actor);
     }
 
-    async chat(actor, roll){
-        await new CoChat(actor)
+    async chat(roll){
+        await new CoChat(this.actor)
             .withTemplate('systems/co/templates/chat/skillcheck-card.hbs')
             .withData({
                 label : roll._label,
@@ -116,13 +92,14 @@ export class CoAttackRoll extends CoRoll {
 
 export class CoSkillRoll {
 
-    constructor(label, dice, mod, bonus, malus, difficulty, critrange){
+    constructor(label, dice, mod, bonus, malus, totalSkillBonuses, difficulty, critrange){
         this._label = label;
         this._dice = dice;
         this._mod = mod;
         this._bonus = bonus;
         this._malus = malus;
-        this._totalBonusMalus = parseInt(this._bonus) + parseInt(this._malus);
+        this._totalSkillBonuses = totalSkillBonuses;
+        this._totalBonusMalus = parseInt(this._bonus) + parseInt(this._malus) + parseInt(this._totalSkillBonuses);
         this._total = parseInt(this._mod) + this._totalBonusMalus;
         this._difficulty = difficulty;
         this._critrange = critrange;

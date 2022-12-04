@@ -38,6 +38,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     html.find(".item-edit").click(this._onEditItem.bind(this));
     html.find(".item-delete").click(this._onDeleteItem.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
+    
   }
 
   /**
