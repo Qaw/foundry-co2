@@ -46,8 +46,20 @@ export class CoSkillRollDialog extends Dialog {
   }
 
   _onCheckSkillBonus(event) {
-    let checked = event.currentTarget.checked;
     let value = event.currentTarget.dataset.value;
     console.log("Skill Check : " + value);
+    let html = $(event.currentTarget).parents('.skillBonuses');
+    let total = this._calculateTotalSkillBonus(html[0]);
+    $('#totalSkillBonuses')[0].value = total;
+  }
+
+  _calculateTotalSkillBonus(html) {
+    const skillBonuses = Array.from(html.querySelectorAll(".skillcheck"));
+    let total = 0;
+    skillBonuses.forEach(element => {
+      if (element.checked) total += parseInt(element.dataset.value);
+    });
+    console.log(skillBonuses,total);
+    return total;
   }
 }

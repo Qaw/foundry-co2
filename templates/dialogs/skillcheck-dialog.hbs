@@ -61,14 +61,16 @@
             </div>            
         </div>
       
-        {{#each skillBonuses as |bonus id|}}
-            {{log 'skillBonuses' bonus id}}
-            <input class="skillcheck" type="checkbox" data-value="{{bonus.value}}"/>
-            <div class="row flexrow" style="margin-bottom: 1px;">
-                {{numberFormat bonus.value decimals=0 sign=true}} {{bonus.name}}
-            </div>
-             {{{bonus.description}}}
-        {{/each}}
+        <div class="skillBonuses">
+            {{#each skillBonuses as |bonus id|}}
+                {{log 'skillBonus' bonus id}}
+                <input class="skillcheck" type="checkbox" data-value="{{bonus.value}}"/>
+                <div class="row flexrow" style="margin-bottom: 1px;">
+                    {{numberFormat bonus.value decimals=0 sign=true}} {{bonus.name}}
+                </div>
+                {{{bonus.description}}}
+            {{/each}}
+        </div>
         
         <div class="row flexrow" style="margin-bottom: 5px;">
             <div class="flex1 center bg-darkslate">

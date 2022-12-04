@@ -538,3 +538,21 @@ Copied from dnd5e
 .co.sheet.item .window-content form.editable .sheet-body .modifiers .modifiers-container .modifier-row {
   padding-bottom: 2px;
 }
+.chatroll .tooltip {
+  position: relative;
+  display: inline-block;
+}
+.chatroll .tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+}
+.chatroll .tooltip:hover .tooltiptext {
+  visibility: visible;
+}

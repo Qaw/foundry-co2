@@ -61,13 +61,17 @@ export class CoSkillCheck extends CoRoll {
         await new CoChat(this.actor)
             .withTemplate('systems/co/templates/chat/skillcheck-card.hbs')
             .withData({
-                label : roll._label,
-                difficulty : roll._difficulty,
-                showDifficulty : !!roll._difficulty,
-                isCritical : roll._isCritical,
-                isFumble : roll._isFumble,
-                isSuccess : roll._isSuccess,
-                isFailure : !roll._isSuccess
+                actorId: this.actor.id,
+                label: roll._label,
+                formula: roll._formula,
+                difficulty: roll._difficulty,
+                showDifficulty: !!roll._difficulty,
+                isCritical: roll._isCritical,
+                isFumble: roll._isFumble,
+                isSuccess: roll._isSuccess,
+                isFailure: !roll._isSuccess,
+                total: roll._rollTotal,
+                toolTip: roll._toolTip
             })
             .withRoll(roll._roll)
             .create();
@@ -108,6 +112,7 @@ export class CoSkillRoll {
         this._isFumble = false;
         this._isSuccess = false;
         this._roll = null;
+        this._toolTip = null;
     }
 
     /**
@@ -126,6 +131,8 @@ export class CoSkillRoll {
             this._isSuccess = r.total >= this._difficulty;
         }
         this._roll = r;
+        this._rollTotal = r._total;
+        this._toolTip = new Handlebars.SafeString(await r.getTooltip());
         return this;
     }
 
