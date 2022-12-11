@@ -15,6 +15,7 @@ CO.ASCII = `
 
  CO.modifier = {
    type: {
+      feature: "CO.modifier.type.feature",
       trait: "CO.modifier.type.trait",
       profile: "CO.modifier.type.profile",
       capacity: "CO.modifier.type.capacity"

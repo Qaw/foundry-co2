@@ -25,7 +25,7 @@ export class CoItem extends Item {
   * @type {boolean}
   */
   get hasModifiers() {
-    if (![ITEM_TYPE.TRAIT, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined;
+    if (![ITEM_TYPE.FEATURE, ITEM_TYPE.TRAIT, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined;
 
     // Array
     if (this.system.modifiers?.length > 0) return true;

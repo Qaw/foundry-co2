@@ -22,11 +22,11 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     context.attributes = this.actor.system.attributes;
     context.resources = this.actor.system.resources;
     context.details = this.actor.system.details;
-    // context.paths = context.items.filter((item) => item.type === ITEM_TYPE.PATH);
-    // context.profile = context.items.find((item) => item.type === ITEM_TYPE.PROFILE);
+    context.paths = context.items.filter((item) => item.type === ITEM_TYPE.PATH);
+    context.profile = context.items.find((item) => item.type === ITEM_TYPE.PROFILE);
     context.capacities = context.items.filter((item) => item.type === ITEM_TYPE.CAPACITY);
     context.traits = context.items.filter((item) => item.type === ITEM_TYPE.TRAIT);
-    // context.features = context.items.filter((item) => item.type === ITEM_TYPE.FEATURE);
+    context.features = context.items.filter((item) => item.type === ITEM_TYPE.FEATURE);
     return context;
   }
 
@@ -114,6 +114,6 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
       event.preventDefault();
       const li = $(event.currentTarget).parents(".item");
       const itemId = li.data("itemId");
-      this.actor.deleteItem(itemId);
+      this.actor.deleteEmbeddedDocuments("Item",[itemId]);
     }
 }

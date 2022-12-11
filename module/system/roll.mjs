@@ -4,7 +4,7 @@ import { CoChat } from "../ui/chat.mjs";
 import { CoSkillRollDialog } from "../dialogs/dialog-roll.mjs";
 
 class CoRoll {
-    constructor() {}
+    constructor(actor) {this.actor = actor;}
     init(event, actor, args){}
     dialog(label){}
     roll(){}
@@ -14,7 +14,6 @@ class CoRoll {
 export class CoSkillCheck extends CoRoll {
     constructor(actor) {
         super(actor);
-        this.actor = actor;
     }
 
     init(event, rolling) {

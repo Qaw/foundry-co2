@@ -10,12 +10,11 @@ export class Modifiers {
    * @returns {Modifier[]} all the modifiers
    */
   static getModifiersByTypeSubtype(items, type, subtype) {
-    if (items.size == 0) return [];
-    let result = items
+    if (!items || items.size == 0) return [];
+    return items
       .reduce((mods, item) => mods.concat(item.modifiers), [])
       .filter((m) => m.type === type && m.subtype === subtype)
       .map((m) => new Modifier(m.source, m.type, m.subtype, m.target, m.value));
-    return result;
   }
 
   /**
@@ -63,60 +62,15 @@ export class Modifier {
    * @returns {int} the modifier's value
    */
   evaluate(actor) {
-    if (this.value === "") return 0;
+    return Utils.evaluate(actor, this.value, this.source);
+
+    /*if (this.value === "") return 0;
     if (this.value.includes("@") || this.value.includes("#")) return this._evaluateCustom(actor);
     const resultat = parseInt(this.value);
     if (isNaN(resultat)) return 0;
-    return resultat;
+    return resultat;*/
   }
-
-  /**
-   * @description Evaluate a custom value
-   * @param {*} actor
-   * @returns {int} the modifier's value
-   */
-  _evaluateCustom(actor) {
-    if (!this.value.includes("@") && !this.value.includes("#")) return value;
-    let value = 0;
-
-    // #level
-    if (this.value.includes("#level")) {
-      let formula = this.value.replace("#level", actor.system.attributes.level.value);
-      let val = eval(formula);
-      if (val) value += val;
-    }
-
-    // #rank{+1,0,+1,0,0}
-    if (this.value.includes("#rank")) {
-      let startRank = this.value.substring(this.value.indexOf("#rank"));
-      let extract = startRank.substring(this.value.indexOf("{") + 1, this.value.indexOf("}"));
-      let ranks = extract.split(",");
-      let itemSource = fromUuidSync(this.source);
-      let rank = itemSource.system.rank;
-      let total = 0;
-      for (let index = 0; index < rank; index++) {
-        const element = ranks[index];
-        let val = parseInt(element);
-        if (val) total += val;
-      }
-      value += total;
-    }
-
-    // #mod{str}
-    if (this.value.includes("#mod")) {
-      let ability = this.value.substring(this.value.indexOf("{") + 1, this.value.indexOf("}"));
-      let val = eval("actor.system.abilities." + ability + ".mod");
-      if (val) value += val;
-    }
-
-    // @abilities.str.value
-    if (this.value.includes("@")) {
-      let val = eval("actor." + Utils.shortcutResolve(this.value));
-      if (val) value += val;
-    }
-    return value;
-  }
-
+  
   getTooltip(actor) {
     let name = this.sourceName;
     let value = this.evaluate(actor);

@@ -395,7 +395,8 @@
       "templates": ["itemDescription"],
       "hd": "1d4",
       "proficiencies": [],
-      "spellcasting": null
+      "spellcasting": null,
+      "mpFormula": null
     },
     "capacity": {
       "templates": ["itemDescription", "activatedEffect", "action"],

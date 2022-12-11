@@ -4,6 +4,7 @@ export const SYSTEM_NAME = 'co';
 export const SYSTEM_DESCRIPTION = "Chroniques Oubliées";
 
 export const MODIFIER_TYPE = {
+    FEATURE: "feature",
     TRAIT: "trait",
     PROFILE: "profile",
     CAPACITY: "capacity"
@@ -38,6 +39,15 @@ export const COMBAT = {
     INIT: 'init',
     DEF: 'def'
 };
+
+export const RESOURCES = {
+    FORTUNE: 'fortune',
+    MANA: 'mana',
+    RECOVERY: 'recovery',
+    PRIMARY: 'primary',
+    SECONDARY: 'secondary',
+    TERTIARY: 'tertiary'
+}
 
 export const ATTRIBUTE = {
     HP: 'hp'

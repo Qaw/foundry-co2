@@ -39,6 +39,7 @@
         "malus": "Malus",
         "value": "Valeur",
         "mod": "Modificateur",
+        "max": "Maximum",
         "modifiers": "Modificateurs",
         "name": "Nom",
         "level": "Niveau",
@@ -53,7 +54,8 @@
         "difficulty": "Difficulté",
         "effects": "Effets",
         "properties": "Propriétés",
-        "hp": "Points de vie"
+        "hp": "Points de vie",
+        "hd": "Dé de vie"
       },
       "short": {
         "stat": "Carac.",
@@ -64,6 +66,7 @@
         "malus": "Malus",
         "value": "Val.",
         "mod": "Mod",
+        "max": "Max",
         "modifiers": "Mods",
         "name": "Nom",
         "level": "Niv.",
@@ -78,7 +81,8 @@
         "difficulty": "Diff.",
         "effects": "FX",
         "properties": "Props",
-        "hp": "PV"
+        "hp": "PV",
+        "hd": "DV"
       }
     },
     "ui": {
@@ -88,7 +92,8 @@
       "kh": "Garder le plus haut",
       "kl": "Garder le plus bas",
       "duration": "Durée",
-      "action": "Action"
+      "action": "Action",
+      "none": "--"
     },
     "properties": {
       "equipable": "Équipable",
@@ -132,6 +137,22 @@
         "def": "DEF"
       }
     },
+    "resources": {
+      "long": {
+        "fortune": "Points de chance",
+        "mana": "Points de mana",
+        "recovery": "Points de récupération"
+      },
+      "short": {
+        "fortune": "PC",
+        "mana": "PM",
+        "recovery": "PR",
+        "primary": "Prim.",
+        "secondary": "Sec.",
+        "tertiary": "Ter."
+      },
+      "mpFormula": "Formule des points de magie"
+    },
     "tabs": {
       "bio": "Biographie",
       "stats": "Caractéristiques",
@@ -155,6 +176,7 @@
     },
     "modifier": {
       "type": {
+        "feature": "Feature",
         "trait": "Trait",
         "profile": "Profil",
         "capacity": "Capacité"

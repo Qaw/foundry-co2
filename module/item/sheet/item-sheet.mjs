@@ -66,23 +66,45 @@ export default class CoItemSheet extends CoBaseItemSheet {
          // Create the owned item
          // return this._onDropItemCreate(itemData);
          switch (item.type) {
+            case ITEM_TYPE.FEATURE:
+                return this._onDropFeatureItem(item);
             case ITEM_TYPE.TRAIT:
                 return this._onDropTraitItem(item);
             case ITEM_TYPE.PATH:
                  return;//this._onDropPathItem(event, itemData);
              case ITEM_TYPE.CAPACITY:
-                 //return this._onDropCapacityItem(item);
+                 return this._onDropCapacityItem(item);
              case ITEM_TYPE.PROFILE:
+                return this._onDropProfileItem(item);
              default:
                  return false;
          }
      }
      
+     _onDropFeatureItem(item) {
+        const itemData = item.toObject();
+        itemData = itemData instanceof Array ? itemData : [itemData];
+        return this.actor.createEmbeddedDocuments("Item", itemData);
+     }
+
      _onDropTraitItem(item) {
         const itemData = item.toObject();
         itemData = itemData instanceof Array ? itemData : [itemData];
         return this.actor.createEmbeddedDocuments("Item", itemData);
      }
+
+     _onDropCapacityItem(item) {
+        const itemData = item.toObject();
+        itemData = itemData instanceof Array ? itemData : [itemData];
+        return this.actor.createEmbeddedDocuments("Item", itemData);
+     }
+
+     _onDropProfileItem(item) {
+        const itemData = item.toObject();
+        itemData = itemData instanceof Array ? itemData : [itemData];
+        return this.actor.createEmbeddedDocuments("Item", itemData);
+     }
+
 
     /**
      *

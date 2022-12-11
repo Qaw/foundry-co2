@@ -1,35 +1,34 @@
 <div class="items-container">
   {{log "items" this}}
 
-  <h1 class="field-label header">Les traits</h1>
-  <!--
-        <div class="cell">
-            <span class="field-label header">{{ localize "CO.label.short.stat" }}</span>
-        </div>
-        <div class="cell">
-            <span class="field-label header">{{ localize "CO.label.short.base" }}</span>
-        </div>
-        <div class="cell">
-            <span class="field-label header">{{ localize "CO.label.short.bonus" }}</span>
-        </div>
-        <div class="cell">
-            <span class="field-label header">{{ localize "CO.label.short.value" }}</span>
-        </div>
-        <div class="cell">
-            <span class="field-label header">{{ localize "CO.label.short.mod" }}</span>
-        </div>
-        <div class="cell"></div>-->
+  <h1 class="field-label header">Profil</h1>
+    {{log (concat "Chroniques Oubliées | " id) profile}}
+    {{#if profile}}
+      <div class="cell item" data-item-id="{{profile._id}}">
+        <span class="field-value">{{profile.name}}</span>
+        <span class="item-delete"><i class="fas fa-trash"></i></span>
+      </div>
+    {{/if}}
 
+  <h1 class="field-label header">Features</h1>
+  {{#each features as |feature id|}}
+    {{log (concat "Chroniques Oubliées | " id) feature}}
+    <div class="cell item" data-item-id="{{feature._id}}">
+      <span class="field-value">{{feature.name}}</span>
+      <span class="item-delete"><i class="fas fa-trash"></i></span>
+    </div>
+  {{/each}}
+
+  <h1 class="field-label header">Traits</h1>
   {{#each traits as |trait id|}}
     {{log (concat "Chroniques Oubliées | " id) trait}}
-    <div class="cell item" data-item-id="{{trait._id}}"">
+    <div class="cell item" data-item-id="{{trait._id}}">
       <span class="field-value">{{trait.name}}</span>
       <span class="item-delete"><i class="fas fa-trash"></i></span>
     </div>
   {{/each}}
 
-  <h1 class="field-label header">Les capacités</h1>
-
+  <h1 class="field-label header">Capacités</h1>
   {{#each capacities as |capacity id|}}
     {{log (concat "Chroniques Oubliées | " id) capacity}}
     <div class="cell item" data-item-id="{{capacity._id}}">

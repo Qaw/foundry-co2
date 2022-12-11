@@ -1,11 +1,11 @@
 <h3 class="form-header">{{localize "COF.ui.properties"}}</h3>
 <input class="field-value" name="data.key" type="hidden" value="{{item.data.key}}" placeholder="{{ localize "COF.ui.key" }}" data-dtype="String">
 <div class="form-group">
-    <label>{{localize "COF.ui.hd"}}</label>
+    <label>{{localize "CO.label.long.hd"}}</label>
     <div class="form-fields">
-        <select name="data.dv" data-type="String" style="width:100%">
-            {{#select data.dv}}
-                <option value="">{{localize "COF.None"}}</option>
+        <select name="system.hd" data-type="String" style="width:100%">
+            {{#select system.hd}}
+                <option value="">{{localize "CO.ui.none"}}</option>
                 <option value="1d4">d4</option>
                 <option value="1d6">d6</option>
                 <option value="1d8">d8</option>
@@ -18,32 +18,14 @@
 </div>
 
 <div class="form-group">
-    <label>{{localize "COF.ui.spellcasting"}}</label>
-    <div class="form-fields">
-        <select name="data.spellcasting" data-type="String" style="width:100%">
-            {{#select data.spellcasting}}
-                <option value="">{{localize "COF.None"}}</option>
-                <option value="int">{{localize "COF.stats.int.label"}}</option>
-                <option value="wis">{{localize "COF.stats.wis.label"}}</option>
-                <option value="cha">{{localize "COF.stats.cha.label"}}</option>
-            {{/select}}
-        </select>
+    <label>{{localize "CO.resources.mpFormula"}}</label>
+    <div class="cell">
+      <input class="field-value" name="system.mpFormula" type="string" value="{{system.mpFormula}}" data-dtype="String" />
     </div>
 </div>
 
-<div class="form-group">
-    <label>{{localize "COF.ui.mpfactor"}}</label>
-    <div class="form-fields">
-        <select name="data.mpfactor" data-type="Number" style="width:100%">
-            {{#select data.mpfactor}}
-                <option value="0">0</option>
-                <option value="1">x1</option>
-                <option value="2">x2</option>
-            {{/select}}
-        </select>
-    </div>
-</div>
 
+<!--
 <h3 class="form-header">{{localize "COF.weapons.skills"}}</h3>
 <div class="form-group stacked">
     <label>{{localize "COF.category.melee-plural"}}</label>
@@ -89,3 +71,5 @@
         </ol>
     {{/each}}
 </ol>
+
+-->
