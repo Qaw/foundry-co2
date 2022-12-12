@@ -214,4 +214,37 @@
             }
         }
     }
+    &.dialog {
+        .dialog-field {
+            height : 27px;
+            margin-top: 1px;
+            .dialog-field-label{
+                padding:4px;
+            }
+            .dialog-field-value{}
+        }
+        &.skillroll {
+            .skill-bonuses {
+                background: rgba(0, 0, 0, 0.05);
+                border: 2px groove var(--color-border-light-highlight);
+                height: 140px;
+                overflow: auto;
+                .bonus-item {
+                    background: rgba(0, 0, 0, 0.1);
+                    height:27px;
+                    padding: 4px;
+                    .bonus-value {}
+                    .bonus-name {margin-left:5px;}
+                    .bonus-actions {}
+                    &.checked {
+                        background: rgba(0, 0, 0, 0.3);
+                    }
+                    &:hover {
+                        cursor:pointer;
+                        background: rgba(0, 0, 0, 0.2);
+                    }
+                }
+            }
+        }
+    }
 }

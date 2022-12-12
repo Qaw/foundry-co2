@@ -2,96 +2,97 @@
     {{log "Chroniques Oubliées | skillcheck" this}}
     <header class="sheet-header"></header>
     <section class="sheet-body">
-        <div class="row flexrow table-header red">
-            <div class="flex1 center">
-                <h3>{{label}}</h3>
-            </div>
-        </div>
-        <div class="flexrow" style="margin-bottom: 1px;">
-            <div class="flex1 center bg-red">
-                <label for="dice">{{localize 'CO.ui.diceType'}}</label>
-            </div>
-            <div class="flex1 center cell">
-                <select class="flex1" name="dice" id="dice" data-type="String">
-                    <option value="1d20" {{#unless (and superior weakened)}}{{else}}selected{{/unless}}>1d20</option>
-                    <option value="1d12" {{#if weakened}}selected{{/if}}>1d12</option>
-                    <option value="2d12kh">2d12 ({{localize 'CO.ui.kh'}})</option>
-                    <option value="2d20kh" {{#if superior}}selected{{/if}}>2d20 ({{localize 'CO.ui.kh'}})</option>
-                    <option value="2d12kl">2d12 ({{localize 'CO.ui.kl'}})</option>
-                    <option value="2d20kl">2d20 ({{localize 'CO.ui.kl'}})</option>
-                </select>
-            </div>
-        </div>
-        <div class="row flexrow" style="margin-bottom: 1px;">
-            <div class="flex1 center bg-red">
-                <span class="field-label">{{localize 'CO.label.long.mod'}}</span>
-            </div>
-            <div class="flex1 center cell">
-                <input class="field-value readonly" id="mod" name="mod" type="text" readonly="true" value="{{numberFormat mod decimals=0 sign=true}}" data-dtype="Number"/>
-            </div>
-        </div>
-        <div class="row flexrow" style="margin-bottom: 1px;">
-            <div class="flex1 center bg-red">
-                <span class="field-label">{{localize 'CO.label.long.critrange'}}</span>
-            </div>
-            <div class="flex1 center cell">
-                <input class="field-value" id="critrange" name="critrange" type="text" value="{{critrange}}" data-dtype="String"/>
-            </div>
-        </div>
-        <div class="row flexrow" style="margin-bottom: 1px;">
-            <div class="flex1 center bg-red">
-                <span class="field-label">{{localize 'CO.label.long.bonus'}}</span>
-            </div>
-            <div class="flex1 center cell">
-                <input class="field-value" id="bonus" name="bonus" type="text" value="{{numberFormat bonus decimals=0 sign=true}}" data-dtype="Number"/>
-            </div>
-        </div>
-        <div class="row flexrow" style="margin-bottom: 1px;">
-            <div class="flex1 center bg-red">
-                <span class="field-label">{{localize 'CO.label.long.malus'}}</span>
-            </div>
-            <div class="flex1 center cell">
-                <input class="field-value" id="malus" name="malus" type="text" value="{{numberFormat malus decimals=0 sign=true}}" data-dtype="Number"/>
-            </div>
-        </div>
-        <hr/>
-        <div class="row flexrow table-header red">
-            <div class="flex1 center">
-                <h3>Bonus divers</h3>
-            </div>            
-        </div>
-      
-        <div class="skillBonuses">
-            {{#each skillBonuses as |bonus id|}}
-                {{log 'skillBonus' bonus id}}
-                <input class="skillcheck" type="checkbox" data-value="{{bonus.value}}"/>
-                <div class="row flexrow" style="margin-bottom: 1px;">
-                    {{numberFormat bonus.value decimals=0 sign=true}} {{bonus.name}}
+        <div class="flexrow">
+            <div class="left flex1">
+                <div class="dialog-field flexrow table-header red center">
+                    <h3>{{label}}</h3>
                 </div>
-                {{{bonus.description}}}
-            {{/each}}
-        </div>
-        
-        <div class="row flexrow" style="margin-bottom: 5px;">
-            <div class="flex1 center bg-darkslate">
-                    <span class="field-label">Total des bonus divers : </span>
+                <div class="dialog-field flexrow">
+                    <div class="dialog-field-label flex1 center bg-red">
+                        <label for="dice">{{localize 'CO.ui.diceType'}}</label>
+                    </div>
+                    <div class="dialog-field-value flex1 center">
+                        <select class="flex1" name="dice" id="dice" data-type="String">
+                            <option value="1d20" {{#unless (and superior weakened)}}{{else}}selected{{/unless}}>1d20</option>
+                            <option value="1d12" {{#if weakened}}selected{{/if}}>1d12</option>
+                            <option value="2d12kh">2d12 ({{localize 'CO.ui.kh'}})</option>
+                            <option value="2d20kh" {{#if superior}}selected{{/if}}>2d20 ({{localize 'CO.ui.kh'}})</option>
+                            <option value="2d12kl">2d12 ({{localize 'CO.ui.kl'}})</option>
+                            <option value="2d20kl">2d20 ({{localize 'CO.ui.kl'}})</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="flex1 center cell">
-                    <input class="field-value" id="totalSkillBonuses" name="totalSkillBonuses" type="text" value="{{totalSkillBonuses}}" data-dtype="Number"/>
+                <div class="dialog-field flexrow">
+                    <div class="dialog-field-label flex1 center bg-red">
+                        <span class="field-label">{{localize 'CO.label.long.mod'}}</span>
+                    </div>
+                    <div class="dialog-field-value flex1 center">
+                        <input class="field-value readonly" id="mod" name="mod" type="text" readonly="true" value="{{numberFormat mod decimals=0 sign=true}}" data-dtype="Number"/>
+                    </div>
                 </div>
-        </div>
-
-        {{#if showDifficulty}}
-            <hr/>
-            <!-- DIFFICULTY -->
-            <div class="row flexrow" style="margin-bottom: 5px;">
-                <div class="flex1 center bg-darkslate">
-                    <span class="field-label">{{localize 'CO.label.long.difficulty'}}</span>
+                <div class="dialog-field flexrow">
+                    <div class="dialog-field-label flex1 center bg-red">
+                        <span class="field-label">{{localize 'CO.label.long.critrange'}}</span>
+                    </div>
+                    <div class="dialog-field-value flex1 center">
+                        <input class="field-value" id="critrange" name="critrange" type="text" value="{{critrange}}" data-dtype="String"/>
+                    </div>
                 </div>
-                <div class="flex1 center cell">
-                    <input class="field-value" id="difficulty" name="difficulty" type="text" value="{{difficulty}}" data-dtype="Number"/>
+                <div class="dialog-field flexrow">
+                    <div class="dialog-field-label flex1 center bg-red">
+                        <span class="field-label">{{localize 'CO.label.long.bonus'}}</span>
+                    </div>
+                    <div class="dialog-field-value flex1 center">
+                        <input class="field-value" id="bonus" name="bonus" type="text" value="{{numberFormat bonus decimals=0 sign=true}}" data-dtype="Number"/>
+                    </div>
+                </div>
+                <div class="dialog-field flexrow">
+                    <div class="dialog-field-label flex1 center bg-red">
+                        <span class="field-label">{{localize 'CO.label.long.malus'}}</span>
+                    </div>
+                    <div class="dialog-field-value flex1 center">
+                        <input class="field-value" id="malus" name="malus" type="text" value="{{numberFormat malus decimals=0 sign=true}}" data-dtype="Number"/>
+                    </div>
+                </div>
+                {{#if showDifficulty}}
+                    <div class="dialog-field flexrow">
+                        <div class="dialog-field-label flex1 center bg-darkslate">
+                            <span class="field-label">{{localize 'CO.label.long.difficulty'}}</span>
+                        </div>
+                        <div class="dialog-field-value flex1 center">
+                            <input class="field-value" id="difficulty" name="difficulty" type="text" value="{{difficulty}}" data-dtype="Number"/>
+                        </div>
+                    </div>
+                {{/if}}
+            </div>
+            <div class="right flex1">
+                <div class="dialog-field flexrow table-header darkslate center">
+                    <h3>Bonus divers</h3>
+                </div>
+                <div class="skillBonuses">
+                    <div class="flex1 skill-bonuses" id="skill-bonuses">
+                    {{#each skillBonuses as |bonus id|}}
+                        {{log 'skillBonus' bonus id}}
+                        <div class="bonus-item flexrow" data-value="{{bonus.value}}" data-description="{{{bonus.description}}}">
+                            <span class="bonus-value flex0">{{numberFormat bonus.value decimals=0 sign=true}}</span>
+                            <span class="bonus-name flex1">{{bonus.name}}</span>
+                            <span class="bonus-actions flex0"><a class="display-chat"><i class="fas fa-comment"></i></a></span>
+                        </div>
+                    {{/each}}
+                    </div>
+                    {{!#each skillBonuses as |bonus id|}}
+<!--                        <div><input class="skillcheck" type="checkbox" data-value="{{!bonus.value}}"/>{{!numberFormat bonus.value decimals=0 sign=true}} {{!bonus.name}} {{!{bonus.description}}}</div>-->
+                    {{!/each}}
+                </div>
+                <div class="dialog-field flexrow">
+                    <div class="dialog-field-label flex1 center bg-darkslate">
+                        <span class="field-label">Bonus divers : </span>
+                    </div>
+                    <div class="dialog-field-value flex1 center">
+                        <input class="field-value" id="totalSkillBonuses" name="totalSkillBonuses" type="text" value="{{totalSkillBonuses}}" data-dtype="Number"/>
+                    </div>
                 </div>
             </div>
-        {{/if}}
+        </div>
     </section>
 </form>

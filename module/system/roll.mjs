@@ -2,6 +2,7 @@ import {Log} from "../utils/log.mjs";
 import {Utils} from "./utils.mjs";
 import { CoChat } from "../ui/chat.mjs";
 import { CoSkillRollDialog } from "../dialogs/dialog-roll.mjs";
+
 class CoRoll {
     constructor() {}
     init(event, actor, args){}
@@ -162,5 +163,4 @@ export class CoSkillRoll {
             }
         }
     }
-
 }

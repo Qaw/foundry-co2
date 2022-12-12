@@ -538,21 +538,31 @@ Copied from dnd5e
 .co.sheet.item .window-content form.editable .sheet-body .modifiers .modifiers-container .modifier-row {
   padding-bottom: 2px;
 }
-.chatroll .tooltip {
-  position: relative;
-  display: inline-block;
+.co.dialog .dialog-field {
+  height: 27px;
+  margin-top: 1px;
 }
-.chatroll .tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-  position: absolute;
-  z-index: 1;
+.co.dialog .dialog-field .dialog-field-label {
+  padding: 4px;
 }
-.chatroll .tooltip:hover .tooltiptext {
-  visibility: visible;
+.co.dialog.skillroll .skill-bonuses {
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove var(--color-border-light-highlight);
+  height: 140px;
+  overflow: auto;
+}
+.co.dialog.skillroll .skill-bonuses .bonus-item {
+  background: rgba(0, 0, 0, 0.1);
+  height: 27px;
+  padding: 4px;
+}
+.co.dialog.skillroll .skill-bonuses .bonus-item .bonus-name {
+  margin-left: 5px;
+}
+.co.dialog.skillroll .skill-bonuses .bonus-item.checked {
+  background: rgba(0, 0, 0, 0.3);
+}
+.co.dialog.skillroll .skill-bonuses .bonus-item:hover {
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.2);
 }

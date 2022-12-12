@@ -1,5 +1,9 @@
 export class CoSkillRollDialog extends Dialog {
   constructor(skillRoll, html, options) {
+
+    options.classes.push("skillroll");
+    options.width = 500;
+
     let conf = {
       title: skillRoll.label,
       content: html,
@@ -41,25 +45,35 @@ export class CoSkillRollDialog extends Dialog {
 
   activateListeners(html) {
     super.activateListeners(html);
-
-    html.find(".skillcheck").click(this._onCheckSkillBonus.bind(this));
+    html.find(".bonus-item").click(this._onToggleCheckSkillBonus.bind(this));
+    html.find(".bonus-item").contextmenu(this._onContextBonusItem.bind(this));
+    // html.find(".bonus-item").mouseover(this._onHoverBonusItem.bind(this));
   }
 
-  _onCheckSkillBonus(event) {
-    let value = event.currentTarget.dataset.value;
-    console.log("Skill Check : " + value);
+  _onToggleCheckSkillBonus(event) {
+    // let value = event.currentTarget.dataset.value;
+    let item = event.currentTarget.closest('.bonus-item');
+    item.classList.toggle("checked");
+    let total = this._calculateTotalSkillBonus(event);
+    $('#totalSkillBonuses')[0].value = total;
+  }
+
+  _onContextBonusItem(event) {
+    let value = event.currentTarget.dataset.description;
+    console.log("Skill description : " + value);
     let html = $(event.currentTarget).parents('.skillBonuses');
     let total = this._calculateTotalSkillBonus(html[0]);
     $('#totalSkillBonuses')[0].value = total;
   }
 
-  _calculateTotalSkillBonus(html) {
-    const skillBonuses = Array.from(html.querySelectorAll(".skillcheck"));
-    let total = 0;
-    skillBonuses.forEach(element => {
-      if (element.checked) total += parseInt(element.dataset.value);
-    });
-    console.log(skillBonuses,total);
+  _onHoverBonusItem(event) {
+    // SHOW HTML TOOLTIP
+  }
+
+  _calculateTotalSkillBonus(event) {
+    let parent = event.currentTarget.closest('.skill-bonuses')
+    const skillBonuses = Array.from(parent.querySelectorAll(".bonus-item.checked"));
+    let total = skillBonuses.reduce((acc, curr) => acc + parseInt(curr.dataset.value), 0);
     return total;
   }
 }
