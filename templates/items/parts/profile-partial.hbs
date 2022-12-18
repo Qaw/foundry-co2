@@ -24,7 +24,11 @@
     </div>
 </div>
 
-
+{{#if (isProfileFamilyEnabled)}}
+    <div>
+        <label>Famille : </label><input name="system.family" type="String" value="{{system.family}}" data-dtype="String">
+    </div>
+{{/if}}
 <!--
 <h3 class="form-header">{{localize "COF.weapons.skills"}}</h3>
 <div class="form-group stacked">

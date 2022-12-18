@@ -393,6 +393,7 @@
     },
     "profile" : {
       "templates": ["itemDescription"],
+      "family": null,
       "hd": "1d4",
       "proficiencies": [],
       "spellcasting": null,

@@ -55,7 +55,8 @@
         "effects": "Effets",
         "properties": "Propriétés",
         "hp": "Points de vie",
-        "hd": "Dé de vie"
+        "hd": "Dé de vie",
+        "rp": "Points de récupération"
       },
       "short": {
         "stat": "Carac.",
@@ -82,7 +83,8 @@
         "effects": "FX",
         "properties": "Props",
         "hp": "PV",
-        "hd": "DV"
+        "hd": "DV",
+        "rp": "PR"
       }
     },
     "ui": {

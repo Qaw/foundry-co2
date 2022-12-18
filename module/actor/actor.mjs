@@ -1,5 +1,5 @@
 import { Stats } from "../system/stats.mjs";
-import { ATTRIBUTE, COMBAT, EQUIPMENT_SUBTYPE, ITEM_TYPE, MODIFIER_SUBTYPE, MODIFIER_TYPE, RESOURCES } from "../system/constants.mjs";
+import { ATTRIBUTE, COMBAT, EQUIPMENT_SUBTYPE, ITEM_TYPE, MODIFIER_SUBTYPE, MODIFIER_TARGET, MODIFIER_TYPE, RESOURCES } from "../system/constants.mjs";
 import { Modifiers } from "../system/modifiers.mjs";
 import { Log } from "../utils/log.mjs";
 import { Utils } from "../system/utils.mjs";
@@ -50,7 +50,6 @@ export default class CoActor extends Actor {
     this._prepareHPMax();
 
     for (const [key, skill] of Object.entries(this.system.resources)) {
-
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr);
 
       // Points de chance  - Fortune Points - FP
@@ -67,24 +66,22 @@ export default class CoActor extends Actor {
       if (key === RESOURCES.RECOVERY) {
         this._prepareRP(skill, bonuses);
       }
-    
     }
   }
 
-  // 
   _prepareFP(skill, bonuses) {
     skill.base = this._computeBaseFP();
-    skill.max =  skill.base + bonuses;
+    skill.max = skill.base + bonuses;
   }
 
   _computeBaseFP() {
-    return 3 + this.system.abilities.cha.mod;
+    return 0;
   }
 
   // BASE : à partir du profile, lire la mpFormula
   _prepareMP(skill, bonuses) {
     skill.base = this._computeBaseMP();
-    skill.max = skill.base + bonuses; 
+    skill.max = skill.base + bonuses;
   }
 
   _computeBaseMP() {
@@ -95,12 +92,13 @@ export default class CoActor extends Actor {
   }
 
   _prepareRP(skill, bonuses) {
-    skill.base = this._computeBaseRP(); 
+    skill.base = this._computeBaseRP();
     skill.max = skill.base + bonuses;
   }
 
   _computeBaseRP() {
-    return 5;
+    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, MODIFIER_TARGET.RP);
+    return 5 + resourceModifiers.total;
   }
 
   _prepareHPMax() {
@@ -199,13 +197,24 @@ export default class CoActor extends Actor {
   }
 
   /**
- * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Skill
- */
+   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Skill
+   */
   get skillModifiers() {
     let modifiers = [];
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.SKILL));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.SKILL));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.SKILL));
+    return modifiers;
+  }
+
+  /**
+   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Skill
+   */
+  get resourceModifiers() {
+    let modifiers = [];
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.RESOURCE));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.RESOURCE));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.RESOURCE));
     return modifiers;
   }
 
@@ -242,7 +251,7 @@ export default class CoActor extends Actor {
   }
 
   get profile() {
-    return this.items.find(item => item.type === ITEM_TYPE.PROFILE) ?? null;
+    return this.items.find((item) => item.type === ITEM_TYPE.PROFILE) ?? null;
   }
 
   /**
@@ -253,8 +262,8 @@ export default class CoActor extends Actor {
   getSkillBonuses(ability) {
     const modifiersByTarget = this.skillModifiers.filter((m) => m.target === ability);
     let bonuses = [];
-    modifiersByTarget.forEach(modifier => {
-      bonuses.push({name: modifier.sourceName, value: modifier.evaluate(this), description: modifier.sourceDescription});
+    modifiersByTarget.forEach((modifier) => {
+      bonuses.push({ name: modifier.sourceName, value: modifier.evaluate(this), description: modifier.sourceDescription });
     });
     return bonuses;
   }
@@ -408,5 +417,4 @@ export default class CoActor extends Actor {
         return this.deleteEmbeddedDocuments("Item", [itemId]);
     }
   }
-  
 }
