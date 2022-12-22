@@ -6,7 +6,8 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.system = this.item.system;
     context.modifiers = this.item.system.modifiers;
     context.enrichedDescription = TextEditor.enrichHTML(this.item.system.description.value, { async: false });
-    context.martialTrainingsList = context.config.martialTrainings;
+    context.martialTrainingsWeaponsList = context.config.martialTrainingsWeapons;
+    context.martialTrainingsArmorsList = context.config.martialTrainingsArmors;
     return context;
   }
 }

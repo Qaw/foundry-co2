@@ -47,11 +47,11 @@ Hooks.once("init", async function () {
 	registerSystemSettings();
 
     // Load Martial Training
-    if (!game.co.config.martialTrainings) {
-        game.co.config.martialTrainings = [];
-        game.co.config.martialTrainings.push({key: 'club', label: "CO.config.martialTraining.club"});
-        game.co.config.martialTrainings.push({key: 'stick', label: "CO.config.martialTraining.stick"});
-        game.co.config.martialTrainings.push({key: 'ironedstick', label: "CO.config.martialTraining.ironed-stick"});
+    if (!game.co.config.martialTrainingsWeapons) {
+        game.co.config.martialTrainingsWeapons = [];
+    }
+    if (!game.co.config.martialTrainingsArmors) {
+        game.co.config.martialTrainingsArmors = [];
     }
 
 

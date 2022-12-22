@@ -30,10 +30,18 @@
     </div>
 {{/if}}
 
-<h2>Formations martiales</h2>
+<h2>Formations martiales (armes)</h2>
 <div class="form-group">
-    {{#each martialTrainingsList as |training key|}}
+    {{#each martialTrainingsWeaponsList as |training key|}}
         {{log 'training ' training key}}
-        <label><input type="checkbox" name="system.martialTrainings.{{getKeyFromMartialTraining training}}" data-dtype="Boolean" {{checked (lookup ../system.martialTrainings training.key)}}/>{{getMartialTrainingLabel training}}</label>        
+        <label><input type="checkbox" name="system.martialTrainingsWeapons.{{getKeyFromMartialTraining training}}" data-dtype="Boolean" {{checked (lookup ../system.martialTrainingsWeapons training.key)}}/>{{getMartialTrainingLabel training}}</label>        
+    {{/each}}   
+</div>
+
+<h2>Formations martiales (armures)</h2>
+<div class="form-group">
+    {{#each martialTrainingsArmorsList as |training key|}}
+        {{log 'training ' training key}}
+        <label><input type="checkbox" name="system.martialTrainingsArmors.{{getKeyFromMartialTraining training}}" data-dtype="Boolean" {{checked (lookup ../system.martialTrainingsArmors training.key)}}/>{{getMartialTrainingLabel training}}</label>        
     {{/each}}   
 </div>

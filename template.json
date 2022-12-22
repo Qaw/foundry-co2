@@ -396,7 +396,8 @@
       "family": null,
       "hd": "1d4",
       "proficiencies": [],
-      "martialTrainings": [],
+      "martialTrainingsWeapons": [],
+      "martialTrainingsArmors": [],
       "spellcasting": null,
       "mpFormula": null
     },
