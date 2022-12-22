@@ -4,6 +4,14 @@ import { ITEM_TYPE } from "../system/constants.mjs";
  * @extends {Item}
  */
 export class CoItem extends Item {
+  constructor(...args) {
+    let data = args[0];
+    
+    super(...args);
+}
+
+
+
   /** @override */
   prepareBaseData() {
     this.system.slug = this.name.slugify({ strict: true });

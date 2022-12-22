@@ -13,4 +13,13 @@ export const registerHandlebarsHelpers = function () {
     Handlebars.registerHelper("isProfileFamilyEnabled", function () {
         return CO.profile.family.enabled;
     });
+    Handlebars.registerHelper("getKeyFromMartialTraining", function (training) {
+        return training.key;
+    });
+    Handlebars.registerHelper("getValueFromMartialTraining", function (training) {
+        return training.label;
+    });
+    Handlebars.registerHelper("getMartialTrainingLabel", function (training) {
+        return game.i18n.localize(training.label);
+    });
 };

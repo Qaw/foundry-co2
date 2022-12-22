@@ -189,6 +189,13 @@
         "attribute": "Attribut",
         "skill": "Jet de compétence"
       }
+    },
+    "config": {
+      "martialTraining": {
+        "club": "gourdin",
+        "stick": "bâton",
+        "ironed-stick": "bâton ferré"
+      }
     }
   },
   "SETTINGS": {

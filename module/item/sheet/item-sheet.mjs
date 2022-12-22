@@ -149,7 +149,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
     /** @override */
     getData(options) {
         const context = super.getData(options);
-        console.log(context);
+        console.log('item-sheet context',context);
         return context;
     }
 

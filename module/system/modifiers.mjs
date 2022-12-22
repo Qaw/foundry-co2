@@ -18,6 +18,7 @@ export class Modifiers {
   }
 
   /**
+   * @name computeTotalModifiersByTarget
    * @param {*} actor
    * @param {*} modifiers array of Modifier objects
    * @param {MODIFIER_TARGET} target

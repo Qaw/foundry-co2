@@ -13,6 +13,12 @@ export class Utils {
     return mod * 2 + 10;
   };
 
+  /**
+   * @name getTooltip
+   * @param {*} name 
+   * @param {*} value 
+   * @returns {String} Chaine vide ou "Nom : valeur "
+   */
   static getTooltip(name, value) {
     if (name !== "" && value > 0) {
       return name + " : " + value + " ";
@@ -56,7 +62,7 @@ export class Utils {
       // #rank{+1,0,+1,0,0}
       if (formula.includes("#rank")) {
         let startRank = formula.substring(formula.indexOf("#rank"));
-        let extract = startRank.substring(formula.indexOf("{") + 1, formula.indexOf("}"));
+        let extract = startRank.substring(formula.indexOf("[") + 1, formula.indexOf("]"));
         let ranks = extract.split(",");
         let itemSource = fromUuidSync(source);
         let rank = itemSource.system.rank;
@@ -66,13 +72,13 @@ export class Utils {
           let val = parseInt(element);
           if (val) total += val;
         }
-        replacedFormula = replacedFormula.replace("#rank{" + extract + "}", total) ;
+        replacedFormula = replacedFormula.replace("#rank[" + extract + "]", total) ;
       }
   
       // #mod{str}
       if (formula.includes("#mod")) {
-        let ability = formula.substring(formula.indexOf("{") + 1, formula.indexOf("}"));
-        replacedFormula = replacedFormula.replace("#mod{" + ability + "}", "actor.system.abilities." + ability + ".mod" );
+        let ability = formula.substring(formula.indexOf("[") + 1, formula.indexOf("]"));
+        replacedFormula = replacedFormula.replace("#mod[" + ability + "]", "actor.system.abilities." + ability + ".mod" );
       }
   
       // @abilities.str.value

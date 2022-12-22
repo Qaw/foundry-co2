@@ -16,17 +16,17 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   /** @override */
   getData(options) {
     const context = super.getData(options);
-    context.system = this.actor.system;
-    context.abilities = this.actor.system.abilities;
-    context.combat = this.actor.system.combat;
-    context.attributes = this.actor.system.attributes;
-    context.resources = this.actor.system.resources;
-    context.details = this.actor.system.details;
-    context.paths = context.items.filter((item) => item.type === ITEM_TYPE.PATH);
-    context.profile = context.items.find((item) => item.type === ITEM_TYPE.PROFILE);
-    context.capacities = context.items.filter((item) => item.type === ITEM_TYPE.CAPACITY);
-    context.traits = context.items.filter((item) => item.type === ITEM_TYPE.TRAIT);
-    context.features = context.items.filter((item) => item.type === ITEM_TYPE.FEATURE);
+      context.system = this.actor.system;
+      context.abilities = this.actor.system.abilities;
+      context.combat = this.actor.system.combat;
+      context.attributes = this.actor.system.attributes;
+      context.resources = this.actor.system.resources;
+      context.details = this.actor.system.details;
+      context.paths = this.actor.paths;
+      context.profile = this.actor.profile;
+      context.capacities = this.actor.capacities;
+      context.traits = this.actor.traits;
+      context.features = this.actor.features;
     return context;
   }
 
@@ -37,8 +37,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     // html.find(".capacity-unchecked").click(this._onCheckCapacity.bind(this));
     html.find(".item-edit").click(this._onEditItem.bind(this));
     html.find(".item-delete").click(this._onDeleteItem.bind(this));
-    html.find(".rollable").click(this._onRoll.bind(this));
-    
+    html.find(".rollable").click(this._onRoll.bind(this));    
   }
 
   /**

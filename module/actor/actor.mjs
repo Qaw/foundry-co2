@@ -5,10 +5,141 @@ import { Log } from "../utils/log.mjs";
 import { Utils } from "../system/utils.mjs";
 
 /**
- * Extend the base Actor entity
+ * @class CoActor
+ * @classdesc
  * @extends {Actor}
+ *
+ * @method
  */
 export default class CoActor extends Actor {
+  //#region accesseurs
+
+  /**
+   * @name abilitiesModifiers
+   * @description Get all the modifiers from Items of type Trait, Path or Capacity with the subtype Ability
+   * @public
+   * @returns {Modifier[]} An empty array or an array of Modifiers
+   */
+  get abilitiesModifiers() {
+    let modifiers = [];
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.ABILITY));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.ABILITY));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ABILITY));
+    return modifiers;
+  }
+
+  /**
+   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Combat
+   */
+  get combatModifiers() {
+    let modifiers = [];
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.COMBAT));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.COMBAT));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.COMBAT));
+    return modifiers;
+  }
+
+  /**
+   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Attribute
+   */
+  get attributeModifiers() {
+    let modifiers = [];
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.ATTRIBUTE));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.ATTRIBUTE));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ATTRIBUTE));
+    return modifiers;
+  }
+
+  /**
+   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Skill
+   */
+  get skillModifiers() {
+    let modifiers = [];
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.SKILL));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.SKILL));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.SKILL));
+    return modifiers;
+  }
+
+  /**
+   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Skill
+   */
+  get resourceModifiers() {
+    let modifiers = [];
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.RESOURCE));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.RESOURCE));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.RESOURCE));
+    return modifiers;
+  }
+
+  /**
+   * @returns les Items de type feature
+   */
+  get features() {
+    return this.items.filter((item) => item.type == ITEM_TYPE.FEATURE);
+  }
+
+  /**
+   * @returns les Items de type traits
+   */
+  get traits() {
+    return this.items.filter((item) => item.type == ITEM_TYPE.TRAIT);
+  }
+
+  get paths() {
+    return this.items.filter((item) => item.type == ITEM_TYPE.PATH);
+  }
+
+  get capacities() {
+    return this.items.filter((item) => item.type == ITEM_TYPE.CAPACITY);
+  }
+
+  /**
+   * @returns les Items de type equipment
+   */
+  get equipments() {
+    return this.items.filter((item) => item.type == ITEM_TYPE.EQUIPMENT);
+  }
+
+  /**
+   * @returns les Items de type equipment et de sous-type armor
+   */
+  get armors() {
+    return this.equipments.filter((item) => item.system.subtype == EQUIPMENT_SUBTYPE.ARMOR);
+  }
+
+  /**
+   * @returns les Items de type equipment et de sous-type shield
+   */
+  get shields() {
+    return this.equipments.filter((item) => item.system.subtype == EQUIPMENT_SUBTYPE.SHIELD);
+  }
+
+  /**
+   * @returns les Items équipés de type equipment et de sous-type armor
+   */
+  get equippedArmors() {
+    return this.armors.filter((item) => item.system.equipped);
+  }
+
+  /**
+   * @returns les Items équipés de type equipment et de sous-type shield
+   */
+  get equippedShields() {
+    return this.shields.filter((item) => item.system.equipped);
+  }
+
+  /**
+   * @returns le premier Itemp de type profile
+   */
+  get profile() {
+    return this.items.find((item) => item.type === ITEM_TYPE.PROFILE) ?? null;
+  }
+
+  //#endregion
+
+  //#region méthodes publiques
+
   /** @override */
   prepareBaseData() {
     return this._prepareCharacterData();
@@ -17,6 +148,107 @@ export default class CoActor extends Actor {
   prepareDerivedData() {
     return this._prepareCharacterDerivedData();
   }
+
+  /**
+   * Return all skill modifiers
+   * @param {String} ability str, dex ...
+   * @returns {Object} Name, value, description
+   */
+  getSkillBonuses(ability) {
+    const modifiersByTarget = this.skillModifiers.filter((m) => m.target === ability);
+    let bonuses = [];
+    modifiersByTarget.forEach((modifier) => {
+      bonuses.push({ name: modifier.sourceName, value: modifier.evaluate(this), description: modifier.sourceDescription });
+    });
+    return bonuses;
+  }
+
+  /**
+   *
+   * @param {*} key
+   * @returns l'objet correspondant à la clé
+   */
+  getEmbeddedItemByKey(key) {
+    return this.items.find((item) => item.system.key == key);
+  }
+
+  /**
+   * @name getMalusToInitiative
+   * @description Retourne le malus à l'initiative lié à l'armure et à l'incompétence armes/armures
+   * @public
+   *
+   * @returns {int} retourne le malus (négatif) ou 0
+   */
+  getMalusToInitiative() {
+    return this.getOverloadMalusToInitiative() + this.getIncompetentMalusToInitiative();
+  }
+
+  /**
+   * @name getOverloadMalusToInitiative
+   * @description Retourne le malus à l'initiative lié à l'armure
+   * @public
+   *
+   * @returns {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
+   */
+  getOverloadMalusToInitiative() {
+    return 0;
+  }
+
+  /**
+   * @name getIncompetentMalusToInitiative
+   * @description Retourne le malus à l'initiative lié à l'incompétence armes/armures
+   * @public
+   *
+   * @returns {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
+   */
+  getIncompetentMalusToInitiative() {
+    return 0;
+  }
+
+  /**
+   * @name getDefenceFromArmorAndShield
+   * @description calcule la défense de l'armure et du bouclier équipés
+   * @returns {Int} la somme des DEF
+   */
+  getDefenceFromArmorAndShield() {
+    return this.getDefenceFromArmor() + this.getDefenceFromShield();
+  }
+
+  /**
+   * @name getDefenceFromArmor
+   * @description calcule la défense de l'armure équipée
+   * @returns {Int} la valeur de défense
+   */
+  getDefenceFromArmor() {
+    let protections = this.equippedArmors.map((i) => i.system.def);
+    return this._addAllValues(protections);
+  }
+
+  /**
+   * @name getDefenceFromShield
+   * @description calcule la défense du bouclier équipé
+   * @returns {Int} la valeur de défense
+   */
+  getDefenceFromShield() {
+    let protections = this.equippedShields.map((i) => i.system.def);
+    return this._addAllValues(protections);
+  }
+
+  deleteItem(itemId) {
+    const item = this.items.find((item) => item.id === itemId);
+
+    switch (item.type) {
+      case ITEM_TYPE.TRAIT:
+        return this.deleteEmbeddedDocuments("Item", [itemId]);
+      case ITEM_TYPE.CAPACITY:
+        return this.deleteEmbeddedDocuments("Item", [itemId]);
+      case ITEM_TYPE.FEATURE:
+        return this.deleteEmbeddedDocuments("Item", [itemId]);
+    }
+  }
+  //#endregion
+
+  //#region méthodes privées
 
   /**
    * Perform any Character specific preparation.
@@ -34,7 +266,7 @@ export default class CoActor extends Actor {
       const abilityBonus = skill.ability && this.system.abilities[skill.ability].mod ? this.system.abilities[skill.ability].mod : 0;
 
       if ([COMBAT.MELEE, COMBAT.RANGED, COMBAT.MAGIC].includes(key)) {
-        this._prepareAttacks(key, skill, abilityBonus, bonuses);
+        this._prepareAttack(key, skill, abilityBonus, bonuses);
       }
 
       if (key === COMBAT.INIT) {
@@ -46,7 +278,6 @@ export default class CoActor extends Actor {
       }
     }
 
-    // HP Max
     this._prepareHPMax();
 
     for (const [key, skill] of Object.entries(this.system.resources)) {
@@ -132,7 +363,7 @@ export default class CoActor extends Actor {
     skill.tooltipValue = initModifiers.tooltip;
   }
 
-  _prepareAttacks(key, skill, abilityBonus, bonuses) {
+  _prepareAttack(key, skill, abilityBonus, bonuses) {
     const levelBonus = this.system.attributes.level.value ? this.system.attributes.level.value : 0;
     const combatModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
     // skill.value = skill.base + abilityBonus + levelBonus;
@@ -142,6 +373,13 @@ export default class CoActor extends Actor {
     skill.tooltipMod = combatModifiers.tooltip;
   }
 
+  /**
+   * @name _prepareAbilities
+   * @description Calcule la valeur et le mod des caractéristiques <br/>
+   *              Valeur = base + bonus + modificateurs <br/>
+   *              bonus est à la somme du bonus de la fiche et du champ dédié aux Active Effets <br/>
+   *              modificateurs est la somme de tous les modificateurs modifiant la caractéristique, quelle que soit la source
+   */
   _prepareAbilities() {
     for (const [key, ability] of Object.entries(this.system.abilities)) {
       // Log.debug(ability);
@@ -156,6 +394,18 @@ export default class CoActor extends Actor {
   }
 
   /**
+   * @name _addAllValues
+   * @description Calcul la somme d'un tableau de valeurs positives ou négatives
+   *
+   * @param {*} array Un tableau de valeurs
+   * @returns {int} 0 ou la somme des valeurs
+   */
+  _addAllValues(array) {
+    return array.length > 0 ? array.reduce((acc, curr) => acc + curr, 0) : 0;
+  }
+  //#endregion
+
+  /**
    * @returns undefined if no items or no items of specie type
    */
   // get specie() {
@@ -163,180 +413,6 @@ export default class CoActor extends Actor {
   //   return this.items.find(i => i.type === MODIFIER_TYPE.SPECIE);
   // }
 
-  /**
-   * @returns {Modifier[]} All the modifiers from Items of type Trait, Path or Capacity with the subtype Abilitys
-   */
-  get abilitiesModifiers() {
-    let modifiers = [];
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.ABILITY));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.ABILITY));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ABILITY));
-    return modifiers;
-  }
-
-  /**
-   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Combat
-   */
-  get combatModifiers() {
-    let modifiers = [];
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.COMBAT));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.COMBAT));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.COMBAT));
-    return modifiers;
-  }
-
-  /**
-   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Attribute
-   */
-  get attributeModifiers() {
-    let modifiers = [];
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.ATTRIBUTE));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.ATTRIBUTE));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ATTRIBUTE));
-    return modifiers;
-  }
-
-  /**
-   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Skill
-   */
-  get skillModifiers() {
-    let modifiers = [];
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.SKILL));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.SKILL));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.SKILL));
-    return modifiers;
-  }
-
-  /**
-   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Skill
-   */
-  get resourceModifiers() {
-    let modifiers = [];
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.RESOURCE));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.RESOURCE));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.RESOURCE));
-    return modifiers;
-  }
-
-  get features() {
-    return this.items.filter((item) => item.type == ITEM_TYPE.FEATURE);
-  }
-
-  get traits() {
-    return this.items.filter((item) => item.type == ITEM_TYPE.TRAIT);
-  }
-
-  get paths() {
-    return this.items.filter((item) => item.type == ITEM_TYPE.PATH);
-  }
-
-  get capacities() {
-    return this.items.filter((item) => item.type == ITEM_TYPE.CAPACITY);
-  }
-
-  get armors() {
-    return this.items.filter((item) => item.type == ITEM_TYPE.EQUIPMENT && item.system.subtype == EQUIPMENT_SUBTYPE.ARMOR);
-  }
-
-  get shields() {
-    return this.items.filter((item) => item.type == ITEM_TYPE.EQUIPMENT && item.system.subtype == EQUIPMENT_SUBTYPE.SHIELD);
-  }
-
-  get equippedArmors() {
-    return this.armors.filter((item) => item.system.equipped);
-  }
-
-  get equippedShields() {
-    return this.shields.filter((item) => item.system.equipped);
-  }
-
-  get profile() {
-    return this.items.find((item) => item.type === ITEM_TYPE.PROFILE) ?? null;
-  }
-
-  /**
-   * Return all skill modifiers
-   * @param {String} ability str, dex ...
-   * @returns {Object} Name, value, description
-   */
-  getSkillBonuses(ability) {
-    const modifiersByTarget = this.skillModifiers.filter((m) => m.target === ability);
-    let bonuses = [];
-    modifiersByTarget.forEach((modifier) => {
-      bonuses.push({ name: modifier.sourceName, value: modifier.evaluate(this), description: modifier.sourceDescription });
-    });
-    return bonuses;
-  }
-
-  getEmbeddedItemByKey(key) {
-    return this.items.find((item) => item.system.key == key);
-  }
-
-  /**
-   * @name getMalusToInitiative
-   * @description Retourne le malus à l'initiative lié à l'armure et à l'incompétence armes/armures
-   * @public
-   *
-   * @returns {int} retourne le malus (négatif) ou 0
-   */
-  getMalusToInitiative() {
-    return this.getOverloadMalusToInitiative() + this.getIncompetentMalusToInitiative();
-  }
-
-  /**
-   * @name getOverloadMalusToInitiative
-   * @description Retourne le malus à l'initiative lié à l'armure
-   * @public
-   *
-   * @returns {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
-   */
-  getOverloadMalusToInitiative() {
-    return 0;
-  }
-
-  /**
-   * @name getIncompetentMalusToInitiative
-   * @description Retourne le malus à l'initiative lié à l'incompétence armes/armures
-   * @public
-   *
-   * @returns {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
-   */
-  getIncompetentMalusToInitiative() {
-    return 0;
-  }
-
-  /**
-   * @name getDefenceFromArmorAndShield
-   * @description calcule la défense de l'armure et du bouclier équipés
-   * @returns {Int} la somme des DEF
-   */
-  getDefenceFromArmorAndShield() {
-    return this.getDefenceFromArmor() + this.getDefenceFromShield();
-  }
-
-  /**
-   * @name getDefenceFromArmor
-   * @description calcule la défense de l'armure équipée
-   * @returns {Int} la valeur de défense
-   */
-  getDefenceFromArmor() {
-    let protections = this.equippedArmors.map((i) => i.system.def);
-    return this._addAllValues(protections);
-  }
-
-  /**
-   * @name getDefenceFromShield
-   * @description calcule la défense du bouclier équipé
-   * @returns {Int} la valeur de défense
-   */
-  getDefenceFromShield() {
-    let protections = this.equippedShields.map((i) => i.system.def);
-    return this._addAllValues(protections);
-  }
-
-  _addAllValues(array) {
-    return array.length > 0 ? array.reduce((acc, curr) => acc + curr, 0) : 0;
-  }
   // toggleCapacity(pathId, capacityKey, status) {
   //   const path = this.items.get(pathId);
   //   let capacities = duplicate(path.system.capacities);
@@ -404,17 +480,4 @@ export default class CoActor extends Actor {
   //       }
   //   }
   // }
-
-  deleteItem(itemId) {
-    const item = this.items.find((item) => item.id === itemId);
-
-    switch (item.type) {
-      case ITEM_TYPE.TRAIT:
-        return this.deleteEmbeddedDocuments("Item", [itemId]);
-      case ITEM_TYPE.CAPACITY:
-        return this.deleteEmbeddedDocuments("Item", [itemId]);
-      case ITEM_TYPE.FEATURE:
-        return this.deleteEmbeddedDocuments("Item", [itemId]);
-    }
-  }
 }
