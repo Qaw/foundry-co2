@@ -5,6 +5,12 @@
             <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img">
         </div>
         <div>Type : {{item.type}}</div>
+        {{#if (eq item.type 'equipment')}}
+        <div>
+            Subtype : <input name="system.subtype" type="text" value="{{item.system.subtype}}" placeholder="Item Subtype"/> <br/>
+            MartialCategory : <input name="system.martialCategory" type="text" value="{{item.system.martialCategory}}" placeholder="Item martialCategory"/>
+        </div>
+        {{/if}}
         <div class="header-top">
             <div class="header-details flexrow">
                 <h1 class="charname">

@@ -116,6 +116,13 @@ export default class CoActor extends Actor {
   }
 
   /**
+   * @returns les Items de type equipment et de sous-type weapon
+   */
+  get weapons() {
+    return this.equipments.filter((item) => item.system.subtype == EQUIPMENT_SUBTYPE.WEAPON);
+  }
+
+  /**
    * @returns les Items équipés de type equipment et de sous-type armor
    */
   get equippedArmors() {
@@ -234,6 +241,11 @@ export default class CoActor extends Actor {
     return this._addAllValues(protections);
   }
 
+  /**
+   * 
+   * @param {*} itemId 
+   * @returns 
+   */
   deleteItem(itemId) {
     const item = this.items.find((item) => item.id === itemId);
 
@@ -245,6 +257,48 @@ export default class CoActor extends Actor {
       case ITEM_TYPE.FEATURE:
         return this.deleteEmbeddedDocuments("Item", [itemId]);
     }
+  }
+
+  /**
+   * 
+   * @param {*} itemId 
+   * @returns 
+   */
+  isTrainedWithWeapon(itemId) {
+    const item = this.weapons.find((item) => item.id === itemId);
+    if (!item) return null;
+    const profile = this.profile;
+    if (!profile) return null;
+    const training = item.system.martialCategory;
+    return profile.system.martialTrainingsWeapons[training];
+  }
+
+  /**
+   * 
+   * @param {*} itemId 
+   * @returns 
+   */
+  isTrainedWithArmor(itemId) {
+    const item = this.armors.find((item) => item.id === itemId);
+    if (!item) return null;
+    const profile = this.profile;
+    if (!profile) return null;
+    const training = item.system.martialCategory;
+    return profile.system.martialTrainingsArmors[training];
+  }
+
+  /**
+   * 
+   * @param {*} itemId 
+   * @returns 
+   */
+  isTrainedWithShield(itemId) {
+    const item = this.shields.find((item) => item.id === itemId);
+    if (!item) return null;
+    const profile = this.profile;
+    if (!profile) return null;
+    const training = item.system.martialCategory;
+    return profile.system.martialTrainingsShields[training];
   }
   //#endregion
 

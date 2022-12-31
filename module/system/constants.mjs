@@ -87,7 +87,8 @@ export const ITEM_TYPE = {
 
 export const EQUIPMENT_SUBTYPE = {
     ARMOR: "armor",
-    SHIELD: "shield"
+    SHIELD: "shield",
+    WEAPON: "weapon"
 }
 
 export const ACTOR_TYPE = {

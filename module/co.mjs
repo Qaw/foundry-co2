@@ -53,7 +53,9 @@ Hooks.once("init", async function () {
     if (!game.co.config.martialTrainingsArmors) {
         game.co.config.martialTrainingsArmors = [];
     }
-
+    if (!game.co.config.martialTrainingsShields) {
+        game.co.config.martialTrainingsShields = [];
+    }
 
 });
 

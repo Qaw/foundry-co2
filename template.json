@@ -284,6 +284,7 @@
       },
       "physicalItem": {
         "subtype": "",
+        "martialCategory": "",
         "quantity": 1,
         "weight": 0,
         "price": 0,
@@ -398,6 +399,7 @@
       "proficiencies": [],
       "martialTrainingsWeapons": [],
       "martialTrainingsArmors": [],
+      "martialTrainingsShields": [],
       "spellcasting": null,
       "mpFormula": null
     },

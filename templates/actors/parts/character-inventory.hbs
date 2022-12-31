@@ -36,4 +36,31 @@
       <span class="item-delete"><i class="fas fa-trash"></i></span>
     </div>
   {{/each}}
+
+  <h1 class="field-label header">Armes</h1>
+  {{#each weapons as |weapon id|}}
+    {{log (concat "Chroniques Oubliées | " id) weapon}}
+    <div class="cell item" data-item-id="{{weapon._id}}">
+      <span class="field-value">{{weapon.name}}</span>
+      <span class="item-delete"><i class="fas fa-trash"></i></span>
+    </div>
+  {{/each}}
+
+  <h1 class="field-label header">Armures</h1>
+  {{#each armors as |armor id|}}
+    {{log (concat "Chroniques Oubliées | " id) armor}}
+    <div class="cell item" data-item-id="{{armor._id}}">
+      <span class="field-value">{{armor.name}}</span>
+      <span class="item-delete"><i class="fas fa-trash"></i></span>
+    </div>
+  {{/each}}
+
+  <h1 class="field-label header">Boucliers</h1>
+  {{#each shields as |shield id|}}
+    {{log (concat "Chroniques Oubliées | " id) shield}}
+    <div class="cell item" data-item-id="{{shield._id}}">
+      <span class="field-value">{{shield.name}}</span>
+      <span class="item-delete"><i class="fas fa-trash"></i></span>
+    </div>
+  {{/each}}
 </div>
