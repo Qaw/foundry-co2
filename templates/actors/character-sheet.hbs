@@ -1,19 +1,6 @@
 <form class="{{cssClass}} flexrow" autocomplete="off">
     {{log "Chroniques Oubliées | actor" this}}
-    <div class="sidebar">
-        <div class="portrait">
-            <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
-        </div>
-        <ul class="features">
-            <li class="featured-item" data-item-id="{{profile._id}}">{{profile.name}}</li>
-            {{#each features as |feature id|}}
-                <li class="featured-item" data-item-id="{{feature._id}}">{{feature.name}}</li>
-            {{/each}}   
-            {{#each traits as |trait id|}}
-                <li class="featured-item" data-item-id="{{trait._id}}">{{trait.name}}</li>
-            {{/each}}       
-        </ul>
-    </div>
+    {{> "systems/co/templates/actors/parts/character-sidebar.hbs"}}
     <div class="main flexcol">
         <div class="header flexrow">
             <div class="details">
@@ -21,8 +8,6 @@
                 <div class="form-value"><input class="field-value sans" name="name" type="text" value="{{actor.name}}" placeholder="Name" data-dtype="String"/></div>
                 <div class="form-label"><a class="field-label header levelUp">{{ localize 'CO.label.long.level' }}</a></div>
                 <div class="form-value"><input class="field-value sans" name="system.attributes.level.value" type="text" value="{{attributes.level.value}}" data-dtype="Number"/></div>
-                <div class="form-label"><span class="field-label header">Points de vie: </span></div>
-                <div class="form-value"><input class="field-value sans" style="width: 30px;" name="system.attributes.hp.base" type="text" value="{{attributes.hp.base}}" data-dtype="Number"/><input class="field-value sans" style="width: 30px;" name="system.attributes.hp.value" type="text" value="{{attributes.hp.value}}" data-dtype="Number"/>/<input class="field-value sans" style="width: 30px;" name="system.attributes.hp.max" type="text" value="{{attributes.hp.max}}" data-dtype="Number" data-tooltip="{{attributes.hp.tooltip}}"/></div>
                 <div class="nav">
                     {{!-- Sheet Tab Navigation --}}
                     <nav class="sheet-tabs tabs" data-group="primary">

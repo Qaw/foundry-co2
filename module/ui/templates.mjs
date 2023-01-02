@@ -10,6 +10,8 @@ export const preloadHandlebarsTemplates = async function () {
   const templatePaths = [
     // ACTOR
     "systems/" + SYSTEM_NAME + "/templates/actors/character-sheet.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-sidebar.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-features.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-stats.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-actions.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-inventory.hbs",

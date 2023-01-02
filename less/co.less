@@ -4,6 +4,7 @@
     --color-shadow-dark: #000;
 }
 .co {
+    @import "variables";
     @import "colors";
     @import "typography";
     @import "form-reset";
@@ -96,60 +97,72 @@
                             .sheet-body {
                                 .stats {
                                     height: 100%;
-                                    .abilities-container {
-                                        width: 50%;
-                                        display: grid;
-                                        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-                                        grid-gap: 3px;
-                                        grid-auto-columns: minmax(20px, 50px);
-                                        .cell {
-                                            justify-self: center;
-                                            align-self: center;
-                                            min-width: 40px;
-                                            .field-value {
-                                                max-width: 40px;
-                                            }
-                                            .header {
-                                                color: darkslategray;
-                                                font-weight: bold;
+                                    .stats-layout {
+                                        .stats-layout-top {
+                                            .stats-layout-topright {
+                                                margin-left: @layout-margin;
                                             }
                                         }
-                                    }
-                                    .combat-container {
-                                        width: 50%;
-                                        display: grid;
-                                        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-                                        grid-gap: 3px;
-                                        grid-auto-columns: minmax(20px, 50px);
-                                        .cell {
-                                            justify-self: center;
-                                            align-self: center;
-                                            min-width: 40px;
-                                            .field-value {
-                                                max-width: 40px;
-                                            }
-                                            .header {
-                                                color: darkslategray;
-                                                font-weight: bold;
+                                        .stats-layout-middle,
+                                        .stats-layout-bottom {
+                                            margin-top: @layout-margin;
+                                            .stats-layout-middleright,
+                                            .stats-layout-bottomright {
+                                                margin-left: @layout-margin;
                                             }
                                         }
-                                    }
-                                    .items-container {
-                                        width: 50%;
-                                        display: grid;
-                                        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-                                        grid-gap: 3px;
-                                        grid-auto-columns: minmax(20px, 50px);
-                                        .cell {
-                                            justify-self: center;
-                                            align-self: center;
-                                            min-width: 40px;
-                                            .field-value {
-                                                max-width: 40px;
+                                        .abilities-container {
+                                            display: grid;
+                                            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+                                            grid-gap: 3px;
+                                            grid-auto-columns: minmax(20px, 50px);
+                                            .cell {
+                                                justify-self: center;
+                                                align-self: center;
+                                                min-width: 40px;
+                                                .field-value {
+                                                    max-width: 40px;
+                                                }
+                                                .header {
+                                                    color: darkslategray;
+                                                    font-weight: bold;
+                                                }
                                             }
-                                            .header {
-                                                color: darkslategray;
-                                                font-weight: bold;
+                                        }
+                                        .combat-container, .resources-container {
+                                            display: grid;
+                                            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+                                            grid-gap: 3px;
+                                            grid-auto-columns: minmax(20px, 50px);
+                                            .cell {
+                                                justify-self: center;
+                                                align-self: center;
+                                                min-width: 40px;
+                                                .field-value {
+                                                    max-width: 40px;
+                                                }
+                                                .header {
+                                                    color: darkslategray;
+                                                    font-weight: bold;
+                                                }
+                                            }
+                                        }
+                                        .hp-container {
+                                            display: grid;
+                                            grid-template-columns: 1fr 1fr 1fr;
+                                            grid-gap: 3px;
+                                            grid-auto-columns: minmax(20px, 50px);
+                                            .cell {
+                                                justify-self: center;
+                                                align-self: center;
+                                                min-width: 40px;
+                                                .field-value {
+                                                    max-width: 40px;
+                                                }
+                                                .header {
+                                                    color: darkslategray;
+                                                    font-weight: bold;
+                                                }
                                             }
                                         }
                                     }
@@ -171,7 +184,27 @@
                                         }
                                     }
                                 }
-                                .inventory {}
+                                .inventory {
+                                    .items-container {
+                                        width: 50%;
+                                        display: grid;
+                                        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+                                        grid-gap: 3px;
+                                        grid-auto-columns: minmax(20px, 50px);
+                                        .cell {
+                                            justify-self: center;
+                                            align-self: center;
+                                            min-width: 40px;
+                                            .field-value {
+                                                max-width: 40px;
+                                            }
+                                            .header {
+                                                color: darkslategray;
+                                                font-weight: bold;
+                                            }
+                                        }
+                                    }
+                                }
                                 .capacities {}
                                 .effects {}
                                 .bio {}

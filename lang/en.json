@@ -31,6 +31,7 @@
     },
     "label": {
       "long": {
+        "label" : "Label",
         "stat": "Caractéristique",
         "superior": "Supérieur",
         "base": "Base",
@@ -39,6 +40,7 @@
         "malus": "Malus",
         "value": "Valeur",
         "mod": "Modificateur",
+        "max": "Maximum",
         "modifiers": "Modificateurs",
         "name": "Nom",
         "level": "Niveau",
@@ -52,9 +54,13 @@
         "delete": "Supprimer",
         "difficulty": "Difficulté",
         "effects": "Effets",
-        "properties": "Propriétés"
+        "properties": "Propriétés",
+        "hp": "Points de vie",
+        "hd": "Dé de vie",
+        "rp": "Points de récupération"
       },
       "short": {
+        "label" : "Label",
         "stat": "Carac.",
         "superior": "Sup.",
         "base": "Base",
@@ -63,6 +69,7 @@
         "malus": "Malus",
         "value": "Val.",
         "mod": "Mod",
+        "max": "Max",
         "modifiers": "Mods",
         "name": "Nom",
         "level": "Niv.",
@@ -76,7 +83,10 @@
         "delete": "Suppr.",
         "difficulty": "Diff.",
         "effects": "FX",
-        "properties": "Props"
+        "properties": "Props",
+        "hp": "PV",
+        "hd": "DV",
+        "rp": "PR"
       }
     },
     "ui": {
@@ -86,7 +96,8 @@
       "kh": "Garder le plus haut",
       "kl": "Garder le plus bas",
       "duration": "Durée",
-      "action": "Action"
+      "action": "Action",
+      "none": "--"
     },
     "properties": {
       "equipable": "Équipable",
@@ -130,6 +141,22 @@
         "def": "DEF"
       }
     },
+    "resources": {
+      "long": {
+        "fortune": "Points de chance",
+        "mana": "Points de mana",
+        "recovery": "Points de récupération"
+      },
+      "short": {
+        "fortune": "PC",
+        "mana": "PM",
+        "recovery": "PR",
+        "primary": "Prim.",
+        "secondary": "Sec.",
+        "tertiary": "Ter."
+      },
+      "mpFormula": "Formule des points de magie"
+    },
     "tabs": {
       "bio": "Biographie",
       "stats": "Caractéristiques",
@@ -145,10 +172,31 @@
       "skillCheck": "Test de compétence"
     },
     "roll": {
+      "skillcheck": "Test de compétence",
       "critical": "Succès critique",
       "success": "Succès",
       "fumble": "Échec critique",
       "failure": "Échec"
+    },
+    "modifier": {
+      "type": {
+        "feature": "Feature",
+        "trait": "Trait",
+        "profile": "Profil",
+        "capacity": "Capacité"
+      },
+      "subtype": {
+        "ability": "Caractéristique",
+        "combat": "Combat",
+        "attribute": "Attribut",
+        "skill": "Jet de compétence"
+      }
+    },
+    "config": {
     }
+  },
+  "SETTINGS": {
+    "BaseDef": "Valeur de défense de base",
+    "BaseDefHint": "Valeur de la base de la défense"
   }
 }

@@ -436,79 +436,74 @@ Copied from dnd5e
 .co.sheet.actor .window-content form.editable .main .content .sheet-body .stats {
   height: 100%;
 }
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .abilities-container {
-  width: 50%;
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .stats-layout-top .stats-layout-topright {
+  margin-left: 20px;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .stats-layout-middle,
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .stats-layout-bottom {
+  margin-top: 20px;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .stats-layout-middle .stats-layout-middleright,
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .stats-layout-bottom .stats-layout-middleright,
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .stats-layout-middle .stats-layout-bottomright,
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .stats-layout-bottom .stats-layout-bottomright {
+  margin-left: 20px;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .abilities-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 3px;
   grid-auto-columns: minmax(20px, 50px);
 }
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .abilities-container .cell {
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .abilities-container .cell {
   justify-self: center;
   align-self: center;
   min-width: 40px;
 }
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .abilities-container .cell .field-value {
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .abilities-container .cell .field-value {
   max-width: 40px;
 }
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .abilities-container .cell .header {
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .abilities-container .cell .header {
   color: darkslategray;
   font-weight: bold;
 }
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .combat-container {
-  width: 50%;
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .combat-container,
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .resources-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 3px;
   grid-auto-columns: minmax(20px, 50px);
 }
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .combat-container .cell {
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .combat-container .cell,
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .resources-container .cell {
   justify-self: center;
   align-self: center;
   min-width: 40px;
 }
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .combat-container .cell .field-value {
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .combat-container .cell .field-value,
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .resources-container .cell .field-value {
   max-width: 40px;
 }
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .combat-container .cell .header {
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .combat-container .cell .header,
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .resources-container .cell .header {
   color: darkslategray;
   font-weight: bold;
 }
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .resources-container {
-  width: 50%;
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .hp-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 3px;
   grid-auto-columns: minmax(20px, 50px);
 }
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .resources-container .cell {
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .hp-container .cell {
   justify-self: center;
   align-self: center;
   min-width: 40px;
 }
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .resources-container .cell .field-value {
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .hp-container .cell .field-value {
   max-width: 40px;
 }
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .resources-container .cell .header {
-  color: darkslategray;
-  font-weight: bold;
-}
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .items-container {
-  width: 50%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-gap: 3px;
-  grid-auto-columns: minmax(20px, 50px);
-}
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .items-container .cell {
-  justify-self: center;
-  align-self: center;
-  min-width: 40px;
-}
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .items-container .cell .field-value {
-  max-width: 40px;
-}
-.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .items-container .cell .header {
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .hp-container .cell .header {
   color: darkslategray;
   font-weight: bold;
 }
@@ -528,6 +523,25 @@ Copied from dnd5e
 }
 .co.sheet.actor .window-content form.editable .main .content .sheet-body .actions .actions-container .cell .field-value {
   max-width: 40px;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .inventory .items-container {
+  width: 50%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 3px;
+  grid-auto-columns: minmax(20px, 50px);
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .inventory .items-container .cell {
+  justify-self: center;
+  align-self: center;
+  min-width: 40px;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .inventory .items-container .cell .field-value {
+  max-width: 40px;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .inventory .items-container .cell .header {
+  color: darkslategray;
+  font-weight: bold;
 }
 .co.sheet.actor .window-content form.editable .editor {
   min-height: 100px;

@@ -31,6 +31,7 @@
     },
     "label": {
       "long": {
+        "label" : "Label",
         "stat": "Caractéristique",
         "superior": "Supérieur",
         "base": "Base",
@@ -59,6 +60,7 @@
         "rp": "Points de récupération"
       },
       "short": {
+        "label" : "Label",
         "stat": "Carac.",
         "superior": "Sup.",
         "base": "Base",
