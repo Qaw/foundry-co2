@@ -57,7 +57,11 @@
         "properties": "Propriétés",
         "hp": "Points de vie",
         "hd": "Dé de vie",
-        "rp": "Points de récupération"
+        "rp": "Points de récupération",
+        "type" : "Type",
+        "subtype" : "Sous-type",
+        "category" : "Catégorie",
+        "martialCategory" : "Catégorie martiale"
       },
       "short": {
         "label" : "Label",
@@ -86,7 +90,11 @@
         "properties": "Props",
         "hp": "PV",
         "hd": "DV",
-        "rp": "PR"
+        "rp": "PR",
+        "type" : "Tpe",
+        "subtype" : "Ss-tpe",
+        "category" : "Cat.",
+        "martialCategory" : "Cat. martiale"
       }
     },
     "ui": {
@@ -191,6 +199,20 @@
         "attribute": "Attribut",
         "skill": "Jet de compétence"
       }
+    },
+    "itemTypes" : {
+      "item": "Objet",
+      "equipment": "Équipement",
+      "feature": "Feature",
+      "trait": "Trait",
+      "profile": "Profil",
+      "consumable": "Consommable/Munition",
+      "loot": "Butin/Trésor",
+      "currency": "Monnaie",
+      "container": "Conteneur",
+      "action": "Action",
+      "path": "Voie",
+      "capacity": "Capacité"
     },
     "config": {
     }

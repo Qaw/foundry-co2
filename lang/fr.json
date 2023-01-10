@@ -27,7 +27,8 @@
     },
     "notif": {
       "ready": "Système Chroniques Oubliées initialisé",
-      "noCapacitySelected": "Aucune capacité sélectionnée"
+      "noCapacitySelected": "Aucune capacité sélectionnée",
+      "inventory.empty" : "L'inventaire est vide"
     },
     "label": {
       "long": {
@@ -57,7 +58,11 @@
         "properties": "Propriétés",
         "hp": "Points de vie",
         "hd": "Dé de vie",
-        "rp": "Points de récupération"
+        "rp": "Points de récupération",
+        "type" : "Type",
+        "subtype" : "Sous-type",
+        "category" : "Catégorie",
+        "martialCategory" : "Catégorie martiale"
       },
       "short": {
         "label" : "Label",
@@ -86,7 +91,11 @@
         "properties": "Props",
         "hp": "PV",
         "hd": "DV",
-        "rp": "PR"
+        "rp": "PR",
+        "type" : "Tpe",
+        "subtype" : "Ss-tpe",
+        "category" : "Cat.",
+        "martialCategory" : "Cat. martiale"
       }
     },
     "ui": {
@@ -190,6 +199,34 @@
         "combat": "Combat",
         "attribute": "Attribut",
         "skill": "Jet de compétence"
+      }
+    },
+    "itemTypes" : {
+      "item": "Objet",
+      "equipment": "Équipement",
+      "feature": "Feature",
+      "trait": "Trait",
+      "profile": "Profil",
+      "consumable": "Consommable/Munition",
+      "loot": "Butin/Trésor",
+      "currency": "Monnaie",
+      "container": "Conteneur",
+      "action": "Action",
+      "path": "Voie",
+      "capacity": "Capacité"
+    },
+    "equipment" : {
+      "subtypes" : {
+        "armor" : "Armure",
+        "shield" : "Bouclier",
+        "weapon" : "Arme",
+        "misc" : "Divers"
+      },
+      "martialCategories" : {
+        "melee": "Arme de contact",
+        "ranged": "Arme à distance",
+        "thrown": "Arme de jet",
+        "magical": "Arme magique"
       }
     },
     "config": {

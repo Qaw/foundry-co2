@@ -1,17 +1,33 @@
 <h3 class="form-header">{{localize "ITEM.TypeEquipment"}}</h3>
+
 <div class="form-group">
-    <label>{{localize "CO.label.long.properties"}}</label>
+    <label>{{localize "CO.label.long.subtype"}}</label>
     <div class="form-fields">
-        <label class="checkbox"> <input type="checkbox" name="data.properties.equipable" {{checked data.properties.equipable}}> {{localize "CO.properties.equipable"}}</label>
-        <label class="checkbox"> <input type="checkbox" name="data.properties.stackable" {{checked data.properties.stackable}}> {{localize "CO.properties.stackable"}}</label>
-        <label class="checkbox"> <input type="checkbox" name="data.properties.unique"    {{checked data.properties.unique}}> {{localize "CO.properties.unique"}}</label>
-        <label class="checkbox"><input type="checkbox" name="data.properties.consumable" {{checked data.properties.consumable}}> {{localize "CO.properties.consumable"}}</label>
-        <label class="checkbox"> <input type="checkbox" name="data.properties.tailored"  {{checked data.properties.tailored}}> {{localize "CO.properties.tailored"}}</label>
-        <label class="checkbox"><input type="checkbox" name="data.properties.2H"         {{checked data.properties.2H}}> {{localize "CO.properties.2H"}}</label>
+        <select name="system.subtype" data-type="String" style="width:100%">
+            {{#select system.subtype}}
+                {{#each @root.config.equipment.subtypes as |label idx|}}
+                    <option value="{{idx}}">{{localize label}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
     </div>
 </div>
+
 <div class="form-group">
-    <label>{{localize "CO.label.long.modifiers"}}</label>
+    <label>{{localize "CO.label.long.martialCategory"}}</label>
+    <div class="form-fields">
+        <select name="system.martialCategory" data-type="String" style="width:100%">
+            {{#select system.martialCategory}}
+                {{#each @root.config.equipment.martialCategories as |label idx|}}
+                    <option value="{{idx}}">{{localize label}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    </div>
+</div>
+
+<div class="form-group">
+    <label>{{localize "CO.label.long.properties"}}</label>
     <div class="form-fields">
         <label class="checkbox"> <input type="checkbox" name="data.properties.equipable" {{checked data.properties.equipable}}> {{localize "CO.properties.equipable"}}</label>
         <label class="checkbox"> <input type="checkbox" name="data.properties.stackable" {{checked data.properties.stackable}}> {{localize "CO.properties.stackable"}}</label>

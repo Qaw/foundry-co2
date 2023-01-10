@@ -1,0 +1,37 @@
+{{#if (gt inventory.count 0)}}
+    {{#each inventory.categories as |category id|}}
+        {{#if (gt category.items.length 0)}}
+            <ol class="inventory-list foldable {{#if (includes ../folded.inventory category.id)}}folded{{/if}}" data-tab="inventory" data-category="{{category.id}}">
+                <li class="inventory-header flexrow">
+                    <h3 class="item-name flexrow">{{localize category.label}}</h3>
+                    <div class="item-detail">{{localize "CO.ui.qty"}}</div>
+                    <div class="item-detail"><i title="{{localize "CO.ui.stackValue"}}" class="fas fa-coins" style="color:silver"></i></div>
+                    {{#if (or (equals ../actor.type "character") (equals ../actor.type "npc"))}}<div class="item-detail">{{localize "CO.ui.action"}}</div>{{/if}}
+                    {{#if @root.editable}}
+                        <div class="item-controls">
+                            <a class="item-control item-create" data-pack="items" data-open="0" title="{{localize "CO.item.add"}}"><i class="fas fa-plus"></i>&nbsp; {{localize "CO.ui.add"}}</a>
+                        </div>
+                    {{/if}}
+                </li>
+                <ol class="item-list" {{#if (includes ../folded.inventory category.id)}}style="display: none;"{{/if}}>
+                    {{#each category.items as |item id|}}
+                        {{> "systems/co/templates/actors/parts/inventory/character-inventory-item.hbs" item owner=../../actor}}
+                    {{/each}}
+                </ol>
+            </ol>
+        {{/if}}
+    {{/each}}
+{{else}}
+    <p class="empty">{{localize "CO.notif.inventory.empty"}}</p>
+{{/if}}
+
+<div class="items-container">
+  {{!log "items" this}}
+  {{#each items as |item id|}}
+    {{log (concat "Chroniques Oubliées | " id) item}}
+    <div class="cell item" data-item-id="{{item._id}}">
+      <span class="field-value">{{item.name}}</span>
+      <span class="item-delete"><i class="fas fa-trash"></i></span>
+    </div>
+  {{/each}}
+</div>

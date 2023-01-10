@@ -14,7 +14,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-features.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-stats.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-actions.hbs",
-    "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-inventory.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/actors/parts/inventory/character-inventory.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-capacities.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-effects.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-bio.hbs",
@@ -25,6 +25,7 @@ export const preloadHandlebarsTemplates = async function () {
 
     // ITEM
     "systems/" + SYSTEM_NAME + "/templates/items/item-sheet.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/items/parts/item-sidebar.hbs",
     "systems/" + SYSTEM_NAME + "/templates/items/parts/equipment-partial.hbs",
     "systems/" + SYSTEM_NAME + "/templates/items/parts/feature-partial.hbs",
     "systems/" + SYSTEM_NAME + "/templates/items/parts/profile-partial.hbs",

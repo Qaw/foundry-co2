@@ -10,7 +10,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
             width: 600,
             height: 600,
             classes: ["co", "sheet", "item"],
-            tabs: [{navSelector: ".sheet-navigation", contentSelector: ".sheet-body", initial: "description"}],
+            tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description"}],
             dragDrop: [{dragSelector: ".item-list .item", dropSelector: null}],
         });
     }
@@ -82,25 +82,25 @@ export default class CoItemSheet extends CoBaseItemSheet {
      }
      
      _onDropFeatureItem(item) {
-        const itemData = item.toObject();
+        let itemData = item.object();
         itemData = itemData instanceof Array ? itemData : [itemData];
         return this.actor.createEmbeddedDocuments("Item", itemData);
      }
 
      _onDropTraitItem(item) {
-        const itemData = item.toObject();
+        let itemData = item.object();
         itemData = itemData instanceof Array ? itemData : [itemData];
         return this.actor.createEmbeddedDocuments("Item", itemData);
      }
 
      _onDropCapacityItem(item) {
-        const itemData = item.toObject();
+        let itemData = item.object();
         itemData = itemData instanceof Array ? itemData : [itemData];
         return this.actor.createEmbeddedDocuments("Item", itemData);
      }
 
      _onDropProfileItem(item) {
-        const itemData = item.toObject();
+        let itemData = item.object();
         itemData = itemData instanceof Array ? itemData : [itemData];
         return this.actor.createEmbeddedDocuments("Item", itemData);
      }

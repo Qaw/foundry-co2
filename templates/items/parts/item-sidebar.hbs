@@ -1,0 +1,13 @@
+<div class="sidebar">
+    <div class="picture">
+        <img src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    </div>
+    <ul class="features">
+        {{#each features as |feature id|}}
+            <li class="featured-item" data-item-id="{{feature._id}}">{{feature.name}}</li>
+        {{/each}}
+        {{#each traits as |trait id|}}
+            <li class="featured-item" data-item-id="{{trait._id}}">{{trait.name}}</li>
+        {{/each}}
+    </ul>
+</div>

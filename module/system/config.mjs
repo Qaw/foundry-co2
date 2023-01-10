@@ -1,5 +1,3 @@
-import { Modifier } from "./modifiers.mjs";
-
 export const CO = {};
 
 // ASCII Artwork
@@ -40,6 +38,21 @@ CO.modifier = {
     def: "CO.combat.long.def",
     hp: "CO.label.long.hp",
     rp: "CO.label.long.rp",
+  },
+};
+
+CO.equipment = {
+  subtypes: {
+    ARMOR : "CO.equipment.subtypes.armor",
+    SHIELD : "CO.equipment.subtypes.shield",
+    WEAPON : "CO.equipment.subtypes.weapon",
+    MISC : "CO.equipment.subtypes.misc"
+  },
+  martialCategories: {
+    MELEE: "CO.equipment.martialCategories.melee",
+    RANGED: "CO.equipment.martialCategories.ranged",
+    THROWN: "CO.equipment.martialCategories.thrown",
+    MAGICAL: "CO.equipment.martialCategories.magical"
   },
 };
 
