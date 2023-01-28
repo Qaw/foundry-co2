@@ -1,0 +1,71 @@
+{
+  "name": "Baguette de feu",
+  "type": "equipment",
+  "img": "systems/co/tsm/baguette.webp",
+  "system": {
+    "description": {
+      "value": "<p>Baguette de feu qui a 10 charges utilisables soit pour lancer le sort boule de feu soit pour lancer le sort rayon ardent.</p>"
+    },
+    "slug": "baguette-de-feu",
+    "source": {
+      "value": "world"
+    },
+    "tags": [
+      "fire",
+      "wand"
+    ],
+    "equipment" : {
+      "martialCategory": "wand",
+      "quantity": {
+        "current" : 1,
+        "max" : 1
+      },
+      "charges": {
+        "current" : 8,
+        "max" : 10,
+        "destroyOnEmpty" : false
+      },
+      "max": 1,
+      "weight": {
+        "value" : 0.5,
+        "unit" : "kg"
+      },
+      "price": {
+        "value": 200,
+        "currency": "g"
+      },
+      "rarity" : "rare",
+      "properties" : {
+        "equipable": true,
+        "stackable": false,
+        "equipped": true
+      },
+      "usage" : {
+        "1h" : true,
+        "2h" : false
+      }
+    },
+    "actions": [
+      {
+        "type": "consume",
+        "consume": {
+          "consumable": "charge",
+          "perUsage": 1
+        }
+      },
+      {
+        "type": "attack",
+        "1h": true,
+        "2h": false,
+        "attack": {
+          "skillAttribute": "dex",
+          "skillModifier": "+2"
+        },
+        "consume": {
+          "consumable": "charge",
+          "perUsage": 1
+        }
+      }
+    ]
+  }
+}

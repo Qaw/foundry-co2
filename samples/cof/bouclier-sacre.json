@@ -1,0 +1,115 @@
+{
+  "name": "Bouclier Sacré de Protection contre les Morts-Vivants",
+  "type": "equipment",
+  "img": "systems/co/items/sword.webp",
+  "system": {
+    "description": {
+      "value": "<p>Bouclier Sacré de Protection contre les Morts-Vivants, +2 contre les Morts vivants</p>"
+    },
+    "slug": "bouclier-sacre-de-protection-contre-les-morts-vivants",
+    "source": {
+      "value": "Anathazerin"
+    },
+    "equipment" : {
+      "category" : "shield",
+      "martialCategory": "shield",
+      "quantity": {
+        "current" : 1,
+        "max" : 1
+      },
+      "weight": {
+        "value" : 5,
+        "unit" : "kg"
+      },
+      "price": {
+        "value": 20,
+        "currency": "g"
+      },
+      "rarity" : "rare",
+      "properties" : {
+        "equipable": true,
+        "stackable": false,
+        "equipped": true
+      },
+      "usage" : {
+        "1h" : true,
+        "2h" : false
+      }
+    },
+    "actions": [
+      {
+        "type": "protection",
+        "img": "systems/co/actions/protection.webp",
+        "label": "Protection",
+        "activable": false,
+        "enabled": false,
+        "condition": [
+          "equipped"
+        ],
+        "protection": {
+          "formula": [
+            { "part" : "2", "type" : "shield"}
+          ]
+        }
+      },
+      {
+        "type": "protection",
+        "img": "systems/co/actions/protection.webp",
+        "label": "Protection (Morts-Vivants)",
+        "activable": false,
+        "enabled": true,
+        "condition": [
+          "equipped"
+        ],
+        "protection": {
+          "formula": [
+            { "part" : "2", "type" : "shield"},
+            { "part" : "2", "type" : "magical"}
+          ]
+        }
+      },
+      {
+        "type": "melee",
+        "label": "Coup de bouclier",
+        "condition": "equipped",
+        "melee": {
+          "skill": {
+            "formula": [
+              { "part" : "@atc"}
+            ],
+            "crit": "20"
+          },
+          "dmg": {
+            "formula": [
+              { "part" : "@str + 1d4", "type" : "blugeoning", "crit" : "2@str + 2d4"}
+            ]
+          }
+        }
+      },
+      {
+        "type": "melee",
+        "label": "Coup de bouclier (Morts-vivants)",
+        "condition": "equipped",
+        "melee": {
+          "skill": {
+            "formula": [
+              { "part" : "@atc"},
+              { "part" : "2"}
+            ],
+            "crit": "20"
+          },
+          "dmg": {
+            "formula": [
+              { "part" : "@str + 1d4", "type" : "blugeoning", "crit" : "2@str + 2d4"},
+              { "part" : "+ 1d6" , "type" : "fire", "crit" : "+ 2d6"}
+            ]
+          }
+        }
+      }
+    ],
+    "tags": [
+      "shield",
+      "holy"
+    ]
+  }
+}

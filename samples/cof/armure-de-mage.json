@@ -1,0 +1,102 @@
+{
+  "name": "Armure de mage",
+  "type": "capacity",
+  "img": "systems/co/capacity/mage-armor.webp",
+  "system": {
+    "description": {
+      "value": "<p>Le magicien fait apparaître un nuage magique argenté qui le protège contre les attaques adverses. Il bénéficie d'un bonus de +4 à la DEF pour le reste du combat.</p>"
+    },
+    "slug": "armure-de-mage",
+    "source": {
+      "value": "Chroniques Oubliées Fantasy"
+    },
+    "capacity" : {
+      "category" : "spell",
+      "limited" : true,
+      "path" : {
+        "id" : "voie-de-la-magie-protectrice",
+        "rank" : 1
+      },
+      "properties" : {
+        "equipable": true,
+        "stackable": false,
+        "equipped": true
+      }
+    },
+    "actions": [
+      {
+        "type": "protection",
+        "img": "systems/co/actions/protection.webp",
+        "label": "Protection",
+        "activable": false,
+        "enabled": false,
+        "condition": [
+          "equipped"
+        ],
+        "protection": {
+          "formula": [
+            { "part" : "2", "type" : "shield"}
+          ]
+        }
+      },
+      {
+        "type": "protection",
+        "img": "systems/co/actions/protection.webp",
+        "label": "Protection (Morts-Vivants)",
+        "activable": false,
+        "enabled": true,
+        "condition": [
+          "equipped"
+        ],
+        "protection": {
+          "formula": [
+            { "part" : "2", "type" : "shield"},
+            { "part" : "2", "type" : "magical"}
+          ]
+        }
+      },
+      {
+        "type": "melee",
+        "label": "Coup de bouclier",
+        "condition": "equipped",
+        "melee": {
+          "skill": {
+            "formula": [
+              { "part" : "@atc"}
+            ],
+            "crit": "20"
+          },
+          "dmg": {
+            "formula": [
+              { "part" : "@str + 1d4", "type" : "blugeoning", "crit" : "2@str + 2d4"}
+            ]
+          }
+        }
+      },
+      {
+        "type": "melee",
+        "label": "Coup de bouclier (Morts-vivants)",
+        "condition": "equipped",
+        "melee": {
+          "skill": {
+            "formula": [
+              { "part" : "@atc"},
+              { "part" : "2"}
+            ],
+            "crit": "20"
+          },
+          "dmg": {
+            "formula": [
+              { "part" : "@str + 1d4", "type" : "blugeoning", "crit" : "2@str + 2d4"},
+              { "part" : "+ 1d6" , "type" : "fire", "crit" : "+ 2d6"}
+            ]
+          }
+        }
+      }
+    ],
+    "tags": [
+      "shield",
+      "holy"
+    ]
+  }
+}

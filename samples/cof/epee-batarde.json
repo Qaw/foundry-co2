@@ -1,0 +1,223 @@
+{
+  "name": "Epée bâtarde de maître",
+  "type": "equipment",
+  "img": "systems/co/items/sword.webp",
+  "system": {
+    "description": {
+      "value": "<p>Epée batarde à une main et demi.</p>"
+    },
+    "source": {
+      "value": "NA"
+    },
+    "equipment" : {
+      "category": "weapon",
+      "martialCategory": "sword",
+      "quantity": {
+        "current" : 1,
+        "max" : 1
+      },
+      "weight": {
+        "value" : 5,
+        "unit" : "kg"
+      },
+      "price": {
+        "value": 20,
+        "currency": "g"
+      },
+      "rarity" : "rare",
+      "properties" : {
+        "equipable": true,
+        "stackable": false,
+        "equipped": true
+      },
+      "usage" : {
+        "1h" : true,
+        "2h" : false
+      }
+    },
+    "tags": [
+      "magical",
+        "consumable",
+        "healing",
+        "magical",
+        "necromancy",
+        "positive",
+        "potion"
+      ],
+    "actions" : [
+      {
+        "type" :  "melee",
+        "img" : "systems/co/actions/attack.webp",
+        "label" : "Attaque à une main",
+        "activable" : "true",
+        "melee" : {
+          "skill" : {
+           "skillFormula" : "@atc + 1",
+            "crit" : "20"
+          },
+          "dmg" : {
+            "dmgFormula" : "@str",
+            "dmgType" : ["slash"]
+          }
+        }
+      },
+      {
+        "type" :  "melee",
+        "label" : "Attaque à deux mains",
+        "activable" : "true",
+        "melee" : {
+          "skill" : {
+            "skillFormula" : "@atc + 1",
+            "crit" : "20"
+          },
+          "dmg" : {
+            "dmgFormula" : "@str",
+            "dmgType" : ["slash"]
+          }
+        }
+      },
+      {
+        "type" :  "attack",
+        "label" : "Frapper avec le plat de la lame (1H)",
+        "activable" : "true",
+        "melee" : {
+          "skillFormula" : "@atc + 1",
+          "dmgFormula" : "@str + 2",
+          "dmgType" : ["bludgeoning"],
+          "crit" : "19"
+        }
+      },
+      {
+        "type" :  "attack",
+        "label" : "Frapper avec le plat de la lame (2H)",
+        "activable" : "true",
+        "melee" : {
+          "skillFormula" : "@atc + 1",
+          "dmgFormula" : "@str + 2",
+          "dmgType" : ["bludgeoning"],
+          "crit" : "19"
+        }
+      },
+      {
+        "type" :  "thrown",
+        "label" : "Lancer",
+        "activable" : "true",
+        "thrown" : {
+          "skill" : {
+            "skillFormula" : "@atc + 1",
+            "crit" : "20"
+          },
+          "dmg" : {
+            "dmgFormula" : "@str",
+            "dmgType" : ["slash"]
+          },
+          "range" : {
+            "value" : "@str",
+            "units" : "m"
+          }
+        }
+      }
+    ],
+    "attributes": {
+      "limitedUsage" : {
+        "enabled" : true,
+        "charges": {
+          "perUsage" : 1, // attribut d'action
+          "current": 5,
+          "max": 10
+        }
+      },
+      "attack" : false,
+      "heal" : true,
+      "buff" : false,
+      "spell" : false,
+      "ranged" : false,
+      "resisted" : false,
+      "activable" : false,
+      "protection" : false,
+      "useMacro" : false
+    },
+    "rules": [],
+    "slug": "healing-potion-lesser",
+    "schema": {
+      "version": 0.796,
+      "lastMigration": null
+    },
+    "quantity": 1,
+    "baseItem": null,
+    "weight": {
+      "value": "L"
+    },
+    "price": {
+      "value": {
+        "gp": 12
+      }
+    },
+    "equipped": {
+      "carryType": "worn",
+      "handsHeld": 0
+    },
+    "stackGroup": null,
+    "containerId": null,
+    "preciousMaterial": {
+      "value": ""
+    },
+    "preciousMaterialGrade": {
+      "value": ""
+    },
+    "size": "med",
+    "usage": {
+      "value": "held-in-one-hand"
+    },
+    "activation": {
+      "type": "",
+      "cost": 0,
+      "condition": ""
+    },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": null,
+      "units": "",
+      "type": ""
+    },
+    "range": {
+      "value": null,
+      "long": null,
+      "units": ""
+    },
+    "uses": {
+      "value": 0,
+      "max": 0,
+      "per": null,
+      "autoUse": true,
+      "autoDestroy": true
+    },
+    "spell": null,
+    "level": {
+      "value": 3
+    },
+    "consumableType": {
+      "value": "potion"
+    },
+    "charges": {
+      "value": 1,
+      "max": 1,
+      "_deprecated": true
+    },
+    "consume": {
+      "value": "2d8+5",
+      "_deprecated": true
+    },
+    "autoUse": {
+      "value": true,
+      "_deprecated": true
+    },
+    "autoDestroy": {
+      "value": true,
+      "_deprecated": true
+    }
+  }
+}
