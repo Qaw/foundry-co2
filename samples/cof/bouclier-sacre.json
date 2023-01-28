@@ -71,6 +71,8 @@
       {
         "type": "melee",
         "label": "Coup de bouclier",
+        "img": "systems/co/actions/protection.webp",
+        "activable": false,
         "condition": "equipped",
         "melee": {
           "skill": {
@@ -89,12 +91,13 @@
       {
         "type": "melee",
         "label": "Coup de bouclier (Morts-vivants)",
+        "img": "systems/co/actions/protection.webp",
+        "activable": false,
         "condition": "equipped",
         "melee": {
           "skill": {
             "formula": [
-              { "part" : "@atc"},
-              { "part" : "2"}
+              { "part" : "@atc + 2"}
             ],
             "crit": "20"
           },

@@ -47,19 +47,28 @@
     },
     "actions": [
       {
-        "type": "consume",
+        "type": "use",
         "consume": {
           "consumable": "charge",
           "perUsage": 1
         }
       },
       {
-        "type": "attack",
-        "1h": true,
-        "2h": false,
+        "type": "ranged",
         "attack": {
           "skillAttribute": "dex",
           "skillModifier": "+2"
+        },
+        "ranged" : {
+          "range" : {
+            "value" : 30,
+            "unit" : "m"
+          },
+          "aoe" : true,
+          "radius" : {
+            "value" : 3,
+            "unit" : "m"
+          }
         },
         "consume": {
           "consumable": "charge",
