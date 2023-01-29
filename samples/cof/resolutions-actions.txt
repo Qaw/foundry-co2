@@ -1,0 +1,53 @@
+Résolution de la Boule de Feu
+=============================================================================================================================================
+
+0/ Click sur le bouton d'action (fait par PJ)
+---------------------------------------------
+    # Check : "Cible(s) sélectionnée(s) ?" -> récupérer les targets dans les variables du jeu
+    => si oui : Affichage du dialogue de lancer de dés avec difficulté pré-remplie (en fonction de l'attribut ciblé en difficulté par l'action)
+    => si non : Affichage du dialogue de lancer de dés sans difficulté pré-remplie
+
+1/ Résultats de la résolution de l'action (récupération des cibles éventuellement sélectionnées)
+------------------------------------------------------------------------------------------------
+Si option "diff cachée" :
+    Message au MJ :
+        => avec cible(s) : Message de chat qui décrit l'action et le résultat qualifié (réussite/crit/échec/fumble) de l'action sur les cibles sélectionnées
+            => Succès normal contre 2 cibles et échec contre 1
+
+    Message au Joueur :
+        => Message de chat qui décrit l'action et le résultat du jet non-qualifié (crit/fumble)
+
+3/ Jets de dommages
+-------------------
+    Message au Joueur :
+        => Message de chat qui décrit le jet de dommages (simple ou double) et le résultat avec information de JdS
+
+    Message au MJ :
+        => Même message que pour joueurs mais avec options affichées :
+            -> bouton "Faire de jet de sauvegarde" pour une cible sélectionnée à la fois (formulaire pré-rempli avec diff et stat)
+            -> boutons "appliquer les dégâts/moitié/double" pour les cibles
+
+
+========================================================================================================================================================================
+Résolution de la Bénédiction
+========================================================================================================================================================================
+
+0/ Click sur le bouton d'action (fait par PJ)
+---------------------------------------------
+
+1/ Résultats de la résolution de l'action (récupération des cibles éventuellement sélectionnées)
+------------------------------------------------------------------------------------------------
+    => Message de chat qui décrit l'action et les cibles sélectionnées et la durée
+
+
+
+========================================================================================================================================================================
+Résolution de la Bénédiction
+========================================================================================================================================================================
+
+0/ Click sur le bouton d'action (fait par PJ)
+---------------------------------------------
+
+1/ Résultats de la résolution de l'action (récupération des cibles éventuellement sélectionnées)
+------------------------------------------------------------------------------------------------
+    => Message de chat qui décrit l'action et les cibles sélectionnées et la durée

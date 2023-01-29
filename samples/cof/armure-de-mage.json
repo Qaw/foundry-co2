@@ -11,87 +11,54 @@
       "value": "Chroniques Oubliées Fantasy"
     },
     "capacity" : {
-      "category" : "spell",
-      "limited" : true,
-      "path" : {
-        "id" : "voie-de-la-magie-protectrice",
-        "rank" : 1
+      "enabled" : false,
+      "path" : "Item.xyz", // ID World ou Compendium ou ID Feuille ?
+      "charges": {
+        "current" : 2,
+        "max" : "@rank",
+        "destroyOnEmpty" : false
       },
       "properties" : {
-        "equipable": true,
-        "stackable": false,
-        "equipped": true
+        "spell" : true
       }
     },
     "actions": [
       {
-        "type": "protection",
-        "img": "systems/co/actions/protection.webp",
-        "label": "Protection",
-        "activable": false,
+        "type": "spell",
+        "img": "systems/co/actions/mage-armor.webp",
+        "label": "Incantation",
+        "activable": true,
         "enabled": false,
-        "condition": [
-          "equipped"
-        ],
-        "protection": {
-          "formula": [
-            { "part" : "2", "type" : "shield"}
-          ]
-        }
-      },
-      {
-        "type": "protection",
-        "img": "systems/co/actions/protection.webp",
-        "label": "Protection (Morts-Vivants)",
-        "activable": false,
-        "enabled": true,
-        "condition": [
-          "equipped"
-        ],
-        "protection": {
-          "formula": [
-            { "part" : "2", "type" : "shield"},
-            { "part" : "2", "type" : "magical"}
-          ]
-        }
-      },
-      {
-        "type": "melee",
-        "label": "Coup de bouclier",
-        "condition": "equipped",
-        "melee": {
-          "skill": {
-            "formula": [
-              { "part" : "@atc"}
-            ],
-            "crit": "20"
-          },
-          "dmg": {
-            "formula": [
-              { "part" : "@str + 1d4", "type" : "blugeoning", "crit" : "2@str + 2d4"}
-            ]
+        "conditions": [
+          {
+            "subject" : "capacity",
+            "predicate" : "enabled",
+            "object" : "_self"
           }
-        }
-      },
-      {
-        "type": "melee",
-        "label": "Coup de bouclier (Morts-vivants)",
-        "condition": "equipped",
-        "melee": {
-          "skill": {
-            "formula": [
-              { "part" : "@atc"},
-              { "part" : "2"}
-            ],
-            "crit": "20"
-          },
-          "dmg": {
-            "formula": [
-              { "part" : "@str + 1d4", "type" : "blugeoning", "crit" : "2@str + 2d4"},
-              { "part" : "+ 1d6" , "type" : "fire", "crit" : "+ 2d6"}
-            ]
+        ],
+        "activation": {
+          "type": "limited", // valeurs possibles "limited|action|movement|free"
+          "cost": 1
+        },
+        "consumes": {
+          "type": "charge",   // valeurs possibles "charge|item"
+          "target" : "_self", // ID de l'item consommé
+          "perUsage": 1
+        },
+        "duration": {
+          "value": 1,
+          "units": "combat" // valeurs possibles "combat|special|round|turn|sec|min|hour|day|week|month|year"
+        },
+        "resolvers": [],
+        "modifiers" : [
+          {
+            "type": "capacity",
+            "subtype": "combat",   // valeurs possibles "ability|combat|attribute|skill|resource"
+            "source": "Item.AY8MiRuqveyGyPaB",
+            "target": "@def",
+            "value": "+4"
           }
-        }
+        ]
       }
     ],
     "tags": [

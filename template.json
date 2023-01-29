@@ -271,132 +271,66 @@
     }
   },
   "Item": {
-    "types": ["equipment", "feature", "trait", "profile", "consumable", "loot", "currency", "action", "path", "capacity"],
+    "types": ["equipment", "feature", "profile", "path", "capacity"],
     "templates": {
-      "itemDescription": {
+      "common": {
         "description": {
           "value": "",
           "chat": ""
         },
         "source": "",
         "slug": "",
-        "modifiers": []
-      },
-      "physicalItem": {
-        "subtype": "",
-        "martialCategory": "",
-        "quantity": 1,
-        "weight": 0,
-        "price": 0,
-        "equipable": false,
-        "equipped": false,
-        "usage": 0
-      },
-      "activatedEffect": {
-        "activation": {
-          "type": "",
-          "cost": 0,
-          "condition": ""
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": null,
-          "width": null,
-          "units": "",
-          "type": ""
-        },
-        "range": {
-          "value": null,
-          "long": null,
-          "units": ""
-        },
-        "uses": {
-          "value": null,
-          "max": "",
-          "per": null,
-          "recovery": ""
-        },
-        "consume": {
-          "type": "",
-          "target": null,
-          "amount": null
-        }
-      },
-      "action": {
-        "properties" : {
-          "attack" : false,
-          "heal" : false,
-          "buff" : false
-        },
-        "ability": null,
-        "actionType": null,
-        "attackBonus": 0,
-        "chatFlavor": "",
-        "critical": {
-          "threshold": null,
-          "damage": ""
-        },
-        "damage": {
-          "parts": [],
-          "versatile": ""
-        },
-        "formula": "",
-        "save": {
-          "ability": "",
-          "dc": null,
-          "scaling": "spell"
-        }
-      },
-      "passiveEffect": {
-        "activation": {
-          "type": "",
-          "condition": ""
-        }
+        "tags": []
       }
     },
     "equipment": {
-      "templates": ["itemDescription", "physicalItem", "activatedEffect", "action"],
-      "protection": {
-        "type": "armor",
-        "value": null
+      "templates": ["common"],
+      "category": "",
+      "martialCategory": "",
+      "quantity": {
+        "current" : 1,
+        "max" : 1,
+        "destroyIfEmpty" : true
       },
-      "baseItem": "",
-      "speed": {
-        "value": null,
-        "conditions": ""
+      "charges": {
+        "current" : null,
+        "max" : null,
+        "destroyIfEmpty" : false
       },
-      "strength": 0,
-      "stealth": false
-    },
-    "consumable": {
-      "templates": ["itemDescription", "physicalItem", "activatedEffect", "action"],
-      "consumableType": "potion",
-      "uses": {
-        "autoDestroy": false
-      }
-    },
-    "loot": {
-      "templates": ["itemDescription", "physicalItem"]
-    },
-    "currency": {
-      "templates": ["itemDescription", "physicalItem"]
+      "weight": {
+        "value" : 0,
+        "unit" : "kg"
+      },
+      "price": {
+        "value": 0,
+        "currency": ""
+      },
+      "rarity" : "",
+      "properties" : {
+        "equipable": true,
+        "chargeable": false,
+        "stackable": false,
+        "equipped": false
+      },
+      "usage" : {
+        "1h" : false,
+        "2h" : false
+      },
+      "actions": []
     },
     "feature" : {
-      "templates": ["itemDescription", "activatedEffect"],
-      "traits": [],
+      "templates": ["common"],
+      "modifiers": [],
+      "paths": [],
       "capacities": []
     },
-    "trait" : {
-      "templates": ["itemDescription", "passiveEffect"]
-    },
     "profile" : {
-      "templates": ["itemDescription"],
+      "templates": ["common"],
+      "modifiers": [],
       "family": null,
       "hd": "1d4",
       "proficiencies": [],
+      "paths": [],
       "martialTrainingsWeapons": [],
       "martialTrainingsArmors": [],
       "martialTrainingsShields": [],
@@ -404,21 +338,22 @@
       "mpFormula": null
     },
     "capacity": {
-      "templates": ["itemDescription", "activatedEffect", "action"],
+      "templates": ["common"],
+      "enabled" : false,
+      "charges": {
+        "current" : null,
+        "max" : null
+      },
+      "properties" : {
+        "spell" : false,
+        "chargeable" : false
+      },
       "path" : null,
-      "rank" : null
+      "actions": []
     },
     "path": {
-      "templates": ["itemDescription"],
-      "capacities" : [],
-      "profiles": [],
-      "traits": [],
-      "properties": {
-        "prestige": false,
-        "trait": false,
-        "alternative": false,
-        "creature": false
-      }
+      "templates": ["common"],
+      "capacities" : []
     }
   }
 }
