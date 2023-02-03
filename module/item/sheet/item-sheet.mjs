@@ -8,9 +8,12 @@ export default class CoItemSheet extends CoBaseItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             width: 600,
-            height: 600,
+            height: 720,
             classes: ["co", "sheet", "item"],
-            tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description"}],
+            tabs: [
+                {navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "details"},
+                {navSelector: ".action-tabs", contentSelector: ".action-body", initial: "0"}
+            ],
             dragDrop: [{dragSelector: ".item-list .item", dropSelector: null}],
         });
     }
@@ -156,10 +159,18 @@ export default class CoItemSheet extends CoBaseItemSheet {
     /** @inheritdoc */
     activateListeners(html) {
         super.activateListeners(html);
+        html.find(".details-toggle").click(function() { $( ".details-form" ).slideToggle( "fast" );});
+        html.find(".actions-toggle").click(function() { $( ".actions-form" ).slideToggle( "fast" );});
         html.find(".item-delete").click(this._onDeleteItem.bind(this));
         html.find(".item-edit").click(this._onEditItem.bind(this));
-        html.find(".mod-add").click(this._onAddModifier.bind(this));
-        html.find(".mod-delete").click(this._onDeleteModifier.bind(this));
+        html.find(".modifier-add").click(this._onAddModifier.bind(this));
+        html.find(".modifier-delete").click(this._onDeleteModifier.bind(this));
+        html.find(".resolver-add").click(this._onAddResolver.bind(this));
+        html.find(".resolver-delete").click(this._onDeleteResolver.bind(this));
+        html.find(".condition-add").click(this._onAddCondition.bind(this));
+        html.find(".condition-delete").click(this._onDeleteCondition.bind(this));
+        html.find(".action-add").click(this._onAddAction.bind(this));
+        html.find(".action-delete").click(this._onDeleteAction.bind(this));
     }
 
     /**
@@ -209,11 +220,89 @@ export default class CoItemSheet extends CoBaseItemSheet {
      * @param {*} event
      * @returns
      */
+    _onAddAction(event) {
+        event.preventDefault();
+        let newActions = foundry.utils.deepClone(this.item.actions);
+        let label = "Action #"+ this.item.actions.length
+        let actionData = {
+            "type": "melee",
+            "label": label,
+            "img": "icons/svg/d20-highlight.svg",
+            "chatFlavor": game.i18n.localize("CO.actionType.melee"),
+            "activable": true,
+            "enabled": false,
+            "visible" : true,
+            "conditions": [],
+            "modifiers": [],
+            "resolvers": []
+        }
+        newActions.push(actionData);
+        return this.item.update({"system.actions": newActions});
+    }
+
+    /**
+     *
+     * @param {*} event
+     * @returns
+     */
+    _onDeleteAction(event) {
+        event.preventDefault();
+        const li = $(event.currentTarget).closest(".action");
+        const rowId = li.data("itemId");
+        let newActions = foundry.utils.deepClone(this.item.actions);
+        newActions.splice(rowId, 1);
+        return this.item.update({"system.actions": newActions});
+    }
+
+    /**
+     *
+     * @param {*} event
+     * @returns
+     */
+    _onAddCondition(event) {
+        event.preventDefault();
+        const li = $(event.currentTarget).closest(".action");
+        const rowId = li.data("itemId");
+        let newActions = foundry.utils.deepClone(this.item.actions);
+        console.log(newActions[rowId]);
+        let conditionData = {
+            "subject" : "item",
+            "predicate" : "equipped",
+            "object" : "_self"
+        }
+        if(!newActions[rowId].conditions) newActions[rowId].conditions = [];
+        newActions[rowId].conditions.push(conditionData);
+        return this.item.update({"system.actions": newActions});
+    }
+
+    /**
+     *
+     * @param {*} event
+     * @returns
+     */
+    _onDeleteCondition(event) {
+        event.preventDefault();
+        const li = $(event.currentTarget).closest(".condition");
+        const condId = li.data("itemId");
+        const actionId = li.data("actionId");
+        let newActions = foundry.utils.deepClone(this.item.actions);
+        newActions[actionId].conditions.splice(condId, 1);
+        return this.item.update({"system.actions": newActions});
+    }
+
+    /**
+     *
+     * @param {*} event
+     * @returns
+     */
     _onAddModifier(event) {
         event.preventDefault();
-        let newModifiers = foundry.utils.deepClone(this.item.modifiers); 
-        newModifiers.push(new Modifier(this.item.uuid));
-        return this.item.update({"system.modifiers": newModifiers});
+        const li = $(event.currentTarget).closest(".action");
+        const rowId = li.data("itemId");
+        let newActions = foundry.utils.deepClone(this.item.actions);
+        if(!newActions[rowId].modifiers) newActions[rowId].modifiers = [];
+        newActions[rowId].modifiers.push(new Modifier(this.item.uuid));
+        return this.item.update({"system.actions": newActions});
     }
 
     /**
@@ -223,12 +312,53 @@ export default class CoItemSheet extends CoBaseItemSheet {
      */
     _onDeleteModifier(event) {
         event.preventDefault();
-        const li = $(event.currentTarget).closest(".modifier-row");
-        const rowId = li.data("itemId");
-        let newModifiers = foundry.utils.deepClone(this.item.modifiers); 
-        newModifiers.splice(rowId, 1);
-        return this.item.update({"system.modifiers": newModifiers});
+        const li = $(event.currentTarget).closest(".modifier");
+        const condId = li.data("itemId");
+        const actionId = li.data("actionId");
+        let newActions = foundry.utils.deepClone(this.item.actions);
+        newActions[actionId].modifiers.splice(condId, 1);
+        return this.item.update({"system.actions": newActions});
     }
 
 
+    /**
+     *
+     * @param {*} event
+     * @returns
+     */
+    _onAddResolver(event) {
+        event.preventDefault();
+        const li = $(event.currentTarget).closest(".action");
+        const rowId = li.data("itemId");
+        let newActions = foundry.utils.deepClone(this.item.actions);
+        let resolverData = {
+            "type" : "melee",
+            "skill": {
+                "formula": [{"part": "@atc"}],
+                "crit": "20",
+                "difficulty" : "@def"
+            },
+            "dmg": {
+                "formula": [{"part": ""}],
+            }
+        }
+        if(!newActions[rowId].resolvers) newActions[rowId].resolvers = [];
+        newActions[rowId].resolvers.push(resolverData);
+        return this.item.update({"system.actions": newActions});
+    }
+
+    /**
+     *
+     * @param {*} event
+     * @returns
+     */
+    _onDeleteResolver(event) {
+        event.preventDefault();
+        const li = $(event.currentTarget).closest(".resolver");
+        const condId = li.data("itemId");
+        const actionId = li.data("actionId");
+        let newActions = foundry.utils.deepClone(this.item.actions);
+        newActions[actionId].resolvers.splice(condId, 1);
+        return this.item.update({"system.actions": newActions});
+    }
 }

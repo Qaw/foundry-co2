@@ -29,14 +29,12 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/" + SYSTEM_NAME + "/templates/items/parts/equipment-partial.hbs",
     "systems/" + SYSTEM_NAME + "/templates/items/parts/feature-partial.hbs",
     "systems/" + SYSTEM_NAME + "/templates/items/parts/profile-partial.hbs",
-    "systems/" + SYSTEM_NAME + "/templates/items/parts/consumable-partial.hbs",
-    "systems/" + SYSTEM_NAME + "/templates/items/parts/loot-partial.hbs",
-    "systems/" + SYSTEM_NAME + "/templates/items/parts/currency-partial.hbs",
-    "systems/" + SYSTEM_NAME + "/templates/items/parts/action-partial.hbs",
     "systems/" + SYSTEM_NAME + "/templates/items/parts/path-partial.hbs",
     "systems/" + SYSTEM_NAME + "/templates/items/parts/capacity-partial.hbs",
-    "systems/" + SYSTEM_NAME + "/templates/items/parts/modifiers-partial.hbs",
-    "systems/" + SYSTEM_NAME + "/templates/items/parts/trait-partial.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/items/parts/actions/action-partial.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/items/parts/actions/conditions-partial.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/items/parts/actions/resolvers-partial.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/items/parts/actions/modifiers-partial.hbs"
   ];
 
   // Load the template parts

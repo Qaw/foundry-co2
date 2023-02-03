@@ -27,7 +27,8 @@
     },
     "notif": {
       "ready": "Système Chroniques Oubliées initialisé",
-      "noCapacitySelected": "Aucune capacité sélectionnée"
+      "noCapacitySelected": "Aucune capacité sélectionnée",
+      "inventory.empty" : "L'inventaire est vide"
     },
     "label": {
       "long": {
@@ -98,14 +99,57 @@
       }
     },
     "ui": {
+      "none": "--",
       "submit": "OK",
       "cancel": "Annuler",
+      "add" : "Ajouter",
+      "remove" : "Supprimer",
       "diceType": "Type de dé",
       "kh": "Garder le plus haut",
       "kl": "Garder le plus bas",
       "duration": "Durée",
       "action": "Action",
-      "none": "--"
+      "details": "Détails",
+      "actions": "Actions",
+      "quantity" : "Quantité",
+      "current" : "Courante",
+      "max" : "Maximum",
+      "destroyIfEmpty" : "Détruire si vide",
+      "charges" : "Charges",
+      "weight" : "Poids",
+      "unit" : "Unité",
+      "price" : "Prix",
+      "value" : "Valeur",
+      "currency" : "Monnaie",
+      "rarity" : "Rareté",
+      "usage" : "Usage",
+      "1h" : "Une main",
+      "2h" : "Deux mains",
+      "type" : "Type",
+      "label" : "Label",
+      "img" : "Image",
+      "chatFlavor" : "Message chat",
+      "activable" : "Activable",
+      "enabled" : "Activé(e)",
+      "visible" : "Visible",
+      "conditions" : "Conditions",
+      "subject" : "Sujet",
+      "predicate" : "Prédicat",
+      "object" : "Objet",
+      "modifiers" : "Modificateurs",
+      "resolvers" : "Résolutions",
+      "skill" : "Compétence",
+      "formula" : "Formule",
+      "part" : "Composante",
+      "crit" : "Critique",
+      "difficulty" : "Difficulté",
+      "dmg" : "Dommages",
+      "saves" : "Sauvegarde",
+      "target" : "Cible(s)",
+      "width" : "Largeur",
+      "range" : "Portée",
+      "consumes" : "Consomme",
+      "perUsage" : "Par utilisation"
     },
     "properties": {
       "equipable": "Équipable",
@@ -113,7 +157,9 @@
       "unique": "Unique",
       "consumable": "Consommable",
       "tailored": "Sur-mesure",
-      "2H": "Deux mains"
+      "2H": "Deux mains",
+      "reloadable": "Rechargeable",
+      "equipped": "Équipé"
     },
     "abilities": {
       "long": {
@@ -213,6 +259,26 @@
       "action": "Action",
       "path": "Voie",
       "capacity": "Capacité"
+    },
+    "equipment" : {
+      "subtypes" : {
+        "armor" : "Armure",
+        "shield" : "Bouclier",
+        "weapon" : "Arme",
+        "misc" : "Divers"
+      },
+      "martialCategories" : {
+        "melee": "Arme de contact",
+        "ranged": "Arme à distance",
+        "thrown": "Arme de jet",
+        "magical": "Arme magique"
+      }
+    },
+    "rarity" : {
+      "common" : "Commun",
+      "medium" : "Moyen",
+      "rare" : "Rare",
+      "unique" : "Unique"
     },
     "config": {
     }

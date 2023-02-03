@@ -1,0 +1,53 @@
+<h4 class="form-header"><a class="modifiers-toggle">{{localize "CO.ui.modifiers"}}</a></h4>
+<div class="modifiers-container">
+{{#if action.modifiers}}
+    <div class="flexrow">
+        <div class="form-fields flex1">Type</div>
+        <div class="form-fields flex1">Subtype</div>
+        <div class="form-fields flex1">Source</div>
+        <div class="form-fields flex1">Target</div>
+        <div class="form-fields flex1">Value</div>
+    </div>
+    {{#each action.modifiers as |m id|}}
+        <div class="modifier flexrow" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="modifier">
+            <div class="form-fields flex1">
+                <select name="system.actions.{{../idx}}.modifiers.{{id}}.type" data-type="String" style="width:100%">
+                    {{#select m.type}}
+                        {{#each @root.config.modifier.type as |label i|}}
+                            <option value="{{i}}">{{localize label}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+            <div class="form-fields flex1">
+                <select name="system.actions.{{../idx}}.modifiers.{{id}}.subtype" data-type="String" style="width:100%">
+                    {{#select m.subtype}}
+                        {{#each @root.config.modifier.subtype as |label i|}}
+                            <option value="{{i}}">{{localize label}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+            <div class="form-fields flex1"><input name="system.actions.{{../idx}}.modifiers.{{id}}.source" type="text" value="{{m.source}}" data-dtype="String" /></div>
+            <div class="form-fields flex1">
+                <select name="system.actions.{{../idx}}.modifiers.{{id}}.target" data-type="String" style="width:100%">
+                    {{#select m.target}}
+                        {{#each @root.config.modifier.target as |label i|}}
+                            <option value="{{i}}">{{localize label}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+            <div class="form-fields flex1"><input name="system.actions.{{../idx}}.modifiers.{{id}}.value" type="text" value="{{m.value}}" data-dtype="String" /></div>
+            <div class="form-fields flex0"><span class="modifier-delete"><i class="fas fa-trash"></i></span></div>
+        </div>
+    {{/each}}
+{{else}}
+    <div class="flexrow">
+        <span>Aucun modificateur.</span>
+    </div>
+{{/if}}
+    <div class="flexrow">
+        <a class="modifier-add" title="{{localize "CO.ui.add"}}"><i class="fas fa-add"></i></a>
+    </div>
+</div>

@@ -99,4 +99,10 @@ export class CoItem extends Item {
   //   if (this.allCapacities != null && this.allCapacities.find((capacity) => capacity.source == source)) return true;
   //   return false;
   // }
+
+    get actions() {
+        if (this.system.actions instanceof Array) return this.system.actions;
+        return Object.values(this.system.actions);
+    }
+
 }

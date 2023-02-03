@@ -54,7 +54,24 @@ CO.equipment = {
     THROWN: "CO.equipment.martialCategories.thrown",
     MAGICAL: "CO.equipment.martialCategories.magical"
   },
+  rarity: {
+    COMMON : "CO.rarity.common",
+    MEDIUM : "CO.rarity.medium",
+    RARE : "CO.rarity.rare",
+    UNIQUE : "CO.rarity.unique"
+  }
 };
+
+CO.action = {
+  types: {
+    melee : "CO.actionType.melee",
+    ranged : "CO.actionType.ranged",
+    magical : "CO.actionType.magical",
+    heal : "CO.actionType.heal",
+    protection : "CO.actionType.protection"
+  }
+
+}
 
 CO.profile = {
   family: {

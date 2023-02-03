@@ -285,7 +285,7 @@
     },
     "equipment": {
       "templates": ["common"],
-      "category": "",
+      "subtype": "",
       "martialCategory": "",
       "quantity": {
         "current" : 1,
@@ -308,11 +308,11 @@
       "rarity" : "",
       "properties" : {
         "equipable": true,
-        "chargeable": false,
-        "stackable": false,
-        "equipped": false
+        "reloadable": false,
+        "stackable": false
       },
       "usage" : {
+        "equipped": false,
         "1h" : false,
         "2h" : false
       },
@@ -320,6 +320,7 @@
     },
     "feature" : {
       "templates": ["common"],
+      "subtype" : "",
       "modifiers": [],
       "paths": [],
       "capacities": []
@@ -339,6 +340,7 @@
     },
     "capacity": {
       "templates": ["common"],
+      "subtype" : "",
       "enabled" : false,
       "charges": {
         "current" : null,
@@ -353,6 +355,7 @@
     },
     "path": {
       "templates": ["common"],
+      "subtype" : "",
       "capacities" : []
     }
   }

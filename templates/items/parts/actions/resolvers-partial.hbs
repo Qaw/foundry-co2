@@ -1,0 +1,29 @@
+<h4 class="form-header"><a class="resolvers-toggle">{{localize "CO.ui.resolvers"}}</a></h4>
+<div class="resolvers-container">
+    {{#if action.resolvers}}
+        <div class="flexrow">
+            <div class="form-fields flex1">Type</div>
+            <div class="form-fields flex1">Skill formula</div>
+            <div class="form-fields flex1">Skill crit</div>
+            <div class="form-fields flex1">Skill difficulty</div>
+            <div class="form-fields flex1">Dmg formula</div>
+        </div>
+        {{#each action.resolvers as |r id|}}
+            <div class="flexrow resolver" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="resolver">
+                <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.type" type="text" value="{{r.type}}" data-dtype="String" /></div>
+                <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.formula.0.part" type="text" value="{{r.skill.formula.0.part}}" data-dtype="String" /></div>
+                <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.crit" type="text" value="{{r.skill.crit}}" data-dtype="Number" /></div>
+                <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.difficulty" type="text" value="{{r.skill.difficulty}}" data-dtype="Number" /></div>
+                <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.dmg.formula.0.part" type="text" value="{{r.dmg.formula.0.part}}" data-dtype="String" /></div>
+                <div class="form-fields flex0"><span class="resolver-delete"><i class="fas fa-trash"></i></span></div>
+            </div>
+        {{/each}}
+    {{else}}
+        <div class="flexrow">
+            <span>Aucune résolution.</span>
+        </div>
+    {{/if}}
+    <div class="flexrow">
+        <a class="resolver-add" title="{{localize "CO.ui.add"}}"><i class="fas fa-add"></i></a>
+    </div>
+</div>
