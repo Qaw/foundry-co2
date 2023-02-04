@@ -13,8 +13,8 @@ CO.ASCII = `
 
 CO.modifier = {
   type: {
+    equipment: "CO.modifier.type.equipment",
     feature: "CO.modifier.type.feature",
-    trait: "CO.modifier.type.trait",
     profile: "CO.modifier.type.profile",
     capacity: "CO.modifier.type.capacity",
   },

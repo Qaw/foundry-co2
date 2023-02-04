@@ -6,11 +6,9 @@ import { ITEM_TYPE } from "../system/constants.mjs";
 export class CoItem extends Item {
   constructor(...args) {
     let data = args[0];
-    
+
     super(...args);
-}
-
-
+  }
 
   /** @override */
   prepareBaseData() {
@@ -29,16 +27,32 @@ export class CoItem extends Item {
   // }
 
   /**
-  * @returns undefined if the item is not a trait, true if the item has modifiers
-  * @type {boolean}
-  */
+   * @returns undefined if the item is a path, true if the item has modifiers
+   * @type {boolean}
+   */
   get hasModifiers() {
-    if (![ITEM_TYPE.FEATURE, ITEM_TYPE.TRAIT, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined;
+    if (![ITEM_TYPE.EQUIPMENT, ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined;
 
-    // Array
-    if (this.system.modifiers?.length > 0) return true;
-    // Object
-    if (this.system.modifiers !== null) return true;
+    let hasModifiers = false;
+    // For Equipement or Capacity Item, the modifiers are in the actions
+    if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(this.type)) {
+      this.actions.forEach((action) => {
+        // Array
+        if (action.modifiers.length > 0) hasModifiers = true;
+        // Object
+        if (action.modifiers !== null) hasModifiers = true;
+      });
+    }
+
+    // For Feature or Profile, the modifiers are in the item
+    if ([ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE].includes(this.type)) {
+      // Array
+      if (this.system.modifiers?.length > 0) return true;
+      // Object
+      if (this.system.modifiers !== null) return true;
+    }
+
+    return hasModifiers;
   }
 
   /**
@@ -46,12 +60,41 @@ export class CoItem extends Item {
    */
   get modifiers() {
     if (!this.hasModifiers) return [];
-    if (this.system.modifiers instanceof Array) return this.system.modifiers;
-    return Object.values(this.system.modifiers);
+
+    let modifiers = [];
+
+    // For Equipement or Capacity Item, the modifiers are in the actions
+    if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(this.type)) {
+      this.actions.forEach((action) => {
+        if (action.modifiers instanceof Array) modifiers.push(...action.modifiers);
+        else modifiers.push(...Object.values(action.modifiers));
+      });
+    }
+
+    // For Feature or Profile, the modifiers are in the item
+    if ([ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE].includes(this.type)) {
+      this.modifiers.forEach((modifier) => {
+        modifiers.push(modifier);
+      });
+    }
+
+    return modifiers;
+    //if (this.system.modifiers instanceof Array) return this.system.modifiers;
+    //return Object.values(this.system.modifiers);
   }
 
+  /**
+   * Get all actions of a Equipment or Capacity item as an array
+   
+  get actions() {
+    if (![ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(this.type)) return [];
+
+    return this.system.actions;
+  }
+  */
+
   // /**
-  //  * @returns undefined if the tiem is not a specie or a path, null if there is no capacities already, all the capacities
+  //  * @returns undefined if the item is not a specie or a path, null if there is no capacities already, all the capacities
   //  * @type {boolean}
   //  */
   // get allCapacities() {
@@ -61,33 +104,33 @@ export class CoItem extends Item {
   //   return this.system.capacities;
   // }
 
-   /**
-    * @description Calculate the sum of all bonus for a specific type and target
-    * @param {*} type      MODIFIER_TYPE
-    * @param {*} subtype   MODIFIER_SUBTYPE
-    * @param {*} target    MODIFIER_TARGET
-    * @returns the value of the bonus
-    */
-   getTotalModifiersByTypeSubtypeAndTarget(type, subtype, target) {
-     if (![ITEM_TYPE.TRAIT, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined;
-     if (!this.hasModifiers) return 0;
-     return this.system.modifiers
-       .filter(m => m.type == type && m.subtype == subtype && m.target == target)
-       .map(i => i.modifier)
-       .reduce((acc, curr) => acc + curr, 0);
-   }
+  /**
+   * @description Calculate the sum of all bonus for a specific type and target
+   * @param {*} type      MODIFIER_TYPE
+   * @param {*} subtype   MODIFIER_SUBTYPE
+   * @param {*} target    MODIFIER_TARGET
+   * @returns the value of the bonus
+   */
+  getTotalModifiersByTypeSubtypeAndTarget(type, subtype, target) {
+    if (![ITEM_TYPE.EQUIPMENT, ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined;
+    if (!this.hasModifiers) return 0;
+    return this.modifiers
+      .filter((m) => m.type == type && m.subtype == subtype && m.target == target)
+      .map((i) => i.modifier)
+      .reduce((acc, curr) => acc + curr, 0);
+  }
 
-      /**
-    * @description Calculate the sum of all bonus for a specific type and target
-    * @param {*} type trait
-    * @param {*} target For trait type, target are str, dex, etc...
-    * @returns the value of the bonus
-    */
-       getModifiersByTypeAndSubtype(type, subtype) {
-        if (![ITEM_TYPE.TRAIT, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined;
-        if (!this.hasModifiers) return 0;
-        return this.system.modifiers.filter((m) => m.type == type && m.subtype == subtype);
-      }
+  /**
+   * @description Calculate the sum of all bonus for a specific type and target
+   * @param {*} type trait
+   * @param {*} target For trait type, target are str, dex, etc...
+   * @returns the value of the bonus
+   */
+  getModifiersByTypeAndSubtype(type, subtype) {
+    if (![ITEM_TYPE.EQUIPMENT, ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined;
+    if (!this.hasModifiers) return 0;
+    return this.modifiers.filter((m) => m.type == type && m.subtype == subtype);
+  }
 
   // /**
   //  *
@@ -100,9 +143,8 @@ export class CoItem extends Item {
   //   return false;
   // }
 
-    get actions() {
-        if (this.system.actions instanceof Array) return this.system.actions;
-        return Object.values(this.system.actions);
-    }
-
+  get actions() {
+    if (this.system.actions instanceof Array) return this.system.actions;
+    return Object.values(this.system.actions);
+  }
 }

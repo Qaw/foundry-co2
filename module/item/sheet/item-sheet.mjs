@@ -59,6 +59,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
      * @protected
      */
      async _onDropItem(event, data) {
+        event.preventDefault();
          if (!this.item.isOwner) return false;
          const item = await Item.implementation.fromDropData(data);
          //const itemData = item.toObject();
@@ -66,37 +67,29 @@ export default class CoItemSheet extends CoBaseItemSheet {
          // Handle item sorting within the same Actor
          // if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, itemData);
     
-         // Create the owned item
-         // return this._onDropItemCreate(itemData);
          switch (item.type) {
+            case ITEM_TYPE.EQUIPMENT:
+                return this._onDropEquipmentItem(item);
             case ITEM_TYPE.FEATURE:
                 return this._onDropFeatureItem(item);
-            case ITEM_TYPE.TRAIT:
-                return this._onDropTraitItem(item);
+            case ITEM_TYPE.PROFILE:
+                return this._onDropProfileItem(item);
             case ITEM_TYPE.PATH:
-                 return;//this._onDropPathItem(event, itemData);
+                 return this._onDropPathItem(item);
              case ITEM_TYPE.CAPACITY:
                  return this._onDropCapacityItem(item);
-             case ITEM_TYPE.PROFILE:
-                return this._onDropProfileItem(item);
              default:
                  return false;
          }
      }
-     
+
+     _onDropEquipmentItem(item) {
+        let itemData = item.object();
+        itemData = itemData instanceof Array ? itemData : [itemData];
+        return this.actor.createEmbeddedDocuments("Item", itemData);
+     }
+
      _onDropFeatureItem(item) {
-        let itemData = item.object();
-        itemData = itemData instanceof Array ? itemData : [itemData];
-        return this.actor.createEmbeddedDocuments("Item", itemData);
-     }
-
-     _onDropTraitItem(item) {
-        let itemData = item.object();
-        itemData = itemData instanceof Array ? itemData : [itemData];
-        return this.actor.createEmbeddedDocuments("Item", itemData);
-     }
-
-     _onDropCapacityItem(item) {
         let itemData = item.object();
         itemData = itemData instanceof Array ? itemData : [itemData];
         return this.actor.createEmbeddedDocuments("Item", itemData);
@@ -108,6 +101,17 @@ export default class CoItemSheet extends CoBaseItemSheet {
         return this.actor.createEmbeddedDocuments("Item", itemData);
      }
 
+     _onDropPathItem(item) {
+        let itemData = item.object();
+        itemData = itemData instanceof Array ? itemData : [itemData];
+        return this.actor.createEmbeddedDocuments("Item", itemData);
+     }     
+
+     _onDropCapacityItem(item) {
+        let itemData = item.object();
+        itemData = itemData instanceof Array ? itemData : [itemData];
+        return this.actor.createEmbeddedDocuments("Item", itemData);
+     }
 
     /**
      *

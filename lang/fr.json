@@ -164,7 +164,8 @@
       "reloadable": "Rechargeable",
       "equipped": "Équipé",
       "spell": "Sort",
-      "chargeable": "Chargeable"
+      "chargeable": "Chargeable",
+      "enabled": "Activé(e)"
     },
     "abilities": {
       "long": {
@@ -239,8 +240,8 @@
     },
     "modifier": {
       "type": {
+        "equipment": "Equipement",
         "feature": "Feature",
-        "trait": "Trait",
         "profile": "Profil",
         "capacity": "Capacité"
       },

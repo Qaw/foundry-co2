@@ -16,61 +16,73 @@ export default class CoActor extends Actor {
 
   /**
    * @name abilitiesModifiers
-   * @description Get all the modifiers from Items of type Trait, Path or Capacity with the subtype Ability
+   * @description Get all the modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Ability
    * @public
    * @returns {Modifier[]} An empty array or an array of Modifiers
    */
   get abilitiesModifiers() {
     let modifiers = [];
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, MODIFIER_SUBTYPE.ABILITY));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.ABILITY));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.ABILITY));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.profile, MODIFIER_TYPE.PROFILE, MODIFIER_SUBTYPE.ABILITY));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ABILITY));
     return modifiers;
   }
 
   /**
-   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Combat
+   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Combat
    */
   get combatModifiers() {
     let modifiers = [];
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, MODIFIER_SUBTYPE.COMBAT));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.COMBAT));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.COMBAT));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.COMBAT));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.profile, MODIFIER_TYPE.PROFILE, MODIFIER_SUBTYPE.COMBAT));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.COMBAT));    
     return modifiers;
   }
 
   /**
-   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Attribute
+   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Attribute
    */
   get attributeModifiers() {
     let modifiers = [];
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, MODIFIER_SUBTYPE.ATTRIBUTE));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.ATTRIBUTE));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.ATTRIBUTE));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ATTRIBUTE));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.profile, MODIFIER_TYPE.PROFILE, MODIFIER_SUBTYPE.ATTRIBUTE));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ATTRIBUTE));    
     return modifiers;
   }
 
   /**
-   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Skill
+   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Skill
    */
   get skillModifiers() {
     let modifiers = [];
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, MODIFIER_SUBTYPE.SKILL));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.SKILL));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.SKILL));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.SKILL));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.profile, MODIFIER_TYPE.PROFILE, MODIFIER_SUBTYPE.SKILL));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.SKILL));       
     return modifiers;
   }
 
   /**
-   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Trait, Path or Capacity with the subtype Skill
+   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of typeEquipment, Feature, Profile or Capacity with the subtype Resource
    */
   get resourceModifiers() {
     let modifiers = [];
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, MODIFIER_SUBTYPE.RESOURCE));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.RESOURCE));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.traits, MODIFIER_TYPE.TRAIT, MODIFIER_SUBTYPE.RESOURCE));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.RESOURCE));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.profile, MODIFIER_TYPE.PROFILE, MODIFIER_SUBTYPE.RESOURCE));
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.RESOURCE));     
     return modifiers;
   }
+
+  /**
+   * @returns les Items de type equipment
+   */
+  get equipments() {
+    return this.items.filter((item) => item.type == ITEM_TYPE.EQUIPMENT);
+  }  
 
   /**
    * @returns les Items de type feature
@@ -80,10 +92,10 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @returns les Items de type traits
-   */
-  get traits() {
-    return this.items.filter((item) => item.type == ITEM_TYPE.TRAIT);
+ * @returns le premier Item de type profile
+ */
+  get profile() {
+    return this.items.find((item) => item.type === ITEM_TYPE.PROFILE) ?? null;
   }
 
   get paths() {
@@ -92,13 +104,6 @@ export default class CoActor extends Actor {
 
   get capacities() {
     return this.items.filter((item) => item.type == ITEM_TYPE.CAPACITY);
-  }
-
-  /**
-   * @returns les Items de type equipment
-   */
-  get equipments() {
-    return this.items.filter((item) => item.type == ITEM_TYPE.EQUIPMENT);
   }
 
   /**
@@ -134,13 +139,6 @@ export default class CoActor extends Actor {
    */
   get equippedShields() {
     return this.shields.filter((item) => item.system.equipped);
-  }
-
-  /**
-   * @returns le premier Itemp de type profile
-   */
-  get profile() {
-    return this.items.find((item) => item.type === ITEM_TYPE.PROFILE) ?? null;
   }
 
   //#endregion

@@ -4,8 +4,8 @@ export const SYSTEM_NAME = 'co';
 export const SYSTEM_DESCRIPTION = "Chroniques Oubliées";
 
 export const MODIFIER_TYPE = {
+    EQUIPMENT: "equipment",
     FEATURE: "feature",
-    TRAIT: "trait",
     PROFILE: "profile",
     CAPACITY: "capacity"
 };
@@ -72,23 +72,18 @@ export const PATH_TYPE = {
 export const PATH_MAX_RANK = 5;
 
 export const ITEM_TYPE = {
-    ITEM : "item",
     EQUIPMENT: "equipment",
-    PROFILE : "profile",
-    CONSUMABLE : "consumable",
-    LOOT : "loot",
-    CURRENCY : "currency",
-    ACTION : "action",
-    TRAIT: "trait",
     FEATURE: "feature",
+    PROFILE : "profile",    
     PATH: "path",
     CAPACITY: "capacity"
 };
 
 export const EQUIPMENT_SUBTYPE = {
-    ARMOR: "armor",
-    SHIELD: "shield",
-    WEAPON: "weapon"
+    ARMOR: "ARMOR",
+    SHIELD: "SHIELD",
+    WEAPON: "WEAPON",
+    MISC: "MISC"
 }
 
 export const ACTOR_TYPE = {

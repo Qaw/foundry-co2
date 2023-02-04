@@ -308,6 +308,7 @@
       "rarity" : "",
       "properties" : {
         "equipable": true,
+        "equipped": false,
         "reloadable": false,
         "stackable": false
       },
@@ -348,7 +349,8 @@
       },
       "properties" : {
         "spell" : false,
-        "chargeable" : false
+        "chargeable" : false,
+        "enabled" : false
       },
       "path" : null,
       "actions": []

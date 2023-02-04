@@ -7,20 +7,19 @@
       "value": "<p>Le magicien fait apparaître un nuage magique argenté qui le protège contre les attaques adverses. Il bénéficie d'un bonus de +4 à la DEF pour le reste du combat.</p>"
     },
     "slug": "armure-de-mage",
-    "source": {
+    "source": "",
+    "origin": {
       "value": "Chroniques Oubliées Fantasy"
     },
-    "capacity" : {
-      "enabled" : false,
-      "path" : "Item.xyz", // ID World ou Compendium ou ID Feuille ?
-      "charges": {
-        "current" : 2,
-        "max" : "@rank",
-        "destroyOnEmpty" : false
-      },
-      "properties" : {
-        "spell" : true
-      }
+    "enabled": false,
+    "path": "Item.xyz", // ID World ou Compendium ou ID Feuille ?
+    "charges": {
+      "current": 2,
+      "max": "@rank",
+      "destroyOnEmpty": false
+    },
+    "properties": {
+      "spell": true
     },
     "actions": [
       {
@@ -31,9 +30,9 @@
         "enabled": false,
         "conditions": [
           {
-            "subject" : "capacity",
-            "predicate" : "enabled",
-            "object" : "_self"
+            "subject": "capacity",
+            "predicate": "enabled",
+            "object": "_self"
           }
         ],
         "activation": {
@@ -41,8 +40,8 @@
           "cost": 1
         },
         "consumes": {
-          "type": "charge",   // valeurs possibles "charge|item"
-          "target" : "_self", // ID de l'item consommé
+          "type": "charge", // valeurs possibles "charge|item"
+          "target": "_self", // ID de l'item consommé
           "perUsage": 1
         },
         "duration": {
@@ -50,10 +49,10 @@
           "units": "combat" // valeurs possibles "combat|special|round|turn|sec|min|hour|day|week|month|year"
         },
         "resolvers": [],
-        "modifiers" : [
+        "modifiers": [
           {
             "type": "capacity",
-            "subtype": "combat",   // valeurs possibles "ability|combat|attribute|skill|resource"
+            "subtype": "combat", // valeurs possibles "ability|combat|attribute|skill|resource"
             "source": "Item.AY8MiRuqveyGyPaB",
             "target": "@def",
             "value": "+4"
@@ -61,9 +60,6 @@
         ]
       }
     ],
-    "tags": [
-      "shield",
-      "holy"
-    ]
+    "tags": ["shield", "holy"]
   }
 }
