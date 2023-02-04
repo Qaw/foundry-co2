@@ -152,6 +152,9 @@
       "perUsage" : "Par utilisation"
     },
     "properties": {
+      "attack": "Attaque",
+      "buff": "Amélioration",
+      "heal": "Soins",
       "equipable": "Équipable",
       "stackable": "Empilable",
       "unique": "Unique",
@@ -159,7 +162,9 @@
       "tailored": "Sur-mesure",
       "2H": "Deux mains",
       "reloadable": "Rechargeable",
-      "equipped": "Équipé"
+      "equipped": "Équipé",
+      "spell": "Sort",
+      "chargeable": "Chargeable"
     },
     "abilities": {
       "long": {

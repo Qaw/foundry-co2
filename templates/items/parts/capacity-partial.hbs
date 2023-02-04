@@ -1,3 +1,26 @@
-<div>
-    <label>Rank : </label><input name="system.rank" type="Number" value="{{system.rank}}" data-dtype="String">
+<h3 class="form-header"><a class="details-toggle">{{localize "CO.ui.details"}}</a></h3>
+<div class="details-form">
+
+    <div class="form-group">
+        <label>{{localize "CO.label.long.properties"}}</label>
+        <div class="form-fields">
+            {{#each system.properties as |prop idx|}}
+                <label class="checkbox"> <input type="checkbox" name="system.properties.{{idx}}" {{checked prop}}> {{localize (concat "CO.properties." idx)}}</label>
+            {{/each}}
+        </div>
+    </div>
+    <br/>
+
+    {{#if system.properties.chargeable}}
+        <div class="form-group">
+            <label>{{localize "CO.ui.charges"}}</label>
+            <div class="form-fields">
+                <input class="field-value" name="system.charges.current" type="text" value="{{system.charges.current}}" placeholder="{{localize "CO.ui.current"}}" data-dtype="Number">
+                /
+                <input class="field-value" name="system.charges.max" type="text" value="{{system.charges.max}}" placeholder="{{localize "CO.ui.max"}}" data-dtype="Number">
+            </div>
+        </div>
+        
+    {{/if}}
 </div>
+{{> "systems/co/templates/items/parts/actions/action-partial.hbs"}}
