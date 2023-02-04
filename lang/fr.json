@@ -165,7 +165,9 @@
       "equipped": "Équipé",
       "spell": "Sort",
       "chargeable": "Chargeable",
-      "enabled": "Activé(e)"
+      "enabled": "Activé(e)",
+      "visible": "Visible",
+      "activable": "Activable"
     },
     "abilities": {
       "long": {

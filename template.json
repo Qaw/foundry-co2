@@ -350,7 +350,9 @@
       "properties" : {
         "spell" : false,
         "chargeable" : false,
-        "enabled" : false
+        "visible" : false,
+        "activable" : false,
+        "enabled" : false        
       },
       "path" : null,
       "actions": []

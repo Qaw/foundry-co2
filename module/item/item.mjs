@@ -13,18 +13,7 @@ export class CoItem extends Item {
   /** @override */
   prepareBaseData() {
     this.system.slug = this.name.slugify({ strict: true });
-    // switch (this.type) {
-    //   case ITEM_TYPE.PATH:
-    //     return this._preparePathData();
-    // }
   }
-
-  /**
-   *
-   */
-  // _preparePathData() {
-  //   this.system.maxRank = PATH_MAX_RANK;
-  // }
 
   /**
    * @returns undefined if the item is a path, true if the item has modifiers
@@ -38,7 +27,7 @@ export class CoItem extends Item {
     if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(this.type)) {
       this.actions.forEach((action) => {
         // Array
-        if (action.modifiers.length > 0) hasModifiers = true;
+        if (action.modifiers?.length > 0) hasModifiers = true;
         // Object
         if (action.modifiers !== null) hasModifiers = true;
       });
@@ -66,8 +55,10 @@ export class CoItem extends Item {
     // For Equipement or Capacity Item, the modifiers are in the actions
     if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(this.type)) {
       this.actions.forEach((action) => {
-        if (action.modifiers instanceof Array) modifiers.push(...action.modifiers);
-        else modifiers.push(...Object.values(action.modifiers));
+        if (action.modifiers) {
+          if (action.modifiers instanceof Array) modifiers.push(...action.modifiers);
+          else modifiers.push(...Object.values(action.modifiers));
+        }        
       });
     }
 
@@ -79,19 +70,7 @@ export class CoItem extends Item {
     }
 
     return modifiers;
-    //if (this.system.modifiers instanceof Array) return this.system.modifiers;
-    //return Object.values(this.system.modifiers);
   }
-
-  /**
-   * Get all actions of a Equipment or Capacity item as an array
-   
-  get actions() {
-    if (![ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(this.type)) return [];
-
-    return this.system.actions;
-  }
-  */
 
   // /**
   //  * @returns undefined if the item is not a specie or a path, null if there is no capacities already, all the capacities
@@ -102,6 +81,17 @@ export class CoItem extends Item {
   //   // No capacities
   //   if (this.system.capacities === undefined) return null;
   //   return this.system.capacities;
+  // }
+
+  // /**
+  //  *
+  //  * @param {*} source
+  //  * @returns true if the capacity with a same source already exists
+  //  * @type {boolean}
+  //  */
+  // hasCapacityBySource(source) {
+  //   if (this.allCapacities != null && this.allCapacities.find((capacity) => capacity.source == source)) return true;
+  //   return false;
   // }
 
   /**
@@ -131,17 +121,6 @@ export class CoItem extends Item {
     if (!this.hasModifiers) return 0;
     return this.modifiers.filter((m) => m.type == type && m.subtype == subtype);
   }
-
-  // /**
-  //  *
-  //  * @param {*} source
-  //  * @returns true if the capacity with a same source already exists
-  //  * @type {boolean}
-  //  */
-  // hasCapacityBySource(source) {
-  //   if (this.allCapacities != null && this.allCapacities.find((capacity) => capacity.source == source)) return true;
-  //   return false;
-  // }
 
   get actions() {
     if (this.system.actions instanceof Array) return this.system.actions;

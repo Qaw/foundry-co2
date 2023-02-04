@@ -141,6 +141,13 @@ export default class CoActor extends Actor {
     return this.shields.filter((item) => item.system.equipped);
   }
 
+  get actions() {
+    let allActions = [];
+    this.items.forEach(item => {
+      if (item.actions.length > 0) allActions.push(...item.actions);
+    });
+    return allActions;
+  }
   //#endregion
 
   //#region méthodes publiques

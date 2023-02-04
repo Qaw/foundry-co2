@@ -26,6 +26,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
       context.profile = this.actor.profile;
       context.capacities = this.actor.capacities;
       context.features = this.actor.features;
+      context.actions = this.actor.actions;
       // context.weapons = this.actor.weapons;
       // context.armors = this.actor.armors;
       // context.shields = this.actor.shields;

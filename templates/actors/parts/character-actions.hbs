@@ -18,7 +18,8 @@
 <!--        <span class="field-label header">{{ localize "CO.label.short.mod" }}</span>-->
 <!--    </div>-->
     {{#each actions as |action id|}}
-        {{ log id action}}
+        {{log 'action' this}}
+       <!-- {{ log id action}}
         <div class="cell">
             <span class="field-label header" title="{{ localize (concat "CO.actions.long." id) }}">{{ localize (concat "CO.actions.short." id) }}</span>
         </div>
@@ -31,5 +32,7 @@
         <div class="cell readonly">
             <input class="field-value" name="system.actions.{{id}}.mod" readonly="true" type="string" value="{{numberFormat action.mod decimals=0 sign=true}}" data-dtype="Number"/>
         </div>
+        -->
+        <div>{{action.label}} </div>
     {{/each}}
 </div>

@@ -2,6 +2,10 @@ import CoBaseItemSheet from "./base-item-sheet.mjs";
 import { Modifier } from "../../system/modifiers.mjs";
 import { ITEM_TYPE } from "../../system/constants.mjs";
 
+import { Action } from "../../system/actions.mjs";
+import { Condition } from "../../system/conditions.mjs";
+import { Resolver } from "../../system/resolvers.mjs";
+
 export default class CoItemSheet extends CoBaseItemSheet {
 
     /** @override */
@@ -227,20 +231,9 @@ export default class CoItemSheet extends CoBaseItemSheet {
     _onAddAction(event) {
         event.preventDefault();
         let newActions = foundry.utils.deepClone(this.item.actions);
-        let label = "Action #"+ this.item.actions.length
-        let actionData = {
-            "type": "melee",
-            "label": label,
-            "img": "icons/svg/d20-highlight.svg",
-            "chatFlavor": game.i18n.localize("CO.actionType.melee"),
-            "activable": true,
-            "enabled": false,
-            "visible" : true,
-            "conditions": [],
-            "modifiers": [],
-            "resolvers": []
-        }
-        newActions.push(actionData);
+
+        let action = new Action (null, "melee", "icons/svg/d20-highlight.svg", "Action #" + this.item.actions.length, game.i18n.localize("CO.actionType.melee"), true, false, true);
+        newActions.push(action);
         return this.item.update({"system.actions": newActions});
     }
 
@@ -269,13 +262,10 @@ export default class CoItemSheet extends CoBaseItemSheet {
         const rowId = li.data("itemId");
         let newActions = foundry.utils.deepClone(this.item.actions);
         console.log(newActions[rowId]);
-        let conditionData = {
-            "subject" : "item",
-            "predicate" : "equipped",
-            "object" : "_self"
-        }
+        let condition = new Condition("item","equipped", "_self");
+
         if(!newActions[rowId].conditions) newActions[rowId].conditions = [];
-        newActions[rowId].conditions.push(conditionData);
+        newActions[rowId].conditions.push(condition);
         return this.item.update({"system.actions": newActions});
     }
 
@@ -324,7 +314,6 @@ export default class CoItemSheet extends CoBaseItemSheet {
         return this.item.update({"system.actions": newActions});
     }
 
-
     /**
      *
      * @param {*} event
@@ -335,19 +324,15 @@ export default class CoItemSheet extends CoBaseItemSheet {
         const li = $(event.currentTarget).closest(".action");
         const rowId = li.data("itemId");
         let newActions = foundry.utils.deepClone(this.item.actions);
-        let resolverData = {
-            "type" : "melee",
-            "skill": {
+        let resolver = new Resolver("melee", {
                 "formula": [{"part": "@atc"}],
                 "crit": "20",
                 "difficulty" : "@def"
-            },
-            "dmg": {
+            },{
                 "formula": [{"part": ""}],
-            }
-        }
+            });
         if(!newActions[rowId].resolvers) newActions[rowId].resolvers = [];
-        newActions[rowId].resolvers.push(resolverData);
+        newActions[rowId].resolvers.push(resolver);
         return this.item.update({"system.actions": newActions});
     }
 
