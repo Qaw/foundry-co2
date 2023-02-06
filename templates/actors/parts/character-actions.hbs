@@ -1,38 +1,10 @@
 <div class="actions-container">
-<!--    <div class="cell">-->
-<!--        <span class="field-label header">{{ localize "CO.label.short.superior" }}</span>-->
-<!--    </div>-->
-<!--    <div class="cell">-->
-<!--        <span class="field-label header">{{ localize "CO.label.short.stat" }}</span>-->
-<!--    </div>-->
-<!--    <div class="cell">-->
-<!--        <span class="field-label header">{{ localize "CO.label.short.base" }}</span>-->
-<!--    </div>-->
-<!--    <div class="cell">-->
-<!--        <span class="field-label header">{{ localize "CO.label.short.bonus" }}</span>-->
-<!--    </div>-->
-<!--    <div class="cell readonly">-->
-<!--        <span class="field-label header">{{ localize "CO.label.short.value" }}</span>-->
-<!--    </div>-->
-<!--    <div class="cell readonly">-->
-<!--        <span class="field-label header">{{ localize "CO.label.short.mod" }}</span>-->
-<!--    </div>-->
     {{#each actions as |action id|}}
+        <input type="hidden" value="{{action.source}}"/>
         {{log (concat "Chroniques Oubliées | action " id) action}}
-       <!-- {{!log id action}}
-        <div class="cell">
-            <span class="field-label header" title="{{ localize (concat "CO.actions.long." id) }}">{{ localize (concat "CO.actions.short." id) }}</span>
-        </div>
-        <div class="cell">
-            <input class="field-value" name="system.actions.{{id}}.base" type="string" value="{{action.base}}" data-dtype="Number"/>
-        </div>
-        <div class="cell">
-            <input class="field-value" name="system.actions.{{id}}.bonus" type="string" value="{{numberFormat action.bonus decimals=0 sign=true}}" data-dtype="Number"/>
-        </div>
-        <div class="cell readonly">
-            <input class="field-value" name="system.actions.{{id}}.mod" readonly="true" type="string" value="{{numberFormat action.mod decimals=0 sign=true}}" data-dtype="Number"/>
-        </div>
-        -->
-        {{#if action.properties.activable}} <div>{{action.label}} {{#if action.properties.enabled}} <i class="fa-solid fa-check"></i> {{else}} <i class="fa fa-times"></i> {{/if}} </div>{{/if}}
+
+        {{#if action.properties.activable}} 
+            <div>{{action.label}} {{#if action.properties.enabled}} <i class="fa-solid fa-check"></i> {{else}} <i class="fa fa-times"></i> {{/if}} </div>
+        {{/if}}
     {{/each}}
 </div>

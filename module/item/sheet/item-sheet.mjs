@@ -356,12 +356,13 @@ export default class CoItemSheet extends CoBaseItemSheet {
             formData = expandObject(formData);
 
             // Parcours des actions pour ajouter les tableaux vides
-            Object.values(formData.system.actions).forEach(action => {
-                if (foundry.utils.isEmpty(action.modifiers)) action.modifiers = [];
-                if (foundry.utils.isEmpty(action.conditions)) action.conditions = [];
-                if (foundry.utils.isEmpty(action.resolvers)) action.resolvers = []; 
-            });          
-            console.log('FormData à la fin :', formData); 
+            if (!foundry.utils.isEmpty(formData.system.actions)) {
+                Object.values(formData.system.actions).forEach(action => {
+                    if (foundry.utils.isEmpty(action.modifiers)) action.modifiers = [];
+                    if (foundry.utils.isEmpty(action.conditions)) action.conditions = [];
+                    if (foundry.utils.isEmpty(action.resolvers)) action.resolvers = []; 
+                });                
+            }                      
         }       
         super._updateObject(event, formData);
     }

@@ -42,5 +42,14 @@ export class Action {
         return !foundry.utils.isEmpty(this.resolvers);
     }
 
+    updateSource(source) {
+        this.source = source;
+
+        // Update the source of all modifiers
+        Object.values(this.modifiers).forEach(element => {
+            element.source = source;
+        });
+    }
+
 }
 

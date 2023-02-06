@@ -1,5 +1,6 @@
 import { ITEM_TYPE, OPEN_TYPE } from "../../system/constants.mjs";
 import CoBaseActorSheet from "./base-actor-sheet.mjs";
+import { Action } from "../../system/actions.mjs";
 
 export default class CoCharacterSheet extends CoBaseActorSheet {
   /** @override */
@@ -125,4 +126,107 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
       const itemId = li.data("itemId");
       this.actor.deleteEmbeddedDocuments("Item",[itemId]);
     }
+
+    /** @inheritdoc */
+    async _onDrop(event) {
+      const data = TextEditor.getDragEventData(event);
+      const actor = this.actor;
+ 
+      /**
+       * A hook event that fires when some useful data is dropped onto an ItemSheet.
+       * @function dropActorSheetData
+       * @memberof hookEvents
+       * @param {Item} item      The Item
+       * @param {ItemSheet} sheet The ItemSheet application
+       * @param {object} data      The data that has been dropped onto the sheet
+       */
+      const allowed = Hooks.call("dropActorSheetData", actor, this, data);
+      if (allowed === false) return;
+ 
+      // Handle different data types
+      switch (data.type) {
+          case "Actor":
+              return;
+          case "Item":
+              return this._onDropItem(event, data);
+          case "Folder":
+              return;
+      }
+  }
+
+ /**
+  * @param {DragEvent} event            The concluding DragEvent which contains drop data
+  * @param {object} data                The data transfer extracted from the event
+  * @returns {Promise<Item[]|boolean>}  The created or updated Item instances, or false if the drop was not permitted.
+  * @protected
+  */
+  async _onDropItem(event, data) {
+     event.preventDefault();
+      if (!this.actor.isOwner) return false;
+      const item = await Item.implementation.fromDropData(data);
+      //const itemData = item.toObject();
+ 
+      // Handle item sorting within the same Actor
+      // if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, itemData);
+ 
+      switch (item.type) {
+         case ITEM_TYPE.EQUIPMENT:
+             return this._onDropEquipmentItem(item);
+         case ITEM_TYPE.FEATURE:
+             return this._onDropFeatureItem(item);
+         case ITEM_TYPE.PROFILE:
+             return this._onDropProfileItem(item);
+         case ITEM_TYPE.PATH:
+             return this._onDropPathItem(item);
+          case ITEM_TYPE.CAPACITY:
+             return this._onDropCapacityItem(item);
+          default:
+             return false;
+      }
+  }
+
+  _onDropEquipmentItem(item) {
+     let itemData = item.toObject();
+     itemData = itemData instanceof Array ? itemData : [itemData];
+     return this.actor.createEmbeddedDocuments("Item", itemData);
+  }
+
+  _onDropFeatureItem(item) {
+     let itemData = item.toObject();
+     itemData = itemData instanceof Array ? itemData : [itemData];
+     return this.actor.createEmbeddedDocuments("Item", itemData);
+  }
+
+  _onDropProfileItem(item) {
+     let itemData = item.toObject();
+     itemData = itemData instanceof Array ? itemData : [itemData];
+     return this.actor.createEmbeddedDocuments("Item", itemData);
+  }
+
+  _onDropPathItem(item) {
+     let itemData = item.toObject();
+     itemData = itemData instanceof Array ? itemData : [itemData];
+     return this.actor.createEmbeddedDocuments("Item", itemData);
+  }     
+
+  async _onDropCapacityItem(item) {
+     let itemData = item.toObject();
+
+     // Change the source of all actions
+     itemData = itemData instanceof Array ? itemData : [itemData];
+     //return this.actor.createEmbeddedDocuments("Item", itemData);
+     const created = await this.actor.createEmbeddedDocuments("Item", itemData);
+     
+     console.log('Drop capacity created : ', created);
+
+     let newActions = Object.values(foundry.utils.deepClone(created[0].system.actions)).map(m => new Action(m.source, m.type, m.img, m.label, m.chatFlavor, m.properties.visible, m.properties.enabled, m.properties.activable, m.conditions, m.modifiers, m.resolvers)); 
+     newActions.forEach(action => {
+        action.updateSource(created[0].id);
+     });
+
+     const updateData = {"_id" : created[0].id, "system.actions": newActions};
+
+     await this.actor.updateEmbeddedDocuments("Item", [updateData]);
+
+  }
 }
