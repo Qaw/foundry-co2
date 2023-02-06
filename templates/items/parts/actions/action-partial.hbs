@@ -25,6 +25,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label>{{localize "CO.ui.chatFlavor"}}</label>
+                            <div class="form-fields">
+                                <input class="field-value" name="system.actions.{{idx}}.chatFlavor" type="text" value="{{action.chatFlavor}}" placeholder="{{localize "CO.ui.label"}}" data-dtype="String">
+                            </div>
+                        </div>                        
+                        <div class="form-group">
                             <label>{{localize "CO.ui.type"}}</label>
                             <div class="form-fields">
                                 <select name="system.actions.{{idx}}.type" data-type="String" style="width:100%">
@@ -45,6 +51,15 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label>{{localize "CO.label.long.properties"}}</label>
+                            <div class="form-fields">
+                                {{#each action.properties as |prop idy|}}
+                                    <label class="checkbox"> <input type="checkbox" name="system.actions.{{idx}}.properties.{{idy}}" {{checked prop}}> {{localize (concat "CO.properties." idy)}}</label>
+                                {{/each}}
+                            </div>
+                        </div>
+                        <br/>
                         {{> "systems/co/templates/items/parts/actions/conditions-partial.hbs" action=action idx=idx}}
                         {{> "systems/co/templates/items/parts/actions/modifiers-partial.hbs" action=action idx=idx}}
                         {{> "systems/co/templates/items/parts/actions/resolvers-partial.hbs" action=action idx=idx}}

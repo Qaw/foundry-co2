@@ -12,7 +12,7 @@ export class Modifiers {
   static getModifiersByTypeSubtype(items, type, subtype) {
     if (!items || items.size == 0) return [];
     return items
-      .reduce((mods, item) => mods.concat(item.modifiers), [])
+      .reduce((mods, item) => mods.concat(item.enabledModifiers), [])
       .filter((m) => m.type === type && m.subtype === subtype)
       .map((m) => new Modifier(m.source, m.type, m.subtype, m.target, m.value));
   }

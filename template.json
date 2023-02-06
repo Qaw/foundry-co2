@@ -279,6 +279,7 @@
           "chat": ""
         },
         "source": "",
+        "origin": "",
         "slug": "",
         "tags": []
       }
@@ -350,8 +351,6 @@
       "properties" : {
         "spell" : false,
         "chargeable" : false,
-        "visible" : false,
-        "activable" : false,
         "enabled" : false        
       },
       "path" : null,

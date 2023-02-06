@@ -1,4 +1,4 @@
-{{log 'profil' this}}
+ {{log "Chroniques Oubliées | profile" this}}
 <input class="field-value" name="system.slug" type="hidden" value="{{item.system.slug}}" placeholder="{{ localize "COF.ui.key" }}" data-dtype="String">
 <div class="form-group">
     <label>{{localize "CO.label.long.hd"}}</label>
@@ -33,7 +33,6 @@
 <h2>Formations martiales (armes)</h2>
 <div class="form-group">
     {{#each martialTrainingsWeaponsList as |training key|}}
-        {{log 'training ' training key}}
         <label><input type="checkbox" name="system.martialTrainingsWeapons.{{getKeyFromMartialTraining training}}" data-dtype="Boolean" {{checked (lookup ../system.martialTrainingsWeapons training.key)}}/>{{getMartialTrainingLabel training}}</label>        
     {{/each}}   
 </div>
@@ -41,7 +40,6 @@
 <h2>Formations martiales (armures)</h2>
 <div class="form-group">
     {{#each martialTrainingsArmorsList as |training key|}}
-        {{log 'training ' training key}}
         <label><input type="checkbox" name="system.martialTrainingsArmors.{{getKeyFromMartialTraining training}}" data-dtype="Boolean" {{checked (lookup ../system.martialTrainingsArmors training.key)}}/>{{getMartialTrainingLabel training}}</label>        
     {{/each}}   
 </div>
@@ -49,7 +47,6 @@
 <h2>Formations martiales (boucliers)</h2>
 <div class="form-group">
     {{#each martialTrainingsShieldsList as |training key|}}
-        {{log 'training ' training key}}
         <label><input type="checkbox" name="system.martialTrainingsArmors.{{getKeyFromMartialTraining training}}" data-dtype="Boolean" {{checked (lookup ../system.martialTrainingsShields training.key)}}/>{{getMartialTrainingLabel training}}</label>        
     {{/each}}   
 </div>

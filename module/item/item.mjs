@@ -58,8 +58,39 @@ export class CoItem extends Item {
         if (action.modifiers) {
           if (action.modifiers instanceof Array) modifiers.push(...action.modifiers);
           else modifiers.push(...Object.values(action.modifiers));
-        }        
+        }
       });
+    }
+
+    // For Feature or Profile, the modifiers are in the item
+    if ([ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE].includes(this.type)) {
+      this.modifiers.forEach((modifier) => {
+        modifiers.push(modifier);
+      });
+    }
+
+    return modifiers;
+  }
+
+  /**
+   * Return an array of enabled Modifiers
+   * If the item has actions, only enabled actions are taken into account
+   */
+  get enabledModifiers() {
+    if (!this.hasModifiers) return [];
+
+    let modifiers = [];
+
+    // For Equipement or Capacity Item, the modifiers are in the actions
+    if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(this.type)) {
+      this.actions
+        .filter((action) => action.properties.enabled)
+        .forEach((action) => {
+          if (action.modifiers) {
+            if (action.modifiers instanceof Array) modifiers.push(...action.modifiers);
+            else modifiers.push(...Object.values(action.modifiers));
+          }
+        });
     }
 
     // For Feature or Profile, the modifiers are in the item

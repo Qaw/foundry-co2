@@ -1,5 +1,5 @@
+   {{log "Chroniques Oubliées | capacities" this}}
    <div class="path-list">
-    {{log 'paths' this}}
         <div class="grid">
             <div class="gridrow grid-6col-150 gridheader">
                 <div>&nbsp;</div>
@@ -10,7 +10,7 @@
                 <div class="gridcell gridcell-sm bg-default">5</div>
             </div>
             {{#each paths as |path id|}}
-              {{log 'path' path id}}
+                {{log "Chroniques Oubliées | path" this}}
                 <div class="gridrow grid-6col-150 item" data-item-id="{{path._id}}" data-item-type="item">
                     <div class="gridcell left gridheader color-default no-border">
                         <a class="item-edit ellipsis" style="width: 100%; text-align: left" title="{{path.name}}">{{path.name}}</a>&nbsp;
@@ -42,8 +42,8 @@
            </div>
 
        </li>
-       {{#each capacities as |capacity id|}}
-           {{log 'capacity' this}}
+       {{#each capacities as |capacity id|}}       
+           {{log "Chroniques Oubliées | capacity" this}}
            <div class="item flexrow" data-item-type="capacity" data-open-type="embeddedId" data-item-id="{{capacity._id}}" data-item-source="{{capacity.source}}" data-capacity-name="{{capacity.name}}">
                <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>
                <h4>{{capacity.name}}</h4>

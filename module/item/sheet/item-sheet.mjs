@@ -232,7 +232,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
         event.preventDefault();
         let newActions = foundry.utils.deepClone(this.item.actions);
 
-        let action = new Action (null, "melee", "icons/svg/d20-highlight.svg", "Action #" + this.item.actions.length, game.i18n.localize("CO.actionType.melee"), true, false, true);
+        let action = new Action (null, "melee", "icons/svg/d20-highlight.svg", "Action #" + this.item.actions.length, game.i18n.localize("CO.actionType.melee"));
         newActions.push(action);
         return this.item.update({"system.actions": newActions});
     }
@@ -349,5 +349,20 @@ export default class CoItemSheet extends CoBaseItemSheet {
         let newActions = foundry.utils.deepClone(this.item.actions);
         newActions[actionId].resolvers.splice(condId, 1);
         return this.item.update({"system.actions": newActions});
+    }
+
+    _updateObject(event, formData) {        
+        if (this.item.type = "capacity") {
+            formData = expandObject(formData);
+
+            // Parcours des actions pour ajouter les tableaux vides
+            Object.values(formData.system.actions).forEach(action => {
+                if (foundry.utils.isEmpty(action.modifiers)) action.modifiers = [];
+                if (foundry.utils.isEmpty(action.conditions)) action.conditions = [];
+                if (foundry.utils.isEmpty(action.resolvers)) action.resolvers = []; 
+            });          
+            console.log('FormData à la fin :', formData); 
+        }       
+        super._updateObject(event, formData);
     }
 }

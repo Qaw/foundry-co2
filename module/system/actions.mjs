@@ -14,18 +14,35 @@ export class Action {
      * @param {*} modifiers 
      * @param {*} resolvers 
      */
-    constructor(source = null, type, img, label, chatFlavor, activable = false, enabled = false, visible = false, conditions = [], modifiers = [], resolvers = []) {
+    constructor(source = null, type, img, label = '', chatFlavor = null, visible = false, enabled = false, activable = false, conditions = [], modifiers = [], resolvers = []) {
         this.source = source;
         this.type = type;
         this.img = img;
         this.label = label;
         this.chatFlavor = chatFlavor;
-        this.activable = activable;
+        this.properties = {
+            "visible": visible,
+            "enabled": enabled,
+            "activable": activable
+        }
+        /*this.visible = visible;        
         this.enabled = enabled;
-        this.visible = visible;
+        this.activable = activable;*/
         this.conditions = conditions;
         this.modifiers = modifiers;
         this.resolvers = resolvers;
+    }
+
+    get hasConditions() {
+        return !foundry.utils.isEmpty(this.conditions);
+    }
+
+    get hasModifiers() {
+        return !foundry.utils.isEmpty(this.modifiers);
+    }
+
+    get hasResolvers() {
+        return !foundry.utils.isEmpty(this.resolvers);
     }
 
 }
