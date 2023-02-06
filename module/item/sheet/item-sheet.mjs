@@ -232,7 +232,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
         event.preventDefault();
         let newActions = foundry.utils.deepClone(this.item.actions);
 
-        let action = new Action (null, "melee", "icons/svg/d20-highlight.svg", "Action #" + this.item.actions.length, game.i18n.localize("CO.actionType.melee"));
+        let action = new Action (this.item.uuid, "melee", "icons/svg/d20-highlight.svg", "Action #" + this.item.actions.length, game.i18n.localize("CO.actionType.melee"));
         newActions.push(action);
         return this.item.update({"system.actions": newActions});
     }

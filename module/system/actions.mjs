@@ -25,9 +25,6 @@ export class Action {
             "enabled": enabled,
             "activable": activable
         }
-        /*this.visible = visible;        
-        this.enabled = enabled;
-        this.activable = activable;*/
         this.conditions = conditions;
         this.modifiers = modifiers;
         this.resolvers = resolvers;

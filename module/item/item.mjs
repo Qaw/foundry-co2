@@ -157,4 +157,11 @@ export class CoItem extends Item {
     if (this.system.actions instanceof Array) return this.system.actions;
     return Object.values(this.system.actions);
   }
+
+  // TO FIX Est-ce utile ?
+  updateActionsSource(source){
+    this.system.actions.forEach(action => {
+        action.source = source;      
+    });
+  }
 }
