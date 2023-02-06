@@ -16,6 +16,7 @@
                 {{#each system.actions as |action idx|}}
                     <div class="tab action item" data-group="actions" data-tab="{{idx}}" data-item-id="{{idx }}" data-item-type="action">
                         <input type="hidden" name="system.actions.{{idx}}.source" value="{{action.source}}" data-dtype="String">
+                        <input type="hidden" name="system.actions.{{idx}}.indice" value="{{action.indice}}" data-dtype="Number">
                         <div class="form-group">
                             <label>{{localize "CO.ui.label"}}</label>
                             <div class="form-fields">

@@ -539,4 +539,19 @@ export default class CoActor extends Actor {
   //       }
   //   }
   // }
+
+  async activateAction(state, source, indice) {
+    const item = this.items.get(source);
+    let newActions = foundry.utils.deepClone(item.system.actions);
+    if (state) {
+      newActions[indice].properties.enabled = true;
+    }
+    else {
+      newActions[indice].properties.enabled = false;
+    }
+
+    const updateData = {"_id" : item.id, "system.actions": newActions};
+
+    await this.updateEmbeddedDocuments("Item", [updateData]);
+  }
 }

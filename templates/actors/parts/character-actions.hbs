@@ -1,10 +1,9 @@
 <div class="actions-container">
     {{#each actions as |action id|}}
-        <input type="hidden" value="{{action.source}}"/>
         {{log (concat "Chroniques Oubliées | action " id) action}}
 
         {{#if action.properties.activable}} 
-            <div>{{action.label}} {{#if action.properties.enabled}} <i class="fa-solid fa-check"></i> {{else}} <i class="fa fa-times"></i> {{/if}} </div>
+            <div>{{action.label}} {{#if action.properties.enabled}} <i class="fa-solid fa-check toggle-action" data-action="unactivate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i> {{else}} <i class="fa fa-times toggle-action" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i> {{/if}} </div>
         {{/if}}
     {{/each}}
 </div>

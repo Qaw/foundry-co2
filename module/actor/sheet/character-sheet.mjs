@@ -49,7 +49,26 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     html.find(".item-edit").click(this._onEditItem.bind(this));
     html.find(".item-delete").click(this._onDeleteItem.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));    
+
+    html.find(".toggle-action").click(this._onUseAction.bind(this));  
   }
+
+
+  _onUseAction(event) {
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    const action = dataset.action;
+    const source = dataset.source;
+    const indice = dataset.indice;
+
+    if (action == "activate") {
+      this.actor.activateAction(true, source, indice);
+    }
+    else if (action == "unactivate") {
+      this.actor.activateAction(false, source, indice);
+    }
+  }
+
 
   /**
    * 
@@ -219,7 +238,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
      
      console.log('Drop capacity created : ', created);
 
-     let newActions = Object.values(foundry.utils.deepClone(created[0].system.actions)).map(m => new Action(m.source, m.type, m.img, m.label, m.chatFlavor, m.properties.visible, m.properties.enabled, m.properties.activable, m.conditions, m.modifiers, m.resolvers)); 
+     let newActions = Object.values(foundry.utils.deepClone(created[0].system.actions)).map(m => new Action(m.source, m.indice, m.type, m.img, m.label, m.chatFlavor, m.properties.visible, m.properties.enabled, m.properties.activable, m.conditions, m.modifiers, m.resolvers)); 
      newActions.forEach(action => {
         action.updateSource(created[0].id);
      });
