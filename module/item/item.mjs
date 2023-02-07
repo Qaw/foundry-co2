@@ -27,7 +27,10 @@ export class CoItem extends Item {
     if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(this.type)) {
       this.actions.forEach((action) => {
         // Array
-        if (action.modifiers?.length > 0) hasModifiers = true;
+        if (action.modifiers instanceof Array) {
+          if (action.modifiers.length > 0 ) return true;
+          return false;
+        }
         // Object
         if (action.modifiers !== null) hasModifiers = true;
       });
@@ -36,7 +39,10 @@ export class CoItem extends Item {
     // For Feature or Profile, the modifiers are in the item
     if ([ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE].includes(this.type)) {
       // Array
-      if (this.system.modifiers?.length > 0) return true;
+      if (this.system.modifiers instanceof Array) {
+        if (this.system.modifiers.length > 0 ) return true;
+        return false;
+       }
       // Object
       if (this.system.modifiers !== null) return true;
     }

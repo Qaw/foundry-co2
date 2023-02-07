@@ -393,8 +393,11 @@ export default class CoItemSheet extends CoBaseItemSheet {
       if (!foundry.utils.isEmpty(formData.system.actions)) {
         Object.values(formData.system.actions).forEach((action) => {
           if (foundry.utils.isEmpty(action.modifiers)) action.modifiers = [];
+          else action.modifiers = Object.values(action.modifiers);
           if (foundry.utils.isEmpty(action.conditions)) action.conditions = [];
+          else action.conditions = Object.values(action.conditions);
           if (foundry.utils.isEmpty(action.resolvers)) action.resolvers = [];
+          else action.resolvers = Object.values(action.resolvers);
         });
       }
     }
