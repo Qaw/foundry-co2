@@ -6,6 +6,7 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.system = this.item.system;
     context.modifiers = this.item.modifiers;
     context.enrichedDescription = TextEditor.enrichHTML(this.item.system.description.value, { async: false });
+    context.tags = this.item.tags;
     return context;
   }
 }

@@ -19,7 +19,6 @@
                     <nav class="sheet-tabs tabs" data-group="primary">
                         <a class="item" data-tab="description" title="{{ localize "CO.tabs.description" }}"><i class="fas fa-book-user"></i></a>
                         <a class="item" data-tab="details" title="{{ localize "CO.tabs.details" }}"><i class="fas fa-gear"></i></a>
-<!--                        <a class="item" data-tab="modifiers" title="{{! localize "CO.tabs.modifiers" }}"><i class="fas fa-sparkles"></i></a>-->
                     </nav>
                 </div>
             </div>
@@ -33,9 +32,6 @@
                 <div class="tab details" data-group="primary" data-tab="details">
                     {{> (concat (concat "systems/co/templates/items/parts/" item.type) "-partial.hbs") }}
                 </div>
-<!--                <div class="tab modifiers" data-group="primary" data-tab="modifiers">-->
-<!--                    {{!> "systems/co/templates/items/parts/modifiers-partial.hbs"}}-->
-<!--                </div>-->
             </section>
         </div>
     </div>

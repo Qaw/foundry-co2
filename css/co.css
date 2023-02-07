@@ -412,10 +412,10 @@ Copied from dnd5e
   max-width: 150px;
   min-width: 150px;
 }
-.co.sheet.actor .window-content form.editable .sidebar .features {
+.co.sheet.actor .window-content form.editable .sidebar .tags {
   list-style-type: none;
 }
-.co.sheet.actor .window-content form.editable .sidebar .features .featured-item {
+.co.sheet.actor .window-content form.editable .sidebar .tags .tag {
   border: 2px groove #eeede0;
   padding: 3px;
   margin-bottom: 3px;

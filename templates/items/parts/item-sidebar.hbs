@@ -1,10 +1,11 @@
+{{log "Chroniques Oubliées | item sidebar" this}}
 <div class="sidebar">
     <div class="picture">
         <img src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
     </div>
-    <ul class="features">
-        {{#each features as |feature id|}}
-            <li class="featured-item" data-item-id="{{feature._id}}">{{feature.name}}</li>
+    <ul class="tags">
+        {{#each tags as |tag id|}}
+            <li class="tag">{{tag}}</li>
         {{/each}}
     </ul>
 </div>

@@ -109,6 +109,9 @@ export class CoItem extends Item {
     return modifiers;
   }
 
+  get tags(){
+    return this.system.tags;
+  }
   // /**
   //  * @returns undefined if the item is not a specie or a path, null if there is no capacities already, all the capacities
   //  * @type {boolean}
