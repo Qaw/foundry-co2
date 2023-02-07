@@ -164,4 +164,23 @@ export class CoItem extends Item {
         action.source = source;      
     });
   }
+
+  addCapacity(uuid) {
+    if (this.type == ITEM_TYPE.PATH || this.type == ITEM_TYPE.FEATURE) {
+      let newCapacities = foundry.utils.duplicate(this.system.capacities);
+      newCapacities.push(uuid);
+      this.update({"system.capacities": newCapacities});
+    }
+  }
+
+  get infosCapacity() {
+    if (this.type == ITEM_TYPE.CAPACITY) {
+      return {
+        "uuid": this.uuid,
+        "name": this.name,
+        "img": this.img
+      }
+    }
+  }
+
 }
