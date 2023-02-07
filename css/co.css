@@ -899,7 +899,7 @@ Copied from dnd5e
   padding: 5px;
   margin: 0;
 }
-.co.sheet.item .window-content form.editable .main .content .sheet-body.description .editor {
+.co.sheet.item .window-content form.editable .main .content .sheet-body .description .editor {
   border: 1px solid red;
   height: 100%;
   min-height: 400px;

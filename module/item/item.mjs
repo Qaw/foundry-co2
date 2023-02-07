@@ -27,10 +27,7 @@ export class CoItem extends Item {
     if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(this.type)) {
       this.actions.forEach((action) => {
         // Array
-        if (action.modifiers instanceof Array) {
-          if (action.modifiers.length > 0 ) return true;
-          return false;
-        }
+        if (action.modifiers?.length > 0) hasModifiers = true;
         // Object
         if (action.modifiers !== null) hasModifiers = true;
       });
