@@ -3,7 +3,6 @@ import CoActor from './actor/actor.mjs';
 import CoCharacterSheet from './actor/sheet/character-sheet.mjs';
 import CoItemSheet from './item/sheet/item-sheet.mjs';
 import { preloadHandlebarsTemplates } from './ui/templates.mjs';
-import { SpecieModel, ProfileModel, PathModel, CapacityModel } from './system/models.mjs';
 import { CoItem } from './item/item.mjs';
 import { registerHandlebarsHelpers } from './ui/helpers.mjs';
 import {Log} from "./utils/log.mjs";

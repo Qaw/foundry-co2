@@ -41,7 +41,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
       this.item.system.capacities.forEach((capacity) => {
         const item = fromUuidSync(capacity);
 
-        // item is null is the item has been deleted in the compendium
+        // item is null if the item has been deleted in the compendium
         if (item != null) {
           // Not from a compendium
           if (foundry.utils.isEmpty(item.pack)) {
@@ -386,7 +386,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
   }
 
   _updateObject(event, formData) {
-    if ((this.item.type = "capacity")) {
+    if ((this.item.type == "capacity")) {
       formData = expandObject(formData);
 
       // Parcours des actions pour ajouter les tableaux vides
