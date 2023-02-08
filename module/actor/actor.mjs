@@ -305,6 +305,27 @@ export default class CoActor extends Actor {
     const training = item.system.martialCategory;
     return profile.system.martialTrainingsShields[training];
   }
+
+  /**
+   * @description 
+   * @param {*} state true to enable the action, false to disable the action
+   * @param {*} source  uuid of the embedded item which is the source of the action
+   * @param {*} indice  indice of the action in the array of actions
+   */
+  async activateAction(state, source, indice) {
+    const item = this.items.get(source);
+    let newActions = foundry.utils.deepClone(item.system.actions);
+    if (state) {
+      newActions[indice].properties.enabled = true;
+    }
+    else {
+      newActions[indice].properties.enabled = false;
+    }
+
+    const updateData = {"_id" : item.id, "system.actions": newActions};
+
+    await this.updateEmbeddedDocuments("Item", [updateData]);
+  }
   //#endregion
 
   //#region méthodes privées
@@ -540,18 +561,4 @@ export default class CoActor extends Actor {
   //   }
   // }
 
-  async activateAction(state, source, indice) {
-    const item = this.items.get(source);
-    let newActions = foundry.utils.deepClone(item.system.actions);
-    if (state) {
-      newActions[indice].properties.enabled = true;
-    }
-    else {
-      newActions[indice].properties.enabled = false;
-    }
-
-    const updateData = {"_id" : item.id, "system.actions": newActions};
-
-    await this.updateEmbeddedDocuments("Item", [updateData]);
-  }
 }

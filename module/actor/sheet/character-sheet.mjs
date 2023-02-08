@@ -53,7 +53,10 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     html.find(".toggle-action").click(this._onUseAction.bind(this));  
   }
 
-
+  /**
+   * 
+   * @param {*} event 
+   */
   _onUseAction(event) {
     const element = event.currentTarget;
     const dataset = element.dataset;

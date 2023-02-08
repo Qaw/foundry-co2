@@ -1,3 +1,4 @@
+{{log "Chroniques Oubliées | equipment" this}}
 <h3 class="form-header"><a class="details-toggle">{{localize "CO.ui.details"}}</a></h3>
 <div class="details-form">
     <div class="form-group">
@@ -13,19 +14,29 @@
         </div>
     </div>
 
-    {{#if (eq system.subtype "WEAPON")}}
-    <div class="form-group">
-        <label>{{localize "CO.label.long.martialCategory"}}</label>
-        <div class="form-fields">
-            <select name="system.martialCategory" data-type="String" style="width:100%">
+    {{#if (or (eq system.subtype "WEAPON") (eq system.subtype "ARMOR") (eq system.subtype "SHIELD"))}}
+        <div class="form-group">
+            <label>{{localize "CO.label.long.martialCategory"}}</label>
+            <div class="form-fields">
+                <select name="system.martialCategory" data-type="String" style="width:100%">
                 {{#select system.martialCategory}}
-                    {{#each @root.config.equipment.martialCategories as |label idx|}}
-                        <option value="{{idx}}">{{localize label}}</option>
-                    {{/each}}
+                    {{#if (eq system.subtype "WEAPON")}}
+                        {{#each martialTrainingsWeaponsList as |training|}}
+                            <option value="{{key}}">{{localize label}}</option>
+                        {{/each}}
+                    {{else if (eq system.subtype "ARMOR")}}
+                        {{#each martialTrainingsArmorsList as |training|}}
+                            <option value="{{key}}">{{localize label}}</option>
+                        {{/each}}
+                    {{else if (eq system.subtype "SHIELD")}}
+                        {{#each martialTrainingsShieldsList as |training|}}
+                            <option value="{{key}}">{{localize label}}</option>
+                        {{/each}}
+                    {{/if}}
                 {{/select}}
-            </select>
+                </select>
+            </div>
         </div>
-    </div>
     {{/if}}
     <div class="form-group">
         <label>{{localize "CO.label.long.properties"}}</label>
@@ -53,7 +64,7 @@
     <div class="form-group">
         <label>{{localize "CO.ui.rarity"}}</label>
         <div class="form-fields">
-            <select name="system.martialCategory" data-type="String" style="width:100%">
+            <select name="system.rarity" data-type="String" style="width:100%">
                 {{#select system.rarity}}
                     {{#each @root.config.equipment.rarity as |label idx|}}
                         <option value="{{idx}}">{{localize label}}</option>

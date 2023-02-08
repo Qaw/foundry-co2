@@ -30,7 +30,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
   async getData(options = {}) {
     const context = super.getData(options);
 
-    if (this.item.type == ITEM_TYPE.PROFILE) {
+    if (this.item.type == ITEM_TYPE.EQUIPMENT ||this.item.type == ITEM_TYPE.PROFILE) {
       context.martialTrainingsWeaponsList = context.config.martialTrainingsWeapons;
       context.martialTrainingsArmorsList = context.config.martialTrainingsArmors;
       context.martialTrainingsShieldsList = context.config.martialTrainingsShields;

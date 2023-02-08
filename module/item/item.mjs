@@ -159,7 +159,11 @@ export class CoItem extends Item {
     return this.modifiers.filter((m) => m.type == type && m.subtype == subtype);
   }
 
+  /**
+   * @returns an array of all the actions of the item or empty if no actions or if it's an item without actions
+   */
   get actions() {
+    if (foundry.utils.isEmpty(this.system.actions)) return [];
     if (this.system.actions instanceof Array) return this.system.actions;
     return Object.values(this.system.actions);
   }
@@ -171,6 +175,10 @@ export class CoItem extends Item {
     });
   }
 
+  /**
+   * Add a capacity to an item of type Path or Feature
+   * @param {*} uuid 
+   */
   addCapacity(uuid) {
     if (this.type == ITEM_TYPE.PATH || this.type == ITEM_TYPE.FEATURE) {
       let newCapacities = foundry.utils.duplicate(this.system.capacities);
@@ -179,6 +187,9 @@ export class CoItem extends Item {
     }
   }
 
+  /**
+   * @returns Basic info for a capacity : uuid, name, img, description
+   */
   get infosCapacity() {
     if (this.type == ITEM_TYPE.CAPACITY) {
       return {
