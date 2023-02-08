@@ -44,10 +44,10 @@ export default class CoItemSheet extends CoBaseItemSheet {
         // item is null if the item has been deleted in the compendium
         if (item != null) {
           // Not from a compendium
-          if (foundry.utils.isEmpty(item.pack)) {
+          if (item.pack === null) {
             infosCapacities.push(item.infosCapacity);
           } else {
-            infosCapacities.push({ uuid: capacity, name: item.name, img: item.img });
+            infosCapacities.push({ uuid: capacity, name: item.name, img: item.img, description: item.system.description.value});
           }
         }
       });

@@ -184,7 +184,8 @@ export class CoItem extends Item {
       return {
         "uuid": this.uuid,
         "name": this.name,
-        "img": this.img
+        "img": this.img,
+        "description": this.system.description.value
       }
     }
   }
