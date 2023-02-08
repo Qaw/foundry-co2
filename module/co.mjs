@@ -16,7 +16,6 @@ Hooks.once("init", async function () {
     // Configuration
     CONFIG.Actor.documentClass = CoActor;
     CONFIG.Item.documentClass = CoItem;
-    //CONFIG.Item.compendiumIndexFields.push('system.description.value');
 
     game.co = {
         Modifier: Modifier,
@@ -58,7 +57,6 @@ Hooks.once("init", async function () {
 
 });
 
-Hooks.once("ready", async function () {
-    await game.packs.get("world.capacites").getIndex({"fields": [ "system.description.value" ]});
+Hooks.once("ready", async function () {   
     Log.info(game.i18n.localize("CO.notif.ready"));
 });

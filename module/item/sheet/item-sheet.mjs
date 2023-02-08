@@ -27,7 +27,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
   }
 
   /** @override */
-  getData(options = {}) {
+  async getData(options = {}) {
     const context = super.getData(options);
 
     if (this.item.type == ITEM_TYPE.PROFILE) {
@@ -38,19 +38,15 @@ export default class CoItemSheet extends CoBaseItemSheet {
 
     if (this.item.type == ITEM_TYPE.PATH) {
       let infosCapacities = [];
-      this.item.system.capacities.forEach((capacity) => {
-        const item = fromUuidSync(capacity);
+
+      for (const capacity of this.item.system.capacities) {
+        const item = await fromUuid(capacity);
 
         // item is null if the item has been deleted in the compendium
         if (item != null) {
-          // Not from a compendium
-          if (item.pack === null) {
             infosCapacities.push(item.infosCapacity);
-          } else {
-            infosCapacities.push({ uuid: capacity, name: item.name, img: item.img, description: item.system.description.value});
-          }
         }
-      });
+      }
       context.capacities = infosCapacities;
     }
 
