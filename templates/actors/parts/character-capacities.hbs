@@ -1,4 +1,4 @@
-   {{log "Chroniques Oubliées | capacities" this}}
+   {{log "Chroniques Oubliées | character capacities" this}}
    <div class="path-list">
         <div class="grid">
             <div class="gridrow grid-6col-150 gridheader">
@@ -14,7 +14,7 @@
                 <div class="gridrow grid-6col-150 item" data-item-id="{{path._id}}" data-item-type="item">
                     <div class="gridcell left gridheader color-default no-border">
                         <a class="item-edit ellipsis" style="width: 100%; text-align: left" title="{{path.name}}">{{path.name}}</a>&nbsp;
-                        <span class="path-controls item" data-item-id="{{path._id}}" style="padding-right:5px;"><a class="item-control item-delete" title="{{localize "CO.label.delete"}}"><i class="fas fa-times"></i></a></span>
+                        <span class="path-controls item" data-item-id="{{path._id}}" data-item-type="{{path.type}}"" style="padding-right:5px;"><a class="item-control item-delete" title="{{localize "CO.label.delete"}}"><i class="fas fa-times"></i></a></span>
                     </div>
                     {{#each path.system.capacities as |capacity id|}}
                         <div class="gridcell gridcell-sm item capacity left color-default no-wrap" data-path-id="{{path._id}}" data-item-type="capacity" data-open-type="source" data-item-source="{{capacity.source}}" data-capacity-name="{{capacity.name}}" data-key="{{capacity.key}}">

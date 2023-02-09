@@ -1,6 +1,7 @@
 import { ITEM_TYPE, OPEN_TYPE } from "../../system/constants.mjs";
 import CoBaseActorSheet from "./base-actor-sheet.mjs";
 import { Action } from "../../system/actions.mjs";
+import { Log } from "../../utils/log.mjs";
 
 export default class CoCharacterSheet extends CoBaseActorSheet {
   /** @override */
@@ -48,6 +49,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     // html.find(".capacity-unchecked").click(this._onCheckCapacity.bind(this));
     html.find(".item-edit").click(this._onEditItem.bind(this));
     html.find(".item-delete").click(this._onDeleteItem.bind(this));
+    html.find(".path-delete").click(this._onDeletePath.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));    
 
     html.find(".toggle-action").click(this._onUseAction.bind(this));  
@@ -146,7 +148,51 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
       event.preventDefault();
       const li = $(event.currentTarget).parents(".item");
       const itemId = li.data("itemId");
-      this.actor.deleteEmbeddedDocuments("Item",[itemId]);
+      const itemType = li.data("itemType")
+      if (itemType == "path") this._onDeletePath(event);
+      else if (itemType == "capacity") this._onDeleteCapacity(event);
+      else this.actor.deleteEmbeddedDocuments("Item",[itemId]);
+    }
+
+   /**
+   * @description Delete the selected path
+   * @param event
+   * @private
+   */
+    async _onDeletePath(event) {
+      event.preventDefault();
+      const li = $(event.currentTarget).parents(".item");
+      const pathId = li.data("itemId");
+
+      // Delete linked capacities
+      const capacitiesId = this.actor.items.get(pathId).system.capacities;
+      this.actor.deleteEmbeddedDocuments("Item",capacitiesId);
+
+      this.actor.deleteEmbeddedDocuments("Item",[pathId]);
+    }
+
+   /**
+   * @description Delete the selected capacity
+   * @param event
+   * @private
+   */
+     async _onDeleteCapacity(event) {
+      event.preventDefault();
+      const li = $(event.currentTarget).parents(".item");
+      const capacityId = li.data("itemId");
+
+      this.actor.deleteEmbeddedDocuments("Item",[capacityId]);
+      
+      // Remove the capacity from the capacities list of the linked Path
+      const capacity = this.actor.items.get(capacityId);
+      const pathId = capacity.system.path;
+      if (pathId != null) {
+        let updatedCapacitiesIds = this.actor.items.get(pathId).system.capacities.filter(id => id !== capacityId);
+        const updateData = {"_id" : pathId, "system.capacities": updatedCapacitiesIds};
+        await this.actor.updateEmbeddedDocuments("Item", [updateData]);     
+      }
+      //const capacitiesId = this.actor.items.get(pathId).system.capacities;
+      //this.actor.deleteEmbeddedDocuments("Item",capacitiesId);
     }
 
     /** @inheritdoc */
@@ -225,12 +271,50 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
      return this.actor.createEmbeddedDocuments("Item", itemData);
   }
 
-  _onDropPathItem(item) {
+  /**
+   * @description The capacities in the path is a list of uui, on the drop, the real capacities must be created as embedded items
+   * @param {*} item the Path dropped
+   * @returns a path and his capacities
+   */
+  async _onDropPathItem(item) {
      let itemData = item.toObject();
+
+     // Create the path
      itemData = itemData instanceof Array ? itemData : [itemData];
-     return this.actor.createEmbeddedDocuments("Item", itemData);
+     const newPath = await this.actor.createEmbeddedDocuments("Item", itemData);
+     console.log('newPath created', newPath);
+
+     let updatedCapacitiesIds = [];
+
+     for (const capacity of item.system.capacities) {
+      let capa = await fromUuid(capacity);
+
+      // item is null if the item has been deleted in the compendium
+      if (capa != null) {
+        // capa.system.source = newPath._id;
+        
+        let capaData = capa.toObject();
+        capaData.system.path = newPath[0].id;
+        // Create the embedded capacity
+        const newCapa = await this.actor.createEmbeddedDocuments("Item", [capaData]);
+      
+        updatedCapacitiesIds.push(newCapa[0].id);
+        
+        // modification de la source des actions
+        //let newActions = Object.values(foundry.utils.deepClone(capa.system.actions)).map(m => new Action(m.id, m.indice, m.type, m.img, m.label, m.chatFlavor, m.properties.visible, m.properties.enabled, m.properties.activable, m.conditions, m.modifiers, m.resolvers)); 
+        //capa.system.actions = newActions;
+      }
+    }
+    
+     // Update the capacities of the path with id of created path
+     const updateData = {"_id" : newPath[0].id, "system.capacities": updatedCapacitiesIds};
+     await this.actor.updateEmbeddedDocuments("Item", [updateData]);     
   }     
 
+  /**
+   * @description Handle the drop of a single capacity on the actor
+   * @param {*} item 
+   */
   async _onDropCapacityItem(item) {
      let itemData = item.toObject();
 
@@ -239,8 +323,10 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
      //return this.actor.createEmbeddedDocuments("Item", itemData);
      const created = await this.actor.createEmbeddedDocuments("Item", itemData);
      
-     console.log('Drop capacity created : ', created);
+     Log.info('Drop capacity created : ', created);
 
+     // Create an array of actions
+     // Update the source of all actions with the id of the new embedded capacity created
      let newActions = Object.values(foundry.utils.deepClone(created[0].system.actions)).map(m => new Action(m.source, m.indice, m.type, m.img, m.label, m.chatFlavor, m.properties.visible, m.properties.enabled, m.properties.activable, m.conditions, m.modifiers, m.resolvers)); 
      newActions.forEach(action => {
         action.updateSource(created[0].id);
@@ -249,6 +335,5 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
      const updateData = {"_id" : created[0].id, "system.actions": newActions};
 
      await this.actor.updateEmbeddedDocuments("Item", [updateData]);
-
   }
 }

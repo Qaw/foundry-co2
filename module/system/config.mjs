@@ -64,6 +64,7 @@ CO.equipment = {
 
 CO.action = {
   types: {
+    spell : "CO.actionType.spell",
     melee : "CO.actionType.melee",
     ranged : "CO.actionType.ranged",
     magical : "CO.actionType.magical",
