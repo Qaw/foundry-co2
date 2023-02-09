@@ -167,7 +167,8 @@
       "chargeable": "Chargeable",
       "enabled": "Activé(e)",
       "visible": "Visible",
-      "activable": "Activable"
+      "activable": "Activable",
+      "temporary": "Temporaire"
     },
     "abilities": {
       "long": {

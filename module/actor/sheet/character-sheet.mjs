@@ -29,6 +29,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
       context.capacities = this.actor.capacities;
       context.features = this.actor.features;
       context.actions = this.actor.actions;
+      context.visibleActions = this.actor.visibleActions;      
       // context.weapons = this.actor.weapons;
       // context.armors = this.actor.armors;
       // context.shields = this.actor.shields;
@@ -182,7 +183,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
       const capacityId = li.data("itemId");
 
       this.actor.deleteEmbeddedDocuments("Item",[capacityId]);
-      
+
       // Remove the capacity from the capacities list of the linked Path
       const capacity = this.actor.items.get(capacityId);
       const pathId = capacity.system.path;
@@ -318,16 +319,16 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   async _onDropCapacityItem(item) {
      let itemData = item.toObject();
 
-     // Change the source of all actions
+     // Enable the capacity
+     itemData.system.properties.enabled = true;
      itemData = itemData instanceof Array ? itemData : [itemData];
-     //return this.actor.createEmbeddedDocuments("Item", itemData);
-     const created = await this.actor.createEmbeddedDocuments("Item", itemData);
-     
+     const created = await this.actor.createEmbeddedDocuments("Item", itemData);    
      Log.info('Drop capacity created : ', created);
 
      // Create an array of actions
      // Update the source of all actions with the id of the new embedded capacity created
-     let newActions = Object.values(foundry.utils.deepClone(created[0].system.actions)).map(m => new Action(m.source, m.indice, m.type, m.img, m.label, m.chatFlavor, m.properties.visible, m.properties.enabled, m.properties.activable, m.conditions, m.modifiers, m.resolvers)); 
+     // All actions are now enabled
+     let newActions = Object.values(foundry.utils.deepClone(created[0].system.actions)).map(m => new Action(m.source, m.indice, m.type, m.img, m.label, m.chatFlavor, true, m.properties.activable, m.properties.enabled, m.properties.temporary, m.conditions, m.modifiers, m.resolvers)); 
      newActions.forEach(action => {
         action.updateSource(created[0].id);
      });

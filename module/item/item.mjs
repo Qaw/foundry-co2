@@ -168,6 +168,15 @@ export class CoItem extends Item {
     return Object.values(this.system.actions);
   }
 
+  /**
+   * @returns an array of all the visible actions of the item or empty if no actions or if it's an item without actions
+   */
+  get visibleActions() {
+    if (foundry.utils.isEmpty(this.system.actions)) return [];
+    if (this.system.actions instanceof Array) return this.system.actions.filter(action => action.properties.visible);
+    return Object.values(this.system.actions).filter(action => action.properties.visible);
+  }  
+
   // TO FIX Est-ce utile ?
   updateActionsSource(source){
     this.system.actions.forEach(action => {

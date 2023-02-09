@@ -141,10 +141,27 @@ export default class CoActor extends Actor {
     return this.shields.filter((item) => item.system.equipped);
   }
 
+  /**
+   * @returns Toutes les actions de tous les objets
+   */
   get actions() {
     let allActions = [];
     this.items.forEach(item => {
       if (item.actions.length > 0) allActions.push(...item.actions);
+    });
+    return allActions;
+  }
+
+  /**
+   * @returns Toutes les actions visibles de tous les objets
+   */
+  get visibleActions() {
+    let allActions = [];
+    this.items.forEach(item => {
+      if (item.type == ITEM_TYPE.CAPACITY && item.system.properties.enabled && item.actions.length > 0) {
+        allActions.push(...item.visibleActions);
+      }
+      else if (item.actions.length > 0) allActions.push(...item.visibleActions);
     });
     return allActions;
   }

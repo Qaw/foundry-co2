@@ -14,7 +14,7 @@ export class Action {
      * @param {*} modifiers 
      * @param {*} resolvers 
      */
-    constructor(source = null, indice, type, img, label = '', chatFlavor = '', visible = false, enabled = false, activable = false, conditions = [], modifiers = [], resolvers = []) {
+    constructor(source = null, indice, type, img, label = '', chatFlavor = '', visible = false, activable = false, enabled = false, temporary = false , conditions = [], modifiers = [], resolvers = []) {
         this.source = source;
         this.indice = indice;
         this.type = type;
@@ -23,8 +23,9 @@ export class Action {
         this.chatFlavor = chatFlavor;
         this.properties = {
             "visible": visible,
+            "activable": activable,
             "enabled": enabled,
-            "activable": activable
+            "temporary": temporary
         }
         this.conditions = conditions;
         this.modifiers = modifiers;

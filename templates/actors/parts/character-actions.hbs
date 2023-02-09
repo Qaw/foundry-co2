@@ -1,5 +1,5 @@
 <div class="actions-container">
-    {{#each actions as |action id|}}
+    {{#each visibleActions as |action id|}}
         {{log (concat "Chroniques Oubliées | action " id) action}}
 
         {{#if action.properties.activable}} 
