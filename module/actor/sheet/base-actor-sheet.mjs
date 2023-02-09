@@ -47,5 +47,4 @@ export default class CoBaseActorSheet extends ActorSheet {
   //   return "/ui/logo-banner.webp";
   // }
 
-  //#endregion
 }

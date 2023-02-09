@@ -64,36 +64,16 @@ export class Modifier {
    */
   evaluate(actor) {
     return Utils.evaluate(actor, this.value, this.source);
-
-    /*if (this.value === "") return 0;
-    if (this.value.includes("@") || this.value.includes("#")) return this._evaluateCustom(actor);
-    const resultat = parseInt(this.value);
-    if (isNaN(resultat)) return 0;
-    return resultat;*/
   }
   
+  /**
+   * @param {*} actor 
+   * @returns 
+   */
   getTooltip(actor) {
-    let name = this.sourceName;
+    let name = actor.items.get(this.source).name;
     let value = this.evaluate(actor);
 
     return Utils.getTooltip(name, value);
-  }
-
-  /**
- *
- * @returns {String} the item's name or an empty string
- */
-  get sourceName() {
-    const item = this._getItemFromSource();
-    return item ? item.name : "";
-  }
-
-  get sourceDescription() {
-    const item = this._getItemFromSource();
-    return item ? item.system.description.value : "";
-  }
-
-  _getItemFromSource() {
-    return fromUuidSync(this.source);
   }
 }
