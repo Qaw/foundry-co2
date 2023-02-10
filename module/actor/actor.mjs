@@ -106,6 +106,10 @@ export default class CoActor extends Actor {
     return this.items.filter((item) => item.type == ITEM_TYPE.CAPACITY);
   }
 
+  get enabledCapacities() {
+    return this.items.filter((item) => item.type == ITEM_TYPE.CAPACITY && item.system.properties.enabled);
+  }
+
   /**
    * @returns les Items de type equipment et de sous-type armor
    */
@@ -502,47 +506,6 @@ export default class CoActor extends Actor {
   }
   //#endregion
 
-  /**
-   * @returns undefined if no items or no items of specie type
-   */
-  // get specie() {
-  //   if (this.items.size == 0) return undefined;
-  //   return this.items.find(i => i.type === MODIFIER_TYPE.SPECIE);
-  // }
-
-  // toggleCapacity(pathId, capacityKey, status) {
-  //   const path = this.items.get(pathId);
-  //   let capacities = duplicate(path.system.capacities);
-  //
-  //   let capacity = capacities.find((capacity) => capacity.key == capacityKey);
-  //   capacity.selected = status;
-  //
-  //   const updateData = [{ _id: pathId, "system.capacities": capacities }];
-  //
-  //   // Add capacity
-  //   if (status) {
-  //     this._addCapacity(capacity.source);
-  //   }
-  //   // Remove capacity
-  //   else {
-  //     this._removeCapacity(capacityKey);
-  //   }
-  //
-  //   this.updateEmbeddedDocuments("Item", updateData);
-  // }
-  //
-  // async _addCapacity(capacitySource) {
-  //   let document = await fromUuid(capacitySource);
-  //   return this.createEmbeddedDocuments("Item", [document]);
-  //
-  // }
-  //
-  // _removeCapacity(capacityKey) {
-  //   const capacity = this.capacities.find(capacity => capacity.system.key == capacityKey);
-  //   if (!capacity) return;
-  //   let capacityId = capacity._id;
-  //   this.deleteEmbeddedDocuments("Item", [capacityId]);
-  // }
   //
   // deleteItem(itemId) {
   //   const item = this.items.find(item => item.id === itemId);

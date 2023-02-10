@@ -15,6 +15,7 @@ export class CoItem extends Item {
     this.system.slug = this.name.slugify({ strict: true });
   }
 
+  //#region accesseurs
   /**
    * @returns undefined if the item is a path, true if the item has modifiers
    * @type {boolean}
@@ -37,9 +38,9 @@ export class CoItem extends Item {
     if ([ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE].includes(this.type)) {
       // Array
       if (this.system.modifiers instanceof Array) {
-        if (this.system.modifiers.length > 0 ) return true;
+        if (this.system.modifiers.length > 0) return true;
         return false;
-       }
+      }
       // Object
       if (this.system.modifiers !== null) return true;
     }
@@ -106,30 +107,60 @@ export class CoItem extends Item {
     return modifiers;
   }
 
-  get tags(){
+  get tags() {
     return this.system.tags;
   }
-  // /**
-  //  * @returns undefined if the item is not a specie or a path, null if there is no capacities already, all the capacities
-  //  * @type {boolean}
-  //  */
-  // get allCapacities() {
-  //   if (!this.type == ITEM_TYPE.SPECIE && !this.type == ITEM_TYPE.PATH) return undefined;
-  //   // No capacities
-  //   if (this.system.capacities === undefined) return null;
-  //   return this.system.capacities;
-  // }
 
-  // /**
-  //  *
-  //  * @param {*} source
-  //  * @returns true if the capacity with a same source already exists
-  //  * @type {boolean}
-  //  */
-  // hasCapacityBySource(source) {
-  //   if (this.allCapacities != null && this.allCapacities.find((capacity) => capacity.source == source)) return true;
-  //   return false;
-  // }
+  /**
+   * @returns An array of all the actions of the item or empty if no actions or if it's an item without actions
+   */
+  get actions() {
+    if (foundry.utils.isEmpty(this.system.actions)) return [];
+    if (this.system.actions instanceof Array) return this.system.actions;
+    return Object.values(this.system.actions);
+  }
+
+  /**
+   * @returns An array of all the visible actions of the item or empty if no actions or if it's an item without actions
+   */
+  get visibleActions() {
+    if (foundry.utils.isEmpty(this.system.actions)) return [];
+    if (this.system.actions instanceof Array) return this.system.actions.filter((action) => action.properties.visible);
+    return Object.values(this.system.actions).filter((action) => action.properties.visible);
+  }
+
+  /**
+   * @returns Basic info for a capacity : uuid, name, img, description
+   */
+  get infosCapacity() {
+    if (this.type == ITEM_TYPE.CAPACITY) {
+      return {
+        uuid: this.uuid,
+        name: this.name,
+        img: this.img,
+        description: this.system.description.value,
+      };
+    }
+  }
+
+  //#endregion
+
+  //#region méthodes publiques
+
+  /**
+   * 
+   * @returns the items of type Capacity based on the ids for a path in an actor
+   */
+  async getEmbeddedCapacities(actor) {
+    if ([ITEM_TYPE.PATH].includes(this.type)){
+      let capacities = [];
+      for (const capacityId of this.system.capacities) {
+        const capacity = actor.items.get(capacityId);
+        capacities.push(capacity);        
+      }
+      return capacities;
+    }
+  }
 
   /**
    * @description Calculate the sum of all bonus for a specific type and target
@@ -160,54 +191,16 @@ export class CoItem extends Item {
   }
 
   /**
-   * @returns an array of all the actions of the item or empty if no actions or if it's an item without actions
-   */
-  get actions() {
-    if (foundry.utils.isEmpty(this.system.actions)) return [];
-    if (this.system.actions instanceof Array) return this.system.actions;
-    return Object.values(this.system.actions);
-  }
-
-  /**
-   * @returns an array of all the visible actions of the item or empty if no actions or if it's an item without actions
-   */
-  get visibleActions() {
-    if (foundry.utils.isEmpty(this.system.actions)) return [];
-    if (this.system.actions instanceof Array) return this.system.actions.filter(action => action.properties.visible);
-    return Object.values(this.system.actions).filter(action => action.properties.visible);
-  }  
-
-  // TODO Est-ce utile ?
-  updateActionsSource(source){
-    this.system.actions.forEach(action => {
-        action.source = source;      
-    });
-  }
-
-  /**
    * Add a capacity to an item of type Path or Feature
-   * @param {*} uuid 
+   * @param {*} uuid
    */
   addCapacity(uuid) {
     if (this.type == ITEM_TYPE.PATH || this.type == ITEM_TYPE.FEATURE) {
       let newCapacities = foundry.utils.duplicate(this.system.capacities);
       newCapacities.push(uuid);
-      this.update({"system.capacities": newCapacities});
+      this.update({ "system.capacities": newCapacities });
     }
   }
 
-  /**
-   * @returns Basic info for a capacity : uuid, name, img, description
-   */
-  get infosCapacity() {
-    if (this.type == ITEM_TYPE.CAPACITY) {
-      return {
-        "uuid": this.uuid,
-        "name": this.name,
-        "img": this.img,
-        "description": this.system.description.value
-      }
-    }
-  }
-
+  //#endregion
 }
