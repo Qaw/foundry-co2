@@ -111,33 +111,24 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
 
   /**
    * @description Open the item sheet
-   * For capacity, open the source of the item or the embededd item depending of OPEN_TYPE value
+   * For capacity, open the embededd item
    * @param event
    * @private
    */
   async _onEditItem(event) {
     event.preventDefault();
     const li = $(event.currentTarget).closest(".item");
-    // const itemType = li.data("itemType");
-    // const openType = li.data("openType");
+    const itemType = li.data("itemType");
+    const id = li.data("itemId");
 
-    // switch (itemType) {
-    //   case ITEM_TYPE.CAPACITY:
-    //     {
-    //       if (openType == OPEN_TYPE.SOURCE) {
-    //         const source = li.data("itemSource");
-    //         let document = await fromUuid(source);
-    //         return document.sheet.render(true);
-    //       }
-    //       else if (openType == OPEN_TYPE.EMBEDDED_ID){
-    //         const id = li.data("itemId");
-    //         let document = this.actor.items.get(id);
-    //         return document.sheet.render(true);
-    //       }
-    //
-    //     }
-    //     break;
-    // }
+    switch (itemType) {
+       case ITEM_TYPE.CAPACITY:
+         {       
+           let document = this.actor.items.get(id);
+           return document.sheet.render(true);
+         }
+         break;
+     }
   }
 
   /**
