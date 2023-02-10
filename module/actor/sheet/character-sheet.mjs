@@ -281,10 +281,9 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
      for (const capacity of item.system.capacities) {
       let capa = await fromUuid(capacity);
 
-      // item is null if the item has been deleted in the compendium
-      if (capa != null) {
-        // capa.system.source = newPath._id;
-        
+      // item is null if the item has been deleted in the compendium or in the world
+      // TODO Add a warning message and think about a global rollback
+      if (capa != null) {      
         let capaData = capa.toObject();
         capaData.system.path = newPath[0].id;
         // Create the embedded capacity
@@ -292,9 +291,15 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
       
         updatedCapacitiesIds.push(newCapa[0].id);
         
-        // modification de la source des actions
-        //let newActions = Object.values(foundry.utils.deepClone(capa.system.actions)).map(m => new Action(m.id, m.indice, m.type, m.img, m.label, m.chatFlavor, m.properties.visible, m.properties.enabled, m.properties.activable, m.conditions, m.modifiers, m.resolvers)); 
-        //capa.system.actions = newActions;
+        // Update the source of all actions
+        let newActions = Object.values(foundry.utils.deepClone(newCapa[0].system.actions)).map(m => new Action(m.source, m.indice, m.type, m.img, m.label, m.chatFlavor, m.properties.visible, m.properties.activable, m.properties.enabled, m.properties.temporary, m.conditions, m.modifiers, m.resolvers)); 
+        newActions.forEach(action => {
+          action.updateSource(newCapa[0].id);
+        });
+
+        const updateActions = {"_id" : newCapa[0].id, "system.actions": newActions};
+
+        await this.actor.updateEmbeddedDocuments("Item", [updateActions]);
       }
     }
     

@@ -359,7 +359,8 @@
     "path": {
       "templates": ["common"],
       "subtype" : "",
-      "capacities" : []
+      "capacities" : [],
+      "rank" : 0
     }
   }
 }

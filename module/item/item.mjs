@@ -177,7 +177,7 @@ export class CoItem extends Item {
     return Object.values(this.system.actions).filter(action => action.properties.visible);
   }  
 
-  // TO FIX Est-ce utile ?
+  // TODO Est-ce utile ?
   updateActionsSource(source){
     this.system.actions.forEach(action => {
         action.source = source;      
