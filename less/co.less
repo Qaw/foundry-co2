@@ -23,17 +23,25 @@
                         padding: 10px;
                         .portrait {
                             cursor: pointer;
-                            background: lightgray;
-                            outline: 3px solid white;
+                            background: white;
+                            outline: 3px solid #d7d7d7;
                             box-shadow: 5px 5px 10px black;
-                            flex: 0;
+                            display: flex;
+                            flex: 1;
                             padding: 0;
+                            width: 150px;
+                            height: 200px;
                             margin: 5px;
+                            justify-content: center;
+                            align-content: center;
+                            justify-items: center;
+                            align-items: center;
                             img {
                                 border: none;
-                                width: 150px;
+                                margin: 0;
+                                padding: 0;
                                 max-width: 150px;
-                                min-width: 150px;
+                                max-height: 200px;
                             }
                         }
                         .tags {
@@ -65,10 +73,10 @@
                                     align-self: center;
                                     flex: 1;
                                 }
-                                .nav {
-                                    .nav()
-                                }
                             }
+                        }
+                        .nav {
+                            .nav()
                         }
                         .content {
                             flex: 1;
@@ -158,7 +166,85 @@
                                         .items-container()
                                     }
                                 }
-                                .capacities {}
+                                .capacities {
+                                    .path-list {
+                                        display: grid;
+                                        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+                                        grid-gap: 0;
+                                        grid-auto-rows: 50px;
+                                        //background: white;
+                                        justify-items: start;
+                                        align-items: start;
+                                        justify-content: start;
+                                        align-content: start;
+                                        font-size: smaller;
+                                        .cell {
+                                            width: 200px;
+                                            min-height: 50px;
+                                            min-width: 200px;
+                                            max-width: 200px;
+                                            border: 1px solid black;
+                                            &.center {
+                                                justify-self: center;
+                                                align-self: center;
+                                            }
+                                            &.left {
+                                                justify-self: start;
+                                                align-self: center;
+                                            }
+                                            &.right {
+                                                justify-self: end;
+                                                align-self: center;
+                                            }
+                                            .field-value {
+                                                max-width: 40px;
+                                            }
+                                            .capacity-name,
+                                            .path-name {
+                                                display: inline;
+                                                img {
+                                                    width: 24px;
+                                                    height: 24px;
+                                                    border: none;
+                                                    padding: 0;
+                                                    margin: 0;
+                                                }
+                                            }
+                                            .header {
+                                                color: @colorOlive;
+                                                font-weight: bold;
+                                            }
+                                        }
+                                    }
+                                    .capacity-list{
+                                        display: grid;
+                                        grid-template-columns: 1fr 1fr 4fr 1fr;
+                                        grid-gap: 0;
+                                        grid-auto-columns: minmax(100px, auto);
+                                        .cell {
+                                            &.center {
+                                                justify-self: center;
+                                                align-self: center;
+                                            }
+                                            &.left {
+                                                justify-self: start;
+                                                align-self: center;
+                                            }
+                                            &.right {
+                                                justify-self: end;
+                                                align-self: center;
+                                            }
+                                            min-width: 40px;
+                                            .field-value {
+                                                max-width: 40px;
+                                            }
+                                            .header {
+                                                color: @colorOlive;
+                                                font-weight: bold;
+                                            }
+                                        }
+                                    }
+                                }
                                 .effects {}
                                 .bio {
                                     .editor {
@@ -203,13 +289,17 @@
                             }
                         }
                         .features {
-                            list-style-type: none;
-
+                            margin-top: 20px;
                             .featured-item {
+                                width:100%;
+                                padding:3px;
+                                margin:0;
                                 border: 2px groove #eeede0;
-                                padding: 3px;
-                                margin-bottom: 3px;
-                                color: @colorOlive;
+                                font-size: smaller;
+                                text-align: center;
+                                //padding: 3px;
+                                margin-top: 3px;
+                                //color: @colorOlive;
                             }
                         }
                     }
@@ -218,11 +308,12 @@
                             flex: 0;
                             flex-wrap: nowrap;
                             .details {
-                                padding: 10px;
+                                padding: 15px 10px 0 10px;
                                 .item-name{
                                     h1 {
+                                        font-family: @font-tertiary;
                                         border: none;
-                                        font-size: 25px;
+                                        font-size: 30px;
                                         min-height:40px;
                                         margin:0;
                                         padding:0;
@@ -232,26 +323,28 @@
                                     }
                                 }
                                 .item-type{
-                                    margin-top:5px;
+                                    padding-top:5px;
                                     h3 {
-                                        border: none;
-                                        color: darkslategray;
-                                        font-size: 16px;
                                         text-align: right;
-                                        height:25px
+                                        font-family: @font-tertiary;
+                                        font-size : 20px;
+                                        color : @colorDark;
+                                        border: none;
+                                        height:20px
                                     }
-                                }
-                                .nav {
-                                    .nav()
                                 }
                             }
                         }
+                        .nav {
+                            .nav()
+                        }
                         .content {
+                            background: rgba(0,0,0,0.05);
                             flex: 1;
                             padding: 5px;
                             margin: 0;
                             .sheet-body {
-                                 .description {
+                                .description {
                                     //.editor {
                                     //    margin: 0;
                                     //    overflow: hidden;
@@ -274,17 +367,43 @@
                                         min-height: 400px;
                                     }
                                 }
-                                .actions {
-                                    padding : 20px;
-                                    button.action-button {
-                                        flex: 0;
+                                .details {
+                                    .capacity-list{
+                                        display: grid;
+                                        grid-template-columns: 1fr 1fr 8fr 2fr;
+                                        grid-gap: 1px;
+                                        grid-auto-columns: minmax(15px, auto);
+                                        .cell {
+                                            &.center {
+                                                justify-self: center;
+                                                align-self: center;
+                                            }
+                                            &.left {
+                                                justify-self: start;
+                                                align-self: center;
+                                            }
+                                            &.right {
+                                                justify-self: end;
+                                                align-self: center;
+                                            }
+                                            .header {
+                                                color: @colorOlive;
+                                                font-weight: bold;
+                                            }
+                                        }
                                     }
-                                }
-                                .modifiers{
-                                    .modifiers-container {
-                                        padding:10px;
-                                        .modifier-row {
-                                            padding-bottom:2px;
+                                    .actions {
+                                        padding : 20px;
+                                        button.action-button {
+                                            flex: 0;
+                                        }
+                                    }
+                                    .modifiers{
+                                        .modifiers-container {
+                                            padding:10px;
+                                            .modifier-row {
+                                                padding-bottom:2px;
+                                            }
                                         }
                                     }
                                 }

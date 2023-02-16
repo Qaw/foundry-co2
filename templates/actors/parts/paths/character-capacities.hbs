@@ -1,0 +1,30 @@
+{{!log "Chroniques Oubliées | character capacities" this}}
+<h3 class="form-header"><a class="section-toggle">{{localize "CO.label.long.capacities"}}</a></h3>
+<div class="capacity-list collapsable">
+    <div class="cell center">
+        <span class="field-label header">{{localize "CO.label.long.rank"}}</span>
+    </div>
+    <div class="cell"></div>
+    <div class="cellleft">
+        <span class="field-label header"></span>
+    </div>
+    <div class="cell center item-controls">
+        <a class="item-control item-create cof-compendium-pack" data-pack="capacities" data-open="0" title="Ajouter une capacité"><i class="fas fa-plus"></i>&nbsp; {{localize "CO.label.long.add"}}</a>
+    </div>
+    {{#each capacities as |capacity id|}}
+        {{!log 'capacity' capacity id}}
+        <div class="cell center">
+            <span class="field-label">{{add id 1}}</span>
+        </div>
+        <div class="cell right">
+            <img class="inline-img" src="{{capacity.img}}" title="{{capacity.name}}"/>
+        </div>
+        <div class="cell left">
+            <span class="field-label">{{capacity.name}}</span>
+        </div>
+        <div class="cell center item-controls" data-item-type="capacity" draggable="true" data-rank="{{add id 1}}" data-uuid="{{capacity.uuid}}">
+            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+        </div>
+    {{/each}}
+</div>

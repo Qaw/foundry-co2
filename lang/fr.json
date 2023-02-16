@@ -48,6 +48,8 @@
         "profile": "Profil",
         "capacity": "Capacité",
         "capacities": "Capacités",
+        "path": "Voie",
+        "paths": "Voies",
         "critrange": "Critique",
         "rank": "Rang",
         "add": "Ajouter",
@@ -149,7 +151,8 @@
       "width" : "Largeur",
       "range" : "Portée",
       "consumes" : "Consomme",
-      "perUsage" : "Par utilisation"
+      "perUsage" : "Par utilisation",
+      "learned" : "Appris"
     },
     "properties": {
       "attack": "Attaque",
@@ -275,6 +278,20 @@
         "shield" : "Bouclier",
         "weapon" : "Arme",
         "misc" : "Divers"
+      },
+      "martialCategories" : {
+        "melee": "Arme de contact",
+        "ranged": "Arme à distance",
+        "thrown": "Arme de jet",
+        "magical": "Arme magique"
+      }
+    },
+    "path" : {
+      "subtypes" : {
+        "profile" : "Voie de profil",
+        "feature" : "Voie de feature",
+        "creature" : "Voie de créature",
+        "prestige" : "Voie de prestige"
       },
       "martialCategories" : {
         "melee": "Arme de contact",

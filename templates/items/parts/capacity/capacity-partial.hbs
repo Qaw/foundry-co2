@@ -2,6 +2,12 @@
 <div class="details-form">
 
     <div class="form-group">
+        <label>{{localize "CO.ui.learned"}}</label>
+        <div class="form-fields">
+            <label class="checkbox"> <input type="checkbox" name="system.learned" {{checked system.learned}}></label>
+        </div>
+    </div>
+    <div class="form-group">
         <label>{{localize "CO.label.long.properties"}}</label>
         <div class="form-fields">
             {{#each system.properties as |prop idx|}}

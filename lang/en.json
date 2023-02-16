@@ -48,8 +48,10 @@
         "profile": "Profil",
         "capacity": "Capacité",
         "capacities": "Capacités",
+        "path": "Voie",
+        "paths": "Voies",
         "critrange": "Critique",
-        "rank": "rang",
+        "rank": "Rang",
         "add": "Ajouter",
         "edit": "Editer",
         "delete": "Supprimer",
@@ -149,9 +151,13 @@
       "width" : "Largeur",
       "range" : "Portée",
       "consumes" : "Consomme",
-      "perUsage" : "Par utilisation"
+      "perUsage" : "Par utilisation",
+      "learned" : "Appris"
     },
     "properties": {
+      "attack": "Attaque",
+      "buff": "Amélioration",
+      "heal": "Soins",
       "equipable": "Équipable",
       "stackable": "Empilable",
       "unique": "Unique",
@@ -159,7 +165,13 @@
       "tailored": "Sur-mesure",
       "2H": "Deux mains",
       "reloadable": "Rechargeable",
-      "equipped": "Équipé"
+      "equipped": "Équipé",
+      "spell": "Sort",
+      "chargeable": "Chargeable",
+      "enabled": "Activé(e)",
+      "visible": "Visible",
+      "activable": "Activable",
+      "temporary": "Temporaire"
     },
     "abilities": {
       "long": {
@@ -234,8 +246,8 @@
     },
     "modifier": {
       "type": {
+        "equipment": "Equipement",
         "feature": "Feature",
-        "trait": "Trait",
         "profile": "Profil",
         "capacity": "Capacité"
       },
@@ -274,11 +286,33 @@
         "magical": "Arme magique"
       }
     },
+    "path" : {
+      "subtypes" : {
+        "profile" : "Voie de profil",
+        "feature" : "Voie de feature",
+        "creature" : "Voie de créature",
+        "prestige" : "Voie de prestige"
+      },
+      "martialCategories" : {
+        "melee": "Arme de contact",
+        "ranged": "Arme à distance",
+        "thrown": "Arme de jet",
+        "magical": "Arme magique"
+      }
+    },
     "rarity" : {
       "common" : "Commun",
       "medium" : "Moyen",
       "rare" : "Rare",
       "unique" : "Unique"
+    },
+    "actionType" : {
+      "spell" : "Sort",
+      "melee" : "Attaque de contact",
+      "ranged" : "Attaque à distance",
+      "magical" : "Attaque magique",
+      "protection" : "Protection",
+      "heal" : "Soin"
     },
     "config": {
     }

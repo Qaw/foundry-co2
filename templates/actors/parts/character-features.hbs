@@ -1,0 +1,10 @@
+<div class="items-container">
+    {{!log "items" this}}
+    {{#each items as |item id|}}
+    {{!log (concat "Chroniques Oubliées | item " id) item}}
+        <div class="cell item" data-item-id="{{item._id}}" data-item-type="{{item.type}}">
+            <span class="field-value">{{item.name}}</span>
+            <span class="item-delete"><i class="fas fa-trash"></i></span>
+        </div>
+    {{/each}}
+</div>

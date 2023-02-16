@@ -25,22 +25,17 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
       context.resources = this.actor.system.resources;
       context.details = this.actor.system.details;
       context.paths = this.actor.paths;
+      context.pathGroups = this.actor.pathGroups;
       context.profile = this.actor.profile;
       context.capacities = this.actor.capacities;
       context.enabledCapacities = this.actor.enabledCapacities;
       context.features = this.actor.features;
       context.actions = this.actor.actions;
-      context.visibleActions = this.actor.visibleActions;      
+      context.visibleActions = this.actor.visibleActions;
       // context.weapons = this.actor.weapons;
       // context.armors = this.actor.armors;
       // context.shields = this.actor.shields;
-      context.inventory = {
-        categories : {
-          weapons : this.actor.weapons,
-          armors : this.actor.armors,
-          shields : this.actor.shields
-        }
-      }
+      context.inventory = this.actor.inventory;
     return context;
   }
 
@@ -270,43 +265,60 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
    * @returns a path and his capacities
    */
   async _onDropPathItem(item) {
-     let itemData = item.toObject();
+      let itemData = item.toObject();
+      // 1 : Retrieve all the capacities
+      let originalSkills = await Promise.all(itemData.system.capacities.map(cuuid => fromUuid(cuuid)));
+      let newSkills = await this.actor.createEmbeddedDocuments("Item", originalSkills);
+      // 2 : Create a mapping table to update path with new capacity ids
+      let mappingTable = {};
+      originalSkills.forEach(oldSkill => {
+          let newSkill = newSkills.find(ns => ns.system.slug === oldSkill.system.slug);
+          mappingTable[oldSkill._id] = newSkill._id;
+      });
+      // console.log("OLD ONES", itemData.system.capacities);
+      // console.log("MAPPING TABLE", mappingTable);
+      const newIds = itemData.system.capacities.map(uuid=> {
+          return mappingTable[uuid.split(".")[1]]
+      });
+      // console.log("NEW ONES", newIds);
+      itemData.system.capacities = newIds;
+      return this.actor.createEmbeddedDocuments("Item", [itemData]);
 
-     // Create the path
-     itemData = itemData instanceof Array ? itemData : [itemData];
-     const newPath = await this.actor.createEmbeddedDocuments("Item", itemData);
-     console.log('newPath created', newPath);
+      // newItems.push(itemData);
+      // 2 : Add capacities + Path to actor
+      // let newSkills =  this.actor.createEmbeddedDocuments("Item", newItems);
+      // return this.actor.createEmbeddedDocuments("Item", newItems);
 
-     let updatedCapacitiesIds = [];
-
-     for (const capacity of item.system.capacities) {
-      let capa = await fromUuid(capacity);
-
-      // item is null if the item has been deleted in the compendium or in the world
-      // TODO Add a warning message and think about a global rollback
-      if (capa != null) {      
-        let capaData = capa.toObject();
-        capaData.system.path = newPath[0].id;
-        // Create the embedded capacity
-        const newCapa = await this.actor.createEmbeddedDocuments("Item", [capaData]);
-      
-        updatedCapacitiesIds.push(newCapa[0].id);
-        
-        // Update the source of all actions
-        let newActions = Object.values(foundry.utils.deepClone(newCapa[0].system.actions)).map(m => new Action(m.source, m.indice, m.type, m.img, m.label, m.chatFlavor, m.properties.visible, m.properties.activable, m.properties.enabled, m.properties.temporary, m.conditions, m.modifiers, m.resolvers)); 
-        newActions.forEach(action => {
-          action.updateSource(newCapa[0].id);
-        });
-
-        const updateActions = {"_id" : newCapa[0].id, "system.actions": newActions};
-
-        await this.actor.updateEmbeddedDocuments("Item", [updateActions]);
-      }
-    }
-    
-     // Update the capacities of the path with id of created path
-     const updateData = {"_id" : newPath[0].id, "system.capacities": updatedCapacitiesIds};
-     await this.actor.updateEmbeddedDocuments("Item", [updateData]);     
+    //  let updatedCapacitiesIds = [];
+    //
+    //  for (const capacity of item.system.capacities) {
+    //   let capa = await fromUuid(capacity);
+    //
+    //   // item is null if the item has been deleted in the compendium or in the world
+    //   // TODO Add a warning message and think about a global rollback
+    //   if (capa != null) {
+    //     let capaData = capa.toObject();
+    //     capaData.system.path = newPath[0].id;
+    //     // Create the embedded capacity
+    //     const newCapa = await this.actor.createEmbeddedDocuments("Item", [capaData]);
+    //
+    //     updatedCapacitiesIds.push(newCapa[0].id);
+    //
+    //     // Update the source of all actions
+    //     let newActions = Object.values(foundry.utils.deepClone(newCapa[0].system.actions)).map(m => new Action(m.source, m.indice, m.type, m.img, m.label, m.chatFlavor, m.properties.visible, m.properties.activable, m.properties.enabled, m.properties.temporary, m.conditions, m.modifiers, m.resolvers));
+    //     newActions.forEach(action => {
+    //       action.updateSource(newCapa[0].id);
+    //     });
+    //
+    //     const updateActions = {"_id" : newCapa[0].id, "system.actions": newActions};
+    //
+    //     await this.actor.updateEmbeddedDocuments("Item", [updateActions]);
+    //   }
+    // }
+    //
+    //  // Update the capacities of the path with id of created path
+    //  const updateData = {"_id" : newPath[0].id, "system.capacities": updatedCapacitiesIds};
+    //  await this.actor.updateEmbeddedDocuments("Item", [updateData]);
   }     
 
   /**
@@ -325,7 +337,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
      // Create an array of actions
      // Update the source of all actions with the id of the new embedded capacity created
      // All actions are now enabled
-     let newActions = Object.values(foundry.utils.deepClone(created[0].system.actions)).map(m => new Action(m.source, m.indice, m.type, m.img, m.label, m.chatFlavor, true, m.properties.activable, m.properties.enabled, m.properties.temporary, m.conditions, m.modifiers, m.resolvers)); 
+     let newActions = Object.values(foundry.utils.deepClone(created[0].system.actions)).map(m => new Action(m.source, m.indice, m.type, m.img, m.label, m.chatFlavor, true, m.properties.activable, m.properties.enabled, m.properties.temporary, m.conditions, m.modifiers, m.resolvers));
      newActions.forEach(action => {
         action.updateSource(created[0].id);
      });

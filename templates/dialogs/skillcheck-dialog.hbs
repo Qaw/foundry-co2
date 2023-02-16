@@ -1,5 +1,5 @@
 <form class="{{cssClass}}" autocomplete="off">
-    {{log "Chroniques Oubliées | skillcheck" this}}
+    {{!log "Chroniques Oubliées | skillcheck" this}}
     <header class="sheet-header"></header>
     <section class="sheet-body">
         <div class="flexrow">
@@ -72,7 +72,7 @@
                 <div class="skillBonuses">
                     <div class="flex1 skill-bonuses" id="skill-bonuses">
                     {{#each skillBonuses as |bonus id|}}
-                        {{log 'skillBonus' bonus id}}
+                        {{!log 'skillBonus' bonus id}}
                         <div class="bonus-item flexrow" data-value="{{bonus.value}}" data-description="{{{bonus.description}}}">
                             <span class="bonus-value flex0">{{numberFormat bonus.value decimals=0 sign=true}}</span>
                             <span class="bonus-name flex1">{{bonus.name}}</span>

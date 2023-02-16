@@ -14,23 +14,23 @@
                         <h3>{{localize (concat "CO.itemTypes." item.type )}}</h3>
                     </div>
                 </div>
-                <div class="nav">
-                    {{!-- Sheet Tab Navigation --}}
-                    <nav class="sheet-tabs tabs" data-group="primary">
-                        <a class="item" data-tab="description" title="{{ localize "CO.tabs.description" }}"><i class="fas fa-book-user"></i></a>
-                        <a class="item" data-tab="details" title="{{ localize "CO.tabs.details" }}"><i class="fas fa-gear"></i></a>
-                    </nav>
-                </div>
             </div>
         </div>
+        <div class="nav">
+            {{!-- Sheet Tab Navigation --}}
+            <nav class="sheet-tabs tabs" data-group="primary">
+                <a class="item" data-tab="description" title="{{ localize "CO.tabs.description" }}"><i class="fas fa-book-user"></i></a>
+                <a class="item" data-tab="details" title="{{ localize "CO.tabs.details" }}"><i class="fas fa-gear"></i></a>
+            </nav>
+        </div>
         <div class="content flexrow">
-            {{ log "Chroniques Oubliées | detail" this}}
+            {{! log "Chroniques Oubliées | detail" this}}
             <section class="sheet-body">
                 <div class="tab description active" data-group="primary" data-tab="description">
                     {{editor enrichedDescription target="system.description.value" button=true owner=owner editable=editable}}
                 </div>
                 <div class="tab details" data-group="primary" data-tab="details">
-                    {{> (concat (concat "systems/co/templates/items/parts/" item.type) "-partial.hbs") }}
+                    {{> (buildItemTemplatePath "systems/co/templates/items/parts/" item.type)}}
                 </div>
             </section>
         </div>

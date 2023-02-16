@@ -307,14 +307,13 @@
         "currency": ""
       },
       "rarity" : "",
+      "equipped": false,
       "properties" : {
         "equipable": true,
-        "equipped": false,
         "reloadable": false,
         "stackable": false
       },
       "usage" : {
-        "equipped": false,
         "1h" : false,
         "2h" : false
       },
@@ -343,15 +342,14 @@
     "capacity": {
       "templates": ["common"],
       "subtype" : "",
-      "enabled" : false,
+      "learned" : false,
       "charges": {
         "current" : null,
         "max" : null
       },
       "properties" : {
         "spell" : false,
-        "chargeable" : false,
-        "enabled" : false        
+        "chargeable" : false
       },
       "path" : null,
       "actions": []

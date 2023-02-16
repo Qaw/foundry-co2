@@ -25,4 +25,7 @@ export const registerHandlebarsHelpers = function () {
     Handlebars.registerHelper("getMartialTrainingLabel", function (training) {
         return game.i18n.localize(training.label);
     });
+    Handlebars.registerHelper("buildItemTemplatePath", function (root, itemType) {
+        return root + itemType + "/" + itemType + "-partial.hbs"
+    });
 };

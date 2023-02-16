@@ -71,7 +71,14 @@ CO.action = {
     heal : "CO.actionType.heal",
     protection : "CO.actionType.protection"
   }
-
+}
+CO.path = {
+  subtypes: {
+    PROFILE: "CO.path.subtypes.profile",
+    FEATURE: "CO.path.subtypes.feature",
+    CREATURE: "CO.path.subtypes.creature",
+    PRESTIGE: "CO.path.subtypes.prestige"
+  }
 }
 
 CO.profile = {

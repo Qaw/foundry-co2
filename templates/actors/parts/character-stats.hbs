@@ -78,7 +78,7 @@
                 </div>
                 <div class="cell"></div>
                 {{#each combat as |field id|}}
-                    {{log (concat "Chroniques Oubliées | combat " id) field}}
+                    {{!log (concat "Chroniques Oubliées | combat " id) field}}
                     <div class="cell">
                         <span class="field-label header" title="{{localize (concat 'CO.combat.long.' id)}}">{{localize (concat "CO.combat.short." id)}}</span>
                     </div>

@@ -187,12 +187,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
   /** @inheritdoc */
   activateListeners(html) {
     super.activateListeners(html);
-    html.find(".details-toggle").click(function () {
-      $(".details-form").slideToggle("fast");
-    });
-    html.find(".actions-toggle").click(function () {
-      $(".actions-form").slideToggle("fast");
-    });
+    html.find(".section-toggle").click(this._onSectionToggle.bind(this));
     html.find(".item-delete").click(this._onDeleteItem.bind(this));
     html.find(".item-edit").click(this._onEditItem.bind(this));
     html.find(".modifier-add").click(this._onAddModifier.bind(this));
@@ -210,21 +205,24 @@ export default class CoItemSheet extends CoBaseItemSheet {
    * @param {*} event
    * @returns
    */
+  _onSectionToggle(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).parent().next(".collapsable");
+    li.slideToggle("fast");
+    return true;
+  }
+  /**
+   *
+   * @param {*} event
+   * @returns
+   */
   _onDeleteItem(event) {
     event.preventDefault();
     const li = $(event.currentTarget).closest(".item");
     const itemType = li.data("itemType");
+    const itemId = li.data("itemId");
     let data = duplicate(this.item);
-
-    switch (itemType) {
-      case "capacity":
-        {
-          const rank = li.data("rank");
-          data.system.capacities.splice(rank - 1, 1);
-        }
-        break;
-    }
-
+    if(itemType === "capacity") data.system.capacities.splice(data.system.capacities.indexOf(itemId), 1);
     return this.item.update(data);
   }
 

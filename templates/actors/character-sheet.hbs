@@ -8,20 +8,21 @@
                 <div class="form-value"><input class="field-value sans" name="name" type="text" value="{{actor.name}}" placeholder="Name" data-dtype="String"/></div>
                 <div class="form-label"><a class="field-label header levelUp">{{ localize 'CO.label.long.level' }}</a></div>
                 <div class="form-value"><input class="field-value sans" name="system.attributes.level.value" type="text" value="{{attributes.level.value}}" data-dtype="Number"/></div>
-                <div class="nav">
-                    {{!-- Sheet Tab Navigation --}}
-                    <nav class="sheet-tabs tabs" data-group="primary">
-                        <a class="item" data-tab="stats" title="{{ localize "CO.tabs.stats" }}"><i class="fas fa-address-card"></i></a>
-                        <a class="item" data-tab="actions" title="{{ localize "CO.tabs.actions" }}"><i class="fas fa-dice-d20"></i></a>
-                        <a class="item" data-tab="inventory" title="{{ localize "CO.tabs.inventory" }}"><i class="fas fa-backpack"></i></a>
-                        <a class="item" data-tab="capacities" title="{{ localize "CO.tabs.capacities" }}"><i class="fas fa-sitemap"></i></a>
-                        <a class="item" data-tab="bio" title="{{ localize "CO.tabs.bio" }}"><i class="fas fa-book-user"></i></a>
-                    </nav>
-                </div>
             </div>
         </div>
+        <div class="nav">
+            {{!-- Sheet Tab Navigation --}}
+            <nav class="sheet-tabs tabs" data-group="primary">
+                <a class="item" data-tab="stats" title="{{ localize "CO.tabs.stats" }}"><i class="fas fa-address-card"></i></a>
+                <a class="item" data-tab="actions" title="{{ localize "CO.tabs.actions" }}"><i class="fas fa-dice-d20"></i></a>
+                <a class="item" data-tab="inventory" title="{{ localize "CO.tabs.inventory" }}"><i class="fas fa-backpack"></i></a>
+                <a class="item" data-tab="capacities" title="{{ localize "CO.tabs.capacities" }}"><i class="fas fa-sitemap"></i></a>
+                <a class="item" data-tab="features" title="{{ localize "CO.tabs.features" }}"><i class="fa-solid fa-wrench"></i></a>
+                <a class="item" data-tab="bio" title="{{ localize "CO.tabs.bio" }}"><i class="fas fa-book-user"></i></a>
+            </nav>
+        </div>
         <div class="content flexrow">
-            {{ log "Chroniques Oubliées | detail" this}}
+            {{! log "Chroniques Oubliées | detail" this}}
             <section class="sheet-body">
                 <div class="tab stats" data-group="primary" data-tab="stats">
                     {{> "systems/co/templates/actors/parts/character-stats.hbs"}}
@@ -33,7 +34,10 @@
                     {{> "systems/co/templates/actors/parts/inventory/character-inventory.hbs"}}
                 </div>
                 <div class="tab capacities" data-group="primary" data-tab="capacities">
-                    {{> "systems/co/templates/actors/parts/character-capacities.hbs"}}
+                    {{> "systems/co/templates/actors/parts/paths/character-paths.hbs"}}
+                </div>
+                <div class="tab features" data-group="primary" data-tab="features">
+                    {{> "systems/co/templates/actors/parts/character-features.hbs"}}
                 </div>
                 <div class="tab bio" data-group="primary" data-tab="bio">
                     {{> "systems/co/templates/actors/parts/character-bio.hbs"}}

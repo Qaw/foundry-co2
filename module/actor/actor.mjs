@@ -81,14 +81,14 @@ export default class CoActor extends Actor {
    * @returns les Items de type equipment
    */
   get equipments() {
-    return this.items.filter((item) => item.type == ITEM_TYPE.EQUIPMENT);
+    return this.items.filter((item) => item.type === ITEM_TYPE.EQUIPMENT);
   }  
 
   /**
    * @returns les Items de type feature
    */
   get features() {
-    return this.items.filter((item) => item.type == ITEM_TYPE.FEATURE);
+    return this.items.filter((item) => item.type === ITEM_TYPE.FEATURE);
   }
 
   /**
@@ -99,36 +99,60 @@ export default class CoActor extends Actor {
   }
 
   get paths() {
-    return this.items.filter((item) => item.type == ITEM_TYPE.PATH);
+    return this.items.filter((item) => item.type === ITEM_TYPE.PATH);
   }
 
+  /**
+   * @returns renvoie un tableau d'objets comprenant les voies et les capacités associées
+   */
+  get pathGroups() {
+    let pathGroups = [];
+    const paths = this.items.filter((item) => item.type === ITEM_TYPE.PATH);
+    paths.forEach(path => {
+      const capacities = path.system.capacities.map(cid => this.items.find(i => i._id === cid));
+      pathGroups.push({
+        path : path,
+        items : capacities
+      });
+    });
+    return pathGroups;
+  }
+
+  get inventory() {
+    return {
+      equipment: this.equipments,
+      weapons: this.weapons,
+      armors: this.armors,
+      shields: this.shields
+    }
+  }
   get capacities() {
-    return this.items.filter((item) => item.type == ITEM_TYPE.CAPACITY);
+    return this.items.filter((item) => item.type === ITEM_TYPE.CAPACITY);
   }
 
   get enabledCapacities() {
-    return this.items.filter((item) => item.type == ITEM_TYPE.CAPACITY && item.system.properties.enabled);
+    return this.items.filter((item) => item.type === ITEM_TYPE.CAPACITY && item.system.properties.enabled);
   }
 
   /**
    * @returns les Items de type equipment et de sous-type armor
    */
   get armors() {
-    return this.equipments.filter((item) => item.system.subtype == EQUIPMENT_SUBTYPE.ARMOR);
+    return this.equipments.filter((item) => item.system.subtype === EQUIPMENT_SUBTYPE.ARMOR);
   }
 
   /**
    * @returns les Items de type equipment et de sous-type shield
    */
   get shields() {
-    return this.equipments.filter((item) => item.system.subtype == EQUIPMENT_SUBTYPE.SHIELD);
+    return this.equipments.filter((item) => item.system.subtype === EQUIPMENT_SUBTYPE.SHIELD);
   }
 
   /**
    * @returns les Items de type equipment et de sous-type weapon
    */
   get weapons() {
-    return this.equipments.filter((item) => item.system.subtype == EQUIPMENT_SUBTYPE.WEAPON);
+    return this.equipments.filter((item) => item.system.subtype === EQUIPMENT_SUBTYPE.WEAPON);
   }
 
   /**
@@ -162,7 +186,7 @@ export default class CoActor extends Actor {
   get visibleActions() {
     let allActions = [];
     this.items.forEach(item => {
-      if (item.type == ITEM_TYPE.CAPACITY && item.system.properties.enabled && item.actions.length > 0) {
+      if (item.type === ITEM_TYPE.CAPACITY && item.system.properties.enabled && item.actions.length > 0) {
         allActions.push(...item.visibleActions);
       }
       else if (item.actions.length > 0) allActions.push(...item.visibleActions);
@@ -202,7 +226,7 @@ export default class CoActor extends Actor {
    * @returns l'objet correspondant à la clé
    */
   getEmbeddedItemByKey(key) {
-    return this.items.find((item) => item.system.key == key);
+    return this.items.find((item) => item.system.key === key);
   }
 
   /**

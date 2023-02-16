@@ -239,7 +239,7 @@ Copied from dnd5e
   border: 2px groove #eeede0;
 }
 .co select {
-  color: #191813;
+  color: #4b4a44;
   font-family: 'Signika', sans-serif;
   font-size: 14px;
   text-align: center;
@@ -343,6 +343,12 @@ Copied from dnd5e
   border-radius: 3px;
   background: rgba(0, 0, 0, 0.05);
 }
+.co img.inline-img {
+  height: 27px;
+  width: 27px;
+  border: none;
+  outline: 1px solid white;
+}
 .co ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: lightgray;
@@ -402,19 +408,27 @@ Copied from dnd5e
 .co.sheet.actor .window-content form.editable .sidebar .portrait,
 .co.sheet.actor .window-content form.locked .sidebar .portrait {
   cursor: pointer;
-  background: lightgray;
-  outline: 3px solid white;
+  background: white;
+  outline: 3px solid #d7d7d7;
   box-shadow: 5px 5px 10px black;
-  flex: 0;
+  display: flex;
+  flex: 1;
   padding: 0;
+  width: 150px;
+  height: 200px;
   margin: 5px;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
 }
 .co.sheet.actor .window-content form.editable .sidebar .portrait img,
 .co.sheet.actor .window-content form.locked .sidebar .portrait img {
   border: none;
-  width: 150px;
+  margin: 0;
+  padding: 0;
   max-width: 150px;
-  min-width: 150px;
+  max-height: 200px;
 }
 .co.sheet.actor .window-content form.editable .sidebar .tags,
 .co.sheet.actor .window-content form.locked .sidebar .tags {
@@ -450,31 +464,39 @@ Copied from dnd5e
   align-self: center;
   flex: 1;
 }
-.co.sheet.actor .window-content form.editable .main .header .details .nav,
-.co.sheet.actor .window-content form.locked .main .header .details .nav {
-  grid-column: 1 / 3;
-  align-self: center;
-  flex: 1;
+.co.sheet.actor .window-content form.editable .main .nav,
+.co.sheet.actor .window-content form.locked .main .nav {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
+  height: 30px;
+  max-height: 30px;
 }
-.co.sheet.actor .window-content form.editable .main .header .details .nav .tabs,
-.co.sheet.actor .window-content form.locked .main .header .details .nav .tabs {
+.co.sheet.actor .window-content form.editable .main .nav .tabs,
+.co.sheet.actor .window-content form.locked .main .nav .tabs {
   padding: 0;
   margin: 0;
   justify-content: end;
   border: none;
 }
-.co.sheet.actor .window-content form.editable .main .header .details .nav .tabs .item,
-.co.sheet.actor .window-content form.locked .main .header .details .nav .tabs .item {
+.co.sheet.actor .window-content form.editable .main .nav .tabs .item,
+.co.sheet.actor .window-content form.locked .main .nav .tabs .item {
   border: none;
-  color: #4c5c5c;
+  color: rgba(47, 79, 79, 0.35);
   background: transparent;
-  margin-left: 3px;
-  text-shadow: 3px 3px 5px gray;
+  padding: 3px;
+  margin: 0 0 0 3px;
 }
-.co.sheet.actor .window-content form.editable .main .header .details .nav .tabs .item.active,
-.co.sheet.actor .window-content form.locked .main .header .details .nav .tabs .item.active {
+.co.sheet.actor .window-content form.editable .main .nav .tabs .item:hover,
+.co.sheet.actor .window-content form.locked .main .nav .tabs .item:hover {
+  color: rgba(47, 79, 79, 0.8);
+}
+.co.sheet.actor .window-content form.editable .main .nav .tabs .item.active,
+.co.sheet.actor .window-content form.locked .main .nav .tabs .item.active {
   border: none;
-  color: darkslategray;
+  color: darkslategrey;
   text-shadow: none;
 }
 .co.sheet.actor .window-content form.editable .main .content,
@@ -904,6 +926,101 @@ Copied from dnd5e
   padding: 0.25em 0.5em;
   border-top: 1px solid #c9c7b8;
 }
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .path-list,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .path-list {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 0;
+  grid-auto-rows: 50px;
+  justify-items: start;
+  align-items: start;
+  justify-content: start;
+  align-content: start;
+  font-size: smaller;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .path-list .cell,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .path-list .cell {
+  width: 200px;
+  min-height: 50px;
+  min-width: 200px;
+  max-width: 200px;
+  border: 1px solid black;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .path-list .cell.center,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .path-list .cell.center {
+  justify-self: center;
+  align-self: center;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .path-list .cell.left,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .path-list .cell.left {
+  justify-self: start;
+  align-self: center;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .path-list .cell.right,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .path-list .cell.right {
+  justify-self: end;
+  align-self: center;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .path-list .cell .field-value,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .path-list .cell .field-value {
+  max-width: 40px;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .path-list .cell .capacity-name,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .path-list .cell .capacity-name,
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .path-list .cell .path-name,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .path-list .cell .path-name {
+  display: inline;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .path-list .cell .capacity-name img,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .path-list .cell .capacity-name img,
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .path-list .cell .path-name img,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .path-list .cell .path-name img {
+  width: 24px;
+  height: 24px;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .path-list .cell .header,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .path-list .cell .header {
+  color: #4b4a44;
+  font-weight: bold;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .capacity-list,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .capacity-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 4fr 1fr;
+  grid-gap: 0;
+  grid-auto-columns: minmax(100px, auto);
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .capacity-list .cell,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .capacity-list .cell {
+  min-width: 40px;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .capacity-list .cell.center,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .capacity-list .cell.center {
+  justify-self: center;
+  align-self: center;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .capacity-list .cell.left,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .capacity-list .cell.left {
+  justify-self: start;
+  align-self: center;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .capacity-list .cell.right,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .capacity-list .cell.right {
+  justify-self: end;
+  align-self: center;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .capacity-list .cell .field-value,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .capacity-list .cell .field-value {
+  max-width: 40px;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .capacities .capacity-list .cell .header,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .capacities .capacity-list .cell .header {
+  color: #4b4a44;
+  font-weight: bold;
+}
 .co.sheet.actor .window-content form.editable .main .content .sheet-body .bio .editor,
 .co.sheet.actor .window-content form.locked .main .content .sheet-body .bio .editor {
   min-height: 100%;
@@ -947,14 +1064,17 @@ Copied from dnd5e
 }
 .co.sheet.item .window-content form.editable .sidebar .features,
 .co.sheet.item .window-content form.locked .sidebar .features {
-  list-style-type: none;
+  margin-top: 20px;
 }
 .co.sheet.item .window-content form.editable .sidebar .features .featured-item,
 .co.sheet.item .window-content form.locked .sidebar .features .featured-item {
-  border: 2px groove #eeede0;
+  width: 100%;
   padding: 3px;
-  margin-bottom: 3px;
-  color: #4b4a44;
+  margin: 0;
+  border: 2px groove #eeede0;
+  font-size: smaller;
+  text-align: center;
+  margin-top: 3px;
 }
 .co.sheet.item .window-content form.editable .main .header,
 .co.sheet.item .window-content form.locked .main .header {
@@ -963,12 +1083,13 @@ Copied from dnd5e
 }
 .co.sheet.item .window-content form.editable .main .header .details,
 .co.sheet.item .window-content form.locked .main .header .details {
-  padding: 10px;
+  padding: 15px 10px 0 10px;
 }
 .co.sheet.item .window-content form.editable .main .header .details .item-name h1,
 .co.sheet.item .window-content form.locked .main .header .details .item-name h1 {
+  font-family: "Modesto Condensed", "Palatino Linotype", serif;
   border: none;
-  font-size: 25px;
+  font-size: 30px;
   min-height: 40px;
   margin: 0;
   padding: 0;
@@ -979,45 +1100,55 @@ Copied from dnd5e
 }
 .co.sheet.item .window-content form.editable .main .header .details .item-type,
 .co.sheet.item .window-content form.locked .main .header .details .item-type {
-  margin-top: 5px;
+  padding-top: 5px;
 }
 .co.sheet.item .window-content form.editable .main .header .details .item-type h3,
 .co.sheet.item .window-content form.locked .main .header .details .item-type h3 {
-  border: none;
-  color: darkslategray;
-  font-size: 16px;
   text-align: right;
-  height: 25px;
+  font-family: "Modesto Condensed", "Palatino Linotype", serif;
+  font-size: 20px;
+  color: darkslategrey;
+  border: none;
+  height: 20px;
 }
-.co.sheet.item .window-content form.editable .main .header .details .nav,
-.co.sheet.item .window-content form.locked .main .header .details .nav {
-  grid-column: 1 / 3;
-  align-self: center;
-  flex: 1;
+.co.sheet.item .window-content form.editable .main .nav,
+.co.sheet.item .window-content form.locked .main .nav {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
+  height: 30px;
+  max-height: 30px;
 }
-.co.sheet.item .window-content form.editable .main .header .details .nav .tabs,
-.co.sheet.item .window-content form.locked .main .header .details .nav .tabs {
+.co.sheet.item .window-content form.editable .main .nav .tabs,
+.co.sheet.item .window-content form.locked .main .nav .tabs {
   padding: 0;
   margin: 0;
   justify-content: end;
   border: none;
 }
-.co.sheet.item .window-content form.editable .main .header .details .nav .tabs .item,
-.co.sheet.item .window-content form.locked .main .header .details .nav .tabs .item {
+.co.sheet.item .window-content form.editable .main .nav .tabs .item,
+.co.sheet.item .window-content form.locked .main .nav .tabs .item {
   border: none;
-  color: #4c5c5c;
+  color: rgba(47, 79, 79, 0.35);
   background: transparent;
-  margin-left: 3px;
-  text-shadow: 3px 3px 5px gray;
+  padding: 3px;
+  margin: 0 0 0 3px;
 }
-.co.sheet.item .window-content form.editable .main .header .details .nav .tabs .item.active,
-.co.sheet.item .window-content form.locked .main .header .details .nav .tabs .item.active {
+.co.sheet.item .window-content form.editable .main .nav .tabs .item:hover,
+.co.sheet.item .window-content form.locked .main .nav .tabs .item:hover {
+  color: rgba(47, 79, 79, 0.8);
+}
+.co.sheet.item .window-content form.editable .main .nav .tabs .item.active,
+.co.sheet.item .window-content form.locked .main .nav .tabs .item.active {
   border: none;
-  color: darkslategray;
+  color: darkslategrey;
   text-shadow: none;
 }
 .co.sheet.item .window-content form.editable .main .content,
 .co.sheet.item .window-content form.locked .main .content {
+  background: rgba(0, 0, 0, 0.05);
   flex: 1;
   padding: 5px;
   margin: 0;
@@ -1028,20 +1159,47 @@ Copied from dnd5e
   height: 100%;
   min-height: 400px;
 }
-.co.sheet.item .window-content form.editable .main .content .sheet-body .actions,
-.co.sheet.item .window-content form.locked .main .content .sheet-body .actions {
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .capacity-list,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .capacity-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 8fr 2fr;
+  grid-gap: 1px;
+  grid-auto-columns: minmax(15px, auto);
+}
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .capacity-list .cell.center,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .capacity-list .cell.center {
+  justify-self: center;
+  align-self: center;
+}
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .capacity-list .cell.left,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .capacity-list .cell.left {
+  justify-self: start;
+  align-self: center;
+}
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .capacity-list .cell.right,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .capacity-list .cell.right {
+  justify-self: end;
+  align-self: center;
+}
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .capacity-list .cell .header,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .capacity-list .cell .header {
+  color: #4b4a44;
+  font-weight: bold;
+}
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .actions,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .actions {
   padding: 20px;
 }
-.co.sheet.item .window-content form.editable .main .content .sheet-body .actions button.action-button,
-.co.sheet.item .window-content form.locked .main .content .sheet-body .actions button.action-button {
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .actions button.action-button,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .actions button.action-button {
   flex: 0;
 }
-.co.sheet.item .window-content form.editable .main .content .sheet-body .modifiers .modifiers-container,
-.co.sheet.item .window-content form.locked .main .content .sheet-body .modifiers .modifiers-container {
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .modifiers .modifiers-container,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .modifiers .modifiers-container {
   padding: 10px;
 }
-.co.sheet.item .window-content form.editable .main .content .sheet-body .modifiers .modifiers-container .modifier-row,
-.co.sheet.item .window-content form.locked .main .content .sheet-body .modifiers .modifiers-container .modifier-row {
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .modifiers .modifiers-container .modifier-row,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .modifiers .modifiers-container .modifier-row {
   padding-bottom: 2px;
 }
 .co.dialog .dialog-field {

@@ -1,0 +1,25 @@
+{{!log "Chroniques Oubliées | character paths" this}}
+<h3 class="form-header"><a class="section-toggle">{{localize "CO.label.long.paths"}}</a></h3>
+<div class="path-list collapsable">
+<!--    <div class="cell"></div>-->
+<!--    <div class="cell left">-->
+<!--        <span class="field-label header"></span>-->
+<!--    </div>-->
+<!--    <div class="cell center item-controls">-->
+<!--        <a class="item-control item-create cof-compendium-pack" data-pack="paths" data-open="0" title="Ajouter une voie"><i class="fas fa-plus"></i>&nbsp; {{localize "CO.label.long.add"}}</a>-->
+<!--    </div>-->
+    {{#each pathGroups as |pg id|}}
+        {{log 'pathGroup' pg id}}
+        <div class="cell center" data-item-type="path" data-item-id="{{pg.path._id}}">
+            <span class="path-name"><img class="path-img" src="{{pg.path.img}}" title="{{pg.path.name}}"/>{{pg.path.name}}</span>
+            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+        </div>
+        {{#each pg.items as |capacity id|}}
+        <div class="cell center">
+            {{add id 1}}. <span class="capacity-name"><img class="capacity-img" src="{{capacity.img}}" title="{{capacity.name}}"/>{{capacity.name}}</span>
+        </div>
+        {{/each}}
+    {{/each}}
+</div>
+{{> "systems/co/templates/actors/parts/paths/character-capacities.hbs"}}
