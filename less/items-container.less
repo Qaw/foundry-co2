@@ -9,7 +9,7 @@
   scrollbar-width: thin;
   color: @colorTan;
   &.foldable {
-    .inventory-header {
+    .items-container-header {
       h3 {
         cursor: pointer;
         &:before {
@@ -19,7 +19,7 @@
     }
   }
   &.folded {
-    .inventory-header {
+    .items-container-header {
       h3:before {
         content: "▸\202F";
       }
@@ -81,7 +81,7 @@
     }
   }
   // Inventory Header
-  .inventory-header {
+  .items-container-header {
     margin: 2px 0;
     padding: 0;
     align-items: center;
@@ -93,9 +93,13 @@
     h3 {
       margin: 0 -5px 0 0;
       padding-left: 5px;
-      .modesto();
+      font-family: @font-tertiary;
+      font-size: 20px;
+      font-weight: 700;
+      border-bottom: none;
+      //.modesto();
       //font-size: 16px;
-      font-size: 18px;
+      //font-size: 18px;
     }
 
     .item-controls,

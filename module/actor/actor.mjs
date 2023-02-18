@@ -120,10 +120,10 @@ export default class CoActor extends Actor {
 
   get inventory() {
     return {
-      equipment: this.equipments,
-      weapons: this.weapons,
-      armors: this.armors,
-      shields: this.shields
+      armors : this.armors,
+      shields : this.shields,
+      weapons : this.weapons,
+      misc : this.misc
     }
   }
   get capacities() {
@@ -153,6 +153,10 @@ export default class CoActor extends Actor {
    */
   get weapons() {
     return this.equipments.filter((item) => item.system.subtype === EQUIPMENT_SUBTYPE.WEAPON);
+  }
+
+  get misc() {
+    return this.equipments.filter((item) => item.system.subtype === EQUIPMENT_SUBTYPE.MISC);
   }
 
   /**
@@ -196,12 +200,6 @@ export default class CoActor extends Actor {
   //#endregion
 
   //#region méthodes publiques
-
-  /** @override */
-  prepareBaseData() {
-    return this._prepareCharacterData();
-  }
-
   prepareDerivedData() {
     return this._prepareCharacterDerivedData();
   }
@@ -374,14 +372,10 @@ export default class CoActor extends Actor {
   //#endregion
 
   //#region méthodes privées
-
   /**
    * Perform any Character specific preparation.
    * @protected
    */
-  _prepareCharacterData() {}
-
-  /** @override */
   _prepareCharacterDerivedData() {
     this._prepareAbilities();
 

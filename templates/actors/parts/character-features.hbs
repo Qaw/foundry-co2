@@ -1,10 +1,22 @@
-<div class="items-container">
-    {{!log "items" this}}
-    {{#each items as |item id|}}
-    {{!log (concat "Chroniques Oubliées | item " id) item}}
-        <div class="cell item" data-item-id="{{item._id}}" data-item-type="{{item.type}}">
-            <span class="field-value">{{item.name}}</span>
-            <span class="item-delete"><i class="fas fa-trash"></i></span>
+<ol class="features items-container foldable"  data-tab="features">
+    <li class="items-container-header flexrow">
+        <h3 class="item-name flexrow">{{localize "CO.ui.features"}}</h3>
+        <div class="item-controls-2">
+            <a class="item-control item-create" data-pack="profiles" data-open="0" title="{{localize "CO.ui.add"}}"><i class="fas fa-plus"></i>&nbsp;{{localize "CO.label.short.add"}}</a>
         </div>
-    {{/each}}
-</div>
+    </li>
+    <ol class="item-list">
+        {{#each items as |item id|}}
+            <li class="item flexrow" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="true">
+                <div class="item-name flexrow">
+                    <div class="item-image" style="background-image: url('{{item.img}}')"></div>
+                    <h4><a class="item-control item-edit">{{item.name}}</a></h4>
+                </div>
+                <div class="item-controls-2">
+                    <a class="item-control item-delete" title="{{localize "CO.ui.delete"}}"><i class="fas fa-trash"></i></a>
+                </div>
+            </li>
+            {{!> "systems/cof/templates/actors/parts/inventory/actor-inventory-item.hbs" item owner=../../actor}}
+        {{/each}}
+    </ol>
+</ol>

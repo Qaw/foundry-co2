@@ -5,6 +5,7 @@ export default class CoBaseActorSheet extends ActorSheet {
   /** @override */
   getData(options) {
     const context = super.getData(options);
+    context.config = game.co.config;
     // context.logoPath = this._getPathRoot() + this._getLogoPath();
     return context;
   }

@@ -81,6 +81,14 @@ CO.path = {
   }
 }
 
+CO.size = {
+  tiny: "CO.size.tiny",
+  small: "CO.size.small",
+  medium: "CO.size.medium",
+  large: "CO.size.large",
+  huge: "CO.size.huge"
+}
+
 CO.profile = {
   family: {
     enabled: false,

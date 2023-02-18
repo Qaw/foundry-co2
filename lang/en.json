@@ -27,6 +27,7 @@
     },
     "notif": {
       "ready": "Système Chroniques Oubliées initialisé",
+      "unknownCapacity": "Vous ne connaissez pas cette capacité.",
       "noCapacitySelected": "Aucune capacité sélectionnée",
       "inventory.empty" : "L'inventaire est vide"
     },
@@ -97,11 +98,13 @@
         "type" : "Tpe",
         "subtype" : "Ss-tpe",
         "category" : "Cat.",
+        "quantity" : "Qté",
         "martialCategory" : "Cat. martiale"
       }
     },
     "ui": {
       "none": "--",
+      "id" : "ID",
       "submit": "OK",
       "cancel": "Annuler",
       "add" : "Ajouter",
@@ -152,7 +155,19 @@
       "range" : "Portée",
       "consumes" : "Consomme",
       "perUsage" : "Par utilisation",
-      "learned" : "Appris"
+      "learned" : "Appris",
+      "biography" : "Biographie",
+      "appearance" : "Apparence",
+      "size" : "Taille",
+      "languages" : "Langages",
+      "private" : "Privée",
+      "public" : "Publique",
+      "misc" : "Divers",
+      "features" : "Traits",
+      "inventory" : "Inventaire",
+      "armors" : "Armures",
+      "weapons" : "Armes",
+      "shields" : "Boucliers"
     },
     "properties": {
       "attack": "Attaque",
@@ -305,6 +320,18 @@
       "medium" : "Moyen",
       "rare" : "Rare",
       "unique" : "Unique"
+    },
+    "size" : {
+      "tiny": "Minuscule",
+      "small": "Petit",
+      "medium": "Moyenne",
+      "large": "Grande",
+      "huge": "Gigantesque"
+
+    },
+    "actions" : {
+      "equip" : "Équiper",
+      "consume" : "Consommer"
     },
     "actionType" : {
       "spell" : "Sort",

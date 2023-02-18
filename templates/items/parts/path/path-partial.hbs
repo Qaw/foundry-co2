@@ -1,6 +1,12 @@
 {{!log "Chroniques Oubliées | path" this}}
 <h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.details"}}</a></h3>
-<div class="details-form collapsable">
+<div class="details-form foldable">
+    <div class="form-group">
+        <label>{{localize "CO.ui.id"}}</label>
+        <div class="form-fields">
+            <input class="field-value" name="data._id" readonly type="text" value="{{data._id}}" placeholder="{{localize "CO.ui.id"}}" data-dtype="String">
+        </div>
+    </div>
     <div class="form-group">
         <label>{{localize "CO.label.long.subtype"}}</label>
         <div class="form-fields">
@@ -21,7 +27,7 @@
     </div>
 </div>
 <h3 class="form-header"><a class="section-toggle">{{localize "CO.label.long.capacities"}}</a></h3>
-<div class="capacity-list collapsable">
+<div class="capacity-list foldable">
     <div class="cell center">
         <span class="field-label header">{{localize "CO.label.long.rank"}}</span>
     </div>

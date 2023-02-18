@@ -29,7 +29,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
   /** @override */
   async getData(options = {}) {
     const context = super.getData(options);
-
+    console.log(context);
     if (this.item.type == ITEM_TYPE.EQUIPMENT ||this.item.type == ITEM_TYPE.PROFILE) {
       context.martialTrainingsWeaponsList = context.config.martialTrainingsWeapons;
       context.martialTrainingsArmorsList = context.config.martialTrainingsArmors;
@@ -207,7 +207,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
    */
   _onSectionToggle(event) {
     event.preventDefault();
-    const li = $(event.currentTarget).parent().next(".collapsable");
+    const li = $(event.currentTarget).parent().next(".foldable");
     li.slideToggle("fast");
     return true;
   }
