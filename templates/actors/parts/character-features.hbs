@@ -6,6 +6,29 @@
         </div>
     </li>
     <ol class="item-list">
+        {{#each features as |item id|}}
+            <li class="item flexrow" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="true">
+                <div class="item-name flexrow">
+                    <div class="item-image" style="background-image: url('{{item.img}}')"></div>
+                    <h4><a class="item-control item-edit">{{item.name}}</a></h4>
+                </div>
+                <div class="item-controls-2">
+                    <a class="item-control item-delete" title="{{localize "CO.ui.delete"}}"><i class="fas fa-trash"></i></a>
+                </div>
+            </li>
+            {{!> "systems/cof/templates/actors/parts/inventory/actor-inventory-item.hbs" item owner=../../actor}}
+        {{/each}}
+    </ol>
+</ol>
+
+<ol class="features items-container foldable"  data-tab="items">
+    <li class="items-container-header flexrow">
+        <h3 class="item-name flexrow">{{localize "CO.ui.inventory"}}</h3>
+        <div class="item-controls-2">
+            <a class="item-control item-create" data-pack="profiles" data-open="0" title="{{localize "CO.ui.add"}}"><i class="fas fa-plus"></i>&nbsp;{{localize "CO.label.short.add"}}</a>
+        </div>
+    </li>
+    <ol class="item-list">
         {{#each items as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="true">
                 <div class="item-name flexrow">

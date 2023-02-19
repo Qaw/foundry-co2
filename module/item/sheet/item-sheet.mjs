@@ -379,8 +379,13 @@ export default class CoItemSheet extends CoBaseItemSheet {
     return this.item.update({ "system.actions": newActions });
   }
 
+  /**
+   * @description For item of type Capacity or Equipment, add array for modifiers, conditions and resolvers when they are empty on the sheet
+   * @param {*} event 
+   * @param {*} formData 
+   */
   _updateObject(event, formData) {
-    if ((this.item.type == "capacity")) {
+    if ((this.item.type === ITEM_TYPE.CAPACITY || this.item.type === ITEM_TYPE.EQUIPMENT)) {
       formData = expandObject(formData);
 
       // Parcours des actions pour ajouter les tableaux vides

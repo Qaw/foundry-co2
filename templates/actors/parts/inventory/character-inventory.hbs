@@ -1,42 +1,51 @@
 {{!log "Chroniques Oubliées | inventory " this}}
 {{#each inventory as |items category|}}
-    {{#if (gt items.length 0)}}
+  {{#if (gt items.length 0)}}
     <ol class="items-container foldable" data-tab="inventory" data-category="{{category}}">
-        <li class="items-container-header flexrow">
-            <h3 class="item-name flexrow">{{localize (concat "CO.ui." category)}}</h3>
-            <div class="item-detail">{{localize "CO.label.short.quantity"}}</div>
+      <li class="items-container-header flexrow">
+        <h3 class="item-name flexrow">{{localize (concat "CO.ui." category)}}</h3>
+        <div class="item-detail">{{localize "CO.label.short.quantity"}}</div>
+        {{#if @root.editable}}
+          <div class="item-detail">{{localize "CO.ui.actions"}}</div>
+          <div class="item-controls-2">
+            <a class="item-control item-create" data-pack="items" data-open="0" title="{{localize 'CO.item.add'}}"><i class="fas fa-plus"></i>&nbsp;
+              {{localize "CO.label.short.add"}}</a>
+          </div>
+        {{/if}}
+      </li>
+      <ol class="item-list">
+        {{#each items as |item id|}}
+          <li class="item flexrow" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="true">
+            <div class="item-name flexrow">
+              <div class="item-image" style="background-image: url('{{item.img}}')"></div>
+              <h4><a class="item-control item-edit">{{item.name}}</a></h4>
+            </div>
+            <div class="item-detail">
+              <a class="item-control inventory-qty" title="{{localize 'CO.label.short.quantity'}}">{{item.system.quantity.current}}</a>
+            </div>
             {{#if @root.editable}}
-                <div class="item-detail">{{localize "CO.ui.actions"}}</div>
-                <div class="item-controls-2">
-                    <a class="item-control item-create" data-pack="items" data-open="0" title="{{localize "CO.item.add"}}"><i class="fas fa-plus"></i>&nbsp; {{localize "CO.label.short.add"}}</a>
-                </div>
+              <div class="item-detail">
+                {{#if item.system.properties.equipable}}
+                  {{#if item.system.equipped}}
+                    <a class="item-control inventory-equip" title="{{localize 'CO.actions.unequip'}}"><i class="fa-solid fa-shield"></i></a>
+                  {{else}}
+                    <a class="item-control inventory-equip" title="{{localize 'CO.actions.equip'}}"><i class="fa-regular fa-shield"></i></a>
+                  {{/if}}
+                {{/if}}
+                {{#if (and item.system.properties.reloadable (gt item.system.quantity.current 0))}}
+                  <a class="item-control inventory-consume" title="{{localize 'CO.actions.consume'}}"><i class="fas fa-drumstick-bite"></i></a>
+                {{/if}}
+              </div>
+              <div class="item-controls-2">
+                <a class="item-control item-delete" title="{{localize 'CO.ui.delete'}}"><i class="fas fa-trash"></i></a>
+              </div>
             {{/if}}
-        </li>
-        <ol class="item-list">
-            {{#each items as |item id|}}
-            <li class="item flexrow" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="true">
-                <div class="item-name flexrow">
-                    <div class="item-image" style="background-image: url('{{item.img}}')"></div>
-                    <h4><a class="item-control item-edit">{{item.name}}</a></h4>
-                </div>
-                <div class="item-detail">
-                    <a class="item-control inventory-qty" title="{{ localize "CO.label.short.quantity"}}">{{item.system.quantity.current}}</a>
-                </div>
-            {{#if @root.editable}}
-                <div class="item-detail">
-                    <a class="item-control item-equip" title="{{localize "CO.actions.equip"}}"><i class="fas fa-shield-alt"></i></a>
-                    <a class="item-control item-consume" title="{{localize "CO.actions.consume"}}"><i class="fas fa-drumstick-bite"></i></a>
-                </div>
-                <div class="item-controls-2">
-                    <a class="item-control item-delete" title="{{localize "CO.ui.delete"}}"><i class="fas fa-trash"></i></a>
-                </div>
-            {{/if}}
-            </li>
-    <!--        {{!> "systems/cof/templates/actors/parts/inventory/actor-inventory-item.hbs" item owner=../../actor}}-->
-            {{/each}}
-        </ol>
+          </li>
+          <!--        {{!> "systems/cof/templates/actors/parts/inventory/actor-inventory-item.hbs" item owner=../../actor}}-->
+        {{/each}}
+      </ol>
     </ol>
-    {{else}}
-<!--        <p class="empty">{{localize "CO.notif.inventory.empty"}}</p>-->
-    {{/if}}
+  {{else}}
+    <!--        <p class="empty">{{localize "CO.notif.inventory.empty"}}</p>-->
+  {{/if}}
 {{/each}}

@@ -5,53 +5,13 @@ import { ITEM_TYPE } from "../system/constants.mjs";
  */
 export class CoItem extends Item {
   constructor(...args) {
-    let data = args[0];
-
     super(...args);
   }
 
   /** @override */
   prepareDerivedData() {
     this.system.slug = this.name.slugify({ strict: true });
-    const itemType = this.type;
-    switch(itemType){
-      case "capacity" : this._prepareCapacityDerivedData();  break;
-      case "path" : this._preparePathDerivedData();  break;
-      default: break;
-    }
   }
-
-  _prepareCapacityDerivedData(){
-    if(this.actor && this.system.path) {
-      const path = this.actor.items.get(this.system.path);
-      let max = 0;
-      path.system.capacities.forEach(c => {
-        const capacity = this.actor.items.get(c);
-        if(capacity && capacity.system.learned) {
-          const rank = path.system.capacities.indexOf(c) +1;
-          if(rank > max) max = rank;
-        }
-      });
-      console.log(max);
-      path.system.rank = max;
-    }
-  }
-  _preparePathDerivedData(){
-    if(this.actor) this.system.rank = this.computeRankFromCheckedItems(this.actor);
-  }
-
-  computeRankFromCheckedItems(actor){
-    let capacities = this.system.capacities;
-    let maxRank = 0;
-    const actorCapacities = actor.items.filter((item) => item.type === ITEM_TYPE.CAPACITY);
-    // console.log("COMPUTE RANK | ", actorCapacities);
-    // maxRank = this.system.capacities.forEach(c => {
-        // console.log("COMPUTE RANK | ", c);
-        // return this.system.capacities.indexOf(c)+1;
-    // });
-    return maxRank;
-  }
-
 
   //#region accesseurs
   /**
@@ -240,5 +200,38 @@ export class CoItem extends Item {
     }
   }
 
+  /**
+   * Update the rank for an embedded path item
+   * @returns 
+   */
+  updateRank() {
+    if (this.type !== ITEM_TYPE.PATH || !this.actor) return;
+    let max = 0;
+    this.system.capacities.forEach(c => {
+      const capacity = this.actor.items.get(c);
+      if (capacity && capacity.system.learned) {
+        const rank = this.system.capacities.indexOf(c) + 1;
+        if(rank > max) max = rank;
+      }
+    });
+    this.update({ "system.rank": max });
+  }
+
+  /**
+   * Update the actions for an embedded capacity item
+   * @returns 
+   */
+  toggleActions() {
+    if ((this.type !== ITEM_TYPE.CAPACITY && this.type !== ITEM_TYPE.EQUIPMENT) || !this.actor) return;
+    let actions = this.actions;
+    for (const action of actions) {
+      action.properties.visible = !action.properties.visible;
+      // Si c'est une action non activable, l'activer automatiquement
+      if (!action.properties.activable) {
+        action.properties.enabled = !action.properties.enabled;
+      }
+    }
+    this.update ({ "system.actions": actions});
+  }
   //#endregion
 }

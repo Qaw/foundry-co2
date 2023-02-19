@@ -38,6 +38,14 @@
             </div>
         </div>
     {{/if}}
+    {{#if system.properties.equipable}}
+    <div class="form-group">
+        <label>{{localize "CO.ui.equipped"}}</label>
+        <div class="form-fields">
+            <label class="checkbox"> <input type="checkbox" name="system.equipped" {{checked system.equipped}}></label>
+        </div>
+    </div>
+    {{/if}}
     <div class="form-group">
         <label>{{localize "CO.label.long.properties"}}</label>
         <div class="form-fields">

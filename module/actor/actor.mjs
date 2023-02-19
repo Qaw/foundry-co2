@@ -126,6 +126,7 @@ export default class CoActor extends Actor {
       misc : this.misc
     }
   }
+  
   get capacities() {
     return this.items.filter((item) => item.type === ITEM_TYPE.CAPACITY);
   }
@@ -369,6 +370,32 @@ export default class CoActor extends Actor {
 
     await this.updateEmbeddedDocuments("Item", [updateData]);
   }
+
+  /**
+   * @description Apprend/désapprend une capacité du personnage
+   * Change le champ learned de la capactié
+   * Met à jour le rank de la voie correspondante
+   * Met à jour le champ visible de toutes les actions de la capacité
+   * @param {*} capacityId 
+   */
+  async toggleCapacityLearned(capacityId) {
+    // Mise à jour de la capacité et de ses actions
+    await this._toggleItemFieldAndctions(capacityId, "learned");
+
+    // Mise à jour du rang de la voie correspondante
+    let path = this.items.get(this.items.get(capacityId).system.path);
+    path.updateRank();    
+  }
+  
+  /**
+   * @description Equippe/Déséquippe un equipment du personnage
+   * Change le champ equipped de l'equipement
+   * @param {*} itemId 
+   */
+  async toggleEquipmentEquipped(itemId) {
+    // Mise à jour de la capacité et de ses actions
+    await this._toggleItemFieldAndctions(itemId, "equipped");
+  }
   //#endregion
 
   //#region méthodes privées
@@ -380,7 +407,6 @@ export default class CoActor extends Actor {
     this._prepareAbilities();
 
     for (const [key, skill] of Object.entries(this.system.combat)) {
-      // Log.debug(skill);
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr);
       const abilityBonus = skill.ability && this.system.abilities[skill.ability].mod ? this.system.abilities[skill.ability].mod : 0;
 
@@ -460,7 +486,7 @@ export default class CoActor extends Actor {
 
   _prepareDef(skill, abilityBonus, bonuses) {
     const defModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, COMBAT.DEF);
-    const protection = this.getDefenceFromArmorAndShield();
+    // const protection = this.getDefenceFromArmorAndShield();
 
     skill.base = game.settings.get("co", "baseDef");
     skill.tooltipBase = Utils.getTooltip("Base", skill.base);
@@ -468,7 +494,7 @@ export default class CoActor extends Actor {
     skill.base += abilityBonus;
     skill.tooltipBase += Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus);
 
-    skill.value = skill.base + bonuses + defModifiers.total + protection;
+    skill.value = skill.base + bonuses + defModifiers.total; // + protection;
     skill.tooltipValue = defModifiers.tooltip;
   }
 
@@ -522,6 +548,20 @@ export default class CoActor extends Actor {
   _addAllValues(array) {
     return array.length > 0 ? array.reduce((acc, curr) => acc + curr, 0) : 0;
   }
+
+  /**
+ * @description toggle the field of the items and the actions linked
+ * @param {*} itemId 
+ * @param {*} fieldName 
+ */
+  async _toggleItemFieldAndctions(itemId, fieldName) {
+    let item = this.items.get(itemId);
+    let fieldValue = item.system[fieldName];
+    await this.updateEmbeddedDocuments('Item', [{ "_id": itemId, [`system.${fieldName}`]: !fieldValue }]);
+    if (item.actions.length > 0) {
+      item.toggleActions();
+    }    
+  }
   //#endregion
 
   //
@@ -557,6 +597,6 @@ export default class CoActor extends Actor {
   //         return this.deleteEmbeddedDocuments("Item", [itemId]);
   //       }
   //   }
-  // }
+  // }  
 
 }
