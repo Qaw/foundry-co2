@@ -1,3 +1,5 @@
+import { Condition } from "./conditions.mjs";
+
 export class Action {
 
     /**
@@ -50,6 +52,10 @@ export class Action {
         return !foundry.utils.isEmpty(this.resolvers);
     }
 
+    /**
+     * Update the source of the action and of all the modifiers
+     * @param {*} source 
+     */
     updateSource(source) {
         this.source = source;
 
@@ -57,6 +63,22 @@ export class Action {
         Object.values(this.modifiers).forEach(element => {
             element.source = source;
         });
+    }
+
+    /**
+     * 
+     * @param {*} item 
+     */
+    isVisible(item) {
+        if (this.hasConditions) {
+            let result = false;
+            this.conditions.forEach(cond => {
+                let condition = new Condition(cond.subject, cond.predicate, cond.object);
+                if (condition.evaluate(item)) result = true;
+            });
+            return result;
+        }
+        return true;
     }
 
 }

@@ -1,4 +1,5 @@
 import { ITEM_TYPE } from "../system/constants.mjs";
+import { Action } from "../system/actions.mjs";
 /**
  * Extend the base Item entity
  * @extends {Item}
@@ -225,10 +226,20 @@ export class CoItem extends Item {
     if ((this.type !== ITEM_TYPE.CAPACITY && this.type !== ITEM_TYPE.EQUIPMENT) || !this.actor) return;
     let actions = this.actions;
     for (const action of actions) {
-      action.properties.visible = !action.properties.visible;
+      let act = new Action(action.source, action.indice, action.type, action.img, action.label, action.chatFlavor, action.properties.visible, action.properties.activable, action.properties.enabled, action.properties.temporary, action.conditions, action.modifiers, action.resolvers);
+      // action.properties.visible = !action.properties.visible;      
       // Si c'est une action non activable, l'activer automatiquement
       if (!action.properties.activable) {
         action.properties.enabled = !action.properties.enabled;
+      }
+      else {
+        // Vérifier si les conditions sont remplies
+        if (!act.hasConditions) {
+          action.properties.visible = !action.properties.visible;  
+        }
+        else {
+          action.properties.visible = act.isVisible(this);
+        }
       }
     }
     this.update ({ "system.actions": actions});
