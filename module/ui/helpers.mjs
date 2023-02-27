@@ -28,4 +28,12 @@ export const registerHandlebarsHelpers = function () {
     Handlebars.registerHelper("buildItemTemplatePath", function (root, itemType) {
         return root + itemType + "/" + itemType + "-partial.hbs"
     });
+    Handlebars.registerHelper("getEmbeddedItemName", function (actor, source) {
+        const item = actor.items.get(source);
+        return item.name;
+    });
+    Handlebars.registerHelper("getEmbeddedItemImg", function (actor, source) {
+        const item = actor.items.get(source);
+        return item.img;
+    });
 };

@@ -1,6 +1,7 @@
 import { Stats } from "../system/stats.mjs";
 import { ATTRIBUTE, COMBAT, EQUIPMENT_SUBTYPE, ITEM_TYPE, MODIFIER_SUBTYPE, MODIFIER_TARGET, MODIFIER_TYPE, RESOURCES } from "../system/constants.mjs";
 import { Modifiers } from "../system/modifiers.mjs";
+import { Resolver } from "../system/resolvers.mjs";
 import { Log } from "../utils/log.mjs";
 import { Utils } from "../system/utils.mjs";
 
@@ -358,17 +359,30 @@ export default class CoActor extends Actor {
    */
   async activateAction(state, source, indice) {
     const item = this.items.get(source);
-    let newActions = foundry.utils.deepClone(item.system.actions);
-    if (state) {
-      newActions[indice].properties.enabled = true;
+
+    // Action avec une durée
+    if (item.system.actions[indice].properties.temporary) {
+      let newActions = foundry.utils.deepClone(item.system.actions);
+      if (state) {
+        newActions[indice].properties.enabled = true;
+      }
+      else {
+        newActions[indice].properties.enabled = false;
+      }
+  
+      const updateData = {"_id" : item.id, "system.actions": newActions};
+  
+      await this.updateEmbeddedDocuments("Item", [updateData]);
     }
+    // Action instantanée
     else {
-      newActions[indice].properties.enabled = false;
+      const action = item.system.actions[indice];
+      // Recherche des resolvers de l'action
+      let resolvers = Object.values(action.resolvers).map(a => new Resolver(a.type, a.skill, a.dmg));
+      for (const resolver of resolvers) {
+          let res = resolver.resolve(this, item);
+      }
     }
-
-    const updateData = {"_id" : item.id, "system.actions": newActions};
-
-    await this.updateEmbeddedDocuments("Item", [updateData]);
   }
 
   /**

@@ -99,6 +99,8 @@ export class Utils {
     }
 
     Log.debug("Custom Formula evaluated : ", replacedFormula);
-    return eval(replacedFormula);
+
+    if (replacedFormula.includes("@")) return eval(replacedFormula);
+    return replacedFormula;
   }
 }

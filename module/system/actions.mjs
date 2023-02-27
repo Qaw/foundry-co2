@@ -18,6 +18,7 @@ export class Action {
      * Sort permanent : activable et temporary à false, enabled à true
      * Sort à durée : temporary à true et activable à true
      * Sort instantané : temporary à false, et activable à true
+     * Attaque simple : temporary à false, et activable à true
      * @param {[]} conditions 
      * @param {[]modifier} modifiers 
      * @param {[]} resolvers 

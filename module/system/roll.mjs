@@ -87,8 +87,8 @@ export class CoDmgRoll extends CoRoll {
 }
 
 export class CoAttackRoll extends CoRoll {
-    attackRoll(value) {
-        Log.debug("ATTACK ROLL")
+    attackRoll(skillFormula, damageFormula) {
+        Log.info("ATTACK ROLL avec Formule : " + skillFormula + " et Dommages : " + damageFormula);
     }
     dialog(){}
     chat(){}

@@ -1,3 +1,4 @@
+{{log 'character-actions' this}}
 <ol class="actions items-container foldable" data-tab="actions">
   <li class="items-container-header flexrow">
     <h3 class="item-name flexrow">{{localize "CO.ui.actions"}}</h3>
@@ -5,20 +6,28 @@
   <ol class="item-list">
     {{#each visibleActions as |action id|}}
       {{log (concat "Chroniques Oubliées | action " id) action}}
-      <li class="item flexrow" data-item-id="{{action._id}}" data-item-type="{{action.type}}" draggable="true"  {{#unless action.properties.enabled}}style="opacity: 60%"{{/unless}}>
+      <li class="item flexrow" data-item-id="{{action._id}}" data-item-type="{{action.type}}" draggable="true"  {{#if action.properties.temporary}}{{#unless action.properties.enabled}}style="opacity: 60%"{{/unless}} {{/if}}>
         <div class="item-name flexrow">
+          <div class="item-image" style="background-image: url('{{getEmbeddedItemImg @root.actor source}}')"></div>
+          <h4>{{getEmbeddedItemName @root.actor source}}</h4>
           <div class="item-image" style="background-image: url('{{action.img}}')"></div>
           <h4><a class="item-control item-edit">{{action.label}}</a></h4>
         </div>
         <div class="item-controls-2">
           {{#if action.properties.activable}}
-            <a class="item-control item-activate" title="Activer">
-              {{#if action.properties.enabled}}
-                <i class="fa-solid green fa-check toggle-action" style="font-size:16px" data-action="unactivate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
-              {{else}}
-                <i class="fa-solid gray fa-check toggle-action" style="font-size:16px" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
-              {{/if}}
-            </a>
+            {{#if action.properties.temporary}}
+              <a class="item-control item-activate" >
+                {{#if action.properties.enabled}}
+                  <i class="fa-solid green fa-check toggle-action" style="font-size:16px" title="Désactiver" data-action="unactivate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                {{else}}
+                  <i class="fa-solid gray fa-check toggle-action" style="font-size:16px" title="Activer" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                {{/if}}
+              </a>
+            {{else}}
+                <a class="item-control">
+                  <i class="fa-solid green fa-sword toggle-action" style="font-size:16px" title="Utiliser" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                </a>                  
+            {{/if}}
           {{/if}}
         </div>
       </li>

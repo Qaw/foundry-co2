@@ -115,8 +115,10 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
         event.preventDefault();
         const li = $(event.currentTarget).closest(".item");
         const id = li.data("itemId");
-        let document = this.actor.items.get(id);
-        return document.sheet.render(true);
+        if (!foundry.utils.isEmpty(id) && id !== "") {
+            let document = this.actor.items.get(id);
+            return document.sheet.render(true);
+        }
     }
 
     /**

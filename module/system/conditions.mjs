@@ -15,7 +15,6 @@ export class Condition {
     }
 
     evaluate(item) {
-        // return true;
         if (this.subject == "item" && this.predicate == "equipped" && this.object == "_self") {
             if (item.type === ITEM_TYPE.EQUIPMENT) return item.system.equipped;
             if (item.type === ITEM_TYPE.CAPACITY) return item.system.learned;
