@@ -290,7 +290,31 @@
                                     }
                                 }
                                 .details {
-                                    .capacity-list{
+                                    .list-3col{
+                                        display: grid;
+                                        grid-template-columns: 1fr 8fr 2fr;
+                                        grid-gap: 1px;
+                                        grid-auto-columns: minmax(15px, auto);
+                                        .cell {
+                                            &.center {
+                                                justify-self: center;
+                                                align-self: center;
+                                            }
+                                            &.left {
+                                                justify-self: start;
+                                                align-self: center;
+                                            }
+                                            &.right {
+                                                justify-self: end;
+                                                align-self: center;
+                                            }
+                                            .header {
+                                                color: @colorOlive;
+                                                font-weight: bold;
+                                            }
+                                        }
+                                    }
+                                    .list-4col{
                                         display: grid;
                                         grid-template-columns: 1fr 1fr 8fr 2fr;
                                         grid-gap: 1px;

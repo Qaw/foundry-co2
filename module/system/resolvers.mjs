@@ -14,6 +14,14 @@ export class Resolver {
         this.dmg = dmg;
     }
 
+    get resolvers() {
+        return {
+            "melee" : function(){},
+            "ranged" : function(){},
+            "heal" : function(){},
+            "modifier" : function(){},
+        }
+    }
     resolve(actor, item) {
         if (this.type === "melee") {
             this.melee(actor, item);

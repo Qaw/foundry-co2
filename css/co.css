@@ -2134,30 +2134,57 @@ Copied from dnd5e
   height: 100%;
   min-height: 400px;
 }
-.co.sheet.item .window-content form.editable .main .content .sheet-body .details .capacity-list,
-.co.sheet.item .window-content form.locked .main .content .sheet-body .details .capacity-list {
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .list-3col,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .list-3col {
+  display: grid;
+  grid-template-columns: 1fr 8fr 2fr;
+  grid-gap: 1px;
+  grid-auto-columns: minmax(15px, auto);
+}
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .list-3col .cell.center,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .list-3col .cell.center {
+  justify-self: center;
+  align-self: center;
+}
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .list-3col .cell.left,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .list-3col .cell.left {
+  justify-self: start;
+  align-self: center;
+}
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .list-3col .cell.right,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .list-3col .cell.right {
+  justify-self: end;
+  align-self: center;
+}
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .list-3col .cell .header,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .list-3col .cell .header {
+  color: #4b4a44;
+  font-weight: bold;
+}
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .list-4col,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .list-4col {
   display: grid;
   grid-template-columns: 1fr 1fr 8fr 2fr;
   grid-gap: 1px;
   grid-auto-columns: minmax(15px, auto);
 }
-.co.sheet.item .window-content form.editable .main .content .sheet-body .details .capacity-list .cell.center,
-.co.sheet.item .window-content form.locked .main .content .sheet-body .details .capacity-list .cell.center {
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .list-4col .cell.center,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .list-4col .cell.center {
   justify-self: center;
   align-self: center;
 }
-.co.sheet.item .window-content form.editable .main .content .sheet-body .details .capacity-list .cell.left,
-.co.sheet.item .window-content form.locked .main .content .sheet-body .details .capacity-list .cell.left {
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .list-4col .cell.left,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .list-4col .cell.left {
   justify-self: start;
   align-self: center;
 }
-.co.sheet.item .window-content form.editable .main .content .sheet-body .details .capacity-list .cell.right,
-.co.sheet.item .window-content form.locked .main .content .sheet-body .details .capacity-list .cell.right {
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .list-4col .cell.right,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .list-4col .cell.right {
   justify-self: end;
   align-self: center;
 }
-.co.sheet.item .window-content form.editable .main .content .sheet-body .details .capacity-list .cell .header,
-.co.sheet.item .window-content form.locked .main .content .sheet-body .details .capacity-list .cell .header {
+.co.sheet.item .window-content form.editable .main .content .sheet-body .details .list-4col .cell .header,
+.co.sheet.item .window-content form.locked .main .content .sheet-body .details .list-4col .cell .header {
   color: #4b4a44;
   font-weight: bold;
 }

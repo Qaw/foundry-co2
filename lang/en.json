@@ -65,7 +65,13 @@
         "type" : "Type",
         "subtype" : "Sous-type",
         "category" : "Catégorie",
-        "martialCategory" : "Catégorie martiale"
+        "family" : "Famille (de profil)",
+        "source" : "Source",
+        "spellcasting" : "Modificateur pour Attaque Magique",
+        "mpFormula": "Formule de calcul pour les Points de Magie",
+        "martialCategory" : "Catégorie martiale",
+        "martialTraining" : "Formation martiale",
+        "martialTrainings" : "Formations martiales"
       },
       "short": {
         "label" : "Label",
@@ -99,12 +105,20 @@
         "subtype" : "Ss-tpe",
         "category" : "Cat.",
         "quantity" : "Qté",
-        "martialCategory" : "Cat. martiale"
+        "family" : "Fam.",
+        "source" : "Src.",
+        "mpFormula": "Formule PM",
+        "spellcasting" : "Mod. pour ATM",
+        "martialCategory" : "Cat. martiale",
+        "martialTraining" : "Form. martiale",
+        "martialTrainings" : "Form. martiales"
+
       }
     },
     "ui": {
       "none": "--",
       "id" : "ID",
+      "key" : "Clé",
       "submit": "OK",
       "cancel": "Annuler",
       "add" : "Ajouter",
@@ -150,12 +164,14 @@
       "difficulty" : "Difficulté",
       "dmg" : "Dommages",
       "saves" : "Sauvegarde",
-      "target" : "Cible(s)",
+      "targets" : "Cible(s)",
+      "target" : "Cible",
       "width" : "Largeur",
       "range" : "Portée",
       "consumes" : "Consomme",
       "perUsage" : "Par utilisation",
       "learned" : "Appris",
+      "equipped": "Équipé",
       "biography" : "Biographie",
       "appearance" : "Apparence",
       "size" : "Taille",
@@ -180,7 +196,6 @@
       "tailored": "Sur-mesure",
       "2H": "Deux mains",
       "reloadable": "Rechargeable",
-      "equipped": "Équipé",
       "spell": "Sort",
       "chargeable": "Chargeable",
       "enabled": "Activé(e)",
@@ -236,7 +251,7 @@
         "secondary": "Sec.",
         "tertiary": "Ter."
       },
-      "mpFormula": "Formule des points de magie"
+      "mpFormula": "Points de Magie (formule)"
     },
     "tabs": {
       "bio": "Biographie",
@@ -247,7 +262,8 @@
       "description": "Description",
       "details": "Détails",
       "modifiers": "Modificateurs",
-      "effects": "Effets"
+      "effects": "Effets",
+      "features": "Features"
     },
     "dialogs": {
       "skillCheck": "Test de compétence"
@@ -301,6 +317,12 @@
         "magical": "Arme magique"
       }
     },
+    "feature" : {
+      "subtypes": {
+        "race": "Race",
+        "trait": "Trait"
+      }
+    },
     "path" : {
       "subtypes" : {
         "profile" : "Voie de profil",
@@ -331,6 +353,7 @@
     },
     "actions" : {
       "equip" : "Équiper",
+      "unequip": "Déséquiper",
       "consume" : "Consommer"
     },
     "actionType" : {

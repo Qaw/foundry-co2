@@ -336,8 +336,8 @@
       "martialTrainingsWeapons": [],
       "martialTrainingsArmors": [],
       "martialTrainingsShields": [],
-      "spellcasting": null,
-      "mpFormula": null
+      "spellcasting": "int",
+      "mpFormula": "@lvl + @sc"
     },
     "capacity": {
       "templates": ["common"],

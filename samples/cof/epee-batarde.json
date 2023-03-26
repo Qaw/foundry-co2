@@ -77,7 +77,7 @@
         }
       },
       {
-        "type" :  "attack",
+        "type" :  "melee",
         "label" : "Frapper avec le plat de la lame (1H)",
         "activable" : "true",
         "melee" : {
@@ -88,7 +88,7 @@
         }
       },
       {
-        "type" :  "attack",
+        "type" :  "melee",
         "label" : "Frapper avec le plat de la lame (2H)",
         "activable" : "true",
         "melee" : {

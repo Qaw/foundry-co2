@@ -41,6 +41,14 @@ CO.modifier = {
   },
 };
 
+CO.spellcasting = {
+  modifiers: {
+    int: "CO.abilities.long.int",
+    wis: "CO.abilities.long.wis",
+    cha: "CO.abilities.long.cha"
+  }
+}
+
 CO.equipment = {
   subtypes: {
     ARMOR : "CO.equipment.subtypes.armor",
@@ -78,6 +86,13 @@ CO.path = {
     FEATURE: "CO.path.subtypes.feature",
     CREATURE: "CO.path.subtypes.creature",
     PRESTIGE: "CO.path.subtypes.prestige"
+  }
+}
+
+CO.feature = {
+  subtypes: {
+    RACE: "CO.feature.subtypes.race",
+    TRAIT: "CO.feature.subtypes.trait"
   }
 }
 

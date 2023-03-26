@@ -65,7 +65,13 @@
         "type" : "Type",
         "subtype" : "Sous-type",
         "category" : "Catégorie",
-        "martialCategory" : "Catégorie martiale"
+        "family" : "Famille (de profil)",
+        "source" : "Source",
+        "spellcasting" : "Modificateur pour Attaque Magique",
+        "mpFormula": "Formule de calcul pour les Points de Magie",
+        "martialCategory" : "Catégorie martiale",
+        "martialTraining" : "Formation martiale",
+        "martialTrainings" : "Formations martiales"
       },
       "short": {
         "label" : "Label",
@@ -99,12 +105,20 @@
         "subtype" : "Ss-tpe",
         "category" : "Cat.",
         "quantity" : "Qté",
-        "martialCategory" : "Cat. martiale"
+        "family" : "Fam.",
+        "source" : "Src.",
+        "mpFormula": "Formule PM",
+        "spellcasting" : "Mod. pour ATM",
+        "martialCategory" : "Cat. martiale",
+        "martialTraining" : "Form. martiale",
+        "martialTrainings" : "Form. martiales"
+
       }
     },
     "ui": {
       "none": "--",
       "id" : "ID",
+      "key" : "Clé",
       "submit": "OK",
       "cancel": "Annuler",
       "add" : "Ajouter",
@@ -150,7 +164,8 @@
       "difficulty" : "Difficulté",
       "dmg" : "Dommages",
       "saves" : "Sauvegarde",
-      "target" : "Cible(s)",
+      "targets" : "Cible(s)",
+      "target" : "Cible",
       "width" : "Largeur",
       "range" : "Portée",
       "consumes" : "Consomme",
@@ -236,7 +251,7 @@
         "secondary": "Sec.",
         "tertiary": "Ter."
       },
-      "mpFormula": "Formule des points de magie"
+      "mpFormula": "Points de Magie (formule)"
     },
     "tabs": {
       "bio": "Biographie",
@@ -302,6 +317,12 @@
         "magical": "Arme magique"
       }
     },
+    "feature" : {
+      "subtypes": {
+        "race": "Race",
+        "trait": "Trait"
+      }
+    },
     "path" : {
       "subtypes" : {
         "profile" : "Voie de profil",
@@ -348,6 +369,8 @@
   },
   "SETTINGS": {
     "BaseDef": "Valeur de défense de base",
-    "BaseDefHint": "Valeur de la base de la défense"
+    "BaseDefHint": "Valeur de la base de la défense",
+    "DebugMode": "Mode Debug",
+    "DebugModeHint": "Affiche certaines valeurs techniques. Utile pour les développeurs exclusivement."
   }
 }

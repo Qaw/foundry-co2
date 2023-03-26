@@ -21,58 +21,27 @@ export class CoItem extends Item {
    */
   get hasModifiers() {
     if (![ITEM_TYPE.EQUIPMENT, ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined;
-
-    let hasModifiers = false;
-    // For Equipement or Capacity Item, the modifiers are in the actions
-    if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(this.type)) {
-      this.actions.forEach((action) => {
-        // Array
-        if (action.modifiers?.length > 0) hasModifiers = true;
-        // Object
-        if (action.modifiers !== null) hasModifiers = true;
-      });
-    }
-
-    // For Feature or Profile, the modifiers are in the item
-    if ([ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE].includes(this.type)) {
-      // Array
-      if (this.system.modifiers instanceof Array) {
-        if (this.system.modifiers.length > 0) return true;
-        return false;
-      }
-      // Object
-      if (this.system.modifiers !== null) return true;
-    }
-
-    return hasModifiers;
+    return this.modifiers.length > 0;
   }
 
   /**
    * Return an array of Modifiers
    */
   get modifiers() {
-    if (!this.hasModifiers) return [];
-
-    let modifiers = [];
-
     // For Equipement or Capacity Item, the modifiers are in the actions
     if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(this.type)) {
-      this.actions.forEach((action) => {
-        if (action.modifiers) {
-          if (action.modifiers instanceof Array) modifiers.push(...action.modifiers);
-          else modifiers.push(...Object.values(action.modifiers));
-        }
-      });
+      return this.getModifiersFromActions(false);
     }
-
     // For Feature or Profile, the modifiers are in the item
     if ([ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE].includes(this.type)) {
-      this.modifiers.forEach((modifier) => {
-        modifiers.push(modifier);
-      });
+      return (this.system.modifiers instanceof Array) ? this.system.modifiers : Object.values(this.system.modifiers);
     }
+    else return []
+  }
 
-    return modifiers;
+  getModifiersFromActions(filterEnabled = false) {
+    const actions = (filterEnabled) ? this.actions.filter((action) => action.properties.enabled) : this.actions;
+    return actions.map((action) => (action.modifiers) ? (action.modifiers instanceof Array) ? action.modifiers : Object.values(action.modifiers) : []);
   }
 
   /**
@@ -80,30 +49,9 @@ export class CoItem extends Item {
    * If the item has actions, only enabled actions are taken into account
    */
   get enabledModifiers() {
-    if (!this.hasModifiers) return [];
-
-    let modifiers = [];
-
     // For Equipement or Capacity Item, the modifiers are in the actions
-    if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(this.type)) {
-      this.actions
-        .filter((action) => action.properties.enabled)
-        .forEach((action) => {
-          if (action.modifiers) {
-            if (action.modifiers instanceof Array) modifiers.push(...action.modifiers);
-            else modifiers.push(...Object.values(action.modifiers));
-          }
-        });
-    }
-
-    // For Feature or Profile, the modifiers are in the item
-    if ([ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE].includes(this.type)) {
-      this.modifiers.forEach((modifier) => {
-        modifiers.push(modifier);
-      });
-    }
-
-    return modifiers;
+    if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(this.type)) return this.getModifiersFromActions(true);
+    else return this.modifiers;
   }
 
   get tags() {
@@ -131,8 +79,16 @@ export class CoItem extends Item {
   /**
    * @returns Basic info for a capacity : uuid, name, img, description
    */
-  get infosCapacity() {
-    if (this.type == ITEM_TYPE.CAPACITY) {
+  get infos() {
+    if (this.type === ITEM_TYPE.CAPACITY) {
+      return {
+        uuid: this.uuid,
+        name: this.name,
+        img: this.img,
+        description: this.system.description.value,
+      };
+    }
+    if (this.type === ITEM_TYPE.PATH) {
       return {
         uuid: this.uuid,
         name: this.name,
@@ -172,7 +128,7 @@ export class CoItem extends Item {
     if (![ITEM_TYPE.EQUIPMENT, ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined;
     if (!this.hasModifiers) return 0;
     return this.modifiers
-      .filter((m) => m.type == type && m.subtype == subtype && m.target == target)
+      .filter((m) => m.type === type && m.subtype === subtype && m.target === target)
       .map((i) => i.modifier)
       .reduce((acc, curr) => acc + curr, 0);
   }
@@ -186,7 +142,7 @@ export class CoItem extends Item {
   getModifiersByTypeAndSubtype(type, subtype) {
     if (![ITEM_TYPE.EQUIPMENT, ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined;
     if (!this.hasModifiers) return 0;
-    return this.modifiers.filter((m) => m.type == type && m.subtype == subtype);
+    return this.modifiers.filter((m) => m.type === type && m.subtype === subtype);
   }
 
   /**
@@ -194,11 +150,25 @@ export class CoItem extends Item {
    * @param {*} uuid
    */
   addCapacity(uuid) {
-    if (this.type == ITEM_TYPE.PATH || this.type == ITEM_TYPE.FEATURE) {
+    if (this.type === ITEM_TYPE.PATH || this.type === ITEM_TYPE.FEATURE) {
       let newCapacities = foundry.utils.duplicate(this.system.capacities);
       newCapacities.push(uuid);
-      this.update({ "system.capacities": newCapacities });
+      return this.update({ "system.capacities": newCapacities });
     }
+    return false
+  }
+
+  /**
+   * Add a path to an item of type Path or Feature
+   * @param {*} uuid
+   */
+  addPath(uuid) {
+    if (this.type === ITEM_TYPE.FEATURE || this.type === ITEM_TYPE.PROFILE) {
+      let newPaths = foundry.utils.duplicate(this.system.paths);
+      newPaths.push(uuid);
+      return this.update({ "system.paths": newPaths });
+    }
+    return false
   }
 
   /**

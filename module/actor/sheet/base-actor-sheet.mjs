@@ -6,6 +6,7 @@ export default class CoBaseActorSheet extends ActorSheet {
   getData(options) {
     const context = super.getData(options);
     context.config = game.co.config;
+    context.debugMode = game.settings.get("co", "debugMode");
     // context.logoPath = this._getPathRoot() + this._getLogoPath();
     return context;
   }

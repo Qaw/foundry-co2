@@ -71,9 +71,9 @@ export class Modifier {
    * @returns 
    */
   getTooltip(actor) {
+    console.log(this.source);
     let name = actor.items.get(this.source).name;
     let value = this.evaluate(actor);
-
     return Utils.getTooltip(name, value);
   }
 }
