@@ -40,14 +40,3 @@ Résolution de la Bénédiction
     => Message de chat qui décrit l'action et les cibles sélectionnées et la durée
 
 
-
-========================================================================================================================================================================
-Résolution de la Bénédiction
-========================================================================================================================================================================
-
-0/ Click sur le bouton d'action (fait par PJ)
----------------------------------------------
-
-1/ Résultats de la résolution de l'action (récupération des cibles éventuellement sélectionnées)
-------------------------------------------------------------------------------------------------
-    => Message de chat qui décrit l'action et les cibles sélectionnées et la durée

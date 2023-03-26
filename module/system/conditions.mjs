@@ -1,30 +1,50 @@
 import { ITEM_TYPE } from "./constants.mjs";
-
+/**
+ * The Condition class represents a conditional check that can be evaluated for a given item.
+ */
 export class Condition {
+  /**
+   * Constructs a new Condition instance.
+   * @param {string} subject - The subject of the condition.
+   * @param {string} predicate - The predicate or method to evaluate the condition.
+   * @param {string} object - The object of the condition, or '_self' to refer to the item being evaluated.
+   */
+  constructor(subject, predicate, object) {
+    this.subject = subject;
+    this.predicate = predicate;
+    this.object = object;
+  }
 
-    /**
-     * 
-     * @param {*} subject 
-     * @param {*} predicate 
-     * @param {*} object 
-     */
+  /**
+   * Returns an object containing the available condition methods.
+   * @returns {object} An object containing condition methods.
+   */
+  get conditions() {
+    return {
+      isEquiped: (condition, object, item) => (item.type === ITEM_TYPE.EQUIPMENT ? item.system.equipped : false),
+      isOwned: (condition, object, item) => {
+        // Implement the isOwned condition
+      },
+      isLearned: (condition, object, item) => (item.type === ITEM_TYPE.CAPACITY ? item.system.learned : false),
+      isTagged: (condition, object, item) => {
+        // Implement the isTagged condition
+      },
+    };
+  }
 
-    constructor(subject, predicate, object) {
-        this.subject = subject;
-        this.predicate = predicate;
-        this.object = object;
+  /**
+   * Evaluates the condition for a given item.
+   * @param {object} item - The item to evaluate the condition for.
+   * @returns {boolean} The result of the condition evaluation.
+   * @throws {Error} If the specified predicate is not a valid condition method.
+   */
+  evaluate(item) {
+    const obj = this.object === "_self" ? item : fromUuid(item);
+
+    if (!Object.prototype.hasOwnProperty.call(this.conditions, this.predicate)) {
+      throw new Error(`Invalid predicate: ${this.predicate}`);
     }
 
-    get conditions() {
-        return {
-            "isEquiped" : function(condition, object, item) { return (item.type === ITEM_TYPE.EQUIPMENT) ? item.system.equipped : false },
-            "isOwned" : function(condition, object, item) {},
-            "isLearned" : function(condition, object, item) { return (item.type === ITEM_TYPE.CAPACITY) ? item.system.learned : false },
-            "isTagged" : function(condition, object, item) {}
-        }
-    }
-    evaluate(item) {
-        const obj = (this.object === "_self") ? item : fromUuid(item);
-        return (Object.keys(this.conditions).includes(this.predicate)) ? this.conditions[this.predicate](this, obj, item) : false;
-    }
+    return this.conditions[this.predicate](this, obj, item);
+  }
 }

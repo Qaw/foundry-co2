@@ -343,7 +343,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
         const rowId = li.data("itemId");
         let newActions = foundry.utils.deepClone(this.item.actions);
         if (!newActions[rowId].modifiers) newActions[rowId].modifiers = [];
-        newActions[rowId].modifiers.push(new Modifier(this.item.uuid));
+        newActions[rowId].modifiers.push(new Modifier(this.item.uuid, this.item.type));
         return this.item.update({"system.actions": newActions});
     }
 
@@ -363,33 +363,40 @@ export default class CoItemSheet extends CoBaseItemSheet {
     }
 
     /**
-     *
-     * @param {*} event
-     * @returns
+     * Adds a new Modifier to the item and updates the item with the new modifier list.
+     * Only for the item of type Feature or Profile
+     * @param {Event} event - The event object triggered by the user action.
+     * @returns {Promise} A promise that resolves when the item is successfully updated.
      */
     _onAddModifier(event) {
         event.preventDefault();
-        const li = $(event.currentTarget).closest(".modifier");
-        // const rowId = li.data("itemId");
-        let newModifiers = foundry.utils.deepClone(this.item.modifiers);
-        if (!newModifiers) newModifiers = [];
-        newModifiers.push(new Modifier(this.item.uuid));
-        return this.item.update({"system.modifiers": newModifiers});
+
+        const currentModifiers = this.item.modifiers || [];
+        const newModifiers = foundry.utils.deepClone(currentModifiers);
+
+        newModifiers.push(new Modifier(this.item.uuid, this.item.type));
+
+        return this.item.update({ "system.modifiers": newModifiers });
     }
 
     /**
-     *
-     * @param {*} event
-     * @returns
+     * Delete a Modifier from the item
+     * Only for the item of type Feature or Profile
+     * @param {Event} event - The event object triggered by the user action.
+     * @returns {Promise} A promise that resolves when the item is successfully updated.
      */
     _onDeleteModifier(event) {
         event.preventDefault();
+
         const li = $(event.currentTarget).closest(".modifier");
-        const condId = li.data("itemId");
-        const actionId = li.data("actionId");
-        let newActions = foundry.utils.deepClone(this.item.actions);
-        newActions[actionId].modifiers.splice(condId, 1);
-        return this.item.update({"system.actions": newActions});
+        const rowId = li.data("itemId");
+
+        const currentModifiers = this.item.modifiers || [];
+        const newModifiers = foundry.utils.deepClone(currentModifiers);
+
+        newModifiers.splice(rowId, 1);
+
+        return this.item.update({"system.modifiers": newModifiers});
     }
 
     /**

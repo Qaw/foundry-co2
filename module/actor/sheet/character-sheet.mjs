@@ -1,7 +1,8 @@
-import {ITEM_TYPE, OPEN_TYPE} from "../../system/constants.mjs";
+import {ITEM_TYPE} from "../../system/constants.mjs";
 import CoBaseActorSheet from "./base-actor-sheet.mjs";
 import {Action} from "../../system/actions.mjs";
 import {Log} from "../../utils/log.mjs";
+import { Modifier } from "../../system/modifiers.mjs";
 
 export default class CoCharacterSheet extends CoBaseActorSheet {
     /** @override */
@@ -254,10 +255,54 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
         }
     }
 
-    _onDropFeatureItem(item) {
+    async _onDropFeatureItem(item) {
         let itemData = item.toObject();
         itemData = itemData instanceof Array ? itemData : [itemData];
-        return this.actor.createEmbeddedDocuments("Item", itemData);
+        const newFeature =  await this.actor.createEmbeddedDocuments("Item", itemData);
+        Log.info('Drop feature created : ', newFeature);
+
+        // Update the source of all modifiers with the id of the new embedded feature created
+        let newModifiers = Object.values(foundry.utils.deepClone(newFeature[0].system.modifiers)).map(m => new Modifier(m.source, m.type, m.subtype, m.target, m.value));
+        newModifiers.forEach(modifier => {
+            modifier.updateSource(newFeature[0].id);
+        });
+
+        const updateModifiers = {"_id": newFeature[0].id, "system.modifiers": newModifiers};
+
+        await this.actor.updateEmbeddedDocuments("Item", [updateModifiers]);
+
+        let updatedCapacitiesIds = [];
+   
+        for (const capacity of item.system.capacities) {
+         let capa = await fromUuid(capacity);
+   
+         // item is null if the item has been deleted in the compendium or in the world
+         // TODO Add a warning message and think about a global rollback
+         if (capa != null) {      
+           let capaData = capa.toObject();
+
+           // Create the embedded capacity
+           const newCapa = await this.actor.createEmbeddedDocuments("Item", [capaData]);
+         
+           updatedCapacitiesIds.push(newCapa[0].id);
+           
+           // Update the source of all actions if there are any
+           if (!foundry.utils.isEmpty(newCapa[0].system.actions)) {
+                let newActions = Object.values(foundry.utils.deepClone(newCapa[0].system.actions)).map(m => new Action(m.source, m.indice, m.type, m.img, m.label, m.chatFlavor, m.properties.visible, m.properties.activable, m.properties.enabled, m.properties.temporary, m.conditions, m.modifiers, m.resolvers)); 
+                newActions.forEach(action => {
+                    action.updateSource(newCapa[0].id);
+                });
+        
+                const updateActions = {"_id" : newCapa[0].id, "system.actions": newActions};
+        
+                await this.actor.updateEmbeddedDocuments("Item", [updateActions]);
+           }
+         }
+       }
+
+        // Update the capacities of the feature with id of created feature
+        const updateData = {"_id" : newFeature[0].id, "system.capacities": updatedCapacitiesIds};
+        await this.actor.updateEmbeddedDocuments("Item", [updateData]); 
     }
 
     _onDropProfileItem(item) {

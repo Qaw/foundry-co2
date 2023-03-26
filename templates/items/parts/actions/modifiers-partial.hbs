@@ -9,7 +9,7 @@
     </div>
     {{#each action.modifiers as |m id|}}
         <div class="modifier flexrow" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="modifier">
-            <input name="system.actions.{{../idx}}.modifiers.{{id}}.subtype" type="hidden" value="{{m.type}}" data-dtype="String" />
+            <input name="system.actions.{{../idx}}.modifiers.{{id}}.type" type="hidden" value="{{m.type}}" data-dtype="String" />
             <input name="system.actions.{{../idx}}.modifiers.{{id}}.source" type="hidden" value="{{m.source}}" data-dtype="String" />
             <div class="form-fields flex1">
                 <select name="system.actions.{{../idx}}.modifiers.{{id}}.subtype" data-type="String" style="width:100%">

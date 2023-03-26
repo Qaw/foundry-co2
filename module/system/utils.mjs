@@ -20,7 +20,7 @@ export class Utils {
    * @returns {String} Chaine vide ou "Nom : valeur "
    */
   static getTooltip(name, value) {
-    if (name !== "" && value > 0) {
+    if (name !== "" && value !== 0) {
       return name + " : " + value + " ";
     }
     return "";

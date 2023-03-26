@@ -39,10 +39,25 @@ export class CoItem extends Item {
     else return []
   }
 
+  /**
+ * Returns an array of modifiers from the actions, with an optional filter for enabled actions.
+ *
+ * @param {boolean} [filterEnabled=false] - If true, only enabled actions will be considered.
+ * @returns {Array} An array of modifiers from the actions.
+ */
   getModifiersFromActions(filterEnabled = false) {
-    const actions = (filterEnabled) ? this.actions.filter((action) => action.properties.enabled) : this.actions;
-    return actions.map((action) => (action.modifiers) ? (action.modifiers instanceof Array) ? action.modifiers : Object.values(action.modifiers) : []);
+    const filteredActions = filterEnabled ? this.actions.filter(action => action.properties.enabled) : this.actions;
+  
+    // Use `flatMap` to create a new array containing the modifiers from each action.
+    // This will also flatten the resulting array of modifiers in a single step.
+    return filteredActions.flatMap(action => {
+      // Destructure the `modifiers` property from the action object
+      const { modifiers } = action;
+      if (!modifiers) return [];
+      return Array.isArray(modifiers) ? modifiers : Object.values(modifiers);
+    });
   }
+  
 
   /**
    * Return an array of enabled Modifiers

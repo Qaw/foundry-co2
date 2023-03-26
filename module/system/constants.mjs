@@ -94,7 +94,3 @@ export const ACTOR_TYPE = {
     MARKER: "marker"
 };
 
-export const OPEN_TYPE = {
-    SOURCE: "source",
-    EMBEDDED_ID: "embeddedId"
-};

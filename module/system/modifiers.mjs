@@ -49,7 +49,7 @@ export class Modifier {
    * @param {*} target    MODIFIER_TARGET
    * @param {*} value     +/- X or custom like 2*@rank
    */
-  constructor(source = null, type = MODIFIER_TYPE.CAPACITY, subtype = MODIFIER_SUBTYPE.ABILITY, target = MODIFIER_TARGET.STR, value = null) {
+  constructor(source = null, type, subtype, target, value = null) {
     this.source = source;
     this.type = type;
     this.subtype = subtype;
@@ -71,9 +71,18 @@ export class Modifier {
    * @returns 
    */
   getTooltip(actor) {
-    console.log(this.source);
-    let name = actor.items.get(this.source).name;
+    let item = actor.items.get(this.source);
+    if (!item) return;
+    let name = item.name;
     let value = this.evaluate(actor);
     return Utils.getTooltip(name, value);
+  }
+
+  /**
+   * Update the source of the modifier
+   * @param {*} source 
+   */
+  updateSource(source) {
+      this.source = source;
   }
 }
