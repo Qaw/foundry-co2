@@ -39,9 +39,17 @@ export default class CoItemSheet extends CoBaseItemSheet {
         if (this.item.type === ITEM_TYPE.PATH || this.item.type === ITEM_TYPE.FEATURE) {
             let infosCapacities = [];
             for (const capacity of this.item.system.capacities) {
-                const item = await fromUuid(capacity);
-
-                // item is null if the item has been deleted in the compendium
+                let item = null;
+                // Embedded item on actor
+                if (this.item.isEmbedded) {
+                    const actor = this.item.parent;
+                    item = actor.items.get(capacity);
+                }
+                // World or compendium item
+                else {
+                    item = await fromUuid(capacity);
+                }
+                // item could be null if the item has been deleted in the compendium
                 if (item != null) {
                     infosCapacities.push(item.infos);
                 }
@@ -52,7 +60,16 @@ export default class CoItemSheet extends CoBaseItemSheet {
         if (this.item.type === ITEM_TYPE.FEATURE || this.item.type === ITEM_TYPE.PROFILE) {
             let infosPaths = [];
             for (const path of this.item.system.paths) {
-                const item = await fromUuid(path);
+                let item = null;
+                // Embedded item on actor
+                if (this.item.isEmbedded) {
+                    const actor = this.item.parent;
+                    item = actor.items.get(path);
+                }
+                // World or compendium item
+                else {
+                    item = await fromUuid(path);
+                }
                 // item is null if the item has been deleted in the compendium
                 if (item != null) {
                     infosPaths.push(item.infos);

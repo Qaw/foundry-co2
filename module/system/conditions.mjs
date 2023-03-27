@@ -21,7 +21,7 @@ export class Condition {
    */
   get conditions() {
     return {
-      isEquiped: (condition, object, item) => (item.type === ITEM_TYPE.EQUIPMENT ? item.system.equipped : false),
+      isEquipped: (condition, object, item) => (item.type === ITEM_TYPE.EQUIPMENT ? item.system.equipped : false),
       isOwned: (condition, object, item) => {
         // Implement the isOwned condition
       },
@@ -42,7 +42,7 @@ export class Condition {
     const obj = this.object === "_self" ? item : fromUuid(item);
 
     if (!Object.prototype.hasOwnProperty.call(this.conditions, this.predicate)) {
-      throw new Error(`Invalid predicate: ${this.predicate}`);
+      throw new Error(`Invalid predicate ${this.predicate} for item ${obj.name} with Id ${obj.id}`);
     }
 
     return this.conditions[this.predicate](this, obj, item);

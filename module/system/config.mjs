@@ -47,7 +47,7 @@ CO.spellcasting = {
     wis: "CO.abilities.long.wis",
     cha: "CO.abilities.long.cha"
   }
-}
+};
 
 CO.equipment = {
   subtypes: {
@@ -79,7 +79,8 @@ CO.action = {
     heal : "CO.actionType.heal",
     protection : "CO.actionType.protection"
   }
-}
+};
+
 CO.path = {
   subtypes: {
     PROFILE: "CO.path.subtypes.profile",
@@ -87,14 +88,14 @@ CO.path = {
     CREATURE: "CO.path.subtypes.creature",
     PRESTIGE: "CO.path.subtypes.prestige"
   }
-}
+};
 
 CO.feature = {
   subtypes: {
     RACE: "CO.feature.subtypes.race",
     TRAIT: "CO.feature.subtypes.trait"
   }
-}
+};
 
 CO.size = {
   tiny: "CO.size.tiny",
@@ -102,7 +103,7 @@ CO.size = {
   medium: "CO.size.medium",
   large: "CO.size.large",
   huge: "CO.size.huge"
-}
+};
 
 CO.profile = {
   family: {

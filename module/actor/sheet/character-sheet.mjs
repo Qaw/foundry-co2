@@ -1,385 +1,275 @@
-import {ITEM_TYPE} from "../../system/constants.mjs";
+import { ITEM_TYPE } from "../../system/constants.mjs";
 import CoBaseActorSheet from "./base-actor-sheet.mjs";
-import {Action} from "../../system/actions.mjs";
-import {Log} from "../../utils/log.mjs";
-import { Modifier } from "../../system/modifiers.mjs";
+import { Action } from "../../system/actions.mjs";
+import { Log } from "../../utils/log.mjs";
 
 export default class CoCharacterSheet extends CoBaseActorSheet {
-    /** @override */
-    static get defaultOptions() {
-        return foundry.utils.mergeObject(super.defaultOptions, {
-            height: 600,
-            width: 800,
-            template: "systems/co/templates/actors/character-sheet.hbs",
-            classes: ["co", "sheet", "actor", "character"],
-            tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "stats"}]
-        });
-    }
+  /** @override */
+  static get defaultOptions() {
+    return foundry.utils.mergeObject(super.defaultOptions, {
+      height: 600,
+      width: 800,
+      template: "systems/co/templates/actors/character-sheet.hbs",
+      classes: ["co", "sheet", "actor", "character"],
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "stats" }],
+    });
+  }
 
-    /** @override */
-    getData(options) {
-        const context = super.getData(options);
-        context.system = this.actor.system;
-        context.abilities = this.actor.system.abilities;
-        context.combat = this.actor.system.combat;
-        context.attributes = this.actor.system.attributes;
-        context.resources = this.actor.system.resources;
-        context.details = this.actor.system.details;
-        context.paths = this.actor.paths;
-        context.pathGroups = this.actor.pathGroups;
-        context.profile = this.actor.profile;
-        context.capacities = this.actor.capacities;
-        context.enabledCapacities = this.actor.enabledCapacities;
-        context.features = this.actor.features;
-        context.actions = this.actor.actions;
-        context.visibleActions = this.actor.visibleActions;
-        // context.weapons = this.actor.weapons;
-        // context.armors = this.actor.armors;
-        // context.shields = this.actor.shields;
-        context.inventory = this.actor.inventory;
-        return context;
-    }
+  /** @override */
+  getData(options) {
+    const context = super.getData(options);
+    context.system = this.actor.system;
+    context.abilities = this.actor.system.abilities;
+    context.combat = this.actor.system.combat;
+    context.attributes = this.actor.system.attributes;
+    context.resources = this.actor.system.resources;
+    context.details = this.actor.system.details;
+    context.paths = this.actor.paths;
+    context.pathGroups = this.actor.pathGroups;
+    context.profile = this.actor.profile;
+    context.capacities = this.actor.capacities;
+    context.enabledCapacities = this.actor.enabledCapacities;
+    context.features = this.actor.features;
+    context.actions = this.actor.actions;
+    context.visibleActions = this.actor.visibleActions;
+    // context.weapons = this.actor.weapons;
+    // context.armors = this.actor.armors;
+    // context.shields = this.actor.shields;
+    context.inventory = this.actor.inventory;
+    return context;
+  }
 
-    /** @override */
-    activateListeners(html) {
-        super.activateListeners(html);
-        html.find(".section-toggle").click(this._onSectionToggle.bind(this));
-        html.find(".item-edit").click(this._onEditItem.bind(this));
-        html.find(".item-delete").click(this._onDeleteItem.bind(this));
-        html.find(".path-delete").click(this._onDeletePath.bind(this));
-        html.find(".rollable").click(this._onRoll.bind(this));
-        html.find(".toggle-action").click(this._onUseAction.bind(this));
-        html.find(".capacity-learn").click(this._onLearnedToggle.bind(this));        
-        html.find(".inventory-equip").click(this._onEquippedToggle.bind(this));
+  /** @override */
+  activateListeners(html) {
+    super.activateListeners(html);
+    html.find(".section-toggle").click(this._onSectionToggle.bind(this));
+    html.find(".item-edit").click(this._onEditItem.bind(this));
+    html.find(".item-delete").click(this._onDeleteItem.bind(this));
+    html.find(".path-delete").click(this._onDeletePath.bind(this));
+    html.find(".rollable").click(this._onRoll.bind(this));
+    html.find(".toggle-action").click(this._onUseAction.bind(this));
+    html.find(".capacity-learn").click(this._onLearnedToggle.bind(this));
+    html.find(".inventory-equip").click(this._onEquippedToggle.bind(this));
+  }
+
+  /**
+   *
+   * @param {*} event
+   * @returns
+   */
+  _onSectionToggle(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).parent().next(".foldable");
+    li.slideToggle("fast");
+    return true;
+  }
+
+  /**
+   *
+   * @param {*} event
+   */
+  _onUseAction(event) {
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    const action = dataset.action;
+    const source = dataset.source;
+    const indice = dataset.indice;
+
+    if (action == "activate") {
+      this.actor.activateAction(true, source, indice);
+    } else if (action == "unactivate") {
+      this.actor.activateAction(false, source, indice);
     }
+  }
+
+  /**
+   * @description Learned or unlearned the capacity in the path view
+   * @param {*} event
+   * @private
+   */
+  _onLearnedToggle(event) {
+    event.preventDefault();
+    const capacityId = $(event.currentTarget).parents(".item").data("itemId");
+    this.actor.toggleCapacityLearned(capacityId);
+  }
+
+  /**
+   * @description Select or unselect the capacity in the path view
+   * @param {*} event
+   * @param {Boolean} status the target status of the capacity, true if selected, false elsewhere
+   * @private
+   */
+  _onEquippedToggle(event) {
+    event.preventDefault();
+    const itemId = $(event.currentTarget).parents(".item").data("itemId");
+    this.actor.toggleEquipmentEquipped(itemId);
+  }
+
+  /**
+   * @description Open the item sheet
+   * For capacity, open the embededd item
+   * @param event
+   * @private
+   */
+  _onEditItem(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).closest(".item");
+    const id = li.data("itemId");
+    if (!foundry.utils.isEmpty(id) && id !== "") {
+      let document = this.actor.items.get(id);
+      return document.sheet.render(true);
+    }
+  }
+
+  /**
+   * @description Delete the selected item
+   * @param event
+   * @private
+   */
+  async _onDeleteItem(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).parents(".item");
+    const itemId = li.data("itemId");
+    const itemType = li.data("itemType");
+    if (itemType == "path") this._onDeletePath(event);
+    else if (itemType == "capacity") this._onDeleteCapacity(event);
+    else if (itemType == "feature") this._onDeleteFeature(event);
+    else this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+  }
+
+  /**
+   * @description Delete the selected feature
+   * @param event
+   * @private
+   */
+  async _onDeleteFeature(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).parents(".item");
+    const featureId = li.data("itemId");
+
+    this.actor.deleteFeature(featureId);
+  }
+
+  /**
+   * @description Delete the selected path
+   * @param event
+   * @private
+   */
+  async _onDeletePath(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).parents(".item");
+    const pathId = li.data("itemId");
+
+    this.actor.deletePath(pathId);
+  }
+
+  /**
+   * @description Delete the selected capacity
+   * @param event
+   * @private
+   */
+  async _onDeleteCapacity(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).parents(".item");
+    const capacityId = li.data("itemId");
+
+    await this.actor.deleteCapacity(capacityId);
+  }
+
+  /** @inheritdoc */
+  async _onDrop(event) {
+    const data = TextEditor.getDragEventData(event);
+    const actor = this.actor;
 
     /**
-     *
-     * @param {*} event
-     * @returns
+     * A hook event that fires when some useful data is dropped onto an ItemSheet.
+     * @function dropActorSheetData
+     * @memberof hookEvents
+     * @param {Item} item      The Item
+     * @param {ItemSheet} sheet The ItemSheet application
+     * @param {object} data      The data that has been dropped onto the sheet
      */
-    _onSectionToggle(event) {
-        event.preventDefault();
-        const li = $(event.currentTarget).parent().next(".foldable");
-        li.slideToggle("fast");
-        return true;
+    const allowed = Hooks.call("dropActorSheetData", actor, this, data);
+    if (allowed === false) return;
+
+    // Handle different data types
+    switch (data.type) {
+      case "Actor":
+        return;
+      case "Item":
+        return this._onDropItem(event, data);
+      case "Folder":
+        return;
     }
+  }
 
-    /**
-     *
-     * @param {*} event
-     */
-    _onUseAction(event) {
-        const element = event.currentTarget;
-        const dataset = element.dataset;
-        const action = dataset.action;
-        const source = dataset.source;
-        const indice = dataset.indice;
+  /**
+   * @param {DragEvent} event            The concluding DragEvent which contains drop data
+   * @param {object} data                The data transfer extracted from the event
+   * @returns {Promise<Item[]|boolean>}  The created or updated Item instances, or false if the drop was not permitted.
+   * @protected
+   */
+  async _onDropItem(event, data) {
+    event.preventDefault();
+    if (!this.actor.isOwner) return false;
+    const item = await Item.implementation.fromDropData(data);
 
-        if (action == "activate") {
-            this.actor.activateAction(true, source, indice);
-        } else if (action == "unactivate") {
-            this.actor.activateAction(false, source, indice);
-        }
+    // Handle item sorting within the same Actor
+    // if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, itemData);
+
+    switch (item.type) {
+      case ITEM_TYPE.EQUIPMENT:
+        return this._onDropEquipmentItem(item);
+      case ITEM_TYPE.FEATURE:
+        return this._onDropFeatureItem(item);
+      case ITEM_TYPE.PROFILE:
+        return this._onDropProfileItem(item);
+      case ITEM_TYPE.PATH:
+        return this._onDropPathItem(item);
+      case ITEM_TYPE.CAPACITY:
+        return this._onDropCapacityItem(item);
+      default:
+        return false;
     }
+  }
 
-    /**
-     * @description Learned or unlearned the capacity in the path view
-     * @param {*} event
-     * @private
-     */
-     _onLearnedToggle(event) {
-       event.preventDefault();
-       const capacityId = $(event.currentTarget).parents(".item").data("itemId");           
-       this.actor.toggleCapacityLearned(capacityId);
-     }
+  /**
+   * @description Handle the drop of an Equipment on the actor
+   * @param {*} item the Equipment dropped
+   */    
+  async _onDropEquipmentItem(item) {
+    this.actor.addEquipment(item);
+  }
 
-    /**
-     * @description Select or unselect the capacity in the path view
-     * @param {*} event
-     * @param {Boolean} status the target status of the capacity, true if selected, false elsewhere
-     * @private
-     */     
-     _onEquippedToggle(event) {
-        event.preventDefault();
-        const itemId = $(event.currentTarget).parents(".item").data("itemId");           
-        this.actor.toggleEquipmentEquipped(itemId);
-     }
+  /**
+   * @description Handle the drop of a feature on the actor
+   * @param {*} item the Feature dropped
+   */  
+  async _onDropFeatureItem(item) {
+    this.actor.addFeature(item);
+  }
 
-    /**
-     * @description Open the item sheet
-     * For capacity, open the embededd item
-     * @param event
-     * @private
-     */
-    _onEditItem(event) {
-        event.preventDefault();
-        const li = $(event.currentTarget).closest(".item");
-        const id = li.data("itemId");
-        if (!foundry.utils.isEmpty(id) && id !== "") {
-            let document = this.actor.items.get(id);
-            return document.sheet.render(true);
-        }
-    }
+  /**
+   * @description Handle the drop of a profile on the actor
+   * @param {*} item the Profile dropped
+   */
+  async _onDropProfileItem(item) {
+    this.actor.addProfile(item);
+  }
 
-    /**
-     * @description Delete the selected item
-     * @param event
-     * @private
-     */
-    async _onDeleteItem(event) {
-        event.preventDefault();
-        const li = $(event.currentTarget).parents(".item");
-        const itemId = li.data("itemId");
-        const itemType = li.data("itemType")
-        if (itemType == "path") this._onDeletePath(event);
-        else if (itemType == "capacity") this._onDeleteCapacity(event);
-        else this.actor.deleteEmbeddedDocuments("Item", [itemId]);
-    }
+  /**
+   * @description Handle the drop of a path on the actor
+   * @param {*} item the Path dropped
+   */
+  async _onDropPathItem(item) {
+    this.actor.addPath(item);
+  }
 
-    /**
-     * @description Delete the selected path
-     * @param event
-     * @private
-     */
-    async _onDeletePath(event) {
-        event.preventDefault();
-        const li = $(event.currentTarget).parents(".item");
-        const pathId = li.data("itemId");
-
-        // Delete linked capacities
-        const capacitiesId = this.actor.items.get(pathId).system.capacities;
-        this.actor.deleteEmbeddedDocuments("Item", capacitiesId);
-
-        this.actor.deleteEmbeddedDocuments("Item", [pathId]);
-    }
-
-    /**
-     * @description Delete the selected capacity
-     * @param event
-     * @private
-     */
-    async _onDeleteCapacity(event) {
-        event.preventDefault();
-        const li = $(event.currentTarget).parents(".item");
-        const capacityId = li.data("itemId");
-
-        this.actor.deleteEmbeddedDocuments("Item", [capacityId]);
-
-        // Remove the capacity from the capacities list of the linked Path
-        const capacity = this.actor.items.get(capacityId);
-        const pathId = capacity.system.path;
-        if (pathId != null) {
-            let updatedCapacitiesIds = this.actor.items.get(pathId).system.capacities.filter(id => id !== capacityId);
-            const updateData = {"_id": pathId, "system.capacities": updatedCapacitiesIds};
-            await this.actor.updateEmbeddedDocuments("Item", [updateData]);
-        }
-        //const capacitiesId = this.actor.items.get(pathId).system.capacities;
-        //this.actor.deleteEmbeddedDocuments("Item",capacitiesId);
-    }
-
-    /** @inheritdoc */
-    async _onDrop(event) {
-        const data = TextEditor.getDragEventData(event);
-        const actor = this.actor;
-
-        /**
-         * A hook event that fires when some useful data is dropped onto an ItemSheet.
-         * @function dropActorSheetData
-         * @memberof hookEvents
-         * @param {Item} item      The Item
-         * @param {ItemSheet} sheet The ItemSheet application
-         * @param {object} data      The data that has been dropped onto the sheet
-         */
-        const allowed = Hooks.call("dropActorSheetData", actor, this, data);
-        if (allowed === false) return;
-
-        // Handle different data types
-        switch (data.type) {
-            case "Actor":
-                return;
-            case "Item":
-                return this._onDropItem(event, data);
-            case "Folder":
-                return;
-        }
-    }
-
-    /**
-     * @param {DragEvent} event            The concluding DragEvent which contains drop data
-     * @param {object} data                The data transfer extracted from the event
-     * @returns {Promise<Item[]|boolean>}  The created or updated Item instances, or false if the drop was not permitted.
-     * @protected
-     */
-    async _onDropItem(event, data) {
-        event.preventDefault();
-        if (!this.actor.isOwner) return false;
-        const item = await Item.implementation.fromDropData(data);
-        //const itemData = item.toObject();
-
-        // Handle item sorting within the same Actor
-        // if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, itemData);
-
-        switch (item.type) {
-            case ITEM_TYPE.EQUIPMENT:
-                return this._onDropEquipmentItem(item);
-            case ITEM_TYPE.FEATURE:
-                return this._onDropFeatureItem(item);
-            case ITEM_TYPE.PROFILE:
-                return this._onDropProfileItem(item);
-            case ITEM_TYPE.PATH:
-                return this._onDropPathItem(item);
-            case ITEM_TYPE.CAPACITY:
-                return this._onDropCapacityItem(item);
-            default:
-                return false;
-        }
-    }
-
-    async _onDropEquipmentItem(item) {
-        let itemData = item.toObject();
-        itemData = itemData instanceof Array ? itemData : [itemData];
-        // Création de l'objet
-        const newItem = await this.actor.createEmbeddedDocuments("Item", itemData);
-        //
-        // Update the source of all actions
-        if (newItem[0].actions.length > 0) {
-            let newActions = Object.values(foundry.utils.deepClone(newItem[0].system.actions)).map(m => new Action(m.source, m.indice, m.type, m.img, m.label, m.chatFlavor, m.properties.visible, m.properties.activable, m.properties.enabled, m.properties.temporary, m.conditions, m.modifiers, m.resolvers)); 
-            newActions.forEach(action => {
-                action.updateSource(newItem[0].id);
-            });
-    
-            const updateActions = {"_id" : newItem[0].id, "system.actions": newActions};
-    
-            await this.actor.updateEmbeddedDocuments("Item", [updateActions]);
-        }
-    }
-
-    async _onDropFeatureItem(item) {
-        let itemData = item.toObject();
-        itemData = itemData instanceof Array ? itemData : [itemData];
-        const newFeature =  await this.actor.createEmbeddedDocuments("Item", itemData);
-        Log.info('Drop feature created : ', newFeature);
-
-        // Update the source of all modifiers with the id of the new embedded feature created
-        let newModifiers = Object.values(foundry.utils.deepClone(newFeature[0].system.modifiers)).map(m => new Modifier(m.source, m.type, m.subtype, m.target, m.value));
-        newModifiers.forEach(modifier => {
-            modifier.updateSource(newFeature[0].id);
-        });
-
-        const updateModifiers = {"_id": newFeature[0].id, "system.modifiers": newModifiers};
-
-        await this.actor.updateEmbeddedDocuments("Item", [updateModifiers]);
-
-        let updatedCapacitiesIds = [];
-   
-        for (const capacity of item.system.capacities) {
-         let capa = await fromUuid(capacity);
-   
-         // item is null if the item has been deleted in the compendium or in the world
-         // TODO Add a warning message and think about a global rollback
-         if (capa != null) {      
-           let capaData = capa.toObject();
-
-           // Create the embedded capacity
-           const newCapa = await this.actor.createEmbeddedDocuments("Item", [capaData]);
-         
-           updatedCapacitiesIds.push(newCapa[0].id);
-           
-           // Update the source of all actions if there are any
-           if (!foundry.utils.isEmpty(newCapa[0].system.actions)) {
-                let newActions = Object.values(foundry.utils.deepClone(newCapa[0].system.actions)).map(m => new Action(m.source, m.indice, m.type, m.img, m.label, m.chatFlavor, m.properties.visible, m.properties.activable, m.properties.enabled, m.properties.temporary, m.conditions, m.modifiers, m.resolvers)); 
-                newActions.forEach(action => {
-                    action.updateSource(newCapa[0].id);
-                });
-        
-                const updateActions = {"_id" : newCapa[0].id, "system.actions": newActions};
-        
-                await this.actor.updateEmbeddedDocuments("Item", [updateActions]);
-           }
-         }
-       }
-
-        // Update the capacities of the feature with id of created feature
-        const updateData = {"_id" : newFeature[0].id, "system.capacities": updatedCapacitiesIds};
-        await this.actor.updateEmbeddedDocuments("Item", [updateData]); 
-    }
-
-    _onDropProfileItem(item) {
-        let itemData = item.toObject();
-        itemData = itemData instanceof Array ? itemData : [itemData];
-        return this.actor.createEmbeddedDocuments("Item", itemData);
-    }
-
-    /**
-     * @description The capacities in the path is a list of uui, on the drop, the real capacities must be created as embedded items
-     * @param {*} item the Path dropped
-     * @returns a path and his capacities
-     */
-    async _onDropPathItem(item) {
-        let itemData = item.toObject();
-
-        // Create the path
-        itemData = itemData instanceof Array ? itemData : [itemData];
-        const newPath = await this.actor.createEmbeddedDocuments("Item", itemData);
-        console.log('newPath created', newPath);
-   
-        let updatedCapacitiesIds = [];
-   
-        for (const capacity of item.system.capacities) {
-         let capa = await fromUuid(capacity);
-   
-         // item is null if the item has been deleted in the compendium or in the world
-         // TODO Add a warning message and think about a global rollback
-         if (capa != null) {      
-           let capaData = capa.toObject();
-           capaData.system.path = newPath[0].id;
-           // Create the embedded capacity
-           const newCapa = await this.actor.createEmbeddedDocuments("Item", [capaData]);
-         
-           updatedCapacitiesIds.push(newCapa[0].id);
-           
-           // Update the source of all actions
-           let newActions = Object.values(foundry.utils.deepClone(newCapa[0].system.actions)).map(m => new Action(m.source, m.indice, m.type, m.img, m.label, m.chatFlavor, m.properties.visible, m.properties.activable, m.properties.enabled, m.properties.temporary, m.conditions, m.modifiers, m.resolvers)); 
-           newActions.forEach(action => {
-             action.updateSource(newCapa[0].id);
-           });
-   
-           const updateActions = {"_id" : newCapa[0].id, "system.actions": newActions};
-   
-           await this.actor.updateEmbeddedDocuments("Item", [updateActions]);
-         }
-       }
-       
-        // Update the capacities of the path with id of created path
-        const updateData = {"_id" : newPath[0].id, "system.capacities": updatedCapacitiesIds};
-        await this.actor.updateEmbeddedDocuments("Item", [updateData]); 
-        
-    }
-
-    /**
-     * @description Handle the drop of a single capacity on the actor
-     * @param {*} item
-     */
-    async _onDropCapacityItem(item) {
-        let itemData = item.toObject();
-
-        // Enable the capacity
-        itemData.system.properties.enabled = true;
-        itemData = itemData instanceof Array ? itemData : [itemData];
-        const created = await this.actor.createEmbeddedDocuments("Item", itemData);
-        Log.info('Drop capacity created : ', created);
-
-        // Create an array of actions
-        // Update the source of all actions with the id of the new embedded capacity created
-        // All actions are now enabled
-        let newActions = Object.values(foundry.utils.deepClone(created[0].system.actions)).map(m => new Action(m.source, m.indice, m.type, m.img, m.label, m.chatFlavor, true, m.properties.activable, m.properties.enabled, m.properties.temporary, m.conditions, m.modifiers, m.resolvers));
-        newActions.forEach(action => {
-            action.updateSource(created[0].id);
-        });
-
-        const updateData = {"_id": created[0].id, "system.actions": newActions};
-
-        await this.actor.updateEmbeddedDocuments("Item", [updateData]);
-    }
+  /**
+   * @description Handle the drop of a single capacity on the actor
+   * @param {*} item the Capacity dropped
+   */
+  async _onDropCapacityItem(item) {
+    this.actor.addCapacity(item, null);
+  }
 }

@@ -1,6 +1,7 @@
 import { Stats } from "../system/stats.mjs";
 import { ATTRIBUTE, COMBAT, EQUIPMENT_SUBTYPE, ITEM_TYPE, MODIFIER_SUBTYPE, MODIFIER_TARGET, MODIFIER_TYPE, RESOURCES } from "../system/constants.mjs";
-import { Modifiers } from "../system/modifiers.mjs";
+import { Action } from "../system/actions.mjs";
+import { Modifiers, Modifier } from "../system/modifiers.mjs";
 import { Resolver } from "../system/resolvers.mjs";
 import { Log } from "../utils/log.mjs";
 import { Utils } from "../system/utils.mjs";
@@ -38,7 +39,7 @@ export default class CoActor extends Actor {
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, MODIFIER_SUBTYPE.COMBAT));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.COMBAT));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.profile, MODIFIER_TYPE.PROFILE, MODIFIER_SUBTYPE.COMBAT));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.COMBAT));    
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.COMBAT));
     return modifiers;
   }
 
@@ -50,7 +51,7 @@ export default class CoActor extends Actor {
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, MODIFIER_SUBTYPE.ATTRIBUTE));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.ATTRIBUTE));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.profile, MODIFIER_TYPE.PROFILE, MODIFIER_SUBTYPE.ATTRIBUTE));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ATTRIBUTE));    
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ATTRIBUTE));
     return modifiers;
   }
 
@@ -62,7 +63,7 @@ export default class CoActor extends Actor {
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, MODIFIER_SUBTYPE.SKILL));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.SKILL));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.profile, MODIFIER_TYPE.PROFILE, MODIFIER_SUBTYPE.SKILL));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.SKILL));       
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.SKILL));
     return modifiers;
   }
 
@@ -74,7 +75,7 @@ export default class CoActor extends Actor {
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, MODIFIER_SUBTYPE.RESOURCE));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.RESOURCE));
     modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.profile, MODIFIER_TYPE.PROFILE, MODIFIER_SUBTYPE.RESOURCE));
-    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.RESOURCE));     
+    modifiers.push(...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.RESOURCE));
     return modifiers;
   }
 
@@ -83,7 +84,7 @@ export default class CoActor extends Actor {
    */
   get equipments() {
     return this.items.filter((item) => item.type === ITEM_TYPE.EQUIPMENT);
-  }  
+  }
 
   /**
    * @returns les Items de type feature
@@ -93,12 +94,16 @@ export default class CoActor extends Actor {
   }
 
   /**
- * @returns le premier Item de type profile
- */
+   * @returns le premier Item de type profile
+   */
   get profile() {
-    return this.items.find((item) => item.type === ITEM_TYPE.PROFILE) ?? null;
+    const profile = this.items.find((item) => item.type === ITEM_TYPE.PROFILE);
+    return profile !== undefined ? [profile] : [];
   }
 
+  /**
+   * @returns les Items de type path
+   */
   get paths() {
     return this.items.filter((item) => item.type === ITEM_TYPE.PATH);
   }
@@ -109,11 +114,11 @@ export default class CoActor extends Actor {
   get pathGroups() {
     let pathGroups = [];
     const paths = this.items.filter((item) => item.type === ITEM_TYPE.PATH);
-    paths.forEach(path => {
-      const capacities = path.system.capacities.map(cid => this.items.find(i => i._id === cid));
+    paths.forEach((path) => {
+      const capacities = path.system.capacities.map((cid) => this.items.find((i) => i._id === cid));
       pathGroups.push({
-        path : path,
-        items : capacities
+        path: path,
+        items: capacities,
       });
     });
     return pathGroups;
@@ -121,13 +126,13 @@ export default class CoActor extends Actor {
 
   get inventory() {
     return {
-      armors : this.armors,
-      shields : this.shields,
-      weapons : this.weapons,
-      misc : this.misc
-    }
+      armors: this.armors,
+      shields: this.shields,
+      weapons: this.weapons,
+      misc: this.misc,
+    };
   }
-  
+
   get capacities() {
     return this.items.filter((item) => item.type === ITEM_TYPE.CAPACITY);
   }
@@ -180,22 +185,21 @@ export default class CoActor extends Actor {
    */
   get actions() {
     let allActions = [];
-    this.items.forEach(item => {
+    this.items.forEach((item) => {
       if (item.actions.length > 0) allActions.push(...item.actions);
     });
     return allActions;
   }
 
   /**
-   * @returns Toutes les actions visibles de tous les objets
+   * @returns Toutes les actions visibles des capacités et des équipements
    */
   get visibleActions() {
     let allActions = [];
-    this.items.forEach(item => {
-      if (item.type === ITEM_TYPE.CAPACITY && item.system.properties.enabled && item.actions.length > 0) {
+    this.items.forEach((item) => {
+      if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
         allActions.push(...item.visibleActions);
       }
-      else if (item.actions.length > 0) allActions.push(...item.visibleActions);
     });
     return allActions;
   }
@@ -292,9 +296,9 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * 
-   * @param {*} itemId 
-   * @returns 
+   *
+   * @param {*} itemId
+   * @returns
    */
   deleteItem(itemId) {
     const item = this.items.find((item) => item.id === itemId);
@@ -310,49 +314,49 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * 
-   * @param {*} itemId 
-   * @returns 
+   *
+   * @param {*} itemId
+   * @returns
    */
   isTrainedWithWeapon(itemId) {
     const item = this.weapons.find((item) => item.id === itemId);
     if (!item) return null;
     const profile = this.profile;
-    if (!profile) return null;
+    if (profile.length == 0) return null;
     const training = item.system.martialCategory;
     return profile.system.martialTrainingsWeapons[training];
   }
 
   /**
-   * 
-   * @param {*} itemId 
-   * @returns 
+   *
+   * @param {*} itemId
+   * @returns
    */
   isTrainedWithArmor(itemId) {
     const item = this.armors.find((item) => item.id === itemId);
     if (!item) return null;
     const profile = this.profile;
-    if (!profile) return null;
+    if (profile.length == 0) return null;
     const training = item.system.martialCategory;
     return profile.system.martialTrainingsArmors[training];
   }
 
   /**
-   * 
-   * @param {*} itemId 
-   * @returns 
+   *
+   * @param {*} itemId
+   * @returns
    */
   isTrainedWithShield(itemId) {
     const item = this.shields.find((item) => item.id === itemId);
     if (!item) return null;
     const profile = this.profile;
-    if (!profile) return null;
+    if (profile.length == 0) return null;
     const training = item.system.martialCategory;
     return profile.system.martialTrainingsShields[training];
   }
 
   /**
-   * @description 
+   * @description
    * @param {*} state true to enable the action, false to disable the action
    * @param {*} source  uuid of the embedded item which is the source of the action
    * @param {*} indice  indice of the action in the array of actions
@@ -365,22 +369,21 @@ export default class CoActor extends Actor {
       let newActions = foundry.utils.deepClone(item.system.actions);
       if (state) {
         newActions[indice].properties.enabled = true;
-      }
-      else {
+      } else {
         newActions[indice].properties.enabled = false;
       }
-  
-      const updateData = {"_id" : item.id, "system.actions": newActions};
-  
+
+      const updateData = { _id: item.id, "system.actions": newActions };
+
       await this.updateEmbeddedDocuments("Item", [updateData]);
     }
     // Action instantanée
     else {
       const action = item.system.actions[indice];
       // Recherche des resolvers de l'action
-      let resolvers = Object.values(action.resolvers).map(a => new Resolver(a.type, a.skill, a.dmg));
+      let resolvers = Object.values(action.resolvers).map((a) => new Resolver(a.type, a.skill, a.dmg));
       for (const resolver of resolvers) {
-          let res = resolver.resolve(this, item);
+        let res = resolver.resolve(this, item);
       }
     }
   }
@@ -390,7 +393,7 @@ export default class CoActor extends Actor {
    * Change le champ learned de la capactié
    * Met à jour le rank de la voie correspondante
    * Met à jour le champ visible de toutes les actions de la capacité
-   * @param {*} capacityId 
+   * @param {*} capacityId
    */
   async toggleCapacityLearned(capacityId) {
     // Mise à jour de la capacité et de ses actions
@@ -398,18 +401,280 @@ export default class CoActor extends Actor {
 
     // Mise à jour du rang de la voie correspondante
     let path = this.items.get(this.items.get(capacityId).system.path);
-    path.updateRank();    
+    path.updateRank();
   }
-  
+
   /**
    * @description Equippe/Déséquippe un equipment du personnage
    * Change le champ equipped de l'equipement
-   * @param {*} itemId 
+   * @param {*} itemId
    */
   async toggleEquipmentEquipped(itemId) {
     // Mise à jour de la capacité et de ses actions
     await this._toggleItemFieldAndctions(itemId, "equipped");
   }
+
+  /**
+   * @description Create a path, and the linked modifiers, paths and capacities if they exist
+   * @param {*} feature
+   */
+  async addFeature(feature) {
+    let itemData = feature.toObject();
+    itemData = itemData instanceof Array ? itemData : [itemData];
+    const newFeature = await this.createEmbeddedDocuments("Item", itemData);
+    Log.info("Feature created : ", newFeature);
+
+    // Update the source of all modifiers with the id of the new embedded feature created
+    let newModifiers = Object.values(foundry.utils.deepClone(newFeature[0].system.modifiers)).map((m) => new Modifier(m.source, m.type, m.subtype, m.target, m.value));
+    newModifiers.forEach((modifier) => {
+      modifier.updateSource(newFeature[0].id);
+    });
+
+    const updateModifiers = { _id: newFeature[0].id, "system.modifiers": newModifiers };
+
+    await this.updateEmbeddedDocuments("Item", [updateModifiers]);
+
+    // Create all Paths
+    let updatedPathsIds = [];
+    for (const path of feature.system.paths) {
+      let originalPath = await fromUuid(path);
+
+      // item is null if the item has been deleted in the compendium or in the world
+      // TODO Add a warning message and think about a global rollback
+      if (originalPath != null) {
+        const newPathId = await this.addPath(originalPath);
+        updatedPathsIds.push(newPathId);
+      }
+    }
+
+    // Update the paths of the feature with ids of created paths
+    const updatePaths = { _id: newFeature[0].id, "system.paths": updatedPathsIds };
+    await this.updateEmbeddedDocuments("Item", [updatePaths]);
+
+    // Create all Capacities
+    let updatedCapacitiesIds = [];
+    for (const capacity of feature.system.capacities) {
+      let capa = await fromUuid(capacity);
+
+      // item is null if the item has been deleted in the compendium or in the world
+      // TODO Add a warning message and think about a global rollback
+      if (capa != null) {
+        const newCapacityId = await this.addCapacity(capa, newFeature[0].id);
+        updatedCapacitiesIds.push(newCapacityId);
+      }
+    }
+
+    // Update the capacities of the feature with ids of created capacities
+    const updateCapacities = { _id: newFeature[0].id, "system.capacities": updatedCapacitiesIds };
+    await this.updateEmbeddedDocuments("Item", [updateCapacities]);
+  }
+
+  /**
+   * @description Create a profile, and the linked modifiers and paths if they exist
+   * @param {*} profile
+   */
+  async addProfile(profile) {
+    let itemData = profile.toObject();
+    itemData = itemData instanceof Array ? itemData : [itemData];
+    const newProfile = await this.createEmbeddedDocuments("Item", itemData);
+    Log.info("Profile created : ", newProfile);
+
+    if (newProfile[0].system.modifiers.length > 0) {
+      // Update the source of all modifiers with the id of the new embedded profile created
+      let newModifiers = Object.values(foundry.utils.deepClone(newProfile[0].system.modifiers)).map((m) => new Modifier(m.source, m.type, m.subtype, m.target, m.value));
+      newModifiers.forEach((modifier) => {
+        modifier.updateSource(newProfile[0].id);
+      });
+
+      const updateModifiers = { _id: newProfile[0].id, "system.modifiers": newModifiers };
+
+      await this.updateEmbeddedDocuments("Item", [updateModifiers]);
+    }
+
+    // Create all Paths
+    let updatedPathsIds = [];
+    for (const path of profile.system.paths) {
+      let originalPath = await fromUuid(path);
+
+      // item is null if the item has been deleted in the compendium or in the world
+      // TODO Add a warning message and think about a global rollback
+      if (originalPath != null) {
+        const newPathId = await this.addPath(originalPath);
+        updatedPathsIds.push(newPathId);
+      }
+    }
+
+    // Update the paths of the profile with ids of created paths
+    const updatePaths = { _id: newProfile[0].id, "system.paths": updatedPathsIds };
+    await this.updateEmbeddedDocuments("Item", [updatePaths]);
+
+    // Update Hit Dice and Magick Attack base ability
+    this.update({"system.combat.magic.ability": profile.system.spellcasting});
+  }
+
+  /**
+   * @description Add a path as an embedded item
+   * It also create the capacities linked to the path
+   * @param {CoItem} path
+   * @returns {Number} id of the created path
+   */
+  async addPath(path) {
+    let itemData = path.toObject();
+
+    // Create the path
+    itemData = itemData instanceof Array ? itemData : [itemData];
+    const newPath = await this.createEmbeddedDocuments("Item", itemData);
+    console.log("Path created : ", newPath);
+
+    let updatedCapacitiesIds = [];
+
+    // Create all capacities
+    for (const capacity of path.system.capacities) {
+      let capa = await fromUuid(capacity);
+
+      // item is null if the item has been deleted in the compendium or in the world
+      // TODO Add a warning message and think about a global rollback
+      if (capa != null) {
+        const newCapacityId = await this.addCapacity(capa, newPath[0].id);
+        updatedCapacitiesIds.push(newCapacityId);
+      }
+    }
+
+    // Update the array of capacities of the path with ids of created path
+    const updateData = { _id: newPath[0].id, "system.capacities": updatedCapacitiesIds };
+    await this.updateEmbeddedDocuments("Item", [updateData]);
+
+    return newPath[0].id;
+  }
+
+  /**
+   * @description Add a capacity as an embedded item
+   * @param {CoItem} capacity
+   * @param {Number} pathId id of the Path if the capacity is linked to a path
+   * @returns {Number} id of the created capacity
+   */
+  async addCapacity(capacity, pathId) {
+    let capacityData = capacity.toObject();
+    if (pathId !== null) capacityData.system.path = pathId;
+
+    // Learned the capacity if the capacity is not linked to a path
+    if (pathId === null) capacityData.system.learned = true;
+
+    capacityData = capacityData instanceof Array ? capacityData : [capacityData];
+    const newCapacity = await this.createEmbeddedDocuments("Item", capacityData);
+    Log.info("Capacity created : ", newCapacity);
+
+    // Update the source of all actions with the id of the new embedded capacity created
+    let newActions = Object.values(foundry.utils.deepClone(newCapacity[0].system.actions)).map(
+      (m) => {
+        const action = new Action(
+          m.source,
+          m.indice,
+          m.type,
+          m.img,
+          m.label,
+          m.chatFlavor,
+          m.properties.visible,
+          m.properties.activable,
+          m.properties.enabled,
+          m.properties.temporary,
+          m.conditions,
+          m.modifiers,
+          m.resolvers
+        );
+        // Update the source and source's modifiers for the action
+        action.updateSource(newCapacity[0].id);
+        return action;
+      });
+
+    const updateActions = { _id: newCapacity[0].id, "system.actions": newActions };
+    await this.updateEmbeddedDocuments("Item", [updateActions]);
+
+    return newCapacity[0].id;
+  }
+
+    /**
+   * @description Add an equipment as an embedded item
+   * @param {CoItem} equipment
+   * @returns {Number} id of the created path
+   */
+  async addEquipment(equipment) {
+    let equipmentData = equipment.toObject();
+    equipmentData = equipmentData instanceof Array ? equipmentData : [equipmentData];
+
+    // Création de l'objet
+    const newEquipment = await this.actor.createEmbeddedDocuments("Item", equipmentData);
+
+    // Update the source of all actions
+    if (newEquipment[0].actions.length > 0) {
+      let newActions = Object.values(foundry.utils.deepClone(newEquipment[0].system.actions)).map(
+        (m) => {
+          const action = new Action(
+            m.source,
+            m.indice,
+            m.type,
+            m.img,
+            m.label,
+            m.chatFlavor,
+            m.properties.visible,
+            m.properties.activable,
+            m.properties.enabled,
+            m.properties.temporary,
+            m.conditions,
+            m.modifiers,
+            m.resolvers
+          );
+          // Update the source and source's modifiers for the action
+          action.updateSource(newEquipment[0].id);
+          return action;
+        });
+
+      const updateActions = { _id: newEquipment[0].id, "system.actions": newActions };
+      await this.actor.updateEmbeddedDocuments("Item", [updateActions]);
+    }
+  }
+
+  deleteFeature(featureId) {
+    // Delete linked paths
+    const pathsIds = this.items.get(featureId).system.paths;
+    for (const pathId of pathsIds) {
+      this.deletePath(pathId);
+    }
+
+    // Delete linked capacities
+    const capacitiesIds = this.items.get(featureId).system.capacities;
+    for (const capacityId of capacitiesIds) {
+      this.deleteCapacity(capacityId);
+    }
+
+    this.deleteEmbeddedDocuments("Item", [featureId]);
+  }
+
+  deletePath(pathId) {
+    // Delete linked capacities
+    const capacitiesId = this.items.get(pathId).system.capacities;
+    this.deleteEmbeddedDocuments("Item", capacitiesId);
+
+    this.deleteEmbeddedDocuments("Item", [pathId]);
+  }
+
+  async deleteCapacity(capacityId) {
+    // Remove the capacity from the capacities list of the linked Path
+    const capacity = this.items.get(capacityId);
+    const pathId = capacity.system.path;
+
+    if (pathId != null) {
+      // If the linked path still exists in the items
+      if (this.items.get(pathId)) {
+        let updatedCapacitiesIds = this.items.get(pathId).system.capacities.filter((id) => id !== capacityId);
+        const updateData = { _id: pathId, "system.capacities": updatedCapacitiesIds };
+        await this.updateEmbeddedDocuments("Item", [updateData]);
+      }
+    }
+
+    this.deleteEmbeddedDocuments("Item", [capacityId]);
+  }
+
   //#endregion
 
   //#region méthodes privées
@@ -476,7 +741,9 @@ export default class CoActor extends Actor {
 
   _computeBaseMP() {
     let total = 0;
-    const formula = this.profile?.system.mpFormula;
+    let formula = null;
+    const profile = this.profile;
+    if (profile.length != 0) formula = this.profile[0].system.mpFormula;
     total = formula ? Utils.evaluate(this, formula, null) : 0;
     return total;
   }
@@ -564,17 +831,17 @@ export default class CoActor extends Actor {
   }
 
   /**
- * @description toggle the field of the items and the actions linked
- * @param {*} itemId 
- * @param {*} fieldName 
- */
+   * @description toggle the field of the items and the actions linked
+   * @param {*} itemId
+   * @param {*} fieldName
+   */
   async _toggleItemFieldAndctions(itemId, fieldName) {
     let item = this.items.get(itemId);
     let fieldValue = item.system[fieldName];
-    await this.updateEmbeddedDocuments('Item', [{ "_id": itemId, [`system.${fieldName}`]: !fieldValue }]);
+    await this.updateEmbeddedDocuments("Item", [{ _id: itemId, [`system.${fieldName}`]: !fieldValue }]);
     if (item.actions.length > 0) {
       item.toggleActions();
-    }    
+    }
   }
   //#endregion
 
@@ -611,6 +878,5 @@ export default class CoActor extends Actor {
   //         return this.deleteEmbeddedDocuments("Item", [itemId]);
   //       }
   //   }
-  // }  
-
+  // }
 }

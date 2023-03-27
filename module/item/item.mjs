@@ -1,5 +1,6 @@
 import { ITEM_TYPE } from "../system/constants.mjs";
 import { Action } from "../system/actions.mjs";
+import { Condition } from "../system/conditions.mjs";
 /**
  * Extend the base Item entity
  * @extends {Item}
@@ -87,8 +88,20 @@ export class CoItem extends Item {
    */
   get visibleActions() {
     if (foundry.utils.isEmpty(this.system.actions)) return [];
-    if (this.system.actions instanceof Array) return this.system.actions.filter((action) => action.properties.visible);
-    return Object.values(this.system.actions).filter((action) => action.properties.visible);
+        
+    return this.actions.filter((action) => {
+      // there are no conditions, use the visible property
+      if (action.conditions.length == 0) return action.properties.visible;
+      else {
+        let visible = true;
+        let index = 0;
+        while (index < action.conditions.length && visible) {
+          visible = new Condition(action.conditions[index].subject, action.conditions[index].predicate, action.conditions[index].object).evaluate;
+          index++;
+        }
+        return visible;
+      }
+    });
   }
 
   /**
