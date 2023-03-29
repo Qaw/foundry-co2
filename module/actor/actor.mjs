@@ -137,8 +137,16 @@ export default class CoActor extends Actor {
     return this.items.filter((item) => item.type === ITEM_TYPE.CAPACITY);
   }
 
-  get enabledCapacities() {
-    return this.items.filter((item) => item.type === ITEM_TYPE.CAPACITY && item.system.properties.enabled);
+  get learnedCapacities() {
+    return this.items.filter((item) => item.type === ITEM_TYPE.CAPACITY && item.system.learned);
+  }
+
+  get equipments() {
+    return this.items.filter((item) => item.type === ITEM_TYPE.EQUIPMENT);
+  }
+
+  get equippedEquipments(){
+    return this.items.filter((item) => item.type === ITEM_TYPE.EQUIPMENT && item.system.equipped);
   }
 
   /**

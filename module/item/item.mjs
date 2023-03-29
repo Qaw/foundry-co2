@@ -96,7 +96,7 @@ export class CoItem extends Item {
         let visible = true;
         let index = 0;
         while (index < action.conditions.length && visible) {
-          visible = new Condition(action.conditions[index].subject, action.conditions[index].predicate, action.conditions[index].object).evaluate;
+          visible = new Condition(action.conditions[index].subject, action.conditions[index].predicate, action.conditions[index].object).evaluate(this);
           index++;
         }
         return visible;

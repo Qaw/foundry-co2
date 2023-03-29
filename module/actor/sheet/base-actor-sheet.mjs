@@ -7,7 +7,6 @@ export default class CoBaseActorSheet extends ActorSheet {
     const context = super.getData(options);
     context.config = game.co.config;
     context.debugMode = game.settings.get("co", "debugMode");
-    // context.logoPath = this._getPathRoot() + this._getLogoPath();
     return context;
   }
 
@@ -29,24 +28,4 @@ export default class CoBaseActorSheet extends ActorSheet {
     // return this.actor.attackRoll(event, this.actor)
     // return this.actor.initRoll(event, this.actor)
   }
-  // /**
-  //  * @name getPathRoot
-  //  * @description get the path of the system or module
-  //  *
-  //  * @returns {String} The path
-  //  */
-  // _getPathRoot() {
-  //   return "systems/co/";
-  // }
-
-  // /**
-  //  * @name getLogoPath
-  //  * @description get the url of logo's image
-  //  *
-  //  * @returns {String} Logo's url after PathRoot
-  //  */
-  // _getLogoPath() {
-  //   return "/ui/logo-banner.webp";
-  // }
-
 }
