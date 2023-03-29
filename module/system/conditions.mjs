@@ -17,14 +17,16 @@ export class Condition {
 
   /**
    * Returns an object containing the available condition methods.
+   * isEquipped : is the item equiped
+   * isOwned : is the item in the inventory
+   * isLearned : is the capacity learned
+   * isTagged : To Do
    * @returns {object} An object containing condition methods.
    */
   get conditions() {
     return {
       isEquipped: (condition, object, item) => (item.type === ITEM_TYPE.EQUIPMENT ? item.system.equipped : false),
-      isOwned: (condition, object, item) => {
-        // Implement the isOwned condition
-      },
+      isOwned: (condition, object, item) => (item.isOwned),
       isLearned: (condition, object, item) => (item.type === ITEM_TYPE.CAPACITY ? item.system.learned : false),
       isTagged: (condition, object, item) => {
         // Implement the isTagged condition
