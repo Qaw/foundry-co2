@@ -31,13 +31,13 @@
         </div>
     </div>
 
-   {{#if (eq enabledCapacities.count 0)}}
+   {{#if (eq learnedCapacities.count 0)}}
        <p class="empty">{{localize "CO.label.noCapacitySelected"}}</p>
    {{else}}
        <li class="inventory-header flexrow">
            <div class="item-detail">{{localize "CO.label.rank"}}</div>
        </li>
-       {{#each enabledCapacities as |capacity id|}}       
+       {{#each learnedCapacities as |capacity id|}}       
            {{!log "Chroniques Oubliées | capacity" this}}
            <div class="item flexrow" data-item-type="capacity" data-item-id="{{capacity._id}}" data-item-source="{{capacity.source}}" data-capacity-name="{{capacity.name}}">
                <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>

@@ -37,9 +37,9 @@ export class Utils {
    * @param {*} source The item source's UUID : used for the #rank
    * @returns
    */
-  static evaluate(actor, formula, source) {
+  static evaluate(actor, formula, source, toEvaluate = false) {
     if (formula === "") return 0;
-    if (formula.includes("@") || formula.includes("#")) return this._evaluateCustom(actor, formula, source);
+    if (formula.includes("@")) return this._evaluateCustom(actor, formula, source, toEvaluate);
     const resultat = parseInt(formula);
     if (isNaN(resultat)) return 0;
     return resultat;
@@ -50,11 +50,12 @@ export class Utils {
    * Shortcuts
    * @str @dex @con @int @wis @cha @mel @ran @mag @lvl @rank[+1,0,+1,0,0]
    * @param {*} actor
+   * @param {} formula
+   * @param {} source
+   * @param {Boolean} eval : true to evaluate the replaced formula
    * @returns {int} the modifier's value
    */
-  static _evaluateCustom(actor, formula, source) {
-    if (!formula.includes("@")) return value;
-
+  static _evaluateCustom(actor, formula, source, toEvaluate) {
     Log.debug("Custom Formula : ", formula);
 
     let replacedFormula = formula;
@@ -100,6 +101,7 @@ export class Utils {
 
     Log.debug("Custom Formula evaluated : ", replacedFormula);
 
-    return eval(replacedFormula);
+    if (toEvaluate) return eval(replacedFormula);
+    else return replacedFormula;
   }
 }

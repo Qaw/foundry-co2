@@ -611,7 +611,7 @@ export default class CoActor extends Actor {
     equipmentData = equipmentData instanceof Array ? equipmentData : [equipmentData];
 
     // Création de l'objet
-    const newEquipment = await this.actor.createEmbeddedDocuments("Item", equipmentData);
+    const newEquipment = await this.createEmbeddedDocuments("Item", equipmentData);
 
     // Update the source of all actions
     if (newEquipment[0].actions.length > 0) {
@@ -638,7 +638,7 @@ export default class CoActor extends Actor {
         });
 
       const updateActions = { _id: newEquipment[0].id, "system.actions": newActions };
-      await this.actor.updateEmbeddedDocuments("Item", [updateActions]);
+      await this.updateEmbeddedDocuments("Item", [updateActions]);
     }
   }
 
@@ -752,7 +752,7 @@ export default class CoActor extends Actor {
     let formula = null;
     const profile = this.profile;
     if (profile.length != 0) formula = this.profile[0].system.mpFormula;
-    total = formula ? Utils.evaluate(this, formula, null) : 0;
+    total = formula ? Utils.evaluate(this, formula, null, true) : 0;
     return total;
   }
 
