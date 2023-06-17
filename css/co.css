@@ -557,23 +557,20 @@ Copied from dnd5e
   flex: auto;
   text-align: left;
 }
-.co h3.form-header {
+.co .form-header {
   margin: 0 0 0.25em 0;
   padding: 2px 0;
-  border-top: 2px groove #eeede0;
   border-bottom: 2px groove #eeede0;
   font-family: "Modesto Condensed", "Palatino Linotype", serif;
-  font-size: 20px;
-  font-weight: 700;
-}
-.co h4.form-header {
-  margin: 0 0 0.25em 0;
-  padding: 2px 0;
-  border-top: none;
-  border-bottom: 2px groove #eeede0;
-  font-family: 'Signika', sans-serif;
   color: #4b4a44;
   font-weight: bold;
+}
+.co h3.form-header {
+  border-top: 2px groove #eeede0;
+  font-size: 20px;
+}
+.co h4.form-header {
+  border-top: none;
 }
 .co .tag {
   display: inline-block;
