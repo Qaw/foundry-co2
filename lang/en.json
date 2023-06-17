@@ -74,7 +74,9 @@
         "mpFormula": "Formule de calcul pour les Points de Magie",
         "martialCategory" : "Catégorie martiale",
         "martialTraining" : "Formation martiale",
-        "martialTrainings" : "Formations martiales"
+        "martialTrainings" : "Formations martiales",
+        "formulaAttack": "Formule d'attaque",
+        "formulaDamage": "Formule des dommages"
       },
       "short": {
         "label" : "Label",
@@ -274,6 +276,7 @@
     },
     "roll": {
       "skillcheck": "Test de compétence",
+      "attackcheck": "Jet d'Attaque",
       "critical": "Succès critique",
       "success": "Succès",
       "fumble": "Échec critique",

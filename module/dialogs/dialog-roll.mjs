@@ -77,3 +77,48 @@ export class CoSkillRollDialog extends Dialog {
     return total;
   }
 }
+
+export class CoAttackRollDialog extends Dialog {
+  constructor(attackRoll, html, options) {
+
+    options.classes.push("attackRoll");
+    options.width = 500;
+
+    let conf = {
+      title: attackRoll.label,
+      content: html,
+      buttons: {
+        cancel: {
+          icon: '<i class="fas fa-times"></i>',
+          label: game.i18n.localize("CO.ui.cancel"),
+          callback: () => { this.close() }
+        },
+        submit: {
+          icon: '<i class="fas fa-check"></i>',
+          label: game.i18n.localize("CO.ui.submit"),
+          callback: async (html) => {
+            const dice = html.find("#dice").val();
+            const formulaAttack = html.find("#formulaAttack").val();
+            const formulaDamage = html.find("#formulaDamage").val();
+            const critrange = html.find("input#critrange").val();
+            const difficulty = html.find("#difficulty").val();
+            let roll = await this.attackRoll.roll(attackRoll.label, dice, formulaAttack, difficulty, critrange);
+            await this.attackRoll.chat(roll);
+          }
+        }
+      },
+      default: "submit"
+    };
+
+    super(conf, options);
+    this.attackRoll = attackRoll;
+  }
+
+  static async create(attackRoll, dialogTemplateData) {
+    let options = { classes: ["co", "dialog"], height: "fit-content", "z-index": 99999 };
+    let html = await renderTemplate("systems/co/templates/dialogs/attack-dialog.hbs", dialogTemplateData);
+
+    return new CoAttackRollDialog(attackRoll, html, options);
+  }
+
+}

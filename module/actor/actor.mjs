@@ -357,7 +357,7 @@ export default class CoActor extends Actor {
       // Recherche des resolvers de l'action
       let resolvers = Object.values(action.resolvers).map((a) => new Resolver(a.type, a.skill, a.dmg));
       for (const resolver of resolvers) {
-        let res = resolver.resolve(this, item);
+        let res = resolver.resolve(this, item, action);
       }
     }
   }

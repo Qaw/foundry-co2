@@ -20,7 +20,7 @@ export default class CoBaseActorSheet extends ActorSheet {
     Log.debug(rolling);
     
     switch(rollType){
-      case "skillcheck" : new CoSkillCheck(this.actor).init(event, rolling);
+      case "skillcheck" : new CoSkillCheck(this.actor).init(rolling);
       case "combatcheck" : break;
     }
     // return this.actor.skillCheck(event, this.actor);

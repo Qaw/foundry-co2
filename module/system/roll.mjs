@@ -1,11 +1,11 @@
 import {Log} from "../utils/log.mjs";
 import {Utils} from "./utils.mjs";
 import { CoChat } from "../ui/chat.mjs";
-import { CoSkillRollDialog } from "../dialogs/dialog-roll.mjs";
+import { CoAttackRollDialog, CoSkillRollDialog } from "../dialogs/dialog-roll.mjs";
 
 class CoRoll {
     constructor(actor) {this.actor = actor;}
-    init(event, actor, args){}
+    init(args){}
     dialog(label){}
     roll(){}
     chat(){}
@@ -16,20 +16,20 @@ export class CoSkillCheck extends CoRoll {
         super(actor);
     }
 
-    init(event, rolling) {
-        return this.dialog(event, this.actor, rolling);
+    init(rolling) {
+        return this.dialog(rolling);
     }
 
-    async dialog(event, actor, rolling) {
+    async dialog(rolling) {
 
-        // 
-        const rollingSkill = eval("actor." + Utils.shortcutResolve(rolling));
+        console.log(('rolling : ', rolling));
+
+        const rollingSkill = foundry.utils.getProperty(this.actor, Utils.shortcutResolve(rolling));
         let parts = rolling.replace("@", "").split(".");
         
-        // 
         const rollingLabel = game.i18n.localize("CO.dialogs.skillCheck") + " - " + game.i18n.localize("CO."+ parts[0] + ".long." + parts[1]);
 
-        const mod = eval('actor.system.abilities.' + parts[1] + '.mod');
+        const mod = rollingSkill.mod;
 
         // CoSkillRollDialog
         this.label = rollingLabel;
@@ -44,7 +44,7 @@ export class CoSkillCheck extends CoRoll {
             weakened : false,
             difficulty : 10,
             showDifficulty : true,
-            skillBonuses: actor.getSkillBonuses(parts[1]),
+            skillBonuses: this.actor.getSkillBonuses(parts[1]),
             totalSkillBonuses: 0
         };
 
@@ -86,12 +86,69 @@ export class CoDmgRoll extends CoRoll {
     chat(){}
 }
 
-export class CoAttackRoll extends CoRoll {
+
+
+
+export class CoAttackCheck extends CoRoll {
+    constructor(actor, item) {
+        super(actor);
+        this.item = item;
+    }
+
+    // {skillFormulaEvaluated, damageFormulaEvaluated, crit, diff}
+    init(rolling) {
+        return this.dialog(rolling);
+    }
+
+
+    async dialog(rolling) {
+       
+        // const rollingLabel = game.i18n.localize("CO.dialogs.skillCheck") + " - " + game.i18n.localize("CO."+ parts[0] + ".long." + parts[1]);
+        const rollingLabel = `${rolling.actionName} (${rolling.itemName})`;
+
+        // CoSkillRollDialog
+        this.label = rollingLabel;
+        const dialogData = {
+            label: rollingLabel,
+            critrange : rolling.crit,
+            difficulty : rolling.diff,
+            showDifficulty : true,
+            formulaAttack: rolling.skillFormulaEvaluated,
+            formulaDamage: rolling.damageFormulaEvaluated
+        };
+
+        let rollDialog = await CoAttackRollDialog.create(this, dialogData);
+        rollDialog.render(true);
+    }
+
     attackRoll(skillFormula, damageFormula) {
         Log.info("ATTACK ROLL avec Formule : " + skillFormula + " et Dommages : " + damageFormula);
     }
-    dialog(){}
-    chat(){}
+
+    roll(label, dice, formulaAttack, difficulty, critrange){
+        let r = new CoAttackRoll(label, dice, formulaAttack, formulaDamage, difficulty, critrange);
+        return r.roll(this.actor);
+    }
+
+    async chat(roll){
+        await new CoChat(this.actor)
+            .withTemplate('systems/co/templates/chat/attack-card.hbs')
+            .withData({
+                actorId: this.actor.id,
+                label: roll._label,
+                formula: roll._formula,
+                difficulty: roll._difficulty,
+                showDifficulty: !!roll._difficulty,
+                isCritical: roll._isCritical,
+                isFumble: roll._isFumble,
+                isSuccess: roll._isSuccess,
+                isFailure: !roll._isSuccess,
+                total: roll._rollTotal,
+                toolTip: roll._toolTip
+            })
+            .withRoll(roll._roll)
+            .create();
+    }
 }
 
 export class CoSkillRoll {
@@ -108,6 +165,72 @@ export class CoSkillRoll {
         this._difficulty = difficulty;
         this._critrange = critrange;
         this._formula = (this._total === 0) ? this._dice : ((this._totalBonusMalus === 0) ? `${this._dice} ${this._mod}`: `${this._dice} ${this._mod} + ${this._totalBonusMalus}`);
+        this._isCritical = false;
+        this._isFumble = false;
+        this._isSuccess = false;
+        this._roll = null;
+        this._toolTip = null;
+    }
+
+    /**
+     * 
+     * @param {*} actor 
+     * @returns 
+     */
+    async roll(actor){
+        let r = new Roll(this._formula);
+        await r.roll({"async": true});
+        // Getting the dice kept in case of 2d12 or 2d20 rolls
+        const result = r.terms[0].results.find(r => r.active).result;
+        this._isCritical = ((result >= this._critrange.split("-")[0]) || result == 20);
+        this._isFumble = (result == 1);
+        if(this._difficulty){
+            this._isSuccess = r.total >= this._difficulty;
+        }
+        this._roll = r;
+        this._rollTotal = r._total;
+        this._toolTip = new Handlebars.SafeString(await r.getTooltip());
+        return this;
+    }
+
+    /**
+     * @name weaponRoll
+     * @description Jet de dommages d'une arme
+     *
+     * @param {*} actor
+     * @param {*} dmgFormula
+     * @param {*} dmgDescr
+     * @returns
+     */
+    async weaponRoll(actor, dmgFormula, dmgDescr){
+        await this.roll(actor);
+        if (this._difficulty) {
+            if(this._isSuccess && game.settings.get("cof", "useComboRolls")){
+                let r = new CofDamageRoll(this._label, dmgFormula, this._isCritical, dmgDescr);
+                await r.roll(actor);
+                return r;
+            }
+        }
+        else {
+            if(game.settings.get("cof", "useComboRolls")){
+                let r = new CofDamageRoll(this._label, dmgFormula, this._isCritical, dmgDescr);
+                await r.roll(actor);
+                return r;
+            }
+        }
+    }
+}
+
+export class CoAttackRoll {
+
+    constructor(label, dice, formulaAttack, formulaDamage, difficulty, critrange){
+        this._label = label;
+        this._dice = dice;
+        this._formulaAttack = formulaAttack;
+        this._formulaDamage = formulaDamage;
+        this._difficulty = difficulty;
+        this._critrange = critrange;
+        this._formula = `${this._dice} + ${this._formulaAttack}`;
         this._isCritical = false;
         this._isFumble = false;
         this._isSuccess = false;
