@@ -23,6 +23,7 @@
   "CO": {
     "sheet": {
       "character": "Fiche de personnage",
+      "encounter": "Fiche de rencontre",
       "item": "Fiche d'objet personnage"
     },
     "notif": {
@@ -369,6 +370,8 @@
   },
   "SETTINGS": {
     "BaseDef": "Valeur de défense de base",
-    "BaseDefHint": "Valeur de la base de la défense"
+    "BaseDefHint": "Valeur de la base de la défense",
+    "DebugMode": "Mode Debug",
+    "DebugModeHint": "Affiche certaines valeurs techniques. Utile pour les développeurs exclusivement."
   }
 }

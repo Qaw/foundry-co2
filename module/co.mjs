@@ -8,6 +8,7 @@ import { registerHandlebarsHelpers } from './ui/helpers.mjs';
 import {Log} from "./utils/log.mjs";
 import { Modifier } from './system/modifiers.mjs';
 import { registerSystemSettings } from './system/settings.js';
+import CoEncounterSheet from "./actor/sheet/encounter-sheet.mjs";
 
 Hooks.once("init", async function () {
 
@@ -28,7 +29,10 @@ Hooks.once("init", async function () {
 
     // Register application sheets
     Actors.registerSheet("co", CoCharacterSheet, {
-        types: ["character", "encounter", "vendor", "vehicle", "marker"], makeDefault: true, label: "CO.sheet.character"
+        types: ["character", "vendor", "vehicle", "marker"], makeDefault: true, label: "CO.sheet.character"
+    });
+    Actors.registerSheet("co", CoEncounterSheet, {
+        types: ["encounter"], makeDefault: true, label: "CO.sheet.encounter"
     });
 
     Items.registerSheet("co", CoItemSheet, {

@@ -397,6 +397,9 @@ Copied from dnd5e
 .co .flxrow .flex4 {
   flex: 4;
 }
+.co.sheet.actor {
+  min-width: 765px;
+}
 .co.sheet.actor .window-content {
   padding: 0;
 }

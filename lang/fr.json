@@ -23,6 +23,7 @@
   "CO": {
     "sheet": {
       "character": "Fiche de personnage",
+      "encounter": "Fiche de rencontre",
       "item": "Fiche d'objet personnage"
     },
     "notif": {

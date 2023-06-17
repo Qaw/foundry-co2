@@ -20,6 +20,9 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-effects.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-bio.hbs",
 
+    // ENCOUNTER
+    "systems/" + SYSTEM_NAME + "/templates/actors/encounter-sheet.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/actors/parts/encounter-data.hbs",
     // EFFECTS
     "systems/" + SYSTEM_NAME + "/templates/effects/effects.hbs",
     "systems/" + SYSTEM_NAME + "/templates/effects/effects-item.hbs",

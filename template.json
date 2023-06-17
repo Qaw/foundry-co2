@@ -258,7 +258,8 @@
       }
     },
     "encounter": {
-      "templates": ["abilities", "combat", "attributes", "details"]
+      "templates": ["abilities", "combat", "attributes", "details"],
+      "pasteData" : ""
     },
     "vendor": {
       "templates": ["attributes", "details"]

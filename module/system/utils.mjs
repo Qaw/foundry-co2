@@ -59,21 +59,30 @@ export class Utils {
     Log.debug("Custom Formula : ", formula);
 
     let replacedFormula = formula;
+    const DSL = {
+      "@for" : "actor.system.abilities.str.mod",
+      "@str" : "actor.system.abilities.str.mod",
+      "@dex" : "actor.system.abilities.dex.mod",
+      "@con" : "actor.system.abilities.con.mod",
+      "@int" : "actor.system.abilities.int.mod",
+      "@sag" : "actor.system.abilities.wis.mod",
+      "@wis" : "actor.system.abilities.wis.mod",
+      "@cha" : "actor.system.abilities.cha.mod",
+      "@atc" : "actor.system.abilities.melee.mod",
+      "@melee" : "actor.system.abilities.melee.mod",
+      "@atd" : "actor.system.abilities.ranged.mod",
+      "@ranged" : "actor.system.abilities.ranged.mod",
+      "@atm" : "actor.system.abilities.magic.mod",
+      "@magic" : "actor.system.abilities.magic.mod",
+      "@def" : "actor.system.abilities.def.value",
+      "@niv" : "actor.system.attributes.level.value",
+      "@lvl" : "actor.system.attributes.level.value"
+    }
 
     // Shortcuts
-    if (replacedFormula.includes("@for")) replacedFormula = replacedFormula.replace("@for", actor.system.abilities.str.mod);
-    if (replacedFormula.includes("@dex")) replacedFormula = replacedFormula.replace("@dex", actor.system.abilities.dex.mod);
-    if (replacedFormula.includes("@con")) replacedFormula = replacedFormula.replace("@con", actor.system.abilities.con.mod);
-    if (replacedFormula.includes("@int")) replacedFormula = replacedFormula.replace("@int", actor.system.abilities.int.mod);
-    if (replacedFormula.includes("@sag")) replacedFormula = replacedFormula.replace("@sag", actor.system.abilities.wis.mod);
-    if (replacedFormula.includes("@cha")) replacedFormula = replacedFormula.replace("@cha", actor.system.abilities.cha.mod);
-
-    if (replacedFormula.includes("@atc")) replacedFormula = replacedFormula.replace("@atc", actor.system.combat.melee.mod);
-    if (replacedFormula.includes("@atd")) replacedFormula = replacedFormula.replace("@atd", actor.system.combat.ranged.mod);
-    if (replacedFormula.includes("@atm")) replacedFormula = replacedFormula.replace("@atm", actor.system.combat.magic.mod);
-    if (replacedFormula.includes("@def")) replacedFormula = replacedFormula.replace("@def", actor.system.combat.def.value);
-
-    if (replacedFormula.includes("@niv")) replacedFormula = replacedFormula.replace("@niv", actor.system.attributes.level.value);
+    Object.keys(DSL).forEach(shortcut => {
+      if(replacedFormula.includes(shortcut)) replacedFormula = replacedFormula.replace(shortcut, eval(DSL[shortcut]));
+    });
 
     if (replacedFormula.includes("@rang")) {
       let startRank = replacedFormula.substring(replacedFormula.indexOf("@rang"));
