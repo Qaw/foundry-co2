@@ -25,4 +25,13 @@ export const registerSystemSettings = function() {
 		requiresReload: true
 	});
 
+	game.settings.register("co", "useVarInit", {
+        name: "SETTINGS.VarInit.name",
+        hint: "SETTINGS.VarInit.hint",
+        scope: 'world',
+		config: true,
+		type: Boolean,
+		default: false,
+		requiresReload: true
+    });
 }

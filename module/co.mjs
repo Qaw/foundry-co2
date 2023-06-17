@@ -61,6 +61,19 @@ Hooks.once("init", async function () {
         game.co.config.martialTrainingsShields = [];
     }
 
+    // Initiative
+    if (game.settings.get("co", "useVarInit")) {
+        CONFIG.Combat.initiative = {
+          formula: "1d6x + @combat.init.value + @abilities.wis.value/100",
+          decimals: 2
+        };
+    } else {
+        CONFIG.Combat.initiative = {
+          formula: "@combat.init.value + @abilities.wis.value/100",
+          decimals: 2
+        };
+    }
+
 });
 
 Hooks.once("ready", async function () {   

@@ -378,6 +378,10 @@
     "BaseDef": "Valeur de défense de base",
     "BaseDefHint": "Valeur de la base de la défense",
     "DebugMode": "Mode Debug",
-    "DebugModeHint": "Affiche certaines valeurs techniques. Utile pour les développeurs exclusivement."
+    "DebugModeHint": "Affiche certaines valeurs techniques. Utile pour les développeurs exclusivement.",
+    "VarInit": {
+      "name": "Using the variable initiative rule",
+      "hint": "The result of an explosive d6 is added to the initiative: add and re-roll on 6."
+    }
   }
 }

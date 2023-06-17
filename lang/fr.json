@@ -389,6 +389,10 @@
     "BaseDef": "Valeur de défense de base",
     "BaseDefHint": "Valeur de la base de la défense",
     "DebugMode": "Mode Debug",
-    "DebugModeHint": "Affiche certaines valeurs techniques. Utile pour les développeurs exclusivement."
+    "DebugModeHint": "Affiche certaines valeurs techniques. Utile pour les développeurs exclusivement.",
+    "VarInit": {
+      "name": "Utiliser la règle de l'initiative variable",
+      "hint": "Le résultat d’un d6 explosif est ajouté à l'initiative : ajout et relance sur 6."
+    }
   }
 }
