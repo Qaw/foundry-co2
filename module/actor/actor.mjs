@@ -204,11 +204,6 @@ export default class CoActor extends Actor {
   getSkillBonuses(ability) {
     const modifiersByTarget = this.skillModifiers.filter((m) => m.target === ability);
     return modifiersByTarget.map((modifier) => ( { name: modifier.sourceName, value: modifier.evaluate(this), description: modifier.sourceDescription }));
-    // let bonuses = [];
-    // modifiersByTarget.forEach((modifier) => {
-    //   bonuses.push({ name: modifier.sourceName, value: modifier.evaluate(this), description: modifier.sourceDescription });
-    // });
-    // return bonuses;
   }
 
   /**
@@ -289,14 +284,11 @@ export default class CoActor extends Actor {
    */
   deleteItem(itemId) {
     const item = this.items.find((item) => item.id === itemId);
-
     switch (item.type) {
-      case ITEM_TYPE.TRAIT:
-        return this.deleteEmbeddedDocuments("Item", [itemId]);
       case ITEM_TYPE.CAPACITY:
-        return this.deleteEmbeddedDocuments("Item", [itemId]);
       case ITEM_TYPE.FEATURE:
         return this.deleteEmbeddedDocuments("Item", [itemId]);
+      default: break;
     }
   }
 

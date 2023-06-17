@@ -172,22 +172,52 @@
       "templates": ["combat", "attributes", "resources", "details"],
       "abilities": {
         "str": {
-          "base": 10
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
         },
         "dex": {
-          "base": 10
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
         },
         "con": {
-          "base": 10
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
         },
         "int": {
-          "base": 10
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
         },
         "wis": {
-          "base": 10
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
         },
         "cha": {
-          "base": 10
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
         }
       },
       "combat": {

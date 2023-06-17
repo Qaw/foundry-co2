@@ -4,7 +4,7 @@
     "description": "Le système Chroniques Oubliées pour FoundryVTT.",
     "version": "11.302.0",
     "compatibility": {
-      "minimum": 10,
+      "minimum": 11,
       "verified": "11.302"
     },
     "authors": [
