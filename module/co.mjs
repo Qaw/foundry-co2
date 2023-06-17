@@ -10,12 +10,14 @@ import { Modifier } from './system/modifiers.mjs';
 import { registerSystemSettings } from './system/settings.js';
 import CoEncounterSheet from "./actor/sheet/encounter-sheet.mjs";
 
+import { CoActorProxy } from './actor/proxy.mjs';
+
 Hooks.once("init", async function () {
 
     Log.debug("Initializing...");
 
     // Configuration
-    CONFIG.Actor.documentClass = CoActor;
+    CONFIG.Actor.documentClass = CoActorProxy;
     CONFIG.Item.documentClass = CoItem;
 
     game.co = {
