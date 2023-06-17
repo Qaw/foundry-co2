@@ -172,52 +172,22 @@
       "templates": ["combat", "attributes", "resources", "details"],
       "abilities": {
         "str": {
-          "superior": false,
-          "base": 10,
-          "bonuses" : {
-            "sheet" : 0,
-            "effects" : 0
-          }
+          "base": 10
         },
         "dex": {
-          "superior": false,
-          "base": 10,
-          "bonuses" : {
-            "sheet" : 0,
-            "effects" : 0
-          }
+          "base": 10
         },
         "con": {
-          "superior": false,
-          "base": 10,
-          "bonuses" : {
-            "sheet" : 0,
-            "effects" : 0
-          }
+          "base": 10
         },
         "int": {
-          "superior": false,
-          "base": 10,
-          "bonuses" : {
-            "sheet" : 0,
-            "effects" : 0
-          }
+          "base": 10
         },
         "wis": {
-          "superior": false,
-          "base": 10,
-          "bonuses" : {
-            "sheet" : 0,
-            "effects" : 0
-          }
+          "base": 10
         },
         "cha": {
-          "superior": false,
-          "base": 10,
-          "bonuses" : {
-            "sheet" : 0,
-            "effects" : 0
-          }
+          "base": 10
         }
       },
       "combat": {
@@ -272,7 +242,7 @@
     }
   },
   "Item": {
-    "types": ["equipment", "feature", "profile", "path", "capacity"],
+    "types": ["capacity", "equipment", "feature", "profile", "path"],
     "templates": {
       "common": {
         "description": {

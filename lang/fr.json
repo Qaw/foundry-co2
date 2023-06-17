@@ -1,24 +1,26 @@
 {
-  "ACTOR": {
-    "TypeCharacter": "Personnage",
-    "TypeEncounter": "Rencontre",
-    "TypeVendor": "Vendeur/Trésor",
-    "TypeVehicle": "Véhicule",
-    "TypeMarker": "Marqueur"
-  },
-  "ITEM": {
-    "TypeItem": "Objet",
-    "TypeEquipment": "Équipement",
-    "TypeFeature": "Feature",
-    "TypeTrait": "Trait",
-    "TypeProfile": "Profil",
-    "TypeConsumable": "Consommable/Munition",
-    "TypeLoot": "Butin/Trésor",
-    "TypeCurrency": "Monnaie",
-    "TypeContainer": "Conteneur",
-    "TypeAction": "Action",
-    "TypePath": "Voie",
-    "TypeCapacity": "Capacité"
+  "TYPES" : {
+    "Actor" : {
+      "character" : "Personnage",
+      "encounter": "Rencontre",
+      "vendor": "Vendeur/Trésor",
+      "vehicle": "Véhicule",
+      "marker": "Marqueur"
+    },
+    "Item": {
+      "item": "Objet",
+      "equipment": "Équipement",
+      "feature": "Feature",
+      "trait": "Trait",
+      "profile": "Profil",
+      "consumable": "Consommable/Munition",
+      "loot": "Butin/Trésor",
+      "currency": "Monnaie",
+      "container": "Conteneur",
+      "action": "Action",
+      "path": "Voie",
+      "capacity": "Capacité"
+    }
   },
   "CO": {
     "sheet": {
@@ -125,6 +127,7 @@
       "add" : "Ajouter",
       "remove" : "Supprimer",
       "diceType": "Type de dé",
+      "data" : "Données",
       "kh": "Garder le plus haut",
       "kl": "Garder le plus bas",
       "duration": "Durée",

@@ -22,60 +22,35 @@ export default class CoActor extends Actor {
    * @returns {Modifier[]} An empty array or an array of Modifiers
    */
   get abilitiesModifiers() {
-    return [
-        ...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, MODIFIER_SUBTYPE.ABILITY),
-        ...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.ABILITY),
-        ...Modifiers.getModifiersByTypeSubtype(this.profile, MODIFIER_TYPE.PROFILE, MODIFIER_SUBTYPE.ABILITY),
-        ...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ABILITY)
-    ];
+    return this._getModifiersBySubtype(MODIFIER_SUBTYPE.ABILITY);
   }
 
   /**
    * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Combat
    */
   get combatModifiers() {
-    return [
-        ...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, MODIFIER_SUBTYPE.COMBAT),
-        ...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.COMBAT),
-        ...Modifiers.getModifiersByTypeSubtype(this.profile, MODIFIER_TYPE.PROFILE, MODIFIER_SUBTYPE.COMBAT),
-        ...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.COMBAT)
-    ];
+    return this._getModifiersBySubtype(MODIFIER_SUBTYPE.COMBAT);
   }
 
   /**
    * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Attribute
    */
   get attributeModifiers() {
-    return [
-      ...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, MODIFIER_SUBTYPE.ATTRIBUTE),
-      ...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.ATTRIBUTE),
-      ...Modifiers.getModifiersByTypeSubtype(this.profile, MODIFIER_TYPE.PROFILE, MODIFIER_SUBTYPE.ATTRIBUTE),
-      ...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.ATTRIBUTE)
-    ];
+    return this._getModifiersBySubtype(MODIFIER_SUBTYPE.ATTRIBUTE);
   }
 
   /**
    * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Skill
    */
   get skillModifiers() {
-    return [
-      ...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, MODIFIER_SUBTYPE.SKILL),
-      ...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.SKILL),
-      ...Modifiers.getModifiersByTypeSubtype(this.profile, MODIFIER_TYPE.PROFILE, MODIFIER_SUBTYPE.SKILL),
-      ...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.SKILL)
-    ];
+    return this._getModifiersBySubtype(MODIFIER_SUBTYPE.SKILL);
   }
 
   /**
    * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of typeEquipment, Feature, Profile or Capacity with the subtype Resource
    */
   get resourceModifiers() {
-    return [
-      ...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, MODIFIER_SUBTYPE.RESOURCE),
-      ...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, MODIFIER_SUBTYPE.RESOURCE),
-      ...Modifiers.getModifiersByTypeSubtype(this.profile, MODIFIER_TYPE.PROFILE, MODIFIER_SUBTYPE.RESOURCE),
-      ...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, MODIFIER_SUBTYPE.RESOURCE)
-    ];
+    return this._getModifiersBySubtype(MODIFIER_SUBTYPE.RESOURCE);
   }
 
   /**
@@ -228,11 +203,12 @@ export default class CoActor extends Actor {
    */
   getSkillBonuses(ability) {
     const modifiersByTarget = this.skillModifiers.filter((m) => m.target === ability);
-    let bonuses = [];
-    modifiersByTarget.forEach((modifier) => {
-      bonuses.push({ name: modifier.sourceName, value: modifier.evaluate(this), description: modifier.sourceDescription });
-    });
-    return bonuses;
+    return modifiersByTarget.map((modifier) => ( { name: modifier.sourceName, value: modifier.evaluate(this), description: modifier.sourceDescription }));
+    // let bonuses = [];
+    // modifiersByTarget.forEach((modifier) => {
+    //   bonuses.push({ name: modifier.sourceName, value: modifier.evaluate(this), description: modifier.sourceDescription });
+    // });
+    // return bonuses;
   }
 
   /**
@@ -408,7 +384,7 @@ export default class CoActor extends Actor {
    */
   async toggleCapacityLearned(capacityId) {
     // Mise à jour de la capacité et de ses actions
-    await this._toggleItemFieldAndctions(capacityId, "learned");
+    await this._toggleItemFieldAndActions(capacityId, "learned");
 
     // Mise à jour du rang de la voie correspondante
     let path = this.items.get(this.items.get(capacityId).system.path);
@@ -422,7 +398,7 @@ export default class CoActor extends Actor {
    */
   async toggleEquipmentEquipped(itemId) {
     // Mise à jour de la capacité et de ses actions
-    await this._toggleItemFieldAndctions(itemId, "equipped");
+    await this._toggleItemFieldAndActions(itemId, "equipped");
   }
 
   /**
@@ -739,7 +715,57 @@ export default class CoActor extends Actor {
    * Perform any Encounter specific preparation.
    * @protected
    */
-  _prepareEncounterDerivedData() {}
+  _prepareEncounterDerivedData() {
+
+    for (const [key, ability] of Object.entries(this.system.abilities)) {
+      Log.debug(ability);
+    //   const bonuses = Object.values(ability.bonuses).reduce((prev, curr) => prev + curr);
+    //   const abilityModifiers = Modifiers.computeTotalModifiersByTarget(this, this.abilitiesModifiers, key);
+    //
+    //   ability.value = ability.base + bonuses + abilityModifiers.total;
+    //   ability.tooltip = abilityModifiers.tooltip;
+    //
+    //   ability.mod = Stats.getModFromValue(ability.value);
+    }
+
+    // for (const [key, skill] of Object.entries(this.system.combat)) {
+    //   const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr);
+    //   const abilityBonus = skill.ability && this.system.abilities[skill.ability].mod ? this.system.abilities[skill.ability].mod : 0;
+    //
+    //   if ([COMBAT.MELEE, COMBAT.RANGED, COMBAT.MAGIC].includes(key)) {
+    //     this._prepareAttack(key, skill, abilityBonus, bonuses);
+    //   }
+    //
+    //   if (key === COMBAT.INIT) {
+    //     this._prepareInit(skill, bonuses);
+    //   }
+    //
+    //   if (key === COMBAT.DEF) {
+    //     this._prepareDef(skill, abilityBonus, bonuses);
+    //   }
+    // }
+
+    // this._prepareHPMax();
+
+    // for (const [key, skill] of Object.entries(this.system.resources)) {
+    //   const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr);
+    //
+    //   // Points de chance  - Fortune Points - FP
+    //   if (key === RESOURCES.FORTUNE) {
+    //     this._prepareFP(skill, bonuses);
+    //   }
+    //
+    //   // Points de mana - Mana Points - MP
+    //   if (key === RESOURCES.MANA) {
+    //     this._prepareMP(skill, bonuses);
+    //   }
+    //
+    //   // Points de récupération - Recovery Points - RP
+    //   if (key === RESOURCES.RECOVERY) {
+    //     this._prepareRP(skill, bonuses);
+    //   }
+    // }
+  }
 
   _prepareFP(skill, bonuses) {
     skill.base = this._computeBaseFP();
@@ -852,7 +878,7 @@ export default class CoActor extends Actor {
    * @param {*} itemId
    * @param {*} fieldName
    */
-  async _toggleItemFieldAndctions(itemId, fieldName) {
+  async _toggleItemFieldAndActions(itemId, fieldName) {
     let item = this.items.get(itemId);
     let fieldValue = item.system[fieldName];
     await this.updateEmbeddedDocuments("Item", [{ _id: itemId, [`system.${fieldName}`]: !fieldValue }]);
@@ -861,6 +887,15 @@ export default class CoActor extends Actor {
     }
   }
   //#endregion
+
+  _getModifiersBySubtype(subtype) {
+    return [
+      ...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, subtype),
+      ...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, subtype),
+      ...Modifiers.getModifiersByTypeSubtype(this.profile, MODIFIER_TYPE.PROFILE, subtype),
+      ...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, subtype)
+    ];
+  }
 
   //
   // deleteItem(itemId) {

@@ -9,3 +9,4 @@ node_modules/
 # OS Specific
 .DS_Store
 foundry.js
+/editor.html

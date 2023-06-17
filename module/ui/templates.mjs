@@ -23,6 +23,7 @@ export const preloadHandlebarsTemplates = async function () {
     // ENCOUNTER
     "systems/" + SYSTEM_NAME + "/templates/actors/encounter-sheet.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/encounter-data.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/actors/parts/encounter-stats.hbs",
     // EFFECTS
     "systems/" + SYSTEM_NAME + "/templates/effects/effects.hbs",
     "systems/" + SYSTEM_NAME + "/templates/effects/effects-item.hbs",
