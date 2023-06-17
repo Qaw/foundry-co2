@@ -614,34 +614,35 @@ Copied from dnd5e
   color: lightgray;
 }
 .co .editor {
-  border: 1px solid red;
-  background-color: red;
   margin: 0;
   overflow: hidden;
+  height: 100%;
+  width: 100%;
   min-height: 200px;
 }
 .co .editor .editor-content {
-  border: 1px solid blue;
-  background-color: blue;
   padding: 5px;
   margin: 0;
   overflow: auto;
   height: 100%;
+  width: 100%;
   min-height: 100%;
   max-height: 100%;
 }
 .co .editor .tox {
-  border: 1px solid purple;
-  background-color: purple;
   padding: 0;
   margin: 0;
   overflow: auto;
   height: 100%;
+  width: 100%;
   min-height: 100%;
   max-height: 100%;
 }
-.co.sheet.actor {
+.co.sheet.actor.character {
   min-width: 765px;
+}
+.co.sheet.actor.encounter {
+  min-width: 500px;
 }
 .co.sheet.actor .window-content {
   padding: 0;
@@ -681,16 +682,65 @@ Copied from dnd5e
   max-width: 150px;
   max-height: 200px;
 }
-.co.sheet.actor .window-content form.editable .sidebar .tags,
-.co.sheet.actor .window-content form.locked .sidebar .tags {
+.co.sheet.actor .window-content form.editable .sidebar .features,
+.co.sheet.actor .window-content form.locked .sidebar .features {
   list-style-type: none;
 }
-.co.sheet.actor .window-content form.editable .sidebar .tags .tag,
-.co.sheet.actor .window-content form.locked .sidebar .tags .tag {
+.co.sheet.actor .window-content form.editable .sidebar .features .featured-item,
+.co.sheet.actor .window-content form.locked .sidebar .features .featured-item {
   border: 2px groove #eeede0;
   padding: 3px;
   margin-bottom: 3px;
   color: #4b4a44;
+}
+.co.sheet.actor .window-content form.editable .sidebar .monitor .hp,
+.co.sheet.actor .window-content form.locked .sidebar .monitor .hp,
+.co.sheet.actor .window-content form.editable .sidebar .monitor .def,
+.co.sheet.actor .window-content form.locked .sidebar .monitor .def,
+.co.sheet.actor .window-content form.editable .sidebar .monitor .init,
+.co.sheet.actor .window-content form.locked .sidebar .monitor .init {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 5px;
+  grid-auto-columns: minmax(60px, 60px);
+}
+.co.sheet.actor .window-content form.editable .sidebar .monitor .hp .cell,
+.co.sheet.actor .window-content form.locked .sidebar .monitor .hp .cell,
+.co.sheet.actor .window-content form.editable .sidebar .monitor .def .cell,
+.co.sheet.actor .window-content form.locked .sidebar .monitor .def .cell,
+.co.sheet.actor .window-content form.editable .sidebar .monitor .init .cell,
+.co.sheet.actor .window-content form.locked .sidebar .monitor .init .cell {
+  justify-self: center;
+  align-self: center;
+  min-width: 40px;
+  max-width: 40px;
+}
+.co.sheet.actor .window-content form.editable .sidebar .monitor .hp .cell.icon-big,
+.co.sheet.actor .window-content form.locked .sidebar .monitor .hp .cell.icon-big,
+.co.sheet.actor .window-content form.editable .sidebar .monitor .def .cell.icon-big,
+.co.sheet.actor .window-content form.locked .sidebar .monitor .def .cell.icon-big,
+.co.sheet.actor .window-content form.editable .sidebar .monitor .init .cell.icon-big,
+.co.sheet.actor .window-content form.locked .sidebar .monitor .init .cell.icon-big {
+  min-width: 60px;
+  max-width: 60px;
+}
+.co.sheet.actor .window-content form.editable .sidebar .monitor .hp .cell .field-value,
+.co.sheet.actor .window-content form.locked .sidebar .monitor .hp .cell .field-value,
+.co.sheet.actor .window-content form.editable .sidebar .monitor .def .cell .field-value,
+.co.sheet.actor .window-content form.locked .sidebar .monitor .def .cell .field-value,
+.co.sheet.actor .window-content form.editable .sidebar .monitor .init .cell .field-value,
+.co.sheet.actor .window-content form.locked .sidebar .monitor .init .cell .field-value {
+  max-width: 40px;
+  min-width: 40px;
+}
+.co.sheet.actor .window-content form.editable .sidebar .monitor .hp .cell .header,
+.co.sheet.actor .window-content form.locked .sidebar .monitor .hp .cell .header,
+.co.sheet.actor .window-content form.editable .sidebar .monitor .def .cell .header,
+.co.sheet.actor .window-content form.locked .sidebar .monitor .def .cell .header,
+.co.sheet.actor .window-content form.editable .sidebar .monitor .init .cell .header,
+.co.sheet.actor .window-content form.locked .sidebar .monitor .init .cell .header {
+  color: darkslategray;
+  font-weight: bold;
 }
 .co.sheet.actor .window-content form.editable .main .header,
 .co.sheet.actor .window-content form.locked .main .header {

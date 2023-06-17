@@ -1,13 +1,19 @@
 <form class="{{cssClass}} flexrow" autocomplete="off">
     {{log "Chroniques Oubliées | actor" this}}
-    {{> "systems/co/templates/actors/parts/character-sidebar.hbs"}}
+    {{> "systems/co/templates/actors/parts/encounter-sidebar.hbs"}}
     <div class="main flexcol">
         <div class="header flexrow">
             <div class="details">
                 <div class="form-label"><span class="field-label header">{{ localize 'CO.label.long.name' }}</span></div>
                 <div class="form-value"><input class="field-value sans" name="name" type="text" value="{{actor.name}}" placeholder="Name" data-dtype="String"/></div>
-                <div class="form-label"><a class="field-label header levelUp">{{ localize 'CO.label.long.level' }}</a></div>
+                <div class="form-label"><a class="field-label header">{{ localize 'CO.label.short.nc' }}</a></div>
                 <div class="form-value"><input class="field-value sans" name="system.attributes.level.value" type="text" value="{{attributes.level.value}}" data-dtype="Number"/></div>
+                <div class="form-label"><a class="field-label header">{{ localize 'CO.ui.size' }}</a></div>
+                <div class="form-value"><input class="field-value sans" name="system.details.size" type="text" value="{{details.size}}" data-dtype="String"/></div>
+                <div class="form-label"><a class="field-label header">{{ localize 'CO.label.long.category' }}</a></div>
+                <div class="form-value"><input class="field-value sans" name="system.details.category" type="text" value="{{details.category}}" data-dtype="String"/></div>
+                <div class="form-label"><a class="field-label header">{{ localize 'CO.label.long.archetype' }}</a></div>
+                <div class="form-value"><input class="field-value sans" name="system.details.archetype" type="text" value="{{details.archetype}}" data-dtype="String"/></div>
             </div>
         </div>
         <div class="nav">

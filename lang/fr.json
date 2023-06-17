@@ -49,6 +49,7 @@
         "modifiers": "Modificateurs",
         "name": "Nom",
         "level": "Niveau",
+        "nc" : "Niveau de Créature",
         "profile": "Profil",
         "capacity": "Capacité",
         "capacities": "Capacités",
@@ -63,18 +64,22 @@
         "effects": "Effets",
         "properties": "Propriétés",
         "hp": "Points de vie",
+        "def": "Défense",
+        "init": "Initiative",
         "hd": "Dé de vie",
         "rp": "Points de récupération",
         "type" : "Type",
         "subtype" : "Sous-type",
         "category" : "Catégorie",
+        "archetype" : "Archétype",
         "family" : "Famille (de profil)",
         "source" : "Source",
         "spellcasting" : "Modificateur pour Attaque Magique",
         "mpFormula": "Formule de calcul pour les Points de Magie",
         "martialCategory" : "Catégorie martiale",
         "martialTraining" : "Formation martiale",
-        "martialTrainings" : "Formations martiales"
+        "martialTrainings" : "Formations martiales",
+        "current" : "Actuel"
       },
       "short": {
         "label" : "Label",
@@ -90,6 +95,7 @@
         "modifiers": "Mods",
         "name": "Nom",
         "level": "Niv.",
+        "nc" : "NC",
         "profile": "Profil",
         "capacity": "Capacité",
         "capacities": "Capacités",
@@ -102,11 +108,14 @@
         "effects": "FX",
         "properties": "Props",
         "hp": "PV",
+        "def": "DEF",
+        "init": "Init.",
         "hd": "DV",
         "rp": "PR",
         "type" : "Tpe",
         "subtype" : "Ss-tpe",
         "category" : "Cat.",
+        "archetype" : "Arch.",
         "quantity" : "Qté",
         "family" : "Fam.",
         "source" : "Src.",
@@ -114,8 +123,8 @@
         "spellcasting" : "Mod. pour ATM",
         "martialCategory" : "Cat. martiale",
         "martialTraining" : "Form. martiale",
-        "martialTrainings" : "Form. martiales"
-
+        "martialTrainings" : "Form. martiales",
+        "current" : "Actuel"
       }
     },
     "ui": {
@@ -187,7 +196,9 @@
       "inventory" : "Inventaire",
       "armors" : "Armures",
       "weapons" : "Armes",
-      "shields" : "Boucliers"
+      "shields" : "Boucliers",
+      "miscBonuses" : "Bonus divers",
+      "totalBonus" : "Bonus total"
     },
     "properties": {
       "attack": "Attaque",

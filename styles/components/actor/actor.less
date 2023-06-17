@@ -2,7 +2,12 @@
 
 &.sheet {
   &.actor {
-    min-width: 765px;
+    &.character {
+      min-width: 765px;
+    }
+    &.encounter {
+      min-width: 500px;
+    }
     .window-content {
       padding: 0;
       form.editable, form.locked {
@@ -34,14 +39,40 @@
               max-height: 200px;
             }
           }
-          .tags {
+          .features {
             list-style-type: none;
-
-            .tag {
+            .featured-item {
               border: 2px groove #eeede0;
               padding: 3px;
               margin-bottom: 3px;
               color: @colorOlive;
+            }
+          }
+          .monitor {
+            .hp, .def, .init {
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr;
+              grid-gap: 5px;
+              grid-auto-columns: minmax(60px, 60px);
+              .cell {
+                //border : 1px solid red;
+                justify-self: center;
+                align-self: center;
+                min-width: 40px;
+                max-width: 40px;
+                &.icon-big {
+                  min-width: 60px;
+                  max-width: 60px;
+                }
+                .field-value {
+                  max-width: 40px;
+                  min-width: 40px;
+                }
+                .header {
+                  color: darkslategray;
+                  font-weight: bold;
+                }
+              }
             }
           }
         }
