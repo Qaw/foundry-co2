@@ -13,8 +13,8 @@
             <div class="cell icon-big" style="grid-column:1; grid-row:1/ span 2; justify-self: start; align-self: center"><span class="field-label darkslate" title="{{localize "CO.label.long.hp" }}" style="font-size: 60px"><i class="fa-solid fa-heart-pulse"></i></span></div>
             <div class="cell darkslate" style="grid-column:2; grid-row:1; justify-self: start; align-self: center">{{localize "CO.label.short.hp"}}</div>
             <div class="cell" style="grid-column:3; grid-row:1; justify-self: center; align-self: center">
-                <input class="field-value" name="system.attributes.hp.base" type="hidden" value="{{attributes.hp.base}}" data-dtype="Number"/>
-                <input class="field-value sans" name="system.attributes.hp.max" type="text" value="{{attributes.hp.max}}" data-dtype="Number"/>
+                <input class="field-value" name="system.attributes.hp.base" type="text" value="{{attributes.hp.base}}" data-dtype="Number" data-tooltip="PV Max Base"/>
+                <input class="field-value sans" name="system.attributes.hp.max" readonly type="text" value="{{attributes.hp.max}}" data-dtype="Number" data-tooltip="PV Max"/>
             </div>
             <div class="cell darkslate" style="grid-column:2; grid-row:2; justify-self: start; align-self: center">{{localize "CO.label.short.current"}}</div>
             <div class="cell" style="grid-column:3; grid-row:2; justify-self: center; align-self: center">
