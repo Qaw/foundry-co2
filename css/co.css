@@ -849,6 +849,28 @@ Copied from dnd5e
   color: darkslategray;
   font-weight: bold;
 }
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .abilities-container-5cols,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .stats .stats-layout .abilities-container-5cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 3px;
+  grid-auto-columns: minmax(20px, 50px);
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .abilities-container-5cols .cell,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .stats .stats-layout .abilities-container-5cols .cell {
+  justify-self: center;
+  align-self: center;
+  min-width: 40px;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .abilities-container-5cols .cell .field-value,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .stats .stats-layout .abilities-container-5cols .cell .field-value {
+  max-width: 40px;
+}
+.co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .abilities-container-5cols .cell .header,
+.co.sheet.actor .window-content form.locked .main .content .sheet-body .stats .stats-layout .abilities-container-5cols .cell .header {
+  color: darkslategray;
+  font-weight: bold;
+}
 .co.sheet.actor .window-content form.editable .main .content .sheet-body .stats .stats-layout .abilities-container-4cols,
 .co.sheet.actor .window-content form.locked .main .content .sheet-body .stats .stats-layout .abilities-container-4cols {
   display: grid;

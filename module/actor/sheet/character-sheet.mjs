@@ -36,6 +36,8 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     // context.armors = this.actor.armors;
     // context.shields = this.actor.shields;
     context.inventory = this.actor.inventory;
+
+    context.unlocked = this.actor.isUnlocked;
     return context;
   }
 
@@ -50,8 +52,24 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     html.find(".toggle-action").click(this._onUseAction.bind(this));
     html.find(".capacity-learn").click(this._onLearnedToggle.bind(this));
     html.find(".inventory-equip").click(this._onEquippedToggle.bind(this));
+    html.find(".sheet-change-lock").click(this._onSheetChangelock.bind(this));
   }
 
+  /**
+   * Manage the lock/unlock button on the sheet
+   *
+   * @name _onSheetChangelock
+   * @param {*} event
+   */
+  async _onSheetChangelock(event) {
+    event.preventDefault();
+
+    let flagData = await this.actor.getFlag(game.system.id, "SheetUnlocked");
+    if (flagData) await this.actor.unsetFlag(game.system.id, "SheetUnlocked");
+    else await this.actor.setFlag(game.system.id, "SheetUnlocked", "SheetUnlocked");
+    this.actor.sheet.render(true);
+  }
+  
   /**
    *
    * @param {*} event

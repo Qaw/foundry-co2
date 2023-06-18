@@ -138,6 +138,24 @@
                       }
                     }
                   }
+                  .abilities-container-5cols {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+                    grid-gap: 3px;
+                    grid-auto-columns: minmax(20px, 50px);
+                    .cell {
+                      justify-self: center;
+                      align-self: center;
+                      min-width: 40px;
+                      .field-value {
+                        max-width: 40px;
+                      }
+                      .header {
+                        color: darkslategray;
+                        font-weight: bold;
+                      }
+                    }
+                  }
                   .abilities-container-4cols {
                     display: grid;
                     grid-template-columns: 1fr 1fr 1fr 1fr;

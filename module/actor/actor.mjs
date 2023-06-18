@@ -185,6 +185,11 @@ export default class CoActor extends Actor {
     });
     return allActions;
   }
+
+  get isUnlocked() {
+    if (this.getFlag(game.system.id, "SheetUnlocked")) return true;
+    return false;
+  }
   //#endregion
 
   //#region méthodes publiques
