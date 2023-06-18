@@ -63,7 +63,7 @@ export class Modifier {
    * @returns {int} the modifier's value
    */
   evaluate(actor) {
-    return Utils.evaluate(actor, this.value, this.source);
+    return Utils.evaluate(actor, this.value, this.source, true);
   }
   
   /**

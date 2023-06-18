@@ -34,4 +34,27 @@ export const registerSystemSettings = function() {
 		default: false,
 		requiresReload: true
     });
+
+	game.settings.register("co", "displayDifficulty", {
+        name: "SETTINGS.DisplayDifficulty.name",
+        hint: "SETTINGS.DisplayDifficulty.hint",
+        scope: "world",
+        config: true,
+        default: "none",
+        type: String,
+        choices: {
+            "none" : "SETTINGS.DisplayDifficulty.none",
+            "all" : "SETTINGS.DisplayDifficulty.all",
+            "gm" : "SETTINGS.DisplayDifficulty.gm"
+        }
+    });
+
+    game.settings.register("co", "useComboRolls", {
+        name: "SETTINGS.UseComboRolls.name",
+        hint: "SETTINGS.UseComboRolls.hint",
+        scope: "world",
+        config: true,
+        default: true,
+        type: Boolean
+    });
 }

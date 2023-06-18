@@ -102,8 +102,22 @@ export class CoAttackRollDialog extends Dialog {
             const formulaDamage = html.find("#formulaDamage").val();
             const critrange = html.find("input#critrange").val();
             const difficulty = html.find("#difficulty").val();
-            let roll = await this.attackRoll.roll(attackRoll.label, dice, formulaAttack, difficulty, critrange);
-            await this.attackRoll.chat(roll);
+
+            if (options.type === "attack") {
+              let rollAttack = await this.attackRoll.rollAttack(attackRoll.label, dice, formulaAttack, formulaDamage, difficulty, critrange);  
+              await this.attackRoll.chat(rollAttack, "attack");
+
+              if (game.settings.get("co", "useComboRolls")){              
+                let damageRoll = await this.attackRoll.rollDamage(attackRoll.label, formulaDamage);  
+                await this.attackRoll.chat(damageRoll, "damage");
+              }
+            }
+			
+            if (options.type === "damage") {
+              let rollDamage = await this.attackRoll.rollDamage(attackRoll.label, formulaDamage);  
+              await this.attackRoll.chat(rollDamage, "damage");
+            }
+
           }
         }
       },
@@ -115,7 +129,7 @@ export class CoAttackRollDialog extends Dialog {
   }
 
   static async create(attackRoll, dialogTemplateData) {
-    let options = { classes: ["co", "dialog"], height: "fit-content", "z-index": 99999 };
+    let options = { classes: ["co", "dialog"], height: "fit-content", "z-index": 99999, type: dialogTemplateData.type };
     let html = await renderTemplate("systems/co/templates/dialogs/attack-dialog.hbs", dialogTemplateData);
 
     return new CoAttackRollDialog(attackRoll, html, options);

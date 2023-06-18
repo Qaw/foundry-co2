@@ -50,6 +50,8 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     html.find(".path-delete").click(this._onDeletePath.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
     html.find(".toggle-action").click(this._onUseAction.bind(this));
+    html.find(".atttack").click(this._onUseAction.bind(this));
+    html.find(".damage").click(this._onUseAction.bind(this));
     html.find(".capacity-learn").click(this._onLearnedToggle.bind(this));
     html.find(".inventory-equip").click(this._onEquippedToggle.bind(this));
     html.find(".sheet-change-lock").click(this._onSheetChangelock.bind(this));
@@ -90,13 +92,15 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     const element = event.currentTarget;
     const dataset = element.dataset;
     const action = dataset.action;
+    const type = dataset.type;
     const source = dataset.source;
     const indice = dataset.indice;
+ 
 
-    if (action == "activate") {
-      this.actor.activateAction(true, source, indice);
-    } else if (action == "unactivate") {
-      this.actor.activateAction(false, source, indice);
+    if (action === "activate") {
+      this.actor.activateAction(true, source, indice, type);
+    } else if (action === "unactivate") {
+      this.actor.activateAction(false, source, indice, type);
     }
   }
 

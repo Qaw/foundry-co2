@@ -277,6 +277,7 @@
     "roll": {
       "skillcheck": "Test de compétence",
       "attackcheck": "Jet d'Attaque",
+      "damagecheck": "Jet de Dommages",
       "critical": "Succès critique",
       "success": "Succès",
       "fumble": "Échec critique",
@@ -382,6 +383,17 @@
     "VarInit": {
       "name": "Using the variable initiative rule",
       "hint": "The result of an explosive d6 is added to the initiative: add and re-roll on 6."
+    },
+    "DisplayDifficulty": {
+      "name": "Display difficulty",
+      "hint": "Activates the difficulty display on skill/attribute and weapon rolls.",
+      "none": "Do not use or display the difficulty",
+      "all": "Use the difficulty and display it for everyone",
+      "gm": "Use the difficulty and display it only to the GM"
+    },
+    "UseComboRolls": {
+      "name": "Activate combo rolls for attack and damages",
+      "hint": "Allows attack and damage rolls to be made simultaneously."
     }
   }
 }

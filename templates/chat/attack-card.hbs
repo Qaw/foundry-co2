@@ -1,6 +1,6 @@
 
 <div class="chatroll" data-actor-id="{{actorId}}">
-    {{!log 'skill-card' this}}
+    {{!og 'attack-card' this}}
     {{#if showDifficulty}}
         {{#if isSuccess}}
             {{#if isCritical}}
@@ -26,7 +26,7 @@
             {{#if isFumble}}
                 <h2 class="failure fumble"><i class="fas fa-skull-crossbones"></i>&nbsp;{{localize "CO.roll.fumble"}}...</h2>
             {{else}}
-                <h2 class="standard"><i class="fas fa-dice-d20"></i>&nbsp;{{localize "CO.roll.attackcheck"}}</h2>
+                <h2 class="standard"><i class="fas fa-dice-d20"></i>&nbsp; {{#if typeAttack}}{{localize "CO.roll.attackcheck"}} {{else}}{{localize "CO.roll.damagecheck"}} {{/if}}</h2>
             {{/if}}
         {{/if}}
         <h3><strong>{{label}}</strong>

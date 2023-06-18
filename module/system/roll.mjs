@@ -87,53 +87,91 @@ export class CoDmgRoll extends CoRoll {
 }
 
 
-
-
 export class CoAttackCheck extends CoRoll {
     constructor(actor, item) {
         super(actor);
         this.item = item;
     }
 
-    // {skillFormulaEvaluated, damageFormulaEvaluated, crit, diff}
+    
+    /**
+     * @param {Object} rolling {skillFormulaEvaluated, damageFormulaEvaluated, crit, diff}
+     * @returns a dialog box
+     */
     init(rolling) {
         return this.dialog(rolling);
     }
 
-
     async dialog(rolling) {
        
-        // const rollingLabel = game.i18n.localize("CO.dialogs.skillCheck") + " - " + game.i18n.localize("CO."+ parts[0] + ".long." + parts[1]);
         const rollingLabel = `${rolling.actionName} (${rolling.itemName})`;
 
-        // CoSkillRollDialog
         this.label = rollingLabel;
-        const dialogData = {
-            label: rollingLabel,
-            critrange : rolling.crit,
-            difficulty : rolling.diff,
-            showDifficulty : true,
-            formulaAttack: rolling.skillFormulaEvaluated,
-            formulaDamage: rolling.damageFormulaEvaluated
-        };
 
+        let dialogData;
+
+        if (!rolling.auto) {
+            dialogData = {
+                label: rollingLabel,
+                critrange : rolling.crit,
+                difficulty : rolling.diff,
+                showDifficulty : true,
+                skillFormula: rolling.skillFormula,
+                formulaAttack: rolling.skillFormulaEvaluated,
+                damageFormula: rolling.damageFormula,
+                formulaDamage: rolling.damageFormulaEvaluated,
+                auto: rolling.auto,
+                type: rolling.type
+            };
+        }
+        else {
+            dialogData = {
+                        label: rollingLabel,
+                        critrange : '',
+                        difficulty : '',
+                        showDifficulty : false,
+                        formulaAttack: '',
+                        formulaDamage: rolling.damageFormulaEvaluated,
+                        auto: rolling.auto,
+                        type: rolling.type
+            };
+        }
+        
         let rollDialog = await CoAttackRollDialog.create(this, dialogData);
         rollDialog.render(true);
     }
 
-    attackRoll(skillFormula, damageFormula) {
-        Log.info("ATTACK ROLL avec Formule : " + skillFormula + " et Dommages : " + damageFormula);
-    }
-
-    roll(label, dice, formulaAttack, difficulty, critrange){
+    /**
+     * 
+     * @param {*} label 
+     * @param {*} dice 
+     * @param {*} formulaAttack 
+     * @param {*} formulaDamage 
+     * @param {*} difficulty 
+     * @param {*} critrange 
+     * @returns 
+     */
+    rollAttack(label, dice, formulaAttack, formulaDamage, difficulty, critrange){
         let r = new CoAttackRoll(label, dice, formulaAttack, formulaDamage, difficulty, critrange);
         return r.roll(this.actor);
     }
 
-    async chat(roll){
+    rollDamage(label, formulaDamage){
+        let r = new CoDamageRoll(label, formulaDamage);
+        return r.roll(this.actor);
+    }
+
+    rollAuto(label, dice, formulaAttack, difficulty, critrange){
+        let r = new CoAttackRoll(label, dice, formulaAttack, formulaDamage, difficulty, critrange);
+        return r.roll(this.actor);
+    }
+
+    async chat(roll, type){
         await new CoChat(this.actor)
             .withTemplate('systems/co/templates/chat/attack-card.hbs')
             .withData({
+                typeAttack: type === "attack" ? true : false,
+                typeDamage: type === "damage" ? true : false,
                 actorId: this.actor.id,
                 label: roll._label,
                 formula: roll._formula,
@@ -259,30 +297,29 @@ export class CoAttackRoll {
         return this;
     }
 
-    /**
-     * @name weaponRoll
-     * @description Jet de dommages d'une arme
-     *
-     * @param {*} actor
-     * @param {*} dmgFormula
-     * @param {*} dmgDescr
-     * @returns
-     */
-    async weaponRoll(actor, dmgFormula, dmgDescr){
-        await this.roll(actor);
-        if (this._difficulty) {
-            if(this._isSuccess && game.settings.get("cof", "useComboRolls")){
-                let r = new CofDamageRoll(this._label, dmgFormula, this._isCritical, dmgDescr);
-                await r.roll(actor);
-                return r;
-            }
-        }
-        else {
-            if(game.settings.get("cof", "useComboRolls")){
-                let r = new CofDamageRoll(this._label, dmgFormula, this._isCritical, dmgDescr);
-                await r.roll(actor);
-                return r;
-            }
-        }
+}
+
+export class CoDamageRoll {
+
+    constructor(label, formulaDamage){
+        this._label = label;
+        this._formula = formulaDamage;
     }
+
+    /**
+     * 
+     * @param {*} actor 
+     * @returns 
+     */
+    async roll(actor){
+        let r = new Roll(this._formula);
+        await r.roll({"async": true});
+        // Getting the dice kept in case of 2d12 or 2d20 rolls
+        const result = r.terms[0].results.find(r => r.active).result;
+        this._roll = r;
+        this._rollTotal = r._total;
+        this._toolTip = new Handlebars.SafeString(await r.getTooltip());
+        return this;
+    }
+
 }

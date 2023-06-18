@@ -45,6 +45,19 @@ export class Utils {
     return resultat;
   }
 
+    /**
+   * @description For an actor, evaluate the formula
+   * @param {*} actor
+   * @param {*} formula
+   * @param {*} source The item source's UUID : used for the #rank
+   * @returns
+   */
+    static evaluateWithDice(actor, formula, source) {
+      if (formula === "") return "";
+      if (formula.includes("@")) return this._evaluateCustom(actor, formula, source, true);
+      return formula;      
+    }
+
   /**
    * @description Evaluate a custom value
    * Shortcuts
@@ -81,7 +94,7 @@ export class Utils {
 
     // Shortcuts
     Object.keys(DSL).forEach(shortcut => {
-      if(replacedFormula.includes(shortcut)) replacedFormula = replacedFormula.replace(shortcut, eval(DSL[shortcut]));
+      if(replacedFormula.includes(shortcut)) replacedFormula = replacedFormula.replace(shortcut, toEvaluate ? eval(DSL[shortcut]) : DSL[shortcut]);
     });
 
     if (replacedFormula.includes("@rang")) {
@@ -110,7 +123,6 @@ export class Utils {
 
     Log.debug("Custom Formula evaluated : ", replacedFormula);
 
-    if (toEvaluate) return eval(replacedFormula);
-    else return replacedFormula;
+    return replacedFormula;
   }
 }

@@ -340,7 +340,7 @@ export default class CoActor extends Actor {
    * @param {*} source  uuid of the embedded item which is the source of the action
    * @param {*} indice  indice of the action in the array of actions
    */
-  async activateAction(state, source, indice) {
+  async activateAction(state, source, indice, type) {
     const item = this.items.get(source);
 
     // Action avec une durée
@@ -362,7 +362,7 @@ export default class CoActor extends Actor {
       // Recherche des resolvers de l'action
       let resolvers = Object.values(action.resolvers).map((a) => new Resolver(a.type, a.skill, a.dmg));
       for (const resolver of resolvers) {
-        let res = resolver.resolve(this, item, action);
+        let res = resolver.resolve(this, item, action, type);
       }
     }
   }
@@ -673,6 +673,7 @@ export default class CoActor extends Actor {
     skill.max = skill.base + bonuses;
   }
 
+  // 2 * @niv + @int
   _computeBaseMP() {
     let total = 0;
     let formula = null;
