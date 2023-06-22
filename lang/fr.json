@@ -200,7 +200,12 @@
       "weapons" : "Armes",
       "shields" : "Boucliers",
       "miscBonuses" : "Bonus divers",
-      "totalBonus" : "Bonus total"
+      "totalBonus" : "Bonus total",
+      "dr": "RD",
+      "applyDamage": "Appliquer les dégâts",
+      "applyHalfDamage": "Appliquer la moitié des dégâts",
+      "applyDoubleDamage": "Appliquer le double des dégâts",
+      "applyHealing" : "Appliquer les soins"
     },
     "properties": {
       "attack": "Attaque",
@@ -405,6 +410,10 @@
     "UseComboRolls": {
       "name": "Activer les jets combinés attaque et dommages",
       "hint": "Permet de lancer les jets d'attaque et de dommages simultanément."
+    },
+    "DisplayChatDamageButtonsToAll": {
+      "name": "Afficher les boutons de dommages",
+      "hint": "Affiche les boutons d'application des dommages dans les messages de chat à tout le monde."
     }
   }
 }

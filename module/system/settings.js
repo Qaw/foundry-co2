@@ -57,4 +57,13 @@ export const registerSystemSettings = function() {
         default: true,
         type: Boolean
     });
+
+	game.settings.register("co", "displayChatDamageButtonsToAll", {
+        name: "SETTINGS.DisplayChatDamageButtonsToAll.name",
+        hint: "SETTINGS.DisplayChatDamageButtonsToAll.hint",
+        scope: "world",
+        config: true,
+        default: false,
+        type: Boolean
+    });
 }

@@ -11,6 +11,7 @@ import { registerSystemSettings } from './system/settings.js';
 import CoEncounterSheet from "./actor/sheet/encounter-sheet.mjs";
 
 import { CoActorProxy } from './actor/proxy.mjs';
+import registerHooks from './system/hooks.mjs';
 
 Hooks.once("init", async function () {
 
@@ -49,6 +50,9 @@ Hooks.once("init", async function () {
 
     // Register System Settings
 	registerSystemSettings();
+
+    // Register hooks
+    registerHooks();
 
     // Load Martial Training
     if (!game.co.config.martialTrainingsWeapons) {

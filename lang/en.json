@@ -189,7 +189,14 @@
       "inventory" : "Inventaire",
       "armors" : "Armures",
       "weapons" : "Armes",
-      "shields" : "Boucliers"
+      "shields" : "Boucliers",
+      "miscBonuses" : "Bonus divers",
+      "totalBonus" : "Bonus total",
+      "dr": "RD",
+      "applyDamage": "Appliquer les dégâts",
+      "applyHalfDamage": "Appliquer la moitié des dégâts",
+      "applyDoubleDamage": "Appliquer le double des dégâts",
+      "applyHealing" : "Appliquer les soins"
     },
     "properties": {
       "attack": "Attaque",
@@ -394,6 +401,10 @@
     "UseComboRolls": {
       "name": "Activate combo rolls for attack and damages",
       "hint": "Allows attack and damage rolls to be made simultaneously."
+    },
+    "DisplayChatDamageButtonsToAll": {
+      "name": "Show damage buttons",
+      "hint": "Displays damage application buttons in chat messages to everyone."
     }
   }
 }
