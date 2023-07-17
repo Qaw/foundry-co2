@@ -7,6 +7,7 @@
           "str": {
             "superior": false,
             "baseMod": 0,
+            "mod" : 0,
             "bonuses" : {
               "sheet" : 0,
               "effects" : 0
@@ -15,6 +16,7 @@
           "dex": {
             "superior": false,
             "baseMod": 0,
+            "mod" : 0,
             "bonuses" : {
               "sheet" : 0,
               "effects" : 0
@@ -23,6 +25,7 @@
           "con": {
             "superior": false,
             "baseMod": 0,
+            "mod" : 0,
             "bonuses" : {
               "sheet" : 0,
               "effects" : 0
@@ -31,6 +34,7 @@
           "int": {
             "superior": false,
             "baseMod": 0,
+            "mod" : 0,
             "bonuses" : {
               "sheet" : 0,
               "effects" : 0
@@ -39,6 +43,7 @@
           "wis": {
             "superior": false,
             "baseMod": 0,
+            "mod" : 0,
             "bonuses" : {
               "sheet" : 0,
               "effects" : 0
@@ -47,6 +52,7 @@
           "cha": {
             "superior": false,
             "baseMod": 0,
+            "mod" : 0,
             "bonuses" : {
               "sheet" : 0,
               "effects" : 0
@@ -59,6 +65,7 @@
           "init": {
             "ability": "dex",
             "base": 10,
+            "details" : "",
             "bonuses" : {
               "sheet" : 0,
               "effects" : 0
@@ -67,6 +74,7 @@
           "def": {
             "ability": "dex",
             "base": 10,
+            "details" : "",
             "bonuses" : {
               "sheet" : 0,
               "effects" : 0
@@ -82,6 +90,8 @@
               "sheet" : 0,
               "effects" : 0
             },
+            "details" : "",
+            "value" : 0,
             "min": 0,
             "max": 0,
             "temp": null,
@@ -164,7 +174,9 @@
             "public": ""
           },
           "size": "medium",
-          "languages": ""
+          "languages": "",
+          "publicNotes" : "",
+          "privateNotes" : ""
         }
       }
     },
@@ -264,7 +276,10 @@
         "category" : "",
         "archetype" : "",
         "description" : "",
-        "size": "medium"
+        "bossRank" : 0,
+        "size": "medium",
+        "publicNotes" : "",
+        "privateNotes" : ""
       }
     },
     "vendor": {

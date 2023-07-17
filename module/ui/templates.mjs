@@ -23,10 +23,12 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-bio.hbs",
 
     // ENCOUNTER
-    "systems/" + SYSTEM_NAME + "/templates/actors/encounter-sheet.hbs",
-    "systems/" + SYSTEM_NAME + "/templates/actors/parts/encounter-data.hbs",
-    "systems/" + SYSTEM_NAME + "/templates/actors/parts/encounter-stats.hbs",
-    "systems/" + SYSTEM_NAME + "/templates/actors/parts/encounter-sidebar.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/encounter/encounter-sheet.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-main.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-notes.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-inventory.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-data.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-sidebar.hbs",
 
     // EFFECTS
     "systems/" + SYSTEM_NAME + "/templates/effects/effects.hbs",

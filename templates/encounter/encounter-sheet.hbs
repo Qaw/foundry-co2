@@ -1,0 +1,72 @@
+<form class="{{cssClass}} flexrow" autocomplete="off">
+    {{log "Chroniques Oubliées | actor" this}}
+    {{> "systems/co/templates/encounter/parts/encounter-sidebar.hbs"}}
+    <div class="main">
+        <header class="npc-sheet-header">
+            <div class="name flexrow bottom-separator">
+                <input class="name-value" name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'CO.label.long.name' }}" spellcheck="false">
+                <label class="level-label">{{ localize 'CO.label.short.nc' }}</label>
+                <input class="level adjustable" type="text" data-property="system.attributes.level.value" value="{{attributes.level.value}}" placeholder="1" data-dtype="Number">
+            </div>
+            <div class="flexrow" style="justify-content: space-between; width: 100%;">
+                <div class="flexrow" style="flex: auto;">
+                    <select class="archetype-select traits-list-item" name="system.details.archetype" data-type="String" style="width:100%">
+                        {{#select system.details.archetype}}
+                            {{#each @root.config.encounter.archetypes as |label idx|}}
+                                <option value="{{idx}}">{{localize label}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                    <select class="category-select traits-list-item" name="system.details.category" data-type="String" style="width:100%">
+                        {{#select system.details.category}}
+                            {{#each @root.config.encounter.categories as |label idx|}}
+                                <option value="{{idx}}">{{localize label}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                    <select class="size-select traits-list-item" name="system.details.size" data-type="String" style="width:100%">
+                        {{#select system.details.size}}
+                            {{#each @root.config.encounter.sizes as |label idx|}}
+                                <option value="{{idx}}">{{localize label}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                    <select class="bossrank-select traits-list-item" name="system.details.bossRank" data-type="Number" style="width:100%">
+                        <option value="0" selected="">-</option>
+                        <option value="1">Boss 1</option>
+                        <option value="2">Boss 2</option>
+                        <option value="3">Boss 3</option>
+                        <option value="4">Boss 4</option>
+                        <option value="5">Boss 5</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+        <div class="nav">
+            {{!-- Sheet Tab Navigation --}}
+            <nav class="sheet-tabs tabs" data-group="primary">
+                <a class="item" data-tab="main" title="{{ localize "CO.tabs.main" }}">{{ localize 'CO.tabs.main' }}</a>
+                <a class="item" data-tab="inventory" title="{{ localize "CO.tabs.inventory" }}">{{ localize 'CO.tabs.inventory' }}</a>
+                <a class="item" data-tab="notes" title="{{ localize "CO.tabs.notes" }}">{{ localize 'CO.tabs.notes' }}</a>
+<!--                <a class="item" data-tab="data" title="{{! localize "CO.tabs.data" }}">{{! localize 'CO.tabs.data' }}</a>-->
+            </nav>
+        </div>
+        <div class="content flexrow">
+            {{! log "Chroniques Oubliées | detail" this}}
+            <section class="sheet-body">
+                <div class="tab main" data-group="primary" data-tab="main">
+                    {{> "systems/co/templates/encounter/parts/encounter-main.hbs"}}
+                </div>
+                <div class="tab inventory" data-group="primary" data-tab="inventory">
+                    {{> "systems/co/templates/encounter/parts/encounter-inventory.hbs"}}
+                </div>
+                <div class="tab notes" data-group="primary" data-tab="notes">
+                    {{> "systems/co/templates/encounter/parts/encounter-notes.hbs"}}
+                </div>
+<!--                <div class="tab data" data-group="primary" data-tab="data">-->
+<!--                    {{!> "systems/co/templates/encounter/parts/encounter-data.hbs"}}-->
+<!--                </div>-->
+            </section>
+        </div>
+    </div>
+</form>

@@ -38,6 +38,7 @@
       "long": {
         "label" : "Label",
         "stat": "Caractéristique",
+        "stats": "Caractéristiques",
         "superior": "Supérieur",
         "base": "Base",
         "specie": "Espèce",
@@ -46,12 +47,18 @@
         "value": "Valeur",
         "mod": "Modificateur",
         "max": "Maximum",
+        "min": "Minimum",
+        "temp" : "Temporaire",
+        "tempmax" : "Maximum Temporaire",
         "modifiers": "Modificateurs",
         "name": "Nom",
         "level": "Niveau",
+        "nc" : "Niveau de Créature",
         "profile": "Profil",
         "capacity": "Capacité",
         "capacities": "Capacités",
+        "attacks": "Attaques",
+        "attack": "Attaque",
         "path": "Voie",
         "paths": "Voies",
         "critrange": "Critique",
@@ -63,11 +70,14 @@
         "effects": "Effets",
         "properties": "Propriétés",
         "hp": "Points de vie",
+        "def": "Défense",
+        "init": "Initiative",
         "hd": "Dé de vie",
         "rp": "Points de récupération",
         "type" : "Type",
         "subtype" : "Sous-type",
         "category" : "Catégorie",
+        "archetype" : "Archétype",
         "family" : "Famille (de profil)",
         "source" : "Source",
         "spellcasting" : "Modificateur pour Attaque Magique",
@@ -75,12 +85,17 @@
         "martialCategory" : "Catégorie martiale",
         "martialTraining" : "Formation martiale",
         "martialTrainings" : "Formations martiales",
+        "current" : "Actuel",
         "formulaAttack": "Formule d'attaque",
-        "formulaDamage": "Formule des dommages"
+        "formulaDamage": "Formule des dommages",
+        "melee" : "Attaque de contact",
+        "ranged" : "Attaque à distance",
+        "magic" : "Attaque magique"
       },
       "short": {
         "label" : "Label",
         "stat": "Carac.",
+        "stats": "Caracs",
         "superior": "Sup.",
         "base": "Base",
         "specie": "Espèce",
@@ -88,10 +103,16 @@
         "malus": "Malus",
         "value": "Val.",
         "mod": "Mod",
-        "max": "Max",
+        "max": "Max.",
+        "min": "Min.",
+        "attacks": "Att.",
+        "attack": "Att.",
+        "temp" : "Temp.",
+        "tempmax" : "Max. Temp.",
         "modifiers": "Mods",
         "name": "Nom",
         "level": "Niv.",
+        "nc" : "NC",
         "profile": "Profil",
         "capacity": "Capacité",
         "capacities": "Capacités",
@@ -104,11 +125,14 @@
         "effects": "FX",
         "properties": "Props",
         "hp": "PV",
+        "def": "DEF",
+        "init": "Init.",
         "hd": "DV",
         "rp": "PR",
         "type" : "Tpe",
         "subtype" : "Ss-tpe",
         "category" : "Cat.",
+        "archetype" : "Arch.",
         "quantity" : "Qté",
         "family" : "Fam.",
         "source" : "Src.",
@@ -116,8 +140,11 @@
         "spellcasting" : "Mod. pour ATM",
         "martialCategory" : "Cat. martiale",
         "martialTraining" : "Form. martiale",
-        "martialTrainings" : "Form. martiales"
-
+        "martialTrainings" : "Form. martiales",
+        "melee" : "Contact",
+        "ranged" : "Distance",
+        "magic" : "Magique",
+        "current" : "Actuel"
       }
     },
     "ui": {
@@ -267,6 +294,9 @@
       "mpFormula": "Points de Magie (formule)"
     },
     "tabs": {
+      "main": "Principal",
+      "notes": "Notes",
+      "data": "Data",
       "bio": "Biographie",
       "stats": "Caractéristiques",
       "actions": "Actions",
@@ -332,6 +362,20 @@
         "magical": "Arme magique"
       }
     },
+    "encounter" : {
+      "archetype" : {
+        "weak" : "Inférieur",
+        "quick" : "Rapide",
+        "powerful" : "Puissant",
+        "standard" : "Standard"
+      },
+      "category" : {
+        "living": "Vivante",
+        "humanoid": "Humanoïde",
+        "plant": "Végétative",
+        "undead" : "Non-Vivante"
+      }
+    },
     "feature" : {
       "subtypes": {
         "race": "Race",
@@ -388,23 +432,23 @@
     "DebugMode": "Mode Debug",
     "DebugModeHint": "Affiche certaines valeurs techniques. Utile pour les développeurs exclusivement.",
     "VarInit": {
-      "name": "Using the variable initiative rule",
-      "hint": "The result of an explosive d6 is added to the initiative: add and re-roll on 6."
+      "name": "Utiliser la règle de l'initiative variable",
+      "hint": "Le résultat d’un d6 explosif est ajouté à l'initiative : ajout et relance sur 6."
     },
     "DisplayDifficulty": {
-      "name": "Display difficulty",
-      "hint": "Activates the difficulty display on skill/attribute and weapon rolls.",
-      "none": "Do not use or display the difficulty",
-      "all": "Use the difficulty and display it for everyone",
-      "gm": "Use the difficulty and display it only to the GM"
+      "name": "Afficher la difficulté",
+      "hint": "Active l'affichage de la difficulté sur les jets de compétences/attributs et d'armes.",
+      "none": "Ne pas utiliser ni afficher la difficulté",
+      "all": "Utiliser la difficulté et l'afficher pour tout le monde",
+      "gm": "Utiliser la difficulté et l'afficher uniquement au MJ"
     },
     "UseComboRolls": {
-      "name": "Activate combo rolls for attack and damages",
-      "hint": "Allows attack and damage rolls to be made simultaneously."
+      "name": "Activer les jets combinés attaque et dommages",
+      "hint": "Permet de lancer les jets d'attaque et de dommages simultanément."
     },
     "DisplayChatDamageButtonsToAll": {
-      "name": "Show damage buttons",
-      "hint": "Displays damage application buttons in chat messages to everyone."
+      "name": "Afficher les boutons de dommages",
+      "hint": "Affiche les boutons d'application des dommages dans les messages de chat à tout le monde."
     }
   }
 }

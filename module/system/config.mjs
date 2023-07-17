@@ -111,3 +111,25 @@ CO.profile = {
     values: [],
   },
 };
+
+CO.encounter = {
+  archetypes : {
+    weak : "CO.encounter.archetype.weak",
+    quick : "CO.encounter.archetype.quick",
+    powerful : "CO.encounter.archetype.powerful",
+    standard : "CO.encounter.archetype.standard"
+  },
+  categories : {
+    living: "CO.encounter.category.living",
+    humanoid: "CO.encounter.category.humanoid",
+    plant: "CO.encounter.category.plant",
+    undead : "CO.encounter.category.undead"
+  },
+  sizes : {
+    tiny: "CO.size.tiny",
+    small: "CO.size.small",
+    medium: "CO.size.medium",
+    large: "CO.size.large",
+    huge: "CO.size.huge"
+  },
+};

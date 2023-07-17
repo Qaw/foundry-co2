@@ -1,0 +1,41 @@
+.notes {
+  .notes-section {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .details-label {
+    padding: 4px;
+    font-family: var(--sans-serif);
+    font-size: var(--font-size-10);
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-right: 2px;
+    white-space: nowrap;
+  }
+  .notes-text {
+    margin-left: 8px;
+    padding: 4px;
+    color: #333;
+    flex-grow: 1;
+    .editor {
+      height: 100%;
+    }
+  }
+  .source {
+    flex-shrink: 0;
+    .section-body {
+      border-width: 2px;
+    }
+    .source-input {
+      flex: 2;
+    }
+    label {
+      margin-right: 4px;
+      flex: 0;
+      font-weight: 700;
+    }
+  }
+}

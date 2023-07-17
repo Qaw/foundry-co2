@@ -1,8 +1,8 @@
 /* Import utilities */
 @import 'utils/colors';
-@import 'utils/typography';
 @import 'utils/variables';
-@import "utils/mixins";
+//@import 'utils/typography';
+//@import "utils/mixins";
 
 /* Global styles */
 @import 'global/flex';
@@ -11,11 +11,14 @@
 
 .co {
     @import "components/form-reset";
-    @import "components/items-container";
-    @import "components/nav";
+    @import "components/actor/character/layout";
+    @import "components/actor/encounter/layout";
+    @import "components/item/layout";
+    //@import "components/items-container";
+    //@import "components/nav";
     @import "components/editor";
-    @import "components/actor/actor";
-    @import "components/item/item";
-    @import "components/dialog/dialog";
-    @import "components/action/action";
+    //@import "components/actor/actor";
+    //@import "components/item/item";
+    //@import "components/dialog/dialog";
+    //@import "components/action/action";
 }

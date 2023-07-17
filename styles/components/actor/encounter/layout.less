@@ -1,0 +1,219 @@
+@import "../../items-container";
+@import "../../container/section-container";
+@import "../../container/sidebar";
+@import "../../container/ability-scores";
+@import "../../container/tags";
+@import "../../container/actions-list";
+@import "../../container/inventory";
+@import "../../container/notes";
+
+&.sheet {
+  &.actor.encounter {
+    min-width: 500px;
+    .window-content {
+      padding: 0;
+
+      form.editable, form.locked {
+        padding: 0;
+        margin: 0;
+
+        .main {
+          .npc-sheet-header {
+            display: flex;
+            flex: 1 0 auto;
+            flex-direction: column;
+            .name {
+              font-family: var(--sans-serif-condensed);
+              font-size: 1.75rem;
+              font-weight: 700;
+              width: 100%;
+              flex-wrap: nowrap;
+              input {
+                font-weight: inherit;
+                height: 32px;
+              }
+              .name-value {
+                font-variant: small-caps;
+                margin-left: 6px;
+                margin-right: 18px;
+              }
+              .level-label {
+                flex: 0;
+                text-align: right;
+                margin-right: 0.1em;
+                text-transform: uppercase;
+              }
+              input.level {
+                flex: 0 0 40px;
+                text-align: center;
+              }
+            }
+
+            select {
+              //flex: auto 0 0;
+              padding: 4px !important;
+              height: auto !important;
+              font-family: var(--sans-serif);
+              font-weight: 500;
+              font-size: var(--font-size-10);
+              background: rgba(255, 255, 255, 0.5);
+            }
+            .traits-list-item {
+              border: 2px solid #d8c384;
+              color: white;
+              text-transform: uppercase;
+              background-color: #002664;
+              &.archetype-select {
+                background-color: #323232;
+              }
+              &.category-select {
+                background-color: #566193;
+              }
+              &.size-select {
+                background-color: #3a7a58;
+              }
+              &.bossrank-select {
+                background-color: #98513d;
+              }
+            }
+          }
+          .nav {
+            //.nav()
+          }
+
+          .content {
+            flex: 1;
+            padding: 5px;
+            margin: 0;
+
+            .sheet-body {
+              //.stats {
+              //  height: 100%;
+              //  .stats-layout {
+              //    .stats-layout-top {
+              //      .stats-layout-topright {
+              //        margin-left: @layout-margin;
+              //      }
+              //    }
+              //    .stats-layout-middle,
+              //    .stats-layout-bottom {
+              //      margin-top: @layout-margin;
+              //      .stats-layout-middleright,
+              //      .stats-layout-bottomright {
+              //        margin-left: @layout-margin;
+              //      }
+              //    }
+              //    .abilities-container-7cols {
+              //      display: grid;
+              //      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+              //      grid-gap: 3px;
+              //      grid-auto-columns: minmax(20px, 50px);
+              //      .cell {
+              //        justify-self: center;
+              //        align-self: center;
+              //        min-width: 40px;
+              //        .field-value {
+              //          max-width: 40px;
+              //        }
+              //        .header {
+              //          color: darkslategray;
+              //          font-weight: bold;
+              //        }
+              //      }
+              //    }
+              //    .abilities-container-5cols {
+              //      display: grid;
+              //      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+              //      grid-gap: 3px;
+              //      grid-auto-columns: minmax(20px, 50px);
+              //      .cell {
+              //        justify-self: center;
+              //        align-self: center;
+              //        min-width: 40px;
+              //        .field-value {
+              //          max-width: 40px;
+              //        }
+              //        .header {
+              //          color: darkslategray;
+              //          font-weight: bold;
+              //        }
+              //      }
+              //    }
+              //    .abilities-container-4cols {
+              //      display: grid;
+              //      grid-template-columns: 1fr 1fr 1fr 1fr;
+              //      grid-gap: 3px;
+              //      grid-auto-columns: minmax(20px, 50px);
+              //      .cell {
+              //        justify-self: center;
+              //        align-self: center;
+              //        min-width: 40px;
+              //        .field-value {
+              //          max-width: 40px;
+              //        }
+              //        .header {
+              //          color: darkslategray;
+              //          font-weight: bold;
+              //        }
+              //      }
+              //    }
+              //    .combat-container, .resources-container {
+              //      display: grid;
+              //      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+              //      grid-gap: 3px;
+              //      grid-auto-columns: minmax(20px, 50px);
+              //      .cell {
+              //        justify-self: center;
+              //        align-self: center;
+              //        min-width: 40px;
+              //        .field-value {
+              //          max-width: 40px;
+              //        }
+              //        .header {
+              //          color: darkslategray;
+              //          font-weight: bold;
+              //        }
+              //      }
+              //    }
+              //    .hp-container {
+              //      display: grid;
+              //      grid-template-columns: 1fr 1fr 1fr;
+              //      grid-gap: 3px;
+              //      grid-auto-columns: minmax(20px, 50px);
+              //      .cell {
+              //        justify-self: center;
+              //        align-self: center;
+              //        min-width: 40px;
+              //        .field-value {
+              //          max-width: 40px;
+              //        }
+              //        .header {
+              //          color: darkslategray;
+              //          font-weight: bold;
+              //        }
+              //      }
+              //    }
+              //  }
+              //}
+              //.actions {
+              //  .items-container()
+              //}
+              //.inventory {
+              //  .items-container()
+              //}
+              //.paths,
+              //.capacities {
+              //  .items-container()
+              //}
+              //.features {
+              //  .items-container()
+              //}
+              //.bio {
+              //}
+            }
+          }
+        }
+      }
+    }
+  }
+}

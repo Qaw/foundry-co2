@@ -1,7 +1,8 @@
 @import "../utils/typography";
 
 .window-app {
-  font-family: @font-primary;
+  font-family: var(--sans-serif);
+  font-size: var(--font-size-12);
 }
 
 .rollable {
@@ -11,10 +12,4 @@
     text-shadow: 0 0 10px red;
     cursor: pointer;
   }
-}
-
-:root {
-  --color-shadow-primary: white;
-  --color-shadow-highlight: #ff6400;
-  --color-shadow-dark: #000;
 }

@@ -38,6 +38,7 @@
       "long": {
         "label" : "Label",
         "stat": "Caractéristique",
+        "stats": "Caractéristiques",
         "superior": "Supérieur",
         "base": "Base",
         "specie": "Espèce",
@@ -46,6 +47,9 @@
         "value": "Valeur",
         "mod": "Modificateur",
         "max": "Maximum",
+        "min": "Minimum",
+        "temp" : "Temporaire",
+        "tempmax" : "Maximum Temporaire",
         "modifiers": "Modificateurs",
         "name": "Nom",
         "level": "Niveau",
@@ -53,6 +57,8 @@
         "profile": "Profil",
         "capacity": "Capacité",
         "capacities": "Capacités",
+        "attacks": "Attaques",
+        "attack": "Attaque",
         "path": "Voie",
         "paths": "Voies",
         "critrange": "Critique",
@@ -81,11 +87,15 @@
         "martialTrainings" : "Formations martiales",
         "current" : "Actuel",
         "formulaAttack": "Formule d'attaque",
-        "formulaDamage": "Formule des dommages"
+        "formulaDamage": "Formule des dommages",
+        "melee" : "Attaque de contact",
+        "ranged" : "Attaque à distance",
+        "magic" : "Attaque magique"
       },
       "short": {
         "label" : "Label",
         "stat": "Carac.",
+        "stats": "Caracs",
         "superior": "Sup.",
         "base": "Base",
         "specie": "Espèce",
@@ -93,7 +103,12 @@
         "malus": "Malus",
         "value": "Val.",
         "mod": "Mod",
-        "max": "Max",
+        "max": "Max.",
+        "min": "Min.",
+        "attacks": "Att.",
+        "attack": "Att.",
+        "temp" : "Temp.",
+        "tempmax" : "Max. Temp.",
         "modifiers": "Mods",
         "name": "Nom",
         "level": "Niv.",
@@ -126,6 +141,9 @@
         "martialCategory" : "Cat. martiale",
         "martialTraining" : "Form. martiale",
         "martialTrainings" : "Form. martiales",
+        "melee" : "Contact",
+        "ranged" : "Distance",
+        "magic" : "Magique",
         "current" : "Actuel"
       }
     },
@@ -276,6 +294,9 @@
       "mpFormula": "Points de Magie (formule)"
     },
     "tabs": {
+      "main": "Principal",
+      "notes": "Notes",
+      "data": "Data",
       "bio": "Biographie",
       "stats": "Caractéristiques",
       "actions": "Actions",
@@ -339,6 +360,20 @@
         "ranged": "Arme à distance",
         "thrown": "Arme de jet",
         "magical": "Arme magique"
+      }
+    },
+    "encounter" : {
+      "archetype" : {
+        "weak" : "Inférieur",
+        "quick" : "Rapide",
+        "powerful" : "Puissant",
+        "standard" : "Standard"
+      },
+      "category" : {
+        "living": "Vivante",
+        "humanoid": "Humanoïde",
+        "plant": "Végétative",
+        "undead" : "Non-Vivante"
       }
     },
     "feature" : {

@@ -9,7 +9,7 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       height: 600,
       width: 800,
-      template: "systems/co/templates/actors/encounter-sheet.hbs",
+      template: "systems/co/templates/encounter/encounter-sheet.hbs",
       classes: ["co", "sheet", "actor", "encounter"],
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "stats" }],
     });
