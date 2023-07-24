@@ -1,6 +1,6 @@
 {{!log "Chroniques Oubliées | inventory " this}}
 {{#each inventory as |items category|}}
-  {{#if (gt items.length 0)}}
+  {{!#if (gt items.length 0)}}
     <ol class="items-container foldable" data-tab="inventory" data-category="{{category}}">
       <li class="items-container-header flexrow">
         <h3 class="item-name flexrow">{{localize (concat "CO.ui." category)}}</h3>
@@ -45,7 +45,7 @@
         {{/each}}
       </ol>
     </ol>
-  {{else}}
-    <!--        <p class="empty">{{localize "CO.notif.inventory.empty"}}</p>-->
-  {{/if}}
+  {{!else}}
+    <!--        <p class="empty">{{!localize "CO.notif.inventory.empty"}}</p>-->
+  {{!/if}}
 {{/each}}

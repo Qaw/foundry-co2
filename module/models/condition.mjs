@@ -1,4 +1,4 @@
-import { ITEM_TYPE } from "./constants.mjs";
+import { ITEM_TYPE } from "../system/constants.mjs";
 /**
  * The Condition class represents a conditional check that can be evaluated for a given item.
  */

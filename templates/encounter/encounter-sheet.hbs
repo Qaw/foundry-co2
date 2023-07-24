@@ -1,4 +1,4 @@
-<form class="{{cssClass}} flexrow" autocomplete="off">
+<form class="{{cssClass}} flexrow no-wrap" autocomplete="off">
     {{log "Chroniques Oubliées | actor" this}}
     {{> "systems/co/templates/encounter/parts/encounter-sidebar.hbs"}}
     <div class="main">
@@ -42,16 +42,13 @@
                 </div>
             </div>
         </header>
-        <div class="nav">
-            {{!-- Sheet Tab Navigation --}}
-            <nav class="sheet-tabs tabs" data-group="primary">
-                <a class="item" data-tab="main" title="{{ localize "CO.tabs.main" }}">{{ localize 'CO.tabs.main' }}</a>
-                <a class="item" data-tab="inventory" title="{{ localize "CO.tabs.inventory" }}">{{ localize 'CO.tabs.inventory' }}</a>
-                <a class="item" data-tab="notes" title="{{ localize "CO.tabs.notes" }}">{{ localize 'CO.tabs.notes' }}</a>
-<!--                <a class="item" data-tab="data" title="{{! localize "CO.tabs.data" }}">{{! localize 'CO.tabs.data' }}</a>-->
-            </nav>
-        </div>
-        <div class="content flexrow">
+        {{!-- Sheet Tab Navigation --}}
+        <nav class="sheet-tabs tabs" data-group="primary">
+            <a class="item" data-tab="main" title="{{ localize "CO.tabs.main" }}">{{ localize 'CO.tabs.main' }}</a>
+            <a class="item" data-tab="inventory" title="{{ localize "CO.tabs.inventory" }}">{{ localize 'CO.tabs.inventory' }}</a>
+            <a class="item" data-tab="notes" title="{{ localize "CO.tabs.notes" }}">{{ localize 'CO.tabs.notes' }}</a>
+        </nav>
+<!--        <div class="content flexrow">-->
             {{! log "Chroniques Oubliées | detail" this}}
             <section class="sheet-body">
                 <div class="tab main" data-group="primary" data-tab="main">
@@ -67,6 +64,6 @@
 <!--                    {{!> "systems/co/templates/encounter/parts/encounter-data.hbs"}}-->
 <!--                </div>-->
             </section>
-        </div>
+<!--        </div>-->
     </div>
 </form>

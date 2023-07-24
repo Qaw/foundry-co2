@@ -1,7 +1,5 @@
 import { ITEM_TYPE } from "../../system/constants.mjs";
 import CoBaseActorSheet from "./base-actor-sheet.mjs";
-import { Action } from "../../system/actions.mjs";
-import { Log } from "../../utils/log.mjs";
 
 export default class CoEncounterSheet extends CoBaseActorSheet {
   /** @override */
@@ -11,7 +9,7 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
       width: 800,
       template: "systems/co/templates/encounter/encounter-sheet.hbs",
       classes: ["co", "sheet", "actor", "encounter"],
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "stats" }],
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main" }],
     });
   }
 

@@ -1,0 +1,396 @@
+{
+  "Actor": {
+    "types": ["character", "encounter"],
+    "htmlFields": [
+      "biography.private",
+      "biography.public",
+      "appearance.private",
+      "appearance.public",
+      "notes.private",
+      "notes.public"
+    ],
+    "templates": {
+      "abilities": {
+        "abilities": {
+          "str": {
+            "superior": false,
+            "baseMod": 0,
+            "mod" : 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
+          },
+          "dex": {
+            "superior": false,
+            "baseMod": 0,
+            "mod" : 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
+          },
+          "con": {
+            "superior": false,
+            "baseMod": 0,
+            "mod" : 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
+          },
+          "int": {
+            "superior": false,
+            "baseMod": 0,
+            "mod" : 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
+          },
+          "wis": {
+            "superior": false,
+            "baseMod": 0,
+            "mod" : 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
+          },
+          "cha": {
+            "superior": false,
+            "baseMod": 0,
+            "mod" : 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
+          }
+        }
+      },
+      "combat": {
+        "combat": {
+          "init": {
+            "ability": "dex",
+            "base": 10,
+            "details" : "",
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
+          },
+          "def": {
+            "ability": "dex",
+            "base": 10,
+            "details" : "",
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            }
+          }
+        }
+      },
+      "attributes" : {
+        "attributes": {
+          "hp": {
+            "base": 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            },
+            "details" : "",
+            "value" : 0,
+            "min": 0,
+            "max": 0,
+            "temp": null,
+            "tempmax": null
+          },          
+          "movement": {
+            "value": 10,
+            "units": "m"
+          },
+          "level": {
+            "value": 1,
+            "max": 20,
+            "history": []
+          }
+        }
+      },
+      "resources": {
+        "resources": {
+          "recovery": {
+            "base": 5,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            },
+            "max": 5
+          },
+          "fortune": {
+            "base": 3,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            },
+            "max": 5
+          },
+          "mana": {
+            "base": 0,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            },
+            "max": 0
+          },
+          "primary": {
+            "base": null,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            },
+            "max": null,
+            "label": ""
+          },
+          "secondary": {
+            "base": null,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            },
+            "max": null,
+            "label": ""
+          },
+          "tertiary": {
+            "base": null,
+            "bonuses" : {
+              "sheet" : 0,
+              "effects" : 0
+            },
+            "max": null,
+            "label": ""
+          }
+        }
+      },
+      "details" : {
+        "details": {
+          "biography": {
+            "private": "",
+            "public": ""
+          },
+          "appearance": {
+            "private": "",
+            "public": ""
+          },
+          "size": "medium",
+          "languages": "",
+          "publicNotes" : "",
+          "privateNotes" : ""
+        }
+      }
+    },
+    "character": {
+      "templates": ["combat", "attributes", "resources", "details"],
+      "abilities": {
+        "str": {
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        },
+        "dex": {
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        },
+        "con": {
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        },
+        "int": {
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        },
+        "wis": {
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        },
+        "cha": {
+          "superior": false,
+          "base": 10,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        }
+      },
+      "combat": {
+        "melee": {
+          "ability": "str",
+          "base": 0,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        },
+        "ranged": {
+          "ability": "dex",
+          "base": 0,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        },
+        "magic": {
+          "ability": "int",
+          "base": 0,
+          "bonuses" : {
+            "sheet" : 0,
+            "effects" : 0
+          }
+        }
+      },
+      "attributes": {
+        "encumbrance": {
+          "value": 0,
+          "encumbered": false
+        },
+        "xp": {
+          "value": 0,
+          "max": 0
+        }
+      }
+    },
+    "encounter": {
+      "templates": ["abilities", "combat", "attributes"],
+      "pasteData" : "",
+      "combat": {
+        "attacks" : [
+          {
+            "name" : "",
+            "type" : "melee",
+            "description" : "",
+            "mod" : 0,
+            "dmg" : ""
+          }
+        ]
+      },
+      "details": {
+        "category" : "",
+        "archetype" : "",
+        "description" : "",
+        "bossRank" : 0,
+        "size": "medium",
+        "publicNotes" : "",
+        "privateNotes" : ""
+      }
+    }
+  },
+  "Item": {
+    "types": ["capacity", "equipment", "feature", "profile", "path"],
+    "templates": {
+      "common": {
+        "description": {
+          "value": "",
+          "chat": ""
+        },
+        "source": "",
+        "origin": "",
+        "slug": "",
+        "tags": []
+      }
+    },
+    "equipment": {
+      "templates": ["common"],
+      "subtype": "",
+      "martialCategory": "",
+      "quantity": {
+        "current" : 1,
+        "max" : 1,
+        "destroyIfEmpty" : true
+      },
+      "charges": {
+        "current" : null,
+        "max" : null,
+        "destroyIfEmpty" : false
+      },
+      "weight": {
+        "value" : 0,
+        "unit" : "kg"
+      },
+      "price": {
+        "value": 0,
+        "currency": ""
+      },
+      "rarity" : "",
+      "equipped": false,
+      "properties" : {
+        "equipable": true,
+        "reloadable": false,
+        "stackable": false
+      },
+      "usage" : {
+        "1h" : false,
+        "2h" : false
+      },
+      "actions": []
+    },
+    "feature" : {
+      "templates": ["common"],
+      "subtype" : "",
+      "modifiers": [],
+      "paths": [],
+      "capacities": []
+    },
+    "profile" : {
+      "templates": ["common"],
+      "modifiers": [],
+      "family": null,
+      "hd": "1d4",
+      "proficiencies": [],
+      "paths": [],
+      "martialTrainingsWeapons": [],
+      "martialTrainingsArmors": [],
+      "martialTrainingsShields": [],
+      "spellcasting": "int",
+      "mpFormula": "@lvl + @int"
+    },
+    "capacity": {
+      "templates": ["common"],
+      "subtype" : "",
+      "learned" : false,
+      "charges": {
+        "current" : null,
+        "max" : null
+      },
+      "properties" : {
+        "spell" : false,
+        "chargeable" : false
+      },
+      "path" : null,
+      "actions": []
+    },
+    "path": {
+      "templates": ["common"],
+      "subtype" : "",
+      "capacities" : [],
+      "rank" : 0
+    }
+  }
+}

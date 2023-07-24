@@ -8,16 +8,9 @@
       "marker": "Marqueur"
     },
     "Item": {
-      "item": "Objet",
       "equipment": "Équipement",
-      "feature": "Feature",
-      "trait": "Trait",
+      "feature": "Trait",
       "profile": "Profil",
-      "consumable": "Consommable/Munition",
-      "loot": "Butin/Trésor",
-      "currency": "Monnaie",
-      "container": "Conteneur",
-      "action": "Action",
       "path": "Voie",
       "capacity": "Capacité"
     }
@@ -32,7 +25,10 @@
       "ready": "Système Chroniques Oubliées initialisé",
       "unknownCapacity": "Vous ne connaissez pas cette capacité.",
       "noCapacitySelected": "Aucune capacité sélectionnée",
-      "inventory.empty" : "L'inventaire est vide"
+      "inventory.empty" : "L'inventaire est vide",
+      "modifiers.empty" : "Aucun modificateur.",
+      "conditions.empty" : "Aucune condition.",
+      "resolvers.empty" : "Aucun resolveur."
     },
     "label": {
       "long": {
@@ -57,6 +53,8 @@
         "profile": "Profil",
         "capacity": "Capacité",
         "capacities": "Capacités",
+        "abilities": "Caractéristiques",
+        "combat": "Combat",
         "attacks": "Attaques",
         "attack": "Attaque",
         "path": "Voie",
@@ -70,6 +68,8 @@
         "effects": "Effets",
         "properties": "Propriétés",
         "hp": "Points de vie",
+        "xp": "Expérience",
+        "movement": "Déplacement",
         "def": "Défense",
         "init": "Initiative",
         "hd": "Dé de vie",
@@ -105,6 +105,8 @@
         "mod": "Mod",
         "max": "Max.",
         "min": "Min.",
+        "abilities": "Carac.",
+        "combat": "Combat",
         "attacks": "Att.",
         "attack": "Att.",
         "temp" : "Temp.",
@@ -125,6 +127,8 @@
         "effects": "FX",
         "properties": "Props",
         "hp": "PV",
+        "xp": "XP",
+        "movement": "Dépl.",
         "def": "DEF",
         "init": "Init.",
         "hd": "DV",
@@ -159,6 +163,7 @@
       "data" : "Données",
       "kh": "Garder le plus haut",
       "kl": "Garder le plus bas",
+      "description": "Description",
       "duration": "Durée",
       "action": "Action",
       "details": "Détails",
@@ -182,7 +187,8 @@
       "img" : "Image",
       "chatFlavor" : "Message chat",
       "activable" : "Activable",
-      "enabled" : "Activé(e)",
+      "enabled" : "Activé(s)",
+      "disabled" : "Désactivé(s)",
       "visible" : "Visible",
       "conditions" : "Conditions",
       "subject" : "Sujet",
@@ -223,7 +229,8 @@
       "applyDamage": "Appliquer les dégâts",
       "applyHalfDamage": "Appliquer la moitié des dégâts",
       "applyDoubleDamage": "Appliquer le double des dégâts",
-      "applyHealing" : "Appliquer les soins"
+      "applyHealing" : "Appliquer les soins",
+      "newAction" : "Nouvelle Action"
     },
     "properties": {
       "attack": "Attaque",
@@ -281,7 +288,10 @@
       "long": {
         "fortune": "Points de chance",
         "mana": "Points de mana",
-        "recovery": "Points de récupération"
+        "recovery": "Points de récupération",
+        "primary": "Primaire",
+        "secondary": "Secondaire",
+        "tertiary": "Tertiaire"
       },
       "short": {
         "fortune": "PC",

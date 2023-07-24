@@ -1,10 +1,10 @@
 import CoBaseItemSheet from "./base-item-sheet.mjs";
-import {Modifier} from "../../system/modifiers.mjs";
+import {Modifier} from "../../models/modifiers.mjs";
 import {ITEM_TYPE} from "../../system/constants.mjs";
 
-import {Action} from "../../system/actions.mjs";
-import {Condition} from "../../system/conditions.mjs";
-import {Resolver} from "../../system/resolvers.mjs";
+import {Action} from "../../models/action.mjs";
+import {Condition} from "../../models/condition.mjs";
+import {Resolver} from "../../models/resolvers.mjs";
 
 export default class CoItemSheet extends CoBaseItemSheet {
     /** @override */
@@ -297,7 +297,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
         event.preventDefault();
         let newActions = foundry.utils.deepClone(this.item.actions);
 
-        let action = new Action(this.item.uuid, newActions.length, "melee", "icons/svg/d20-highlight.svg", "Action #" + this.item.actions.length);
+        let action = new Action(this.item.uuid, newActions.length, "melee", "icons/svg/d20-highlight.svg", game.i18n.localize("CO.ui.newAction") + " " + (this.item.actions.length + 1));
         newActions.push(action);
         return this.item.update({"system.actions": newActions});
     }

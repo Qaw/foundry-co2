@@ -24,6 +24,7 @@
       color: white;
       align-items: baseline;
     }
+
     & > :first-child {
       border-radius: 3px 3px 0px 0px;
     }
@@ -115,6 +116,7 @@
 
   .item-quantity {
     justify-content: space-around;
+
     .item-decrease-quantity, .item-increase-quantity {
       display: flex;
       justify-content: center;
@@ -245,6 +247,7 @@
 
   .list-row {
     width: 100%;
+
     .item-controls {
       color: var(--body);
       font-size: var(--font-size-13);
@@ -253,10 +256,12 @@
         &.item-toggle-invest.active, &.item-carry-type.active {
           color: var(--secondary);
         }
+
         &.item-carry-type {
           color: rgba(0, 0, 0, 0.5);
           text-align: right;
         }
+
         .fa-stack {
           margin: -3px -2px 0;
         }

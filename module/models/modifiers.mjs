@@ -1,5 +1,5 @@
-import { MODIFIER_SUBTYPE, MODIFIER_TARGET, MODIFIER_TYPE } from "./constants.mjs";
-import { Utils } from "./utils.mjs";
+import {MODIFIER_TARGET} from "../system/constants.mjs";
+import {Utils} from "../system/utils.mjs";
 
 export class Modifiers {
   /**
@@ -35,7 +35,6 @@ export class Modifiers {
       let partialTooltip = modifier.getTooltip(actor);
       if (partialTooltip !== null) tooltip += partialTooltip;
     });
-
     return { total: total, tooltip: tooltip };
   }
 }

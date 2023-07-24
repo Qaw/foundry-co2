@@ -1,30 +1,46 @@
 import {CO} from './system/config.mjs';
-import CoActor from './actor/actor.mjs';
 import CoCharacterSheet from './actor/sheet/character-sheet.mjs';
 import CoItemSheet from './item/sheet/item-sheet.mjs';
-import { preloadHandlebarsTemplates } from './ui/templates.mjs';
-import { CoItem } from './item/item.mjs';
-import { registerHandlebarsHelpers } from './ui/helpers.mjs';
-import {Log} from "./utils/log.mjs";
-import { Modifier } from './system/modifiers.mjs';
-import { registerSystemSettings } from './system/settings.js';
+import {preloadHandlebarsTemplates} from './ui/templates.mjs';
+import {CoItem} from './item/item.mjs';
+import {registerHandlebarsHelpers} from './ui/helpers.mjs';
+import {Modifier} from './models/modifiers.mjs';
+import {registerSystemSettings} from './system/settings.js';
 import CoEncounterSheet from "./actor/sheet/encounter-sheet.mjs";
 
-import { CoActorProxy } from './actor/proxy.mjs';
+import {CharacterData} from './models/actor/character.mjs';
+import {CoActorProxy} from './actor/proxy.mjs';
 import registerHooks from './system/hooks.mjs';
+import {EncounterData} from "./models/actor/encounter.mjs";
 
 Hooks.once("init", async function () {
 
-    Log.debug("Initializing...");
-
-    // Configuration
-    CONFIG.Actor.documentClass = CoActorProxy;
-    CONFIG.Item.documentClass = CoItem;
-
     game.co = {
+        log : function(message) {
+            return ('Chroniques Oubliées | ' + message);
+        },
         Modifier: Modifier,
         config: CO
     }
+
+    console.debug(game.co.log("Initializing..."));
+
+    // Hook up system data types
+    CONFIG.Actor.dataModels = {
+        character: CharacterData,
+        encounter: EncounterData
+    };
+    // CONFIG.Item.dataModels = {
+    //     capacity : CapacityData,
+    //     equipment : EquipmentData,
+    //     feature : FeatureData,
+    //     profile : ProfileData,
+    //     path : PathData
+    // };
+
+    CONFIG.Actor.documentClass = CoActorProxy;
+    CONFIG.Item.documentClass = CoItem;
+
 
     // Unregister legacy sheets
     Actors.unregisterSheet("core", ActorSheet);
@@ -81,5 +97,5 @@ Hooks.once("init", async function () {
 });
 
 Hooks.once("ready", async function () {   
-    Log.info(game.i18n.localize("CO.notif.ready"));
+    console.info(game.co.log(game.i18n.localize("CO.notif.ready")));
 });

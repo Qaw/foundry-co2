@@ -130,6 +130,7 @@
   --font-size-21: 1.3125rem;
   --font-size-22: 1.375rem;
   --font-size-26: 1.625rem;
+  --font-size-28: 1.75rem;
   --font-size-30: 1.875rem;
   --font-size-34: 2.125rem;
   --font-size-36: 2.25rem;
@@ -279,50 +280,168 @@
 .no-wrap {
   flex-wrap: nowrap !important;
 }
+.grid,
+.grid-2col {
+  display: grid;
+  grid-column: span 2 / span 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
+}
+.grid-3col {
+  grid-column: span 3 / span 3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.grid-4col {
+  grid-column: span 4 / span 4;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.grid-5col {
+  grid-column: span 5 / span 5;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.grid-6col {
+  grid-column: span 6 / span 6;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.grid-7col {
+  grid-column: span 7 / span 7;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+.grid-8col {
+  grid-column: span 8 / span 8;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+.grid-9col {
+  grid-column: span 9 / span 9;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+}
+.grid-10col {
+  grid-column: span 10 / span 10;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+.grid-11col {
+  grid-column: span 11 / span 11;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+}
+.grid-12col {
+  grid-column: span 12 / span 12;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+.grid-start-2 {
+  grid-column-start: 2;
+}
+.grid-start-3 {
+  grid-column-start: 3;
+}
+.grid-start-4 {
+  grid-column-start: 4;
+}
+.grid-start-5 {
+  grid-column-start: 5;
+}
+.grid-start-6 {
+  grid-column-start: 6;
+}
+.grid-start-7 {
+  grid-column-start: 7;
+}
+.grid-start-8 {
+  grid-column-start: 8;
+}
+.grid-start-9 {
+  grid-column-start: 9;
+}
+.grid-start-10 {
+  grid-column-start: 10;
+}
+.grid-start-11 {
+  grid-column-start: 11;
+}
+.grid-start-12 {
+  grid-column-start: 12;
+}
+.grid-span-2 {
+  grid-column-end: span 2;
+}
+.grid-span-3 {
+  grid-column-end: span 3;
+}
+.grid-span-4 {
+  grid-column-end: span 4;
+}
+.grid-span-5 {
+  grid-column-end: span 5;
+}
+.grid-span-6 {
+  grid-column-end: span 6;
+}
+.grid-span-7 {
+  grid-column-end: span 7;
+}
+.grid-span-8 {
+  grid-column-end: span 8;
+}
+.grid-span-9 {
+  grid-column-end: span 9;
+}
+.grid-span-10 {
+  grid-column-end: span 10;
+}
+.grid-span-11 {
+  grid-column-end: span 11;
+}
+.grid-span-12 {
+  grid-column-end: span 12;
+}
+.list-3col {
+  display: grid;
+  grid-template-columns: 1fr 8fr 2fr;
+  grid-gap: 1px;
+  grid-auto-columns: minmax(15px, auto);
+}
+.list-3col .cell.center {
+  justify-self: center;
+  align-self: center;
+}
+.list-3col .cell.left {
+  justify-self: start;
+  align-self: center;
+}
+.list-3col .cell.right {
+  justify-self: end;
+  align-self: center;
+}
+.list-3col .cell .header {
+  color: #4b4a44;
+  font-weight: bold;
+}
+.list-4col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 8fr 2fr;
+  grid-gap: 1px;
+  grid-auto-columns: minmax(15px, auto);
+}
+.list-4col .cell.center {
+  justify-self: center;
+  align-self: center;
+}
+.list-4col .cell.left {
+  justify-self: start;
+  align-self: center;
+}
+.list-4col .cell.right {
+  justify-self: end;
+  align-self: center;
+}
+.list-4col .cell .header {
+  color: #4b4a44;
+  font-weight: bold;
+}
 /* ----------------------------------------- */
 /*  LOCAL FONTS                             */
 /* ----------------------------------------- */
-@font-face {
-  font-family: "MyriadPro";
-  font-style: normal;
-  font-weight: 400;
-  src: url('../fonts/MyriadPro-Regular.otf');
-}
-@font-face {
-  font-family: "MyriadPro";
-  font-style: italic;
-  font-weight: 400;
-  src: url('../fonts/MyriadPro-It.otf');
-}
-@font-face {
-  font-family: "MyriadPro";
-  font-weight: 700;
-  src: url('../fonts/MyriadPro-Bold.otf');
-}
-@font-face {
-  font-family: "MyriadPro";
-  font-weight: 700;
-  font-style: italic;
-  src: url('../fonts/MyriadPro-BoldIt.otf');
-}
-@font-face {
-  font-family: "MyriadPro";
-  font-style: normal;
-  font-weight: 200;
-  src: url('../fonts/MyriadPro-Light.otf');
-}
-@font-face {
-  font-family: "MyriadPro";
-  font-style: normal;
-  font-weight: 900;
-  src: url('../fonts/MyriadPro-Black.otf');
-}
-@font-face {
-  font-family: "PermanentMarker";
-  font-style: normal;
-  font-weight: 700;
-  src: url('../fonts/PermanentMarker-Regular.ttf');
-}
 @font-face {
   font-family: 'Modesto Condensed';
   font-style: normal;
@@ -335,19 +454,16 @@
   font-weight: 700;
   src: url('../../../fonts/modesto-condensed/modesto-condensed-bold.woff2') format('woff2');
 }
-@font-face {
-  font-family: "ChN1Regular";
-  src: url('../fonts/ChN1_Regular.ttf');
-}
 /* ----------------------------------------- */
 /*  TEXT STYLES                             */
 /* ----------------------------------------- */
 .empty {
-  color: #23221d;
+  color: var(--sub);
   font-style: italic;
 }
-strong {
-  font-weight: bold;
+strong,
+.strong {
+  font-weight: 700;
 }
 /* ----------------------------------------- */
 /*  Chat Cards
@@ -369,7 +485,7 @@ strong {
   flex: 1;
   margin: 0;
   line-height: 36px;
-  font-family: "Modesto Condensed", "Palatino Linotype", serif;
+  font-family: var(--serif-condensed);
   font-size: 20px;
   font-weight: 700;
   color: #4b4a44;
@@ -467,6 +583,16 @@ strong {
   /*
  Placeholders
  */
+  /* ----------------------------------------- */
+  /*  Premade colors                           */
+  /* ----------------------------------------- */
+  /* Functional Colors*/
+  /* ----------------------------------------- */
+  /*  LOCAL FONTS                             */
+  /* ----------------------------------------- */
+  /* ----------------------------------------- */
+  /*  TEXT STYLES                             */
+  /* ----------------------------------------- */
 }
 .co input[readonly="true"] {
   border: none;
@@ -514,7 +640,7 @@ strong {
 }
 .co select {
   color: #4b4a44;
-  font-family: 'Signika', sans-serif;
+  font-family: var(--sans-serif);
   font-size: 14px;
   text-align: center;
   text-align-last: center;
@@ -593,7 +719,7 @@ strong {
   margin: 0 0 0.25em 0;
   padding: 2px 0;
   border-bottom: 2px groove #eeede0;
-  font-family: "Modesto Condensed", "Palatino Linotype", serif;
+  font-family: var(--serif-condensed);
   color: #4b4a44;
   font-weight: bold;
 }
@@ -625,6 +751,347 @@ strong {
   margin: 0;
   padding: 0;
 }
+.co .sheet-tabs {
+  display: flex;
+  flex: 0 0 30px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+  border-top: 1px solid var(--color-border-light-primary);
+  border-bottom: 1px solid var(--secondary-background);
+  border-bottom: 1px solid var(--color-border-light-primary);
+}
+.co .sheet-tabs .item {
+  flex: 1 1 auto;
+  align-items: baseline;
+  text-align: center;
+  font-weight: 600;
+  margin: 0;
+}
+.co .sheet-tabs .item.active {
+  text-shadow: 0 0 10px var(--color-shadow-primary);
+  text-decoration: underline;
+}
+.co .sheet-tabs .item.disabled {
+  color: #ababab;
+  border-color: #ababab;
+}
+.co .editor {
+  margin: 0;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  min-height: 200px;
+}
+.co .editor .editor-content {
+  padding: 5px;
+  margin: 0;
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+}
+.co .editor .tox {
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+}
+.co.dialog .dialog-field {
+  height: 27px;
+  margin-top: 1px;
+}
+.co.dialog .dialog-field .dialog-field-label {
+  padding: 4px;
+}
+.co.dialog.skillroll .skill-bonuses {
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove var(--color-border-light-highlight);
+  height: 140px;
+  overflow: auto;
+}
+.co.dialog.skillroll .skill-bonuses .bonus-item {
+  background: rgba(0, 0, 0, 0.1);
+  height: 27px;
+  padding: 4px;
+}
+.co.dialog.skillroll .skill-bonuses .bonus-item .bonus-name {
+  margin-left: 5px;
+}
+.co.dialog.skillroll .skill-bonuses .bonus-item.checked {
+  background: rgba(0, 0, 0, 0.3);
+}
+.co.dialog.skillroll .skill-bonuses .bonus-item:hover {
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.2);
+}
+.co.dialog.edit-abilities-dialog .window-content {
+  background: url("../ui/background.webp");
+  background-repeat: repeat-x, no-repeat;
+  background-size: cover;
+  background-attachment: local;
+  height: 100%;
+  padding: 10px 20px 10px 20px;
+  position: relative;
+}
+.co.dialog.edit-abilities-dialog .window-content h3 {
+  font: 400 var(--font-size-24) var(--serif-condensed);
+  line-height: var(--font-size-24);
+}
+.co.dialog.edit-abilities-dialog .window-content h4 {
+  font: 400 var(--font-size-10) var(--sans-serif);
+  text-transform: uppercase;
+  color: #605856;
+}
+.co.dialog.edit-abilities-dialog .window-content header.row {
+  align-items: normal;
+  padding-top: 10px;
+  height: 60px;
+}
+.co.dialog.edit-abilities-dialog .window-content header.row .abilities {
+  align-items: normal;
+}
+.co.dialog.edit-abilities-dialog .window-content header.row .row-column {
+  display: block;
+}
+.co.dialog.edit-abilities-dialog .window-content .row {
+  display: flex;
+  align-items: center;
+}
+.co.dialog.edit-abilities-dialog .window-content .row .row-heading {
+  width: 220px;
+}
+.co.dialog.edit-abilities-dialog .window-content .row .abilities {
+  display: grid;
+  grid-template-columns: repeat(6, 84px);
+  grid-template-rows: auto;
+  flex: 0 0 auto;
+}
+.co.dialog.edit-abilities-dialog .window-content .row-heading {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  grid-template-areas: "img description remaining";
+  align-items: center;
+}
+.co.dialog.edit-abilities-dialog .window-content .row-heading h3 {
+  grid-column: 1/4;
+  align-self: start;
+  font-size: var(--font-size-24);
+}
+.co.dialog.edit-abilities-dialog .window-content .row-column {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.co.dialog.edit-abilities-dialog .window-content .row-column button {
+  align-items: center;
+  border: 1px solid var(--button-color);
+  color: var(--button-color);
+  display: flex;
+  font-size: var(--font-size-12);
+  justify-content: space-around;
+  outline: none;
+  margin: 0;
+  padding: 0.1em 0 0;
+  position: relative;
+  text-transform: uppercase;
+  width: 6em;
+  height: 1.5em;
+}
+.co.dialog.edit-abilities-dialog .window-content .row-column button.hidden {
+  pointer-events: none;
+  visibility: hidden;
+}
+.co.dialog.edit-abilities-dialog .window-content .row-column button.boost {
+  margin-top: auto;
+  --button-color: #316549;
+  --button-locked-color: #1b3c2a;
+}
+.co.dialog.edit-abilities-dialog .window-content .summary-row .row-heading {
+  display: block;
+}
+.co.dialog.edit-abilities-dialog .window-content .summary-row .abilities {
+  grid-template-rows: auto auto;
+}
+.co.dialog.edit-abilities-dialog .window-content .summary-row .row-column {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+}
+.co.dialog.edit-abilities-dialog .window-content .summary-row .row-column .value {
+  height: 40px;
+  font: 700 var(--font-size-24) var(--serif);
+  line-height: var(--font-size-30);
+}
+.co.dialog.edit-abilities-dialog .window-content .summary-row .complete {
+  grid-row: 2;
+  grid-column: 1/7;
+  margin-top: 10px;
+  margin-left: auto;
+}
+.co.dialog.edit-abilities-dialog .window-content .summary-row button.complete {
+  color: white;
+  background: var(--secondary);
+  height: 35px;
+  width: 131px;
+  border: 1px solid var(--tertiary);
+}
+.co.dialog.edit-abilities-dialog .window-content .background-stripes {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 50px;
+  right: 0;
+  padding: 10px 20px 10px 20px;
+  pointer-events: none;
+  align-items: normal;
+}
+.co.dialog.edit-abilities-dialog .window-content .background-stripes .abilities div:nth-child(odd) {
+  background-color: rgba(68, 55, 48, 0.1);
+}
+.co .light {
+  color: lightgray;
+}
+.co .bg-light {
+  background: lightgray;
+}
+.co .darkgray {
+  color: #23221d;
+}
+.co .bg-darkgray {
+  background: #23221d;
+  color: #fff;
+}
+.co .bg-dark {
+  background: #464331c4;
+  color: #fff;
+}
+.co .darkslate {
+  color: darkslategray;
+}
+.co .bg-darkslate {
+  background: darkslategray;
+  color: #fff;
+}
+.co .darkgreen {
+  color: #003c1e;
+}
+.co .bg-darkgreen {
+  background: #003c1e;
+  color: #fff;
+}
+.co .darkblue {
+  color: midnightblue;
+}
+.co .bg-darkblue {
+  background: midnightblue;
+  color: #fff;
+}
+.co .blue {
+  color: #009ee0;
+}
+.co .bg-blue {
+  background: #009ee0;
+  color: #fff;
+}
+.co .green {
+  color: #44a12b;
+}
+.co .bg-green {
+  background: #44a12b;
+  color: #fff;
+}
+.co .black {
+  color: #000;
+}
+.co .bg-black {
+  background: #000;
+  color: #fff;
+}
+.co .red {
+  color: #cd071e;
+}
+.co .bg-red {
+  background: #cd071e;
+  color: #fff;
+}
+.co .purple {
+  color: purple;
+}
+.co .bg-purple {
+  background: purple;
+  color: #fff;
+}
+.co .bg-default {
+  background: #003c1e;
+  color: #fff;
+}
+.co .color-default {
+  color: #003c1e;
+}
+.co .bg-header {
+  background: #003c1e;
+  color: #fff;
+}
+.co .color-header {
+  color: #003c1e;
+}
+.co .bg-health {
+  background: #44a12b;
+  color: #fff;
+}
+.co .color-health {
+  color: #44a12b;
+}
+.co .bg-stats {
+  background: #003c1e;
+  color: #fff;
+}
+.co .color-stats {
+  color: #003c1e;
+}
+.co .bg-resource {
+  background: darkslategray;
+  color: #fff;
+}
+.co .color-resource {
+  color: darkslategray;
+}
+.co .bg-recovery {
+  background: #44a12b;
+  color: #fff;
+}
+.co .color-recovery {
+  color: #44a12b;
+}
+@font-face {
+  font-family: 'Modesto Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../../../fonts/modesto-condensed/modesto-condensed.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Modesto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../../../fonts/modesto-condensed/modesto-condensed-bold.woff2') format('woff2');
+}
+.co .empty {
+  color: var(--sub);
+  font-style: italic;
+}
+.co strong,
+.co .strong {
+  font-weight: 700;
+}
 .co .ellipse {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -650,119 +1117,6 @@ strong {
 }
 .co .flxrow .flex4 {
   flex: 4;
-}
-.co.sheet.actor.character {
-  min-width: 765px;
-}
-.co.sheet.actor.character .window-content {
-  padding: 0;
-}
-.co.sheet.actor.character .window-content form.editable,
-.co.sheet.actor.character .window-content form.locked {
-  padding: 0;
-  margin: 0;
-}
-.co.sheet.actor.character .window-content form.editable .sidebar,
-.co.sheet.actor.character .window-content form.locked .sidebar {
-  flex: 0;
-  padding: 10px;
-}
-.co.sheet.actor.character .window-content form.editable .sidebar .portrait img,
-.co.sheet.actor.character .window-content form.locked .sidebar .portrait img {
-  border: none;
-  margin: 0;
-  padding: 0;
-  max-width: 150px;
-  max-height: 200px;
-}
-.co.sheet.actor.character .window-content form.editable .sidebar .features,
-.co.sheet.actor.character .window-content form.locked .sidebar .features {
-  list-style-type: none;
-}
-.co.sheet.actor.character .window-content form.editable .sidebar .features .featured-item,
-.co.sheet.actor.character .window-content form.locked .sidebar .features .featured-item {
-  border: 2px groove #eeede0;
-  padding: 3px;
-  margin-bottom: 3px;
-  color: #4b4a44;
-}
-.co.sheet.actor.character .window-content form.editable .sidebar .monitor .hp,
-.co.sheet.actor.character .window-content form.locked .sidebar .monitor .hp,
-.co.sheet.actor.character .window-content form.editable .sidebar .monitor .def,
-.co.sheet.actor.character .window-content form.locked .sidebar .monitor .def,
-.co.sheet.actor.character .window-content form.editable .sidebar .monitor .init,
-.co.sheet.actor.character .window-content form.locked .sidebar .monitor .init {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 5px;
-  grid-auto-columns: minmax(60px, 60px);
-}
-.co.sheet.actor.character .window-content form.editable .sidebar .monitor .hp .cell,
-.co.sheet.actor.character .window-content form.locked .sidebar .monitor .hp .cell,
-.co.sheet.actor.character .window-content form.editable .sidebar .monitor .def .cell,
-.co.sheet.actor.character .window-content form.locked .sidebar .monitor .def .cell,
-.co.sheet.actor.character .window-content form.editable .sidebar .monitor .init .cell,
-.co.sheet.actor.character .window-content form.locked .sidebar .monitor .init .cell {
-  justify-self: center;
-  align-self: center;
-  min-width: 40px;
-  max-width: 40px;
-}
-.co.sheet.actor.character .window-content form.editable .sidebar .monitor .hp .cell.icon-big,
-.co.sheet.actor.character .window-content form.locked .sidebar .monitor .hp .cell.icon-big,
-.co.sheet.actor.character .window-content form.editable .sidebar .monitor .def .cell.icon-big,
-.co.sheet.actor.character .window-content form.locked .sidebar .monitor .def .cell.icon-big,
-.co.sheet.actor.character .window-content form.editable .sidebar .monitor .init .cell.icon-big,
-.co.sheet.actor.character .window-content form.locked .sidebar .monitor .init .cell.icon-big {
-  min-width: 60px;
-  max-width: 60px;
-}
-.co.sheet.actor.character .window-content form.editable .sidebar .monitor .hp .cell .field-value,
-.co.sheet.actor.character .window-content form.locked .sidebar .monitor .hp .cell .field-value,
-.co.sheet.actor.character .window-content form.editable .sidebar .monitor .def .cell .field-value,
-.co.sheet.actor.character .window-content form.locked .sidebar .monitor .def .cell .field-value,
-.co.sheet.actor.character .window-content form.editable .sidebar .monitor .init .cell .field-value,
-.co.sheet.actor.character .window-content form.locked .sidebar .monitor .init .cell .field-value {
-  max-width: 40px;
-  min-width: 40px;
-}
-.co.sheet.actor.character .window-content form.editable .sidebar .monitor .hp .cell .header,
-.co.sheet.actor.character .window-content form.locked .sidebar .monitor .hp .cell .header,
-.co.sheet.actor.character .window-content form.editable .sidebar .monitor .def .cell .header,
-.co.sheet.actor.character .window-content form.locked .sidebar .monitor .def .cell .header,
-.co.sheet.actor.character .window-content form.editable .sidebar .monitor .init .cell .header,
-.co.sheet.actor.character .window-content form.locked .sidebar .monitor .init .cell .header {
-  color: darkslategray;
-  font-weight: bold;
-}
-.co.sheet.actor.character .window-content form.editable .main .header,
-.co.sheet.actor.character .window-content form.locked .main .header {
-  flex: 0;
-  flex-wrap: nowrap;
-}
-.co.sheet.actor.character .window-content form.editable .main .header .details,
-.co.sheet.actor.character .window-content form.locked .main .header .details {
-  padding: 5px;
-  display: grid;
-  grid-template-columns: 1fr 6fr;
-  grid-gap: 10px;
-  grid-auto-columns: minmax(100px, auto);
-}
-.co.sheet.actor.character .window-content form.editable .main .header .details .form-label,
-.co.sheet.actor.character .window-content form.locked .main .header .details .form-label {
-  justify-self: end;
-  align-self: center;
-}
-.co.sheet.actor.character .window-content form.editable .main .header .details .form-value,
-.co.sheet.actor.character .window-content form.locked .main .header .details .form-value {
-  align-self: center;
-  flex: 1;
-}
-.co.sheet.actor.character .window-content form.editable .main .content,
-.co.sheet.actor.character .window-content form.locked .main .content {
-  flex: 1;
-  padding: 5px;
-  margin: 0;
 }
 .co .section-container {
   padding: 4px 6px 0;
@@ -814,6 +1168,18 @@ strong {
   justify-content: flex-start;
   width: 100%;
   padding: 4px;
+}
+.co .section-container .section-body-no-flex {
+  border: 1px solid #5e0000;
+  border-radius: 0px 0px 3px 3px;
+  width: 100%;
+  padding: 4px;
+}
+.co .top-sections {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 .co .sidebar {
   padding: 3px 0 0 3px;
@@ -1004,6 +1370,83 @@ strong {
   font-size: var(--font-size-10);
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
+}
+.co .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  list-style-type: none;
+  margin-bottom: 2px;
+  padding-left: 0;
+}
+.co .tags .paizo-style {
+  align-items: center;
+  border-radius: 3px;
+  padding: 0.05em;
+  gap: 0;
+}
+.co tags.tags.paizo-style {
+  background-color: rgba(0, 0, 0, 0.075);
+  --tag-bg: var(--primary);
+  --tag-hover: var(--primary);
+  --tag-remove-btn-color: var(--color-text-trait);
+  --tag-text-color: var(--color-text-trait);
+  --tags-border-color: var(--color-border-light-tertiary);
+  --tags-focus-border-color: var(--color-border-light-tertiary);
+  --tags-hover-border-color: var(--color-border-light-tertiary);
+  --readonly-striped: 0;
+}
+.co .tagify {
+  --tags-disabled-bg: #F1F1F1;
+  --tags-border-color: #DDD;
+  --tags-hover-border-color: #CCC;
+  --tags-focus-border-color: #3595f6;
+  --tag-border-radius: 3px;
+  --tag-bg: #E5E5E5;
+  --tag-hover: #D3E2E2;
+  --tag-text-color: black;
+  --tag-text-color--edit: black;
+  --tag-pad: 0.3em 0.5em;
+  --tag-inset-shadow-size: 1.1em;
+  --tag-invalid-color: #D39494;
+  --tag-invalid-bg: rgba(211, 148, 148, 0.5);
+  --tag-remove-bg: rgba(211, 148, 148, 0.3);
+  --tag-remove-btn-color: black;
+  --tag-remove-btn-bg: none;
+  --tag-remove-btn-bg--hover: #c77777;
+  --input-color: inherit;
+  --tag--min-width: 1ch;
+  --tag--max-width: auto;
+  --tag-hide-transition: 0.3s;
+  --placeholder-color: rgba(0, 0, 0, 0.4);
+  --placeholder-color-focus: rgba(0, 0, 0, 0.25);
+  --loader-size: 0.8em;
+  --readonly-striped: 1;
+  display: inline-flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  border: 1px solid var(--tags-border-color);
+  padding: 0;
+  line-height: 0;
+  cursor: text;
+  outline: none;
+  position: relative;
+  box-sizing: border-box;
+  transition: 0.1s;
+}
+.co .trait {
+  flex: auto 0 0;
+  padding: 4px;
+  background: var(--primary);
+  border: 2px solid var(--color-border-trait);
+  color: var(--color-text-trait);
+  font-size: 0.9em;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.co .adjustment-select .adjustment:not(.active) {
+  background-color: #7a7971;
+  color: #f5efe0;
 }
 .co .actions-list {
   width: 97%;
@@ -1460,8 +1903,1866 @@ strong {
   flex: 0;
   font-weight: 700;
 }
+.co .sheet-tabs {
+  display: flex;
+  flex: 0 0 30px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+  border-top: 1px solid var(--color-border-light-primary);
+  border-bottom: 1px solid var(--secondary-background);
+  border-bottom: 1px solid var(--color-border-light-primary);
+}
+.co .sheet-tabs .item {
+  flex: 1 1 auto;
+  align-items: baseline;
+  text-align: center;
+  font-weight: 600;
+  margin: 0;
+}
+.co .sheet-tabs .item.active {
+  text-shadow: 0 0 10px var(--color-shadow-primary);
+  text-decoration: underline;
+}
+.co .sheet-tabs .item.disabled {
+  color: #ababab;
+  border-color: #ababab;
+}
+.co.sheet.actor.character {
+  min-width: 630px;
+}
+.co.sheet.actor.character .window-content {
+  padding: 0;
+}
+.co.sheet.actor.character .window-content form.editable,
+.co.sheet.actor.character .window-content form.locked {
+  padding: 0;
+  margin: 0;
+}
+.co.sheet.actor.character .window-content form.editable .main .character-sheet-header,
+.co.sheet.actor.character .window-content form.locked .main .character-sheet-header {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+}
+.co.sheet.actor.character .window-content form.editable .main .character-sheet-header .name,
+.co.sheet.actor.character .window-content form.locked .main .character-sheet-header .name {
+  font-family: var(--serif-condensed);
+  font-size: var(--font-size-36);
+  height: var(--font-size-34);
+  font-weight: 700;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+.co.sheet.actor.character .window-content form.editable .main .character-sheet-header .name input,
+.co.sheet.actor.character .window-content form.locked .main .character-sheet-header .name input {
+  font-weight: inherit;
+  height: 32px;
+}
+.co.sheet.actor.character .window-content form.editable .main .character-sheet-header .name .name-value,
+.co.sheet.actor.character .window-content form.locked .main .character-sheet-header .name .name-value {
+  margin-left: 6px;
+  margin-right: 18px;
+}
+.co.sheet.actor.character .window-content form.editable .main .character-sheet-header .name .level-label,
+.co.sheet.actor.character .window-content form.locked .main .character-sheet-header .name .level-label {
+  flex: 0;
+  text-align: right;
+  margin-right: 0.1em;
+  text-transform: uppercase;
+}
+.co.sheet.actor.character .window-content form.editable .main .character-sheet-header .name input.level,
+.co.sheet.actor.character .window-content form.locked .main .character-sheet-header .name input.level {
+  flex: 0 0 40px;
+  text-align: center;
+}
+.co.sheet.actor.character .window-content form.editable .main .character-sheet-header select,
+.co.sheet.actor.character .window-content form.locked .main .character-sheet-header select {
+  padding: 4px !important;
+  height: auto !important;
+  font-family: var(--sans-serif);
+  font-weight: 500;
+  font-size: var(--font-size-10);
+  background: rgba(255, 255, 255, 0.5);
+}
+.co.sheet.actor.character .window-content form.editable .main .character-sheet-header .traits-list-item,
+.co.sheet.actor.character .window-content form.locked .main .character-sheet-header .traits-list-item {
+  border: 2px solid #d8c384;
+  color: white;
+  text-transform: uppercase;
+  background-color: #002664;
+}
+.co.sheet.actor.character .window-content form.editable .main .character-sheet-header .traits-list-item.archetype-select,
+.co.sheet.actor.character .window-content form.locked .main .character-sheet-header .traits-list-item.archetype-select {
+  background-color: #323232;
+}
+.co.sheet.actor.character .window-content form.editable .main .character-sheet-header .traits-list-item.category-select,
+.co.sheet.actor.character .window-content form.locked .main .character-sheet-header .traits-list-item.category-select {
+  background-color: #566193;
+}
+.co.sheet.actor.character .window-content form.editable .main .character-sheet-header .traits-list-item.size-select,
+.co.sheet.actor.character .window-content form.locked .main .character-sheet-header .traits-list-item.size-select {
+  background-color: #3a7a58;
+}
+.co.sheet.actor.character .window-content form.editable .main .character-sheet-header .traits-list-item.bossrank-select,
+.co.sheet.actor.character .window-content form.locked .main .character-sheet-header .traits-list-item.bossrank-select {
+  background-color: #98513d;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body {
+  flex: 1;
+  padding: 5px;
+  margin: 0;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body h3.header,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body h3.header {
+  position: relative;
+  margin-top: 0.75em;
+  font-size: var(--font-size-16);
+  font-family: var(--serif);
+  font-weight: 600;
+  color: var(--primary);
+  line-height: 1;
+  border-bottom: 1px solid var(--color-border-divider);
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body h3.header button,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body h3.header button {
+  background: transparent;
+  border-radius: 2px 2px 0 0;
+  border: 1px solid var(--color-border-divider);
+  color: var(--primary);
+  cursor: pointer;
+  font-family: var(--sans-serif);
+  font-size: var(--font-size-12);
+  font-weight: 500;
+  height: 20px;
+  line-height: var(--font-size-12);
+  margin: 0;
+  outline: none;
+  text-transform: uppercase;
+  width: auto;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body h3.header > button,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body h3.header > button,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body h3.header > .controls,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body h3.header > .controls {
+  position: absolute;
+  bottom: -1px;
+  right: 0;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container {
+  list-style: none;
+  margin: 0;
+  padding: 0 5px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container.foldable .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container.foldable .items-container-header h3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container.foldable .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container.foldable .items-container-header h3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container.foldable .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container.foldable .items-container-header h3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container.foldable .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container.foldable .items-container-header h3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container.foldable .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container.foldable .items-container-header h3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container.foldable .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container.foldable .items-container-header h3 {
+  cursor: pointer;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container.foldable .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container.foldable .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container.foldable .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container.foldable .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container.foldable .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container.foldable .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container.foldable .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container.foldable .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container.foldable .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container.foldable .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container.foldable .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container.foldable .items-container-header h3:before {
+  content: "▾\202F";
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container.folded .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container.folded .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container.folded .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container.folded .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container.folded .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container.folded .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container.folded .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container.folded .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container.folded .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container.folded .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container.folded .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container.folded .items-container-header h3:before {
+  content: "▸\202F";
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item {
+  line-height: 30px;
+  padding: 0 2px;
+  border-bottom: 1px solid #c9c7b8;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item:last-child,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item:last-child,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item:last-child,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item:last-child,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item:last-child,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item:last-child {
+  border-bottom: none;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item .item-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item .item-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item .item-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item .item-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item .item-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item .item-name {
+  cursor: pointer;
+  max-height: 30px;
+  overflow: hidden;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item .item-name .item-image,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item .item-name .item-image,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item .item-name .item-image,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item .item-name .item-image,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item .item-name .item-image,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item .item-name .item-image,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item .item-name .item-image,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item .item-name .item-image,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item .item-name .item-image,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item .item-name .item-image,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item .item-name .item-image,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item .item-name .item-image {
+  flex: 0 0 30px;
+  background-size: 30px;
+  margin-right: 5px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item .item-name h4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item .item-name h4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item .item-name h4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item .item-name h4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item .item-name h4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item .item-name h4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item .item-name h4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item .item-name h4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item .item-name h4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item .item-name h4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item .item-name h4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item .item-name h4 {
+  margin: 0;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item .item-name i.attuned,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item .item-name i.attuned,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item .item-name i.attuned,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item .item-name i.attuned,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item .item-name i.attuned,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item .item-name i.attuned,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item .item-name i.attuned,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item .item-name i.attuned,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item .item-name i.attuned,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item .item-name i.attuned,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item .item-name i.attuned,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item .item-name i.attuned {
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item .item-uses input,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item .item-uses input,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item .item-uses input,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item .item-uses input,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item .item-uses input,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item .item-uses input,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item .item-uses input,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item .item-uses input,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item .item-uses input,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item .item-uses input,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item .item-uses input,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item .item-uses input {
+  width: 24px;
+  text-align: center;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item .item-properties,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item .item-properties,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item .item-properties,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item .item-properties,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item .item-properties,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item .item-properties,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item .item-properties,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item .item-properties,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item .item-properties,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item .item-properties,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item .item-properties,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item .item-properties {
+  margin-top: 3px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item .item-recharge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item .item-recharge,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item .item-recharge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item .item-recharge,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item .item-recharge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item .item-recharge,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item .item-recharge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item .item-recharge,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item .item-recharge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item .item-recharge,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item .item-recharge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item .item-recharge {
+  flex: 0 0 80px;
+  text-align: right;
+  font-size: 11px;
+  color: #7a7971;
+  white-space: nowrap;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .items-container-header,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .items-container-header,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .items-container-header,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .items-container-header,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .items-container-header,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .items-container-header,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .items-container-header,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .items-container-header,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .items-container-header,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .items-container-header,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .items-container-header,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .items-container-header {
+  margin: 2px 0;
+  padding: 0;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove #eeede0;
+  font-weight: bold;
+  line-height: 24px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .items-container-header h3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .items-container-header h3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .items-container-header h3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .items-container-header h3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .items-container-header h3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .items-container-header h3 {
+  margin: 0 -5px 0 0;
+  padding-left: 5px;
+  font-family: var(--serif-condensed);
+  font-size: 20px;
+  font-weight: 700;
+  border-bottom: none;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .items-container-header .item-controls-4 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .items-container-header .item-controls-4 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .items-container-header .item-controls-4 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .items-container-header .item-controls-4 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .items-container-header .item-controls-4 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .items-container-header .item-controls-4 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .items-container-header .item-controls-4 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .items-container-header .item-controls-4 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .items-container-header .item-controls-4 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .items-container-header .item-controls-4 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .items-container-header .item-controls-4 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .items-container-header .item-controls-4 a.item-create {
+  flex: 0 0 100%;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-name {
+  color: #4b4a44;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-detail,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-detail,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-detail,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-detail,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-detail,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-detail,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-detail,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-detail,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-detail,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-detail,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-detail,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-detail {
+  flex: 0 0 70px;
+  font-size: 12px;
+  color: #7a7971;
+  text-align: center;
+  border-right: 1px solid #c9c7b8;
+  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-detail:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-detail:last-child,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-detail:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-detail:last-child,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-detail:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-detail:last-child,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-detail:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-detail:last-child,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-detail:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-detail:last-child,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-detail:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-detail:last-child {
+  border-right: none;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-detail.item-action,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-detail.item-action,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-detail.item-action,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-detail.item-action,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-detail.item-action,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-detail.item-action,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-detail.item-action,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-detail.item-action,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-detail.item-action,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-detail.item-action,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-detail.item-action,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-detail.item-action {
+  flex: 0 0 100px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-weight,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-weight,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-weight,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-weight,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-weight,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-weight,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-weight,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-weight,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-weight,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-weight,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-weight,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-weight {
+  flex: 0 0 60px;
+  border-left: 1px solid #c9c7b8;
+  border-right: 1px solid #c9c7b8;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-list,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-list,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-list,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-list,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-list,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-list,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-list,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-list,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-list,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-list,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-list,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-list.out-of-charge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-list.out-of-charge,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-list.out-of-charge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-list.out-of-charge,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-list.out-of-charge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-list.out-of-charge,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-list.out-of-charge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-list.out-of-charge,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-list.out-of-charge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-list.out-of-charge,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-list.out-of-charge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-list.out-of-charge {
+  color: lightgray;
+  font-style: italic;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-list.out-of-charge .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-list.out-of-charge .item-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-list.out-of-charge .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-list.out-of-charge .item-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-list.out-of-charge .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-list.out-of-charge .item-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-list.out-of-charge .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-list.out-of-charge .item-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-list.out-of-charge .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-list.out-of-charge .item-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-list.out-of-charge .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-list.out-of-charge .item-name {
+  color: lightgray;
+  font-style: italic;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-1 {
+  flex: 0 0 22px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: flex-end;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-1 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-1 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-1 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-1 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-1 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-1 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-1 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-1 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-1 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-1 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-1 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-1 > * {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-1 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-1 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-1 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-1 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-1 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-1 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-1 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-1 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-1 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-1 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-1 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-1 .flex1 {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-1 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-1 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-1 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-1 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-1 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-1 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-1 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-1 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-1 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-1 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-1 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-1 .flex2 {
+  flex: 2;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-1 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-1 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-1 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-1 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-1 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-1 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-1 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-1 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-1 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-1 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-1 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-1 .flex3 {
+  flex: 3;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-1 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-1 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-1 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-1 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-1 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-1 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-1 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-1 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-1 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-1 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-1 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-1 .flex4 {
+  flex: 4;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-1 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-1 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-1 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-1 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-1 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-1 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-1 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-1 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-1 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-1 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-1 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-1 a {
+  flex: 0 0 22px;
+  font-size: 12px;
+  text-align: center;
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-2 {
+  flex: 0 0 44px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: flex-end;
+  text-align: center;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-2 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-2 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-2 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-2 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-2 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-2 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-2 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-2 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-2 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-2 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-2 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-2 > * {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-2 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-2 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-2 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-2 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-2 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-2 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-2 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-2 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-2 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-2 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-2 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-2 .flex1 {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-2 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-2 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-2 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-2 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-2 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-2 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-2 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-2 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-2 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-2 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-2 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-2 .flex2 {
+  flex: 2;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-2 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-2 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-2 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-2 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-2 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-2 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-2 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-2 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-2 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-2 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-2 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-2 .flex3 {
+  flex: 3;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-2 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-2 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-2 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-2 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-2 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-2 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-2 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-2 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-2 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-2 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-2 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-2 .flex4 {
+  flex: 4;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-2 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-2 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-2 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-2 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-2 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-2 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-2 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-2 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-2 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-2 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-2 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-2 a {
+  flex: 0 0 22px;
+  font-size: 12px;
+  text-align: center;
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-3 {
+  flex: 0 0 66px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: flex-end;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-3 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-3 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-3 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-3 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-3 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-3 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-3 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-3 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-3 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-3 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-3 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-3 > * {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-3 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-3 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-3 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-3 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-3 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-3 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-3 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-3 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-3 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-3 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-3 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-3 .flex1 {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-3 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-3 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-3 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-3 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-3 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-3 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-3 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-3 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-3 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-3 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-3 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-3 .flex2 {
+  flex: 2;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-3 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-3 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-3 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-3 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-3 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-3 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-3 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-3 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-3 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-3 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-3 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-3 .flex3 {
+  flex: 3;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-3 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-3 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-3 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-3 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-3 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-3 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-3 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-3 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-3 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-3 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-3 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-3 .flex4 {
+  flex: 4;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-3 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-3 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-3 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-3 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-3 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-3 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-3 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-3 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-3 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-3 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-3 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-3 a {
+  flex: 0 0 22px;
+  font-size: 12px;
+  text-align: center;
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-4 {
+  flex: 0 0 88px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: flex-end;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-4 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-4 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-4 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-4 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-4 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-4 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-4 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-4 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-4 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-4 > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-4 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-4 > * {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-4 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-4 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-4 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-4 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-4 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-4 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-4 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-4 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-4 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-4 .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-4 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-4 .flex1 {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-4 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-4 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-4 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-4 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-4 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-4 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-4 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-4 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-4 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-4 .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-4 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-4 .flex2 {
+  flex: 2;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-4 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-4 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-4 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-4 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-4 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-4 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-4 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-4 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-4 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-4 .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-4 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-4 .flex3 {
+  flex: 3;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-4 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-4 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-4 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-4 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-4 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-4 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-4 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-4 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-4 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-4 .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-4 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-4 .flex4 {
+  flex: 4;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-controls-4 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-controls-4 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-controls-4 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-controls-4 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-controls-4 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-controls-4 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-controls-4 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-controls-4 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-controls-4 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-controls-4 a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-controls-4 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-controls-4 a {
+  flex: 0 0 22px;
+  font-size: 12px;
+  text-align: center;
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .features-container .item-summary,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .features-container .item-summary,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .features-container .item-summary,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .features-container .item-summary,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .actions-container .item-summary,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .actions-container .item-summary,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .actions-container .item-summary,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .actions-container .item-summary,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .effects-container .item-summary,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .effects-container .item-summary,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .effects-container .item-summary,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container .item-summary {
+  flex: 0 0 100%;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 0.25em 0.5em;
+  border-top: 1px solid #c9c7b8;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .ability-scores,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .ability-scores,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .ability-scores,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .ability-scores {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid: 1fr/repeat(6, 1fr);
+  justify-content: center;
+  list-style: none;
+  gap: 12px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .ability-scores .ability,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .ability-scores .ability,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .ability-scores .ability,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .ability-scores .ability {
+  display: grid;
+  grid: "prefix" auto "mod" 1fr "score" auto "label" auto / 1fr;
+  column-gap: 10px;
+  align-items: center;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .ability-scores .ability .details-label,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .ability-scores .ability .details-label,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .ability-scores .ability .details-label,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .ability-scores .ability .details-label {
+  font-family: var(--sans-serif);
+  font-size: 0.625rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--alt-dark);
+  margin-right: 2px;
+  white-space: nowrap;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .ability-scores .ability .ability-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .ability-scores .ability .ability-name,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .ability-scores .ability .ability-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .ability-scores .ability .ability-name {
+  grid-area: label;
+  margin: 0;
+  text-align: center;
+  padding: 2px;
+  color: var(--primary);
+  opacity: 0.4;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .ability-scores .ability .ability-id,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .ability-scores .ability .ability-id,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .ability-scores .ability .ability-id,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .ability-scores .ability .ability-id {
+  text-transform: capitalize;
+  grid-area: prefix;
+  font: 400 22px var(--serif-condensed);
+  color: var(--alt-dark);
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  border: none;
+  position: relative;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .ability-scores .ability .ability-id i.fas,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .ability-scores .ability .ability-id i.fas,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .ability-scores .ability .ability-id i.fas,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .ability-scores .ability .ability-id i.fas {
+  position: absolute;
+  font-size: var(--font-size-12);
+  bottom: 4px;
+  left: 2px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .ability-scores .ability h3.ability-mod,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .ability-scores .ability h3.ability-mod,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .ability-scores .ability h3.ability-mod,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .ability-scores .ability h3.ability-mod {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-image-repeat: repeat;
+  border-image-source: url("../ui/frame-elegant.svg");
+  border-image-slice: 11;
+  border-image-width: 14px;
+  border-bottom: none;
+  border-style: double;
+  grid-area: mod;
+  font-size: var(--font-size-24);
+  font-family: var(--serif);
+  font-weight: 700;
+  height: 46px;
+  margin: 0;
+  padding-right: 4px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .ability-scores .ability .ability-score,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .ability-scores .ability .ability-score,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .ability-scores .ability .ability-score,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .ability-scores .ability .ability-score {
+  grid-area: score;
+  display: flex;
+  border-radius: 0;
+  font-size: 0;
+  border: 1px solid #D3CCBC;
+  background: rgba(211, 204, 188, 0.2);
+  margin-top: 4px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .ability-scores .ability .ability-score div,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .ability-scores .ability .ability-score div,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .ability-scores .ability .ability-score div,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .ability-scores .ability .ability-score div {
+  text-align: center;
+  font-size: var(--font-size-16);
+  font-family: var(--serif);
+  line-height: 16px;
+  height: 16px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .ability-scores .ability.key .ability-id,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .ability-scores .ability.key .ability-id,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .ability-scores .ability.key .ability-id,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .ability-scores .ability.key .ability-id,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .main .ability-scores .ability.key .ability-mod,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .main .ability-scores .ability.key .ability-mod,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .ability-scores .ability.key .ability-mod,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .ability-scores .ability.key .ability-mod {
+  color: var(--primary);
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory {
+  list-style: none;
+  margin: 0;
+  padding: 0 5px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory.foldable .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory.foldable .items-container-header h3 {
+  cursor: pointer;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory.foldable .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory.foldable .items-container-header h3:before {
+  content: "▾\202F";
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory.folded .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory.folded .items-container-header h3:before {
+  content: "▸\202F";
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item {
+  line-height: 30px;
+  padding: 0 2px;
+  border-bottom: 1px solid #c9c7b8;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item:last-child {
+  border-bottom: none;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item .item-name {
+  cursor: pointer;
+  max-height: 30px;
+  overflow: hidden;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item .item-name .item-image,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item .item-name .item-image {
+  flex: 0 0 30px;
+  background-size: 30px;
+  margin-right: 5px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item .item-name h4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item .item-name h4 {
+  margin: 0;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item .item-name i.attuned,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item .item-name i.attuned {
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item .item-uses input,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item .item-uses input {
+  width: 24px;
+  text-align: center;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item .item-properties,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item .item-properties {
+  margin-top: 3px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item .item-recharge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item .item-recharge {
+  flex: 0 0 80px;
+  text-align: right;
+  font-size: 11px;
+  color: #7a7971;
+  white-space: nowrap;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .items-container-header,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .items-container-header {
+  margin: 2px 0;
+  padding: 0;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove #eeede0;
+  font-weight: bold;
+  line-height: 24px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .items-container-header h3 {
+  margin: 0 -5px 0 0;
+  padding-left: 5px;
+  font-family: var(--serif-condensed);
+  font-size: 20px;
+  font-weight: 700;
+  border-bottom: none;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .items-container-header .item-controls-4 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .items-container-header .item-controls-4 a.item-create {
+  flex: 0 0 100%;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-name {
+  color: #4b4a44;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-detail,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-detail {
+  flex: 0 0 70px;
+  font-size: 12px;
+  color: #7a7971;
+  text-align: center;
+  border-right: 1px solid #c9c7b8;
+  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-detail:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-detail:last-child {
+  border-right: none;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-detail.item-action,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-detail.item-action {
+  flex: 0 0 100px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-weight,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-weight {
+  flex: 0 0 60px;
+  border-left: 1px solid #c9c7b8;
+  border-right: 1px solid #c9c7b8;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-list,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-list.out-of-charge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-list.out-of-charge {
+  color: lightgray;
+  font-style: italic;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-list.out-of-charge .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-list.out-of-charge .item-name {
+  color: lightgray;
+  font-style: italic;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-1 {
+  flex: 0 0 22px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: flex-end;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-1 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-1 > * {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-1 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-1 .flex1 {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-1 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-1 .flex2 {
+  flex: 2;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-1 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-1 .flex3 {
+  flex: 3;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-1 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-1 .flex4 {
+  flex: 4;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-1 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-1 a {
+  flex: 0 0 22px;
+  font-size: 12px;
+  text-align: center;
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-2 {
+  flex: 0 0 44px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: flex-end;
+  text-align: center;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-2 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-2 > * {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-2 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-2 .flex1 {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-2 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-2 .flex2 {
+  flex: 2;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-2 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-2 .flex3 {
+  flex: 3;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-2 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-2 .flex4 {
+  flex: 4;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-2 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-2 a {
+  flex: 0 0 22px;
+  font-size: 12px;
+  text-align: center;
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-3 {
+  flex: 0 0 66px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: flex-end;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-3 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-3 > * {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-3 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-3 .flex1 {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-3 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-3 .flex2 {
+  flex: 2;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-3 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-3 .flex3 {
+  flex: 3;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-3 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-3 .flex4 {
+  flex: 4;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-3 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-3 a {
+  flex: 0 0 22px;
+  font-size: 12px;
+  text-align: center;
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-4 {
+  flex: 0 0 88px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: flex-end;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-4 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-4 > * {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-4 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-4 .flex1 {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-4 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-4 .flex2 {
+  flex: 2;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-4 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-4 .flex3 {
+  flex: 3;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-4 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-4 .flex4 {
+  flex: 4;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-controls-4 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-controls-4 a {
+  flex: 0 0 22px;
+  font-size: 12px;
+  text-align: center;
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .inventory .item-summary,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory .item-summary {
+  flex: 0 0 100%;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 0.25em 0.5em;
+  border-top: 1px solid #c9c7b8;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities {
+  list-style: none;
+  margin: 0;
+  padding: 0 5px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities.foldable .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities.foldable .items-container-header h3 {
+  cursor: pointer;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities.foldable .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities.foldable .items-container-header h3:before {
+  content: "▾\202F";
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities.folded .items-container-header h3:before,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities.folded .items-container-header h3:before {
+  content: "▸\202F";
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item {
+  line-height: 30px;
+  padding: 0 2px;
+  border-bottom: 1px solid #c9c7b8;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item:last-child {
+  border-bottom: none;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item .item-name {
+  cursor: pointer;
+  max-height: 30px;
+  overflow: hidden;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item .item-name .item-image,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item .item-name .item-image {
+  flex: 0 0 30px;
+  background-size: 30px;
+  margin-right: 5px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item .item-name h4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item .item-name h4 {
+  margin: 0;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item .item-name i.attuned,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item .item-name i.attuned {
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item .item-uses input,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item .item-uses input {
+  width: 24px;
+  text-align: center;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item .item-properties,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item .item-properties {
+  margin-top: 3px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item .item-recharge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item .item-recharge {
+  flex: 0 0 80px;
+  text-align: right;
+  font-size: 11px;
+  color: #7a7971;
+  white-space: nowrap;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .items-container-header,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .items-container-header {
+  margin: 2px 0;
+  padding: 0;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove #eeede0;
+  font-weight: bold;
+  line-height: 24px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .items-container-header h3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .items-container-header h3 {
+  margin: 0 -5px 0 0;
+  padding-left: 5px;
+  font-family: var(--serif-condensed);
+  font-size: 20px;
+  font-weight: 700;
+  border-bottom: none;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .items-container-header .item-controls a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .items-container-header .item-controls-4 a.item-create,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .items-container-header .item-controls-4 a.item-create {
+  flex: 0 0 100%;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-name {
+  color: #4b4a44;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-detail,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-detail {
+  flex: 0 0 70px;
+  font-size: 12px;
+  color: #7a7971;
+  text-align: center;
+  border-right: 1px solid #c9c7b8;
+  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-detail:last-child,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-detail:last-child {
+  border-right: none;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-detail.item-action,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-detail.item-action {
+  flex: 0 0 100px;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-weight,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-weight {
+  flex: 0 0 60px;
+  border-left: 1px solid #c9c7b8;
+  border-right: 1px solid #c9c7b8;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-list,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-list.out-of-charge,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-list.out-of-charge {
+  color: lightgray;
+  font-style: italic;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-list.out-of-charge .item-name,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-list.out-of-charge .item-name {
+  color: lightgray;
+  font-style: italic;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-1 {
+  flex: 0 0 22px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: flex-end;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-1 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-1 > * {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-1 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-1 .flex1 {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-1 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-1 .flex2 {
+  flex: 2;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-1 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-1 .flex3 {
+  flex: 3;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-1 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-1 .flex4 {
+  flex: 4;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-1 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-1 a {
+  flex: 0 0 22px;
+  font-size: 12px;
+  text-align: center;
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-2 {
+  flex: 0 0 44px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: flex-end;
+  text-align: center;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls > *,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-2 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-2 > * {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls .flex1,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-2 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-2 .flex1 {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls .flex2,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-2 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-2 .flex2 {
+  flex: 2;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls .flex3,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-2 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-2 .flex3 {
+  flex: 3;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls .flex4,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-2 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-2 .flex4 {
+  flex: 4;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls a,
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-2 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-2 a {
+  flex: 0 0 22px;
+  font-size: 12px;
+  text-align: center;
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-3 {
+  flex: 0 0 66px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: flex-end;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-3 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-3 > * {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-3 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-3 .flex1 {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-3 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-3 .flex2 {
+  flex: 2;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-3 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-3 .flex3 {
+  flex: 3;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-3 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-3 .flex4 {
+  flex: 4;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-3 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-3 a {
+  flex: 0 0 22px;
+  font-size: 12px;
+  text-align: center;
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-4 {
+  flex: 0 0 88px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  justify-content: flex-end;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-4 > *,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-4 > * {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-4 .flex1,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-4 .flex1 {
+  flex: 1;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-4 .flex2,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-4 .flex2 {
+  flex: 2;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-4 .flex3,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-4 .flex3 {
+  flex: 3;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-4 .flex4,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-4 .flex4 {
+  flex: 4;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-controls-4 a,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-controls-4 a {
+  flex: 0 0 22px;
+  font-size: 12px;
+  text-align: center;
+  color: #7a7971;
+}
+.co.sheet.actor.character .window-content form.editable .main .sheet-body .capacities .item-summary,
+.co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities .item-summary {
+  flex: 0 0 100%;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 0.25em 0.5em;
+  border-top: 1px solid #c9c7b8;
+}
 .co.sheet.actor.encounter {
-  min-width: 500px;
+  min-width: 585px;
 }
 .co.sheet.actor.encounter .window-content {
   padding: 0;
@@ -1479,8 +3780,9 @@ strong {
 }
 .co.sheet.actor.encounter .window-content form.editable .main .npc-sheet-header .name,
 .co.sheet.actor.encounter .window-content form.locked .main .npc-sheet-header .name {
-  font-family: var(--sans-serif-condensed);
-  font-size: 1.75rem;
+  font-family: var(--serif-condensed);
+  font-size: var(--font-size-36);
+  height: var(--font-size-34);
   font-weight: 700;
   width: 100%;
   flex-wrap: nowrap;
@@ -1492,7 +3794,6 @@ strong {
 }
 .co.sheet.actor.encounter .window-content form.editable .main .npc-sheet-header .name .name-value,
 .co.sheet.actor.encounter .window-content form.locked .main .npc-sheet-header .name .name-value {
-  font-variant: small-caps;
   margin-left: 6px;
   margin-right: 18px;
 }
@@ -1540,34 +3841,173 @@ strong {
 .co.sheet.actor.encounter .window-content form.locked .main .npc-sheet-header .traits-list-item.bossrank-select {
   background-color: #98513d;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .content,
-.co.sheet.actor.encounter .window-content form.locked .main .content {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body {
   flex: 1;
   padding: 5px;
   margin: 0;
 }
-.co .editor {
-  margin: 0;
+.co .action-icon {
+  width: 48px;
+  height: 48px;
+  border: none;
+  outline: 2px solid white;
+  box-shadow: 3px 3px 5px gray;
+}
+.co .action-icon-small {
+  width: 32px;
+  height: 32px;
+  border: none;
+  outline: 2px solid white;
+  box-shadow: 3px 3px 5px gray;
+}
+.co.sheet.item .window-content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  padding: 8px;
+  color: var(--color-text-dark-primary);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.co.sheet.item .window-content form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  height: 100%;
-  width: 100%;
-  min-height: 200px;
 }
-.co .editor .editor-content {
-  padding: 5px;
-  margin: 0;
-  overflow: auto;
-  height: 100%;
+.co.sheet.item .window-content form .sheet-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  flex: 0 0 70px;
+  align-items: start;
   width: 100%;
-  min-height: 100%;
-  max-height: 100%;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--secondary-background);
 }
-.co .editor .tox {
-  padding: 0;
-  margin: 0;
-  overflow: auto;
+.co.sheet.item .window-content form .sheet-header > * {
+  flex: 1;
+}
+.co.sheet.item .window-content form .sheet-header img {
+  border: none;
+  object-fit: contain;
+  flex: 0 0 64px;
+  margin-right: 6px;
+  height: 64px;
+}
+.co.sheet.item .window-content form .sheet-header .paizo-style {
+  flex-basis: 100%;
+  width: 0;
+  border: none;
+  margin-top: 2px;
+  padding-left: 0;
+  padding-right: 0;
+}
+.co.sheet.item .window-content form .sheet-header .details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+.co.sheet.item .window-content form .sheet-header .details input[name=name] {
+  font-family: var(--serif-condensed);
+  font-size: var(--font-size-36);
+  font-weight: 700;
+  flex: 1;
+  border: none;
+  height: var(--font-size-34);
+}
+.co.sheet.item .window-content form .sheet-body .description {
   height: 100%;
-  width: 100%;
-  min-height: 100%;
-  max-height: 100%;
+}
+.co.sheet.item .window-content form .sheet-body .details {
+  padding: 10px;
+}
+.co.sheet.item .window-content form .sheet-body .details .list-3col {
+  display: grid;
+  grid-template-columns: 1fr 8fr 2fr;
+  grid-gap: 1px;
+  grid-auto-columns: minmax(15px, auto);
+}
+.co.sheet.item .window-content form .sheet-body .details .list-3col .cell.center {
+  justify-self: center;
+  align-self: center;
+}
+.co.sheet.item .window-content form .sheet-body .details .list-3col .cell.left {
+  justify-self: start;
+  align-self: center;
+}
+.co.sheet.item .window-content form .sheet-body .details .list-3col .cell.right {
+  justify-self: end;
+  align-self: center;
+}
+.co.sheet.item .window-content form .sheet-body .details .list-3col .cell .header {
+  color: #4b4a44;
+  font-weight: bold;
+}
+.co.sheet.item .window-content form .sheet-body .details .list-4col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 8fr 2fr;
+  grid-gap: 1px;
+  grid-auto-columns: minmax(15px, auto);
+}
+.co.sheet.item .window-content form .sheet-body .details .list-4col .cell.center {
+  justify-self: center;
+  align-self: center;
+}
+.co.sheet.item .window-content form .sheet-body .details .list-4col .cell.left {
+  justify-self: start;
+  align-self: center;
+}
+.co.sheet.item .window-content form .sheet-body .details .list-4col .cell.right {
+  justify-self: end;
+  align-self: center;
+}
+.co.sheet.item .window-content form .sheet-body .details .list-4col .cell .header {
+  color: #4b4a44;
+  font-weight: bold;
+}
+.co.sheet.item .window-content form .sheet-body .actions .actions {
+  padding: 20px;
+}
+.co.sheet.item .window-content form .sheet-body .actions .actions button.action-button {
+  flex: 0;
+}
+.co.sheet.item .window-content form .sheet-body .actions .conditions,
+.co.sheet.item .window-content form .sheet-body .actions .modifiers,
+.co.sheet.item .window-content form .sheet-body .actions .resolvers {
+  font-family: var(--sans-serif-condensed);
+  margin-top: 5px;
+  border: 1px solid #5e0000;
+  border-radius: 3px 3px 0px 0px;
+  background: #5e0000;
+  color: #f5efe0;
+  font-size: var(--font-size-13);
+  text-transform: uppercase;
+  padding: 0 8px;
+  line-height: 2em;
+  margin-bottom: 0;
+}
+.co.sheet.item .window-content form .sheet-body .actions .conditions-container,
+.co.sheet.item .window-content form .sheet-body .actions .modifiers-container,
+.co.sheet.item .window-content form .sheet-body .actions .resolvers-container {
+  border: 1px solid #5e0000;
+  border-radius: 0px 0px 3px 3px;
+  padding: 10px;
+  margin-top: 0;
+}
+.co.sheet.item .window-content form .sheet-body .actions .conditions-container .condition,
+.co.sheet.item .window-content form .sheet-body .actions .modifiers-container .condition,
+.co.sheet.item .window-content form .sheet-body .actions .resolvers-container .condition,
+.co.sheet.item .window-content form .sheet-body .actions .conditions-container .modifier,
+.co.sheet.item .window-content form .sheet-body .actions .modifiers-container .modifier,
+.co.sheet.item .window-content form .sheet-body .actions .resolvers-container .modifier,
+.co.sheet.item .window-content form .sheet-body .actions .conditions-container .resolver,
+.co.sheet.item .window-content form .sheet-body .actions .modifiers-container .resolver,
+.co.sheet.item .window-content form .sheet-body .actions .resolvers-container .resolver {
+  padding-bottom: 2px;
 }

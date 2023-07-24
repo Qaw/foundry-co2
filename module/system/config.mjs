@@ -11,6 +11,20 @@ CO.ASCII = `
  //******  //*******        
   //////    ///////   `;
 
+CO.itemIcons = {
+  "equipment": "icons/svg/item-bag.svg",
+  "capacity": "icons/svg/combat.svg",
+  "feature": "icons/svg/invisible.svg",
+  "profile": "icons/svg/upgrade.svg",
+  "path": "icons/svg/upgrade.svg"
+}
+
+CO.actorIcons = {
+  "character": "icons/svg/mystery-man.svg",
+  "encounter": "icons/svg/eye.svg"
+}
+
+
 CO.modifier = {
   type: {
     equipment: "CO.modifier.type.equipment",

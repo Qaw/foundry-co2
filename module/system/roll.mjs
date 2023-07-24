@@ -1,7 +1,6 @@
-import {Log} from "../utils/log.mjs";
 import {Utils} from "./utils.mjs";
-import { CoChat } from "../ui/chat.mjs";
-import { CoAttackRollDialog, CoSkillRollDialog } from "../dialogs/dialog-roll.mjs";
+import {CoChat} from "../ui/chat.mjs";
+import {CoAttackRollDialog, CoSkillRollDialog} from "../dialogs/dialog-roll.mjs";
 
 class CoRoll {
     constructor(actor) {this.actor = actor;}
@@ -80,7 +79,7 @@ export class CoSkillCheck extends CoRoll {
 
 export class CoDmgRoll extends CoRoll {
     roll(event, actor, rolling) {
-        Log.debug("DMG ROLL");
+        console.debug(game.co.log("DMG ROLL"));
     }
     dialog(){}
     chat(){}

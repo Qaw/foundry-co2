@@ -1,17 +1,7 @@
-import { Log } from "../utils/log.mjs";
-
 export class Utils {
   static shortcutResolve(shortcut) {
     return shortcut.replace("@", "system.");
   }
-
-  static getModFromValue = function (value) {
-    return value < 4 ? -4 : Math.floor(value / 2) - 5;
-  };
-
-  static getValueFromMod = function (mod) {
-    return mod * 2 + 10;
-  };
 
   /**
    * @name getTooltip
@@ -69,7 +59,7 @@ export class Utils {
    * @returns {int} the modifier's value
    */
   static _evaluateCustom(actor, formula, source, toEvaluate) {
-    Log.debug("Custom Formula : ", formula);
+    console.debug(game.co.log("Custom Formula : ", formula));
 
     let replacedFormula = formula;
     const DSL = {
@@ -121,7 +111,7 @@ export class Utils {
       replacedFormula = replacedFormula.replace("@", "actor.system.");
     }
 
-    Log.debug("Custom Formula evaluated : ", replacedFormula);
+    console.debug(game.co.log("Custom Formula evaluated : ", replacedFormula));
 
     return replacedFormula;
   }

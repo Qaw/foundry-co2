@@ -1,17 +1,2 @@
 <div class="sidebar">
-    <div class="picture">
-        <img src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
-    </div>
-    <ul class="tags">
-        {{#each tags as |tag id|}}
-            <li class="tag">{{tag}}</li>
-        {{/each}}
-    </ul>
-    <div class="features">
-        {{#each system.properties as |value id|}}
-            {{#if value}}
-                <div class="featured-item">{{localize (concat "CO.properties." id)}}</div>
-            {{/if}}
-        {{/each}}
-    </div>
 </div>

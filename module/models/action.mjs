@@ -1,4 +1,4 @@
-import { Condition } from "./conditions.mjs";
+import { Condition } from "./condition.mjs";
 
 export class Action {
 
@@ -39,6 +39,22 @@ export class Action {
         this.conditions = conditions;
         this.modifiers = modifiers;
         this.resolvers = resolvers;
+    }
+
+    /**
+     * Creates an action from a data object.
+     */
+    static apply(data) {
+        Object.assign(this, data);
+    }
+
+    /**
+     * Creates an empty action.
+     */
+    static empty() {
+        return Action.apply({
+
+        });
     }
 
     get hasConditions() {

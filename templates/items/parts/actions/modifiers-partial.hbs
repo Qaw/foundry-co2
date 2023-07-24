@@ -1,7 +1,10 @@
-<h4 class="form-header"><a class="modifiers-toggle">{{localize "CO.ui.modifiers"}}</a></h4>
-<div class="modifiers-container">
+<h4 class="form-header modifiers flexrow">
+    <a class="modifiers-toggle section-toggle flex1">{{localize "CO.ui.modifiers"}}</a>
+    <a class="action-modifier-add flex0" title="{{localize "CO.ui.add"}}"><i class="fas fa-add"></i></a>
+</h4>
+<div class="modifiers-container foldable">
 {{#if action.modifiers}}
-    <div class="flexrow">
+    <div class="flexrow strong">
         <div class="form-fields flex1">{{localize "CO.ui.type"}}</div>
         <div class="form-fields flex1">{{localize "CO.ui.target"}}</div>
         <div class="form-fields flex1">{{localize "CO.ui.value"}}</div>
@@ -30,15 +33,12 @@
                 </select>
             </div>
             <div class="form-fields flex1"><input name="system.actions.{{../idx}}.modifiers.{{id}}.value" type="text" value="{{m.value}}" data-dtype="String" /></div>
-            <div class="form-fields flex0"><span class="action-modifier-delete"><i class="fas fa-trash"></i></span></div>
+            <div class="form-fields flex0"><a class="action-modifier-delete"><i class="fas fa-trash"></i></a></div>
         </div>
     {{/each}}
 {{else}}
     <div class="flexrow">
-        <span>Aucun modificateur.</span>
+        <span class="empty" style="padding:3px;">{{localize "CO.notif.modifiers.empty"}}</span>
     </div>
 {{/if}}
-    <div class="flexrow">
-        <a class="action-modifier-add" title="{{localize "CO.ui.add"}}"><i class="fas fa-add"></i></a>
-    </div>
 </div>

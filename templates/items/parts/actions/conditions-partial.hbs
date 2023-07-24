@@ -1,7 +1,11 @@
-<h4 class="form-header"><a class="conditions-toggle">{{localize "CO.ui.conditions"}}</a></h4>
-<div class="conditions-container">
+<h4 class="form-header conditions flexrow">
+    <a class="conditions-toggle section-toggle flex1">{{localize "CO.ui.conditions"}}</a>
+    <a class="condition-add flex0" title="{{localize "CO.ui.add"}}"><i class="fas fa-add"></i></a>
+
+</h4>
+<div class="conditions-container foldable">
     {{#if action.conditions}}
-        <div class="flexrow">
+        <div class="flexrow strong">
             <div class="form-fields flex1">Subject</div>
             <div class="form-fields flex1">Predicate</div>
             <div class="form-fields flex1">Object</div>
@@ -11,15 +15,12 @@
             <div class="form-fields flex1"><input name="system.actions.{{../idx}}.conditions.{{id}}.subject" type="text" value="{{c.subject}}" data-dtype="String" /></div>
             <div class="form-fields flex1"><input name="system.actions.{{../idx}}.conditions.{{id}}.predicate" type="text" value="{{c.predicate}}" data-dtype="String" /></div>
             <div class="form-fields flex1"><input name="system.actions.{{../idx}}.conditions.{{id}}.object" type="text" value="{{c.object}}" data-dtype="String" /></div>
-            <div class="form-fields flex0"><span class="condition-delete"><i class="fas fa-trash"></i></span></div>
+            <div class="form-fields flex0"><a class="condition-delete"><i class="fas fa-trash"></i></a></div>
         </div>
         {{/each}}
     {{else}}
         <div class="flexrow">
-            <span>Aucune condition.</span>
+            <span class="empty" style="padding:3px;">{{localize "CO.notif.conditions.empty"}}</span>
         </div>
     {{/if}}
-    <div class="flexrow">
-        <a class="condition-add" title="{{localize "CO.ui.add"}}"><i class="fas fa-add"></i></a>
-    </div>
 </div>

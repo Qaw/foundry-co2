@@ -10,6 +10,9 @@ export const registerHandlebarsHelpers = function () {
     Handlebars.registerHelper("isset", function (value) {
         return (value == undefined) ? false : true;
     });
+    Handlebars.registerHelper("not", function (value) {
+        return !value;
+    });
     Handlebars.registerHelper("sum", function (arr, init) {
         return arr.reduce((previousValue, currentValue) => previousValue + currentValue, init);
     });
@@ -35,5 +38,9 @@ export const registerHandlebarsHelpers = function () {
     Handlebars.registerHelper("getEmbeddedItemImg", function (actor, source) {
         const item = actor.items.get(source);
         return item.img;
+    });
+    Handlebars.registerHelper("isActionable", function (itemType) {
+        const actionableItemTypes = ["capacity", "equipment"];
+        return actionableItemTypes.includes(itemType);
     });
 };

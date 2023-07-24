@@ -105,7 +105,7 @@
             <div class="sidebar-label">
                 <i class="fa-solid fa-swords fa-fw"></i>
                 <h4>{{localize "CO.label.long.init"}}</h4>
-                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><div>{{combat.init.value}}</div></a>
+                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i>&nbsp;<div>{{numberFormat combat.init.value decimals=0 sign=true}}</div></a>
             </div>
         </div>
 

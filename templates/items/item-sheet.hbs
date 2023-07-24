@@ -1,38 +1,54 @@
 <form class="{{cssClass}} flexrow" autocomplete="off">
     {{log "Chroniques Oubliées | item" item.type this}}
-    {{> "systems/co/templates/items/parts/item-sidebar.hbs"}}
-    <div class="main flexcol">
-        <div class="header flexrow">
-            <div class="details flex1">
-                <div class="item-name flexrow">
-                    <div class="flex1">
-                        <h1><input class="sans" name="name" type="text" value="{{item.name}}" placeholder="Item Name" data-dtype="String"/></h1>
-                    </div>
-                </div>
-                <div class="item-type flexrow">
-                    <div class="flex1">
-                        <h3>{{localize (concat "CO.itemTypes." item.type )}}</h3>
-                    </div>
+    <header class="sheet-header">
+        <img src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+        <div class="details">
+            <div class="name flex1">
+                <input class="flex1" name="name" type="text" value="{{item.name}}" placeholder="{{localize "CO.ui.itemName"}}" spellcheck="false" data-dtype="String">
+            </div>
+            <div class="flexrow" style="justify-content: space-between; width: 100%;">
+<!--                <div class="tagify paizo-style tags" style="flex: auto;">-->
+<!--                    <select class="tag" name="system.traits.rarity" value="common">-->
+<!--                        <option value="common" selected="">Common</option>-->
+<!--                        <option value="uncommon">Uncommon</option>-->
+<!--                        <option value="rare">Rare</option>-->
+<!--                        <option value="unique">Unique</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+                <div class="adjustment-select flexrow" style="flex: auto; justify-content: flex-end;">
+                    <span class="adjustment elite trait">{{localize (concat "CO.itemTypes." item.type )}}</span>
                 </div>
             </div>
         </div>
-        <div class="nav">
-            {{!-- Sheet Tab Navigation --}}
-            <nav class="sheet-tabs tabs" data-group="primary">
-                <a class="item" data-tab="description" title="{{ localize "CO.tabs.description" }}"><i class="fas fa-book-user"></i></a>
-                <a class="item" data-tab="details" title="{{ localize "CO.tabs.details" }}"><i class="fas fa-gear"></i></a>
-            </nav>
+<!--        <div class="adjustment-select flexrow  bg-blue" style="flex: auto; justify-content: flex-end;">-->
+<!--            <a class="adjustment elite trait " data-adjustment="elite">-->
+<!--                Elite-->
+<!--            </a>-->
+<!--            <a class="adjustment weak trait " data-adjustment="weak">-->
+<!--                Weak-->
+<!--            </a>-->
+<!--        </div>-->
+    </header>
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="description" title="{{ localize "CO.tabs.description" }}">{{ localize "CO.tabs.description" }}</a>
+        <a class="item" data-tab="details" title="{{ localize "CO.tabs.details" }}">{{ localize "CO.tabs.details" }}</a>
+        {{#if (isActionable item.type)}}
+        <a class="item" data-tab="actions" title="{{ localize "CO.tabs.actions" }}">{{ localize "CO.tabs.actions" }} / {{ localize "CO.tabs.effects" }}</a>
+        {{/if}}
+    </nav>
+    {{!> "systems/co/templates/items/parts/item-sidebar.hbs"}}
+    {{! log "Chroniques Oubliées | detail" this}}
+    <section class="sheet-body">
+        <div class="tab description active" data-group="primary" data-tab="description">
+            {{editor enrichedDescription target="system.description.value" button=true owner=owner editable=editable}}
         </div>
-        <div class="content flexrow">
-            {{! log "Chroniques Oubliées | detail" this}}
-            <section class="sheet-body">
-                <div class="tab description active" data-group="primary" data-tab="description">
-                    {{editor enrichedDescription target="system.description.value" button=true owner=owner editable=editable}}
-                </div>
-                <div class="tab details" data-group="primary" data-tab="details">
-                    {{> (buildItemTemplatePath "systems/co/templates/items/parts/" item.type)}}
-                </div>
-            </section>
+        <div class="tab details" data-group="primary" data-tab="details">
+            {{> (buildItemTemplatePath "systems/co/templates/items/parts/" item.type)}}
         </div>
-    </div>
+        {{#if (isActionable item.type)}}
+        <div class="tab actions" data-group="primary" data-tab="actions">
+            {{> "systems/co/templates/items/parts/actions/action-partial.hbs"}}
+        </div>
+        {{/if}}
+    </section>
 </form>

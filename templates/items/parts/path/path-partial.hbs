@@ -1,5 +1,5 @@
 {{!log "Chroniques Oubliées | path" this}}
-<h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.details"}}</a></h3>
+<!--<h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.details"}}</a></h3>-->
 <div class="details-form foldable">
     {{#if debugMode}}
         <div class="form-group">
@@ -46,7 +46,6 @@
     <div class="cell right item-controls">
         <a class="item-control item-create cof-compendium-pack" data-pack="capacities" data-open="0" title="Ajouter une capacité"><i class="fas fa-plus"></i>&nbsp; {{localize "CO.label.long.add"}}</a>
     </div>
-
     {{#each capacities as |capacity id|}}
         {{!log 'capacity' capacity id}}
         <div class="cell center">
@@ -59,7 +58,8 @@
             <div class="field-label ellipse"><a class="item-control item-edit" title="Edit Item">{{capacity.name}}</a></div>
         </div>
         <div class="cell right item item-controls" data-uuid="{{capacity.uuid}}" data-item-type="capacity" draggable="true" data-rank="{{add id 1}}">
-            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-fw fa-edit"></i></a>
+            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-fw fa-trash"></i></a>
         </div>
     {{/each}}
 </div>

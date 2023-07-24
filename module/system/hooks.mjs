@@ -1,4 +1,4 @@
-import { Hitpoints } from "./hitpoints.js";
+import { Hitpoints } from "../ui/hitpoints.js";
 
 export default function registerHooks() {
 
