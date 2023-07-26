@@ -1,11 +1,19 @@
+import {CoSkillRollDialog} from "./dialog-roll.mjs";
+
 export class CoEditAbilitiesDialog extends Dialog {
+
+  static async init(actor) {
+    let dialogTemplateData = {
+      actor: actor
+    };
+    let options = { classes: ["co", "dialog", "edit-abilities-dialog"], width:750, height: "fit-content", "z-index": 99999, type: "editAbilities" };
+    let html = await renderTemplate("systems/co/templates/dialogs/edit-abilities-dialog.hbs", dialogTemplateData);
+    let rollDialog = new CoEditAbilitiesDialog(actor, html, options);
+    return rollDialog.render(true);
+  }
   constructor(actor, html, options) {
-
-    options.classes.push("edit-abilities-dialog");
-    options.width = 500;
-
     let conf = {
-      title: skillRoll.label,
+      title: game.i18n.localize("CO.ui.editYourAbilities"),
       content: html,
       buttons: {
         cancel: {
@@ -17,122 +25,31 @@ export class CoEditAbilitiesDialog extends Dialog {
           icon: '<i class="fas fa-check"></i>',
           label: game.i18n.localize("CO.ui.submit"),
           callback: async (html) => {
-            const dice = html.find("#dice").val();
-            const difficulty = html.find("#difficulty").val();
-            const critrange = html.find("input#critrange").val();
-            const mod = html.find("input#mod").val();
-            const bonus = html.find("input#bonus").val();
-            const malus = html.find("input#malus").val();
-            const totalSkillBonuses = html.find("input#totalSkillBonuses").val();
-            let roll = await this.skillRoll.roll(this.skillRoll.label, dice, mod, bonus, malus, totalSkillBonuses, difficulty, critrange);
-            await this.skillRoll.chat(roll);
+            // const dice = html.find("#dice").val();
+            // const formulaAttack = html.find("#formulaAttack").val();
+            // const formulaDamage = html.find("#formulaDamage").val();
+            // const critrange = html.find("input#critrange").val();
+            // const difficulty = html.find("#difficulty").val();
+            //
+            // if (options.type === "attack") {
+            //   let rollAttack = await this.attackRoll.rollAttack(attackRoll.label, dice, formulaAttack, formulaDamage, difficulty, critrange);
+            //   await this.attackRoll.chat(rollAttack, "attack");
+            //
+            //   if (game.settings.get("co", "useComboRolls")){
+            //     let damageRoll = await this.attackRoll.rollDamage(attackRoll.label, formulaDamage);
+            //     await this.attackRoll.chat(damageRoll, "damage");
+            //   }
+            // }
+            // if (options.type === "damage") {
+            //   let rollDamage = await this.attackRoll.rollDamage(attackRoll.label, formulaDamage);
+            //   await this.attackRoll.chat(rollDamage, "damage");
+            // }
           }
         }
       },
       default: "submit"
     };
-
     super(conf, options);
-    this.skillRoll = skillRoll;
+    this.actor = actor;
   }
-
-  static async create(skillRoll, dialogTemplateData) {
-    let options = { classes: ["co", "dialog"], height: "fit-content", "z-index": 99999 };
-    let html = await renderTemplate("systems/co/templates/dialogs/skillcheck-dialog.hbs", dialogTemplateData);
-
-    return new CoSkillRollDialog(skillRoll, html, options);
-  }
-
-  activateListeners(html) {
-    super.activateListeners(html);
-    html.find(".bonus-item").click(this._onToggleCheckSkillBonus.bind(this));
-    html.find(".bonus-item").contextmenu(this._onContextBonusItem.bind(this));
-    // html.find(".bonus-item").mouseover(this._onHoverBonusItem.bind(this));
-  }
-
-  _onToggleCheckSkillBonus(event) {
-    // let value = event.currentTarget.dataset.value;
-    let item = event.currentTarget.closest('.bonus-item');
-    item.classList.toggle("checked");
-    let total = this._calculateTotalSkillBonus(event);
-    $('#totalSkillBonuses')[0].value = total;
-  }
-
-  _onContextBonusItem(event) {
-    let value = event.currentTarget.dataset.description;
-    console.log("Skill description : " + value);
-    let html = $(event.currentTarget).parents('.skillBonuses');
-    let total = this._calculateTotalSkillBonus(html[0]);
-    $('#totalSkillBonuses')[0].value = total;
-  }
-
-  _onHoverBonusItem(event) {
-    // SHOW HTML TOOLTIP
-  }
-
-  _calculateTotalSkillBonus(event) {
-    let parent = event.currentTarget.closest('.skill-bonuses')
-    const skillBonuses = Array.from(parent.querySelectorAll(".bonus-item.checked"));
-    let total = skillBonuses.reduce((acc, curr) => acc + parseInt(curr.dataset.value), 0);
-    return total;
-  }
-}
-
-export class CoAttackRollDialog extends Dialog {
-  constructor(attackRoll, html, options) {
-
-    options.classes.push("attackRoll");
-    options.width = 500;
-
-    let conf = {
-      title: attackRoll.label,
-      content: html,
-      buttons: {
-        cancel: {
-          icon: '<i class="fas fa-times"></i>',
-          label: game.i18n.localize("CO.ui.cancel"),
-          callback: () => { this.close() }
-        },
-        submit: {
-          icon: '<i class="fas fa-check"></i>',
-          label: game.i18n.localize("CO.ui.submit"),
-          callback: async (html) => {
-            const dice = html.find("#dice").val();
-            const formulaAttack = html.find("#formulaAttack").val();
-            const formulaDamage = html.find("#formulaDamage").val();
-            const critrange = html.find("input#critrange").val();
-            const difficulty = html.find("#difficulty").val();
-
-            if (options.type === "attack") {
-              let rollAttack = await this.attackRoll.rollAttack(attackRoll.label, dice, formulaAttack, formulaDamage, difficulty, critrange);  
-              await this.attackRoll.chat(rollAttack, "attack");
-
-              if (game.settings.get("co", "useComboRolls")){              
-                let damageRoll = await this.attackRoll.rollDamage(attackRoll.label, formulaDamage);  
-                await this.attackRoll.chat(damageRoll, "damage");
-              }
-            }
-			
-            if (options.type === "damage") {
-              let rollDamage = await this.attackRoll.rollDamage(attackRoll.label, formulaDamage);  
-              await this.attackRoll.chat(rollDamage, "damage");
-            }
-
-          }
-        }
-      },
-      default: "submit"
-    };
-
-    super(conf, options);
-    this.attackRoll = attackRoll;
-  }
-
-  static async create(attackRoll, dialogTemplateData) {
-    let options = { classes: ["co", "dialog"], height: "fit-content", "z-index": 99999, type: dialogTemplateData.type };
-    let html = await renderTemplate("systems/co/templates/dialogs/attack-dialog.hbs", dialogTemplateData);
-
-    return new CoAttackRollDialog(attackRoll, html, options);
-  }
-
 }

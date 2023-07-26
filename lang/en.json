@@ -33,8 +33,8 @@
     "label": {
       "long": {
         "label" : "Label",
-        "stat": "Caractéristique",
-        "stats": "Caractéristiques",
+        "ability": "Caractéristique",
+        "abilities": "Caractéristiques",
         "superior": "Supérieur",
         "base": "Base",
         "specie": "Espèce",
@@ -53,7 +53,6 @@
         "profile": "Profil",
         "capacity": "Capacité",
         "capacities": "Capacités",
-        "abilities": "Caractéristiques",
         "combat": "Combat",
         "attacks": "Attaques",
         "attack": "Attaque",
@@ -90,22 +89,24 @@
         "formulaDamage": "Formule des dommages",
         "melee" : "Attaque de contact",
         "ranged" : "Attaque à distance",
-        "magic" : "Attaque magique"
+        "magic" : "Attaque magique",
+        "meters" : "Mètres",
+        "feet" : "Pieds"
       },
       "short": {
         "label" : "Label",
-        "stat": "Carac.",
-        "stats": "Caracs",
+        "ability": "Carac.",
+        "abilities": "Caracs",
         "superior": "Sup.",
         "base": "Base",
         "specie": "Espèce",
         "bonus": "Bonus",
+        "traits" : "Traits",
         "malus": "Malus",
         "value": "Val.",
         "mod": "Mod",
         "max": "Max.",
         "min": "Min.",
-        "abilities": "Carac.",
         "combat": "Combat",
         "attacks": "Att.",
         "attack": "Att.",
@@ -148,7 +149,9 @@
         "melee" : "Contact",
         "ranged" : "Distance",
         "magic" : "Magique",
-        "current" : "Actuel"
+        "current" : "Actuel",
+        "meters" : "m",
+        "feet" : "ft"
       }
     },
     "ui": {
@@ -230,7 +233,10 @@
       "applyHalfDamage": "Appliquer la moitié des dégâts",
       "applyDoubleDamage": "Appliquer le double des dégâts",
       "applyHealing" : "Appliquer les soins",
-      "newAction" : "Nouvelle Action"
+      "newAction" : "Nouvelle Action",
+      "capacitiesLearned" : "Capacités acquises",
+      "capacitiesNotLearned" : "Capacités non-acquises",
+      "editYourAbilities" : "Éditez vos Caractéristiques"
     },
     "properties": {
       "attack": "Attaque",
@@ -293,6 +299,14 @@
         "secondary": "Secondaire",
         "tertiary": "Tertiaire"
       },
+      "medium": {
+        "fortune": "Chance",
+        "mana": "Mana",
+        "recovery": "Récup.",
+        "primary": "Primaire",
+        "secondary": "Secondaire",
+        "tertiary": "Tertiaire"
+      },
       "short": {
         "fortune": "PC",
         "mana": "PM",
@@ -308,7 +322,7 @@
       "notes": "Notes",
       "data": "Data",
       "bio": "Biographie",
-      "stats": "Caractéristiques",
+      "abilities": "Caractéristiques",
       "actions": "Actions",
       "inventory": "Inventaire",
       "capacities": "Voies & Capacités",

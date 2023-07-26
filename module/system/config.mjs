@@ -24,6 +24,14 @@ CO.actorIcons = {
   "encounter": "icons/svg/eye.svg"
 }
 
+CO.abilities = {
+  str: "CO.abilities.long.str",
+  dex: "CO.abilities.long.dex",
+  con: "CO.abilities.long.con",
+  int: "CO.abilities.long.int",
+  wis: "CO.abilities.long.wis",
+  cha: "CO.abilities.long.cha"
+};
 
 CO.modifier = {
   type: {

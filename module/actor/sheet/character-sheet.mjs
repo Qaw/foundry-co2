@@ -1,5 +1,6 @@
 import {ITEM_TYPE} from "../../system/constants.mjs";
 import CoBaseActorSheet from "./base-actor-sheet.mjs";
+import {CoEditAbilitiesDialog} from "../../dialogs/edit-abilities-dialog.mjs";
 
 export default class CoCharacterSheet extends CoBaseActorSheet {
   /** @override */
@@ -85,13 +86,18 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
    * @param {*} event
    */
   _onUseAction(event) {
-    const element = event.currentTarget;
-    const dataset = element.dataset;
-    const action = dataset.action;
-    const type = dataset.type;
-    const source = dataset.source;
-    const indice = dataset.indice;
- 
+    const li = $(event.currentTarget).parents(".item");
+    // const itemId = li.data("itemId");
+    // const element = event.currentTarget;
+    // const dataset = element.dataset;
+    const action = li.data("action");
+    console.log(action);
+    const type = li.data("type");
+    console.log(type);
+    const source = li.data("source");
+    console.log(source);
+    const indice = li.data("indice");
+    console.log(indice);
 
     if (action === "activate") {
       this.actor.activateAction(true, source, indice, type);
@@ -256,6 +262,6 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
    */
   async _onEditAbilities(event) {
     event.preventDefault();
-
+    return CoEditAbilitiesDialog.init(this.actor);
   }
 }

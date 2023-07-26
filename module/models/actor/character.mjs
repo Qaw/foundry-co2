@@ -14,50 +14,30 @@ export class CharacterData extends foundry.abstract.DataModel {
                 cha: new fields.EmbeddedDataField(AbilityValue, {label : "CO.abilities.long.cha", nullable:false})
             }),
             combat : new fields.SchemaField({
-                init: new fields.EmbeddedDataField(BaseValue, {nullable: false, label: "CO.combat.long.init"}),
-                def: new fields.EmbeddedDataField(BaseValue, {nullable: false,
-                    initial: {
-                        base: 10,
-                        ability: "dex",
-                        label: "CO.combat.long.def",
-                        bonuses: {
-                            sheet: 0,
-                            effects: 0
-                        }
-                    }
+                init: new fields.EmbeddedDataField(BaseValue, {
+                    nullable: false,
+                    label: "CO.combat.long.init",
+                    initial: { base: 0, ability: "dex", bonuses: { sheet: 0, effects: 0 } }
                 }),
-                melee: new fields.EmbeddedDataField(BaseValue, {nullable: false,
-                    initial: {
-                        base: 0,
-                        ability: "str",
-                        label: "CO.combat.long.melee",
-                        bonuses: {
-                            sheet: 0,
-                            effects: 0
-                        }
-                    }
+                def: new fields.EmbeddedDataField(BaseValue, {
+                    nullable: false,
+                    label: "CO.combat.long.def",
+                    initial: { base: 10, ability: "str", bonuses: { sheet: 0, effects: 0 } }
                 }),
-                ranged: new fields.EmbeddedDataField(BaseValue, {nullable: false,
-                    initial: {
-                        base: 0,
-                        ability: "dex",
-                        label: "CO.combat.long.ranged",
-                        bonuses: {
-                            sheet: 0,
-                            effects: 0
-                        }
-                    }
+                melee: new fields.EmbeddedDataField(BaseValue, {
+                    nullable: false,
+                    label: "CO.combat.long.melee",
+                    initial: { base: 0, ability: "str", bonuses: { sheet: 0, effects: 0 } }
                 }),
-                magic: new fields.EmbeddedDataField(BaseValue, {nullable: false,
-                    initial: {
-                        base: 0,
-                        ability: "int",
-                        label: "CO.combat.long.magic",
-                        bonuses: {
-                            sheet: 0,
-                            effects: 0
-                        }
-                    }
+                ranged: new fields.EmbeddedDataField(BaseValue, {
+                    nullable: false,
+                    label: "CO.combat.long.ranged",
+                    initial: { base: 0, ability: "dex", bonuses: { sheet: 0, effects: 0 } }
+                }),
+                magic: new fields.EmbeddedDataField(BaseValue, {
+                    nullable: false,
+                    label: "CO.combat.long.magic",
+                    initial: { base: 0, ability: "int", bonuses: { sheet: 0, effects: 0 } }
                 })
             }),
             attributes : new fields.SchemaField({
@@ -140,6 +120,12 @@ export class CharacterData extends foundry.abstract.DataModel {
             }),
             resources : new fields.SchemaField({
                 recovery: new fields.SchemaField({
+                    base: new fields.NumberField({
+                        required: true,
+                        nullable: false,
+                        initial: 0,
+                        integer: true
+                    }),
                     value: new fields.NumberField({
                         required: true,
                         nullable: false,
@@ -151,8 +137,26 @@ export class CharacterData extends foundry.abstract.DataModel {
                         initial: 0,
                         integer: true
                     }),
+                    bonuses: new fields.SchemaField({
+                        sheet: new fields.NumberField({
+                            required: true,
+                            initial: 0,
+                            integer: true
+                        }),
+                        effects: new fields.NumberField({
+                            required: true,
+                            initial: 0,
+                            integer: true
+                        })
+                    })
                 }, {label : "CO.resources.long.recovery", nullable:false}),
                 fortune: new fields.SchemaField({
+                    base: new fields.NumberField({
+                        required: true,
+                        nullable: false,
+                        initial: 0,
+                        integer: true
+                    }),
                     value: new fields.NumberField({
                         required: true,
                         nullable: false,
@@ -164,8 +168,26 @@ export class CharacterData extends foundry.abstract.DataModel {
                         initial: 0,
                         integer: true
                     }),
+                    bonuses: new fields.SchemaField({
+                        sheet: new fields.NumberField({
+                            required: true,
+                            initial: 0,
+                            integer: true
+                        }),
+                        effects: new fields.NumberField({
+                            required: true,
+                            initial: 0,
+                            integer: true
+                        })
+                    })
                 }, {label : "CO.resources.long.fortune", nullable:false}),
                 mana: new fields.SchemaField({
+                    base: new fields.NumberField({
+                        required: true,
+                        nullable: false,
+                        initial: 0,
+                        integer: true
+                    }),
                     value: new fields.NumberField({
                         required: true,
                         nullable: false,
@@ -177,8 +199,31 @@ export class CharacterData extends foundry.abstract.DataModel {
                         initial: 0,
                         integer: true
                     }),
+                    bonuses: new fields.SchemaField({
+                        sheet: new fields.NumberField({
+                            required: true,
+                            initial: 0,
+                            integer: true
+                        }),
+                        effects: new fields.NumberField({
+                            required: true,
+                            initial: 0,
+                            integer: true
+                        })
+                    })
                 }, {label : "CO.resources.long.mana", nullable:false}),
                 primary: new fields.SchemaField({
+                    label: new fields.StringField({
+                        required: true,
+                        nullable: false,
+                        initial: ""
+                    }),
+                    base: new fields.NumberField({
+                        required: true,
+                        nullable: false,
+                        initial: 0,
+                        integer: true
+                    }),
                     value: new fields.NumberField({
                         required: true,
                         nullable: false,
@@ -190,8 +235,31 @@ export class CharacterData extends foundry.abstract.DataModel {
                         initial: 0,
                         integer: true
                     }),
+                    bonuses: new fields.SchemaField({
+                        sheet: new fields.NumberField({
+                            required: true,
+                            initial: 0,
+                            integer: true
+                        }),
+                        effects: new fields.NumberField({
+                            required: true,
+                            initial: 0,
+                            integer: true
+                        })
+                    })
                 }, {label : "CO.resources.long.primary", nullable:false}),
                 secondary: new fields.SchemaField({
+                    label: new fields.StringField({
+                        required: true,
+                        nullable: false,
+                        initial: ""
+                    }),
+                    base: new fields.NumberField({
+                        required: true,
+                        nullable: false,
+                        initial: 0,
+                        integer: true
+                    }),
                     value: new fields.NumberField({
                         required: true,
                         nullable: false,
@@ -203,8 +271,31 @@ export class CharacterData extends foundry.abstract.DataModel {
                         initial: 0,
                         integer: true
                     }),
+                    bonuses: new fields.SchemaField({
+                        sheet: new fields.NumberField({
+                            required: true,
+                            initial: 0,
+                            integer: true
+                        }),
+                        effects: new fields.NumberField({
+                            required: true,
+                            initial: 0,
+                            integer: true
+                        })
+                    })
                 }, {label : "CO.resources.long.secondary", nullable:false}),
                 tertiary: new fields.SchemaField({
+                    label: new fields.StringField({
+                        required: true,
+                        nullable: false,
+                        initial: ""
+                    }),
+                    base: new fields.NumberField({
+                        required: true,
+                        nullable: false,
+                        initial: 0,
+                        integer: true
+                    }),
                     value: new fields.NumberField({
                         required: true,
                         nullable: false,
@@ -216,6 +307,18 @@ export class CharacterData extends foundry.abstract.DataModel {
                         initial: 0,
                         integer: true
                     }),
+                    bonuses: new fields.SchemaField({
+                        sheet: new fields.NumberField({
+                            required: true,
+                            initial: 0,
+                            integer: true
+                        }),
+                        effects: new fields.NumberField({
+                            required: true,
+                            initial: 0,
+                            integer: true
+                        })
+                    })
                 }, {label : "CO.resources.long.tertiary", nullable:false}),
             }),
             details : new fields.SchemaField({

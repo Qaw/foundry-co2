@@ -5,7 +5,7 @@
   </li>
   <ol class="item-list">
     {{#each visibleActions as |action id|}}
-      {{log (concat "Chroniques Oubliées | action " id) action}}
+      {{!log (concat "Chroniques Oubliées | action " id) action}}
       <li class="item flexrow" data-item-id="{{action._id}}" data-item-type="{{action.type}}" draggable="true"  {{#if action.properties.temporary}}{{#unless action.properties.enabled}}style="opacity: 60%"{{/unless}} {{/if}}>
         <div class="item-name flexrow">
           <div class="item-image" style="background-image: url('{{getEmbeddedItemImg @root.actor source}}')"></div>

@@ -136,6 +136,7 @@
   --font-size-36: 2.25rem;
   --font-size-42: 2.625rem;
   --color-text-dark-primary: #323232;
+  --color-text-dark-secondary: #595959;
   --body-serif: Gelasio, Georgia, serif;
   --sans-serif: Roboto, sans-serif;
   --sans-serif-condensed: "Roboto Condensed", var(--sans-serif);
@@ -1208,29 +1209,48 @@ strong,
 .co .sidebar .image-container:hover .hover-icon {
   visibility: visible;
 }
-.co .sidebar .health-section .hit-points {
+.co .sidebar .health-section .hit-points,
+.co .sidebar .resource-section .hit-points,
+.co .sidebar .health-section .resource-points,
+.co .sidebar .resource-section .resource-points {
   display: flex;
   flex-direction: row;
   flex: 0;
   margin-left: auto;
+  font-size: var(--font-size-14);
 }
-.co .sidebar .health-section .hit-points input.current {
+.co .sidebar .health-section .hit-points .current,
+.co .sidebar .resource-section .hit-points .current,
+.co .sidebar .health-section .resource-points .current,
+.co .sidebar .resource-section .resource-points .current {
   width: 36px;
   text-align: right;
   padding-right: 3px;
 }
 .co .sidebar .health-section .hit-points .max.lt1000,
-.co .sidebar .health-section .hit-points .max.lt1000 {
+.co .sidebar .resource-section .hit-points .max.lt1000,
+.co .sidebar .health-section .resource-points .max.lt1000,
+.co .sidebar .resource-section .resource-points .max.lt1000,
+.co .sidebar .health-section .hit-points .max.lt1000,
+.co .sidebar .resource-section .hit-points .max.lt1000,
+.co .sidebar .health-section .resource-points .max.lt1000,
+.co .sidebar .resource-section .resource-points .max.lt1000 {
   width: 36px;
 }
-.co .sidebar .health-section .hit-points .max {
+.co .sidebar .health-section .hit-points .max,
+.co .sidebar .resource-section .hit-points .max,
+.co .sidebar .health-section .resource-points .max,
+.co .sidebar .resource-section .resource-points .max {
   font-weight: 700;
   margin-right: 4px;
   text-align: center;
   align-items: center;
   display: flex;
 }
-.co .sidebar .health-section .hit-points .slash {
+.co .sidebar .health-section .hit-points .slash,
+.co .sidebar .resource-section .hit-points .slash,
+.co .sidebar .health-section .resource-points .slash,
+.co .sidebar .resource-section .resource-points .slash {
   align-items: center;
   display: flex;
 }
@@ -1249,6 +1269,7 @@ strong,
   padding-right: 0.5em;
 }
 .co .sidebar-section {
+  margin-bottom: 5px;
   display: flex;
   flex: auto;
   flex-direction: column;
@@ -1269,12 +1290,16 @@ strong,
   flex: auto;
   flex-direction: row;
   align-items: flex-start;
+  padding-bottom: 3px;
 }
 .co .sidebar-section-header .sidebar-label h4 {
   font-size: 0.8rem;
   margin-bottom: 0px;
   padding-left: 2px;
   font-weight: 600;
+}
+.co .sidebar-section-header .labelled-field {
+  font-size: var(--font-size-14);
 }
 .co .sidebar-section-content {
   display: flex;
@@ -1284,6 +1309,33 @@ strong,
   justify-content: flex-start;
   align-items: flex-start;
   padding-top: 2px;
+}
+.co .sidebar-section-content .labelled-field {
+  display: flex;
+  font-size: var(--font-size-12);
+  align-self: center;
+}
+.co .sidebar-section-content .labelled-field label {
+  font-weight: normal;
+  color: var(--color-text-dark-secondary);
+}
+.co .sidebar-section-content .labelled-field .select-container {
+  display: flex;
+  flex: 1;
+  align-self: end;
+  justify-self: end;
+}
+.co .sidebar-section-content .labelled-field select {
+  background: none;
+  text-transform: unset;
+  font-size: var(--font-size-10);
+  font-weight: 500;
+  font-family: var(--sans-serif);
+  padding: 4px !important;
+  height: auto !important;
+  border: 1px solid var(--color-border-light-tertiary);
+  border-radius: 3px;
+  text-overflow: ellipsis;
 }
 .co .ability-scores {
   flex: 2;

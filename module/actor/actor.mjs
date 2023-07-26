@@ -170,12 +170,12 @@ export default class CoActor extends Actor {
     return this._getModifiersBySubtype(MODIFIER_SUBTYPE.ABILITY);
   }
 
-  // /**
-  //  * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Combat
-  //  */
-  // get combatModifiers() {
-  //   return this._getModifiersBySubtype(MODIFIER_SUBTYPE.COMBAT);
-  // }
+  /**
+   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Combat
+   */
+  get combatModifiers() {
+    return this._getModifiersBySubtype(MODIFIER_SUBTYPE.COMBAT);
+  }
 
   /**
    * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Attribute
@@ -207,177 +207,177 @@ export default class CoActor extends Actor {
   //#region méthodes publiques
   prepareDerivedData() {}
 
-  // /**
-  //  * Return all skill modifiers
-  //  * @param {String} ability str, dex ...
-  //  * @returns {Object} Name, value, description
-  //  */
-  // getSkillBonuses(ability) {
-  //   const modifiersByTarget = this.skillModifiers.filter((m) => m.target === ability);
-  //   return modifiersByTarget.map((modifier) => ( { name: modifier.sourceName, value: modifier.evaluate(this), description: modifier.sourceDescription }));
-  // }
-  //
-  // /**
-  //  *
-  //  * @param {*} key
-  //  * @returns l'objet correspondant à la clé
-  //  */
-  // getEmbeddedItemByKey(key) {
-  //   return this.items.find((item) => item.system.key === key);
-  // }
-  //
-  // /**
-  //  * @name getMalusToInitiative
-  //  * @description Retourne le malus à l'initiative lié à l'armure et à l'incompétence armes/armures
-  //  * @public
-  //  *
-  //  * @returns {int} retourne le malus (négatif) ou 0
-  //  */
-  // getMalusToInitiative() {
-  //   return 0;
-  //   // return this.getOverloadMalusToInitiative() + this.getIncompetentMalusToInitiative();
-  // }
-  //
-  // /**
-  //  * @name getOverloadMalusToInitiative
-  //  * @description Retourne le malus à l'initiative lié à l'armure
-  //  * @public
-  //  *
-  //  * @returns {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
-  //  */
-  // getOverloadMalusToInitiative() {
-  //   return 0;
-  // }
-  //
-  // /**
-  //  * @name getIncompetentMalusToInitiative
-  //  * @description Retourne le malus à l'initiative lié à l'incompétence armes/armures
-  //  * @public
-  //  *
-  //  * @returns {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
-  //  */
-  // getIncompetentMalusToInitiative() {
-  //   return 0;
-  // }
-  //
-  // /**
-  //  * @name getDefenceFromArmorAndShield
-  //  * @description calcule la défense de l'armure et du bouclier équipés
-  //  * @returns {Int} la somme des DEF
-  //  */
-  // getDefenceFromArmorAndShield() {
-  //   return this.getDefenceFromArmor() + this.getDefenceFromShield();
-  // }
-  //
-  // /**
-  //  * @name getDefenceFromArmor
-  //  * @description calcule la défense de l'armure équipée
-  //  * @returns {Int} la valeur de défense
-  //  */
-  // getDefenceFromArmor() {
-  //   let protections = this.equippedArmors.map((i) => i.system.def);
-  //   return this._addAllValues(protections);
-  // }
-  //
-  // /**
-  //  * @name getDefenceFromShield
-  //  * @description calcule la défense du bouclier équipé
-  //  * @returns {Int} la valeur de défense
-  //  */
-  // getDefenceFromShield() {
-  //   let protections = this.equippedShields.map((i) => i.system.def);
-  //   return this._addAllValues(protections);
-  // }
-  //
-  // /**
-  //  *
-  //  * @param {*} itemId
-  //  * @returns
-  //  */
-  // deleteItem(itemId) {
-  //   const item = this.items.find((item) => item.id === itemId);
-  //   switch (item.type) {
-  //     case ITEM_TYPE.CAPACITY:
-  //     case ITEM_TYPE.FEATURE:
-  //       return this.deleteEmbeddedDocuments("Item", [itemId]);
-  //     default: break;
-  //   }
-  // }
-  //
-  // /**
-  //  *
-  //  * @param {*} itemId
-  //  * @returns
-  //  */
-  // isTrainedWithWeapon(itemId) {
-  //   const item = this.weapons.find((item) => item.id === itemId);
-  //   if (!item) return null;
-  //   const profile = this.profile;
-  //   if (profile.length == 0) return null;
-  //   const training = item.system.martialCategory;
-  //   return profile.system.martialTrainingsWeapons[training];
-  // }
-  //
-  // /**
-  //  *
-  //  * @param {*} itemId
-  //  * @returns
-  //  */
-  // isTrainedWithArmor(itemId) {
-  //   const item = this.armors.find((item) => item.id === itemId);
-  //   if (!item) return null;
-  //   const profile = this.profile;
-  //   if (profile.length == 0) return null;
-  //   const training = item.system.martialCategory;
-  //   return profile.system.martialTrainingsArmors[training];
-  // }
-  //
-  // /**
-  //  *
-  //  * @param {*} itemId
-  //  * @returns
-  //  */
-  // isTrainedWithShield(itemId) {
-  //   const item = this.shields.find((item) => item.id === itemId);
-  //   if (!item) return null;
-  //   const profile = this.profile;
-  //   if (profile.length == 0) return null;
-  //   const training = item.system.martialCategory;
-  //   return profile.system.martialTrainingsShields[training];
-  // }
-  //
-  // /**
-  //  * @description
-  //  * @param {*} state true to enable the action, false to disable the action
-  //  * @param {*} source  uuid of the embedded item which is the source of the action
-  //  * @param {*} indice  indice of the action in the array of actions
-  //  */
-  // async activateAction(state, source, indice, type) {
-  //   const item = this.items.get(source);
-  //
-  //   // Action avec une durée
-  //   if (item.system.actions[indice].properties.temporary) {
-  //     let newActions = foundry.utils.deepClone(item.system.actions);
-  //     if (state) {
-  //       newActions[indice].properties.enabled = true;
-  //     } else {
-  //       newActions[indice].properties.enabled = false;
-  //     }
-  //
-  //     const updateData = { _id: item.id, "system.actions": newActions };
-  //
-  //     await this.updateEmbeddedDocuments("Item", [updateData]);
-  //   }
-  //   // Action instantanée
-  //   else {
-  //     const action = item.system.actions[indice];
-  //     // Recherche des resolvers de l'action
-  //     let resolvers = Object.values(action.resolvers).map((a) => new Resolver(a.type, a.skill, a.dmg));
-  //     for (const resolver of resolvers) {
-  //       let res = resolver.resolve(this, item, action, type);
-  //     }
-  //   }
-  // }
+  /**
+   * Return all skill modifiers
+   * @param {String} ability str, dex ...
+   * @returns {Object} Name, value, description
+   */
+  getSkillBonuses(ability) {
+    const modifiersByTarget = this.skillModifiers.filter((m) => m.target === ability);
+    return modifiersByTarget.map((modifier) => ( { name: modifier.sourceName, value: modifier.evaluate(this), description: modifier.sourceDescription }));
+  }
+
+  /**
+   *
+   * @param {*} key
+   * @returns l'objet correspondant à la clé
+   */
+  getEmbeddedItemByKey(key) {
+    return this.items.find((item) => item.system.key === key);
+  }
+
+  /**
+   * @name getMalusToInitiative
+   * @description Retourne le malus à l'initiative lié à l'armure et à l'incompétence armes/armures
+   * @public
+   *
+   * @returns {int} retourne le malus (négatif) ou 0
+   */
+  getMalusToInitiative() {
+    return 0;
+    // return this.getOverloadMalusToInitiative() + this.getIncompetentMalusToInitiative();
+  }
+
+  /**
+   * @name getOverloadMalusToInitiative
+   * @description Retourne le malus à l'initiative lié à l'armure
+   * @public
+   *
+   * @returns {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
+   */
+  getOverloadMalusToInitiative() {
+    return 0;
+  }
+
+  /**
+   * @name getIncompetentMalusToInitiative
+   * @description Retourne le malus à l'initiative lié à l'incompétence armes/armures
+   * @public
+   *
+   * @returns {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
+   */
+  getIncompetentMalusToInitiative() {
+    return 0;
+  }
+
+  /**
+   * @name getDefenceFromArmorAndShield
+   * @description calcule la défense de l'armure et du bouclier équipés
+   * @returns {Int} la somme des DEF
+   */
+  getDefenceFromArmorAndShield() {
+    return this.getDefenceFromArmor() + this.getDefenceFromShield();
+  }
+
+  /**
+   * @name getDefenceFromArmor
+   * @description calcule la défense de l'armure équipée
+   * @returns {Int} la valeur de défense
+   */
+  getDefenceFromArmor() {
+    let protections = this.equippedArmors.map((i) => i.system.def);
+    return this._addAllValues(protections);
+  }
+
+  /**
+   * @name getDefenceFromShield
+   * @description calcule la défense du bouclier équipé
+   * @returns {Int} la valeur de défense
+   */
+  getDefenceFromShield() {
+    let protections = this.equippedShields.map((i) => i.system.def);
+    return this._addAllValues(protections);
+  }
+
+  /**
+   *
+   * @param {*} itemId
+   * @returns
+   */
+  deleteItem(itemId) {
+    const item = this.items.find((item) => item.id === itemId);
+    switch (item.type) {
+      case ITEM_TYPE.CAPACITY:
+      case ITEM_TYPE.FEATURE:
+        return this.deleteEmbeddedDocuments("Item", [itemId]);
+      default: break;
+    }
+  }
+
+  /**
+   *
+   * @param {*} itemId
+   * @returns
+   */
+  isTrainedWithWeapon(itemId) {
+    const item = this.weapons.find((item) => item.id === itemId);
+    if (!item) return null;
+    const profile = this.profile;
+    if (profile.length == 0) return null;
+    const training = item.system.martialCategory;
+    return profile.system.martialTrainingsWeapons[training];
+  }
+
+  /**
+   *
+   * @param {*} itemId
+   * @returns
+   */
+  isTrainedWithArmor(itemId) {
+    const item = this.armors.find((item) => item.id === itemId);
+    if (!item) return null;
+    const profile = this.profile;
+    if (profile.length == 0) return null;
+    const training = item.system.martialCategory;
+    return profile.system.martialTrainingsArmors[training];
+  }
+
+  /**
+   *
+   * @param {*} itemId
+   * @returns
+   */
+  isTrainedWithShield(itemId) {
+    const item = this.shields.find((item) => item.id === itemId);
+    if (!item) return null;
+    const profile = this.profile;
+    if (profile.length == 0) return null;
+    const training = item.system.martialCategory;
+    return profile.system.martialTrainingsShields[training];
+  }
+
+  /**
+   * @description
+   * @param {*} state true to enable the action, false to disable the action
+   * @param {*} source  uuid of the embedded item which is the source of the action
+   * @param {*} indice  indice of the action in the array of actions
+   */
+  async activateAction(state, source, indice, type) {
+    const item = this.items.get(source);
+
+    // Action avec une durée
+    if (item.system.actions[indice].properties.temporary) {
+      let newActions = foundry.utils.deepClone(item.system.actions);
+      if (state) {
+        newActions[indice].properties.enabled = true;
+      } else {
+        newActions[indice].properties.enabled = false;
+      }
+
+      const updateData = { _id: item.id, "system.actions": newActions };
+
+      await this.updateEmbeddedDocuments("Item", [updateData]);
+    }
+    // Action instantanée
+    else {
+      const action = item.system.actions[indice];
+      // Recherche des resolvers de l'action
+      let resolvers = Object.values(action.resolvers).map((a) => new Resolver(a.type, a.skill, a.dmg));
+      for (const resolver of resolvers) {
+        let res = resolver.resolve(this, item, action, type);
+      }
+    }
+  }
 
   /**
    * @description Apprend/désapprend une capacité du personnage
@@ -413,7 +413,7 @@ export default class CoActor extends Actor {
     let itemData = feature.toObject();
     itemData = itemData instanceof Array ? itemData : [itemData];
     const newFeature = await this.createEmbeddedDocuments("Item", itemData);
-    console.info(game.co.log("Feature created"), newFeature);
+    // console.info(game.co.log("Feature created"), newFeature);
 
     // Update the source of all modifiers with the id of the new embedded feature created
     let newModifiers = Object.values(foundry.utils.deepClone(newFeature[0].system.modifiers)).map((m) => new Modifier(m.source, m.type, m.subtype, m.target, m.value));
@@ -468,7 +468,7 @@ export default class CoActor extends Actor {
     let itemData = profile.toObject();
     itemData = itemData instanceof Array ? itemData : [itemData];
     const newProfile = await this.createEmbeddedDocuments("Item", itemData);
-    console.info(game.co.log("Profile created"), newProfile);
+    // console.info(game.co.log("Profile created"), newProfile);
 
     if (newProfile[0].system.modifiers.length > 0) {
       // Update the source of all modifiers with the id of the new embedded profile created
@@ -515,7 +515,7 @@ export default class CoActor extends Actor {
     // Create the path
     itemData = itemData instanceof Array ? itemData : [itemData];
     const newPath = await this.createEmbeddedDocuments("Item", itemData);
-    console.log("Path created : ", newPath);
+    // console.log("Path created : ", newPath);
 
     let updatedCapacitiesIds = [];
 
@@ -553,7 +553,7 @@ export default class CoActor extends Actor {
 
     capacityData = capacityData instanceof Array ? capacityData : [capacityData];
     const newCapacity = await this.createEmbeddedDocuments("Item", capacityData);
-    console.info(game.co.log("Capacity created"), newCapacity);
+    // console.info(game.co.log("Capacity created"), newCapacity);
 
     // Update the source of all actions with the id of the new embedded capacity created
     let newActions = Object.values(foundry.utils.deepClone(newCapacity[0].system.actions)).map(
@@ -665,87 +665,83 @@ export default class CoActor extends Actor {
 
   //#region méthodes privées
 
-  // _prepareFP(skill, bonuses) {
-  //   skill.base = this._computeBaseFP();
-  //   skill.max = skill.base + bonuses;
-  // }
-  //
-  // _computeBaseFP() {
-  //   return 0;
-  // }
-  //
-  // // BASE : à partir du profile, lire la mpFormula
-  // _prepareMP(skill, bonuses) {
-  //   skill.base = this._computeBaseMP();
-  //   skill.max = skill.base + bonuses;
-  // }
-  //
-  // // 2 * @niv + @int
-  // _computeBaseMP() {
-  //   let total = 0;
-  //   let formula = null;
-  //   const profile = this.profile;
-  //   if (profile.length != 0) formula = this.profile[0].system.mpFormula;
-  //   total = formula ? Utils.evaluate(this, formula, null, true) : 0;
-  //   return total;
-  // }
-  //
-  // _prepareRP(skill, bonuses) {
-  //   skill.base = this._computeBaseRP();
-  //   skill.max = skill.base + bonuses;
-  // }
-  //
-  // _computeBaseRP() {
-  //   const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, MODIFIER_TARGET.RP);
-  //   return 5 + resourceModifiers.total;
-  // }
+  _prepareFP(skill, bonuses) {
+    skill.base = this._computeBaseFP();
+    skill.max = skill.base + bonuses;
+  }
+
+  _computeBaseFP() {
+    return 0;
+  }
+
+  // BASE : à partir du profile, lire la mpFormula
+  _prepareMP(skill, bonuses) {
+    // skill.base = this._computeBaseMP();
+    // skill.base = this._computeBaseMP();
+    skill.max = skill.base + bonuses;
+  }
+
+  // 2 * @niv + @int
+  _computeBaseMP() {
+    let total = 0;
+    let formula = (this.profiles.length != 0 && this.profiles[0].system.mpFormula) ? this.profiles[0].system.mpFormula : null;
+    total = formula ? Utils.evaluate(this, formula, null, true) : 0;
+    return total;
+  }
+
+  _prepareRP(skill, bonuses) {
+    skill.base = this._computeBaseRP();
+    skill.max = skill.base + bonuses;
+  }
+
+  _computeBaseRP() {
+    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, MODIFIER_TARGET.RP);
+    return 5 + resourceModifiers.total;
+  }
 
   _prepareHPMax() {
     const hpMaxBonuses = Object.values(this.system.attributes.hp.bonuses).reduce((prev, curr) => prev + curr);
     const hpMaxModifiers = Modifiers.computeTotalModifiersByTarget(this, this.attributeModifiers, ATTRIBUTE.HP);
-    const constitutionBonus = this.system.abilities
-    console.debug(hpMaxBonuses);
-    console.debug(hpMaxModifiers);
+    // const constitutionBonus = this.system.abilities
     // this.system.attributes.hp.base = hpMaxModifiers;
     // this.system.attributes.hp.bonuses.effects = hpMaxBonuses.total;
-
-    // this.system.attributes.hp.max = this.system.attributes.hp.base + hpMaxBonuses + hpMaxModifiers.total;
-    // this.system.attributes.hp.tooltip = Utils.getTooltip("Base", this.system.attributes.hp.base) + hpMaxModifiers.tooltip;
+    this.system.attributes.hp.max = this.system.attributes.hp.base + hpMaxBonuses + hpMaxModifiers.total;
+    this.system.attributes.hp.tooltip = Utils.getTooltip("Base", this.system.attributes.hp.base) + hpMaxModifiers.tooltip;
   }
-  //
-  // _prepareDef(skill, abilityBonus, bonuses) {
-  //   const defModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, COMBAT.DEF);
-  //   // const protection = this.getDefenceFromArmorAndShield();
-  //
-  //   skill.base = game.settings.get("co", "baseDef");
-  //   skill.tooltipBase = Utils.getTooltip("Base", skill.base);
-  //
-  //   skill.base += abilityBonus;
-  //   skill.tooltipBase += Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus);
-  //
-  //   skill.value = skill.base + bonuses + defModifiers.total; // + protection;
-  //   skill.tooltipValue = defModifiers.tooltip;
-  // }
-  //
-  // _prepareInit(skill, bonuses) {
-  //   const abilityValue = skill.ability && this.system.abilities[skill.ability].value ? this.system.abilities[skill.ability].value : 0;
-  //   const initModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, COMBAT.INIT);
-  //   const malus = this.getMalusToInitiative();
-  //   skill.base = abilityValue;
-  //   skill.value = skill.base + bonuses + initModifiers.total + malus;
-  //   skill.tooltipBase = Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityValue);
-  //   skill.tooltipValue = initModifiers.tooltip;
-  // }
-  //
-  // _prepareAttack(key, skill, abilityBonus, bonuses) {
-  //   const levelBonus = this.system.attributes.level.value ? this.system.attributes.level.value : 0;
-  //   const combatModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
-  //   // skill.value = skill.base + abilityBonus + levelBonus;
-  //   skill.base = abilityBonus + levelBonus;
-  //   skill.tooltipBase = Utils.getTooltip(game.i18n.localize("CO.label.long.level"), levelBonus) + Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus);
-  //   skill.mod = skill.base + bonuses + combatModifiers.total;
-  //   skill.tooltipMod = combatModifiers.tooltip;
-  // }
+
+  _prepareDef(skill, abilityBonus, bonuses) {
+    const defModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, COMBAT.DEF);
+    // const protection = this.getDefenceFromArmorAndShield();
+
+    skill.base = game.settings.get("co", "baseDef");
+    skill.tooltipBase = Utils.getTooltip("Base", skill.base);
+
+    skill.base += abilityBonus;
+    skill.tooltipBase += Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus);
+
+    skill.value = skill.base + bonuses + defModifiers.total; // + protection;
+    skill.tooltipValue = defModifiers.tooltip;
+  }
+
+  _prepareInit(skill, bonuses) {
+    const abilityValue = skill.ability && this.system.abilities[skill.ability].value ? this.system.abilities[skill.ability].value : 0;
+    const initModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, COMBAT.INIT);
+    const malus = this.getMalusToInitiative();
+    skill.base = abilityValue;
+    skill.value = skill.base + bonuses + initModifiers.total + malus;
+    skill.tooltipBase = Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityValue);
+    skill.tooltipValue = initModifiers.tooltip;
+  }
+
+  _prepareAttack(key, skill, abilityBonus, bonuses) {
+    const levelBonus = this.system.attributes.level.value ? this.system.attributes.level.value : 0;
+    const combatModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
+    // skill.value = skill.base + abilityBonus + levelBonus;
+    skill.base = abilityBonus + levelBonus;
+    skill.tooltipBase = Utils.getTooltip(game.i18n.localize("CO.label.long.level"), levelBonus) + Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus);
+    skill.mod = skill.base + bonuses + combatModifiers.total;
+    skill.tooltipMod = combatModifiers.tooltip;
+  }
 
   /**
    * @name _prepareAbilities

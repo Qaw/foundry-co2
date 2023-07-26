@@ -85,7 +85,6 @@ export class CoDmgRoll extends CoRoll {
     chat(){}
 }
 
-
 export class CoAttackCheck extends CoRoll {
     constructor(actor, item) {
         super(actor);

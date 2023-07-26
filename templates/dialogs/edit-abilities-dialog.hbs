@@ -2,631 +2,90 @@
     <div class="ability-rows">
         <header class="row">
             <div class="row-heading">
-                <h3>Edit your Abilities</h3>
+                <h3>{{localize "CO.ui.editYourAbilities"}}</h3>
             </div>
             <div class="abilities">
+            {{#each actor.system.abilities as |ability id|}}
                 <div class="row-column">
-                    <h3>Str</h3>
+                    <h3>{{localize (concat "CO.abilities.short." id)}}</h3>
                 </div>
-                <div class="row-column">
-                    <h3>Dex</h3>
-                </div>
-                <div class="row-column">
-                    <h3>Con</h3>
-                </div>
-                <div class="row-column">
-                    <h3>Int</h3>
-                </div>
-                <div class="row-column">
-                    <h3>Wis</h3>
-                </div>
-                <div class="row-column">
-                    <h3>Cha</h3>
-                </div>
+            {{/each}}
             </div>
         </header>
-
-        <!-- ancestry boosts -->
-        <section class="row" data-section="ancestry">
+        <section class="row" data-section="base">
             <div class="row-heading">
-                <div class="remaining extra">1</div>
-                <img class=""
-                     src="https://assets.forge-vtt.com/bazaar/systems/pf2e/assets/icons/default-icons/alternatives/ancestries/dwarf.svg"
-                     title="Dwarf" width="32" height="32" loading="lazy">
                 <div class="label">
-                    <div class="title">Ancestry</div>
-                    <div class="description tooltipstered" data-tooltip-content="#Kny5qcGo1dBItrIj-ancestry-tooltip">
-                        Dwarf
-                    </div>
-                    <label class="extra">
-                        Alternate Boosts <input type="checkbox" data-action="toggle-alternate-ancestry-boosts">
-                    </label>
-                </div>
-            </div>
-
-            <div class="abilities">
-                <div class="row-column" data-ability="str" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost ">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="dex" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost ">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="con" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost  selected locked">
-                        <i class="fas fa-lock"></i>
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="int" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost ">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="wis" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost  selected locked">
-                        <i class="fas fa-lock"></i>
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="cha" data-stat="">
-                    <button type="button" data-action="flaw" class="tooltip boost-button flaw  selected locked">
-                        <i class="fas fa-lock"></i>
-                        Flaw
-                    </button>
-
-                    <button type="button" data-action="boost" class="tooltip boost-button boost ">
-
-                        Boost
-                    </button>
-
-                </div>
-            </div>
-
-            <div class="hover-content" id="Kny5qcGo1dBItrIj-ancestry-tooltip">
-                <h2>Boosts</h2>
-                <ul class="boost-details">
-                    <li><i class="fas fa-circle"></i>Constitution</li>
-                    <li><i class="fas fa-circle"></i>Wisdom</li>
-                    <li><i class="fas fa-circle"></i>Free</li>
-                </ul>
-                <h2>Flaws</h2>
-                <ul class="boost-details">
-                </ul>
-            </div>
-        </section>
-
-        <!-- ancestry voluntary flaw -->
-        <section class="row voluntary-flaw-row" data-section="voluntary">
-            <div class="row-heading">
-
-                <div class="label">
-                    <div class="description tooltipstered"
-                         data-tooltip-content="#Kny5qcGo1dBItrIj-voluntary-flaw-tooltip">Voluntary Flaws
-                    </div>
-                    <label class="extra tooltipstered"
-                           data-tooltip-content="#Kny5qcGo1dBItrIj-legacy-voluntary-flaw-tooltip">
-                        Legacy Flaws <i class="fas fa-info-circle small"></i>
-                        <input type="checkbox" data-action="toggle-legacy-voluntary-flaw">
-                    </label>
+                    <div class="title">{{localize "CO.label.long.superior"}}</div>
                 </div>
             </div>
             <div class="abilities">
-                <div class="row-column" data-ability="str" data-stat="">
-                    <button type="button" data-action="flaw" class="tooltip boost-button flaw ">
-
-                        Flaw
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="dex" data-stat="">
-                    <button type="button" data-action="flaw" class="tooltip boost-button flaw ">
-
-                        Flaw
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="con" data-stat="">
-                    <button type="button" data-action="flaw" class="tooltip boost-button flaw ">
-
-                        Flaw
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="int" data-stat="">
-                    <button type="button" data-action="flaw" class="tooltip boost-button flaw ">
-
-                        Flaw
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="wis" data-stat="">
-                    <button type="button" data-action="flaw" class="tooltip boost-button flaw ">
-
-                        Flaw
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="cha" data-stat="">
-                    <button type="button" data-action="flaw" class="tooltip boost-button flaw ">
-
-                        Flaw
-                    </button>
-
-                </div>
-            </div>
-
-            <div class="hover-content" id="Kny5qcGo1dBItrIj-voluntary-flaw-tooltip">You can take one or more additional
-                penalties purely for roleplaying a highly flawed character.
-            </div>
-            <div class="hover-content" id="Kny5qcGo1dBItrIj-legacy-voluntary-flaw-tooltip">This is the Voluntary Flaws
-                feature that existed until the CRB's 4th printing. It is kept in place for older characters and as a
-                continued option for Pathfinder Society play.
+                {{#each actor.system.abilities as |ability id|}}
+                {{log (concat "Chroniques Oubliées | ability " id) ability}}
+                    <div class="row-column" data-ability="{{id}}">
+                        <button type="button" data-action="boost" class="tooltip boost-button boost ">{{localize "CO.label.long.superior"}}</button>
+                    </div>
+                {{/each}}
             </div>
         </section>
-
         <hr>
-
-        <!-- background boosts -->
-        <section class="row" data-section="background">
-            <div class="row-heading tooltipstered" data-tooltip-content="#Kny5qcGo1dBItrIj-background-tooltip">
-                <div class="remaining extra">2</div>
-                <img class=""
-                     src="https://assets.forge-vtt.com/bazaar/systems/pf2e/assets/icons/default-icons/background.svg"
-                     title="Artisan" width="32" height="32" loading="lazy">
+        <section class="row" data-section="base">
+            <div class="row-heading">
                 <div class="label">
-                    <div class="title">Background</div>
-                    <div class="description">Artisan</div>
+                    <div class="title">{{localize "CO.label.long.base"}}</div>
                 </div>
             </div>
-
             <div class="abilities">
-                <div class="row-column" data-ability="str" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost ">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="dex" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="con" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="int" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost ">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="wis" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="cha" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-            </div>
-
-            <div class="hover-content" id="Kny5qcGo1dBItrIj-background-tooltip">
-                Two boosts: one must be Intelligence or Strength.
+                {{#each actor.system.abilities as |ability id|}}
+                    <div class="row-column" data-ability="{{id}}">
+                        {{ability.base}}
+                    </div>
+                {{/each}}
             </div>
         </section>
-
         <hr>
-
-        <!-- class boosts -->
-        <section class="row">
+        <section class="row" data-section="base">
             <div class="row-heading">
-                <img class="" src="https://assets.forge-vtt.com/bazaar/systems/pf2e/assets/icons/classes/fighter.webp"
-                     title="Dwarf" width="32" height="32" loading="lazy">
-                <div>
-                    <div class="title">Class</div>
-                    <div class="description">Fighter</div>
+                <div class="label">
+                    <div class="title">{{localize "CO.label.long.bonus"}}</div>
                 </div>
             </div>
             <div class="abilities">
-                <div class="row-column">
-                    <button type="button" data-action="class-key-ability" data-key="PF2E.AbilityStr" data-ability="str"
-                            class="boost key-ability selected">
-                        <i class="fas fa-fw fa-key"></i>
-                        Key
-                    </button>
-                </div>
-                <div class="row-column">
-                    <button type="button" data-action="class-key-ability" data-key="PF2E.AbilityDex" data-ability="dex"
-                            class="boost key-ability">
-                        <i class="fas fa-fw fa-key"></i>
-                        Key
-                    </button>
-                </div>
-                <div class="row-column">
-                    <button type="button" data-action="class-key-ability" data-key="PF2E.AbilityCon" data-ability="con"
-                            class="boost key-ability hidden">
-                        <i class="fas fa-fw fa-key"></i>
-                        Key
-                    </button>
-                </div>
-                <div class="row-column">
-                    <button type="button" data-action="class-key-ability" data-key="PF2E.AbilityInt" data-ability="int"
-                            class="boost key-ability hidden">
-                        <i class="fas fa-fw fa-key"></i>
-                        Key
-                    </button>
-                </div>
-                <div class="row-column">
-                    <button type="button" data-action="class-key-ability" data-key="PF2E.AbilityWis" data-ability="wis"
-                            class="boost key-ability hidden">
-                        <i class="fas fa-fw fa-key"></i>
-                        Key
-                    </button>
-                </div>
-                <div class="row-column">
-                    <button type="button" data-action="class-key-ability" data-key="PF2E.AbilityCha" data-ability="cha"
-                            class="boost key-ability hidden">
-                        <i class="fas fa-fw fa-key"></i>
-                        Key
-                    </button>
-                </div>
+                {{#each actor.system.abilities as |ability id|}}
+                    <div class="row-column" data-ability="{{id}}">
+                        <input class="ability-bonus" type="number" name="actor.system.abilities.{{id}}.bonuses.sheet" value="{{ability.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                    </div>
+                {{/each}}
             </div>
         </section>
-
         <hr>
-
-        <div class="row">
+        <section class="row" data-section="base">
             <div class="row-heading">
                 <div class="label">
-                    <div class="title">Free</div>
-                </div>
-            </div>
-        </div>
-
-        <section class="row" data-level="1">
-            <div class="row-heading">
-                <div class="remaining extra">4</div>
-                <div class="label">
-                    <div class="description">
-                        Level 1
-                    </div>
+                    <div class="title">{{localize "CO.label.long.traits"}}&nbsp;&amp;&nbsp;{{localize "CO.label.long.effects"}}</div>
                 </div>
             </div>
             <div class="abilities">
-                <div class="row-column" data-ability="str" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost ">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="dex" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost ">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="con" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost ">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="int" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost ">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="wis" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost ">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="cha" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost ">
-
-                        Boost
-                    </button>
-
-                </div>
-            </div>
-        </section>
-        <section class="row not-eligible" data-level="5">
-            <div class="row-heading">
-
-                <div class="label">
-                    <div class="description">
-                        Level 5
+                {{#each actor.system.abilities as |ability id|}}
+                    <div class="row-column" data-ability="{{id}}">
+                        {{numberFormat ability.bonuses.effects decimals=0 sign=true}}
                     </div>
-                </div>
-            </div>
-            <div class="abilities">
-                <div class="row-column" data-ability="str" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="dex" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="con" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="int" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="wis" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="cha" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
+                {{/each}}
             </div>
         </section>
-        <section class="row not-eligible" data-level="10">
-            <div class="row-heading">
-
-                <div class="label">
-                    <div class="description">
-                        Level 10
-                    </div>
-                </div>
-            </div>
-            <div class="abilities">
-                <div class="row-column" data-ability="str" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="dex" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="con" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="int" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="wis" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="cha" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-            </div>
-        </section>
-        <section class="row not-eligible" data-level="15">
-            <div class="row-heading">
-
-                <div class="label">
-                    <div class="description">
-                        Level 15
-                    </div>
-                </div>
-            </div>
-            <div class="abilities">
-                <div class="row-column" data-ability="str" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="dex" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="con" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="int" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="wis" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="cha" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-            </div>
-        </section>
-        <section class="row not-eligible" data-level="20">
-            <div class="row-heading">
-
-                <div class="label">
-                    <div class="description">
-                        Level 20
-                    </div>
-                </div>
-            </div>
-            <div class="abilities">
-                <div class="row-column" data-ability="str" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="dex" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="con" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="int" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="wis" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-                <div class="row-column" data-ability="cha" data-stat="">
-                    <button type="button" data-action="boost" class="tooltip boost-button boost " disabled="">
-
-                        Boost
-                    </button>
-
-                </div>
-            </div>
-        </section>
-
+        <hr>
         <section class="row summary-row">
             <div class="row-heading">
-                <aside class="hint-container">
-                    <h3>AbilityValue Score Method</h3>
-                    <p>Switching method resets your ability score distribution.</p>
-                    <label>
-                        <input type="checkbox" name="toggle-manual-mode">
-                        Use Custom
-                    </label>
-                </aside>
             </div>
             <div class="abilities">
-                <div class="row-column">
-                    <button type="button" class="boost hidden"></button>
-                    <div class="value">12</div>
-                    <h4>Strength</h4>
-                </div>
-                <div class="row-column">
-                    <button type="button" class="boost hidden"></button>
-                    <div class="value">10</div>
-                    <h4>Dexterity</h4>
-                </div>
-                <div class="row-column">
-                    <button type="button" class="boost hidden"></button>
-                    <div class="value">12</div>
-                    <h4>Constitution</h4>
-                </div>
-                <div class="row-column">
-                    <button type="button" class="boost hidden"></button>
-                    <div class="value">10</div>
-                    <h4>Intelligence</h4>
-                </div>
-                <div class="row-column">
-                    <button type="button" class="boost hidden"></button>
-                    <div class="value">12</div>
-                    <h4>Wisdom</h4>
-                </div>
-                <div class="row-column">
-                    <button type="button" class="boost hidden"></button>
-                    <div class="value">8</div>
-                    <h4>Charisma</h4>
-                </div>
-                <button class="complete" type="button" data-action="close">Complete</button>
+                {{#each actor.system.abilities as |ability id|}}
+                    <div class="row-column">
+                        <div class="value">{{ability.value}}</div>
+                        <h4>{{localize (concat "CO.abilities.long." id)}}</h4>
+                    </div>
+                {{/each}}
             </div>
         </section>
     </div>
-
     <div class="row background-stripes">
         <div class="row-heading"></div>
         <div class="abilities">

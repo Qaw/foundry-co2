@@ -13,7 +13,7 @@
             </li>
             <ol class="item-list">
                 {{#each actions as |item id|}}
-                    {{log (concat "Chroniques Oubliées | action " id) item}}
+                    {{!log (concat "Chroniques Oubliées | action " id) item}}
                     {{#if (and item.properties.enabled (not item.properties.activable))}}
                     <li class="item flexrow" data-item-id="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
                         <div class="item-name flexrow">
@@ -40,7 +40,7 @@
             </li>
             <ol class="item-list">
                 {{#each actions as |item id|}}
-                    {{log (concat "Chroniques Oubliées | action " id) item}}
+                    {{!log (concat "Chroniques Oubliées | action " id) item}}
                     {{#if (and (not item.properties.enabled) (not item.properties.activable))}}
                         <li class="item flexrow" data-item-id="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
                             <div class="item-name flexrow">
