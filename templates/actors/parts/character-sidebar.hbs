@@ -3,198 +3,6 @@
         <img class="actor-image" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="auto" width="100%" style="margin: 0 auto">
         <a class="hover-icon" data-action="show-image"><i class="fas fa-image fa-fw"></i></a>
     </div>
-    <!-- INIT -->
-    <div class="init-section sidebar-section">
-        <div class="sidebar-section-header">
-            <div class="sidebar-label init-label">
-                <i class="fa-solid fa-swords fa-fw"></i>
-                <h4>{{localize "CO.label.long.init"}}</h4>
-<!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
-<!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
-            </div>
-            <div class="init-value labelled-field">
-                {{combat.init.value}}
-            </div>
-        </div>
-
-        {{#if unlocked}}
-            <div class="sidebar-section-content flexrow">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.short.ability"}}</label>
-                    <div class="select-container">
-                        <select name="system.combat.init.ability" data-type="String">
-                            {{#select system.combat.init.ability}}
-                                {{#each @root.config.abilities as |label idx|}}
-                                    <option value="{{idx}}">{{localize label}}</option>
-                                {{/each}}
-                            {{/select}}
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.value"}}</label>
-                    <input class="init-value" type="number" name="system.combat.init.value" value="{{combat.init.value}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.base"}}</label>
-                    <input class="init-base" type="number" name="system.combat.init.base" value="{{combat.init.base}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-        {{/if}}
-        <div class="sidebar-section-content">
-            <div class="labelled-field">
-                <label>{{localize "CO.label.long.bonus"}}</label>
-                <input class="init-bonus" type="number" name="system.combat.init.bonuses.sheet" value="{{combat.init.bonuses.sheet}}" data-dtype="Number" placeholder="0">
-            </div>
-        </div>
-    </div>
-    <!-- MELEE -->
-    <div class="melee-section sidebar-section">
-        <div class="sidebar-section-header">
-            <div class="sidebar-label melee-label">
-                <i class="fas fa-fw fa-sword"></i>
-                <h4>{{localize "CO.label.short.melee"}}</h4>
-            </div>
-            <div class="melee-value labelled-field">
-                {{numberFormat combat.melee.mod decimals=0 sign=true}}
-            </div>
-        </div>
-        {{#if unlocked}}
-            <div class="sidebar-section-content flexrow">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.short.ability"}}</label>
-                    <div class="select-container">
-                        <select name="system.combat.melee.ability" data-type="String">
-                            {{#select system.combat.melee.ability}}
-                                {{#each @root.config.abilities as |label idx|}}
-                                    <option value="{{idx}}">{{localize label}}</option>
-                                {{/each}}
-                            {{/select}}
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.value"}}</label>
-                    <input class="melee-value" type="number" name="system.combat.melee.value" value="{{combat.melee.value}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.base"}}</label>
-                    <input class="melee-base" type="number" name="system.combat.melee.base" value="{{combat.melee.base}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-        {{/if}}
-        <div class="sidebar-section-content">
-            <div class="labelled-field">
-                <label>{{localize "CO.label.long.bonus"}}</label>
-                <input class="melee-bonus" type="number" name="system.combat.melee.bonuses.sheet" value="{{combat.melee.bonuses.sheet}}" data-dtype="Number" placeholder="0">
-            </div>
-        </div>
-    </div>
-    <!-- RANGED -->
-    <div class="ranged-section sidebar-section">
-        <div class="sidebar-section-header">
-            <div class="sidebar-label ranged-label">
-                <i class="fas fa-fw fa-bow-arrow"></i>
-                <h4>{{localize "CO.label.short.ranged"}}</h4>
-                <!--                <a class="roll-icon roll-ranged"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.ranged.value}}</div></a>-->
-                <!--                <a class="roll-icon roll-ranged"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.ranged.value}}</div></a>-->
-            </div>
-            <div class="ranged-value labelled-field">
-                {{numberFormat combat.ranged.mod decimals=0 sign=true}}
-            </div>
-        </div>
-
-        {{#if unlocked}}
-            <div class="sidebar-section-content flexrow">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.short.ability"}}</label>
-                    <div class="select-container">
-                        <select name="system.combat.ranged.ability" data-type="String">
-                            {{#select system.combat.ranged.ability}}
-                                {{#each @root.config.abilities as |label idx|}}
-                                    <option value="{{idx}}">{{localize label}}</option>
-                                {{/each}}
-                            {{/select}}
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.value"}}</label>
-                    <input class="ranged-value" type="number" name="system.combat.ranged.value" value="{{combat.ranged.value}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.base"}}</label>
-                    <input class="ranged-base" type="number" name="system.combat.ranged.base" value="{{combat.ranged.base}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-        {{/if}}
-        <div class="sidebar-section-content">
-            <div class="labelled-field">
-                <label>{{localize "CO.label.long.bonus"}}</label>
-                <input class="ranged-bonus" type="number" name="system.combat.ranged.bonuses.sheet" value="{{combat.ranged.bonuses.sheet}}" data-dtype="Number" placeholder="0">
-            </div>
-        </div>
-    </div>
-    <!-- MAGIC -->
-    <div class="magic-section sidebar-section">
-        <div class="sidebar-section-header">
-            <div class="sidebar-label magic-label">
-                <i class="fas fa-fw fa-wand-magic-sparkles"></i>
-                <h4>{{localize "CO.label.short.magic"}}</h4>
-                <!--                <a class="roll-icon roll-magic"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.magic.value}}</div></a>-->
-                <!--                <a class="roll-icon roll-magic"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.magic.value}}</div></a>-->
-            </div>
-            <div class="magic-value labelled-field">
-                {{numberFormat combat.magic.mod decimals=0 sign=true}}
-            </div>
-        </div>
-        {{#if unlocked}}
-            <div class="sidebar-section-content flexrow">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.short.ability"}}</label>
-                    <div class="select-container">
-                        <select name="system.combat.magic.ability" data-type="String">
-                            {{#select system.combat.magic.ability}}
-                                {{#each @root.config.abilities as |label idx|}}
-                                    <option value="{{idx}}">{{localize label}}</option>
-                                {{/each}}
-                            {{/select}}
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.value"}}</label>
-                    <input class="magic-value" type="number" name="system.combat.magic.value" value="{{combat.magic.value}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.base"}}</label>
-                    <input class="magic-base" type="number" name="system.combat.magic.base" value="{{combat.magic.base}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-        {{/if}}
-        <div class="sidebar-section-content">
-            <div class="labelled-field">
-                <label>{{localize "CO.label.long.bonus"}}</label>
-                <input class="magic-bonus" type="number" name="system.combat.magic.bonuses.sheet" value="{{combat.magic.bonuses.sheet}}" data-dtype="Number" placeholder="0">
-            </div>
-        </div>
-    </div>
     <!-- DEF -->
     <div class="sidebar-section armor-section">
         <div class="sidebar-section-header" title="{{combat.def.details}}">
@@ -260,6 +68,198 @@
                 <div class="labelled-field">
                     <label>{{localize "CO.label.long.bonus"}}</label>
                     <input class="hp-bonus" type="number" name="system.attributes.hp.bonuses.sheet" value="{{attributes.hp.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                </div>
+            </div>
+        {{/if}}
+    </div>
+    <!-- INIT -->
+    <div class="init-section sidebar-section">
+        <div class="sidebar-section-header">
+            <div class="sidebar-label init-label">
+                <i class="fa-solid fa-swords fa-fw"></i>
+                <h4>{{localize "CO.label.long.init"}}</h4>
+<!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
+<!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
+            </div>
+            <div class="init-value labelled-field">
+                {{combat.init.value}}
+            </div>
+        </div>
+
+        {{#if unlocked}}
+            <div class="sidebar-section-content flexrow">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.short.ability"}}</label>
+                    <div class="select-container">
+                        <select name="system.combat.init.ability" data-type="String">
+                            {{#select system.combat.init.ability}}
+                                {{#each @root.config.abilities as |label idx|}}
+                                    <option value="{{idx}}">{{localize label}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.value"}}</label>
+                    <input class="init-value" type="number" name="system.combat.init.value" value="{{combat.init.value}}" data-dtype="Number" placeholder="0">
+                </div>
+            </div>
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.base"}}</label>
+                    <input class="init-base" type="number" name="system.combat.init.base" value="{{combat.init.base}}" data-dtype="Number" placeholder="0">
+                </div>
+            </div>
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.bonus"}}</label>
+                    <input class="init-bonus" type="number" name="system.combat.init.bonuses.sheet" value="{{combat.init.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                </div>
+            </div>
+        {{/if}}
+    </div>
+    <!-- MELEE -->
+    <div class="melee-section sidebar-section">
+        <div class="sidebar-section-header">
+            <div class="sidebar-label melee-label">
+                <i class="fas fa-fw fa-sword"></i>
+                <h4>{{localize "CO.label.short.melee"}}</h4>
+            </div>
+            <div class="melee-value labelled-field">
+                {{numberFormat combat.melee.mod decimals=0 sign=true}}
+            </div>
+        </div>
+        {{#if unlocked}}
+            <div class="sidebar-section-content flexrow">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.short.ability"}}</label>
+                    <div class="select-container">
+                        <select name="system.combat.melee.ability" data-type="String">
+                            {{#select system.combat.melee.ability}}
+                                {{#each @root.config.abilities as |label idx|}}
+                                    <option value="{{idx}}">{{localize label}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.value"}}</label>
+                    <input class="melee-value" type="number" name="system.combat.melee.value" value="{{combat.melee.value}}" data-dtype="Number" placeholder="0">
+                </div>
+            </div>
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.base"}}</label>
+                    <input class="melee-base" type="number" name="system.combat.melee.base" value="{{combat.melee.base}}" data-dtype="Number" placeholder="0">
+                </div>
+            </div>
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.bonus"}}</label>
+                    <input class="melee-bonus" type="number" name="system.combat.melee.bonuses.sheet" value="{{combat.melee.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                </div>
+            </div>
+        {{/if}}
+    </div>
+    <!-- RANGED -->
+    <div class="ranged-section sidebar-section">
+        <div class="sidebar-section-header">
+            <div class="sidebar-label ranged-label">
+                <i class="fas fa-fw fa-bow-arrow"></i>
+                <h4>{{localize "CO.label.short.ranged"}}</h4>
+                <!--                <a class="roll-icon roll-ranged"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.ranged.value}}</div></a>-->
+                <!--                <a class="roll-icon roll-ranged"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.ranged.value}}</div></a>-->
+            </div>
+            <div class="ranged-value labelled-field">
+                {{numberFormat combat.ranged.mod decimals=0 sign=true}}
+            </div>
+        </div>
+
+        {{#if unlocked}}
+            <div class="sidebar-section-content flexrow">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.short.ability"}}</label>
+                    <div class="select-container">
+                        <select name="system.combat.ranged.ability" data-type="String">
+                            {{#select system.combat.ranged.ability}}
+                                {{#each @root.config.abilities as |label idx|}}
+                                    <option value="{{idx}}">{{localize label}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.value"}}</label>
+                    <input class="ranged-value" type="number" name="system.combat.ranged.value" value="{{combat.ranged.value}}" data-dtype="Number" placeholder="0">
+                </div>
+            </div>
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.base"}}</label>
+                    <input class="ranged-base" type="number" name="system.combat.ranged.base" value="{{combat.ranged.base}}" data-dtype="Number" placeholder="0">
+                </div>
+            </div>
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.bonus"}}</label>
+                    <input class="ranged-bonus" type="number" name="system.combat.ranged.bonuses.sheet" value="{{combat.ranged.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                </div>
+            </div>
+        {{/if}}
+    </div>
+    <!-- MAGIC -->
+    <div class="magic-section sidebar-section">
+        <div class="sidebar-section-header">
+            <div class="sidebar-label magic-label">
+                <i class="fas fa-fw fa-wand-magic-sparkles"></i>
+                <h4>{{localize "CO.label.short.magic"}}</h4>
+                <!--                <a class="roll-icon roll-magic"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.magic.value}}</div></a>-->
+                <!--                <a class="roll-icon roll-magic"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.magic.value}}</div></a>-->
+            </div>
+            <div class="magic-value labelled-field">
+                {{numberFormat combat.magic.mod decimals=0 sign=true}}
+            </div>
+        </div>
+        {{#if unlocked}}
+            <div class="sidebar-section-content flexrow">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.short.ability"}}</label>
+                    <div class="select-container">
+                        <select name="system.combat.magic.ability" data-type="String">
+                            {{#select system.combat.magic.ability}}
+                                {{#each @root.config.abilities as |label idx|}}
+                                    <option value="{{idx}}">{{localize label}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.value"}}</label>
+                    <input class="magic-value" type="number" name="system.combat.magic.value" value="{{combat.magic.value}}" data-dtype="Number" placeholder="0">
+                </div>
+            </div>
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.base"}}</label>
+                    <input class="magic-base" type="number" name="system.combat.magic.base" value="{{combat.magic.base}}" data-dtype="Number" placeholder="0">
+                </div>
+            </div>
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.bonus"}}</label>
+                    <input class="magic-bonus" type="number" name="system.combat.magic.bonuses.sheet" value="{{combat.magic.bonuses.sheet}}" data-dtype="Number" placeholder="0">
                 </div>
             </div>
         {{/if}}
