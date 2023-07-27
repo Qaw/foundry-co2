@@ -1,55 +1,81 @@
-import {CoSkillRollDialog} from "./dialog-roll.mjs";
+export class CoEditAbilitiesDialog extends Application {
+    constructor(actor) {
+        super();
+        this.actor = actor
+    }
 
-export class CoEditAbilitiesDialog extends Dialog {
+    static get defaultOptions() {
+        return {
+            ...super.defaultOptions,
+            classes: ["co", "dialog", "edit-abilities-dialog"],
+            title: game.i18n.localize("CO.ui.editYourAbilities"),
+            template: "systems/co/templates/dialogs/edit-abilities-dialog.hbs",
+            width: "auto",
+            height: "fit-content"
+        };
+    }
 
-  static async init(actor) {
-    let dialogTemplateData = {
-      actor: actor
-    };
-    let options = { classes: ["co", "dialog", "edit-abilities-dialog"], width:750, height: "fit-content", "z-index": 99999, type: "editAbilities" };
-    let html = await renderTemplate("systems/co/templates/dialogs/edit-abilities-dialog.hbs", dialogTemplateData);
-    let rollDialog = new CoEditAbilitiesDialog(actor, html, options);
-    return rollDialog.render(true);
-  }
-  constructor(actor, html, options) {
-    let conf = {
-      title: game.i18n.localize("CO.ui.editYourAbilities"),
-      content: html,
-      buttons: {
-        cancel: {
-          icon: '<i class="fas fa-times"></i>',
-          label: game.i18n.localize("CO.ui.cancel"),
-          callback: () => { this.close() }
-        },
-        submit: {
-          icon: '<i class="fas fa-check"></i>',
-          label: game.i18n.localize("CO.ui.submit"),
-          callback: async (html) => {
-            // const dice = html.find("#dice").val();
-            // const formulaAttack = html.find("#formulaAttack").val();
-            // const formulaDamage = html.find("#formulaDamage").val();
-            // const critrange = html.find("input#critrange").val();
-            // const difficulty = html.find("#difficulty").val();
-            //
-            // if (options.type === "attack") {
-            //   let rollAttack = await this.attackRoll.rollAttack(attackRoll.label, dice, formulaAttack, formulaDamage, difficulty, critrange);
-            //   await this.attackRoll.chat(rollAttack, "attack");
-            //
-            //   if (game.settings.get("co", "useComboRolls")){
-            //     let damageRoll = await this.attackRoll.rollDamage(attackRoll.label, formulaDamage);
-            //     await this.attackRoll.chat(damageRoll, "damage");
-            //   }
-            // }
-            // if (options.type === "damage") {
-            //   let rollDamage = await this.attackRoll.rollDamage(attackRoll.label, formulaDamage);
-            //   await this.attackRoll.chat(rollDamage, "damage");
-            // }
-          }
-        }
-      },
-      default: "submit"
-    };
-    super(conf, options);
-    this.actor = actor;
-  }
+    get id() {
+        return `edit-abilities-${this.actor.id}`;
+    }
+
+    async getData(options = {}) {
+        const {actor} = this;
+        return {
+            ...(await super.getData(options)),
+            actor
+        };
+    }
+
+    activateListeners(html) {
+        super.activateListeners(html);
+        html.find("button[data-action=superior]").click(this._onToggleSuperiorAbility.bind(this));
+        html.find("button[name=reset-ability-scores]").click(this._onResetAbilityScores.bind(this));
+        html.find("input.ability-base").change(this._onChangeAbilityBase.bind(this));
+        html.find("input.ability-bonus").change(this._onChangeAbilityBonus.bind(this));
+
+    }
+
+    _onChangeAbilityBase(event){
+        const ability = $(event.currentTarget).attr("data-ability");
+        const value = $(event.currentTarget).val();
+        const {actor} = this;
+        return actor.update({[`system.abilities.${ability}.base`]: value}).then(() => this.render(true, {focus:true}));
+    }
+    _onChangeAbilityBonus(event){
+        const ability = $(event.currentTarget).attr("data-ability");
+        const value = $(event.currentTarget).val();
+        const {actor} = this;
+        return actor.update({[`system.abilities.${ability}.bonuses.sheet`]: value}).then(() => this.render(true, {focus:true}));
+    }
+
+    async _onToggleSuperiorAbility(event) {
+        const ability = $(event.currentTarget).attr("data-ability");
+        const {actor} = this;
+        const value = !actor.system.abilities[ability].superior;
+        return actor.update({[`system.abilities.${ability}.superior`]: value}).then(() => this.render(true));
+    }
+
+    async _onResetAbilityScores(event) {
+        const {actor} = this;
+        // Construct the Roll instance
+        let r = new Roll("{4d6kh3, 4d6kh3, 4d6kh3, 4d6kh3, 4d6kh3, 4d6kh3}");
+        await r.roll({"async": true});
+        const newAbilityScores = {
+            str: {base: r.terms[0].results[0].result},
+            dex: {base: r.terms[0].results[1].result},
+            con: {base: r.terms[0].results[2].result},
+            int: {base: r.terms[0].results[3].result},
+            wis: {base: r.terms[0].results[4].result},
+            cha: {base: r.terms[0].results[5].result}
+        };
+        r.toMessage({
+            user: game.user.id,
+            flavor: "Réinitialisation des caractéristiques",
+            speaker: ChatMessage.getSpeaker({actor: actor}),
+            flags: {msgType: "damage"}
+        });
+        // await r.evaluate();
+        return actor.update({"system.abilities": newAbilityScores }).then(()=>this.render(true));
+    }
 }

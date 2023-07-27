@@ -86,6 +86,9 @@
           align-self: start;
           font-size: var(--font-size-24);
         }
+        .hint-container {
+          grid-column: 1/4;
+        }
       }
       .row-column {
         align-items: center;
@@ -107,11 +110,18 @@
           text-transform: uppercase;
           width: 6em;
           height: 1.5em;
+
+          &.locked, &.selected {
+            color: white;
+          }
+          &.selected {
+            background: var(--button-color);
+          }
           &.hidden {
             pointer-events: none;
             visibility: hidden;
           }
-          &.boost {
+          &.superior {
             margin-top: auto;
             --button-color: #316549;
             --button-locked-color: #1b3c2a;
@@ -147,6 +157,17 @@
           height: 35px;
           width: 131px;
           border: 1px solid var(--tertiary);
+        }
+        .hint-container {
+          background: rgba(211, 204, 188, 0.4);
+          padding: 12px;
+          margin-right: 10px;
+          border: 1px solid rgb(211, 204, 188);
+          border-radius: 3px;
+          align-self: end;
+          h3 {
+            font-size: var(--font-size-21);
+          }
         }
       }
       .background-stripes {

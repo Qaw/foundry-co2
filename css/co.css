@@ -125,6 +125,7 @@
   --font-size-10: 0.625rem;
   --font-size-12: 0.8rem;
   --font-size-15: 0.9375rem;
+  --font-size-16: 0.9875rem;
   --font-size-17: 1.0625rem;
   --font-size-19: 1.1875rem;
   --font-size-21: 1.3125rem;
@@ -885,6 +886,9 @@ strong,
   align-self: start;
   font-size: var(--font-size-24);
 }
+.co.dialog.edit-abilities-dialog .window-content .row-heading .hint-container {
+  grid-column: 1/4;
+}
 .co.dialog.edit-abilities-dialog .window-content .row-column {
   align-items: center;
   display: flex;
@@ -907,11 +911,18 @@ strong,
   width: 6em;
   height: 1.5em;
 }
+.co.dialog.edit-abilities-dialog .window-content .row-column button.locked,
+.co.dialog.edit-abilities-dialog .window-content .row-column button.selected {
+  color: white;
+}
+.co.dialog.edit-abilities-dialog .window-content .row-column button.selected {
+  background: var(--button-color);
+}
 .co.dialog.edit-abilities-dialog .window-content .row-column button.hidden {
   pointer-events: none;
   visibility: hidden;
 }
-.co.dialog.edit-abilities-dialog .window-content .row-column button.boost {
+.co.dialog.edit-abilities-dialog .window-content .row-column button.superior {
   margin-top: auto;
   --button-color: #316549;
   --button-locked-color: #1b3c2a;
@@ -944,6 +955,17 @@ strong,
   height: 35px;
   width: 131px;
   border: 1px solid var(--tertiary);
+}
+.co.dialog.edit-abilities-dialog .window-content .summary-row .hint-container {
+  background: rgba(211, 204, 188, 0.4);
+  padding: 12px;
+  margin-right: 10px;
+  border: 1px solid #d3ccbc;
+  border-radius: 3px;
+  align-self: end;
+}
+.co.dialog.edit-abilities-dialog .window-content .summary-row .hint-container h3 {
+  font-size: var(--font-size-21);
 }
 .co.dialog.edit-abilities-dialog .window-content .background-stripes {
   position: absolute;
@@ -3122,10 +3144,8 @@ strong,
 .co.sheet.actor.character .window-content form.locked .main .sheet-body .main .ability-scores .ability .ability-id i.fas,
 .co.sheet.actor.character .window-content form.editable .main .sheet-body .effects .ability-scores .ability .ability-id i.fas,
 .co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .ability-scores .ability .ability-id i.fas {
-  position: absolute;
   font-size: var(--font-size-12);
-  bottom: 4px;
-  left: 2px;
+  vertical-align: super;
 }
 .co.sheet.actor.character .window-content form.editable .main .sheet-body .main .ability-scores .ability h3.ability-mod,
 .co.sheet.actor.character .window-content form.locked .main .sheet-body .main .ability-scores .ability h3.ability-mod,

@@ -202,6 +202,7 @@ export default class CoActor extends Actor {
     if (this.getFlag(game.system.id, "SheetUnlocked")) return true;
     return false;
   }
+
   //#endregion
 
   //#region méthodes publiques
@@ -377,6 +378,10 @@ export default class CoActor extends Actor {
         let res = resolver.resolve(this, item, action, type);
       }
     }
+  }
+
+  toggleSuperior(ability) {
+    return this.system.abilities[ability].superior = !this.system.abilities[ability].superior
   }
 
   /**

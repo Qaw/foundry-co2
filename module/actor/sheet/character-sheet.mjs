@@ -262,6 +262,6 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
    */
   async _onEditAbilities(event) {
     event.preventDefault();
-    return CoEditAbilitiesDialog.init(this.actor);
+    return new CoEditAbilitiesDialog(this.actor).render(true);
   }
 }
