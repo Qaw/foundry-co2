@@ -327,7 +327,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
         const rowId = li.data("itemId");
         let newActions = foundry.utils.deepClone(this.item.actions);
         console.log(newActions[rowId]);
-        let condition = new Condition("item", "equipped", "_self");
+        let condition = new Condition("item", "isEquipped", "_self");
 
         if (!newActions[rowId].conditions) newActions[rowId].conditions = [];
         newActions[rowId].conditions.push(condition);

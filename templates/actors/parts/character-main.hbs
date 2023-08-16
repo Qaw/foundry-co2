@@ -77,33 +77,33 @@
     <div class="section-body-no-flex">
         <ol class="actions-container items-container">
             <ol class="item-list">
-                {{#each actions as |item id|}}
+                {{#each visibleActions as |item id|}}
                 {{!log (concat "Chroniques Oubliées | action " id) item}}
                     {{#if item.properties.visible}}
-                    <li class="item flexrow"
-                        data-item-id="{{item._id}}"
-                        data-type="{{item.type}}"
-                        data-source="{{item.source}}"
-                        data-action="activate"
-                        data-indice="{{id}}"
-                        draggable="false">
-                        <div class="item-name flexrow" title="{{item.type}}">
-                            <div class="item-image" style="background-image: url('{{item.img}}')"></div>
-                            <h4><a class="item-control item-edit">{{item.label}}</a>&nbsp;
-                            {{#if (eq item.type "melee")}}<i class="fas fa-fw fa-sword"></i>{{/if}}
-                            {{#if (eq item.type "ranged")}}<i class="fas fa-fw fa-bow-arrow"></i>{{/if}}
-                            {{#if (eq item.type "spell")}}<i class="fas fa-fw fa-hand-sparkles"></i>{{/if}}
-                            {{#if (eq item.type "protection")}}<i class="fa-regular fa-fw fa-shield"></i>{{/if}}
-                            {{#if (eq item.type "heal")}}<i class="fas fa-fw fa-hand-holding-medical"></i>{{/if}}
-                            </h4>
-                        </div>
-                        <div class="item-controls-2">
-                            {{#if item.properties.activable}}
-                                <a class="item-roll rollable toggle-action"><i class="fas fa-dice-d20"></i></a>
-                            {{/if}}
-                            <a class="item-chat chat" title="Send to chat"><i class="fas fa-fw fa-comment-alt"></i></a>
-                        </div>
-                    </li>
+                        <li class="item flexrow"
+                            data-item-id="{{item._id}}"
+                            data-type="{{item.type}}"
+                            data-source="{{item.source}}"
+                            data-action="activate"
+                            data-indice="{{id}}"
+                            draggable="false">
+                            <div class="item-name flexrow" title="{{item.type}}">
+                                <div class="item-image" style="background-image: url('{{item.img}}')"></div>
+                                <h4><a class="item-control item-edit">{{item.label}}</a>&nbsp;
+                                {{#if (eq item.type "melee")}}<i class="fas fa-fw fa-sword"></i>{{/if}}
+                                {{#if (eq item.type "ranged")}}<i class="fas fa-fw fa-bow-arrow"></i>{{/if}}
+                                {{#if (eq item.type "spell")}}<i class="fas fa-fw fa-hand-sparkles"></i>{{/if}}
+                                {{#if (eq item.type "protection")}}<i class="fa-regular fa-fw fa-shield"></i>{{/if}}
+                                {{#if (eq item.type "heal")}}<i class="fas fa-fw fa-hand-holding-medical"></i>{{/if}}
+                                </h4>
+                            </div>
+                            <div class="item-controls-2">
+                                {{#if item.properties.activable}}
+                                    <a class="item-roll rollable toggle-action"><i class="fas fa-dice-d20"></i></a>
+                                {{/if}}
+                                <a class="item-chat chat" title="Send to chat"><i class="fas fa-fw fa-comment-alt"></i></a>
+                            </div>
+                        </li>
                     {{/if}}
                 {{/each}}
             </ol>

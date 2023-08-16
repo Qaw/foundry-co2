@@ -148,18 +148,19 @@ export default class CoActor extends Actor {
     return allActions;
   }
 
-  // /**
-  //  * @returns Toutes les actions visibles des capacités et des équipements
-  //  */
-  // get visibleActions() {
-  //   let allActions = [];
-  //   this.items.forEach((item) => {
-  //     if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
-  //       allActions.push(...item.visibleActions);
-  //     }
-  //   });
-  //   return allActions;
-  // }
+  /**
+   * @returns Toutes les actions visibles des capacités et des équipements
+   */
+  get visibleActions() {
+    let allActions = [];
+    this.items.forEach((item) => {
+      if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
+        allActions.push(...item.visibleActions);
+      }
+    });
+    return allActions;
+  }
+
   /**
    * @name abilitiesModifiers
    * @description Get all the modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype AbilityValue
