@@ -10,6 +10,7 @@ export default class CoCharacter extends CoActor {
 
     for (const [key, skill] of Object.entries(this.system.combat)) {
       // console.debug(skill);
+      // Somme du bonus de la feuille et du bonus des effets
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr);
       const abilityBonus = skill.ability && this.system.abilities[skill.ability].mod ? this.system.abilities[skill.ability].mod : 0;
 

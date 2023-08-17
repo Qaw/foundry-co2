@@ -22,7 +22,7 @@ export class CharacterData extends foundry.abstract.DataModel {
                 def: new fields.EmbeddedDataField(BaseValue, {
                     nullable: false,
                     label: "CO.combat.long.def",
-                    initial: { base: 10, ability: "str", bonuses: { sheet: 0, effects: 0 } }
+                    initial: { base: 10, ability: "dex", bonuses: { sheet: 0, effects: 0 } }
                 }),
                 melee: new fields.EmbeddedDataField(BaseValue, {
                     nullable: false,

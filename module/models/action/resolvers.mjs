@@ -1,5 +1,5 @@
-import { Utils } from "../system/utils.mjs";
-import { CoAttackCheck } from "../system/roll.mjs";
+import { Utils } from "../../system/utils.mjs";
+import { CoAttackCheck } from "../../system/roll.mjs";
 export class Resolver {
 
     /**

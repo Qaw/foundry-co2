@@ -1,3 +1,4 @@
+{{log 'character-sidebar' this}}
 <div class="sidebar">
     <div class="image-container">
         <img class="actor-image" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="auto" width="100%" style="margin: 0 auto">
@@ -5,12 +6,12 @@
     </div>
     <!-- DEF -->
     <div class="sidebar-section armor-section">
-        <div class="sidebar-section-header" title="{{combat.def.details}}">
+        <div class="sidebar-section-header">
             <div class="sidebar-label armor-label">
                 <i class="fas fa-fw fa-shield-alt"></i>
                 <h4>{{localize "CO.label.long.def"}}</h4>
             </div>
-            <div class="armor-base labelled-field">
+            <div class="armor-base labelled-field" data-tooltip="{{combat.def.tooltipValue}}">
                 {{combat.def.value}}
                 <!--                <input class="def-value adjustable adjusted-lower" type="number" data-property="system.combat.def.value" readonly value="{{combat.def.value}}" placeholder="0">-->
             </div>
@@ -25,7 +26,7 @@
             <div class="sidebar-section-content">
                 <div class="labelled-field">
                     <label>{{localize "CO.label.long.base"}}</label>
-                    <input class="def-base" type="number" name="system.combat.def.base" value="{{combat.def.base}}" data-dtype="Number" placeholder="0">
+                    <input class="def-base" type="number" name="system.combat.def.base" value="{{combat.def.base}}" data-dtype="Number" placeholder="0" readonly data-tooltip="{{combat.def.tooltipBase}}">
                 </div>
             </div>
             <div class="sidebar-section-content">
@@ -38,26 +39,18 @@
     </div>
     <!-- HP -->
     <div class="health-section sidebar-section">
-        <div class="sidebar-section-header" title="{{localize "CO.label.long.hp"}}">
+        <div class="sidebar-section-header" >
             <div class="sidebar-label">
                 <i class="fas fa-fw fa-heart"></i>
-                <h4>{{localize "CO.label.short.hp"}}</h4>
+                <h4 title="{{localize "CO.label.long.hp"}}">{{localize "CO.label.short.hp"}}</h4>
                 <div class="hit-points">
-                    <!--                    <input class="current" name="system.attributes.hp.value" value="{{attributes.hp.value}}" type="number" data-dtype="Number" placeholder="0">-->
-                    <span class="current">{{attributes.hp.value}}</span>
+                    <input class="current" name="system.attributes.hp.value" value="{{attributes.hp.value}}" type="number" data-dtype="Number" placeholder="0">
                     <span class="slash">/</span>
-                    <span class="max">{{attributes.hp.max}}</span>
-                    <!--                    <input class="max" readonly value="{{attributes.hp.max}}" type="number" data-dtype="Number" placeholder="0">-->
+                    <span class="max" data-tooltip="{{attributes.hp.tooltip}}">{{attributes.hp.max}}</span>
                 </div>
             </div>
         </div>
         {{#if unlocked}}
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.value"}}</label>
-                    <input class="hp-value" type="number" name="system.attributes.hp.value" value="{{attributes.hp.value}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
             <div class="sidebar-section-content">
                 <div class="labelled-field">
                     <label>{{localize "CO.label.long.base"}}</label>
@@ -81,7 +74,7 @@
 <!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
 <!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
             </div>
-            <div class="init-value labelled-field">
+            <div class="init-value labelled-field" data-tooltip="{{combat.init.tooltipValue}}">
                 {{combat.init.value}}
             </div>
         </div>
@@ -103,14 +96,8 @@
             </div>
             <div class="sidebar-section-content">
                 <div class="labelled-field">
-                    <label>{{localize "CO.label.long.value"}}</label>
-                    <input class="init-value" type="number" name="system.combat.init.value" value="{{combat.init.value}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
                     <label>{{localize "CO.label.long.base"}}</label>
-                    <input class="init-base" type="number" name="system.combat.init.base" value="{{combat.init.base}}" data-dtype="Number" placeholder="0">
+                    <input class="init-base" type="number" name="system.combat.init.base" value="{{combat.init.base}}" data-dtype="Number" placeholder="0" readonly>
                 </div>
             </div>
             <div class="sidebar-section-content">
@@ -128,8 +115,8 @@
                 <i class="fas fa-fw fa-sword"></i>
                 <h4>{{localize "CO.label.short.melee"}}</h4>
             </div>
-            <div class="melee-value labelled-field">
-                {{numberFormat combat.melee.mod decimals=0 sign=true}}
+            <div class="melee-value labelled-field" data-tooltip="{{combat.melee.tooltipValue}}">
+                {{numberFormat combat.melee.value decimals=0 sign=true}}
             </div>
         </div>
         {{#if unlocked}}
@@ -149,14 +136,8 @@
             </div>
             <div class="sidebar-section-content">
                 <div class="labelled-field">
-                    <label>{{localize "CO.label.long.value"}}</label>
-                    <input class="melee-value" type="number" name="system.combat.melee.value" value="{{combat.melee.value}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
                     <label>{{localize "CO.label.long.base"}}</label>
-                    <input class="melee-base" type="number" name="system.combat.melee.base" value="{{combat.melee.base}}" data-dtype="Number" placeholder="0">
+                    <input class="melee-base" type="number" name="system.combat.melee.base" value="{{combat.melee.base}}" data-dtype="Number" placeholder="0" data-tooltip="{{combat.melee.tooltipBase}}" readonly>
                 </div>
             </div>
             <div class="sidebar-section-content">
@@ -176,8 +157,8 @@
                 <!--                <a class="roll-icon roll-ranged"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.ranged.value}}</div></a>-->
                 <!--                <a class="roll-icon roll-ranged"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.ranged.value}}</div></a>-->
             </div>
-            <div class="ranged-value labelled-field">
-                {{numberFormat combat.ranged.mod decimals=0 sign=true}}
+            <div class="ranged-value labelled-field" data-tooltip="{{combat.ranged.tooltipValue}}">
+                {{numberFormat combat.ranged.value decimals=0 sign=true}}
             </div>
         </div>
 
@@ -198,14 +179,8 @@
             </div>
             <div class="sidebar-section-content">
                 <div class="labelled-field">
-                    <label>{{localize "CO.label.long.value"}}</label>
-                    <input class="ranged-value" type="number" name="system.combat.ranged.value" value="{{combat.ranged.value}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
                     <label>{{localize "CO.label.long.base"}}</label>
-                    <input class="ranged-base" type="number" name="system.combat.ranged.base" value="{{combat.ranged.base}}" data-dtype="Number" placeholder="0">
+                    <input class="ranged-base" type="number" name="system.combat.ranged.base" value="{{combat.ranged.base}}" data-dtype="Number" placeholder="0" data-tooltip="{{combat.ranged.tooltipBase}}" readonly>
                 </div>
             </div>
             <div class="sidebar-section-content">
@@ -225,8 +200,8 @@
                 <!--                <a class="roll-icon roll-magic"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.magic.value}}</div></a>-->
                 <!--                <a class="roll-icon roll-magic"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.magic.value}}</div></a>-->
             </div>
-            <div class="magic-value labelled-field">
-                {{numberFormat combat.magic.mod decimals=0 sign=true}}
+            <div class="magic-value labelled-field" data-tooltip="{{combat.magic.tooltipValue}}">
+                {{numberFormat combat.magic.value decimals=0 sign=true}}
             </div>
         </div>
         {{#if unlocked}}
@@ -246,14 +221,8 @@
             </div>
             <div class="sidebar-section-content">
                 <div class="labelled-field">
-                    <label>{{localize "CO.label.long.value"}}</label>
-                    <input class="magic-value" type="number" name="system.combat.magic.value" value="{{combat.magic.value}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
                     <label>{{localize "CO.label.long.base"}}</label>
-                    <input class="magic-base" type="number" name="system.combat.magic.base" value="{{combat.magic.base}}" data-dtype="Number" placeholder="0">
+                    <input class="magic-base" type="number" name="system.combat.magic.base" value="{{combat.magic.base}}" data-dtype="Number" placeholder="0" data-tooltip="{{combat.magic.tooltipBase}}" readonly>
                 </div>
             </div>
             <div class="sidebar-section-content">
@@ -271,19 +240,13 @@
                 <i class="fas fa-fw fa-clover"></i>
                 <h4>{{localize "CO.resources.medium.fortune"}}</h4>
                 <div class="resource-points">
-                    <span class="current">{{resources.fortune.value}}</span>
+                    <input class="current" name="system.resources.fortune.value" value="{{resources.fortune.value}}" type="number" data-dtype="Number" placeholder="0">
                     <span class="slash">/</span>
                     <span class="max">{{resources.fortune.max}}</span>
                 </div>
             </div>
         </div>
         {{#if unlocked}}
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.value"}}</label>
-                    <input class="hp-value" type="number" name="system.resources.fortune.value" value="{{resources.fortune.value}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
             <div class="sidebar-section-content">
                 <div class="labelled-field">
                     <label>{{localize "CO.label.long.base"}}</label>
@@ -305,19 +268,13 @@
                 <i class="fas fa-fw fa-heart-pulse"></i>
                 <h4>{{localize "CO.resources.medium.recovery"}}</h4>
                 <div class="resource-points">
-                    <span class="current">{{resources.recovery.value}}</span>
+                    <input class="current" name="system.resources.recovery.value" value="{{resources.recovery.value}}" type="number" data-dtype="Number" placeholder="0">
                     <span class="slash">/</span>
                     <span class="max">{{resources.recovery.max}}</span>
                 </div>
             </div>
         </div>
         {{#if unlocked}}
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.value"}}</label>
-                    <input class="hp-value" type="number" name="system.resources.recovery.value" value="{{resources.recovery.value}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
             <div class="sidebar-section-content">
                 <div class="labelled-field">
                     <label>{{localize "CO.label.long.base"}}</label>
@@ -339,19 +296,13 @@
                 <i class="fas fa-fw fa-bolt"></i>
                 <h4>{{localize "CO.resources.medium.mana"}}</h4>
                 <div class="resource-points">
-                    <span class="current">{{resources.mana.value}}</span>
+                    <input class="current" name="system.resources.mana.value" value="{{resources.mana.value}}" type="number" data-dtype="Number" placeholder="0">
                     <span class="slash">/</span>
                     <span class="max">{{resources.mana.max}}</span>
                 </div>
             </div>
         </div>
         {{#if unlocked}}
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.value"}}</label>
-                    <input class="hp-value" type="number" name="system.resources.mana.value" value="{{resources.mana.value}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
             <div class="sidebar-section-content">
                 <div class="labelled-field">
                     <label>{{localize "CO.label.long.base"}}</label>

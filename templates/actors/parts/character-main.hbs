@@ -18,8 +18,8 @@
                         {{localize (concat "CO.abilities.short." id)}}
                         {{#if ability.superior}}<i class="fas fa-asterisk"></i>{{/if}}
                     </h2>
-                    <h3 class="ability-mod" title="Modifier">{{numberFormat ability.mod decimals=0 sign=true}}</h3>
-                    <div class="ability-score" title="Score">
+                    <h3 class="ability-mod" title="Modificateur">{{numberFormat ability.mod decimals=0 sign=true}}</h3>
+                    <div class="ability-score" data-tooltip="{{ability.tooltipValue}}">
                         <div>{{ability.value}}</div>
                     </div>
                 </li>

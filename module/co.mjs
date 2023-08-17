@@ -4,11 +4,11 @@ import CoItemSheet from './item/sheet/item-sheet.mjs';
 import {preloadHandlebarsTemplates} from './ui/templates.mjs';
 import {CoItem} from './item/item.mjs';
 import {registerHandlebarsHelpers} from './ui/helpers.mjs';
-import {Modifier} from './models/modifiers.mjs';
+import { Modifier } from './models/action/modifiers.mjs';
 import {registerSystemSettings} from './system/settings.js';
 import CoEncounterSheet from "./actor/sheet/encounter-sheet.mjs";
 
-import {CharacterData} from './models/actor/character.mjs';
+import { CharacterData } from './models/actor/character.mjs';
 import {CoActorProxy} from './actor/proxy.mjs';
 import registerHooks from './system/hooks.mjs';
 import {EncounterData} from "./models/actor/encounter.mjs";

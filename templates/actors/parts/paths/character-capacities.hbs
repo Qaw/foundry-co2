@@ -7,22 +7,23 @@
         </div>
     </li>
     <ol class="item-list">
-    {{#each capacities as |capacity id|}}
-    {{!log "Chroniques Oubliées | capacity" capacity}}
-        {{#if capacity.system.learned}}
-        <li class="item flexrow" data-item-id="{{capacity._id}}" data-item-type="capacity" draggable="true">
-            <div class="item-name flexrow">
-                <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>
-                <h4><a class="item-control item-edit">{{capacity.name}}</a></h4>
-            </div>
-            <div class="item-controls-2">
-            {{!#if unlocked}}
-                <a class="item-control item-delete" title="{{localize "CO.ui.delete"}}"><i class="fas fa-trash"></i></a>
-            {{!/if}}
-            </div>
-        </li>
-        {{/if}}
-    {{/each}}
+        {{#each capacities as |capacity id|}}
+        {{!log "Chroniques Oubliées | capacity" capacity}}
+            {{#if capacity.system.learned}}
+                <li class="item flexrow" data-item-id="{{capacity._id}}" data-item-type="capacity" draggable="true">
+                    <div class="item-name flexrow">
+                        <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>
+                        <h4><a class="item-control item-edit">{{capacity.name}}</a></h4>
+                    </div>
+                    <!--<div class="item-controls-2">
+                    {{!#if unlocked}}
+                        <a class="item-control item-delete" title="{{localize "CO.ui.delete"}}"><i class="fas fa-trash"></i></a>
+                    {{!/if}}
+                    </div>
+                    -->
+                </li>
+            {{/if}}
+        {{/each}}
     </ol>
 </ol>
 

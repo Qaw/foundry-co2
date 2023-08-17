@@ -1,10 +1,10 @@
 import CoBaseItemSheet from "./base-item-sheet.mjs";
-import {Modifier} from "../../models/modifiers.mjs";
 import {ITEM_TYPE} from "../../system/constants.mjs";
 
-import {Action} from "../../models/action.mjs";
-import {Condition} from "../../models/condition.mjs";
-import {Resolver} from "../../models/resolvers.mjs";
+import { Action } from "../../models/action/action.mjs";
+import { Condition } from "../../models/action/condition.mjs";
+import { Modifier } from "../../models/action/modifiers.mjs";
+import { Resolver } from "../../models/action/resolvers.mjs";
 
 export default class CoItemSheet extends CoBaseItemSheet {
     /** @override */

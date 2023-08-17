@@ -1,5 +1,5 @@
-import { MODIFIER_SUBTYPE, MODIFIER_TARGET, MODIFIER_TYPE } from "../system/constants.mjs";
-import { Utils } from "../system/utils.mjs";
+import { MODIFIER_SUBTYPE, MODIFIER_TARGET, MODIFIER_TYPE } from "../../system/constants.mjs";
+import { Utils } from "../../system/utils.mjs";
 
 export class Modifiers {
   /**

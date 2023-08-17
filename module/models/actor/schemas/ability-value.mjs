@@ -12,7 +12,7 @@ export class AbilityValue extends foundry.abstract.DataModel {
                 required: false,
                 nullable: false,
                 initial: 10,
-                min:0,
+                min: 0,
                 integer: true
             }),
             bonuses: new fields.SchemaField({
@@ -30,15 +30,14 @@ export class AbilityValue extends foundry.abstract.DataModel {
         };
     }
 
-    get value() {
-        return this.base + this.bonuses.sheet + this.bonuses.effects ;
-    }
     get mod() {
         return AbilityValue.getModFromValue(this.value);
     }
+
     static getModFromValue = function (value) {
         return value < 4 ? -4 : Math.floor(value / 2) - 5;
     };
+    
     static getValueFromMod = function (mod) {
         return mod * 2 + 10;
     };

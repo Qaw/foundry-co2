@@ -2052,6 +2052,11 @@ strong,
   flex: 0 0 40px;
   text-align: center;
 }
+.co.sheet.actor.character .window-content form.editable .main .character-sheet-header .name span.level,
+.co.sheet.actor.character .window-content form.locked .main .character-sheet-header .name span.level {
+  flex: 0 0 40px;
+  text-align: center;
+}
 .co.sheet.actor.character .window-content form.editable .main .character-sheet-header select,
 .co.sheet.actor.character .window-content form.locked .main .character-sheet-header select {
   padding: 4px !important;

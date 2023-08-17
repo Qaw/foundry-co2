@@ -1,6 +1,6 @@
 import { ITEM_TYPE } from "../system/constants.mjs";
-import { Action } from "../models/action.mjs";
-import { Condition } from "../models/condition.mjs";
+import { Action } from "../models/action/action.mjs";
+import { Condition } from "../models/action/condition.mjs";
 /**
  * Extend the base Item entity
  * @extends {Item}
@@ -111,15 +111,7 @@ export class CoItem extends Item {
    * @returns Basic info for a capacity : uuid, name, img, description
    */
   get infos() {
-    if (this.type === ITEM_TYPE.CAPACITY) {
-      return {
-        uuid: this.uuid,
-        name: this.name,
-        img: this.img,
-        description: this.system.description.value,
-      };
-    }
-    if (this.type === ITEM_TYPE.PATH) {
+    if (this.type === ITEM_TYPE.CAPACITY || this.type === ITEM_TYPE.PATH) {
       return {
         uuid: this.uuid,
         name: this.name,
