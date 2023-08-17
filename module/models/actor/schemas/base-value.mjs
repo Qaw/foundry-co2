@@ -49,7 +49,4 @@ export class BaseValue extends foundry.abstract.DataModel {
             })
         };
     }
-    // get value() {
-    //     return this.base + this.bonuses.sheet + this.bonuses.effects;
-    // }
 }

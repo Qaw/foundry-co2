@@ -78,13 +78,13 @@ export class Utils {
       "@atm" : "actor.system.combat.magic.mod",
       "@magic" : "actor.system.combat.magic.mod",
       "@def" : "actor.system.combat.def.value",
-      "@niv" : "actor.system.attributes.level.value",
-      "@lvl" : "actor.system.attributes.level.value"
+      "@niv" : "actor.system.attributes.level.base",
+      "@lvl" : "actor.system.attributes.level.base"
     }
 
     // Shortcuts
     Object.keys(DSL).forEach(shortcut => {
-      if(replacedFormula.includes(shortcut)) replacedFormula = replacedFormula.replace(shortcut, toEvaluate ? eval(DSL[shortcut]) : DSL[shortcut]);
+      if(replacedFormula.includes(shortcut)) replacedFormula = replacedFormula.replace(shortcut, DSL[shortcut]);
     });
 
     if (replacedFormula.includes("@rang")) {
@@ -113,6 +113,7 @@ export class Utils {
 
     console.debug(game.co.log("Custom Formula evaluated : ", replacedFormula));
 
-    return replacedFormula;
+    if (toEvaluate) return eval(replacedFormula);
+    else return replacedFormula;
   }
 }

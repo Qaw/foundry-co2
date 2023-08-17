@@ -51,6 +51,14 @@ export default class CoActor extends Actor {
   }
 
   /**
+   * @returns le premier Item de type profile
+   */
+  get profile() {
+    const profile = this.items.find((item) => item.type === ITEM_TYPE.PROFILE);
+    return profile !== undefined ? [profile] : [];
+  }
+
+  /**
    * @returns les Items de type path
    */
   get paths() {
@@ -672,7 +680,9 @@ export default class CoActor extends Actor {
 
   _prepareFP(skill, bonuses) {
     skill.base = this._computeBaseFP();
-    skill.max = skill.base + bonuses;
+    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, MODIFIER_TARGET.FP);
+
+    skill.max = skill.base + resourceModifiers.total + bonuses;
   }
 
   _computeBaseFP() {
@@ -680,10 +690,11 @@ export default class CoActor extends Actor {
   }
 
   // BASE : à partir du profile, lire la mpFormula
-  _prepareMP(skill, bonuses) {
-    // skill.base = this._computeBaseMP();
-    // skill.base = this._computeBaseMP();
-    skill.max = skill.base + bonuses;
+  _prepareMP(skill, bonuses) {    
+    skill.base = this._computeBaseMP();
+    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, MODIFIER_TARGET.MP);
+
+    skill.max = skill.base + resourceModifiers.total + bonuses;
   }
 
   // 2 * @niv + @int
@@ -696,12 +707,13 @@ export default class CoActor extends Actor {
 
   _prepareRP(skill, bonuses) {
     skill.base = this._computeBaseRP();
-    skill.max = skill.base + bonuses;
+    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, MODIFIER_TARGET.RP);
+
+    skill.max = skill.base + resourceModifiers.total + bonuses;
   }
 
-  _computeBaseRP() {
-    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, MODIFIER_TARGET.RP);
-    return 5 + resourceModifiers.total;
+  _computeBaseRP() {  
+    return 5 ;
   }
 
   _prepareHPMax() {
@@ -770,16 +782,16 @@ export default class CoActor extends Actor {
     }
   }
 
-  // /**
-  //  * @name _addAllValues
-  //  * @description Calcul la somme d'un tableau de valeurs positives ou négatives
-  //  *
-  //  * @param {*} array Un tableau de valeurs
-  //  * @returns {int} 0 ou la somme des valeurs
-  //  */
-  // _addAllValues(array) {
-  //   return array.length > 0 ? array.reduce((acc, curr) => acc + curr, 0) : 0;
-  // }
+  /**
+    * @name _addAllValues
+    * @description Calcul la somme d'un tableau de valeurs positives ou négatives
+    *
+    * @param {*} array Un tableau de valeurs
+    * @returns {int} 0 ou la somme des valeurs
+    */
+   _addAllValues(array) {
+     return array.length > 0 ? array.reduce((acc, curr) => acc + curr, 0) : 0;
+   }
 
   /**
    * @description toggle the field of the items and the actions linked

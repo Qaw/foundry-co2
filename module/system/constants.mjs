@@ -31,7 +31,9 @@ export const MODIFIER_TARGET = {
     INIT: 'init',
     DEF: 'def',
     HP: 'hp',
-    RP: 'rp'
+    RP: 'rp',
+    MP: 'mp',
+    FP: 'fp'
 };
 
 export const COMBAT = {
