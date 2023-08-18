@@ -44,7 +44,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @returns le premier Item de type profile
+   * @returns les Items de type profile
    */
   get profiles() {
     return this.items.filter((item) => item.type === ITEM_TYPE.PROFILE);
@@ -72,7 +72,7 @@ export default class CoActor extends Actor {
     let pathGroups = [];
     this.paths.forEach((path) => {
       const capacities = path.system.capacities.map((cid) => this.items.find((i) => i._id === cid));
-      pathGroups.push({
+      pathGroups.push({        
         path: path,
         items: capacities
       });
@@ -419,7 +419,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @description Create a path, and the linked modifiers, paths and capacities if they exist
+   * @description Create a feature, and the linked modifiers, paths and capacities if they exist
    * @param {*} feature
    */
   async addFeature(feature) {
@@ -463,7 +463,7 @@ export default class CoActor extends Actor {
       // item is null if the item has been deleted in the compendium or in the world
       // TODO Add a warning message and think about a global rollback
       if (capa != null) {
-        const newCapacityId = await this.addCapacity(capa, newFeature[0].id);
+        const newCapacityId = await this.addCapacity(capa, null);
         updatedCapacitiesIds.push(newCapacityId);
       }
     }
@@ -654,24 +654,30 @@ export default class CoActor extends Actor {
 
   deletePath(pathId) {
     // Delete linked capacities
-    const capacitiesId = this.items.get(pathId).system.capacities;
-    this.deleteEmbeddedDocuments("Item", capacitiesId);
-    this.deleteEmbeddedDocuments("Item", [pathId]);
+    const path = this.items.get(pathId);
+    if (path) {
+      const capacitiesId = path.system.capacities;
+      this.deleteEmbeddedDocuments("Item", capacitiesId);
+      this.deleteEmbeddedDocuments("Item", [pathId]);
+    }    
   }
 
   async deleteCapacity(capacityId) {
     // Remove the capacity from the capacities list of the linked Path
     const capacity = this.items.get(capacityId);
-    const pathId = capacity.system.path;
-    if (pathId != null) {
-      // If the linked path still exists in the items
-      if (this.items.get(pathId)) {
-        let updatedCapacitiesIds = this.items.get(pathId).system.capacities.filter((id) => id !== capacityId);
-        const updateData = { _id: pathId, "system.capacities": updatedCapacitiesIds };
-        await this.updateEmbeddedDocuments("Item", [updateData]);
+
+    if (capacity) {
+      const pathId = capacity.system.path;
+      if (pathId != null) {
+        // If the linked path still exists in the items
+        if (this.items.get(pathId)) {
+          let updatedCapacitiesIds = this.items.get(pathId).system.capacities.filter((id) => id !== capacityId);
+          const updateData = { _id: pathId, "system.capacities": updatedCapacitiesIds };
+          await this.updateEmbeddedDocuments("Item", [updateData]);
+        }
       }
+      this.deleteEmbeddedDocuments("Item", [capacityId]);      
     }
-    this.deleteEmbeddedDocuments("Item", [capacityId]);
   }
 
   //#endregion

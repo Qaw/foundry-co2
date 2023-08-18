@@ -28,7 +28,8 @@
       "inventory.empty" : "L'inventaire est vide",
       "modifiers.empty" : "Aucun modificateur.",
       "conditions.empty" : "Aucune condition.",
-      "resolvers.empty" : "Aucun resolveur."
+      "resolvers.empty" : "Aucun resolveur.",
+      "profilAlreadyExist": "Vous avez déjà un profil"
     },
     "label": {
       "long": {
@@ -237,7 +238,9 @@
       "newAction" : "Nouvelle Action",
       "capacitiesLearned" : "Capacités acquises",
       "capacitiesNotLearned" : "Capacités non-acquises",
-      "editYourAbilities" : "Éditez vos Caractéristiques"
+      "editYourAbilities" : "Éditez vos Caractéristiques",
+      "buy": "Apprendre",
+      "unbuy": "Ne pas apprendre"
     },
     "properties": {
       "attack": "Attaque",

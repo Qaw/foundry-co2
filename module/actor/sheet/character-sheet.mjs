@@ -181,7 +181,8 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
    */
   async _onDeletePath(event) {
     event.preventDefault();
-    const li = $(event.currentTarget).parents(".item");
+    
+    const li = $(event.currentTarget).closest(".item");
     const pathId = li.data("itemId");
 
     this.actor.deletePath(pathId);
@@ -247,6 +248,10 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
       case ITEM_TYPE.FEATURE:
         return this.actor.addFeature(item);
       case ITEM_TYPE.PROFILE:
+        if (this.actor.profiles.length > 0) {
+          ui.notifications.warn(game.i18n.localize("CO.notif.profilAlreadyExist"));
+          break;
+        }        
         return this.actor.addProfile(item);
       case ITEM_TYPE.PATH:
         return this.actor.addPath(item);
