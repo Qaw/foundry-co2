@@ -155,10 +155,22 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     const li = $(event.currentTarget).parents(".item");
     const itemId = li.data("itemId");
     const itemType = li.data("itemType");
-    if (itemType == "path") this._onDeletePath(event);
-    else if (itemType == "capacity") this._onDeleteCapacity(event);
-    else if (itemType == "feature") this._onDeleteFeature(event);
-    else this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+    switch (itemType) {
+      case "path":
+        this._onDeletePath(event);
+        break;
+      case "capacity":
+        this._onDeleteCapacity(event);
+        break;
+      case "feature":
+        this._onDeleteFeature(event);
+        break;
+      case "profile":
+        this._onDeleteProfile(event);
+        break;
+      default:
+        this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+    }
   }
 
   /**
@@ -175,13 +187,26 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
+   * @description Delete the selected profile
+   * @param event
+   * @private
+   */
+  async _onDeleteProfile(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).parents(".item");
+    const profileId = li.data("itemId");
+
+    this.actor.deleteProfile(profileId);
+  }  
+
+  /**
    * @description Delete the selected path
    * @param event
    * @private
    */
   async _onDeletePath(event) {
     event.preventDefault();
-    
+
     const li = $(event.currentTarget).closest(".item");
     const pathId = li.data("itemId");
 

@@ -652,6 +652,15 @@ export default class CoActor extends Actor {
     this.deleteEmbeddedDocuments("Item", [featureId]);
   }
 
+  deleteProfile(profileId) {
+    // Delete linked paths
+    const pathsIds = this.items.get(profileId).system.paths;
+    for (const pathId of pathsIds) {
+      this.deletePath(pathId);
+    }
+    this.deleteEmbeddedDocuments("Item", [profileId]);
+  }  
+
   deletePath(pathId) {
     // Delete linked capacities
     const path = this.items.get(pathId);
