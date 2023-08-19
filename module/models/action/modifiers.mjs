@@ -42,10 +42,9 @@ export class Modifiers {
 
 export class Modifier {
   /**
-   *
+   * @param {*} source    UUID of the source
    * @param {*} type      MODIFIER_TYPE
    * @param {*} subtype   MODIFIER_SUBTYPE
-   * @param {*} source    UUID of the source
    * @param {*} target    MODIFIER_TARGET
    * @param {*} value     +/- X or custom like 2*@rank
    */

@@ -34,7 +34,11 @@
     <div>
         <p>Formule : {{formula}}</p>        
     </div>
-        
+    
+    {{#if showDifficulty}}
+        <p>Difficulté : {{difficulty}}</p>  
+    {{/if}}
+
     <div class="tooltip">
         <p>Résultat : {{total}}</p>
         {{#if typeDamage}}

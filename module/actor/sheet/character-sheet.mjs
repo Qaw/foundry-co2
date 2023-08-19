@@ -32,6 +32,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     context.features = this.actor.features;
     context.actions = this.actor.actions;
     context.visibleActions = this.actor.visibleActions;
+    context.visibleActivableActions = this.actor.visibleActivableActions;    
     context.inventory = this.actor.inventory;
     context.unlocked = this.actor.isUnlocked;
     return context;
@@ -86,18 +87,11 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
    * @param {*} event
    */
   _onUseAction(event) {
-    const li = $(event.currentTarget).parents(".item");
-    // const itemId = li.data("itemId");
-    // const element = event.currentTarget;
-    // const dataset = element.dataset;
-    const action = li.data("action");
-    console.log(action);
-    const type = li.data("type");
-    console.log(type);
-    const source = li.data("source");
-    console.log(source);
-    const indice = li.data("indice");
-    console.log(indice);
+    const dataset = event.currentTarget.dataset;
+    const action = dataset.action;
+    const type = dataset.type;
+    const source = dataset.source;
+    const indice = dataset.indice
 
     if (action === "activate") {
       this.actor.activateAction(true, source, indice, type);

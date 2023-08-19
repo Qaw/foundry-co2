@@ -77,34 +77,49 @@
     <div class="section-body-no-flex">
         <ol class="actions-container items-container">
             <ol class="item-list">
-                {{#each visibleActions as |item id|}}
-                {{!log (concat "Chroniques Oubliées | action " id) item}}
-                    {{#if item.properties.visible}}
-                        <li class="item flexrow"
-                            data-item-id="{{item._id}}"
-                            data-type="{{item.type}}"
-                            data-source="{{item.source}}"
-                            data-action="activate"
-                            data-indice="{{id}}"
-                            draggable="false">
-                            <div class="item-name flexrow" title="{{item.type}}">
-                                <div class="item-image" style="background-image: url('{{item.img}}')"></div>
-                                <h4><a class="item-control item-edit">{{item.label}}</a>&nbsp;
-                                {{#if (eq item.type "melee")}}<i class="fas fa-fw fa-sword"></i>{{/if}}
-                                {{#if (eq item.type "ranged")}}<i class="fas fa-fw fa-bow-arrow"></i>{{/if}}
-                                {{#if (eq item.type "spell")}}<i class="fas fa-fw fa-hand-sparkles"></i>{{/if}}
-                                {{#if (eq item.type "protection")}}<i class="fa-regular fa-fw fa-shield"></i>{{/if}}
-                                {{#if (eq item.type "heal")}}<i class="fas fa-fw fa-hand-holding-medical"></i>{{/if}}
+                {{#each visibleActivableActions as |action id|}}
+                {{log (concat "Chroniques Oubliées | action " id) action}}
+                        <li class="item flexrow" draggable="true"
+                            {{#if action.properties.temporary}}{{#unless action.properties.enabled}}style="opacity: 60%"{{/unless}} {{/if}}>
+                            <div class="item-name flexrow">
+                                <div class="item-image" style="background-image: url('{{getEmbeddedItemImg @root.actor source}}')"></div>
+                                <div class="item-image" style="background-image: url('{{action.img}}')"></div>                                
+                                <h4><a class="item-control item-edit">{{getEmbeddedItemName @root.actor source}} : {{action.label}}</a>&nbsp;
+                                {{#if (eq action.type "melee")}}<i class="fas fa-fw fa-sword"></i>{{/if}}
+                                {{#if (eq action.type "ranged")}}<i class="fas fa-fw fa-bow-arrow"></i>{{/if}}
+                                {{#if (eq action.type "spell")}}<i class="fas fa-fw fa-hand-sparkles"></i>{{/if}}
+                                {{#if (eq action.type "protection")}}<i class="fa-regular fa-fw fa-shield"></i>{{/if}}
+                                {{#if (eq action.type "heal")}}<i class="fas fa-fw fa-hand-holding-medical"></i>{{/if}}
                                 </h4>
                             </div>
-                            <div class="item-controls-2">
-                                {{#if item.properties.activable}}
-                                    <a class="item-roll rollable toggle-action"><i class="fas fa-dice-d20"></i></a>
+                            <div class="item-controls-3">
+                                {{#if action.properties.activable}}
+                                    {{#if action.properties.temporary}}
+                                        <a class="item-control item-activate" >
+                                            {{#if action.properties.enabled}}
+                                                <i class="fas fa-dice-d20 green toggle-action" style="font-size:16px" title="Désactiver" data-action="unactivate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                            {{else}}
+                                                <i class="fas fa-dice-d20 gray toggle-action" style="font-size:16px" title="Activer" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                            {{/if}}
+                                        </a>
+                                    {{else}}
+                                        {{#if (or (eq action.type 'melee') (eq action.type 'ranged'))}}
+                                            <a class="item-control">
+                                                <i class="fas fa-dice-d20 green toggle-action" style="font-size:16px" title="Attaque" data-action="activate" data-type="attack" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                            </a> 
+                                            <a class="item-control">
+                                                <i class="fas fa-dice-d20 green toggle-action" style="font-size:16px" title="Dommages" data-action="activate" data-type="damage" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                            </a> 
+                                        {{else}}
+                                        <a class="item-control">
+                                            <i class="fa-solid green fa-sword toggle-action" style="font-size:16px" title="Utiliser" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                        </a>     
+                                        {{/if}}             
+                                    {{/if}}
                                 {{/if}}
                                 <a class="item-chat chat" title="Send to chat"><i class="fas fa-fw fa-comment-alt"></i></a>
                             </div>
                         </li>
-                    {{/if}}
                 {{/each}}
             </ol>
         </ol>

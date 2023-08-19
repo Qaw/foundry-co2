@@ -5,13 +5,14 @@ export class Action {
     /**
      * 
      * @param {*} source L'item de type Equipment ou Capacity à l'origine de l'action
+     * @param {*} indice numéro de l'action
      * @param {*} type 
      * @param {*} img 
      * @param {*} label 
      * @param {*} chatFlavor 
      * @param {Boolean} visible  Définit si l'action est visible sur la fiche de personnage
-     *  Pour une action venant d'une capacité, si le champ Enabled de la capacité est à True, alors l'action est visible   
-     *  Pour une action venant d'un équipement, si le champ Enabled de l'équipement est à True, alors l'action est visible   
+     *  Une action sans conditions est visible   
+     *  Une action dont toutes les conditions sont vraies est visible
      * @param {Boolean} activable Si true : un bouton permet de l'activer ou de la désactiver
      * @param {Boolean} enabled False tant que la Capacité à l'origine n'est pas activée. Les modifiers ne sont pris en compte que si enabled de l'action vaut true
      * @param {Boolean} temporary true si le sort a une durée
@@ -52,9 +53,7 @@ export class Action {
      * Creates an empty action.
      */
     static empty() {
-        return Action.apply({
-
-        });
+        return Action.apply({});
     }
 
     get hasConditions() {
@@ -83,20 +82,15 @@ export class Action {
     }
 
     /**
-     * 
+     * Return true if there is no condition or all conditions are true
      * @param {*} item 
      */
     isVisible(item) {
         if (this.hasConditions) {
-            let result = false;
-            this.conditions.forEach(cond => {
-                let condition = new Condition(cond.subject, cond.predicate, cond.object);
-                if (condition.evaluate(item)) result = true;
-            });
-            return result;
+            let conditionsArray = this.conditions.map(cond => new Condition(cond.subject, cond.predicate, cond.object));
+            return conditionsArray.every(condition => condition.evaluate(item));
         }
         return true;
     }
-
 }
 

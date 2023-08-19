@@ -46,7 +46,7 @@ export class Resolver {
         const crit = this.skill.crit;
         const diff = this.skill.diff;              
         const skillFormulaToEvaluate = (skillFormula.includes("d") || skillFormula.includes("D")) ? false : true;
-        let skillFormulaEvaluated = skillFormulaToEvaluate ?  Utils.evaluate(actor, skillFormula, item.uuid, true) : Utils.evaluateWithDice(actor, skillFormula, item.uuid, false);
+        let skillFormulaEvaluated = skillFormulaToEvaluate ?  Utils.evaluate(actor, skillFormula, item.uuid, true) : Utils.evaluateWithDice(actor, skillFormula, item.uuid);
 
         const damageFormula = this.dmg.formula[0].part;      
         const damageFormulaToEvaluate = (damageFormula.includes("d") || damageFormula.includes("D")) ? false : true;       
