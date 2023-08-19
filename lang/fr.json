@@ -194,6 +194,7 @@
       "activable" : "Activable",
       "enabled" : "Activé(s)",
       "disabled" : "Désactivé(s)",
+      "passive" : "Passif(s)",
       "visible" : "Visible",
       "conditions" : "Conditions",
       "subject" : "Sujet",

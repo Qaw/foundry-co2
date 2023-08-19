@@ -33,6 +33,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     context.actions = this.actor.actions;
     context.visibleActions = this.actor.visibleActions;
     context.visibleActivableActions = this.actor.visibleActivableActions;    
+    context.visibleNonActivableActions = this.actor.visibleNonActivableActions;
     context.inventory = this.actor.inventory;
     context.unlocked = this.actor.isUnlocked;
     return context;

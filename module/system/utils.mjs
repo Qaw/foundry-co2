@@ -107,6 +107,25 @@ export class Utils {
       replacedFormula = replacedFormula.replace("@rang[" + extract + "]", total);
     }
 
+    if (replacedFormula.includes("@rank")) {
+      let startRank = replacedFormula.substring(replacedFormula.indexOf("@rank"));
+      let extract = startRank.substring(replacedFormula.indexOf("[") + 1, replacedFormula.indexOf("]"));
+      let ranks = extract.split(",");
+      let itemSource = actor.items.get(source);
+      const pathId = itemSource.system.path;
+      const path = actor.items.get(pathId);
+      const rank = path.system.rank;
+      let total = 0;
+      if (rank) {
+        for (let index = 0; index < rank; index++) {
+          const element = ranks[index];
+          let val = parseInt(element);
+          if (val) total += val;
+        }
+      }
+      replacedFormula = replacedFormula.replace("@rank[" + extract + "]", total);
+    }
+
     // Remaining formula
     if (replacedFormula.includes("@")) {
       replacedFormula = replacedFormula.replace("@", "actor.system.");

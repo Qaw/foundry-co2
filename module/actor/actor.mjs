@@ -168,12 +168,19 @@ export default class CoActor extends Actor {
     return allActions;
   }
 
-    /**
+  /**
    * @returns Toutes les actions visibles et activables des capacités et des équipements
    */
-    get visibleActivableActions() {
-      return this.visibleActions.filter(a=>a.properties.activable);
-    }
+  get visibleActivableActions() {
+   return this.visibleActions.filter(a=>a.properties.activable);
+  }
+
+  /**
+   * @returns Toutes les actions visibles et activables des capacités et des équipements
+   */
+  get visibleNonActivableActions() {
+    return this.visibleActions.filter(a=>!a.properties.activable);
+   }    
 
   /**
    * @name abilitiesModifiers
