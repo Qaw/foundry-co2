@@ -139,4 +139,35 @@ export class Utils {
       else return replacedFormula;
     }
   }
+
+  replacedFormula = _processFormulaKeyword("@rang", replacedFormula, source);
+  replacedFormula = _processFormulaKeyword("@rank", replacedFormula, source);
+
+  _processFormulaKeyword(keyword, replacedFormula, source) {
+    if (replacedFormula.includes(keyword)) {
+        let keywordIndex = replacedFormula.indexOf(keyword);
+        let startRank = replacedFormula.substring(keywordIndex);
+        let openBracketIndex = replacedFormula.indexOf("[", keywordIndex) + 1;
+        let closeBracketIndex = replacedFormula.indexOf("]", keywordIndex);
+        let extract = startRank.substring(openBracketIndex, closeBracketIndex);
+        
+        let ranks = extract.split(",");
+        let itemSource = actor.items.get(source);
+        const pathId = itemSource.system.path;
+        const path = actor.items.get(pathId);
+        const rank = path.system.rank;
+        let total = 0;
+        
+        if (rank) {
+            for (let index = 0; index < rank; index++) {
+                const element = ranks[index];
+                let val = parseInt(element, 10);
+                if (val) total += val;
+            }
+        }
+        
+        replacedFormula = replacedFormula.replace(keyword + "[" + extract + "]", total);
+    }
+    return replacedFormula;
+  }
 }
