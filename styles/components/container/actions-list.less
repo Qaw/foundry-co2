@@ -1,0 +1,145 @@
+.actions-list {
+  width: 97%;
+  .action {
+    width: 99%;
+    margin-top: 6px;
+  }
+}
+
+.actions-list,
+.attacks-list {
+  align-items: baseline;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  .action {
+    display: flex;
+    flex: 1 0 46%;
+    flex-direction: column;
+    margin-left: 6px;
+    margin-right: 6px;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-border-light-tertiary);
+    }
+
+    .action-header {
+      display: flex;
+      flex: 1 0 auto;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      .action-name {
+        display: flex;
+        flex: auto;
+        font-size: 0.9rem;
+
+        h4 {
+          margin: 0;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .attack {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 8px 6px 0 6px;
+    border-bottom: 1px solid var(--color-border-light-tertiary);
+    .attack-header {
+      display: flex;
+      flex: 1 0 auto;
+      flex-direction: row;
+      align-items: baseline;
+      width: 100%;
+    }
+    .attack-name {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2px;
+      white-space: nowrap;
+      margin: 0 4px 0 0;
+      font-size: 0.9rem;
+      font-weight: 500;
+      & > span {
+        gap: 3px;
+        margin-right: 4px;
+        display: flex;
+        align-items: baseline;
+        line-height: 1.125rem;
+      }
+    }
+    .attack-body {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      width: 100%;
+      padding-top: 3px;
+      .sub-section {
+        align-items: flex-start;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        flex: auto;
+        justify-content: flex-start;
+      }
+      .flexrow, .sub-section{
+        gap: 2px;
+      }
+      button {
+        width: auto !important;
+        cursor: pointer;
+        margin: 0;
+        padding: 0 8px;
+        font-size: var(--font-size-11);
+        height: 18px;
+        line-height: 18px;
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3), inset 0 0 0 2px rgba(255, 255, 255, 0.2);
+        background: var(--color-primary);
+        color: #f5efe0;
+        text-align: center;
+        white-space: nowrap;
+        border-radius: 3px;
+        border: none;
+        &:first-child {
+          margin-left: 0px;
+        }
+      }
+      .attack-button {
+        background-color: var(--secondary);
+      }
+      .damage-button, .critical-button {
+        background-color: var(--primary);
+      }
+    }
+  }
+}
+
+.controls {
+  font-size: 0.8rem;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  margin-left: auto;
+  gap: 1px;
+
+  .chat {
+    margin-right: 3px;
+    font-size: 0.9em;
+  }
+}
+
+.activity-icon {
+  align-self: center;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-family: Pathfinder2eActions;
+  font-size: 1.2em;
+}

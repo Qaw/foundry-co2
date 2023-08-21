@@ -1,10 +1,10 @@
 import CoBaseItemSheet from "./base-item-sheet.mjs";
-import {Modifier} from "../../system/modifiers.mjs";
 import {ITEM_TYPE} from "../../system/constants.mjs";
 
-import {Action} from "../../system/actions.mjs";
-import {Condition} from "../../system/conditions.mjs";
-import {Resolver} from "../../system/resolvers.mjs";
+import { Action } from "../../models/action/action.mjs";
+import { Condition } from "../../models/action/condition.mjs";
+import { Modifier } from "../../models/action/modifiers.mjs";
+import { Resolver } from "../../models/action/resolvers.mjs";
 
 export default class CoItemSheet extends CoBaseItemSheet {
     /** @override */
@@ -297,7 +297,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
         event.preventDefault();
         let newActions = foundry.utils.deepClone(this.item.actions);
 
-        let action = new Action(this.item.uuid, newActions.length, "melee", "icons/svg/d20-highlight.svg", "Action #" + this.item.actions.length);
+        let action = new Action(this.item.uuid, newActions.length, "melee", "icons/svg/d20-highlight.svg", game.i18n.localize("CO.ui.newAction") + " " + (this.item.actions.length + 1));
         newActions.push(action);
         return this.item.update({"system.actions": newActions});
     }
@@ -327,7 +327,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
         const rowId = li.data("itemId");
         let newActions = foundry.utils.deepClone(this.item.actions);
         console.log(newActions[rowId]);
-        let condition = new Condition("item", "equipped", "_self");
+        let condition = new Condition("item", "isEquipped", "_self");
 
         if (!newActions[rowId].conditions) newActions[rowId].conditions = [];
         newActions[rowId].conditions.push(condition);

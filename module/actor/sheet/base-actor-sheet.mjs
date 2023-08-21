@@ -1,4 +1,3 @@
-import {Log} from "../../utils/log.mjs";
 import {CoSkillCheck} from "../../system/roll.mjs";
 
 export default class CoBaseActorSheet extends ActorSheet {
@@ -11,16 +10,15 @@ export default class CoBaseActorSheet extends ActorSheet {
   }
 
   _onRoll(event) {
-
     const element = event.currentTarget;
     const dataset = element.dataset;
     const rollType = dataset.rollType;
     const rolling = dataset.rolling;
 
-    Log.debug(rolling);
+    // console.debug(game.co.log(rolling));
     
     switch(rollType){
-      case "skillcheck" : new CoSkillCheck(this.actor).init(event, rolling);
+      case "skillcheck" : new CoSkillCheck(this.actor).init(rolling);
       case "combatcheck" : break;
     }
     // return this.actor.skillCheck(event, this.actor);

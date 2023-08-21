@@ -2,10 +2,10 @@
     "id": "co",
     "title": "Chroniques Oubliées",
     "description": "Le système Chroniques Oubliées pour FoundryVTT.",
-    "version": "1.0.0",
+    "version": "11.306.0",
     "compatibility": {
-      "minimum": 10,
-      "verified": "10.290"
+      "minimum": 11,
+      "verified": "11.306"
     },
     "authors": [
       {
@@ -33,7 +33,7 @@
     ],
     "gridDistance": 1.5,
     "gridUnits": "m",
-    "primaryTokenAttribute": "hp",
+    "primaryTokenAttribute": "attributes.hp",
     "initiative": "1d20",
     "url": "",
     "manifest": "",

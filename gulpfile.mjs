@@ -2,8 +2,8 @@ import gulp from "gulp";
 import less from "gulp-less";
 
 const LESS_DEST = "./css";
-const LESS_SRC = "./less/co.less";
-export const LESS_WATCH = ["./less/*.less"];
+const LESS_SRC = "./styles/co.less";
+export const LESS_WATCH = ["./styles/**/*.less"];
 
 /**
  * Compile the LESS sources into a single CSS file.

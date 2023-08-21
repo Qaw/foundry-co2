@@ -1,15 +1,20 @@
-{{log "Chroniques Oubliées | character paths" this}}
-<!--<h3 class="form-header"><a class="section-toggle">{{localize "CO.label.long.paths"}}</a></h3>-->
+{{!log "Chroniques Oubliées | character paths" this}}
+{{> "systems/co/templates/actors/parts/paths/character-capacities.hbs"}}
+
 <!--<div class="path-list foldable">-->
     {{#each pathGroups as |pg id|}}
-        {{!log 'pathGroup' pg id}}
+        {{log 'pathGroup' pg id}}
         <ol class="paths items-container foldable"  data-tab="features">
             <li class="items-container-header flexrow">
                 <h3 class="item-name flexrow">
 <!--                    <div class="item-image" style="background-image: url('{{pg.path.img}}')"></div>-->
                     {{pg.path.name}} ({{pg.path.system.rank}})
                 </h3>
-                <div class="item-controls-2">
+                <div class="item-controls-2 item" data-item-id="{{pg.path.id}}">
+                        {{#if ../unlocked}}
+                            <a class="item-control path-delete" title={{localize "CO.ui.remove"}}><i class="fas fa-trash"></i></a>
+                        {{/if}}
+                        
 <!--                    <a class="item-control item-create" data-pack="profiles" data-open="0" title="{{!localize "CO.ui.add"}}"><i class="fas fa-plus"></i>&nbsp;{{!localize "CO.label.short.add"}}</a>-->
                 </div>
             </li>
@@ -43,6 +48,3 @@
         </ol>
     {{/each}}
 <!--</div>-->
-
-{{!log "Chroniques Oubliées | character capacities" this}}
-{{!> "systems/co/templates/actors/parts/paths/character-capacities.hbs"}}

@@ -1,24 +1,54 @@
 {{!log "Chroniques Oubliées | character capacities" this}}
 <ol class="features items-container foldable"  data-tab="features">
     <li class="items-container-header flexrow">
-        <div class="item-detail">{{localize "CO.label.long.rank"}}</div>
-        <h3 class="item-name flexrow">{{localize "CO.label.long.capacities"}}</h3>
+        <h3 class="item-name flexrow">{{localize "CO.ui.capacitiesLearned"}}</h3>
         <div class="item-controls-2">
-            <a class="item-control item-create" data-pack="profiles" data-open="0" title="{{localize "CO.ui.add"}}"><i class="fas fa-plus"></i>&nbsp;{{localize "CO.label.short.add"}}</a>
+<!--            <a class="item-control item-create" data-pack="profiles" data-open="0" title="{{localize "CO.ui.add"}}"><i class="fas fa-plus"></i>&nbsp;{{localize "CO.label.short.add"}}</a>-->
         </div>
     </li>
     <ol class="item-list">
-    {{#each capacities as |capacity id|}}
-        <li class="item flexrow" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="true">
-            <div class="item-detail">{{add id 1}}</div>
-            <div class="item-name flexrow">
-                <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>
-                <h4><a class="item-control item-edit">{{capacity.name}}</a></h4>
-            </div>
-            <div class="item-controls-2">
-                <a class="item-control item-delete" title="{{localize "CO.ui.delete"}}"><i class="fas fa-trash"></i></a>
-            </div>
-        </li>
-    {{/each}}
+        {{#each capacities as |capacity id|}}
+        {{!log "Chroniques Oubliées | capacity" capacity}}
+            {{#if capacity.system.learned}}
+                <li class="item flexrow" data-item-id="{{capacity._id}}" data-item-type="capacity" draggable="true">
+                    <div class="item-name flexrow">
+                        <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>
+                        <h4><a class="item-control item-edit">{{capacity.name}}</a></h4>
+                    </div>
+                    <!----><div class="item-controls-2">
+                    {{#if ../unlocked}}
+                        <a class="item-control item-delete" title="{{localize "CO.ui.remove"}}"><i class="fas fa-trash"></i></a>
+                    {{/if}}
+                    </div>
+                    
+                </li>
+            {{/if}}
+        {{/each}}
     </ol>
 </ol>
+
+<!--{{!log "Chroniques Oubliées | character capacities" this}}-->
+<!--<ol class="features items-container foldable"  data-tab="features">-->
+<!--    <li class="items-container-header flexrow">-->
+<!--        <h3 class="item-name flexrow">{{!localize "CO.ui.capacitiesNotLearned"}}</h3>-->
+<!--        <div class="item-controls-2">-->
+<!--            <a class="item-control item-create" data-pack="profiles" data-open="0" title="{{!localize "CO.ui.add"}}"><i class="fas fa-plus"></i>&nbsp;{{!localize "CO.label.short.add"}}</a>-->
+<!--        </div>-->
+<!--    </li>-->
+<!--    <ol class="item-list">-->
+<!--        {{!#each capacities as |capacity id|}}-->
+<!--            {{!log "Chroniques Oubliées | capacity" capacity}}-->
+<!--            {{!#if (and (not capacity.system.learned) (not capacity.system.path))}}-->
+<!--                <li class="item flexrow" data-item-id="{{!capacity._id}}" data-item-type="capacity" draggable="true">-->
+<!--                    <div class="item-name flexrow">-->
+<!--                        <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>-->
+<!--                        <h4><a class="item-control item-edit">{{!capacity.name}}</a></h4>-->
+<!--                    </div>-->
+<!--                    <div class="item-controls-2">-->
+<!--                        <a class="item-control item-delete" title="{{!localize "CO.ui.remove"}}"><i class="fas fa-trash"></i></a>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--            {{!/if}}-->
+<!--        {{!/each}}-->
+<!--    </ol>-->
+<!--</ol>-->

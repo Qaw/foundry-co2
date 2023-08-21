@@ -1,0 +1,236 @@
+@import "../items-container";
+
+&.sheet {
+  &.actor {
+    &.character {
+      min-width: 765px;
+    }
+    &.encounter {
+      min-width: 500px;
+    }
+    .window-content {
+      padding: 0;
+      form.editable, form.locked {
+        padding: 0;
+        margin: 0;
+        .sidebar {
+          flex: 0;
+          padding: 10px;
+          .portrait {
+            cursor: pointer;
+            background: white;
+            outline: 3px solid #d7d7d7;
+            box-shadow: 5px 5px 10px black;
+            display: flex;
+            flex: 1;
+            padding: 0;
+            width: 150px;
+            height: 200px;
+            margin: 5px;
+            justify-content: center;
+            align-content: center;
+            justify-items: center;
+            align-items: center;
+            img {
+              border: none;
+              margin: 0;
+              padding: 0;
+              max-width: 150px;
+              max-height: 200px;
+            }
+          }
+          .features {
+            list-style-type: none;
+            .featured-item {
+              border: 2px groove #eeede0;
+              padding: 3px;
+              margin-bottom: 3px;
+              color: @colorOlive;
+            }
+          }
+          .monitor {
+            .hp, .def, .init {
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr;
+              grid-gap: 5px;
+              grid-auto-columns: minmax(60px, 60px);
+              .cell {
+                //border : 1px solid red;
+                justify-self: center;
+                align-self: center;
+                min-width: 40px;
+                max-width: 40px;
+                &.icon-big {
+                  min-width: 60px;
+                  max-width: 60px;
+                }
+                .field-value {
+                  max-width: 40px;
+                  min-width: 40px;
+                }
+                .header {
+                  color: darkslategray;
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+        }
+        .main {
+          .header {
+            flex: 0;
+            flex-wrap: nowrap;
+            .details {
+              padding: 5px;
+              display: grid;
+              grid-template-columns: 1fr 6fr;
+              grid-gap: 10px;
+              grid-auto-columns: minmax(100px, auto);
+              .form-label {
+                justify-self: end;
+                align-self: center;
+              }
+              .form-value {
+                align-self: center;
+                flex: 1;
+              }
+            }
+          }
+          .nav {
+            .nav()
+          }
+          .content {
+            flex: 1;
+            padding: 5px;
+            margin: 0;
+            .sheet-body {
+              .stats {
+                height: 100%;
+                .stats-layout {
+                  .stats-layout-top {
+                    .stats-layout-topright {
+                      margin-left: @layout-margin;
+                    }
+                  }
+                  .stats-layout-middle,
+                  .stats-layout-bottom {
+                    margin-top: @layout-margin;
+                    .stats-layout-middleright,
+                    .stats-layout-bottomright {
+                      margin-left: @layout-margin;
+                    }
+                  }
+                  .abilities-container-7cols {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+                    grid-gap: 3px;
+                    grid-auto-columns: minmax(20px, 50px);
+                    .cell {
+                      justify-self: center;
+                      align-self: center;
+                      min-width: 40px;
+                      .field-value {
+                        max-width: 40px;
+                      }
+                      .header {
+                        color: darkslategray;
+                        font-weight: bold;
+                      }
+                    }
+                  }
+                  .abilities-container-5cols {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+                    grid-gap: 3px;
+                    grid-auto-columns: minmax(20px, 50px);
+                    .cell {
+                      justify-self: center;
+                      align-self: center;
+                      min-width: 40px;
+                      .field-value {
+                        max-width: 40px;
+                      }
+                      .header {
+                        color: darkslategray;
+                        font-weight: bold;
+                      }
+                    }
+                  }
+                  .abilities-container-4cols {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr 1fr;
+                    grid-gap: 3px;
+                    grid-auto-columns: minmax(20px, 50px);
+                    .cell {
+                      justify-self: center;
+                      align-self: center;
+                      min-width: 40px;
+                      .field-value {
+                        max-width: 40px;
+                      }
+                      .header {
+                        color: darkslategray;
+                        font-weight: bold;
+                      }
+                    }
+                  }
+                  .combat-container, .resources-container {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+                    grid-gap: 3px;
+                    grid-auto-columns: minmax(20px, 50px);
+                    .cell {
+                      justify-self: center;
+                      align-self: center;
+                      min-width: 40px;
+                      .field-value {
+                        max-width: 40px;
+                      }
+                      .header {
+                        color: darkslategray;
+                        font-weight: bold;
+                      }
+                    }
+                  }
+                  .hp-container {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    grid-gap: 3px;
+                    grid-auto-columns: minmax(20px, 50px);
+                    .cell {
+                      justify-self: center;
+                      align-self: center;
+                      min-width: 40px;
+                      .field-value {
+                        max-width: 40px;
+                      }
+                      .header {
+                        color: darkslategray;
+                        font-weight: bold;
+                      }
+                    }
+                  }
+                }
+              }
+              .actions {
+                .items-container()
+              }
+              .inventory {
+                .items-container()
+              }
+              .paths,
+              .capacities {
+                .items-container()
+              }
+              .features {
+                .items-container()
+              }
+              .bio {
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

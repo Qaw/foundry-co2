@@ -25,4 +25,45 @@ export const registerSystemSettings = function() {
 		requiresReload: true
 	});
 
+	game.settings.register("co", "useVarInit", {
+        name: "SETTINGS.VarInit.name",
+        hint: "SETTINGS.VarInit.hint",
+        scope: 'world',
+		config: true,
+		type: Boolean,
+		default: false,
+		requiresReload: true
+    });
+
+	game.settings.register("co", "displayDifficulty", {
+        name: "SETTINGS.DisplayDifficulty.name",
+        hint: "SETTINGS.DisplayDifficulty.hint",
+        scope: "world",
+        config: true,
+        default: "none",
+        type: String,
+        choices: {
+            "none" : "SETTINGS.DisplayDifficulty.none",
+            "all" : "SETTINGS.DisplayDifficulty.all",
+            "gm" : "SETTINGS.DisplayDifficulty.gm"
+        }
+    });
+
+    game.settings.register("co", "useComboRolls", {
+        name: "SETTINGS.UseComboRolls.name",
+        hint: "SETTINGS.UseComboRolls.hint",
+        scope: "world",
+        config: true,
+        default: true,
+        type: Boolean
+    });
+
+	game.settings.register("co", "displayChatDamageButtonsToAll", {
+        name: "SETTINGS.DisplayChatDamageButtonsToAll.name",
+        hint: "SETTINGS.DisplayChatDamageButtonsToAll.hint",
+        scope: "world",
+        config: true,
+        default: false,
+        type: Boolean
+    });
 }

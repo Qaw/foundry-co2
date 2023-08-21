@@ -12,13 +12,20 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/" + SYSTEM_NAME + "/templates/actors/character-sheet.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-sidebar.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-features.hbs",
-    "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-stats.hbs",
-    "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-actions.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-main.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/inventory/character-inventory.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/paths/character-paths.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/paths/character-capacities.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-effects.hbs",
     "systems/" + SYSTEM_NAME + "/templates/actors/parts/character-bio.hbs",
+
+    // ENCOUNTER
+    "systems/" + SYSTEM_NAME + "/templates/encounter/encounter-sheet.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-main.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-notes.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-inventory.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-data.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-sidebar.hbs",
 
     // EFFECTS
     "systems/" + SYSTEM_NAME + "/templates/effects/effects.hbs",

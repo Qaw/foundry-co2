@@ -1,0 +1,90 @@
+@import "styles/components/items-container";
+@import "styles/components/container/section-container";
+@import "styles/components/container/sidebar";
+@import "styles/components/container/ability-scores";
+@import "styles/components/container/tags";
+@import "styles/components/container/actions-list";
+@import "styles/components/container/inventory";
+@import "styles/components/container/notes";
+@import "styles/components/nav";
+&.sheet {
+  &.actor.encounter {
+    min-width: 585px;
+    .window-content {
+      padding: 0;
+      form.editable, form.locked {
+        padding: 0;
+        margin: 0;
+        .main {
+          .npc-sheet-header {
+            display: flex;
+            flex: 1 0 auto;
+            flex-direction: column;
+            .name {
+              //font-family: var(--sans-serif-condensed);
+              //font-size: var(--font-size-28);
+              font-family: var(--serif-condensed);
+              font-size: var(--font-size-36);
+              height: var(--font-size-34);
+
+              font-weight: 700;
+              width: 100%;
+              flex-wrap: nowrap;
+              input {
+                font-weight: inherit;
+                height: 32px;
+              }
+              .name-value {
+                //font-variant: small-caps;
+                margin-left: 6px;
+                margin-right: 18px;
+              }
+              .level-label {
+                flex: 0;
+                text-align: right;
+                margin-right: 0.1em;
+                text-transform: uppercase;
+              }
+              input.level {
+                flex: 0 0 40px;
+                text-align: center;
+              }
+            }
+            select {
+              //flex: auto 0 0;
+              padding: 4px !important;
+              height: auto !important;
+              font-family: var(--sans-serif);
+              font-weight: 500;
+              font-size: var(--font-size-10);
+              background: rgba(255, 255, 255, 0.5);
+            }
+            .traits-list-item {
+              border: 2px solid #d8c384;
+              color: white;
+              text-transform: uppercase;
+              background-color: #002664;
+              &.archetype-select {
+                background-color: #323232;
+              }
+              &.category-select {
+                background-color: #566193;
+              }
+              &.size-select {
+                background-color: #3a7a58;
+              }
+              &.bossrank-select {
+                background-color: #98513d;
+              }
+            }
+          }
+          .sheet-body {
+            flex: 1;
+            padding: 5px;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}

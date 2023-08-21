@@ -77,3 +77,62 @@ export class CoSkillRollDialog extends Dialog {
     return total;
   }
 }
+
+export class CoAttackRollDialog extends Dialog {
+  constructor(attackRoll, html, options) {
+
+    options.classes.push("attackRoll");
+    options.width = 500;
+
+    let conf = {
+      title: attackRoll.label,
+      content: html,
+      buttons: {
+        cancel: {
+          icon: '<i class="fas fa-times"></i>',
+          label: game.i18n.localize("CO.ui.cancel"),
+          callback: () => { this.close() }
+        },
+        submit: {
+          icon: '<i class="fas fa-check"></i>',
+          label: game.i18n.localize("CO.ui.submit"),
+          callback: async (html) => {
+            const dice = html.find("#dice").val();
+            const formulaAttack = html.find("#formulaAttack").val();
+            const formulaDamage = html.find("#formulaDamage").val();
+            const critrange = html.find("input#critrange").val();
+            const difficulty = html.find("#difficulty").val();
+
+            if (options.type === "attack") {
+              let rollAttack = await this.attackRoll.rollAttack(attackRoll.label, dice, formulaAttack, formulaDamage, difficulty, critrange);  
+              await this.attackRoll.chat(rollAttack, "attack");
+
+              if (game.settings.get("co", "useComboRolls")){              
+                let damageRoll = await this.attackRoll.rollDamage(attackRoll.label, formulaDamage);  
+                await this.attackRoll.chat(damageRoll, "damage");
+              }
+            }
+			
+            if (options.type === "damage") {
+              let rollDamage = await this.attackRoll.rollDamage(attackRoll.label, formulaDamage);  
+              await this.attackRoll.chat(rollDamage, "damage");
+            }
+
+          }
+        }
+      },
+      default: "submit"
+    };
+
+    super(conf, options);
+    this.attackRoll = attackRoll;
+  }
+
+  static async create(attackRoll, dialogTemplateData) {
+    let options = { classes: ["co", "dialog"], height: "fit-content", "z-index": 99999, type: dialogTemplateData.type };
+    let html = await renderTemplate("systems/co/templates/dialogs/attack-dialog.hbs", dialogTemplateData);
+
+    return new CoAttackRollDialog(attackRoll, html, options);
+  }
+
+}

@@ -1,54 +1,63 @@
 {
-  "ACTOR": {
-    "TypeCharacter": "Personnage",
-    "TypeEncounter": "Rencontre",
-    "TypeVendor": "Vendeur/Trésor",
-    "TypeVehicle": "Véhicule",
-    "TypeMarker": "Marqueur"
-  },
-  "ITEM": {
-    "TypeItem": "Objet",
-    "TypeEquipment": "Équipement",
-    "TypeFeature": "Feature",
-    "TypeTrait": "Trait",
-    "TypeProfile": "Profil",
-    "TypeConsumable": "Consommable/Munition",
-    "TypeLoot": "Butin/Trésor",
-    "TypeCurrency": "Monnaie",
-    "TypeContainer": "Conteneur",
-    "TypeAction": "Action",
-    "TypePath": "Voie",
-    "TypeCapacity": "Capacité"
+  "TYPES" : {
+    "Actor" : {
+      "character" : "Personnage",
+      "encounter": "Rencontre",
+      "vendor": "Vendeur/Trésor",
+      "vehicle": "Véhicule",
+      "marker": "Marqueur"
+    },
+    "Item": {
+      "equipment": "Équipement",
+      "feature": "Trait",
+      "profile": "Profil",
+      "path": "Voie",
+      "capacity": "Capacité"
+    }
   },
   "CO": {
     "sheet": {
       "character": "Fiche de personnage",
+      "encounter": "Fiche de rencontre",
       "item": "Fiche d'objet personnage"
     },
     "notif": {
       "ready": "Système Chroniques Oubliées initialisé",
       "unknownCapacity": "Vous ne connaissez pas cette capacité.",
       "noCapacitySelected": "Aucune capacité sélectionnée",
-      "inventory.empty" : "L'inventaire est vide"
+      "inventory.empty" : "L'inventaire est vide",
+      "modifiers.empty" : "Aucun modificateur.",
+      "conditions.empty" : "Aucune condition.",
+      "resolvers.empty" : "Aucun resolveur.",
+      "profilAlreadyExist": "Vous avez déjà un profil"
     },
     "label": {
       "long": {
         "label" : "Label",
-        "stat": "Caractéristique",
+        "ability": "Caractéristique",
+        "abilities": "Caractéristiques",
         "superior": "Supérieur",
         "base": "Base",
         "specie": "Espèce",
         "bonus": "Bonus",
+        "traits" : "Traits",
         "malus": "Malus",
         "value": "Valeur",
         "mod": "Modificateur",
         "max": "Maximum",
+        "min": "Minimum",
+        "temp" : "Temporaire",
+        "tempmax" : "Maximum Temporaire",
         "modifiers": "Modificateurs",
         "name": "Nom",
         "level": "Niveau",
+        "nc" : "Niveau de Créature",
         "profile": "Profil",
         "capacity": "Capacité",
         "capacities": "Capacités",
+        "combat": "Combat",
+        "attacks": "Attaques",
+        "attack": "Attaque",
         "path": "Voie",
         "paths": "Voies",
         "critrange": "Critique",
@@ -60,33 +69,55 @@
         "effects": "Effets",
         "properties": "Propriétés",
         "hp": "Points de vie",
+        "xp": "Expérience",
+        "movement": "Déplacement",
+        "def": "Défense",
+        "init": "Initiative",
         "hd": "Dé de vie",
         "rp": "Points de récupération",
         "type" : "Type",
         "subtype" : "Sous-type",
         "category" : "Catégorie",
+        "archetype" : "Archétype",
         "family" : "Famille (de profil)",
         "source" : "Source",
         "spellcasting" : "Modificateur pour Attaque Magique",
         "mpFormula": "Formule de calcul pour les Points de Magie",
         "martialCategory" : "Catégorie martiale",
         "martialTraining" : "Formation martiale",
-        "martialTrainings" : "Formations martiales"
+        "martialTrainings" : "Formations martiales",
+        "current" : "Actuel",
+        "formulaAttack": "Formule d'attaque",
+        "formulaDamage": "Formule des dommages",
+        "melee" : "Attaque de contact",
+        "ranged" : "Attaque à distance",
+        "magic" : "Attaque magique",
+        "meters" : "Mètres",
+        "feet" : "Pieds"
       },
       "short": {
         "label" : "Label",
-        "stat": "Carac.",
+        "ability": "Carac.",
+        "abilities": "Caracs",
         "superior": "Sup.",
         "base": "Base",
         "specie": "Espèce",
         "bonus": "Bonus",
+        "traits" : "Traits",
         "malus": "Malus",
         "value": "Val.",
         "mod": "Mod",
-        "max": "Max",
+        "max": "Max.",
+        "min": "Min.",
+        "combat": "Combat",
+        "attacks": "Att.",
+        "attack": "Att.",
+        "temp" : "Temp.",
+        "tempmax" : "Max. Temp.",
         "modifiers": "Mods",
         "name": "Nom",
         "level": "Niv.",
+        "nc" : "NC",
         "profile": "Profil",
         "capacity": "Capacité",
         "capacities": "Capacités",
@@ -99,11 +130,16 @@
         "effects": "FX",
         "properties": "Props",
         "hp": "PV",
+        "xp": "XP",
+        "movement": "Dépl.",
+        "def": "DEF",
+        "init": "Init.",
         "hd": "DV",
         "rp": "PR",
         "type" : "Tpe",
         "subtype" : "Ss-tpe",
         "category" : "Cat.",
+        "archetype" : "Arch.",
         "quantity" : "Qté",
         "family" : "Fam.",
         "source" : "Src.",
@@ -111,8 +147,13 @@
         "spellcasting" : "Mod. pour ATM",
         "martialCategory" : "Cat. martiale",
         "martialTraining" : "Form. martiale",
-        "martialTrainings" : "Form. martiales"
-
+        "martialTrainings" : "Form. martiales",
+        "melee" : "Contact",
+        "ranged" : "Distance",
+        "magic" : "Magique",
+        "current" : "Actuel",
+        "meters" : "m",
+        "feet" : "ft"
       }
     },
     "ui": {
@@ -124,8 +165,10 @@
       "add" : "Ajouter",
       "remove" : "Supprimer",
       "diceType": "Type de dé",
+      "data" : "Données",
       "kh": "Garder le plus haut",
       "kl": "Garder le plus bas",
+      "description": "Description",
       "duration": "Durée",
       "action": "Action",
       "details": "Détails",
@@ -149,7 +192,9 @@
       "img" : "Image",
       "chatFlavor" : "Message chat",
       "activable" : "Activable",
-      "enabled" : "Activé(e)",
+      "enabled" : "Activé(s)",
+      "disabled" : "Désactivé(s)",
+      "passive" : "Passif(s)",
       "visible" : "Visible",
       "conditions" : "Conditions",
       "subject" : "Sujet",
@@ -183,7 +228,20 @@
       "inventory" : "Inventaire",
       "armors" : "Armures",
       "weapons" : "Armes",
-      "shields" : "Boucliers"
+      "shields" : "Boucliers",
+      "miscBonuses" : "Bonus divers",
+      "totalBonus" : "Bonus total",
+      "dr": "RD",
+      "applyDamage": "Appliquer les dégâts",
+      "applyHalfDamage": "Appliquer la moitié des dégâts",
+      "applyDoubleDamage": "Appliquer le double des dégâts",
+      "applyHealing" : "Appliquer les soins",
+      "newAction" : "Nouvelle Action",
+      "capacitiesLearned" : "Capacités acquises",
+      "capacitiesNotLearned" : "Capacités non-acquises",
+      "editYourAbilities" : "Éditez vos Caractéristiques",
+      "buy": "Apprendre",
+      "unbuy": "Ne pas apprendre"
     },
     "properties": {
       "attack": "Attaque",
@@ -241,7 +299,18 @@
       "long": {
         "fortune": "Points de chance",
         "mana": "Points de mana",
-        "recovery": "Points de récupération"
+        "recovery": "Points de récupération",
+        "primary": "Primaire",
+        "secondary": "Secondaire",
+        "tertiary": "Tertiaire"
+      },
+      "medium": {
+        "fortune": "Chance",
+        "mana": "Mana",
+        "recovery": "Récup.",
+        "primary": "Primaire",
+        "secondary": "Secondaire",
+        "tertiary": "Tertiaire"
       },
       "short": {
         "fortune": "PC",
@@ -254,8 +323,11 @@
       "mpFormula": "Points de Magie (formule)"
     },
     "tabs": {
+      "main": "Principal",
+      "notes": "Notes",
+      "data": "Data",
       "bio": "Biographie",
-      "stats": "Caractéristiques",
+      "abilities": "Caractéristiques",
       "actions": "Actions",
       "inventory": "Inventaire",
       "capacities": "Voies & Capacités",
@@ -270,6 +342,8 @@
     },
     "roll": {
       "skillcheck": "Test de compétence",
+      "attackcheck": "Jet d'Attaque",
+      "damagecheck": "Jet de Dommages",
       "critical": "Succès critique",
       "success": "Succès",
       "fumble": "Échec critique",
@@ -315,6 +389,20 @@
         "ranged": "Arme à distance",
         "thrown": "Arme de jet",
         "magical": "Arme magique"
+      }
+    },
+    "encounter" : {
+      "archetype" : {
+        "weak" : "Inférieur",
+        "quick" : "Rapide",
+        "powerful" : "Puissant",
+        "standard" : "Standard"
+      },
+      "category" : {
+        "living": "Vivante",
+        "humanoid": "Humanoïde",
+        "plant": "Végétative",
+        "undead" : "Non-Vivante"
       }
     },
     "feature" : {
@@ -371,6 +459,25 @@
     "BaseDef": "Valeur de défense de base",
     "BaseDefHint": "Valeur de la base de la défense",
     "DebugMode": "Mode Debug",
-    "DebugModeHint": "Affiche certaines valeurs techniques. Utile pour les développeurs exclusivement."
+    "DebugModeHint": "Affiche certaines valeurs techniques. Utile pour les développeurs exclusivement.",
+    "VarInit": {
+      "name": "Utiliser la règle de l'initiative variable",
+      "hint": "Le résultat d’un d6 explosif est ajouté à l'initiative : ajout et relance sur 6."
+    },
+    "DisplayDifficulty": {
+      "name": "Afficher la difficulté",
+      "hint": "Active l'affichage de la difficulté sur les jets de compétences/attributs et d'armes.",
+      "none": "Ne pas utiliser ni afficher la difficulté",
+      "all": "Utiliser la difficulté et l'afficher pour tout le monde",
+      "gm": "Utiliser la difficulté et l'afficher uniquement au MJ"
+    },
+    "UseComboRolls": {
+      "name": "Activer les jets combinés attaque et dommages",
+      "hint": "Permet de lancer les jets d'attaque et de dommages simultanément."
+    },
+    "DisplayChatDamageButtonsToAll": {
+      "name": "Afficher les boutons de dommages",
+      "hint": "Affiche les boutons d'application des dommages dans les messages de chat à tout le monde."
+    }
   }
 }

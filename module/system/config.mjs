@@ -11,6 +11,28 @@ CO.ASCII = `
  //******  //*******        
   //////    ///////   `;
 
+CO.itemIcons = {
+  "equipment": "icons/svg/item-bag.svg",
+  "capacity": "icons/svg/combat.svg",
+  "feature": "icons/svg/invisible.svg",
+  "profile": "icons/svg/upgrade.svg",
+  "path": "icons/svg/upgrade.svg"
+}
+
+CO.actorIcons = {
+  "character": "icons/svg/mystery-man.svg",
+  "encounter": "icons/svg/eye.svg"
+}
+
+CO.abilities = {
+  str: "CO.abilities.long.str",
+  dex: "CO.abilities.long.dex",
+  con: "CO.abilities.long.con",
+  int: "CO.abilities.long.int",
+  wis: "CO.abilities.long.wis",
+  cha: "CO.abilities.long.cha"
+};
+
 CO.modifier = {
   type: {
     equipment: "CO.modifier.type.equipment",
@@ -109,5 +131,27 @@ CO.profile = {
   family: {
     enabled: false,
     values: [],
+  },
+};
+
+CO.encounter = {
+  archetypes : {
+    weak : "CO.encounter.archetype.weak",
+    quick : "CO.encounter.archetype.quick",
+    powerful : "CO.encounter.archetype.powerful",
+    standard : "CO.encounter.archetype.standard"
+  },
+  categories : {
+    living: "CO.encounter.category.living",
+    humanoid: "CO.encounter.category.humanoid",
+    plant: "CO.encounter.category.plant",
+    undead : "CO.encounter.category.undead"
+  },
+  sizes : {
+    tiny: "CO.size.tiny",
+    small: "CO.size.small",
+    medium: "CO.size.medium",
+    large: "CO.size.large",
+    huge: "CO.size.huge"
   },
 };

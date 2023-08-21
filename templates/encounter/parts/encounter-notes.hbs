@@ -1,0 +1,20 @@
+<div class="notes-section public-notes">
+    <label class="details-label">Public Notes</label>
+    <div class="notes-text">
+        {{editor system.details.notes.public target="system.details.notes.public" button=true owner=owner editable=editable}}
+    </div>
+</div>
+<div class="notes-section private-notes">
+    <label class="details-label">Private Notes</label>
+    <div class="notes-text">
+        {{editor system.details.notes.private target="system.details.notes.private" button=true owner=owner editable=editable}}
+    </div>
+</div>
+<div class="source section-container headerless">
+    <div class="section-body flexrow">
+        <label>Source:</label>
+        <input class="source-input" name="system.details.source.value" type="text" value="Pathfinder Bestiary" placeholder="Book">
+        <label>Author:</label>
+        <input name="system.details.source.author" type="text" value="" placeholder="Author">
+    </div>
+</div>

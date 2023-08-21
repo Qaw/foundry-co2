@@ -1,18 +1,21 @@
 import { ITEM_TYPE } from "../system/constants.mjs";
-import { Action } from "../system/actions.mjs";
-import { Condition } from "../system/conditions.mjs";
+import { Action } from "../models/action/action.mjs";
+import { Condition } from "../models/action/condition.mjs";
 /**
  * Extend the base Item entity
  * @extends {Item}
  */
 export class CoItem extends Item {
   constructor(...args) {
+    let data = args[0];
+    if (!data.img && game.co.config.itemIcons[data.type]) data.img = game.co.config.itemIcons[data.type];
     super(...args);
   }
 
+
   /** @override */
   prepareDerivedData() {
-    this.system.slug = this.name.slugify({ strict: true });
+    this.system.common.slug = this.name.slugify({ strict: true });
   }
 
   //#region accesseurs
@@ -108,15 +111,7 @@ export class CoItem extends Item {
    * @returns Basic info for a capacity : uuid, name, img, description
    */
   get infos() {
-    if (this.type === ITEM_TYPE.CAPACITY) {
-      return {
-        uuid: this.uuid,
-        name: this.name,
-        img: this.img,
-        description: this.system.description.value,
-      };
-    }
-    if (this.type === ITEM_TYPE.PATH) {
+    if (this.type === ITEM_TYPE.CAPACITY || this.type === ITEM_TYPE.PATH) {
       return {
         uuid: this.uuid,
         name: this.name,
@@ -224,7 +219,8 @@ export class CoItem extends Item {
     if ((this.type !== ITEM_TYPE.CAPACITY && this.type !== ITEM_TYPE.EQUIPMENT) || !this.actor) return;
     let actions = this.actions;
     for (const action of actions) {
-      let act = new Action(action.source, action.indice, action.type, action.img, action.label, action.chatFlavor, action.properties.visible, action.properties.activable, action.properties.enabled, action.properties.temporary, action.conditions, action.modifiers, action.resolvers);
+      let act = new Action(action);
+      // let act = new Action(action.source, action.indice, action.type, action.img, action.label, action.chatFlavor, action.properties.visible, action.properties.activable, action.properties.enabled, action.properties.temporary, action.conditions, action.modifiers, action.resolvers);
       // action.properties.visible = !action.properties.visible;      
       // Si c'est une action non activable, l'activer automatiquement
       if (!action.properties.activable) {

@@ -1,7 +1,10 @@
-<h4 class="form-header"><a class="resolvers-toggle">{{localize "CO.ui.resolvers"}}</a></h4>
-<div class="resolvers-container">
+<h4 class="form-header resolvers flexrow">
+    <a class="resolvers-toggle section-toggle flex1">{{localize "CO.ui.resolvers"}}</a>
+    <a class="resolver-add flex0" title="{{localize "CO.ui.add"}}"><i class="fas fa-add"></i></a>
+</h4>
+<div class="resolvers-container foldable">
     {{#if action.resolvers}}
-        <div class="flexrow">
+        <div class="flexrow strong">
             <div class="form-fields flex1">Type</div>
             <div class="form-fields flex1">Skill formula</div>
             <div class="form-fields flex1">Skill crit</div>
@@ -15,15 +18,12 @@
                 <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.crit" type="text" value="{{r.skill.crit}}" data-dtype="Number" /></div>
                 <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.difficulty" type="text" value="{{r.skill.difficulty}}" data-dtype="Number" /></div>
                 <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.dmg.formula.0.part" type="text" value="{{r.dmg.formula.0.part}}" data-dtype="String" /></div>
-                <div class="form-fields flex0"><span class="resolver-delete"><i class="fas fa-trash"></i></span></div>
+                <div class="form-fields flex0"><a class="resolver-delete"><i class="fas fa-trash"></i></a></div>
             </div>
         {{/each}}
     {{else}}
         <div class="flexrow">
-            <span>Aucune résolution.</span>
+            <span class="empty" style="padding:3px;">{{localize "CO.notif.resolvers.empty"}}</span>
         </div>
     {{/if}}
-    <div class="flexrow">
-        <a class="resolver-add" title="{{localize "CO.ui.add"}}"><i class="fas fa-add"></i></a>
-    </div>
 </div>

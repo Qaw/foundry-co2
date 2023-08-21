@@ -1,26 +1,52 @@
 import {CO} from './system/config.mjs';
-import CoActor from './actor/actor.mjs';
 import CoCharacterSheet from './actor/sheet/character-sheet.mjs';
 import CoItemSheet from './item/sheet/item-sheet.mjs';
-import { preloadHandlebarsTemplates } from './ui/templates.mjs';
-import { CoItem } from './item/item.mjs';
-import { registerHandlebarsHelpers } from './ui/helpers.mjs';
-import {Log} from "./utils/log.mjs";
-import { Modifier } from './system/modifiers.mjs';
-import { registerSystemSettings } from './system/settings.js';
+import {preloadHandlebarsTemplates} from './ui/templates.mjs';
+import {CoItem} from './item/item.mjs';
+import {registerHandlebarsHelpers} from './ui/helpers.mjs';
+import { Modifier } from './models/action/modifiers.mjs';
+import {registerSystemSettings} from './system/settings.js';
+import CoEncounterSheet from "./actor/sheet/encounter-sheet.mjs";
+
+import { CharacterData } from './models/actor/character.mjs';
+import {CoActorProxy} from './actor/proxy.mjs';
+import registerHooks from './system/hooks.mjs';
+import {EncounterData} from "./models/actor/encounter.mjs";
+import { PathData } from './models/item/path.mjs';
+import { CapacityData } from './models/item/capacity.mjs';
+import { FeatureData } from './models/item/feature.mjs';
+import { ProfileData } from './models/item/profile.mjs';
+import { EquipmentData } from './models/item/equipment.mjs';
 
 Hooks.once("init", async function () {
 
-    Log.debug("Initializing...");
-
-    // Configuration
-    CONFIG.Actor.documentClass = CoActor;
-    CONFIG.Item.documentClass = CoItem;
-
     game.co = {
+        log : function(message) {
+            return ('Chroniques Oubliées | ' + message);
+        },
         Modifier: Modifier,
         config: CO
     }
+
+    console.debug(game.co.log("Initializing..."));
+
+    // Hook up system data types
+    CONFIG.Actor.dataModels = {
+        character: CharacterData,
+        encounter: EncounterData
+    };
+    
+    CONFIG.Item.dataModels = {
+         capacity : CapacityData,
+         equipment : EquipmentData,
+         feature : FeatureData,
+         profile : ProfileData,
+         path : PathData
+    };
+
+    CONFIG.Actor.documentClass = CoActorProxy;
+    CONFIG.Item.documentClass = CoItem;
+
 
     // Unregister legacy sheets
     Actors.unregisterSheet("core", ActorSheet);
@@ -28,7 +54,10 @@ Hooks.once("init", async function () {
 
     // Register application sheets
     Actors.registerSheet("co", CoCharacterSheet, {
-        types: ["character", "encounter", "vendor", "vehicle", "marker"], makeDefault: true, label: "CO.sheet.character"
+        types: ["character", "vendor", "vehicle", "marker"], makeDefault: true, label: "CO.sheet.character"
+    });
+    Actors.registerSheet("co", CoEncounterSheet, {
+        types: ["encounter"], makeDefault: true, label: "CO.sheet.encounter"
     });
 
     Items.registerSheet("co", CoItemSheet, {
@@ -44,6 +73,9 @@ Hooks.once("init", async function () {
     // Register System Settings
 	registerSystemSettings();
 
+    // Register hooks
+    registerHooks();
+
     // Load Martial Training
     if (!game.co.config.martialTrainingsWeapons) {
         game.co.config.martialTrainingsWeapons = [];
@@ -55,8 +87,21 @@ Hooks.once("init", async function () {
         game.co.config.martialTrainingsShields = [];
     }
 
+    // Initiative
+    if (game.settings.get("co", "useVarInit")) {
+        CONFIG.Combat.initiative = {
+          formula: "1d6x + @combat.init.value + @abilities.wis.value/100",
+          decimals: 2
+        };
+    } else {
+        CONFIG.Combat.initiative = {
+          formula: "@combat.init.value + @abilities.wis.value/100",
+          decimals: 2
+        };
+    }
+
 });
 
 Hooks.once("ready", async function () {   
-    Log.info(game.i18n.localize("CO.notif.ready"));
+    console.info(game.co.log(game.i18n.localize("CO.notif.ready")));
 });

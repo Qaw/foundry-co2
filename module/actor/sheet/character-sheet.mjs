@@ -1,7 +1,6 @@
-import { ITEM_TYPE } from "../../system/constants.mjs";
+import {ITEM_TYPE} from "../../system/constants.mjs";
 import CoBaseActorSheet from "./base-actor-sheet.mjs";
-import { Action } from "../../system/actions.mjs";
-import { Log } from "../../utils/log.mjs";
+import {CoEditAbilitiesDialog} from "../../dialogs/edit-abilities-dialog.mjs";
 
 export default class CoCharacterSheet extends CoBaseActorSheet {
   /** @override */
@@ -11,7 +10,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
       width: 800,
       template: "systems/co/templates/actors/character-sheet.hbs",
       classes: ["co", "sheet", "actor", "character"],
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "stats" }],
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main" }],
     });
   }
 
@@ -19,6 +18,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   getData(options) {
     const context = super.getData(options);
     context.system = this.actor.system;
+    // console.debug(game.co.log(this.actor.system.abilities));
     context.abilities = this.actor.system.abilities;
     context.combat = this.actor.system.combat;
     context.attributes = this.actor.system.attributes;
@@ -26,16 +26,16 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     context.details = this.actor.system.details;
     context.paths = this.actor.paths;
     context.pathGroups = this.actor.pathGroups;
-    context.profile = this.actor.profile;
+    context.profiles = this.actor.profiles;
     context.capacities = this.actor.capacities;
     context.learnedCapacities = this.actor.learnedCapacities;
     context.features = this.actor.features;
     context.actions = this.actor.actions;
     context.visibleActions = this.actor.visibleActions;
-    // context.weapons = this.actor.weapons;
-    // context.armors = this.actor.armors;
-    // context.shields = this.actor.shields;
+    context.visibleActivableActions = this.actor.visibleActivableActions;    
+    context.visibleNonActivableActions = this.actor.visibleNonActivableActions;
     context.inventory = this.actor.inventory;
+    context.unlocked = this.actor.isUnlocked;
     return context;
   }
 
@@ -44,14 +44,33 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     super.activateListeners(html);
     html.find(".section-toggle").click(this._onSectionToggle.bind(this));
     html.find(".item-edit").click(this._onEditItem.bind(this));
+    html.find(".abilities-edit").click(this._onEditAbilities.bind(this));
     html.find(".item-delete").click(this._onDeleteItem.bind(this));
     html.find(".path-delete").click(this._onDeletePath.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
     html.find(".toggle-action").click(this._onUseAction.bind(this));
+    html.find(".attack").click(this._onUseAction.bind(this));
+    html.find(".damage").click(this._onUseAction.bind(this));
     html.find(".capacity-learn").click(this._onLearnedToggle.bind(this));
     html.find(".inventory-equip").click(this._onEquippedToggle.bind(this));
+    html.find(".sheet-change-lock").click(this._onSheetChangelock.bind(this));
   }
 
+  /**
+   * Manage the lock/unlock button on the sheet
+   *
+   * @name _onSheetChangelock
+   * @param {*} event
+   */
+  async _onSheetChangelock(event) {
+    event.preventDefault();
+
+    let flagData = await this.actor.getFlag(game.system.id, "SheetUnlocked");
+    if (flagData) await this.actor.unsetFlag(game.system.id, "SheetUnlocked");
+    else await this.actor.setFlag(game.system.id, "SheetUnlocked", "SheetUnlocked");
+    this.actor.sheet.render(true);
+  }
+  
   /**
    *
    * @param {*} event
@@ -69,16 +88,16 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
    * @param {*} event
    */
   _onUseAction(event) {
-    const element = event.currentTarget;
-    const dataset = element.dataset;
+    const dataset = event.currentTarget.dataset;
     const action = dataset.action;
+    const type = dataset.type;
     const source = dataset.source;
-    const indice = dataset.indice;
+    const indice = dataset.indice
 
-    if (action == "activate") {
-      this.actor.activateAction(true, source, indice);
-    } else if (action == "unactivate") {
-      this.actor.activateAction(false, source, indice);
+    if (action === "activate") {
+      this.actor.activateAction(true, source, indice, type);
+    } else if (action === "unactivate") {
+      this.actor.activateAction(false, source, indice, type);
     }
   }
 
@@ -131,10 +150,22 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     const li = $(event.currentTarget).parents(".item");
     const itemId = li.data("itemId");
     const itemType = li.data("itemType");
-    if (itemType == "path") this._onDeletePath(event);
-    else if (itemType == "capacity") this._onDeleteCapacity(event);
-    else if (itemType == "feature") this._onDeleteFeature(event);
-    else this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+    switch (itemType) {
+      case "path":
+        this._onDeletePath(event);
+        break;
+      case "capacity":
+        this._onDeleteCapacity(event);
+        break;
+      case "feature":
+        this._onDeleteFeature(event);
+        break;
+      case "profile":
+        this._onDeleteProfile(event);
+        break;
+      default:
+        this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+    }
   }
 
   /**
@@ -151,13 +182,27 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
+   * @description Delete the selected profile
+   * @param event
+   * @private
+   */
+  async _onDeleteProfile(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).parents(".item");
+    const profileId = li.data("itemId");
+
+    this.actor.deleteProfile(profileId);
+  }  
+
+  /**
    * @description Delete the selected path
    * @param event
    * @private
    */
   async _onDeletePath(event) {
     event.preventDefault();
-    const li = $(event.currentTarget).parents(".item");
+
+    const li = $(event.currentTarget).closest(".item");
     const pathId = li.data("itemId");
 
     this.actor.deletePath(pathId);
@@ -219,57 +264,29 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
 
     switch (item.type) {
       case ITEM_TYPE.EQUIPMENT:
-        return this._onDropEquipmentItem(item);
+        return this.actor.addEquipment(item);
       case ITEM_TYPE.FEATURE:
-        return this._onDropFeatureItem(item);
+        return this.actor.addFeature(item);
       case ITEM_TYPE.PROFILE:
-        return this._onDropProfileItem(item);
+        if (this.actor.profiles.length > 0) {
+          ui.notifications.warn(game.i18n.localize("CO.notif.profilAlreadyExist"));
+          break;
+        }        
+        return this.actor.addProfile(item);
       case ITEM_TYPE.PATH:
-        return this._onDropPathItem(item);
+        return this.actor.addPath(item);
       case ITEM_TYPE.CAPACITY:
-        return this._onDropCapacityItem(item);
+        return this.actor.addCapacity(item, null);
       default:
         return false;
     }
   }
 
   /**
-   * @description Handle the drop of an Equipment on the actor
-   * @param {*} item the Equipment dropped
-   */    
-  async _onDropEquipmentItem(item) {
-    this.actor.addEquipment(item);
-  }
-
-  /**
-   * @description Handle the drop of a feature on the actor
-   * @param {*} item the Feature dropped
-   */  
-  async _onDropFeatureItem(item) {
-    this.actor.addFeature(item);
-  }
-
-  /**
-   * @description Handle the drop of a profile on the actor
-   * @param {*} item the Profile dropped
+   * Edit Abilities event hander
    */
-  async _onDropProfileItem(item) {
-    this.actor.addProfile(item);
-  }
-
-  /**
-   * @description Handle the drop of a path on the actor
-   * @param {*} item the Path dropped
-   */
-  async _onDropPathItem(item) {
-    this.actor.addPath(item);
-  }
-
-  /**
-   * @description Handle the drop of a single capacity on the actor
-   * @param {*} item the Capacity dropped
-   */
-  async _onDropCapacityItem(item) {
-    this.actor.addCapacity(item, null);
+  async _onEditAbilities(event) {
+    event.preventDefault();
+    return new CoEditAbilitiesDialog(this.actor).render(true);
   }
 }

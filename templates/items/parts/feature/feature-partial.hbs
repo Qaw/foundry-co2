@@ -1,5 +1,5 @@
 {{!log "Chroniques Oubliées | feature" this}}
-<h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.details"}}</a></h3>
+<!--<h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.details"}}</a></h3>-->
 <div class="details-form foldable">
     {{#if debugMode}}
         <div class="form-group">
@@ -11,7 +11,7 @@
         <div class="form-group">
             <label>{{localize "CO.ui.key"}}</label>
             <div class="form-fields">
-                <input class="field-value" name="system.slug" type="text" value="{{item.system.slug}}" placeholder="{{ localize "COF.ui.key" }}" data-dtype="String">
+                <input class="field-value" name="system.common.slug" type="text" value="{{item.system.common.slug}}" placeholder="{{ localize "COF.ui.key" }}" data-dtype="String">
             </div>
         </div>
     {{/if}}

@@ -1,0 +1,191 @@
+<div class="ability-scores section-container">
+    <div class="section-header">
+        <h4>{{localize "CO.label.long.modifiers"}}</h4>
+    </div>
+    <!-- ABILITY MODIFIERS -->
+    <div class="section-body">
+        <div class="list">
+        {{#each abilities as |ability id|}}
+            <div class="labelled-field" data-attribute="str">
+                <label class="rollable"><a>{{localize (concat "CO.abilities.short." id)}} {{#if ability.superior}}*{{/if}}</a></label>
+                <input class="modifier" type="text" data-property="system.abilities.{{id}}.mod" value="{{numberFormat ability.mod decimals=0 sign=true}}" data-dtype="Number" placeholder="0">
+            </div>
+        {{/each}}
+        </div>
+    </div>
+</div>
+
+<div class="attacks section-container">
+    <div class="section-header">
+        <h4>{{localize "CO.label.long.attacks"}}</h4>
+        <div class="attacks-controls controls">
+            <a class="attack-add item-create" title="Add Attack" data-type="attack" data-action-type="melee"><i class="fas fa-plus"></i></a>
+<!--            <a class="attack-add item-create" data-type="attack" data-action-type="melee"><i class="fas fa-plus"></i> {{!localize "CO.label.short.melee"}}</a>-->
+<!--            <a class="attack-add item-create" data-type="attack" data-action-type="ranged"><i class="fas fa-plus"></i> {{!localize "CO.label.short.ranged"}}</a>-->
+<!--            <a class="attack-add item-create" data-type="attack" data-action-type="magic"><i class="fas fa-plus"></i> {{!localize "CO.label.short.magic"}}</a>-->
+        </div>
+    </div>
+    <div class="section-body">
+        <ol class="attacks-list strikes-list item-list">
+            <li class="item attack flexrow" data-action-index="0" data-item-type="melee" data-item-id="C3vgtExLgNdN7GHz" draggable="true">
+                <div class="attack-header">
+                    <h4 class="attack-name tags">
+                                            <span>
+                                                <strong>{{localize "CO.label.short.melee"}}</strong>
+                                                <span class="activity-icon">
+                                                    <i class="fas fa-fw fa-sword"></i>
+                                                </span>
+                                                Vorpal Cold Iron Silver Longsword
+                                            </span>
+                    </h4>
+                    <div class="attack-controls controls">
+                        <a class="item-chat chat" title="Send to chat"><i class="fas fa-fw fa-comment-alt"></i></a>
+                        <a class="item-edit edit" title="Edit"><i class="fas fa-fw fa-edit"></i></a>
+                        <a class="item-delete delete" title="Remove"><i class="fas fa-fw fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="attack-body">
+                    <div class="flexrow">
+                        <div class="attacks sub-section">
+                            <button type="button" class="btn attack-button" title="" data-action="strike-attack" data-variant-index="0">Strike +40</button>
+                        </div>
+                        <div class="damage sub-section">
+                            <button type="button" class="damage-button tooltipstered" data-action="strike-damage">(4d8 + 17) slashing + 1d6 evil</button>
+                            <button type="button" class="critical-button tooltipstered" data-action="strike-critical">Critical</button>
+                        </div>
+                    </div>
+                    <div class="attack-detail sub-section expandable expanded">
+                        <div class="attack-description"></div>
+                    </div>
+                </div>
+            </li>
+            <li class="item attack flexrow" data-action-index="1" data-item-type="melee" data-item-id="K33vakNPDetkh1iP" draggable="true">
+                <div class="attack-header">
+                    <h4 class="attack-name tags">
+                                            <span>
+                                                <strong>{{localize "CO.label.short.ranged"}}</strong>
+                                                <span class="activity-icon"><i class="fas fa-fw fa-bow-arrow"></i></span>
+                                                Cold Iron Silver Flame Whip
+                                            </span>
+                    </h4>
+                    <div class="attack-controls controls">
+                        <a class="item-chat chat" title="Send to chat"><i class="fas fa-fw fa-comment-alt"></i></a>
+                        <a class="item-edit edit" title="Edit"><i class="fas fa-fw fa-edit"></i></a>
+                        <a class="item-delete delete" title="Remove"><i class="fas fa-fw fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="attack-body">
+                    <div class="flexrow">
+                        <div class="attacks sub-section">
+                            <button type="button" class="btn attack-button" title="" data-action="strike-attack" data-variant-index="0">Strike +40</button>
+                        </div>
+                        <div class="damage sub-section">
+                            <button type="button" class="damage-button tooltipstered" data-action="strike-damage">(4d6 + 17) fire + 1d6 evil</button>
+                            <button type="button" class="critical-button tooltipstered" data-action="strike-critical">Critical</button>
+                        </div>
+                    </div>
+                    <div class="attack-detail sub-section expandable expanded">
+                        <div class="attack-description">
+
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="item attack flexrow" data-action-index="1" data-item-type="melee" data-item-id="K33vakNPDetkh1iP" draggable="true">
+                <div class="attack-header">
+                    <h4 class="attack-name tags">
+                                            <span>
+                                                <strong>{{localize "CO.label.short.magic"}}</strong>
+                                                <span class="activity-icon">
+                                                    <i class="fas fa-fw fa-wand-magic-sparkles"></i>
+                                                </span>
+                                                Telekinetic Projectile
+                                            </span>
+                    </h4>
+                    <div class="attack-controls controls">
+                        <a class="item-chat chat" title="Send to chat"><i class="fas fa-fw fa-comment-alt"></i></a>
+                        <a class="item-edit edit" title="Edit"><i class="fas fa-fw fa-edit"></i></a>
+                        <a class="item-delete delete" title="Remove"><i class="fas fa-fw fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="attack-body">
+                    <div class="flexrow">
+                        <div class="attacks sub-section">
+                            <button type="button" class="btn attack-button" title="" data-action="strike-attack" data-variant-index="0">Strike +40</button>
+                        </div>
+                        <div class="damage sub-section">
+                            <button type="button" class="damage-button tooltipstered" data-action="strike-damage">(4d6 + 17) fire + 1d6 evil</button>
+                            <button type="button" class="critical-button tooltipstered" data-action="strike-critical">Critical</button>
+                        </div>
+                    </div>
+                    <div class="attack-detail sub-section expandable expanded">
+                        <div class="attack-description">
+
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="actions section-container">
+    <div class="section-header">
+        <h4>{{localize "CO.label.long.capacities"}}</h4>
+        <div class="actions-controls controls">
+            <a class="action-add item-create" title="Add Action" data-type="action" data-action-type="action"><i class="fas fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="section-body">
+        <ol class="actions-list item-list">
+            <li class="item action flexrow" data-action="UupBqSBXKanyWoA6" data-item-name="Dispelling Strike" data-item-id="UupBqSBXKanyWoA6" draggable="true">
+                <div class="action-header">
+                    <div class="action-name rollable">
+                        <h4><a>Dispelling Strike <span class="activity-icon"><i class="fa-solid fa-share-all fa-flip-vertical"></i></span></a></h4>
+                    </div>
+                    <div class="action-controls controls">
+                        <a class="item-chat chat" title="Send to chat"><i class="fas fa-fw fa-comment-alt"></i></a>
+                        <a class="item-edit edit" title="Edit"><i class="fas fa-fw fa-edit"></i></a>
+                        <a class="item-delete delete" title="Remove"><i class="fas fa-fw fa-trash"></i></a>
+                    </div>
+                </div>
+            </li>
+            <li class="item action flexrow" data-action="R7wSakgDTKzgP8Eo" data-item-name="Lifedrinker" data-item-id="R7wSakgDTKzgP8Eo" draggable="true">
+                <div class="action-header">
+                    <div class="action-name rollable">
+                        <h4><a>Lifedrinker <span class="activity-icon"><i class="fa-solid fa-share-all fa-flip-vertical"></i></span></a></h4>
+                    </div>
+                    <div class="action-controls controls">
+                        <a class="item-chat chat" title="Send to chat"><i class="fas fa-fw fa-comment-alt"></i></a>
+                        <a class="item-edit edit" title="Edit"><i class="fas fa-fw fa-edit"></i></a>
+                        <a class="item-delete delete" title="Remove"><i class="fas fa-fw fa-trash"></i></a>
+                    </div>
+                </div>
+            </li>
+            <li class="item action flexrow" data-action="MwNIK1P57HlN0q90" data-item-name="Improved Grab" data-item-id="MwNIK1P57HlN0q90" draggable="true">
+                <div class="action-header">
+                    <div class="action-name rollable">
+                        <h4><a>Improved Grab <span class="activity-icon"><i class="fa-solid fa-share-all fa-flip-vertical"></i></span></a></h4>
+                    </div>
+                    <div class="action-controls controls">
+                        <a class="item-chat chat" title="Send to chat"><i class="fas fa-fw fa-comment-alt"></i></a>
+                        <a class="item-edit edit" title="Edit"><i class="fas fa-fw fa-edit"></i></a>
+                        <a class="item-delete delete" title="Remove"><i class="fas fa-fw fa-trash"></i></a>
+                    </div>
+                </div>
+            </li>
+            <li class="item action flexrow" data-action="AcetPc7srVrIa4vs" data-item-name="Attack of Opportunity (Special)" data-item-id="AcetPc7srVrIa4vs" draggable="true">
+                <div class="action-header">
+                    <div class="action-name rollable">
+                        <h4><a>Attack of Opportunity (Special) <span class="activity-icon"><i class="fa-solid fa-share-all fa-flip-vertical"></i></span></a></h4>
+                    </div>
+                    <div class="action-controls controls">
+                        <a class="item-chat chat" title="Send to chat"><i class="fas fa-fw fa-comment-alt"></i></a>
+                        <a class="item-edit edit" title="Edit"><i class="fas fa-fw fa-edit"></i></a>
+                        <a class="item-delete delete" title="Remove"><i class="fas fa-fw fa-trash"></i></a>
+                    </div>
+                </div>
+            </li>
+        </ol>
+    </div>
+</div>

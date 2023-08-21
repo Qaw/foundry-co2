@@ -1,17 +1,7 @@
-import { Log } from "../utils/log.mjs";
-
 export class Utils {
   static shortcutResolve(shortcut) {
     return shortcut.replace("@", "system.");
   }
-
-  static getModFromValue = function (value) {
-    return value < 4 ? -4 : Math.floor(value / 2) - 5;
-  };
-
-  static getValueFromMod = function (mod) {
-    return mod * 2 + 10;
-  };
 
   /**
    * @name getTooltip
@@ -39,44 +29,86 @@ export class Utils {
    */
   static evaluate(actor, formula, source, toEvaluate = false) {
     if (formula === "") return 0;
-    if (formula.includes("@")) return this._evaluateCustom(actor, formula, source, toEvaluate);
+    if (formula.includes("@")) return this._evaluateCustom(actor, formula, source, toEvaluate, false);
     const resultat = parseInt(formula);
     if (isNaN(resultat)) return 0;
     return resultat;
   }
+
+    /**
+   * @description For an actor, evaluate the formula
+   * @param {*} actor
+   * @param {*} formula
+   * @param {*} source The item source's UUID : used for the #rank
+   * @returns
+   */
+    static evaluateWithDice(actor, formula, source) {
+      if (formula === "") return "";
+      if (formula.includes("@")) return this._evaluateCustom(actor, formula, source, true, true);
+      return formula;      
+    }
 
   /**
    * @description Evaluate a custom value
    * Shortcuts
    * @str @dex @con @int @wis @cha @mel @ran @mag @lvl @rank[+1,0,+1,0,0]
    * @param {*} actor
-   * @param {} formula
-   * @param {} source
-   * @param {Boolean} eval : true to evaluate the replaced formula
+   * @param {} formula 
+   * @param {} source The item source's UUID : used for the #rank
+   * @param {Boolean} toEvaluate : true to evaluate the replaced formula
+   * @param {Boolean} withDice : true if there is dice in the formula ; if yes toEvaluate should be false
    * @returns {int} the modifier's value
    */
-  static _evaluateCustom(actor, formula, source, toEvaluate) {
-    Log.debug("Custom Formula : ", formula);
+  static _evaluateCustom(actor, formula, source, toEvaluate, withDice) {
+    console.debug(game.co.log("Custom Formula : ", formula));
 
     let replacedFormula = formula;
+    const DSL = {
+      "@for" : "system.abilities.str.mod",
+      "@str" : "system.abilities.str.mod",
+      "@dex" : "system.abilities.dex.mod",
+      "@con" : "system.abilities.con.mod",
+      "@int" : "system.abilities.int.mod",
+      "@sag" : "system.abilities.wis.mod",
+      "@wis" : "system.abilities.wis.mod",
+      "@cha" : "system.abilities.cha.mod",
+      "@atc" : "system.combat.melee.value",
+      "@melee" : "system.combat.melee.value",
+      "@atd" : "system.combat.ranged.value",
+      "@ranged" : "system.combat.ranged.value",
+      "@atm" : "system.combat.magic.value",
+      "@magic" : "system.combat.magic.value",
+      "@def" : "system.combat.def.value",
+      "@niv" : "system.attributes.level.base",
+      "@lvl" : "system.attributes.level.base"
+    }
 
     // Shortcuts
-    if (replacedFormula.includes("@for")) replacedFormula = replacedFormula.replace("@for", actor.system.abilities.str.mod);
-    if (replacedFormula.includes("@dex")) replacedFormula = replacedFormula.replace("@dex", actor.system.abilities.dex.mod);
-    if (replacedFormula.includes("@con")) replacedFormula = replacedFormula.replace("@con", actor.system.abilities.con.mod);
-    if (replacedFormula.includes("@int")) replacedFormula = replacedFormula.replace("@int", actor.system.abilities.int.mod);
-    if (replacedFormula.includes("@sag")) replacedFormula = replacedFormula.replace("@sag", actor.system.abilities.wis.mod);
-    if (replacedFormula.includes("@cha")) replacedFormula = replacedFormula.replace("@cha", actor.system.abilities.cha.mod);
-
-    if (replacedFormula.includes("@atc")) replacedFormula = replacedFormula.replace("@atc", actor.system.combat.melee.mod);
-    if (replacedFormula.includes("@atd")) replacedFormula = replacedFormula.replace("@atd", actor.system.combat.ranged.mod);
-    if (replacedFormula.includes("@atm")) replacedFormula = replacedFormula.replace("@atm", actor.system.combat.magic.mod);
-    if (replacedFormula.includes("@def")) replacedFormula = replacedFormula.replace("@def", actor.system.combat.def.value);
-
-    if (replacedFormula.includes("@niv")) replacedFormula = replacedFormula.replace("@niv", actor.system.attributes.level.value);
+    Object.keys(DSL).forEach(shortcut => {
+      if(replacedFormula.includes(shortcut)) replacedFormula = replacedFormula.replace(shortcut, foundry.utils.getProperty(actor, DSL[shortcut]));
+    });
 
     if (replacedFormula.includes("@rang")) {
       let startRank = replacedFormula.substring(replacedFormula.indexOf("@rang"));
+      let extract = startRank.substring(replacedFormula.indexOf("[") + 1, replacedFormula.indexOf("]"));
+      let ranks = extract.split(",");
+      let itemSource = actor.items.get(source);
+      const pathId = itemSource.system.path;      
+      const path = actor.items.get(pathId);
+      const rank = path.system.rank;
+      let total = 0;
+      if (rank) {
+        for (let index = 0; index < rank; index++) {
+          const element = ranks[index];
+          let val = parseInt(element);
+          if (val) total += val;
+        }
+      }
+      replacedFormula = replacedFormula.replace("@rang[" + extract + "]", total);
+    }
+
+    if (replacedFormula.includes("@rank")) {
+      let startRank = replacedFormula.substring(replacedFormula.indexOf("@rank"));
       let extract = startRank.substring(replacedFormula.indexOf("[") + 1, replacedFormula.indexOf("]"));
       let ranks = extract.split(",");
       let itemSource = actor.items.get(source);
@@ -91,7 +123,7 @@ export class Utils {
           if (val) total += val;
         }
       }
-      replacedFormula = replacedFormula.replace("@rang[" + extract + "]", total);
+      replacedFormula = replacedFormula.replace("@rank[" + extract + "]", total);
     }
 
     // Remaining formula
@@ -99,9 +131,43 @@ export class Utils {
       replacedFormula = replacedFormula.replace("@", "actor.system.");
     }
 
-    Log.debug("Custom Formula evaluated : ", replacedFormula);
+    console.debug(game.co.log("Custom Formula evaluated : ", replacedFormula));
 
-    if (toEvaluate) return eval(replacedFormula);
-    else return replacedFormula;
+    if (withDice) return replacedFormula;
+    else {
+      if (toEvaluate) return eval(replacedFormula);
+      else return replacedFormula;
+    }
+  }
+
+  replacedFormula = _processFormulaKeyword("@rang", replacedFormula, source);
+  replacedFormula = _processFormulaKeyword("@rank", replacedFormula, source);
+
+  _processFormulaKeyword(keyword, replacedFormula, source) {
+    if (replacedFormula.includes(keyword)) {
+        let keywordIndex = replacedFormula.indexOf(keyword);
+        let startRank = replacedFormula.substring(keywordIndex);
+        let openBracketIndex = replacedFormula.indexOf("[", keywordIndex) + 1;
+        let closeBracketIndex = replacedFormula.indexOf("]", keywordIndex);
+        let extract = startRank.substring(openBracketIndex, closeBracketIndex);
+        
+        let ranks = extract.split(",");
+        let itemSource = actor.items.get(source);
+        const pathId = itemSource.system.path;
+        const path = actor.items.get(pathId);
+        const rank = path.system.rank;
+        let total = 0;
+        
+        if (rank) {
+            for (let index = 0; index < rank; index++) {
+                const element = ranks[index];
+                let val = parseInt(element, 10);
+                if (val) total += val;
+            }
+        }
+        
+        replacedFormula = replacedFormula.replace(keyword + "[" + extract + "]", total);
+    }
+    return replacedFormula;
   }
 }
