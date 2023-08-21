@@ -74,7 +74,7 @@ export class CoItem extends Item {
   }
 
   get tags() {
-    return this.system.tags;
+    return this.system.common.tags;
   }
 
   /**
@@ -116,7 +116,7 @@ export class CoItem extends Item {
         uuid: this.uuid,
         name: this.name,
         img: this.img,
-        description: this.system.description.value,
+        description: this.system.common.description.value,
       };
     }
   }
