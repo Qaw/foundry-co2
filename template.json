@@ -15,93 +15,14 @@
   },
   "Item": {
     "types": ["capacity", "equipment", "feature", "profile", "path"],
-    "templates": {
-      "common": {
-        "description": {
-          "value": "",
-          "chat": ""
-        },
-        "source": "",
-        "origin": "",
-        "slug": "",
-        "tags": []
-      }
-    },
-    "equipment": {
-      "templates": ["common"],
-      "subtype": "",
-      "martialCategory": "",
-      "quantity": {
-        "current" : 1,
-        "max" : 1,
-        "destroyIfEmpty" : true
-      },
-      "charges": {
-        "current" : null,
-        "max" : null,
-        "destroyIfEmpty" : false
-      },
-      "weight": {
-        "value" : 0,
-        "unit" : "kg"
-      },
-      "price": {
-        "value": 0,
-        "currency": ""
-      },
-      "rarity" : "",
-      "equipped": false,
-      "properties" : {
-        "equipable": true,
-        "reloadable": false,
-        "stackable": false
-      },
-      "usage" : {
-        "1h" : false,
-        "2h" : false
-      },
-      "actions": []
-    },
-    "feature" : {
-      "templates": ["common"],
-      "subtype" : "",
-      "modifiers": [],
-      "paths": [],
-      "capacities": []
-    },
-    "profile" : {
-      "templates": ["common"],
-      "modifiers": [],
-      "family": null,
-      "hd": "1d4",
-      "proficiencies": [],
-      "paths": [],
-      "martialTrainingsWeapons": [],
-      "martialTrainingsArmors": [],
-      "martialTrainingsShields": [],
-      "spellcasting": "int",
-      "mpFormula": "@lvl + @int"
-    },
-    "capacity": {
-      "templates": ["common"],
-      "subtype" : "",
-      "learned" : false,
-      "charges": {
-        "current" : null,
-        "max" : null
-      },
-      "properties" : {
-        "spell" : false,
-        "chargeable" : false
-      },
-      "path" : null,
-      "actions": []
-    },
-    "path": {
-      "templates": ["common"],
-      "subtype" : "",
-      "capacities" : [],
-      "rank" : 0
-    }
+    "htmlFields": [
+      "description.value",
+      "description.chat"
+    ],
+    "equipment": {},
+    "feature" : {},
+    "profile" : {},
+    "capacity": {},
+    "path": {}
   }
 }

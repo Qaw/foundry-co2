@@ -12,6 +12,11 @@ import { CharacterData } from './models/actor/character.mjs';
 import {CoActorProxy} from './actor/proxy.mjs';
 import registerHooks from './system/hooks.mjs';
 import {EncounterData} from "./models/actor/encounter.mjs";
+import { PathData } from './models/item/path.mjs';
+import { CapacityData } from './models/item/capacity.mjs';
+import { FeatureData } from './models/item/feature.mjs';
+import { ProfileData } from './models/item/profile.mjs';
+import { EquipmentData } from './models/item/equipment.mjs';
 
 Hooks.once("init", async function () {
 
@@ -30,13 +35,14 @@ Hooks.once("init", async function () {
         character: CharacterData,
         encounter: EncounterData
     };
-    // CONFIG.Item.dataModels = {
-    //     capacity : CapacityData,
-    //     equipment : EquipmentData,
-    //     feature : FeatureData,
-    //     profile : ProfileData,
-    //     path : PathData
-    // };
+    
+    CONFIG.Item.dataModels = {
+         capacity : CapacityData,
+         equipment : EquipmentData,
+         feature : FeatureData,
+         profile : ProfileData,
+         path : PathData
+    };
 
     CONFIG.Actor.documentClass = CoActorProxy;
     CONFIG.Item.documentClass = CoItem;

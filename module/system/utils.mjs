@@ -93,7 +93,7 @@ export class Utils {
       let extract = startRank.substring(replacedFormula.indexOf("[") + 1, replacedFormula.indexOf("]"));
       let ranks = extract.split(",");
       let itemSource = actor.items.get(source);
-      const pathId = itemSource.system.path;
+      const pathId = itemSource.system.path;      
       const path = actor.items.get(pathId);
       const rank = path.system.rank;
       let total = 0;

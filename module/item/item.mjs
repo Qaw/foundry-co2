@@ -15,7 +15,7 @@ export class CoItem extends Item {
 
   /** @override */
   prepareDerivedData() {
-    this.system.slug = this.name.slugify({ strict: true });
+    this.system.common.slug = this.name.slugify({ strict: true });
   }
 
   //#region accesseurs
