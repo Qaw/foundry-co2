@@ -1,3 +1,6 @@
+import { SYSTEM, SYSTEM_ID } from './config/system.mjs';
+globalThis.SYSTEM = SYSTEM;
+
 import {CO} from './system/config.mjs';
 import CoCharacterSheet from './actor/sheet/character-sheet.mjs';
 import CoItemSheet from './item/sheet/item-sheet.mjs';
@@ -18,6 +21,8 @@ import { FeatureData } from './models/item/feature.mjs';
 import { ProfileData } from './models/item/profile.mjs';
 import { EquipmentData } from './models/item/equipment.mjs';
 
+
+
 Hooks.once("init", async function () {
 
     game.co = {
@@ -27,6 +32,8 @@ Hooks.once("init", async function () {
         Modifier: Modifier,
         config: CO
     }
+
+    game.system.CONST = SYSTEM;
 
     console.debug(game.co.log("Initializing..."));
 
@@ -47,20 +54,19 @@ Hooks.once("init", async function () {
     CONFIG.Actor.documentClass = CoActorProxy;
     CONFIG.Item.documentClass = CoItem;
 
-
     // Unregister legacy sheets
     Actors.unregisterSheet("core", ActorSheet);
     Items.unregisterSheet("core", ItemSheet);
 
     // Register application sheets
-    Actors.registerSheet("co", CoCharacterSheet, {
+    Actors.registerSheet(SYSTEM_ID, CoCharacterSheet, {
         types: ["character", "vendor", "vehicle", "marker"], makeDefault: true, label: "CO.sheet.character"
     });
-    Actors.registerSheet("co", CoEncounterSheet, {
+    Actors.registerSheet(SYSTEM_ID, CoEncounterSheet, {
         types: ["encounter"], makeDefault: true, label: "CO.sheet.encounter"
     });
 
-    Items.registerSheet("co", CoItemSheet, {
+    Items.registerSheet(SYSTEM_ID, CoItemSheet, {
         types: ["equipment", "trait", "profile", "feature", "consumable", "loot", "currency", "container", "action", "path", "capacity"], makeDefault: true, label: "CO.sheet.item"
     });
 

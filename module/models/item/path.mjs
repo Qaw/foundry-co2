@@ -17,8 +17,6 @@ export class PathData extends foundry.abstract.DataModel {
                 initial: 0,
                 integer: true
             })
-
-
         }
     }
 }

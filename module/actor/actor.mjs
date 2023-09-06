@@ -410,7 +410,6 @@ export default class CoActor extends Actor {
    * @description Apprend/désapprend une capacité du personnage
    * Change le champ learned de la capactié
    * Met à jour le rank de la voie correspondante
-   * Met à jour le champ visible de toutes les actions de la capacité
    * @param {*} capacityId
    */
   async toggleCapacityLearned(capacityId) {
