@@ -18,12 +18,7 @@
                         <li class="item flexrow" data-item-id="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
                             <div class="item-name flexrow">
                                 <div class="item-image" style="background-image: url('{{item.img}}')"></div>
-                                <h4><a class="item-control item-edit" title="{{item.type}}">{{item.label}}</a>&nbsp;
-                                    {{#if (eq item.type "melee")}}<i class="fas fa-fw fa-sword"></i>{{/if}}
-                                    {{#if (eq item.type "ranged")}}<i class="fas fa-fw fa-bow-arrow"></i>{{/if}}
-                                    {{#if (eq item.type "spell")}}<i class="fas fa-fw fa-hand-sparkles"></i>{{/if}}
-                                    {{#if (eq item.type "protection")}}<i class="fa-regular fa-fw fa-shield"></i>{{/if}}
-                                    {{#if (eq item.type "heal")}}<i class="fas fa-fw fa-hand-holding-medical"></i>{{/if}}
+                                <h4><a class="item-control item-edit" title="{{item.type}}">{{item.label}}</a>&nbsp; {{{getActionIcon item}}}
                                 </h4>
                             </div>
                             <div class="item-controls-2">
@@ -45,12 +40,7 @@
                         <li class="item flexrow" data-item-id="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
                             <div class="item-name flexrow">
                                 <div class="item-image" style="background-image: url('{{item.img}}')"></div>
-                                <h4><a class="item-control item-edit" title="{{item.type}}">{{item.label}}</a>&nbsp;
-                                    {{#if (eq item.type "melee")}}<i class="fas fa-fw fa-sword"></i>{{/if}}
-                                    {{#if (eq item.type "ranged")}}<i class="fas fa-fw fa-bow-arrow"></i>{{/if}}
-                                    {{#if (eq item.type "spell")}}<i class="fas fa-fw fa-hand-sparkles"></i>{{/if}}
-                                    {{#if (eq item.type "protection")}}<i class="fa-regular fa-fw fa-shield"></i>{{/if}}
-                                    {{#if (eq item.type "heal")}}<i class="fas fa-fw fa-hand-holding-medical"></i>{{/if}}
+                                <h4><a class="item-control item-edit" title="{{item.type}}">{{item.label}}</a>&nbsp; {{{getActionIcon item}}}
                                 </h4>
                             </div>
                             <div class="item-controls-2">
@@ -71,12 +61,7 @@
                     <li class="item flexrow" data-item-id="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
                         <div class="item-name flexrow">
                             <div class="item-image" style="background-image: url('{{item.img}}')"></div>
-                            <h4><a class="item-control item-edit" title="{{item.type}}">{{item.label}}</a>&nbsp;
-                                {{#if (eq item.type "melee")}}<i class="fas fa-fw fa-sword"></i>{{/if}}
-                                {{#if (eq item.type "ranged")}}<i class="fas fa-fw fa-bow-arrow"></i>{{/if}}
-                                {{#if (eq item.type "spell")}}<i class="fas fa-fw fa-hand-sparkles"></i>{{/if}}
-                                {{#if (eq item.type "protection")}}<i class="fa-regular fa-fw fa-shield"></i>{{/if}}
-                                {{#if (eq item.type "heal")}}<i class="fas fa-fw fa-hand-holding-medical"></i>{{/if}}
+                            <h4><a class="item-control item-edit" title="{{item.type}}">{{item.label}}</a>&nbsp; {{{getActionIcon item}}}
                             </h4>
                         </div>
                         <div class="item-controls-2">
