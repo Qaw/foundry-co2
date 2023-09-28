@@ -234,89 +234,95 @@
         {{/if}}
     </div>
     <!-- FP -->
-    <div class="resource-section sidebar-section">
-        <div class="sidebar-section-header" title="{{localize "CO.resources.long.fortune"}}">
-            <div class="sidebar-label">
-                <i class="fas fa-fw fa-clover"></i>
-                <h4>{{localize "CO.resources.medium.fortune"}}</h4>
-                <div class="resource-points">
-                    <input class="current" name="system.resources.fortune.value" value="{{resources.fortune.value}}" type="number" data-dtype="Number" placeholder="0">
-                    <span class="slash">/</span>
-                    <span class="max">{{resources.fortune.max}}</span>
+    {{#if (isEnabled "useFortune")}}
+        <div class="resource-section sidebar-section">
+            <div class="sidebar-section-header" title="{{localize "CO.resources.long.fortune"}}">
+                <div class="sidebar-label">
+                    <i class="fas fa-fw fa-clover"></i>
+                    <h4>{{localize "CO.resources.medium.fortune"}}</h4>
+                    <div class="resource-points">
+                        <input class="current" name="system.resources.fortune.value" value="{{resources.fortune.value}}" type="number" data-dtype="Number" placeholder="0">
+                        <span class="slash">/</span>
+                        <span class="max">{{resources.fortune.max}}</span>
+                    </div>
                 </div>
             </div>
+            {{#if unlocked}}
+                <div class="sidebar-section-content">
+                    <div class="labelled-field">
+                        <label>{{localize "CO.label.long.base"}}</label>
+                        <input class="hp-base" type="number" name="system.resources.fortune.base" value="{{resources.fortune.base}}" data-dtype="Number" placeholder="0">
+                    </div>
+                </div>
+                <div class="sidebar-section-content">
+                    <div class="labelled-field">
+                        <label>{{localize "CO.label.long.bonus"}}</label>
+                        <input class="hp-bonus" type="number" name="system.resources.fortune.bonuses.sheet" value="{{resources.fortune.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                    </div>
+                </div>
+            {{/if}}
         </div>
-        {{#if unlocked}}
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.base"}}</label>
-                    <input class="hp-base" type="number" name="system.resources.fortune.base" value="{{resources.fortune.base}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.bonus"}}</label>
-                    <input class="hp-bonus" type="number" name="system.resources.fortune.bonuses.sheet" value="{{resources.fortune.bonuses.sheet}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-        {{/if}}
-    </div>
+    {{/if}}
     <!-- RP -->
-    <div class="resource-section sidebar-section">
-        <div class="sidebar-section-header" title="{{localize "CO.resources.long.recovery"}}">
-            <div class="sidebar-label">
-                <i class="fas fa-fw fa-heart-pulse"></i>
-                <h4>{{localize "CO.resources.medium.recovery"}}</h4>
-                <div class="resource-points">
-                    <input class="current" name="system.resources.recovery.value" value="{{resources.recovery.value}}" type="number" data-dtype="Number" placeholder="0">
-                    <span class="slash">/</span>
-                    <span class="max">{{resources.recovery.max}}</span>
+    {{#if (isEnabled "useRecovery")}}
+        <div class="resource-section sidebar-section">
+            <div class="sidebar-section-header" title="{{localize "CO.resources.long.recovery"}}">
+                <div class="sidebar-label">
+                    <i class="fas fa-fw fa-heart-pulse"></i>
+                    <h4>{{localize "CO.resources.medium.recovery"}}</h4>
+                    <div class="resource-points">
+                        <input class="current" name="system.resources.recovery.value" value="{{resources.recovery.value}}" type="number" data-dtype="Number" placeholder="0">
+                        <span class="slash">/</span>
+                        <span class="max">{{resources.recovery.max}}</span>
+                    </div>
                 </div>
             </div>
+            {{#if unlocked}}
+                <div class="sidebar-section-content">
+                    <div class="labelled-field">
+                        <label>{{localize "CO.label.long.base"}}</label>
+                        <input class="hp-base" type="number" name="system.resources.recovery.base" value="{{resources.recovery.base}}" data-dtype="Number" placeholder="0">
+                    </div>
+                </div>
+                <div class="sidebar-section-content">
+                    <div class="labelled-field">
+                        <label>{{localize "CO.label.long.bonus"}}</label>
+                        <input class="hp-bonus" type="number" name="system.resources.recovery.bonuses.sheet" value="{{resources.recovery.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                    </div>
+                </div>
+            {{/if}}
         </div>
-        {{#if unlocked}}
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.base"}}</label>
-                    <input class="hp-base" type="number" name="system.resources.recovery.base" value="{{resources.recovery.base}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.bonus"}}</label>
-                    <input class="hp-bonus" type="number" name="system.resources.recovery.bonuses.sheet" value="{{resources.recovery.bonuses.sheet}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-        {{/if}}
-    </div>
+    {{/if}}
     <!-- MP -->
-    <div class="resource-section sidebar-section">
-        <div class="sidebar-section-header" title="{{localize "CO.resources.long.mana"}}">
-            <div class="sidebar-label">
-                <i class="fas fa-fw fa-bolt"></i>
-                <h4>{{localize "CO.resources.medium.mana"}}</h4>
-                <div class="resource-points">
-                    <input class="current" name="system.resources.mana.value" value="{{resources.mana.value}}" type="number" data-dtype="Number" placeholder="0">
-                    <span class="slash">/</span>
-                    <span class="max">{{resources.mana.max}}</span>
+    {{#if (isEnabled "useMana")}}    
+        <div class="resource-section sidebar-section">
+            <div class="sidebar-section-header" title="{{localize "CO.resources.long.mana"}}">
+                <div class="sidebar-label">
+                    <i class="fas fa-fw fa-bolt"></i>
+                    <h4>{{localize "CO.resources.medium.mana"}}</h4>
+                    <div class="resource-points">
+                        <input class="current" name="system.resources.mana.value" value="{{resources.mana.value}}" type="number" data-dtype="Number" placeholder="0">
+                        <span class="slash">/</span>
+                        <span class="max">{{resources.mana.max}}</span>
+                    </div>
                 </div>
             </div>
+            {{#if unlocked}}
+                <div class="sidebar-section-content">
+                    <div class="labelled-field">
+                        <label>{{localize "CO.label.long.base"}}</label>
+                        <input class="hp-base" type="number" name="system.resources.mana.base" value="{{resources.mana.base}}" data-dtype="Number" placeholder="0" readonly>
+                    </div>
+                </div>
+                <div class="sidebar-section-content">
+                    <div class="labelled-field">
+                        <label>{{localize "CO.label.long.bonus"}}</label>
+                        <input class="hp-bonus" type="number" name="system.resources.mana.bonuses.sheet" value="{{resources.mana.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                    </div>
+                </div>
+            {{/if}}
         </div>
-        {{#if unlocked}}
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.base"}}</label>
-                    <input class="hp-base" type="number" name="system.resources.mana.base" value="{{resources.mana.base}}" data-dtype="Number" placeholder="0" readonly>
-                </div>
-            </div>
-            <div class="sidebar-section-content">
-                <div class="labelled-field">
-                    <label>{{localize "CO.label.long.bonus"}}</label>
-                    <input class="hp-bonus" type="number" name="system.resources.mana.bonuses.sheet" value="{{resources.mana.bonuses.sheet}}" data-dtype="Number" placeholder="0">
-                </div>
-            </div>
-        {{/if}}
-    </div>
+    {{/if}}
     <!-- MOVEMENT -->
     <div class="speed-section sidebar-section">
         <div class="sidebar-section-header">

@@ -66,4 +66,9 @@ export const registerHandlebarsHelpers = function () {
         break;
     }
   });
+  Handlebars.registerHelper("isEnabled", function (configKey) {
+    const value = game.settings.get("co", configKey);
+    if (value === false || value === "none") return false;
+    return true;
+  });
 };

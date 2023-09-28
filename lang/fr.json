@@ -478,6 +478,18 @@
     "DisplayChatDamageButtonsToAll": {
       "name": "Afficher les boutons de dommages",
       "hint": "Affiche les boutons d'application des dommages dans les messages de chat à tout le monde."
+    },
+    "UseRecovery": {
+      "name": "Points de Récupération",
+      "hint": "Utiliser la règle optionnelle des Points de Récupération (PR)."
+    },
+    "UseFortune": {
+      "name": "Points de Chance",
+      "hint": "Utiliser la règle optionnelle des Points de Chance (PC)."
+    },
+    "UseMana": {
+      "name": "Points de Mana",
+      "hint": "Utiliser la règle optionnelle des Points de Mana (PM)."
     }
   }
 }
