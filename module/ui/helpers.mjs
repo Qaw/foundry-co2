@@ -39,6 +39,11 @@ export const registerHandlebarsHelpers = function () {
         const item = actor.items.get(source);
         return item.img;
     });
+    Handlebars.registerHelper("getActionImg", function (action, actor, source) {
+		if (action.img !== "icons/svg/d20-highlight.svg") return action.img;
+        const item = actor.items.get(source);
+        return item.img;
+});    
     Handlebars.registerHelper("isActionable", function (itemType) {
         const actionableItemTypes = ["capacity", "equipment"];
         return actionableItemTypes.includes(itemType);

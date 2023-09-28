@@ -82,8 +82,7 @@
                         <li class="item flexrow" draggable="true"
                             {{#if action.properties.temporary}}{{#unless action.properties.enabled}}style="opacity: 60%"{{/unless}} {{/if}}>
                             <div class="item-name flexrow">
-                                <div class="item-image" style="background-image: url('{{getEmbeddedItemImg @root.actor source}}')"></div>
-                                <div class="item-image" style="background-image: url('{{action.img}}')"></div>                                
+                                <div class="item-image" style="background-image: url('{{getActionImg action @root.actor source}}')"></div>
                                 <h4><a class="item-control item-edit">{{getEmbeddedItemName @root.actor source}} : {{action.label}}</a>&nbsp;
                                 {{#if (eq action.type "melee")}}<i class="fas fa-fw fa-sword"></i>{{/if}}
                                 {{#if (eq action.type "ranged")}}<i class="fas fa-fw fa-bow-arrow"></i>{{/if}}

@@ -206,19 +206,19 @@ export default class CoActor extends Actor {
     return this._getModifiersBySubtype(MODIFIER_SUBTYPE.ATTRIBUTE);
   }
 
-  // /**
-  //  * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Skill
-  //  */
-  // get skillModifiers() {
-  //   return this._getModifiersBySubtype(MODIFIER_SUBTYPE.SKILL);
-  // }
-  //
-  // /**
-  //  * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of typeEquipment, Feature, Profile or Capacity with the subtype Resource
-  //  */
-  // get resourceModifiers() {
-  //   return this._getModifiersBySubtype(MODIFIER_SUBTYPE.RESOURCE);
-  // }
+  /**
+   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Skill
+   */
+  get skillModifiers() {
+    return this._getModifiersBySubtype(MODIFIER_SUBTYPE.SKILL);
+  }
+
+  /**
+   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of typeEquipment, Feature, Profile or Capacity with the subtype Resource
+   */
+  get resourceModifiers() {
+    return this._getModifiersBySubtype(MODIFIER_SUBTYPE.RESOURCE);
+  }
 
   get isUnlocked() {
     if (this.getFlag(game.system.id, "SheetUnlocked")) return true;
