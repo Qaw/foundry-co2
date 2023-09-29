@@ -14,11 +14,11 @@
             {{!log (concat "Chroniques Oubliées | " id) ability}}
                 <li class="ability key" data-ability="str">
                     <label class="details-label ability-name">{{localize (concat 'CO.abilities.long.' id)}}</label>
-                    <h2 class="ability-id" title="AbilityValue">
+                    <h2 class="ability-id">
                         {{localize (concat "CO.abilities.short." id)}}
                         {{#if ability.superior}}<i class="fas fa-asterisk"></i>{{/if}}
                     </h2>
-                    <h3 class="ability-mod" title="Modificateur">{{numberFormat ability.mod decimals=0 sign=true}}</h3>
+                    <h3 class="ability-mod rollable" data-rolling="@abilities.{{id}}" data-roll-type="skillcheck">{{numberFormat ability.mod decimals=0 sign=true}}</h3>
                     <div class="ability-score" data-tooltip="{{ability.tooltipValue}}">
                         <div>{{ability.value}}</div>
                     </div>
