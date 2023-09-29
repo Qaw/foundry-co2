@@ -1,13 +1,13 @@
 {{!log "Chroniques Oubliées | character capacities" this}}
 <ol class="features items-container foldable"  data-tab="features">
     <li class="items-container-header flexrow">
-        <h3 class="item-name flexrow">{{localize "CO.ui.capacitiesLearned"}}</h3>
+        <h3 class="item-name flexrow">{{localize "CO.ui.capacitiesOffPaths"}}</h3>
         <div class="item-controls-2">
 <!--            <a class="item-control item-create" data-pack="profiles" data-open="0" title="{{localize "CO.ui.add"}}"><i class="fas fa-plus"></i>&nbsp;{{localize "CO.label.short.add"}}</a>-->
         </div>
     </li>
     <ol class="item-list">
-        {{#each capacities as |capacity id|}}
+        {{#each capacitiesOffPaths as |capacity id|}}
         {{!log "Chroniques Oubliées | capacity" capacity}}
             {{#if capacity.system.learned}}
                 <li class="item flexrow" data-item-id="{{capacity._id}}" data-item-type="capacity" draggable="true">

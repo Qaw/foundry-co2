@@ -89,6 +89,10 @@ export default class CoActor extends Actor {
     return this.items.filter((item) => item.type === ITEM_TYPE.CAPACITY && item.system.learned);
   }
 
+  get capacitiesOffPaths() {
+    return this.items.filter((item) => item.type === ITEM_TYPE.CAPACITY && item.system.path === null)
+  }
+
   get equipments() {
     return this.items.filter((item) => item.type === ITEM_TYPE.EQUIPMENT);
   }
