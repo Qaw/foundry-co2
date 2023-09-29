@@ -84,4 +84,12 @@ export class Modifier {
   updateSource(source) {
       this.source = source;
   }
+
+  async getSourceInfos() {
+    let item = await fromUuid(this.source);
+    if (!item) return;
+    const name = item.name;
+    const description = item.system.common.description.value;
+    return {name, description};
+  }
 }

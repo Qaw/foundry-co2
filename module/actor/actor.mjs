@@ -1,14 +1,6 @@
-import {
-  ATTRIBUTE,
-  COMBAT,
-  EQUIPMENT_SUBTYPE,
-  ITEM_TYPE,
-  MODIFIER_SUBTYPE,
-  MODIFIER_TARGET,
-  MODIFIER_TYPE
-} from "../system/constants.mjs";
+import { ATTRIBUTE, COMBAT, EQUIPMENT_SUBTYPE, ITEM_TYPE, MODIFIER_SUBTYPE, MODIFIER_TARGET, MODIFIER_TYPE } from "../system/constants.mjs";
 import { Action } from "../models/action/action.mjs";
-import {Modifier, Modifiers} from "../models/action/modifiers.mjs";
+import { Modifier, Modifiers } from "../models/action/modifiers.mjs";
 import { Resolver } from "../models/action/resolvers.mjs";
 import { Utils } from "../system/utils.mjs";
 
@@ -72,9 +64,9 @@ export default class CoActor extends Actor {
     let pathGroups = [];
     this.paths.forEach((path) => {
       const capacities = path.system.capacities.map((cid) => this.items.find((i) => i._id === cid));
-      pathGroups.push({        
+      pathGroups.push({
         path: path,
-        items: capacities
+        items: capacities,
       });
     });
     return pathGroups;
@@ -85,7 +77,7 @@ export default class CoActor extends Actor {
       armors: this.armors,
       shields: this.shields,
       weapons: this.weapons,
-      misc: this.misc
+      misc: this.misc,
     };
   }
 
@@ -101,7 +93,7 @@ export default class CoActor extends Actor {
     return this.items.filter((item) => item.type === ITEM_TYPE.EQUIPMENT);
   }
 
-  get equippedEquipments(){
+  get equippedEquipments() {
     return this.items.filter((item) => item.type === ITEM_TYPE.EQUIPMENT && item.system.equipped);
   }
 
@@ -172,15 +164,15 @@ export default class CoActor extends Actor {
    * @returns Toutes les actions visibles et activables des capacités et des équipements
    */
   get visibleActivableActions() {
-   return this.visibleActions.filter(a=>a.properties.activable);
+    return this.visibleActions.filter((a) => a.properties.activable);
   }
 
   /**
    * @returns Toutes les actions visibles et activables des capacités et des équipements
    */
   get visibleNonActivableActions() {
-    return this.visibleActions.filter(a=>!a.properties.activable);
-   }    
+    return this.visibleActions.filter((a) => !a.properties.activable);
+  }
 
   /**
    * @name abilitiesModifiers
@@ -235,9 +227,14 @@ export default class CoActor extends Actor {
    * @param {String} ability str, dex ...
    * @returns {Object} Name, value, description
    */
-  getSkillBonuses(ability) {
+  async getSkillBonuses(ability) {
     const modifiersByTarget = this.skillModifiers.filter((m) => m.target === ability);
-    return modifiersByTarget.map((modifier) => ( { name: modifier.sourceName, value: modifier.evaluate(this), description: modifier.sourceDescription }));
+    let bonuses = [];
+    for (const modifier of modifiersByTarget) {
+      const sourceInfos = await modifier.getSourceInfos();
+      bonuses.push({ name: sourceInfos.name, value: modifier.evaluate(this), description: sourceInfos.description });
+    }
+    return bonuses;
   }
 
   /**
@@ -323,7 +320,8 @@ export default class CoActor extends Actor {
       case ITEM_TYPE.CAPACITY:
       case ITEM_TYPE.FEATURE:
         return this.deleteEmbeddedDocuments("Item", [itemId]);
-      default: break;
+      default:
+        break;
     }
   }
 
@@ -403,7 +401,7 @@ export default class CoActor extends Actor {
   }
 
   toggleSuperior(ability) {
-    return this.system.abilities[ability].superior = !this.system.abilities[ability].superior
+    return (this.system.abilities[ability].superior = !this.system.abilities[ability].superior);
   }
 
   /**
@@ -526,7 +524,7 @@ export default class CoActor extends Actor {
     await this.updateEmbeddedDocuments("Item", [updatePaths]);
 
     // Update Hit Dice and Magick Attack base ability
-    this.update({"system.combat.magic.ability": profile.system.spellcasting});
+    this.update({ "system.combat.magic.ability": profile.system.spellcasting });
   }
 
   /**
@@ -582,8 +580,48 @@ export default class CoActor extends Actor {
     // console.info(game.co.log("Capacity created"), newCapacity);
 
     // Update the source of all actions with the id of the new embedded capacity created
-    let newActions = Object.values(foundry.utils.deepClone(newCapacity[0].system.actions)).map(
-      (m) => {
+    let newActions = Object.values(foundry.utils.deepClone(newCapacity[0].system.actions)).map((m) => {
+      const action = new Action(
+        m.source,
+        m.indice,
+        m.type,
+        m.img,
+        m.label,
+        m.chatFlavor,
+        m.properties.visible,
+        m.properties.activable,
+        m.properties.enabled,
+        m.properties.temporary,
+        m.conditions,
+        m.modifiers,
+        m.resolvers
+      );
+      // Update the source and source's modifiers for the action
+      action.updateSource(newCapacity[0].id);
+      return action;
+    });
+
+    const updateActions = { _id: newCapacity[0].id, "system.actions": newActions };
+    await this.updateEmbeddedDocuments("Item", [updateActions]);
+
+    return newCapacity[0].id;
+  }
+
+  /**
+   * @description Add an equipment as an embedded item
+   * @param {CoItem} equipment
+   * @returns {Number} id of the created path
+   */
+  async addEquipment(equipment) {
+    let equipmentData = equipment.toObject();
+    equipmentData = equipmentData instanceof Array ? equipmentData : [equipmentData];
+
+    // Création de l'objet
+    const newEquipment = await this.createEmbeddedDocuments("Item", equipmentData);
+
+    // Update the source of all actions
+    if (newEquipment[0].actions.length > 0) {
+      let newActions = Object.values(foundry.utils.deepClone(newEquipment[0].system.actions)).map((m) => {
         const action = new Action(
           m.source,
           m.indice,
@@ -600,51 +638,9 @@ export default class CoActor extends Actor {
           m.resolvers
         );
         // Update the source and source's modifiers for the action
-        action.updateSource(newCapacity[0].id);
+        action.updateSource(newEquipment[0].id);
         return action;
       });
-
-    const updateActions = { _id: newCapacity[0].id, "system.actions": newActions };
-    await this.updateEmbeddedDocuments("Item", [updateActions]);
-
-    return newCapacity[0].id;
-  }
-
-    /**
-   * @description Add an equipment as an embedded item
-   * @param {CoItem} equipment
-   * @returns {Number} id of the created path
-   */
-  async addEquipment(equipment) {
-    let equipmentData = equipment.toObject();
-    equipmentData = equipmentData instanceof Array ? equipmentData : [equipmentData];
-
-    // Création de l'objet
-    const newEquipment = await this.createEmbeddedDocuments("Item", equipmentData);
-
-    // Update the source of all actions
-    if (newEquipment[0].actions.length > 0) {
-      let newActions = Object.values(foundry.utils.deepClone(newEquipment[0].system.actions)).map(
-        (m) => {
-          const action = new Action(
-            m.source,
-            m.indice,
-            m.type,
-            m.img,
-            m.label,
-            m.chatFlavor,
-            m.properties.visible,
-            m.properties.activable,
-            m.properties.enabled,
-            m.properties.temporary,
-            m.conditions,
-            m.modifiers,
-            m.resolvers
-          );
-          // Update the source and source's modifiers for the action
-          action.updateSource(newEquipment[0].id);
-          return action;
-        });
 
       const updateActions = { _id: newEquipment[0].id, "system.actions": newActions };
       await this.updateEmbeddedDocuments("Item", [updateActions]);
@@ -672,7 +668,7 @@ export default class CoActor extends Actor {
       this.deletePath(pathId);
     }
     this.deleteEmbeddedDocuments("Item", [profileId]);
-  }  
+  }
 
   deletePath(pathId) {
     // Delete linked capacities
@@ -681,7 +677,7 @@ export default class CoActor extends Actor {
       const capacitiesId = path.system.capacities;
       this.deleteEmbeddedDocuments("Item", capacitiesId);
       this.deleteEmbeddedDocuments("Item", [pathId]);
-    }    
+    }
   }
 
   async deleteCapacity(capacityId) {
@@ -698,7 +694,7 @@ export default class CoActor extends Actor {
           await this.updateEmbeddedDocuments("Item", [updateData]);
         }
       }
-      this.deleteEmbeddedDocuments("Item", [capacityId]);      
+      this.deleteEmbeddedDocuments("Item", [capacityId]);
     }
   }
 
@@ -718,7 +714,7 @@ export default class CoActor extends Actor {
   }
 
   // BASE : à partir du profile, lire la mpFormula
-  _prepareMP(skill, bonuses) {    
+  _prepareMP(skill, bonuses) {
     skill.base = this._computeBaseMP();
     const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, MODIFIER_TARGET.MP);
 
@@ -728,7 +724,7 @@ export default class CoActor extends Actor {
   // 2 * @niv + @int
   _computeBaseMP() {
     let total = 0;
-    let formula = (this.profiles.length != 0 && this.profiles[0].system.mpFormula) ? this.profiles[0].system.mpFormula : null;
+    let formula = this.profiles.length != 0 && this.profiles[0].system.mpFormula ? this.profiles[0].system.mpFormula : null;
     total = formula ? Utils.evaluate(this, formula, null, true) : 0;
     return total;
   }
@@ -740,22 +736,22 @@ export default class CoActor extends Actor {
     skill.max = skill.base + resourceModifiers.total + bonuses;
   }
 
-  _computeBaseRP() {  
-    return 5 ;
+  _computeBaseRP() {
+    return 5;
   }
 
   _prepareHPMax() {
     const hpMaxBonuses = Object.values(this.system.attributes.hp.bonuses).reduce((prev, curr) => prev + curr);
     const hpMaxModifiers = Modifiers.computeTotalModifiersByTarget(this, this.attributeModifiers, ATTRIBUTE.HP);
     this.system.attributes.hp.max = this.system.attributes.hp.base + hpMaxBonuses + hpMaxModifiers.total;
-    this.system.attributes.hp.tooltip = Utils.getTooltip("Base", this.system.attributes.hp.base).concat(hpMaxModifiers.tooltip,Utils.getTooltip("Bonus", hpMaxBonuses));
+    this.system.attributes.hp.tooltip = Utils.getTooltip("Base", this.system.attributes.hp.base).concat(hpMaxModifiers.tooltip, Utils.getTooltip("Bonus", hpMaxBonuses));
   }
 
   /**
    * Dans COF : 10 + Mod DEX + Bonus Armure + Bonus Bouclier + Bonus Capacités
-   * @param {*} skill 
-   * @param {*} abilityBonus 
-   * @param {*} bonuses 
+   * @param {*} skill
+   * @param {*} abilityBonus
+   * @param {*} bonuses
    */
   _prepareDef(skill, abilityBonus, bonuses) {
     const defModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, COMBAT.DEF);
@@ -777,7 +773,7 @@ export default class CoActor extends Actor {
     skill.base = abilityValue;
     skill.tooltipBase = Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityValue);
 
-    skill.value = skill.base + bonuses + initModifiers.total + malus;    
+    skill.value = skill.base + bonuses + initModifiers.total + malus;
     skill.tooltipValue = skill.tooltipBase.concat(initModifiers.tooltip, Utils.getTooltip("Bonus", bonuses));
   }
 
@@ -811,15 +807,15 @@ export default class CoActor extends Actor {
   }
 
   /**
-    * @name _addAllValues
-    * @description Calcul la somme d'un tableau de valeurs positives ou négatives
-    *
-    * @param {*} array Un tableau de valeurs
-    * @returns {int} 0 ou la somme des valeurs
-    */
-   _addAllValues(array) {
-     return array.length > 0 ? array.reduce((acc, curr) => acc + curr, 0) : 0;
-   }
+   * @name _addAllValues
+   * @description Calcul la somme d'un tableau de valeurs positives ou négatives
+   *
+   * @param {*} array Un tableau de valeurs
+   * @returns {int} 0 ou la somme des valeurs
+   */
+  _addAllValues(array) {
+    return array.length > 0 ? array.reduce((acc, curr) => acc + curr, 0) : 0;
+  }
 
   /**
    * @description toggle the field of the items and the actions linked
@@ -840,7 +836,7 @@ export default class CoActor extends Actor {
       ...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, subtype),
       ...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, subtype),
       ...Modifiers.getModifiersByTypeSubtype(this.profiles, MODIFIER_TYPE.PROFILE, subtype),
-      ...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, subtype)
+      ...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, subtype),
     ];
   }
   //#endregion

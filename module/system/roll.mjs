@@ -43,7 +43,7 @@ export class CoSkillCheck extends CoRoll {
             weakened : false,
             difficulty : 10,
             showDifficulty : true,
-            skillBonuses: this.actor.getSkillBonuses(parts[1]),
+            skillBonuses: await this.actor.getSkillBonuses(parts[1]),
             totalSkillBonuses: 0
         };
 
