@@ -85,11 +85,28 @@ export class Modifier {
       this.source = source;
   }
 
-  async getSourceInfos() {
-    let item = await fromUuid(this.source);
+  /**
+   * Pour un objet appartenant à un acteur, la source est l'id de l'objet (embedded item) ou du type Actor.id.Item.id
+  * @param {*} actor 
+   * @returns Le nom et la description de l'objet à l'origine du modifier
+   */
+  getSourceInfos(actor) {
+    let item;
+    if (this.source.startsWith("Actor.")) item = actor.items.get(this.extraireItemId(this.source));
+    else item = actor.items.get(this.source);
     if (!item) return;
     const name = item.name;
     const description = item.system.common.description.value;
     return {name, description};
+  }
+
+  extraireItemId(chaine) { 
+    // Divise la chaîne en segments en utilisant le caractère '.'
+    const segments = chaine.split('.');
+  
+    // Récupère le dernier élément du tableau
+    const dernierID = segments[segments.length - 1];
+  
+    return dernierID;
   }
 }

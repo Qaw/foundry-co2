@@ -231,11 +231,11 @@ export default class CoActor extends Actor {
    * @param {String} ability str, dex ...
    * @returns {Object} Name, value, description
    */
-  async getSkillBonuses(ability) {
+  getSkillBonuses(ability) {
     const modifiersByTarget = this.skillModifiers.filter((m) => m.target === ability);
     let bonuses = [];
     for (const modifier of modifiersByTarget) {
-      const sourceInfos = await modifier.getSourceInfos();
+      const sourceInfos = modifier.getSourceInfos(this);
       bonuses.push({ name: sourceInfos.name, value: modifier.evaluate(this), description: sourceInfos.description });
     }
     return bonuses;
