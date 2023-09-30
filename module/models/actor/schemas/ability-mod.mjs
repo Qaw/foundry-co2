@@ -1,5 +1,3 @@
-import {BaseValue} from "./base-value.mjs";
-
 export class AbilityModifier extends foundry.abstract.DataModel {
     static defineSchema() {
         const fields = foundry.data.fields;
@@ -8,14 +6,13 @@ export class AbilityModifier extends foundry.abstract.DataModel {
                 required: true,
                 initial: false
             }),
-            mod: new fields.EmbeddedDataField(BaseValue)
+            mod: new fields.NumberField({
+                required: true,
+                nullable: false,
+                initial: 0,
+                integer: true,
+                positive:false
+            })
         };
     }
-
-    get value() {
-        return AbilityModifier.getValueFromMod(this.mod);
-    }
-    static getValueFromMod = function (mod) {
-        return mod * 2 + 10;
-    };
 }

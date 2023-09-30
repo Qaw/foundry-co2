@@ -17,6 +17,7 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
   getData(options) {
     const context = super.getData(options);
     context.system = this.actor.system;
+    // console.debug(this.actor.system.abilities);
     context.abilities = this.actor.system.abilities;
     context.combat = this.actor.system.combat;
     context.attributes = this.actor.system.attributes;
@@ -24,23 +25,22 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
     context.details = this.actor.system.details;
     context.paths = this.actor.paths;
     context.pathGroups = this.actor.pathGroups;
-    context.profile = this.actor.profile;
     context.capacities = this.actor.capacities;
     context.learnedCapacities = this.actor.learnedCapacities;
+    context.capacitiesOffPaths = this.actor.capacitiesOffPaths;
     context.features = this.actor.features;
     context.actions = this.actor.actions;
     context.visibleActions = this.actor.visibleActions;
-    // context.weapons = this.actor.weapons;
-    // context.armors = this.actor.armors;
-    // context.shields = this.actor.shields;
+    context.visibleActivableActions = this.actor.visibleActivableActions;
+    context.visibleNonActivableActions = this.actor.visibleNonActivableActions;
     context.inventory = this.actor.inventory;
+    context.unlocked = this.actor.isUnlocked;
     return context;
   }
 
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
-    html.find(".section-toggle").click(this._onSectionToggle.bind(this));
     html.find(".item-edit").click(this._onEditItem.bind(this));
     html.find(".item-delete").click(this._onDeleteItem.bind(this));
     html.find(".path-delete").click(this._onDeletePath.bind(this));
@@ -48,18 +48,6 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
     html.find(".toggle-action").click(this._onUseAction.bind(this));
     html.find(".capacity-learn").click(this._onLearnedToggle.bind(this));
     html.find(".inventory-equip").click(this._onEquippedToggle.bind(this));
-  }
-
-  /**
-   *
-   * @param {*} event
-   * @returns
-   */
-  _onSectionToggle(event) {
-    event.preventDefault();
-    const li = $(event.currentTarget).parent().next(".foldable");
-    li.slideToggle("fast");
-    return true;
   }
 
   /**
@@ -129,9 +117,9 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
     const li = $(event.currentTarget).parents(".item");
     const itemId = li.data("itemId");
     const itemType = li.data("itemType");
-    if (itemType == "path") this._onDeletePath(event);
-    else if (itemType == "capacity") this._onDeleteCapacity(event);
-    else if (itemType == "feature") this._onDeleteFeature(event);
+    if (itemType === "path") this._onDeletePath(event);
+    else if (itemType === "capacity") this._onDeleteCapacity(event);
+    else if (itemType === "feature") this._onDeleteFeature(event);
     else this.actor.deleteEmbeddedDocuments("Item", [itemId]);
   }
 
@@ -144,7 +132,6 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
     event.preventDefault();
     const li = $(event.currentTarget).parents(".item");
     const featureId = li.data("itemId");
-
     this.actor.deleteFeature(featureId);
   }
 
@@ -212,58 +199,24 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
     if (!this.actor.isOwner) return false;
     const item = await Item.implementation.fromDropData(data);
 
-    // Handle item sorting within the same Actor
-    // if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, itemData);
-
     switch (item.type) {
       case ITEM_TYPE.EQUIPMENT:
-        return this._onDropEquipmentItem(item);
+        return this.actor.addEquipment(item);
+      case ITEM_TYPE.FEATURE:
+        // return this.actor.addFeature(item);
+      case ITEM_TYPE.PROFILE:
+        // if (this.actor.profiles.length > 0) {
+        //   ui.notifications.warn(game.i18n.localize("CO.notif.profilAlreadyExist"));
+        //   break;
+        // }
+        // return this.actor.addProfile(item);
       case ITEM_TYPE.PATH:
-        // return this._onDropPathItem(item);
+        return this.actor.addPath(item);
       case ITEM_TYPE.CAPACITY:
-        // return this._onDropCapacityItem(item);
+        return this.actor.addCapacity(item, null);
       default:
         return false;
     }
-  }
 
-  /**
-   * @description Handle the drop of an Equipment on the actor
-   * @param {*} item the Equipment dropped
-   */    
-  async _onDropEquipmentItem(item) {
-    this.actor.addEquipment(item);
-  }
-
-  /**
-   * @description Handle the drop of a feature on the actor
-   * @param {*} item the Feature dropped
-   */  
-  async _onDropFeatureItem(item) {
-    this.actor.addFeature(item);
-  }
-
-  /**
-   * @description Handle the drop of a profile on the actor
-   * @param {*} item the Profile dropped
-   */
-  async _onDropProfileItem(item) {
-    this.actor.addProfile(item);
-  }
-
-  /**
-   * @description Handle the drop of a path on the actor
-   * @param {*} item the Path dropped
-   */
-  async _onDropPathItem(item) {
-    this.actor.addPath(item);
-  }
-
-  /**
-   * @description Handle the drop of a single capacity on the actor
-   * @param {*} item the Capacity dropped
-   */
-  async _onDropCapacityItem(item) {
-    this.actor.addCapacity(item, null);
   }
 }

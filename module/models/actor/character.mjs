@@ -33,7 +33,7 @@ export class CharacterData extends foundry.abstract.DataModel {
       movement: new fields.EmbeddedDataField(BaseValue, {
         label: "CO.label.long.movement",
         nullable: false,
-        initial: { base: 20, unit: "m", bonuses: { sheet: 0, effects: 0 } },
+        initial: { base: 10, unit: "m", bonuses: { sheet: 0, effects: 0 } },
       }),
       level: new fields.EmbeddedDataField(BaseValue, {
         label: "CO.label.long.level",

@@ -13,16 +13,9 @@
             </div>
             <div class="armor-base labelled-field" data-tooltip="{{combat.def.tooltipValue}}">
                 {{combat.def.value}}
-                <!--                <input class="def-value adjustable adjusted-lower" type="number" data-property="system.combat.def.value" readonly value="{{combat.def.value}}" placeholder="0">-->
             </div>
         </div>
         {{#if unlocked}}
-            <!--            <div class="sidebar-section-content">-->
-            <!--                <div class="labelled-field">-->
-            <!--                    <label>{{localize "CO.label.long.value"}}</label>-->
-            <!--                    <input class="def-value" type="number" name="system.combat.def.value" value="{{combat.def.value}}" data-dtype="Number" placeholder="0">-->
-            <!--                </div>-->
-            <!--            </div>-->
             <div class="sidebar-section-content">
                 <div class="labelled-field">
                     <label>{{localize "CO.label.long.base"}}</label>
@@ -32,7 +25,7 @@
             <div class="sidebar-section-content">
                 <div class="labelled-field">
                     <label>{{localize "CO.label.long.bonus"}}</label>
-                    <input class="def-bonus" type="number" name="system.combat.def.bonuses.sheet" value="{{combat.def.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                    <input class="def-bonus" type="text" name="system.combat.def.bonuses.sheet" value="{{numberFormat combat.def.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0">
                 </div>
             </div>
         {{/if}}
@@ -60,7 +53,7 @@
             <div class="sidebar-section-content">
                 <div class="labelled-field">
                     <label>{{localize "CO.label.long.bonus"}}</label>
-                    <input class="hp-bonus" type="number" name="system.attributes.hp.bonuses.sheet" value="{{attributes.hp.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                    <input class="hp-bonus" type="text" name="system.attributes.hp.bonuses.sheet" value="{{numberFormat attributes.hp.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0">
                 </div>
             </div>
         {{/if}}
@@ -78,7 +71,6 @@
                 {{combat.init.value}}
             </div>
         </div>
-
         {{#if unlocked}}
             <div class="sidebar-section-content flexrow">
                 <div class="labelled-field">
@@ -103,7 +95,7 @@
             <div class="sidebar-section-content">
                 <div class="labelled-field">
                     <label>{{localize "CO.label.long.bonus"}}</label>
-                    <input class="init-bonus" type="number" name="system.combat.init.bonuses.sheet" value="{{combat.init.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                    <input class="init-bonus" type="text" name="system.combat.init.bonuses.sheet" value="{{numberFormat combat.init.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0">
                 </div>
             </div>
         {{/if}}
@@ -143,7 +135,7 @@
             <div class="sidebar-section-content">
                 <div class="labelled-field">
                     <label>{{localize "CO.label.long.bonus"}}</label>
-                    <input class="melee-bonus" type="number" name="system.combat.melee.bonuses.sheet" value="{{combat.melee.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                    <input class="melee-bonus" type="text" name="system.combat.melee.bonuses.sheet" value="{{numberFormat combat.melee.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0">
                 </div>
             </div>
         {{/if}}
@@ -186,7 +178,7 @@
             <div class="sidebar-section-content">
                 <div class="labelled-field">
                     <label>{{localize "CO.label.long.bonus"}}</label>
-                    <input class="ranged-bonus" type="number" name="system.combat.ranged.bonuses.sheet" value="{{combat.ranged.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                    <input class="ranged-bonus" type="text" name="system.combat.ranged.bonuses.sheet" value="{{numberFormat combat.ranged.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0">
                 </div>
             </div>
         {{/if}}
@@ -228,7 +220,7 @@
             <div class="sidebar-section-content">
                 <div class="labelled-field">
                     <label>{{localize "CO.label.long.bonus"}}</label>
-                    <input class="magic-bonus" type="number" name="system.combat.magic.bonuses.sheet" value="{{combat.magic.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                    <input class="magic-bonus" type="text" name="system.combat.magic.bonuses.sheet" value="{{numberFormat combat.magic.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0">
                 </div>
             </div>
         {{/if}}
@@ -257,7 +249,7 @@
                 <div class="sidebar-section-content">
                     <div class="labelled-field">
                         <label>{{localize "CO.label.long.bonus"}}</label>
-                        <input class="hp-bonus" type="number" name="system.resources.fortune.bonuses.sheet" value="{{resources.fortune.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                        <input class="hp-bonus" type="text" name="system.resources.fortune.bonuses.sheet" value="{{numberFormat resources.fortune.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0">
                     </div>
                 </div>
             {{/if}}
@@ -287,7 +279,7 @@
                 <div class="sidebar-section-content">
                     <div class="labelled-field">
                         <label>{{localize "CO.label.long.bonus"}}</label>
-                        <input class="hp-bonus" type="number" name="system.resources.recovery.bonuses.sheet" value="{{resources.recovery.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                        <input class="hp-bonus" type="text" name="system.resources.recovery.bonuses.sheet" value="{{numberFormat resources.recovery.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0">
                     </div>
                 </div>
             {{/if}}
@@ -317,7 +309,7 @@
                 <div class="sidebar-section-content">
                     <div class="labelled-field">
                         <label>{{localize "CO.label.long.bonus"}}</label>
-                        <input class="hp-bonus" type="number" name="system.resources.mana.bonuses.sheet" value="{{resources.mana.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+                        <input class="hp-bonus" type="text" name="system.resources.mana.bonuses.sheet" value="{{numberFormat resources.mana.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0">
                     </div>
                 </div>
             {{/if}}

@@ -5,205 +5,155 @@
     </div>
     <!-- DEF -->
     <div class="sidebar-section armor-section">
-        <div class="sidebar-section-header" title="{{combat.def.details}}">
+        <div class="sidebar-section-header">
             <div class="sidebar-label armor-label">
                 <i class="fas fa-fw fa-shield-alt"></i>
-                <h4>{{localize "CO.label.short.def"}}</h4>
+                <h4>{{localize "CO.label.long.def"}}</h4>
             </div>
-            <div class="armor-base labelled-field">
-                <input class="def-value adjustable adjusted-lower" type="number" data-property="system.combat.def.value" readonly value="{{combat.def.value}}" placeholder="0">
-            </div>
-        </div>
-{{#if debugMode}}
-        <div class="sidebar-section-content">
-            <div class="hp-temp labelled-field">
-                <label>{{localize "CO.label.long.value"}}</label>
-                <input class="def-value" type="number" name="system.combat.def.value" value="{{combat.def.value}}" data-dtype="Number" placeholder="0">
+            <div class="armor-base labelled-field" data-tooltip="{{combat.def.tooltipValue}}">
+                {{combat.def.value}}
             </div>
         </div>
-        <div class="sidebar-section-content">
-            <div class="hp-temp labelled-field">
-                <label>{{localize "CO.label.long.base"}}</label>
-                <input class="def-base" type="number" name="system.combat.def.base" value="{{combat.def.base}}" data-dtype="Number" placeholder="0">
+        {{#if unlocked}}
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.base"}}</label>
+                    <input class="def-base" type="number" name="system.combat.def.base" value="{{combat.def.base}}" data-dtype="Number" placeholder="0" data-tooltip="{{combat.def.tooltipBase}}">
+                </div>
             </div>
-        </div>
-{{/if}}
-        <div class="sidebar-section-content">
-            <div class="hp-temp labelled-field">
-                <label>{{localize "CO.label.long.bonus"}}</label>
-                <input class="def-bonus" type="number" name="system.combat.def.bonuses.sheet" value="{{combat.def.bonuses.sheet}}" data-dtype="Number" placeholder="0">
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.bonus"}}</label>
+                    <input class="def-bonus" type="text" name="system.combat.def.bonuses.sheet" value="{{numberFormat combat.def.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0">
+                </div>
             </div>
-        </div>
-        <div class="sidebar-section-content">
-            <input type="text" name="system.combat.def.details" value="{{combat.def.details}}" class="def-details" placeholder="PV details...">
-        </div>
+        {{/if}}
     </div>
     <!-- HPs -->
     <div class="health-section sidebar-section">
-        <div class="sidebar-section-header" title="{{localize "CO.label.long.hp"}}">
+        <div class="sidebar-section-header" >
             <div class="sidebar-label">
                 <i class="fas fa-fw fa-heart"></i>
-                <h4>{{localize "CO.label.short.hp"}}</h4>
+                <h4 title="{{localize "CO.label.long.hp"}}">{{localize "CO.label.short.hp"}}</h4>
                 <div class="hit-points">
-                    <input type="number" name="system.attributes.hp.value" value="{{attributes.hp.value}}" class="current" placeholder="0">
+                    <input class="current" name="system.attributes.hp.value" value="{{attributes.hp.value}}" type="number" data-dtype="Number" placeholder="0">
                     <span class="slash">/</span>
-                    <input type="text" class="max adjustable lt1000" data-property="system.attributes.hp.max" value="{{attributes.hp.max}}" data-dtype="Number" placeholder="0">
+                    <span class="max" data-tooltip="{{attributes.hp.tooltip}}">{{attributes.hp.max}}</span>
                 </div>
             </div>
         </div>
-    {{#if debugMode}}
-        <div class="sidebar-section-content">
-            <div class="hp-temp labelled-field">
-                <label>{{localize "CO.label.long.value"}}</label>
-                <input class="hp-value" type="number" name="system.attributes.hp.value" value="{{attributes.hp.value}}" data-dtype="Number" placeholder="0">
+        {{#if unlocked}}
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.base"}}</label>
+                    <input class="hp-base" type="number" name="system.attributes.hp.base" value="{{attributes.hp.base}}" data-dtype="Number" placeholder="0">
+                </div>
             </div>
-        </div>
-        <div class="sidebar-section-content">
-            <div class="hp-temp labelled-field">
-                <label>{{localize "CO.label.short.min"}}</label>
-                <input class="hp-min" type="number" name="system.attributes.hp.min" value="{{attributes.hp.min}}" data-dtype="Number" placeholder="0">
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.bonus"}}</label>
+                    <input class="hp-bonus" type="text" name="system.attributes.hp.bonuses.sheet" value="{{numberFormat attributes.hp.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0">
+                </div>
             </div>
-        </div>
-        <div class="sidebar-section-content">
-            <div class="hp-temp labelled-field">
-                <label>{{localize "CO.label.short.max"}}</label>
-                <input class="hp-max" type="number" name="system.attributes.hp.max" value="{{attributes.hp.max}}" data-dtype="Number" placeholder="0">
-            </div>
-        </div>
-        <div class="sidebar-section-content">
-            <div class="hp-temp labelled-field">
-                <label>{{localize "CO.label.long.base"}}</label>
-                <input class="hp-base" type="number" name="system.attributes.hp.base" value="{{attributes.hp.base}}" data-dtype="Number" placeholder="0">
-            </div>
-        </div>
-        <div class="sidebar-section-content">
-            <div class="hp-temp labelled-field">
-                <label>{{localize "CO.label.short.tempmax"}}</label>
-                <input class="hp-tempmax" type="number" name="system.attributes.hp.tempmax" value="{{attributes.hp.tempmax}}" data-dtype="Number" placeholder="0">
-            </div>
-        </div>
-        <div class="sidebar-section-content">
-            <div class="hp-temp labelled-field">
-                <label>{{localize "CO.label.long.bonus"}}</label>
-                <input class="hp-bonus" type="number" name="system.attributes.hp.bonuses.sheet" value="{{attributes.hp.bonuses.sheet}}" data-dtype="Number" placeholder="0">
-            </div>
-        </div>
-    {{/if}}
-        <div class="sidebar-section-content">
-            <div class="hp-temp labelled-field">
-                <label>{{localize "CO.label.short.temp"}}</label>
-                <input class="hp-temp" type="number" name="system.attributes.hp.temp" value="{{attributes.hp.temp}}" data-dtype="Number" placeholder="0">
-            </div>
-        </div>
-        <div class="sidebar-section-content">
-            <input type="text" name="system.attributes.hp.details" value="{{attributes.hp.details}}" class="hp-details" placeholder="DEF details...">
-        </div>
+        {{/if}}
     </div>
     <!-- INIT -->
     <div class="init-section sidebar-section">
         <div class="sidebar-section-header">
-            <div class="sidebar-label">
+            <div class="sidebar-label init-label">
                 <i class="fa-solid fa-swords fa-fw"></i>
                 <h4>{{localize "CO.label.long.init"}}</h4>
-                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i>&nbsp;<div>{{numberFormat combat.init.value decimals=0 sign=true}}</div></a>
+            </div>
+            <div class="init-value labelled-field" data-tooltip="{{combat.init.tooltipValue}}">
+                {{combat.init.value}}
             </div>
         </div>
-
-{{#if debugMode}}
-        <div class="sidebar-section-content">
-            <div class="hp-temp labelled-field">
-                <label>{{localize "CO.label.long.value"}}</label>
-                <input class="init-value" type="number" name="system.combat.init.value" value="{{combat.init.value}}" data-dtype="Number" placeholder="0">
+        {{#if unlocked}}
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.base"}}</label>
+                    <input class="init-base" type="number" name="system.combat.init.base" value="{{combat.init.base}}" data-dtype="Number" placeholder="0">
+                </div>
             </div>
-        </div>
-        <div class="sidebar-section-content">
-            <div class="hp-temp labelled-field">
-                <label>{{localize "CO.label.long.base"}}</label>
-                <input class="init-base" type="number" name="system.combat.init.base" value="{{combat.init.base}}" data-dtype="Number" placeholder="0">
+            <div class="sidebar-section-content">
+                <div class="labelled-field">
+                    <label>{{localize "CO.label.long.bonus"}}</label>
+                    <input class="init-bonus" type="text" name="system.combat.init.bonuses.sheet" value="{{numberFormat combat.init.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0">
+                </div>
             </div>
-        </div>
-{{/if}}
-        <div class="sidebar-section-content">
-            <div class="hp-temp labelled-field">
-                <label>{{localize "CO.label.long.bonus"}}</label>
-                <input class="init-bonus" type="number" name="system.combat.init.bonuses.sheet" value="{{combat.init.bonuses.sheet}}" data-dtype="Number" placeholder="0">
-            </div>
-        </div>
-        <div class="sidebar-section-content">
-            <input type="text" name="system.combat.init.details" value="{{combat.init.details}}" class="init-details" placeholder="INIT details...">
-        </div>
+        {{/if}}
     </div>
     <!-- IMMUNITES -->
-    <div class="immunities sidebar-section">
-        <div class="sidebar-section-header">
-            <div class="sidebar-label">
-                <i class="fas fa-fw fa-ankh"></i>
-                <h4>Immunities</h4>
-            </div>
-            <div class="immunities-controls controls">
-                <a data-action="edit-immunities" title="Edit Immunities"><i class="fa-solid fa-edit"></i></a>
-            </div>
-        </div>
+<!--    <div class="immunities sidebar-section">-->
+<!--        <div class="sidebar-section-header">-->
+<!--            <div class="sidebar-label">-->
+<!--                <i class="fas fa-fw fa-ankh"></i>-->
+<!--                <h4>Immunities</h4>-->
+<!--            </div>-->
+<!--            <div class="immunities-controls controls">-->
+<!--                <a data-action="edit-immunities" title="Edit Immunities"><i class="fa-solid fa-edit"></i></a>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div class="sidebar-section-content">
-            <div class="tag-legacy immunity" data-immunity="fire">fire</div>
-        </div>
-    </div>
+<!--        <div class="sidebar-section-content">-->
+<!--            <div class="tag-legacy immunity" data-immunity="fire">fire</div>-->
+<!--        </div>-->
+<!--    </div>-->
     <!-- FAIBLESSES -->
-    <div class="weaknesses sidebar-section">
-        <div class="sidebar-section-header">
-            <div class="sidebar-label">
-                <i class="fas fa-fw fa-heart-broken"></i>
-                <h4>Weaknesses</h4>
-            </div>
-            <div class="weaknesses-controls controls">
-                <a data-action="edit-weaknesses" title="Edit Weaknesses"><i class="fa-solid fa-edit"></i></a>
-            </div>
-        </div>
-        <div class="sidebar-section-content">
-            <div class="tag-legacy weakness" data-weakness="cold">cold 20</div>
-            <div class="tag-legacy weakness" data-weakness="cold-iron">cold iron 20</div>
-            <div class="tag-legacy weakness" data-weakness="good">good 20</div>
-        </div>
-    </div>
+<!--    <div class="weaknesses sidebar-section">-->
+<!--        <div class="sidebar-section-header">-->
+<!--            <div class="sidebar-label">-->
+<!--                <i class="fas fa-fw fa-heart-broken"></i>-->
+<!--                <h4>Weaknesses</h4>-->
+<!--            </div>-->
+<!--            <div class="weaknesses-controls controls">-->
+<!--                <a data-action="edit-weaknesses" title="Edit Weaknesses"><i class="fa-solid fa-edit"></i></a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="sidebar-section-content">-->
+<!--            <div class="tag-legacy weakness" data-weakness="cold">cold 20</div>-->
+<!--            <div class="tag-legacy weakness" data-weakness="cold-iron">cold iron 20</div>-->
+<!--            <div class="tag-legacy weakness" data-weakness="good">good 20</div>-->
+<!--        </div>-->
+<!--    </div>-->
     <!-- RESISTANCES -->
-    <div class="resistances sidebar-section">
-        <div class="sidebar-section-header disabled">
-            <div class="sidebar-label">
-                <i class="fas fa-fw fa-shield-virus"></i>
-                <h4>Resistances</h4>
-            </div>
-            <div class="resistances-controls controls">
-                <a data-action="edit-resistances" title="Edit Resistances"><i class="fa-solid fa-edit"></i></a>
-            </div>
-        </div>
-        <div class="sidebar-section-content">
-        </div>
-    </div>
+<!--    <div class="resistances sidebar-section">-->
+<!--        <div class="sidebar-section-header disabled">-->
+<!--            <div class="sidebar-label">-->
+<!--                <i class="fas fa-fw fa-shield-virus"></i>-->
+<!--                <h4>Resistances</h4>-->
+<!--            </div>-->
+<!--            <div class="resistances-controls controls">-->
+<!--                <a data-action="edit-resistances" title="Edit Resistances"><i class="fa-solid fa-edit"></i></a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="sidebar-section-content">-->
+<!--        </div>-->
+<!--    </div>-->
     <!-- MOUVEMENT -->
     <div class="speed-section sidebar-section">
         <div class="sidebar-section-header">
-            <div class="sidebar-label">
+            <div class="sidebar-label mvt-label">
                 <i class="fas fa-fw fa-shoe-prints"></i>
-                <h4>Speed</h4>
+                <h4>{{localize "CO.label.long.movement"}}</h4>
             </div>
-            <div class="speed-controls controls">
-                <a class="tag-selector edit" data-tag-selector="speed-types" data-options="speedTypes" data-has-values="true" title="Edit Speed"><i class="fas fa-edit"></i></a>
+            <div class="mvt-base labelled-field">
+                {{attributes.movement.base}}&nbsp;{{attributes.movement.unit}}
             </div>
         </div>
-        <div class="sidebar-section-content">
-            <div class="land-speed flexrow">
-                <input type="number" class="land-speed-value adjustable" data-property="system.attributes.speed.value" value="35" placeholder="0">
-                <input type="text" class="speed-details" name="system.attributes.speed.details" value="" placeholder="Speed details...">
-            </div>
-            <div class="other-speeds">
-                <div class="tag-legacy speed" data-speed="fly">
-                    Fly
-                    <span class="adjustable">
-                                    70
-                                </span>
+        {{#if unlocked}}
+            <div class="sidebar-section-content">
+                <div class="mvt-base labelled-field">
+                    <label>{{localize "CO.label.long.base"}}</label>
+                    <input class="mvt-base" type="number" name="system.attributes.movement.base" value="{{attributes.movement.base}}" data-dtype="Number" placeholder="0">
+                    <select name="system.attributes.movement.unit" data-type="String">
+                        {{#select system.attributes.movement.unit}}
+                            <option value="m">{{localize "CO.label.long.meters"}}</option>
+                            <option value="ft">{{localize "CO.label.long.feet"}}</option>
+                        {{/select}}
+                    </select>
                 </div>
             </div>
-        </div>
+        {{/if}}
     </div>
 </div>

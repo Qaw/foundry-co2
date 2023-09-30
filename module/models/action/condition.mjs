@@ -42,7 +42,6 @@ export class Condition {
    */
   evaluate(item) {
     const obj = this.object === "_self" ? item : fromUuid(item);
-
     if (!Object.prototype.hasOwnProperty.call(this.conditions, this.predicate)) {
       throw new Error(`Invalid predicate ${this.predicate} for item ${obj.name} with Id ${obj.id}`);
     }

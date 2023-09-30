@@ -60,7 +60,7 @@ export class Utils {
    * @returns {int} the modifier's value
    */
   static _evaluateCustom(actor, formula, source, toEvaluate, withDice) {
-    console.debug(game.co.log("Custom Formula : ", formula));
+    // console.debug(game.co.log("Custom Formula : ", formula));
 
     let replacedFormula = formula;
     const DSL = {
@@ -131,7 +131,7 @@ export class Utils {
       replacedFormula = replacedFormula.replace("@", "actor.system.");
     }
 
-    console.debug(game.co.log("Custom Formula evaluated : ", replacedFormula));
+    // console.debug(game.co.log("Custom Formula evaluated : ", replacedFormula));
 
     if (withDice) return replacedFormula;
     else {

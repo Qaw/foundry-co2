@@ -6,7 +6,7 @@
             <div class="name flexrow bottom-separator">
                 <input class="name-value" name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'CO.label.long.name' }}" spellcheck="false">
                 <label class="level-label">{{ localize 'CO.label.short.nc' }}</label>
-                <input class="level adjustable" type="text" data-property="system.attributes.level.value" value="{{attributes.level.value}}" placeholder="1" data-dtype="Number">
+                <input class="level adjustable" type="text" name="system.attributes.level.base" value="{{attributes.level.base}}" data-dtype="Number">
             </div>
             <div class="flexrow" style="justify-content: space-between; width: 100%;">
                 <div class="flexrow" style="flex: auto;">
@@ -31,13 +31,12 @@
                             {{/each}}
                         {{/select}}
                     </select>
-                    <select class="bossrank-select traits-list-item" name="system.details.bossRank" data-type="Number" style="width:100%">
-                        <option value="0" selected="">-</option>
-                        <option value="1">Boss 1</option>
-                        <option value="2">Boss 2</option>
-                        <option value="3">Boss 3</option>
-                        <option value="4">Boss 4</option>
-                        <option value="5">Boss 5</option>
+                    <select class="bossrank-select traits-list-item" name="system.details.bossRank" data-type="String" style="width:100%">
+                        {{#select system.details.bossRank}}
+                            {{#each @root.config.encounter.bossRank as |label idx|}}
+                                <option value="{{idx}}">{{label}}</option>
+                            {{/each}}
+                        {{/select}}
                     </select>
                 </div>
             </div>
@@ -46,7 +45,9 @@
         <nav class="sheet-tabs tabs" data-group="primary">
             <a class="item" data-tab="main" title="{{ localize "CO.tabs.main" }}">{{ localize 'CO.tabs.main' }}</a>
             <a class="item" data-tab="inventory" title="{{ localize "CO.tabs.inventory" }}">{{ localize 'CO.tabs.inventory' }}</a>
+            <a class="item" data-tab="capacities" title="{{ localize "CO.tabs.capacities" }}">{{ localize "CO.tabs.capacities" }}</a>
             <a class="item" data-tab="notes" title="{{ localize "CO.tabs.notes" }}">{{ localize 'CO.tabs.notes' }}</a>
+            <a class="item sheet-change-lock" title="{{ localize "CO.tabs.lock" }}">{{#if unlocked}}<i class="fas fa-lock-open"></i>{{else}}<i class="fas fa-lock" ></i>{{/if}}</a>
         </nav>
 <!--        <div class="content flexrow">-->
             {{! log "Chroniques Oubliées | detail" this}}
@@ -55,7 +56,10 @@
                     {{> "systems/co/templates/encounter/parts/encounter-main.hbs"}}
                 </div>
                 <div class="tab inventory" data-group="primary" data-tab="inventory">
-                    {{> "systems/co/templates/encounter/parts/encounter-inventory.hbs"}}
+                    {{> "systems/co/templates/actors/parts/inventory/character-inventory.hbs"}}
+                </div>
+                <div class="tab capacities" data-group="primary" data-tab="capacities">
+                    {{> "systems/co/templates/actors/parts/paths/character-paths.hbs"}}
                 </div>
                 <div class="tab notes" data-group="primary" data-tab="notes">
                     {{> "systems/co/templates/encounter/parts/encounter-notes.hbs"}}
