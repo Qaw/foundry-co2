@@ -93,7 +93,8 @@ export class CoAttackCheck extends CoRoll {
 
     
     /**
-     * @param {Object} rolling {skillFormulaEvaluated, damageFormulaEvaluated, crit, diff}
+     * Prepare la fenêtre de dialogue
+     * @param {Object} rolling {actionName, itemName, skillFormula, skillFormulaEvaluated, damageFormulaEvaluated, crit, diff}
      * @returns a dialog box
      */
     init(rolling) {
@@ -103,39 +104,21 @@ export class CoAttackCheck extends CoRoll {
     async dialog(rolling) {
        
         const rollingLabel = `${rolling.actionName} (${rolling.itemName})`;
-
         this.label = rollingLabel;
 
-        let dialogData;
-
-        if (!rolling.auto) {
-            dialogData = {
-                label: rollingLabel,
-                critrange : rolling.crit,
-                difficulty : rolling.diff,
-                showDifficulty : true,
-                skillFormula: rolling.skillFormula,
-                formulaAttack: rolling.skillFormulaEvaluated,
-                damageFormula: rolling.damageFormula,
-                formulaDamage: rolling.damageFormulaEvaluated,
-                auto: rolling.auto,
-                type: rolling.type
-            };
-        }
-        else {
-            dialogData = {
-                        label: rollingLabel,
-                        critrange : '',
-                        difficulty : '',
-                        showDifficulty : false,
-                        formulaAttack: '',
-                        formulaDamage: rolling.damageFormulaEvaluated,
-                        auto: rolling.auto,
-                        type: rolling.type
-            };
-        }
+        const dialogData = {
+            label: rollingLabel,
+            critrange: !rolling.auto ? rolling.crit : '',
+            difficulty: !rolling.auto ? rolling.diff : '',
+            showDifficulty: !rolling.auto,
+            skillFormula: !rolling.auto ? rolling.skillFormula : '',
+            formulaAttack: !rolling.auto ? rolling.skillFormulaEvaluated : '',
+            formulaDamage: rolling.damageFormulaEvaluated,
+            auto: rolling.auto,
+            type: rolling.type
+        };
         
-        let rollDialog = await CoAttackRollDialog.create(this, dialogData);
+        const rollDialog = await CoAttackRollDialog.create(this, dialogData);
         rollDialog.render(true);
     }
 

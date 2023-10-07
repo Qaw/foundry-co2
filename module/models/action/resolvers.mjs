@@ -23,6 +23,7 @@ export class Resolver {
             "auto": function(){}
         }
     }
+
     resolve(actor, item, action, type) {
         if (this.type === "melee") {
             this.melee(actor, item, action, type);
@@ -60,7 +61,7 @@ export class Resolver {
         const actionName = action.label;
         const damageFormula = this.dmg.formula[0].part;
         const auto = true;     
-        const type = "damage"       ;
+        const type = "damage";
 
         let damageFormulaEvaluated = damageFormula.includes("d") || damageFormula.includes("D") ?  Utils.evaluateWithDice(actor, damageFormula, item.uuid) : Utils.evaluate(actor, damageFormula, item.uuid);
         new CoAttackCheck(actor, item).init({auto, type, itemName, actionName, damageFormulaEvaluated});
