@@ -1,4 +1,5 @@
 {{!log "Chroniques Oubliées | character paths" this}}
+<!-- Capacités hors voies -->
 {{> "systems/co/templates/actors/parts/paths/character-capacities.hbs"}}
 
 <!--<div class="path-list foldable">-->
@@ -21,27 +22,31 @@
             <ol class="item-list foldable">
                 {{#each pg.items as |capacity id|}}
                     {{#if capacity.system.learned}}
-                    <li class="item flexrow" data-item-id="{{capacity._id}}" data-item-type="capacity" draggable="false">
-                        <div class="item-detail">{{add id 1}}</div>
-                        <div class="item-name flexrow">
-                            <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>
-                            <h4><a class="item-control item-edit">{{capacity.name}}</a></h4>
-                        </div>
-                        <div class="item-controls-2">
-                            <a class="item-control capacity-learn" title="{{localize "CO.ui.unbuy"}}"><i class="fa-solid green fa-check" style="font-size:16px"></i></a>
-                        </div>
-                    </li>
+                        <li class="item flexrow" data-item-id="{{capacity._id}}" data-item-type="capacity" draggable="false">
+                            <div class="item-detail">{{add id 1}}</div>
+                            <div class="item-name flexrow">
+                                <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>
+                                <h4><a class="item-control item-edit">{{capacity.name}}</a></h4>
+                            </div>
+                            <div class="item-controls-2">
+                                {{#if @root.unlocked}}
+                                    <a class="item-control capacity-learn" title="{{localize "CO.ui.unbuy"}}"><i class="fa-solid green fa-check" style="font-size:16px"></i></a>
+                                {{/if}}
+                            </div>
+                        </li>
                     {{else}}
-                    <li class="item flexrow" data-item-id="{{capacity._id}}" data-item-type="capacity" draggable="false" style="opacity: 60%">
-                        <div class="item-detail">{{add id 1}}</div>
-                        <div class="item-name flexrow">
-                            <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>
-                            <h4><a class="item-control item-edit" title="{{localize "CO.notif.unknownCapacity"}}">{{capacity.name}}</a></h4>
-                        </div>
-                        <div class="item-controls-2">
-                            <a class="item-control capacity-learn" title="{{localize "CO.ui.buy"}}"><i class="fa-solid gray fa-check" style="font-size:16px"></i></a>
-                        </div>
-                    </li>
+                        {{#if @root.unlocked}}
+                            <li class="item flexrow" data-item-id="{{capacity._id}}" data-item-type="capacity" draggable="false" style="opacity: 60%">
+                                <div class="item-detail">{{add id 1}}</div>
+                                <div class="item-name flexrow">
+                                    <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>
+                                    <h4><a class="item-control item-edit" title="{{localize "CO.notif.unknownCapacity"}}">{{capacity.name}}</a></h4>
+                                </div>
+                                <div class="item-controls-2">
+                                    <a class="item-control capacity-learn" title="{{localize "CO.ui.buy"}}"><i class="fa-solid gray fa-check" style="font-size:16px"></i></a>
+                                </div>
+                            </li>
+                        {{/if}}
                     {{/if}}
                 {{/each}}
             </ol>

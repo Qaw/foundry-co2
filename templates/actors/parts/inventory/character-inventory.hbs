@@ -35,10 +35,12 @@
                 {{#if (and item.system.properties.reloadable (gt item.system.quantity.current 0))}}
                   <a class="item-control inventory-consume" title="{{localize 'CO.actions.consume'}}"><i class="fas fa-drumstick-bite"></i></a>
                 {{/if}}
-              </div>
-              <div class="item-controls-2">
-                <a class="item-control item-delete" title="{{localize 'CO.ui.remove'}}"><i class="fas fa-trash"></i></a>
-              </div>
+              </div>              
+                <div class="item-controls-2">
+                  {{#if @root/unlocked}}
+                    <a class="item-control item-delete" title="{{localize 'CO.ui.remove'}}"><i class="fas fa-trash"></i></a>
+                  {{/if}}
+                </div>              
             {{/if}}
           </li>
           <!--        {{!> "systems/cof/templates/actors/parts/inventory/actor-inventory-item.hbs" item owner=../../actor}}-->
