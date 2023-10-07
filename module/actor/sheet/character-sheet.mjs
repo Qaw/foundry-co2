@@ -43,7 +43,6 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
-    html.find(".section-toggle").click(this._onSectionToggle.bind(this));
     html.find(".item-edit").click(this._onEditItem.bind(this));
     html.find(".abilities-edit").click(this._onEditAbilities.bind(this));
     html.find(".item-delete").click(this._onDeleteItem.bind(this));
@@ -54,34 +53,6 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     html.find(".damage").click(this._onUseAction.bind(this));
     html.find(".capacity-learn").click(this._onLearnedToggle.bind(this));
     html.find(".inventory-equip").click(this._onEquippedToggle.bind(this));
-    html.find(".sheet-change-lock").click(this._onSheetChangelock.bind(this));
-  }
-
-  /**
-   * Manage the lock/unlock button on the sheet
-   *
-   * @name _onSheetChangelock
-   * @param {*} event
-   */
-  async _onSheetChangelock(event) {
-    event.preventDefault();
-
-    let flagData = await this.actor.getFlag(game.system.id, "SheetUnlocked");
-    if (flagData) await this.actor.unsetFlag(game.system.id, "SheetUnlocked");
-    else await this.actor.setFlag(game.system.id, "SheetUnlocked", "SheetUnlocked");
-    this.actor.sheet.render(true);
-  }
-  
-  /**
-   *
-   * @param {*} event
-   * @returns
-   */
-  _onSectionToggle(event) {
-    event.preventDefault();
-    const li = $(event.currentTarget).parent().next(".foldable");
-    li.slideToggle("fast");
-    return true;
   }
 
   /**

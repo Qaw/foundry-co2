@@ -21,8 +21,6 @@ import { FeatureData } from './models/item/feature.mjs';
 import { ProfileData } from './models/item/profile.mjs';
 import { EquipmentData } from './models/item/equipment.mjs';
 
-
-
 Hooks.once("init", async function () {
 
     game.co = {
@@ -35,7 +33,7 @@ Hooks.once("init", async function () {
 
     game.system.CONST = SYSTEM;
 
-    console.debug(game.co.log("Initializing..."));
+    console.info(game.co.log("Initializing..."));
 
     // Hook up system data types
     CONFIG.Actor.dataModels = {

@@ -9,6 +9,41 @@ export default class CoBaseActorSheet extends ActorSheet {
     return context;
   }
 
+  /** @override */
+  activateListeners(html) {
+    super.activateListeners(html);
+    html.find(".section-toggle").click(this._onSectionToggle.bind(this));
+    html.find(".sheet-change-lock").click(this._onSheetChangelock.bind(this));
+  }
+
+  /**
+   * Manage the lock/unlock button on the sheet
+   *
+   * @name _onSheetChangelock
+   * @param {*} event
+   */
+  async _onSheetChangelock(event) {
+    event.preventDefault();
+
+    let flagData = await this.actor.getFlag(game.system.id, "SheetUnlocked");
+    if (flagData) await this.actor.unsetFlag(game.system.id, "SheetUnlocked");
+    else await this.actor.setFlag(game.system.id, "SheetUnlocked", "SheetUnlocked");
+    this.actor.sheet.render(true);
+  }
+
+  /**
+   *
+   * @param {*} event
+   * @returns
+   */
+  _onSectionToggle(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).parents().next(".foldable");
+    // const li = $(event.currentTarget).parent().next(".foldable");
+    li.slideToggle("fast");
+    return true;
+  }
+
   _onRoll(event) {
     const element = event.currentTarget;
     const dataset = element.dataset;

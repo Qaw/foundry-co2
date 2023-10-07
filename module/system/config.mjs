@@ -154,4 +154,12 @@ CO.encounter = {
     large: "CO.size.large",
     huge: "CO.size.huge"
   },
+  bossRank : {
+    noboss: "-",
+    boss1: "Boss 1",
+    boss2: "Boss 2",
+    boss3: "Boss 3",
+    boss4: "Boss 4",
+    boss5: "Boss 5"
+  }
 };

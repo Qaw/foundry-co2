@@ -20,32 +20,33 @@
     </div>
 </div>
 <h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.biography"}}</a></h3>
-<div class="bio foldable">
-    <div class="form-group">
-        <label>{{localize "CO.ui.public"}}</label>
-        <div class="form-fields">
-            {{editor enrichedDescription target="system.details.biography.public" button=true owner=owner editable=editable}}
+<div class="bio notes foldable">
+    <div class="notes-section">
+        <label class="details-label">{{localize "CO.ui.public"}}</label>
+        <div class="notes-text">
+            {{editor system.details.biography.public target="system.details.biography.public" button=true owner=owner editable=editable}}
         </div>
     </div>
-    <div class="form-group">
-        <label>{{localize "CO.ui.private"}}</label>
-        <div class="form-fields">
-            {{editor enrichedDescription target="system.details.biography.private" button=true owner=owner editable=editable}}
+    <div class="notes-section">
+        <label class="details-label">{{localize "CO.ui.private"}}</label>
+        <div class="notes-text">
+            {{editor system.details.biography.private target="system.details.biography.private" button=true owner=owner editable=editable}}
         </div>
     </div>
 </div>
+
 <h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.appearance"}}</a></h3>
-<div class="appearance foldable">
-    <div class="form-group">
-        <label>{{localize "CO.ui.public"}}</label>
-        <div class="form-fields">
-            {{editor enrichedDescription target="system.details.appearance.public" button=true owner=owner editable=editable}}
+<div class="appearance notes foldable">
+    <div class="notes-section">
+        <label class="details-label">{{localize "CO.ui.public"}}</label>
+        <div class="notes-text">
+            {{editor system.details.appearance.public target="system.details.appearance.public" button=true owner=owner editable=editable}}
         </div>
     </div>
-    <div class="form-group">
-        <label>{{localize "CO.ui.private"}}</label>
-        <div class="form-fields">
-            {{editor enrichedDescription target="system.details.appearance.private" button=true owner=owner editable=editable}}
+    <div class="notes-section">
+        <label class="details-label">{{localize "CO.ui.private"}}</label>
+        <div class="notes-text">
+            {{editor system.details.appearance.private target="system.details.appearance.private" button=true owner=owner editable=editable}}
         </div>
     </div>
 </div>

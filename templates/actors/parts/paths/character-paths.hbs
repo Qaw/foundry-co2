@@ -4,11 +4,11 @@
 <!--<div class="path-list foldable">-->
     {{#each pathGroups as |pg id|}}
         {{log 'pathGroup' pg id}}
-        <ol class="paths items-container foldable"  data-tab="features">
+        <ol class="paths items-container"  data-tab="features">
             <li class="items-container-header flexrow">
                 <h3 class="item-name flexrow">
 <!--                    <div class="item-image" style="background-image: url('{{pg.path.img}}')"></div>-->
-                    {{pg.path.name}} ({{pg.path.system.rank}})
+                    <a class="section-toggle">{{pg.path.name}} ({{pg.path.system.rank}})</a>
                 </h3>
                 <div class="item-controls-2 item" data-item-id="{{pg.path.id}}">
                         {{#if ../unlocked}}
@@ -18,7 +18,7 @@
 <!--                    <a class="item-control item-create" data-pack="profiles" data-open="0" title="{{!localize "CO.ui.add"}}"><i class="fas fa-plus"></i>&nbsp;{{!localize "CO.label.short.add"}}</a>-->
                 </div>
             </li>
-            <ol class="item-list">
+            <ol class="item-list foldable">
                 {{#each pg.items as |capacity id|}}
                     {{#if capacity.system.learned}}
                     <li class="item flexrow" data-item-id="{{capacity._id}}" data-item-type="capacity" draggable="false">
