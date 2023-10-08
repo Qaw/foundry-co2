@@ -40,7 +40,7 @@
     {{! log "Chroniques Oubliées | detail" this}}
     <section class="sheet-body">
         <div class="tab description active" data-group="primary" data-tab="description">
-            {{editor enrichedDescription target="system.common.description.value" button=true owner=owner editable=editable}}
+            {{editor enrichedDescription target="system.common.description" button=true owner=owner editable=editable}}
         </div>
         <div class="tab details" data-group="primary" data-tab="details">
             {{> (buildItemTemplatePath "systems/co/templates/items/parts/" item.type)}}

@@ -43,6 +43,29 @@ export class Action {
     }
 
     /**
+     * Crée un nouvel objet Action basé sur un objet Action existant.
+     * @param {Action} existingAction L'objet Action existant à partir duquel créer le nouvel objet.
+     * @returns {Action} Un nouvel objet Action.
+     */
+    static createFromExisting(existingAction) {
+        return new Action(
+            existingAction.source,
+            existingAction.indice,
+            existingAction.type,
+            existingAction.img,
+            existingAction.label,
+            existingAction.chatFlavor,
+            existingAction.properties.visible,
+            existingAction.properties.activable,
+            existingAction.properties.enabled,
+            existingAction.properties.temporary,
+            existingAction.conditions,
+            existingAction.modifiers,
+            existingAction.resolvers
+        );
+    }
+
+    /**
      * Creates an action from a data object.
      */
     static apply(data) {
@@ -91,6 +114,24 @@ export class Action {
             return conditionsArray.every(condition => condition.evaluate(item));
         }
         return true;
+    }
+
+    get chatData() {
+        if (this.properties.visible && this.properties.activable) {
+            if (this.properties.temporary) {
+              if (this.properties.enabled) return [{"label": "Désactiver " + this.label, "action": "unactivate", "indice": this.indice }];
+              else return [{"label": "Activer " + this.label, "action": "activate", "indice": this.indice }];
+            }
+            else {
+              if (this.type === "melee" || this.type === "ranged") {
+                return[{"label": this.label + " - Attaque", "action": "activate", "type": "attack", "indice": this.indice}, {"label": this.label + " - Dommages", "action": "activate", "type": "damage", "indice": this.indice }];
+              }
+              else {
+                return [{"label": this.label, "action": "activate", "indice": this.indice }];
+              }
+            }
+        }
+        return [];
     }
 }
 

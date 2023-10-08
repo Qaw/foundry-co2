@@ -15,10 +15,7 @@
   },
   "Item": {
     "types": ["capacity", "equipment", "feature", "profile", "path"],
-    "htmlFields": [
-      "description.value",
-      "description.chat"
-    ],
+    "htmlFields": ["description"],
     "equipment": {},
     "feature" : {},
     "profile" : {},

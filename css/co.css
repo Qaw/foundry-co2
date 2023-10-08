@@ -5417,3 +5417,9 @@ strong,
 .co.sheet.item .window-content form .sheet-body .actions .resolvers-container .resolver {
   padding-bottom: 2px;
 }
+.co .item-card .inline-img {
+  height: 27px;
+  width: 27px;
+  border: none;
+  outline: 1px solid white;
+}

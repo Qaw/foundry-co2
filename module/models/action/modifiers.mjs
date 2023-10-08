@@ -96,7 +96,7 @@ export class Modifier {
     else item = actor.items.get(this.source);
     if (!item) return;
     const name = item.name;
-    const description = item.system.common.description.value;
+    const description = item.system.common.description;
     return {name, description};
   }
 

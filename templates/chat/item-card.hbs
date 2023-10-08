@@ -1,0 +1,12 @@
+{{log 'item-card' this}}
+<div class="item-card" data-actor-id="{{actorId}}" data-item-id="{{id}}">
+    <hr>
+    <div>
+        <img class="inline-img" style="height: 27px;" src="{{img}}" title="{{name}}"/>  <span style="text-transform: uppercase; font-weight: bold;">{{name}}</span>
+    </div>
+    <hr/>
+    <div>{{{description}}}</div>
+    {{#each actions as |action|}}
+        <button class="toggle-action" data-actor-id="{{@root.actorId}}" data-action="{{action.action}}" data-type="{{action.type}}" data-source="{{@root.id}}" data-indice="{{action.indice}}">{{action.label}}</button>
+    {{/each}}
+</div>

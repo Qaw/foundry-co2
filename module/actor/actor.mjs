@@ -376,6 +376,7 @@ export default class CoActor extends Actor {
    * @param {*} state true to enable the action, false to disable the action
    * @param {*} source  uuid of the embedded item which is the source of the action
    * @param {*} indice  indice of the action in the array of actions
+     @param {string("attack","damage")} type  define if it's an attack or just a damage
    */
   async activateAction(state, source, indice, type) {
     const item = this.items.get(source);

@@ -34,9 +34,10 @@
                 {{/if}}
                 {{#if (and item.system.properties.reloadable (gt item.system.quantity.current 0))}}
                   <a class="item-control inventory-consume" title="{{localize 'CO.actions.consume'}}"><i class="fas fa-drumstick-bite"></i></a>
-                {{/if}}
+                {{/if}}                
               </div>              
                 <div class="item-controls-2">
+                  <a class="item-chat chat" title="Envoyer dans le chat" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
                   {{#if @root/unlocked}}
                     <a class="item-control item-delete" title="{{localize 'CO.ui.remove'}}"><i class="fas fa-trash"></i></a>
                   {{/if}}

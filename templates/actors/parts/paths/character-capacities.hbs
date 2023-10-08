@@ -2,9 +2,7 @@
 <ol class="features items-container foldable"  data-tab="features">
     <li class="items-container-header flexrow">
         <h3 class="item-name flexrow">{{localize "CO.ui.capacitiesOffPaths"}}</h3>
-        <div class="item-controls-2">
-<!--            <a class="item-control item-create" data-pack="profiles" data-open="0" title="{{localize "CO.ui.add"}}"><i class="fas fa-plus"></i>&nbsp;{{localize "CO.label.short.add"}}</a>-->
-        </div>
+        <div class="item-controls-2"></div>
     </li>
     <ol class="item-list">
         {{#each capacitiesOffPaths as |capacity id|}}
@@ -15,40 +13,14 @@
                         <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>
                         <h4><a class="item-control item-edit">{{capacity.name}}</a></h4>
                     </div>
-                    <!----><div class="item-controls-2">
-                    {{#if ../unlocked}}
-                        <a class="item-control item-delete" title="{{localize "CO.ui.remove"}}"><i class="fas fa-trash"></i></a>
-                    {{/if}}
-                    </div>
-                    
+                    <div class="item-controls-2">
+                        <a class="item-chat chat" title="Envoyer dans le chat" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
+                        {{#if ../unlocked}}
+                            <a class="item-control item-delete" title="{{localize "CO.ui.remove"}}"><i class="fas fa-trash"></i></a>
+                        {{/if}}
+                    </div>                    
                 </li>
             {{/if}}
         {{/each}}
     </ol>
 </ol>
-
-<!--{{!log "Chroniques Oubliées | character capacities" this}}-->
-<!--<ol class="features items-container foldable"  data-tab="features">-->
-<!--    <li class="items-container-header flexrow">-->
-<!--        <h3 class="item-name flexrow">{{!localize "CO.ui.capacitiesNotLearned"}}</h3>-->
-<!--        <div class="item-controls-2">-->
-<!--            <a class="item-control item-create" data-pack="profiles" data-open="0" title="{{!localize "CO.ui.add"}}"><i class="fas fa-plus"></i>&nbsp;{{!localize "CO.label.short.add"}}</a>-->
-<!--        </div>-->
-<!--    </li>-->
-<!--    <ol class="item-list">-->
-<!--        {{!#each capacities as |capacity id|}}-->
-<!--            {{!log "Chroniques Oubliées | capacity" capacity}}-->
-<!--            {{!#if (and (not capacity.system.learned) (not capacity.system.path))}}-->
-<!--                <li class="item flexrow" data-item-id="{{!capacity._id}}" data-item-type="capacity" draggable="true">-->
-<!--                    <div class="item-name flexrow">-->
-<!--                        <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>-->
-<!--                        <h4><a class="item-control item-edit">{{!capacity.name}}</a></h4>-->
-<!--                    </div>-->
-<!--                    <div class="item-controls-2">-->
-<!--                        <a class="item-control item-delete" title="{{!localize "CO.ui.remove"}}"><i class="fas fa-trash"></i></a>-->
-<!--                    </div>-->
-<!--                </li>-->
-<!--            {{!/if}}-->
-<!--        {{!/each}}-->
-<!--    </ol>-->
-<!--</ol>-->

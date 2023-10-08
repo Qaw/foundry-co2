@@ -116,8 +116,45 @@ export class CoItem extends Item {
         uuid: this.uuid,
         name: this.name,
         img: this.img,
-        description: this.system.common.description.value,
+        description: this.system.common.description,
       };
+    }
+  }
+
+  /**
+   * @returns Informations of all the items to be displayed in the chat via sendToChat button
+   */
+  get chatData() {
+    if (this.type === ITEM_TYPE.CAPACITY || this.type === ITEM_TYPE.EQUIPMENT) {
+      let actions = [];
+      for (const action of this.actions) {
+        let act = Action.createFromExisting(action);
+        actions.push(...act.chatData);
+      }
+      return {
+        id: this.id,
+        name: this.name,
+        img: this.img,
+        description: this.system.common.description,
+        actions: actions
+      }
+    }
+  }
+
+  /**
+   * @returns Informations of a single action to be displayed in the chat via sendToChat button
+   * @param {*} indice 
+   */
+  getchatDataFromAction(indice) {    
+    if (this.type === ITEM_TYPE.CAPACITY || this.type === ITEM_TYPE.EQUIPMENT) {
+      const action =  Action.createFromExisting(this.actions[indice]);
+      return {
+        id: this.id,
+        name: this.name,
+        img: this.img,
+        description: this.system.common.description,
+        actions: action.chatData
+      }
     }
   }
 

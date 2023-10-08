@@ -1,8 +1,6 @@
 import { Hitpoints } from "../ui/hitpoints.js";
 
 export default function registerHooks() {
-
-
   Hooks.on("renderChatMessage", (message, html, data) => {
     // Affiche ou non les boutons d'application des dommages
     if (game.settings.get("co", "displayChatDamageButtonsToAll")) {
@@ -27,6 +25,24 @@ export default function registerHooks() {
         elt.remove();
       });
     }
-  });
 
+    html.find(".toggle-action").click((event) => {
+      console.log(event);
+      const dataset = event.currentTarget.dataset;
+
+      const actorId = dataset.actorId;
+      const action = dataset.action;
+      const type = dataset.type;
+      const source = dataset.source;
+      const indice = dataset.indice;
+      
+      const actor = game.actors.get(actorId);
+
+      if (action === "activate") {
+        actor.activateAction(true, source, indice, type);
+      } else if (action === "unactivate") {
+        actor.activateAction(false, source, indice, type);
+      }
+    });
+  });
 }
