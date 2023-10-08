@@ -1,0 +1,92 @@
+import { CoItem } from "../item/item.mjs";
+import { CoChat } from "../ui/chat.mjs";
+import { ITEM_TYPE } from "./constants.mjs";
+
+/**
+ * Attempt to create a macro from the dropped data. Will use an existing macro if one exists.
+ * @param {object} dropData     The dropped data
+ * @param {number} slot         The hotbar slot to use
+ */
+export async function createCoMacro(dropData, slot) {
+  const macroData = { type: "script", scope: "actor" };
+  switch (dropData.type) {
+    case "Item":
+      const itemData = await Item.implementation.fromDropData(dropData);
+      if (!itemData) return ui.notifications.warn(game.i18n.localize("MACRO.CoUnownedWarn"));
+      foundry.utils.mergeObject(macroData, {
+        name: itemData.name,
+        img: itemData.img,
+        command: `game.co.macros.sendToChat("${itemData.id}","${itemData.name}")`,
+        flags: { "co.itemMacro": true },
+      });
+      break;
+    default:
+      return;
+  }
+
+  // Assign the macro to the hotbar
+  let macro = game.macros.find((m) => m.name === macroData.name && m.command === macroData.command && m.author.isSelf);
+  if (!macro) {
+    macro = await Macro.create(macroData);
+    game.user.assignHotbarMacro(macro, slot);
+  }
+}
+
+export class Macros {
+  /**
+   * Send to Chat an Item or an action
+   * @param {string} itemName                Name of the item on the selected actor to trigger.
+   * @returns {Promise<ChatMessage|object>}  Roll result.
+   */
+  static async sendToChat(itemId, itemName) {
+    const {item, actor} = Macros.getMacroTarget(itemId, itemName, "Item");
+    if (item instanceof CoItem) {
+      let itemChatData = item.chatData;
+      if (item.type === ITEM_TYPE.CAPACITY && !item.system.learned) return ui.notifications.warn(game.i18n.format("MACRO.CoCapacityNotLearned", { name: itemName }));  
+      if (item.type === ITEM_TYPE.EQUIPMENT && !item.system.equipped) return ui.notifications.warn(game.i18n.format("MACRO.CoItemNotEquipped", {  name: itemName })); 
+      await new CoChat(actor)
+      .withTemplate('systems/co/templates/chat/item-card.hbs')
+      .withData({
+          actorId: actor.id,
+          id: itemChatData.id,
+          name: itemChatData.name,
+          img: itemChatData.img,
+          description: itemChatData.description,
+          actions: itemChatData.actions
+      })
+      .withWhisper(ChatMessage.getWhisperRecipients('GM').map((u) => u.id))
+      .create();
+    }    
+  }
+
+  /**
+   * Find a document of the specified name and type on an assigned or selected actor.
+   * @param {string} name          Document name to locate.
+   * @param {string} documentType  Type of embedded document (e.g. "Item").
+   * @returns {Document}           Document if found, otherwise nothing.
+   */
+  static getMacroTarget(id, name, documentType) {
+    let actor;
+    const speaker = ChatMessage.getSpeaker();
+    if (speaker.token) actor = game.actors.tokens[speaker.token];
+    actor ??= game.actors.get(speaker.actor);
+    if (!actor) return ui.notifications.warn(game.i18n.localize("MACRO.CoNoActorSelected"));
+
+    const item = actor.items.get(id);
+    if (item) return {item, actor};
+
+    const collection = documentType === "Item" ? actor.items : actor.effects;
+    const nameKeyPath = documentType === "Item" ? "name" : "label";
+
+    // Find item in collection
+    const documents = collection.filter((i) => foundry.utils.getProperty(i, nameKeyPath) === name);
+    const type = game.i18n.localize(`DOCUMENT.${documentType}`);
+    if (documents.length === 0) {
+      return ui.notifications.warn(game.i18n.format("MACRO.CoMissingTargetWarn", { actor: actor.name, type, name }));
+    }
+    if (documents.length > 1) {
+      ui.notifications.warn(game.i18n.format("MACRO.CoMultipleTargetsWarn", { actor: actor.name, type, name }));
+    }
+    return {item: documents[0], actor};
+  }
+}

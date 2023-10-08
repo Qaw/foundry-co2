@@ -20,6 +20,7 @@ import { CapacityData } from './models/item/capacity.mjs';
 import { FeatureData } from './models/item/feature.mjs';
 import { ProfileData } from './models/item/profile.mjs';
 import { EquipmentData } from './models/item/equipment.mjs';
+import { Macros } from './system/macros.mjs';
 
 Hooks.once("init", async function () {
 
@@ -28,7 +29,8 @@ Hooks.once("init", async function () {
             return ('Chroniques Oubliées | ' + message);
         },
         Modifier: Modifier,
-        config: CO
+        config: CO,
+        macros: Macros
     }
 
     game.system.CONST = SYSTEM;

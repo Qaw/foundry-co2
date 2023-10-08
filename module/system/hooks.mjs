@@ -1,4 +1,5 @@
 import { Hitpoints } from "../ui/hitpoints.js";
+import { createCoMacro } from "./macros.mjs";
 
 export default function registerHooks() {
   Hooks.on("renderChatMessage", (message, html, data) => {
@@ -45,4 +46,12 @@ export default function registerHooks() {
       }
     });
   });
+
+  Hooks.on("hotbarDrop", (bar, data, slot) => {
+    if ( ["Item"].includes(data.type) ) {
+      createCoMacro(data, slot);
+      return false;
+    }
+  });
+  
 }

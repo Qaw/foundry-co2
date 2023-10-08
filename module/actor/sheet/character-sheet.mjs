@@ -1,6 +1,6 @@
-import {ITEM_TYPE} from "../../system/constants.mjs";
+import { ITEM_TYPE } from "../../system/constants.mjs";
 import CoBaseActorSheet from "./base-actor-sheet.mjs";
-import {CoEditAbilitiesDialog} from "../../dialogs/edit-abilities-dialog.mjs";
+import { CoEditAbilitiesDialog } from "../../dialogs/edit-abilities-dialog.mjs";
 
 export default class CoCharacterSheet extends CoBaseActorSheet {
   /** @override */
@@ -10,10 +10,10 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
       width: 800,
       template: "systems/co/templates/actors/character-sheet.hbs",
       classes: ["co", "sheet", "actor", "character"],
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main" }],
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main" }]
     });
   }
-
+  
   /** @override */
   getData(options) {
     const context = super.getData(options);
@@ -33,7 +33,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     context.features = this.actor.features;
     context.actions = this.actor.actions;
     context.visibleActions = this.actor.visibleActions;
-    context.visibleActivableActions = this.actor.visibleActivableActions;    
+    context.visibleActivableActions = this.actor.visibleActivableActions;
     context.visibleNonActivableActions = this.actor.visibleNonActivableActions;
     context.inventory = this.actor.inventory;
     context.unlocked = this.actor.isUnlocked;
@@ -64,7 +64,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     const action = dataset.action;
     const type = dataset.type;
     const source = dataset.source;
-    const indice = dataset.indice
+    const indice = dataset.indice;
 
     if (action === "activate") {
       this.actor.activateAction(true, source, indice, type);
@@ -164,7 +164,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     const profileId = li.data("itemId");
 
     this.actor.deleteProfile(profileId);
-  }  
+  }
 
   /**
    * @description Delete the selected path
@@ -243,7 +243,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
         if (this.actor.profiles.length > 0) {
           ui.notifications.warn(game.i18n.localize("CO.notif.profilAlreadyExist"));
           break;
-        }        
+        }
         return this.actor.addProfile(item);
       case ITEM_TYPE.PATH:
         return this.actor.addPath(item);

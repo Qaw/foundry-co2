@@ -492,5 +492,13 @@
       "name": "Points de Mana",
       "hint": "Utiliser la règle optionnelle des Points de Mana (PM)."
     }
+  },
+  "MACRO": {
+    "CoMissingTargetWarn": "Votre acteur contrôlé '{actor}' n'a pas de {type} avec le nom '{name}'.",
+    "CoMultipleTargetsWarn": "Votre acteur contrôlé '{actor}' a plus d'un {type} avec le nom '{name}'. Le premier sera choisi.",
+    "CoNoActorSelected": "Aucun acteur sélectionné ou assigné ne peut être trouvé comme cible de la macro.",
+    "CoUnownedWarn": "Vous ne pouvez créer une macro que pour un objet possédé.",
+    "CoCapacityNotLearned": "La capacité {name} ciblée par la macro n'est pas apprise.",
+    "CoItemNotEquipped": "L'équipement {name} ciblé par la macro n'est pas équipé."
   }
 }
