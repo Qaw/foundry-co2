@@ -10,10 +10,10 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
       width: 800,
       template: "systems/co/templates/actors/character-sheet.hbs",
       classes: ["co", "sheet", "actor", "character"],
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main" }]
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main" }],
     });
   }
-  
+
   /** @override */
   getData(options) {
     const context = super.getData(options);
@@ -55,10 +55,11 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     html.find(".damage").click(this._onUseAction.bind(this));
     html.find(".capacity-learn").click(this._onLearnedToggle.bind(this));
     html.find(".inventory-equip").click(this._onEquippedToggle.bind(this));
+    html.find(".use-recovery").click(this._onUseRecovery.bind(this));
   }
 
   /**
-   *
+   * @description Action d'utiliser : active ou désactive une action
    * @param {*} event
    */
   _onUseAction(event) {
@@ -73,6 +74,19 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     } else if (action === "unactivate") {
       this.actor.activateAction(false, source, indice, type);
     }
+  }
+
+  /**
+   * @description Dépense un point de récupération avec récupération de point de vie ou sans si Shift + Clic
+   * @param {*} event
+   * @private
+   */
+  _onUseRecovery(event) {
+    event.preventDefault();
+    if (event.shiftKey) {
+      return this.actor.useRecovery(false);
+    }
+    return this.actor.useRecovery(true);
   }
 
   /**

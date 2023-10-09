@@ -258,10 +258,10 @@
     <!-- RP -->
     {{#if (isEnabled "useRecovery")}}
         <div class="resource-section sidebar-section">
-            <div class="sidebar-section-header" title="{{localize "CO.resources.long.recovery"}}">
+            <div class="sidebar-section-header" >
                 <div class="sidebar-label">
-                    <i class="fas fa-fw fa-heart-pulse"></i>
-                    <h4>{{localize "CO.resources.medium.recovery"}}</h4>
+                    <i class="fas fa-fw fa-heart-pulse use-recovery" title="Dépenser un PR avec PV, SHIFT+click sans PV"></i>
+                    <h4 title="{{localize "CO.resources.long.recovery"}}">{{localize "CO.resources.medium.recovery"}}</h4>
                     <div class="resource-points">
                         <input class="current" name="system.resources.recovery.value" value="{{resources.recovery.value}}" type="number" data-dtype="Number" placeholder="0">
                         <span class="slash">/</span>

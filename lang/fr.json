@@ -339,7 +339,12 @@
       "features": "Features"
     },
     "dialogs": {
-      "skillCheck": "Test de compétence"
+      "skillCheck": "Test de compétence",
+      "spendRecoveryPoint": {
+        "title": "Dépenser un point de récupération",
+        "content": "<p>Êtes-vous sûr de vouloir dépenser 1 point de récupération ?",
+        "rollTitle": "Point de récupération"
+      }
     },
     "roll": {
       "skillcheck": "Test de compétence",
