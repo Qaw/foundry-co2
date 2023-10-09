@@ -6,9 +6,9 @@
 <div class="conditions-container foldable">
     {{#if action.conditions}}
         <div class="flexrow strong">
-            <div class="form-fields flex1">Subject</div>
-            <div class="form-fields flex1">Predicate</div>
-            <div class="form-fields flex1">Object</div>
+            <div class="form-fields flex1">Sujet</div>
+            <div class="form-fields flex1">Prédicat</div>
+            <div class="form-fields flex1">Objet</div>
         </div>
         {{#each action.conditions as |c id|}}
         <div class="flexrow condition" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="condition">

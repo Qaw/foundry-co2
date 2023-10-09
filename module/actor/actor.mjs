@@ -90,7 +90,7 @@ export default class CoActor extends Actor {
   }
 
   get capacitiesOffPaths() {
-    return this.items.filter((item) => item.type === ITEM_TYPE.CAPACITY && item.system.path === null)
+    return this.items.filter((item) => item.type === ITEM_TYPE.CAPACITY && item.system.path === null);
   }
 
   get equipments() {
@@ -172,10 +172,24 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @returns Toutes les actions visibles et activables des capacités et des équipements
+   * @returns Toutes les actions visibles, activables et temporaires des capacités et des équipements
+   */
+  get visibleActivableTemporaireActions() {
+    return this.visibleActions.filter((a) => a.properties.activable && a.properties.temporary);
+  }
+
+  /**
+   * @returns Toutes les actions visibles et non activables des capacités et des équipements
    */
   get visibleNonActivableActions() {
     return this.visibleActions.filter((a) => !a.properties.activable);
+  }
+
+  /**
+   * @returns Toutes les actions visibles, non activables et non temporaires des capacités et des équipements
+   */
+  get visibleNonActivableNonTemporaireActions() {
+    return this.visibleActions.filter((a) => !a.properties.activable && !a.properties.temporary);
   }
 
   /**

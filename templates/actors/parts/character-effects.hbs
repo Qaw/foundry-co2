@@ -1,9 +1,8 @@
+{{log 'effects' this}}
 <div class="effects section-container">
     <div class="section-header">
         <h4>{{localize "CO.label.long.effects"}}</h4>
-        <div class="actions-controls controls">
-<!--            <a class="action-add item-create" title="Add Action" data-type="action" data-action-type="action"><i class="fas fa-plus"></i></a>-->
-        </div>
+        <div class="actions-controls controls"></div>
     </div>
     <!-- ACTIONS -->
     <div class="section-body-no-flex">
@@ -12,18 +11,17 @@
                 <h3 class="item-name flexrow">{{localize "CO.ui.enabled"}}</h3>
             </li>
             <ol class="item-list">
-                {{#each visibleActivableActions as |item id|}}                
+                <!-- Actions Visibles Activables Non temporaires et Activées -->
+                {{#each visibleActivableTemporaireActions as |item id|}}                
                     {{!log (concat "Chroniques Oubliées | action " id) item}}
                     {{#if item.properties.enabled }}
                         <li class="item flexrow" data-item-id="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
                             <div class="item-name flexrow">
-                                <div class="item-image" style="background-image: url('{{item.img}}')"></div>
+                                <div class="item-image" style="background-image: url({{getActionImg item @root.actor source}})"></div>
                                 <h4><a class="item-control item-edit" title="{{item.type}}">{{item.label}}</a>&nbsp; {{{getActionIcon item}}}
                                 </h4>
                             </div>
-                            <div class="item-controls-2">
-                                <a class="item-chat chat" title="Envoyer dans le chat"><i class="fas fa-fw fa-comment-alt"></i></a>
-                            </div>
+                            <div class="item-controls-2"></div>
                         </li>
                     {{/if}}
                 {{/each}}
@@ -34,7 +32,8 @@
                 <h3 class="item-name flexrow">{{localize "CO.ui.disabled"}}</h3>
             </li>
             <ol class="item-list">
-                {{#each visibleActivableActions as |item id|}}
+                <!-- Actions Visibles Activables Non temporaires et Désactivées -->
+                {{#each visibleActivableTemporaireActions as |item id|}}
                     {{!log (concat "Chroniques Oubliées | action " id) item}}
                     {{#if (not item.properties.enabled) }}
                         <li class="item flexrow" data-item-id="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
@@ -43,9 +42,7 @@
                                 <h4><a class="item-control item-edit" title="{{item.type}}">{{item.label}}</a>&nbsp; {{{getActionIcon item}}}
                                 </h4>
                             </div>
-                            <div class="item-controls-2">
-                                <a class="item-chat chat" title="Envoyer dans le chat"><i class="fas fa-fw fa-comment-alt"></i></a>
-                            </div>
+                            <div class="item-controls-2"></div>
                         </li>
                     {{/if}}
                 {{/each}}
@@ -56,18 +53,19 @@
                 <h3 class="item-name flexrow">{{localize "CO.ui.passive"}}</h3>
             </li>
             <ol class="item-list">
-                {{#each visibleNonActivableActions as |item id|}}
+                <!-- Actions Visibles non Activables Non temporaires et activées -->
+                {{#each visibleNonActivableNonTemporaireActions as |item id|}}
                     {{!log (concat "Chroniques Oubliées | action " id) item}}
-                    <li class="item flexrow" data-item-id="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
-                        <div class="item-name flexrow">
-                            <div class="item-image" style="background-image: url('{{item.img}}')"></div>
-                            <h4><a class="item-control item-edit" title="{{item.type}}">{{item.label}}</a>&nbsp; {{{getActionIcon item}}}
-                            </h4>
-                        </div>
-                        <div class="item-controls-2">
-                            <a class="item-chat chat" title="Envoyer dans le chat"><i class="fas fa-fw fa-comment-alt"></i></a>
-                        </div>
-                    </li>
+                     {{#if item.properties.enabled }}
+                        <li class="item flexrow" data-item-id="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
+                            <div class="item-name flexrow">
+                                <div class="item-image" style="background-image: url('{{item.img}}')"></div>
+                                <h4><a class="item-control item-edit" title="{{item.type}}">{{item.label}}</a>&nbsp; {{{getActionIcon item}}}
+                                </h4>
+                            </div>
+                            <div class="item-controls-2"></div>
+                        </li>
+                    {{/if}}
                 {{/each}}
             </ol>
         </ol>

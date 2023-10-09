@@ -91,20 +91,8 @@ export class CoItem extends Item {
    */
   get visibleActions() {
     if (foundry.utils.isEmpty(this.system.actions)) return [];
-        
-    return this.actions.filter((action) => {
-      // there are no conditions, use the visible property
-      if (action.conditions.length == 0) return action.properties.visible;
-      else {
-        let visible = true;
-        let index = 0;
-        while (index < action.conditions.length && visible) {
-          visible = new Condition(action.conditions[index].subject, action.conditions[index].predicate, action.conditions[index].object).evaluate(this);
-          index++;
-        }
-        return visible;
-      }
-    });
+
+    return this.actions.map(i=>Action.createFromExisting(i)).filter(action => action.isVisible(this));
   }
 
   /**

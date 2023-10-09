@@ -105,7 +105,8 @@ export class Action {
     }
 
     /**
-     * Return true if there is no condition or all conditions are true
+     * Return true if visible = true there is no condition or all conditions are true
+     * Elsewhere returns true if all conditions are true
      * @param {*} item 
      */
     isVisible(item) {
@@ -113,7 +114,7 @@ export class Action {
             let conditionsArray = this.conditions.map(cond => new Condition(cond.subject, cond.predicate, cond.object));
             return conditionsArray.every(condition => condition.evaluate(item));
         }
-        return true;
+        else return this.properties.visible;
     }
 
     get chatData() {
