@@ -96,4 +96,18 @@ export const registerSystemSettings = function () {
     type: Boolean,
     requiresReload: true,
   });
+
+  game.settings.register("co", "checkFreeHandsBeforeEquip", {
+    name: "SETTINGS.CheckFreeHandsBeforeEquip.name",
+    hint: "SETTINGS.CheckFreeHandsBeforeEquip.hint",
+    scope: "world",
+    config: true,
+    default: "none",
+    type: String,
+    choices: {
+        "none" : "SETTINGS.CheckFreeHandsBeforeEquip.none",
+        "all" : "SETTINGS.CheckFreeHandsBeforeEquip.all",
+        "gm" : "SETTINGS.CheckFreeHandsBeforeEquip.gm"
+    }
+});  
 };

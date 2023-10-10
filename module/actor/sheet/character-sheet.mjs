@@ -121,7 +121,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Select or unselect the capacity in the path view
+   * @description Equip or unequip the equipment
    * @param {*} event
    * @param {Boolean} status the target status of the capacity, true if selected, false elsewhere
    * @private
@@ -129,7 +129,8 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   _onEquippedToggle(event) {
     event.preventDefault();
     const itemId = $(event.currentTarget).parents(".item").data("itemId");
-    this.actor.toggleEquipmentEquipped(itemId);
+    const bypassChecks = event.shiftKey;
+    this.actor.toggleEquipmentEquipped(itemId, bypassChecks);
   }
 
   /**

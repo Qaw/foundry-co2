@@ -68,6 +68,13 @@
             {{/each}}
         </div>
     </div>
+    <div class="form-group">
+        <label>{{localize "CO.ui.usage"}}</label>
+        <div class="form-fields">
+	    	<label class="checkbox"> <input type="checkbox" name="system.usage.oneHand" {{checked system.usage.oneHand}}> {{localize "CO.ui.1h"}}</label>
+			<label class="checkbox"> <input type="checkbox" name="system.usage.twoHand" {{checked system.usage.twoHand}}> {{localize "CO.ui.2h"}}</label>		
+        </div>
+    </div>
     <br/>
     <div class="form-group">
         <label>{{localize "CO.ui.weight"}}</label>

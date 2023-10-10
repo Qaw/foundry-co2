@@ -22,14 +22,15 @@
       "item": "Fiche d'objet personnage"
     },
     "notif": {
-      "ready": "Système Chroniques Oubliées initialisé",
+      "ready": "Système Chroniques Oubliées initialisé.",
       "unknownCapacity": "Vous ne connaissez pas cette capacité.",
-      "noCapacitySelected": "Aucune capacité sélectionnée",
-      "inventory.empty" : "L'inventaire est vide",
+      "noCapacitySelected": "Aucune capacité sélectionnée.",
+      "inventory.empty" : "L'inventaire est vide.",
       "modifiers.empty" : "Aucun modificateur.",
       "conditions.empty" : "Aucune condition.",
       "resolvers.empty" : "Aucun resolveur.",
-      "profilAlreadyExist": "Vous avez déjà un profil"
+      "profilAlreadyExist": "Vous avez déjà un profil.",
+      "NotEnoughFreeHands": "Pas suffisament de mains libres pour équiper l'objet."
     },
     "label": {
       "long": {
@@ -497,6 +498,13 @@
     "UseMana": {
       "name": "Points de Mana",
       "hint": "Utiliser la règle optionnelle des Points de Mana (PM)."
+    },
+    "CheckFreeHandsBeforeEquip": {
+      "name": "Vérification des mains libres",
+      "hint": "Vérifier que le personnage a assez de mains libres pour équiper un objet (Maintenir MAJ pour ignorer le contrôle)",
+      "none": "Ne pas vérifier",
+      "all": "Vérification (ignorable par tous)",
+      "gm": "Vérification (ignorable uniquement par le MJ)"
     }
   },
   "MACRO": {

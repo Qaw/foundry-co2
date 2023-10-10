@@ -1,53 +1,65 @@
 {{!log "Chroniques Oubliées | inventory " this}}
 {{#each inventory as |items category|}}
   {{!#if (gt items.length 0)}}
-    <ol class="items-container foldable" data-tab="inventory" data-category="{{category}}">
-      <li class="items-container-header flexrow">
-        <h3 class="item-name flexrow">{{localize (concat "CO.ui." category)}}</h3>
-        <div class="item-detail">{{localize "CO.label.short.quantity"}}</div>
-        {{#if @root.editable}}
-          <div class="item-detail">{{localize "CO.ui.actions"}}</div>
-          <div class="item-controls-2">
-            <a class="item-control item-create" data-type="equipment" data-subtype="{{category}}" title="{{localize 'CO.label.long.add'}}"><i class="fas fa-plus"></i></a>
+  <ol class="items-container foldable" data-tab="inventory" data-category="{{category}}">
+    <li class="items-container-header flexrow">
+      <h3 class="item-name flexrow">{{localize (concat "CO.ui." category)}}</h3>
+      <div class="item-detail">{{localize "CO.ui.usage"}}</div>
+      <div class="item-detail">{{localize "CO.label.short.quantity"}}</div>      
+      {{#if @root.editable}}
+        <div class="item-detail">{{localize "CO.ui.actions"}}</div>
+        <div class="item-controls-2">
+          <a class="item-control item-create" data-type="equipment" data-subtype="{{category}}" title="{{localize 'CO.label.long.add'}}"><i class="fas fa-plus"></i></a>
+        </div>
+      {{/if}}
+    </li>
+    <ol class="item-list">
+      {{#each items as |item id|}}
+        <li class="item flexrow" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="true">
+          <div class="item-name flexrow">
+            <div class="item-image" style="background-image: url('{{item.img}}')"></div>
+            <h4><a class="item-control item-edit">{{item.name}}</a></h4>
           </div>
-        {{/if}}
-      </li>
-      <ol class="item-list">
-        {{#each items as |item id|}}
-          <li class="item flexrow" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="true">
-            <div class="item-name flexrow">
-              <div class="item-image" style="background-image: url('{{item.img}}')"></div>
-              <h4><a class="item-control item-edit">{{item.name}}</a></h4>
-            </div>
-            <div class="item-detail">
-              <a class="item-control inventory-qty" title="{{localize 'CO.label.short.quantity'}}">{{item.system.quantity.current}}</a>
-            </div>
-            {{#if @root.editable}}
-              <div class="item-detail">
-                {{#if item.system.properties.equipable}}
-                  {{#if item.system.equipped}}
-                    <a class="item-control inventory-equip" title="{{localize 'CO.actions.unequip'}}"><i class="fa-solid fa-shield"></i></a>
-                  {{else}}
-                    <a class="item-control inventory-equip" title="{{localize 'CO.actions.equip'}}"><i class="fa-regular fa-shield"></i></a>
-                  {{/if}}
+          <div class="item-detail">
+            <a class="item-control inventory-usage">
+              {{#if system.usage.twoHand}}
+                <i class="fas fa-hand-paper"></i><i class="fas fa-hand-paper"></i>
+              {{else}}
+                {{#if system.usage.oneHand}}
+                  <i class="fas fa-hand-paper"></i>
                 {{/if}}
-                {{#if (and item.system.properties.reloadable (gt item.system.quantity.current 0))}}
-                  <a class="item-control inventory-consume" title="{{localize 'CO.actions.consume'}}"><i class="fas fa-drumstick-bite"></i></a>
-                {{/if}}                
-              </div>              
-                <div class="item-controls-2">
-                  <a class="item-chat chat" title="Envoyer dans le chat" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
-                  {{#if @root/unlocked}}
-                    <a class="item-control item-delete" title="{{localize 'CO.ui.remove'}}"><i class="fas fa-trash"></i></a>
-                  {{/if}}
-                </div>              
-            {{/if}}
-          </li>
-          <!--        {{!> "systems/cof/templates/actors/parts/inventory/actor-inventory-item.hbs" item owner=../../actor}}-->
-        {{/each}}
-      </ol>
+              {{/if}}
+            </a>
+          </div>
+          <div class="item-detail">
+            <a class="item-control inventory-qty" title="{{localize 'CO.label.short.quantity'}}">{{item.system.quantity.current}}</a>
+          </div>
+          {{#if @root.editable}}
+            <div class="item-detail">
+              {{#if item.system.properties.equipable}}
+                {{#if item.system.equipped}}
+                  <a class="item-control inventory-equip" title="{{localize 'CO.actions.unequip'}}"><i class="fa-solid fa-shield"></i></a>
+                {{else}}
+                  <a class="item-control inventory-equip" title="{{localize 'CO.actions.equip'}}"><i class="fa-regular fa-shield"></i></a>
+                {{/if}}
+              {{/if}}
+              {{#if (and item.system.properties.reloadable (gt item.system.quantity.current 0))}}
+                <a class="item-control inventory-consume" title="{{localize 'CO.actions.consume'}}"><i class="fas fa-drumstick-bite"></i></a>
+              {{/if}}
+            </div>
+            <div class="item-controls-2">
+              <a class="item-chat chat" title="Envoyer dans le chat" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
+              {{#if @root/unlocked}}
+                <a class="item-control item-delete" title="{{localize 'CO.ui.remove'}}"><i class="fas fa-trash"></i></a>
+              {{/if}}
+            </div>
+          {{/if}}
+        </li>
+        <!--        {{!> "systems/cof/templates/actors/parts/inventory/actor-inventory-item.hbs" item owner=../../actor}}-->
+      {{/each}}
     </ol>
+  </ol>
   {{!else}}
-    <!--        <p class="empty">{{!localize "CO.notif.inventory.empty"}}</p>-->
+  <!--        <p class="empty">{{!localize "CO.notif.inventory.empty"}}</p>-->
   {{!/if}}
 {{/each}}

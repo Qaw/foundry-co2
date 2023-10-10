@@ -442,10 +442,11 @@ export default class CoActor extends Actor {
    * @description Equippe/Déséquippe un equipment du personnage
    * Change le champ equipped de l'equipement
    * @param {*} itemId
+   * @param {*} bypassChecks True to ignore the control of the hands
    */
-  async toggleEquipmentEquipped(itemId) {
+  async toggleEquipmentEquipped(itemId, bypassChecks) {
     // Mise à jour de l'item et de ses actions
-    await this._toggleItemFieldAndActions(itemId, "equipped");
+    await this._toggleItemFieldAndActions(itemId, "equipped", bypassChecks);
   }
 
   /**
@@ -840,14 +841,58 @@ export default class CoActor extends Actor {
    * @description toggle the field of the items and the actions linked
    * @param {*} itemId
    * @param {*} fieldName
+   * @param {*} bypassChecks True to ignore the control of the hands
    */
-  async _toggleItemFieldAndActions(itemId, fieldName) {
+  async _toggleItemFieldAndActions(itemId, fieldName, bypassChecks) {
     let item = this.items.get(itemId);
+    if (item.system.usage.oneHand || item.system.usage.twoHand) {
+      if (!this.canEquipItem(item, bypassChecks)) return;
+    }
     let fieldValue = item.system[fieldName];
     await this.updateEmbeddedDocuments("Item", [{ _id: itemId, [`system.${fieldName}`]: !fieldValue }]);
     if (item.actions.length > 0) {
       item.toggleActions();
     }
+  }
+
+  /**
+   * Check if an item can be equiped, if one Hand or two Hands property is true
+   * @param item
+   * @param bypassChecks
+   */
+  canEquipItem(item, bypassChecks) {
+    if (!this._hasEnoughFreeHands(item, bypassChecks)) {
+      ui.notifications.warn(game.i18n.localize("CO.notif.NotEnoughFreeHands"));
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Check if actor has enough free hands to equip this item
+   * @param item
+   * @param bypassChecks
+   */
+  _hasEnoughFreeHands(item, bypassChecks) {
+    // Si le contrôle de mains libres n'est pas demandé, on renvoi Vrai
+    let checkFreehands = game.settings.get("co", "checkFreeHandsBeforeEquip");
+    if (!checkFreehands || checkFreehands === "none") return true;
+
+    // Si le contrôle est ignoré ponctuellement avec la touche MAJ, on renvoi Vrai
+    if (bypassChecks && (checkFreehands === "all" || (checkFreehands === "gm" && game.user.isGM))) return true;
+
+    // Si l'objet est équipé, on tente de le déséquiper donc on ne fait pas de contrôle et on renvoi Vrai
+    if (item.system.equipped) return true;
+
+    // Nombre de mains nécessaire pour l'objet que l'on veux équipper
+    let neededHands = item.system.usage.twoHand ? 2 : 1;
+
+    // Calcul du nombre de mains déjà utilisées
+    let itemsInHands = this.items.filter((item) => item.system.equipped);
+    let usedHands = 0;
+    itemsInHands.forEach((item) => (usedHands += item.system.usage.twoHand? 2 : 1));
+
+    return usedHands + neededHands <= 2;
   }
 
   _getModifiersBySubtype(subtype) {
@@ -858,6 +903,7 @@ export default class CoActor extends Actor {
       ...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, subtype),
     ];
   }
+
   //#endregion
 
   // deleteItem(itemId) {
