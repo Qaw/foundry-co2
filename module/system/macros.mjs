@@ -16,8 +16,16 @@ export async function createCoMacro(dropData, slot) {
       foundry.utils.mergeObject(macroData, {
         name: itemData.name,
         img: itemData.img,
-        command: `game.co.macros.sendToChat("${itemData.id}","${itemData.name}")`,
+        command: `game.co.macros.sendToChat("${itemData.id}","${itemData.name}", null)`,
         flags: { "co.itemMacro": true },
+      });
+      break;
+    case "co.action":
+      foundry.utils.mergeObject(macroData, {
+        name: dropData.name + " - " + dropData.actionName,
+        img: dropData.img,
+        command: `game.co.macros.sendToChat("${dropData.source}","${dropData.name}","${dropData.indice}")`,
+        flags: { "co.actionMacro": true },
       });
       break;
     default:
@@ -35,28 +43,48 @@ export async function createCoMacro(dropData, slot) {
 export class Macros {
   /**
    * Send to Chat an Item or an action
-   * @param {string} itemName                Name of the item on the selected actor to trigger.
+   * @param {string} itemId          Id of the item on the selected actor to trigger.
+   * @param {string} itemName        Name of the item on the selected actor to trigger.
+   * @param {int} indice               Indice of the action to display, null if it's the item
    * @returns {Promise<ChatMessage|object>}  Roll result.
    */
-  static async sendToChat(itemId, itemName) {
-    const {item, actor} = Macros.getMacroTarget(itemId, itemName, "Item");
+  static async sendToChat(itemId, itemName, indice) {
+    const { item, actor } = Macros.getMacroTarget(itemId, itemName, "Item");
     if (item instanceof CoItem) {
-      let itemChatData = item.chatData;
-      if (item.type === ITEM_TYPE.CAPACITY && !item.system.learned) return ui.notifications.warn(game.i18n.format("MACRO.CoCapacityNotLearned", { name: itemName }));  
-      if (item.type === ITEM_TYPE.EQUIPMENT && !item.system.equipped) return ui.notifications.warn(game.i18n.format("MACRO.CoItemNotEquipped", {  name: itemName })); 
-      await new CoChat(actor)
-      .withTemplate('systems/co/templates/chat/item-card.hbs')
-      .withData({
-          actorId: actor.id,
-          id: itemChatData.id,
-          name: itemChatData.name,
-          img: itemChatData.img,
-          description: itemChatData.description,
-          actions: itemChatData.actions
-      })
-      .withWhisper(ChatMessage.getWhisperRecipients('GM').map((u) => u.id))
-      .create();
-    }    
+      if (indice === null) {
+        let itemChatData = item.getChatData(null);
+        if (item.type === ITEM_TYPE.CAPACITY && !item.system.learned) return ui.notifications.warn(game.i18n.format("MACRO.CoCapacityNotLearned", { name: itemName }));
+        if (item.type === ITEM_TYPE.EQUIPMENT && !item.system.equipped) return ui.notifications.warn(game.i18n.format("MACRO.CoItemNotEquipped", { name: itemName }));
+        await new CoChat(actor)
+          .withTemplate("systems/co/templates/chat/item-card.hbs")
+          .withData({
+            actorId: actor.id,
+            id: itemChatData.id,
+            name: itemChatData.name,
+            img: itemChatData.img,
+            description: itemChatData.description,
+            actions: itemChatData.actions,
+          })
+          .withWhisper(ChatMessage.getWhisperRecipients("GM").map((u) => u.id))
+          .create();
+      } else {
+        let itemChatData = item.getChatData(indice);
+        if (item.type === ITEM_TYPE.CAPACITY && !item.system.learned) return ui.notifications.warn(game.i18n.format("MACRO.CoCapacityNotLearned", { name: itemName }));
+        if (item.type === ITEM_TYPE.EQUIPMENT && !item.system.equipped) return ui.notifications.warn(game.i18n.format("MACRO.CoItemNotEquipped", { name: itemName }));
+        await new CoChat(actor)
+          .withTemplate("systems/co/templates/chat/item-card.hbs")
+          .withData({
+            actorId: actor.id,
+            id: itemChatData.id,
+            name: itemChatData.name,
+            img: itemChatData.img,
+            description: itemChatData.description,
+            actions: itemChatData.actions,
+          })
+          .withWhisper(ChatMessage.getWhisperRecipients("GM").map((u) => u.id))
+          .create();
+      }
+    }
   }
 
   /**
@@ -73,7 +101,7 @@ export class Macros {
     if (!actor) return ui.notifications.warn(game.i18n.localize("MACRO.CoNoActorSelected"));
 
     const item = actor.items.get(id);
-    if (item) return {item, actor};
+    if (item) return { item, actor };
 
     const collection = documentType === "Item" ? actor.items : actor.effects;
     const nameKeyPath = documentType === "Item" ? "name" : "label";
@@ -87,6 +115,6 @@ export class Macros {
     if (documents.length > 1) {
       ui.notifications.warn(game.i18n.format("MACRO.CoMultipleTargetsWarn", { actor: actor.name, type, name }));
     }
-    return {item: documents[0], actor};
+    return { item: documents[0], actor };
   }
 }

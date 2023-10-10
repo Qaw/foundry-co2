@@ -1,4 +1,4 @@
-import {CoSkillCheck} from "../../system/roll.mjs";
+import { CoSkillCheck } from "../../system/roll.mjs";
 import { CoChat } from "../../ui/chat.mjs";
 
 export default class CoBaseActorSheet extends ActorSheet {
@@ -16,6 +16,11 @@ export default class CoBaseActorSheet extends ActorSheet {
     html.find(".section-toggle").click(this._onSectionToggle.bind(this));
     html.find(".sheet-change-lock").click(this._onSheetChangelock.bind(this));
     html.find(".item-chat.chat").click(this._sendToChat.bind(this));
+  }
+
+  /** @inheritDoc */
+  _onDragStart(event) {
+    super._onDragStart(event);
   }
 
   /**
@@ -45,7 +50,7 @@ export default class CoBaseActorSheet extends ActorSheet {
 
   /**
    * Send the item details to the chat
-   * @param {*} event 
+   * @param {*} event
    */
   async _sendToChat(event) {
     event.preventDefault();
@@ -58,27 +63,26 @@ export default class CoBaseActorSheet extends ActorSheet {
     let indice;
     if (chatType === "item") {
       id = $(event.currentTarget).parents(".item").data("itemId");
-    }
-    else if (chatType === "action") {
+    } else if (chatType === "action") {
       id = $(event.currentTarget).data("source");
       indice = $(event.currentTarget).data("indice");
     }
-    console.log('Item : ', id);
+    console.log("Item : ", id);
     let item = this.actor.items.get(id);
-    let itemChatData = chatType === "item" ? item.chatData : item.getchatDataFromAction(indice);
+    let itemChatData = chatType === "item" ? item.getChatData(null) : item.getChatData(indice);
 
     await new CoChat(this.actor)
-          .withTemplate('systems/co/templates/chat/item-card.hbs')
-          .withData({
-              actorId: this.actor.id,
-              id: itemChatData.id,
-              name: itemChatData.name,
-              img: itemChatData.img,
-              description: itemChatData.description,
-              actions: itemChatData.actions
-          })
-          .withWhisper(ChatMessage.getWhisperRecipients('GM').map((u) => u.id))
-          .create();
+      .withTemplate("systems/co/templates/chat/item-card.hbs")
+      .withData({
+        actorId: this.actor.id,
+        id: itemChatData.id,
+        name: itemChatData.name,
+        img: itemChatData.img,
+        description: itemChatData.description,
+        actions: itemChatData.actions,
+      })
+      .withWhisper(ChatMessage.getWhisperRecipients("GM").map((u) => u.id))
+      .create();
   }
 
   _onRoll(event) {
@@ -88,10 +92,12 @@ export default class CoBaseActorSheet extends ActorSheet {
     const rolling = dataset.rolling;
 
     // console.debug(game.co.log(rolling));
-    
-    switch(rollType){
-      case "skillcheck" : new CoSkillCheck(this.actor).init(rolling);
-      case "combatcheck" : break;
+
+    switch (rollType) {
+      case "skillcheck":
+        new CoSkillCheck(this.actor).init(rolling);
+      case "combatcheck":
+        break;
     }
     // return this.actor.skillCheck(event, this.actor);
     // return this.actor.dmgRoll(event, this.actor);

@@ -48,10 +48,11 @@ export default function registerHooks() {
   });
 
   Hooks.on("hotbarDrop", (bar, data, slot) => {
-    if ( ["Item"].includes(data.type) ) {
-      createCoMacro(data, slot);
-      return false;
+    if ( ["Item", "co.action"].includes(data.type) ) { 
+      console.log('hotbardrop data', data);
+      createCoMacro(data, slot);      
     }
+    return false;
   });
   
 }

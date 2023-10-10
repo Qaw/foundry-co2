@@ -77,7 +77,7 @@
             <ol class="item-list">
                 {{#each visibleActivableActions as |action id|}}
                 {{log (concat "Chroniques Oubliées | action " id) action}}
-                        <li class="item flexrow action draggable" draggable="true" {{#if action.properties.temporary}}{{#unless action.properties.enabled}}style="opacity: 60%"{{/unless}} {{/if}}>
+                        <li class="item flexrow action"  draggable="true" data-source="{{action.source}}" data-indice="{{action.indice}}"   {{#if action.properties.temporary}}{{#unless action.properties.enabled}}style="opacity: 60%"{{/unless}}{{/if}}>
                             <div class="item-name flexrow">
                                 <div class="item-image" style="background-image: url('{{getActionImg action @root.actor source}}')"></div>
                                 <h4><a class="item-control item-edit">{{getEmbeddedItemName @root.actor source}} : {{action.label}}</a>&nbsp;{{{getActionIcon action}}}</h4>

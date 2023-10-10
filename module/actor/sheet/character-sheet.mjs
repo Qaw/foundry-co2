@@ -1,6 +1,7 @@
 import { ITEM_TYPE } from "../../system/constants.mjs";
 import CoBaseActorSheet from "./base-actor-sheet.mjs";
 import { CoEditAbilitiesDialog } from "../../dialogs/edit-abilities-dialog.mjs";
+import { Action } from "../../models/action/action.mjs";
 
 export default class CoCharacterSheet extends CoBaseActorSheet {
   /** @override */
@@ -74,6 +75,25 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     } else if (action === "unactivate") {
       this.actor.activateAction(false, source, indice, type);
     }
+  }
+
+  /** @inheritDoc */
+  _onDragStart(event) {
+    const target = event.currentTarget;
+    let dragData;
+    if (target.classList.contains("action")) {      
+      const itemId = target.dataset.source;
+      const indice = target.dataset.indice;
+      const item = this.actor.items.get(itemId);
+      const action = Action.createFromExisting(item.actions[indice]);
+      // Get source (itemId) and indice
+      dragData = action.toDragData(); 
+      dragData.name = item.name;
+      dragData.img = item.img;
+      dragData.actionName = action.label;
+      event.dataTransfer.setData("text/plain", JSON.stringify(dragData));      
+    }
+    else super._onDragStart(event);
   }
 
   /**
