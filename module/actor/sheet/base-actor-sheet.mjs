@@ -15,7 +15,8 @@ export default class CoBaseActorSheet extends ActorSheet {
     super.activateListeners(html);
     html.find(".section-toggle").click(this._onSectionToggle.bind(this));
     html.find(".sheet-change-lock").click(this._onSheetChangelock.bind(this));
-    html.find(".item-chat.chat").click(this._sendToChat.bind(this));
+    html.find(".item-chat.chat").click(this._onSendToChat.bind(this));
+    html.find(".item-create").click(this._onItemCreate.bind(this));
   }
 
   /** @inheritDoc */
@@ -24,8 +25,18 @@ export default class CoBaseActorSheet extends ActorSheet {
   }
 
   /**
-   * Manage the lock/unlock button on the sheet
-   *
+   * @description
+   * @param {*} event
+   */
+  _onSectionToggle(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).parents().next(".foldable");
+    li.slideToggle("fast");
+    return true;
+  }
+
+  /**
+   * @description Manage the lock/unlock button on the sheet
    * @param {*} event
    */
   async _onSheetChangelock(event) {
@@ -37,24 +48,11 @@ export default class CoBaseActorSheet extends ActorSheet {
   }
 
   /**
-   *
-   * @param {*} event
-   * @returns
-   */
-  _onSectionToggle(event) {
-    event.preventDefault();
-    const li = $(event.currentTarget).parents().next(".foldable");
-    li.slideToggle("fast");
-    return true;
-  }
-
-  /**
-   * Send the item details to the chat
+   * @description Send the item details to the chat
    * @param {*} event
    */
-  async _sendToChat(event) {
+  async _onSendToChat(event) {
     event.preventDefault();
-    //const li = $(event.currentTarget).parents().next(".foldable");
     const dataset = event.currentTarget.dataset;
     const chatType = dataset.chatType;
     console.log("send to chat with type", chatType);
@@ -85,6 +83,54 @@ export default class CoBaseActorSheet extends ActorSheet {
       .create();
   }
 
+  /**
+   * @description Create a new embedded item
+   * @param {*} event
+   */
+  _onItemCreate(event) {
+    event.preventDefault();
+    const header = event.currentTarget;
+    const type = header.dataset.type;
+
+    const itemData = {
+      type: type,
+      system: foundry.utils.expandObject({ ...header.dataset }),
+    };
+    delete itemData.system.type;
+
+    switch (type) {
+      case "equipment":
+        itemData.name = game.i18n.format("CO.ui.newItem", { item: "Equipement" });
+        let subtype;
+        switch (itemData.system.subtype) {
+          case "armors":
+            subtype = "ARMOR";
+            break;
+          case "shields":
+            subtype = "SHIELD";
+            break;
+          case "weapons":
+            subtype = "WEAPON";
+            break;
+          case "misc":
+            subtype = "MISC";
+            break;
+        }
+        itemData.system.subtype = subtype;
+        break;
+      case "capacity":
+        itemData.name = game.i18n.format("CO.ui.newItem", { item: "Capacité" });
+        itemData.system.learned = true;
+        break;
+    }
+
+    return this.actor.createEmbeddedDocuments("Item", [itemData]);
+  }
+
+  /**
+   *
+   * @param {*} event
+   */
   _onRoll(event) {
     const element = event.currentTarget;
     const dataset = element.dataset;

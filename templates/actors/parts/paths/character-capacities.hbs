@@ -2,7 +2,9 @@
 <ol class="features items-container foldable"  data-tab="features">
     <li class="items-container-header flexrow">
         <h3 class="item-name flexrow">{{localize "CO.ui.capacitiesOffPaths"}}</h3>
-        <div class="item-controls-2"></div>
+        <div class="item-controls-2">
+            <a class="item-control item-create" data-type="capacity" title="{{localize 'CO.label.long.add'}}"><i class="fas fa-plus"></i></a>
+        </div>
     </li>
     <ol class="item-list">
         {{#each capacitiesOffPaths as |capacity id|}}

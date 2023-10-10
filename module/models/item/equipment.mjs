@@ -93,7 +93,7 @@ export class EquipmentData extends foundry.abstract.DataModel {
                 reloadable: new fields.BooleanField({
                     required: true,
                     nullable: false,
-                    initial: true
+                    initial: false
                 }),
                 stackable: new fields.BooleanField({
                     required: true,

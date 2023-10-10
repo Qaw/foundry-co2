@@ -143,7 +143,7 @@
         <ol class="actions-container items-container">
             <ol class="item-list">
                 {{#each visibleActivableActions as |action id|}}
-                    {{log (concat "Chroniques Oubliées | action " id) action}}
+                    {{!log (concat "Chroniques Oubliées | action " id) action}}
                     <li class="item flexrow" draggable="true"
                         {{#if action.properties.temporary}}{{#unless action.properties.enabled}}style="opacity: 60%"{{/unless}} {{/if}}>
                         <div class="item-name flexrow">

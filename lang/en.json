@@ -163,6 +163,7 @@
       "submit": "OK",
       "cancel": "Annuler",
       "add" : "Ajouter",
+      "newItem": "Nouvel objet {item}",
       "remove" : "Supprimer",
       "diceType": "Type de dé",
       "data" : "Données",

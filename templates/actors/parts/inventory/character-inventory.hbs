@@ -8,8 +8,7 @@
         {{#if @root.editable}}
           <div class="item-detail">{{localize "CO.ui.actions"}}</div>
           <div class="item-controls-2">
-            <a class="item-control item-create" data-pack="items" data-open="0" title="{{localize 'CO.item.add'}}"><i class="fas fa-plus"></i>&nbsp;
-              {{localize "CO.label.short.add"}}</a>
+            <a class="item-control item-create" data-type="equipment" data-subtype="{{category}}" title="{{localize 'CO.label.long.add'}}"><i class="fas fa-plus"></i></a>
           </div>
         {{/if}}
       </li>
