@@ -44,7 +44,7 @@
         {{!-- Sheet Tab Navigation --}}
         <nav class="sheet-tabs tabs" data-group="primary">
             <a class="item" data-tab="main" title="{{ localize "CO.tabs.main" }}">{{ localize 'CO.tabs.main' }}</a>
-            <a class="item" data-tab="inventory" title="{{ localize "CO.tabs.inventory" }}">{{ localize 'CO.tabs.inventory' }}</a>
+            <a class="item" data-tab="loot" title="{{ localize "CO.tabs.loot" }}">{{ localize 'CO.tabs.loot' }}</a>
             <a class="item" data-tab="capacities" title="{{ localize "CO.tabs.capacities" }}">{{ localize "CO.tabs.capacities" }}</a>
             <a class="item" data-tab="notes" title="{{ localize "CO.tabs.notes" }}">{{ localize 'CO.tabs.notes' }}</a>
             <a class="item sheet-change-lock" title="{{ localize "CO.tabs.lock" }}">{{#if unlocked}}<i class="fas fa-lock-open"></i>{{else}}<i class="fas fa-lock" ></i>{{/if}}</a>
@@ -55,8 +55,8 @@
                 <div class="tab main" data-group="primary" data-tab="main">
                     {{> "systems/co/templates/encounter/parts/encounter-main.hbs"}}
                 </div>
-                <div class="tab inventory" data-group="primary" data-tab="inventory">
-                    {{> "systems/co/templates/actors/parts/inventory/character-inventory.hbs"}}
+                <div class="tab loot" data-group="primary" data-tab="loot">
+                    {{> "systems/co/templates/encounter/parts/encounter-loot.hbs"}}
                 </div>
                 <div class="tab capacities" data-group="primary" data-tab="capacities">
                     {{> "systems/co/templates/actors/parts/paths/character-paths.hbs"}}

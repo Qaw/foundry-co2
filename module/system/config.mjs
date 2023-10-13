@@ -16,7 +16,8 @@ CO.itemIcons = {
   "capacity": "icons/svg/combat.svg",
   "feature": "icons/svg/invisible.svg",
   "profile": "icons/svg/upgrade.svg",
-  "path": "icons/svg/upgrade.svg"
+  "path": "icons/svg/upgrade.svg",
+  "attack": "icons/svg/sword.svg"
 }
 
 CO.actorIcons = {
@@ -39,6 +40,7 @@ CO.modifier = {
     feature: "CO.modifier.type.feature",
     profile: "CO.modifier.type.profile",
     capacity: "CO.modifier.type.capacity",
+    attack: "CO.modifier.type.attack"
   },
   subtype: {
     ability: "CO.modifier.subtype.ability",
@@ -161,5 +163,10 @@ CO.encounter = {
     boss3: "Boss 3",
     boss4: "Boss 4",
     boss5: "Boss 5"
+  },
+  attackTypes : {
+    MELEE: "CO.combat.long.melee",
+    RANGED: "CO.combat.long.ranged",
+    MAGICAL: "CO.combat.long.magic"
   }
 };

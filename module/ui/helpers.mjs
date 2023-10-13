@@ -1,6 +1,9 @@
 import { CO } from "../system/config.mjs";
 
 export const registerHandlebarsHelpers = function () {
+  Handlebars.registerHelper("equals", function (a, b) {
+    return a === b;
+  });
   Handlebars.registerHelper("add", function (a, b) {
     return parseInt(a) + parseInt(b);
   });
@@ -45,8 +48,11 @@ export const registerHandlebarsHelpers = function () {
     return item.img;
   });
   Handlebars.registerHelper("isActionable", function (itemType) {
-    const actionableItemTypes = ["capacity", "equipment"];
+    const actionableItemTypes = ["capacity", "equipment", "attack"];
     return actionableItemTypes.includes(itemType);
+  });
+  Handlebars.registerHelper("isNegativeOrNull", function (value) {
+    return value >= 0;
   });
   Handlebars.registerHelper("getActionIcon", function (action) {
     switch (action.type) {

@@ -19,6 +19,8 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
     context.system = this.actor.system;
     // console.debug(this.actor.system.abilities);
     context.abilities = this.actor.system.abilities;
+    console.debug(this.actor.attacks);
+    context.attacks = this.actor.attacks;
     context.combat = this.actor.system.combat;
     context.attributes = this.actor.system.attributes;
     context.resources = this.actor.system.resources;
@@ -210,6 +212,8 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
         //   break;
         // }
         // return this.actor.addProfile(item);
+      case ITEM_TYPE.ATTACK:
+        return this.actor.addAttack(item);
       case ITEM_TYPE.PATH:
         return this.actor.addPath(item);
       case ITEM_TYPE.CAPACITY:

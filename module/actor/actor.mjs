@@ -101,6 +101,10 @@ export default class CoActor extends Actor {
     return this.items.filter((item) => item.type === ITEM_TYPE.EQUIPMENT && item.system.equipped);
   }
 
+  get attacks() {
+    return this.items.filter((item) => item.type === ITEM_TYPE.ATTACK);
+  }
+
   /**
    * @returns les Items de type equipment et de sous-type armor
    */
@@ -581,6 +585,7 @@ export default class CoActor extends Actor {
 
     return newPath[0].id;
   }
+
 
   /**
    * @description Add a capacity as an embedded item

@@ -78,7 +78,8 @@ export const ITEM_TYPE = {
     FEATURE: "feature",
     PROFILE : "profile",    
     PATH: "path",
-    CAPACITY: "capacity"
+    CAPACITY: "capacity",
+    ATTACK: "attack"
 };
 
 export const EQUIPMENT_SUBTYPE = {

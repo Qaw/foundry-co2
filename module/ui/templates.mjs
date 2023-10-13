@@ -23,7 +23,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/" + SYSTEM_NAME + "/templates/encounter/encounter-sheet.hbs",
     "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-main.hbs",
     "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-notes.hbs",
-    "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-inventory.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-loot.hbs",
     "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-data.hbs",
     "systems/" + SYSTEM_NAME + "/templates/encounter/parts/encounter-sidebar.hbs",
 
@@ -38,6 +38,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/" + SYSTEM_NAME + "/templates/items/parts/feature/feature-partial.hbs",
     "systems/" + SYSTEM_NAME + "/templates/items/parts/profile/profile-partial.hbs",
     "systems/" + SYSTEM_NAME + "/templates/items/parts/path/path-partial.hbs",
+    "systems/" + SYSTEM_NAME + "/templates/items/parts/attack/attack-partial.hbs",
     "systems/" + SYSTEM_NAME + "/templates/items/parts/capacity/capacity-partial.hbs",
     "systems/" + SYSTEM_NAME + "/templates/items/parts/actions/action-partial.hbs",
     "systems/" + SYSTEM_NAME + "/templates/items/parts/actions/conditions-partial.hbs",

@@ -1,0 +1,48 @@
+{{!log "Chroniques Oubliées | inventory " this}}
+{{#each inventory as |items category|}}
+{{!#if (gt items.length 0)}}
+    <ol class="items-container foldable" data-tab="inventory" data-category="{{category}}">
+        <li class="items-container-header flexrow">
+            <h3 class="item-name flexrow">{{localize (concat "CO.ui." category)}}</h3>
+            <div class="item-detail">{{localize "CO.ui.usage"}}</div>
+            <div class="item-detail">{{localize "CO.label.short.quantity"}}</div>
+            {{#if (and @root.editable @root/unlocked)}}
+                <div class="item-controls-2">
+                    <a class="item-control item-create" data-type="equipment" data-subtype="{{category}}" title="{{localize 'CO.label.long.add'}}"><i class="fas fa-plus"></i></a>
+                </div>
+            {{/if}}
+        </li>
+        <ol class="item-list">
+            {{#each items as |item id|}}
+                <li class="item flexrow" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="true">
+                    <div class="item-name flexrow">
+                        <div class="item-image" style="background-image: url('{{item.img}}')"></div>
+                        <h4><a class="item-control item-edit">{{item.name}}</a></h4>
+                    </div>
+                    <div class="item-detail">
+                        <a class="item-control inventory-usage">
+                            {{#if system.usage.twoHand}}
+                                <i class="fas fa-hand-paper"></i><i class="fas fa-hand-paper"></i>
+                            {{else}}
+                                {{#if system.usage.oneHand}}
+                                    <i class="fas fa-hand-paper"></i>
+                                {{/if}}
+                            {{/if}}
+                        </a>
+                    </div>
+                    <div class="item-detail">
+                        <a class="item-control inventory-qty" title="{{localize 'CO.label.short.quantity'}}">{{item.system.quantity.current}}</a>
+                    </div>
+                    {{#if @root.editable}}
+                        <div class="item-controls-2">
+                            <a class="item-chat chat" title="Envoyer dans le chat" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
+                            {{#if @root/unlocked}}
+                                <a class="item-control item-delete" title="{{localize 'CO.ui.remove'}}"><i class="fas fa-trash"></i></a>
+                            {{/if}}
+                        </div>
+                    {{/if}}
+                </li>
+            {{/each}}
+        </ol>
+    </ol>
+{{/each}}

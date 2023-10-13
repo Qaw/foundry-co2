@@ -14,12 +14,13 @@
     "encounter": {}
   },
   "Item": {
-    "types": ["capacity", "equipment", "feature", "profile", "path"],
+    "types": ["attack", "capacity", "equipment", "feature", "path", "profile"],
     "htmlFields": ["description"],
     "equipment": {},
     "feature" : {},
     "profile" : {},
     "capacity": {},
+    "attack": {},
     "path": {}
   }
 }

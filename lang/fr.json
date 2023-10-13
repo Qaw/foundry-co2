@@ -12,7 +12,8 @@
       "feature": "Trait",
       "profile": "Profil",
       "path": "Voie",
-      "capacity": "Capacité"
+      "capacity": "Capacité",
+      "attack": "Attaque (de rencontre)"
     }
   },
   "CO": {
@@ -59,11 +60,13 @@
         "combat": "Combat",
         "attacks": "Attaques",
         "attack": "Attaque",
+        "damage": "Dommages",
         "path": "Voie",
         "paths": "Voies",
         "critrange": "Critique",
         "rank": "Rang",
         "add": "Ajouter",
+        "sendToChat" : "Envoyer sur le chat",
         "edit": "Editer",
         "delete": "Supprimer",
         "difficulty": "Difficulté",
@@ -113,6 +116,7 @@
         "combat": "Combat",
         "attacks": "Att.",
         "attack": "Att.",
+        "damage": "Dmg.",
         "temp" : "Temp.",
         "tempmax" : "Max. Temp.",
         "modifiers": "Mods",
@@ -333,6 +337,7 @@
       "abilities": "Caractéristiques",
       "actions": "Actions",
       "inventory": "Inventaire",
+      "loot": "Butin",
       "capacities": "Voies & Capacités",
       "description": "Description",
       "details": "Détails",
@@ -383,7 +388,8 @@
       "container": "Conteneur",
       "action": "Action",
       "path": "Voie",
-      "capacity": "Capacité"
+      "capacity": "Capacité",
+      "attack": "Attaque (Rencontre)"
     },
     "equipment" : {
       "subtypes" : {

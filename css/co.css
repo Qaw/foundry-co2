@@ -147,7 +147,9 @@
   --color-shadow-primary: white;
   --color-shadow-highlight: #ff6400;
   --color-shadow-dark: #000;
-  --primary: #5e0000;
+  --primary: #154e7b;
+  --primary2: #367620;
+  --primary3: #6f0010;
   --secondary: #171f69;
   --tertiary: #E9D7A1;
   --alt: #786452;
@@ -1150,9 +1152,9 @@ strong,
   border-radius: 3px;
 }
 .co .section-container .section-header {
-  border: 1px solid #5e0000;
+  border: 1px solid var(--primary);
   border-radius: 3px 3px 0px 0px;
-  background: #5e0000;
+  background: var(--primary);
   display: flex;
   flex: 0;
   width: 100%;
@@ -1160,7 +1162,7 @@ strong,
   justify-content: space-between;
   align-items: baseline;
   text-align: left;
-  color: #f5efe0;
+  color: var(--color-text-trait);
   font-size: var(--font-size-13);
   padding: 0 8px;
   line-height: 2em;
@@ -1181,7 +1183,7 @@ strong,
   justify-self: flex-end;
 }
 .co .section-container .section-body {
-  border: 1px solid #5e0000;
+  border: 1px solid var(--primary);
   border-radius: 0px 0px 3px 3px;
   display: flex;
   flex: auto;
@@ -1193,7 +1195,7 @@ strong,
   padding: 4px;
 }
 .co .section-container .section-body-no-flex {
-  border: 1px solid #5e0000;
+  border: 1px solid var(--primary);
   border-radius: 0px 0px 3px 3px;
   width: 100%;
   padding: 4px;
@@ -1655,7 +1657,7 @@ strong,
 .co .attacks-list .attack .attack-body .damage-button,
 .co .actions-list .attack .attack-body .critical-button,
 .co .attacks-list .attack .attack-body .critical-button {
-  background-color: var(--primary);
+  background-color: var(--primary3);
 }
 .co .controls {
   font-size: 0.8rem;
@@ -4623,8 +4625,8 @@ strong,
   padding: 0.25em 0.5em;
   border-top: 1px solid #c9c7b8;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot {
   list-style: none;
   margin: 0;
   padding: 0 5px;
@@ -4632,71 +4634,71 @@ strong,
   scrollbar-width: thin;
   color: #7a7971;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory.foldable .items-container-header h3,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory.foldable .items-container-header h3 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot.foldable .items-container-header h3,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot.foldable .items-container-header h3 {
   cursor: pointer;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory.foldable .items-container-header h3:before,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory.foldable .items-container-header h3:before {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot.foldable .items-container-header h3:before,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot.foldable .items-container-header h3:before {
   content: "▾\202F";
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory.folded .items-container-header h3:before,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory.folded .items-container-header h3:before {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot.folded .items-container-header h3:before,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot.folded .items-container-header h3:before {
   content: "▸\202F";
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item {
   line-height: 30px;
   padding: 0 2px;
   border-bottom: 1px solid #c9c7b8;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item:last-child,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item:last-child {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item:last-child,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item:last-child {
   border-bottom: none;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item .item-name,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item .item-name {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item .item-name,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item .item-name {
   cursor: pointer;
   max-height: 30px;
   overflow: hidden;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item .item-name .item-image,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item .item-name .item-image {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item .item-name .item-image,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item .item-name .item-image {
   flex: 0 0 30px;
   background-size: 30px;
   margin-right: 5px;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item .item-name h4,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item .item-name h4 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item .item-name h4,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item .item-name h4 {
   margin: 0;
   overflow-x: hidden;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item .item-name i.attuned,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item .item-name i.attuned {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item .item-name i.attuned,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item .item-name i.attuned {
   color: #7a7971;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item .item-uses input,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item .item-uses input {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item .item-uses input,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item .item-uses input {
   width: 24px;
   text-align: center;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item .item-properties,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item .item-properties {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item .item-properties,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item .item-properties {
   margin-top: 3px;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item .item-recharge,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item .item-recharge {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item .item-recharge,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item .item-recharge {
   flex: 0 0 80px;
   text-align: right;
   font-size: 11px;
   color: #7a7971;
   white-space: nowrap;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .items-container-header,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .items-container-header {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .items-container-header,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .items-container-header {
   margin: 2px 0;
   padding: 0;
   align-items: center;
@@ -4705,8 +4707,8 @@ strong,
   font-weight: bold;
   line-height: 24px;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .items-container-header h3,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .items-container-header h3 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .items-container-header h3,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .items-container-header h3 {
   margin: 0 -5px 0 0;
   padding-left: 5px;
   font-family: var(--serif-condensed);
@@ -4714,24 +4716,24 @@ strong,
   font-weight: 700;
   border-bottom: none;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .items-container-header .item-controls a.item-create,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .items-container-header .item-controls a.item-create,
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .items-container-header .item-controls-1 a.item-create,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .items-container-header .item-controls-1 a.item-create,
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .items-container-header .item-controls-2 a.item-create,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .items-container-header .item-controls-2 a.item-create,
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .items-container-header .item-controls-3 a.item-create,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .items-container-header .item-controls-3 a.item-create,
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .items-container-header .item-controls-4 a.item-create,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .items-container-header .item-controls-4 a.item-create {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .items-container-header .item-controls a.item-create,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .items-container-header .item-controls a.item-create,
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .items-container-header .item-controls-1 a.item-create,
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .items-container-header .item-controls-2 a.item-create,
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .items-container-header .item-controls-3 a.item-create,
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .items-container-header .item-controls-4 a.item-create,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .items-container-header .item-controls-4 a.item-create {
   flex: 0 0 100%;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-name,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-name {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-name,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-name {
   color: #4b4a44;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-detail,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-detail {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-detail,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-detail {
   flex: 0 0 70px;
   font-size: 12px;
   color: #7a7971;
@@ -4741,38 +4743,38 @@ strong,
   white-space: nowrap;
   overflow: hidden;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-detail:last-child,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-detail:last-child {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-detail:last-child,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-detail:last-child {
   border-right: none;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-detail.item-action,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-detail.item-action {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-detail.item-action,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-detail.item-action {
   flex: 0 0 100px;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-weight,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-weight {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-weight,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-weight {
   flex: 0 0 60px;
   border-left: 1px solid #c9c7b8;
   border-right: 1px solid #c9c7b8;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-list,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-list {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-list,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-list.out-of-charge,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-list.out-of-charge {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-list.out-of-charge,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-list.out-of-charge {
   color: lightgray;
   font-style: italic;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-list.out-of-charge .item-name,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-list.out-of-charge .item-name {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-list.out-of-charge .item-name,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-list.out-of-charge .item-name {
   color: lightgray;
   font-style: italic;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-1,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-1 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-1,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-1 {
   flex: 0 0 22px;
   display: flex;
   flex-direction: row;
@@ -4780,37 +4782,37 @@ strong,
   justify-content: flex-start;
   justify-content: flex-end;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-1 > *,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-1 > * {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-1 > *,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-1 > * {
   flex: 1;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-1 .flex1,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-1 .flex1 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-1 .flex1,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-1 .flex1 {
   flex: 1;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-1 .flex2,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-1 .flex2 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-1 .flex2,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-1 .flex2 {
   flex: 2;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-1 .flex3,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-1 .flex3 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-1 .flex3,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-1 .flex3 {
   flex: 3;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-1 .flex4,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-1 .flex4 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-1 .flex4,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-1 .flex4 {
   flex: 4;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-1 a,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-1 a {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-1 a,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-1 a {
   flex: 0 0 22px;
   font-size: 12px;
   text-align: center;
   color: #7a7971;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls,
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-2,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-2 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls,
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-2,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-2 {
   flex: 0 0 44px;
   display: flex;
   flex-direction: row;
@@ -4819,47 +4821,47 @@ strong,
   justify-content: flex-end;
   text-align: center;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls > *,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls > *,
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-2 > *,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-2 > * {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls > *,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls > *,
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-2 > *,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-2 > * {
   flex: 1;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls .flex1,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls .flex1,
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-2 .flex1,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-2 .flex1 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls .flex1,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls .flex1,
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-2 .flex1,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-2 .flex1 {
   flex: 1;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls .flex2,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls .flex2,
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-2 .flex2,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-2 .flex2 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls .flex2,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls .flex2,
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-2 .flex2,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-2 .flex2 {
   flex: 2;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls .flex3,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls .flex3,
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-2 .flex3,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-2 .flex3 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls .flex3,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls .flex3,
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-2 .flex3,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-2 .flex3 {
   flex: 3;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls .flex4,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls .flex4,
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-2 .flex4,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-2 .flex4 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls .flex4,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls .flex4,
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-2 .flex4,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-2 .flex4 {
   flex: 4;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls a,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls a,
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-2 a,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-2 a {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls a,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls a,
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-2 a,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-2 a {
   flex: 0 0 22px;
   font-size: 12px;
   text-align: center;
   color: #7a7971;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-3,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-3 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-3,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-3 {
   flex: 0 0 66px;
   display: flex;
   flex-direction: row;
@@ -4867,35 +4869,35 @@ strong,
   justify-content: flex-start;
   justify-content: flex-end;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-3 > *,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-3 > * {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-3 > *,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-3 > * {
   flex: 1;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-3 .flex1,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-3 .flex1 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-3 .flex1,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-3 .flex1 {
   flex: 1;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-3 .flex2,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-3 .flex2 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-3 .flex2,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-3 .flex2 {
   flex: 2;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-3 .flex3,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-3 .flex3 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-3 .flex3,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-3 .flex3 {
   flex: 3;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-3 .flex4,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-3 .flex4 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-3 .flex4,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-3 .flex4 {
   flex: 4;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-3 a,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-3 a {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-3 a,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-3 a {
   flex: 0 0 22px;
   font-size: 12px;
   text-align: center;
   color: #7a7971;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-4,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-4 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-4,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-4 {
   flex: 0 0 88px;
   display: flex;
   flex-direction: row;
@@ -4903,35 +4905,35 @@ strong,
   justify-content: flex-start;
   justify-content: flex-end;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-4 > *,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-4 > * {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-4 > *,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-4 > * {
   flex: 1;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-4 .flex1,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-4 .flex1 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-4 .flex1,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-4 .flex1 {
   flex: 1;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-4 .flex2,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-4 .flex2 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-4 .flex2,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-4 .flex2 {
   flex: 2;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-4 .flex3,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-4 .flex3 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-4 .flex3,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-4 .flex3 {
   flex: 3;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-4 .flex4,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-4 .flex4 {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-4 .flex4,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-4 .flex4 {
   flex: 4;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-controls-4 a,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-controls-4 a {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-controls-4 a,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-controls-4 a {
   flex: 0 0 22px;
   font-size: 12px;
   text-align: center;
   color: #7a7971;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .inventory .item-summary,
-.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .inventory .item-summary {
+.co.sheet.actor.encounter .window-content form.editable .main .sheet-body .loot .item-summary,
+.co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot .item-summary {
   flex: 0 0 100%;
   font-size: 12px;
   line-height: 16px;

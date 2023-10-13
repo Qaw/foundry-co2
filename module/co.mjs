@@ -1,31 +1,32 @@
-import { SYSTEM, SYSTEM_ID } from './config/system.mjs';
-globalThis.SYSTEM = SYSTEM;
-
+import {SYSTEM, SYSTEM_ID} from './config/system.mjs';
 import {CO} from './system/config.mjs';
 import CoCharacterSheet from './actor/sheet/character-sheet.mjs';
 import CoItemSheet from './item/sheet/item-sheet.mjs';
 import {preloadHandlebarsTemplates} from './ui/templates.mjs';
 import {CoItem} from './item/item.mjs';
 import {registerHandlebarsHelpers} from './ui/helpers.mjs';
-import { Modifier } from './models/action/modifiers.mjs';
+import {Modifier} from './models/action/modifiers.mjs';
 import {registerSystemSettings} from './system/settings.js';
 import CoEncounterSheet from "./actor/sheet/encounter-sheet.mjs";
 
-import { CharacterData } from './models/actor/character.mjs';
+import {CharacterData} from './models/actor/character.mjs';
 import {CoActorProxy} from './actor/proxy.mjs';
 import registerHooks from './system/hooks.mjs';
 import {EncounterData} from "./models/actor/encounter.mjs";
-import { PathData } from './models/item/path.mjs';
-import { CapacityData } from './models/item/capacity.mjs';
-import { FeatureData } from './models/item/feature.mjs';
-import { ProfileData } from './models/item/profile.mjs';
-import { EquipmentData } from './models/item/equipment.mjs';
-import { Macros } from './system/macros.mjs';
+import {PathData} from './models/item/path.mjs';
+import {FeatureData} from './models/item/feature.mjs';
+import {ProfileData} from './models/item/profile.mjs';
+import {EquipmentData} from './models/item/equipment.mjs';
+import {CapacityData} from './models/item/capacity.mjs';
+import {Macros} from './system/macros.mjs';
+import {AttackData} from "./models/item/attack.mjs";
+
+globalThis.SYSTEM = SYSTEM;
 
 Hooks.once("init", async function () {
 
     game.co = {
-        log : function(message) {
+        log: function (message) {
             return ('Chroniques Oubliées | ' + message);
         },
         Modifier: Modifier,
@@ -42,13 +43,14 @@ Hooks.once("init", async function () {
         character: CharacterData,
         encounter: EncounterData
     };
-    
+
     CONFIG.Item.dataModels = {
-         capacity : CapacityData,
-         equipment : EquipmentData,
-         feature : FeatureData,
-         profile : ProfileData,
-         path : PathData
+        capacity: CapacityData,
+        equipment: EquipmentData,
+        feature: FeatureData,
+        profile: ProfileData,
+        path: PathData,
+        attack: AttackData
     };
 
     CONFIG.Actor.documentClass = CoActorProxy;
@@ -60,14 +62,16 @@ Hooks.once("init", async function () {
 
     // Register application sheets
     Actors.registerSheet(SYSTEM_ID, CoCharacterSheet, {
-        types: ["character", "vendor", "vehicle", "marker"], makeDefault: true, label: "CO.sheet.character"
+        types: ["character"], makeDefault: true, label: "CO.sheet.character"
     });
     Actors.registerSheet(SYSTEM_ID, CoEncounterSheet, {
         types: ["encounter"], makeDefault: true, label: "CO.sheet.encounter"
     });
 
     Items.registerSheet(SYSTEM_ID, CoItemSheet, {
-        types: ["equipment", "trait", "profile", "feature", "consumable", "loot", "currency", "container", "action", "path", "capacity"], makeDefault: true, label: "CO.sheet.item"
+        types: ["attack", "capacity", "equipment", "feature", "path", "profile"],
+        makeDefault: true,
+        label: "CO.sheet.item"
     });
 
     // Preload Handlebars Templates
@@ -77,7 +81,7 @@ Hooks.once("init", async function () {
     registerHandlebarsHelpers();
 
     // Register System Settings
-	registerSystemSettings();
+    registerSystemSettings();
 
     // Register hooks
     registerHooks();
@@ -96,18 +100,18 @@ Hooks.once("init", async function () {
     // Initiative
     if (game.settings.get("co", "useVarInit")) {
         CONFIG.Combat.initiative = {
-          formula: "1d6x + @combat.init.value + @abilities.wis.value/100",
-          decimals: 2
+            formula: "1d6x + @combat.init.value + @abilities.wis.value/100",
+            decimals: 2
         };
     } else {
         CONFIG.Combat.initiative = {
-          formula: "@combat.init.value + @abilities.wis.value/100",
-          decimals: 2
+            formula: "@combat.init.value + @abilities.wis.value/100",
+            decimals: 2
         };
     }
 
 });
 
-Hooks.once("ready", async function () {   
+Hooks.once("ready", async function () {
     console.info(game.co.log(game.i18n.localize("CO.notif.ready")));
 });
