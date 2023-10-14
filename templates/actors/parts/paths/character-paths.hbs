@@ -9,8 +9,9 @@
             <h3 class="item-name flexrow">
                 <a class="section-toggle">{{pg.path.name}} ({{pg.path.system.rank}})</a>
             </h3>
-            <div class="item-controls-2 item" data-item-id="{{pg.path.id}}">
+            <div class="item-controls-3 item" data-item-id="{{pg.path.id}}">
                     {{#if ../unlocked}}
+                        <a class="item-edit edit" title="{{localize 'CO.label.long.edit'}}"><i class="fas fa-fw fa-edit"></i></a>
                         <a class="item-control path-delete" title={{localize "CO.ui.remove"}}><i class="fas fa-trash"></i></a>
                     {{/if}}                        
             </div>
@@ -24,9 +25,10 @@
                             <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>
                             <h4><a class="item-control item-edit">{{capacity.name}}</a></h4>
                         </div>
-                        <div class="item-controls-2">
-                            <a class="item-chat chat" title="Envoyer dans le chat" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
+                        <div class="item-controls-3">
+                            <a class="item-chat chat" title="{{localize "CO.label.long.sendToChat"}}" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
                             {{#if @root.unlocked}}
+                                <a class="item-edit edit" title="{{localize 'CO.label.long.edit'}}"><i class="fas fa-fw fa-edit"></i></a>
                                 <a class="item-control capacity-learn" title="{{localize "CO.ui.unbuy"}}"><i class="fa-solid green fa-check" style="font-size:16px"></i></a>
                             {{/if}}
                         </div>
@@ -40,6 +42,7 @@
                                 <h4><a class="item-control item-edit" title="{{localize "CO.notif.unknownCapacity"}}">{{capacity.name}}</a></h4>
                             </div>
                             <div class="item-controls-2">
+                                <a class="item-edit edit" title="{{localize 'CO.label.long.edit'}}"><i class="fas fa-fw fa-edit"></i></a>
                                 <a class="item-control capacity-learn" title="{{localize "CO.ui.buy"}}"><i class="fa-solid gray fa-check" style="font-size:16px"></i></a>
                             </div>
                         </li>

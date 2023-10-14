@@ -14,16 +14,6 @@ export class AttackData extends foundry.abstract.DataModel {
                 required: true,
                 initial: false
             }),
-            value : new fields.StringField({
-                required: true,
-                nullable: false,
-                initial: ""
-            }),
-            damage : new fields.StringField({
-                required: false,
-                nullable: false,
-                initial: ""
-            }),
             charges: new fields.SchemaField({
                 current: new fields.NumberField({
                     required: false,

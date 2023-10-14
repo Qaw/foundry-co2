@@ -7,6 +7,27 @@ export default class CoBaseActorSheet extends ActorSheet {
     const context = super.getData(options);
     context.config = game.co.config;
     context.debugMode = game.settings.get("co", "debugMode");
+    context.system = this.actor.system;
+    // console.debug(game.co.log(this.actor.system.abilities));
+    context.abilities = this.actor.system.abilities;
+    context.combat = this.actor.system.combat;
+    context.attributes = this.actor.system.attributes;
+    context.resources = this.actor.system.resources;
+    context.details = this.actor.system.details;
+    context.paths = this.actor.paths;
+    context.pathGroups = this.actor.pathGroups;
+    context.capacities = this.actor.capacities;
+    context.learnedCapacities = this.actor.learnedCapacities;
+    context.capacitiesOffPaths = this.actor.capacitiesOffPaths;
+    context.features = this.actor.features;
+    context.actions = this.actor.actions;
+    context.visibleActions = this.actor.visibleActions;
+    context.visibleActivableActions = this.actor.visibleActivableActions;
+    context.visibleNonActivableActions = this.actor.visibleNonActivableActions;
+    context.visibleActivableTemporaireActions = this.actor.visibleActivableTemporaireActions;
+    context.visibleNonActivableNonTemporaireActions = this.actor.visibleNonActivableNonTemporaireActions;
+    context.inventory = this.actor.inventory;
+    context.unlocked = this.actor.isUnlocked;    
     return context;
   }
 
@@ -49,25 +70,28 @@ export default class CoBaseActorSheet extends ActorSheet {
 
   /**
    * @description Send the item details to the chat
+   * Chat Type are :
+   * - item : to display an item and all its actions
+   * - action : to display the item and the action
+   * - loot : to only display informations on the item
    * @param {*} event
    */
   async _onSendToChat(event) {
     event.preventDefault();
     const dataset = event.currentTarget.dataset;
     const chatType = dataset.chatType;
-    console.log("send to chat with type", chatType);
 
     let id;
     let indice;
-    if (chatType === "item") {
+    if (chatType === "item" || chatType === "loot") {
       id = $(event.currentTarget).parents(".item").data("itemId");
     } else if (chatType === "action") {
       id = $(event.currentTarget).data("source");
       indice = $(event.currentTarget).data("indice");
-    }
-    console.log("Item : ", id);
+    } 
+
     let item = this.actor.items.get(id);
-    let itemChatData = chatType === "item" ? item.getChatData(null) : item.getChatData(indice);
+    let itemChatData = item.getChatData(chatType, indice);
 
     await new CoChat(this.actor)
       .withTemplate("systems/co/templates/chat/item-card.hbs")
@@ -120,6 +144,11 @@ export default class CoBaseActorSheet extends ActorSheet {
         break;
       case "capacity":
         itemData.name = game.i18n.format("CO.ui.newItem", { item: "Capacité" });
+        itemData.system.learned = true;
+        break;
+      case "attack":
+        itemData.name = game.i18n.format("CO.ui.newItem", { item: "Attaque" });
+        itemData.system.subtype = "MELEE";
         itemData.system.learned = true;
         break;
     }

@@ -111,19 +111,23 @@ export class CoItem extends Item {
 
   /**
    * @returns Informations of the item to be displayed in the chat via sendToChat button
-   * @param (String) Indice of the action, null for all actions
+   * @param {*} chatType 
+   * item : Item and all actions
+   * loot : Item without actions
+   * action : Item and a specific action
+   * @param (String) Indice of the action, null for others
    */
-  getChatData(indice) {
-    if (this.type === ITEM_TYPE.CAPACITY || this.type === ITEM_TYPE.EQUIPMENT) {
+  getChatData(chatType, indice = null) {
+    if (this.type === ITEM_TYPE.CAPACITY || this.type === ITEM_TYPE.EQUIPMENT || this.type === ITEM_TYPE.ATTACK) {
       let actions = [];
       // All actions
-      if (indice === null) {
+      if (chatType === "item" && indice === null) {
         for (const action of this.actions) {
           let act = Action.createFromExisting(action);
           actions.push(...act.chatData);
         }
       }
-      else {
+      else if (chatType === "action") {
         const action = this.actions.find((a) => a.indice === parseInt(indice));
         console.log('getChatData action', action);
         let act = Action.createFromExisting(action);

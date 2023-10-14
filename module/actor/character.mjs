@@ -1,5 +1,5 @@
 import CoActor from "./actor.mjs";
-import { COMBAT, RESOURCES } from "../system/constants.mjs";
+import { COMBAT, ITEM_TYPE, RESOURCES } from "../system/constants.mjs";
 import { CoChat } from "../ui/chat.mjs";
 
 export default class CoCharacter extends CoActor {
@@ -52,12 +52,44 @@ export default class CoCharacter extends CoActor {
     this.system.attributes.level.max = this.system.attributes.level.base + levelBonuses;
   }
 
+  //#region accesseurs
+
+  /**
+   * @returns les Items de type profile
+   */
+  get profiles() {
+    return this.items.filter((item) => item.type === ITEM_TYPE.PROFILE);
+  }
+
+  /**
+ * @returns le premier Item de type profile
+ */
+  get profile() {
+    const profile = this.items.find((item) => item.type === ITEM_TYPE.PROFILE);
+    return profile !== undefined ? [profile] : [];
+  }
+
   get hd() {
     const profile = this.profile[0];
     if (profile) return profile.system.hd;
     return undefined;
   }
 
+  /**
+   * @returns Toutes les actions visibles des capacités et des équipements
+   */
+  get visibleActions() {
+    let allActions = [];
+    this.items.forEach((item) => {
+      if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
+        allActions.push(...item.visibleActions);
+      }
+    });
+    return allActions;
+  }  
+
+//#endregion
+  
   useRecovery(withHpRecovery) {
     if (!this.system.resources.recovery.value > 0) return;
     let hp = this.system.attributes.hp;

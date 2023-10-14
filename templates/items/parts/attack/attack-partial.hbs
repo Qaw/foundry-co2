@@ -26,18 +26,6 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
-        <label>{{localize "CO.label.long.formulaAttack"}}</label>
-        <div class="form-fields">
-            <input class="field-value" name="system.value" type="text" value="{{numberFormat system.value decimals=0 sign=true}}" placeholder="{{localize "CO.label.long.formulaAttack"}}" data-dtype="String">
-        </div>
-    </div>
-    <div class="form-group">
-        <label>{{localize "CO.label.long.formulaDamage"}}</label>
-        <div class="form-fields">
-            <input class="field-value" name="system.damage" type="text" value="{{system.damage}}" placeholder="{{localize "CO.label.long.formulaDamage"}}" data-dtype="String">
-        </div>
-    </div>
     {{#if system.properties.chargeable}}
         <div class="form-group">
             <label>{{localize "CO.ui.charges"}}</label>

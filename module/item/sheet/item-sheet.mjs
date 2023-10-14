@@ -296,8 +296,12 @@ export default class CoItemSheet extends CoBaseItemSheet {
     _onAddAction(event) {
         event.preventDefault();
         let newActions = foundry.utils.deepClone(this.item.actions);
-
         let action = new Action(this.item.uuid, newActions.length, "melee", "icons/svg/d20-highlight.svg", game.i18n.localize("CO.ui.newAction") + " " + (this.item.actions.length + 1));
+        // Attack action must be Visible and Activable by default
+        if (this.item.type === "attack") {
+            action.properties.visible = true;
+            action.properties.activable = true;
+        }
         newActions.push(action);
         return this.item.update({"system.actions": newActions});
     }

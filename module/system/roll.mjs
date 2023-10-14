@@ -295,8 +295,6 @@ export class CoDamageRoll {
     async roll(actor){
         let r = new Roll(this._formula);
         await r.roll({"async": true});
-        // Getting the dice kept in case of 2d12 or 2d20 rolls
-        const result = r.terms[0].results.find(r => r.active).result;
         this._roll = r;
         this._rollTotal = r._total;
         this._toolTip = new Handlebars.SafeString(await r.getTooltip());

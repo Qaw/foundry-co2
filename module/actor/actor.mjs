@@ -36,21 +36,6 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @returns les Items de type profile
-   */
-  get profiles() {
-    return this.items.filter((item) => item.type === ITEM_TYPE.PROFILE);
-  }
-
-  /**
-   * @returns le premier Item de type profile
-   */
-  get profile() {
-    const profile = this.items.find((item) => item.type === ITEM_TYPE.PROFILE);
-    return profile !== undefined ? [profile] : [];
-  }
-
-  /**
    * @returns les Items de type path
    */
   get paths() {
@@ -99,10 +84,6 @@ export default class CoActor extends Actor {
 
   get equippedEquipments() {
     return this.items.filter((item) => item.type === ITEM_TYPE.EQUIPMENT && item.system.equipped);
-  }
-
-  get attacks() {
-    return this.items.filter((item) => item.type === ITEM_TYPE.ATTACK);
   }
 
   /**

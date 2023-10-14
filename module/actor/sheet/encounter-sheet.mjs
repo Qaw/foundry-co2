@@ -16,27 +16,9 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
   /** @override */
   getData(options) {
     const context = super.getData(options);
-    context.system = this.actor.system;
-    // console.debug(this.actor.system.abilities);
-    context.abilities = this.actor.system.abilities;
     console.debug(this.actor.attacks);
     context.attacks = this.actor.attacks;
-    context.combat = this.actor.system.combat;
-    context.attributes = this.actor.system.attributes;
-    context.resources = this.actor.system.resources;
-    context.details = this.actor.system.details;
-    context.paths = this.actor.paths;
-    context.pathGroups = this.actor.pathGroups;
-    context.capacities = this.actor.capacities;
-    context.learnedCapacities = this.actor.learnedCapacities;
-    context.capacitiesOffPaths = this.actor.capacitiesOffPaths;
-    context.features = this.actor.features;
-    context.actions = this.actor.actions;
-    context.visibleActions = this.actor.visibleActions;
-    context.visibleActivableActions = this.actor.visibleActivableActions;
-    context.visibleNonActivableActions = this.actor.visibleNonActivableActions;
-    context.inventory = this.actor.inventory;
-    context.unlocked = this.actor.isUnlocked;
+    context.attacksActions = this.actor.attacksActions;
     return context;
   }
 
