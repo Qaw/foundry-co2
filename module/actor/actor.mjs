@@ -449,8 +449,14 @@ export default class CoActor extends Actor {
    * @param {*} bypassChecks True to ignore the control of the hands
    */
   async toggleEquipmentEquipped(itemId, bypassChecks) {
+    // Contrôle usage des mains
+    let item = this.items.get(itemId);
+    if (item.system.usage.oneHand || item.system.usage.twoHand) {
+      if (!this.canEquipItem(item, bypassChecks)) return;
+    }
+
     // Mise à jour de l'item et de ses actions
-    await this._toggleItemFieldAndActions(itemId, "equipped", bypassChecks);
+    await this._toggleItemFieldAndActions(itemId, "equipped");
   }
 
   /**
@@ -846,13 +852,9 @@ export default class CoActor extends Actor {
    * @description toggle the field of the items and the actions linked
    * @param {*} itemId
    * @param {*} fieldName
-   * @param {*} bypassChecks True to ignore the control of the hands
    */
-  async _toggleItemFieldAndActions(itemId, fieldName, bypassChecks) {
+  async _toggleItemFieldAndActions(itemId, fieldName) {
     let item = this.items.get(itemId);
-    if (item.system.usage.oneHand || item.system.usage.twoHand) {
-      if (!this.canEquipItem(item, bypassChecks)) return;
-    }
     let fieldValue = item.system[fieldName];
     await this.updateEmbeddedDocuments("Item", [{ _id: itemId, [`system.${fieldName}`]: !fieldValue }]);
     if (item.actions.length > 0) {
