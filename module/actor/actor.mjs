@@ -380,6 +380,8 @@ export default class CoActor extends Actor {
   async activateAction(state, source, indice, type) {
     const item = this.items.get(source);
 
+    if (!item) return;
+
     // Action avec une durée
     if (item.system.actions[indice].properties.temporary) {
       let newActions = foundry.utils.deepClone(item.system.actions);
@@ -395,7 +397,7 @@ export default class CoActor extends Actor {
     }
     // Action instantanée
     else {
-      const action = item.system.actions[indice];
+      const action = Action.createFromExisting(item.system.actions[indice]);
       // Recherche des resolvers de l'action
       let resolvers = Object.values(action.resolvers).map((a) => new Resolver(a.type, a.skill, a.dmg));
       for (const resolver of resolvers) {

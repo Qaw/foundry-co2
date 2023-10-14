@@ -39,16 +39,16 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
    * @param {*} event
    */
   _onUseAction(event) {
-    const element = event.currentTarget;
-    const dataset = element.dataset;
+    const dataset = event.currentTarget.dataset;
     const action = dataset.action;
+    const type = dataset.type;
     const source = dataset.source;
     const indice = dataset.indice;
 
     if (action == "activate") {
-      this.actor.activateAction(true, source, indice);
+      this.actor.activateAction(true, source, indice, type);
     } else if (action == "unactivate") {
-      this.actor.activateAction(false, source, indice);
+      this.actor.activateAction(false, source, indice, type);
     }
   }
 

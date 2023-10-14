@@ -44,7 +44,7 @@ export default class CoEncounter extends CoActor {
 
     get attacks() {
         return this.items.filter((item) => item.type === ITEM_TYPE.ATTACK);
-        }
+    }
     
     /**
      * @returns Toutes les actions visibles des attaques
@@ -98,4 +98,5 @@ export default class CoEncounter extends CoActor {
 
     return newAttack[0].id;
   }
+  
 }

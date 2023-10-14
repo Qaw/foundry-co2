@@ -39,4 +39,5 @@ export class AttackData extends foundry.abstract.DataModel {
             actions: new fields.ArrayField(new fields.ObjectField())
         }
     }
+
 }

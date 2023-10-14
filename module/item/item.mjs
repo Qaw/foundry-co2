@@ -5,7 +5,7 @@ import { Condition } from "../models/action/condition.mjs";
  * Extend the base Item entity
  * @extends {Item}
  */
-export class CoItem extends Item {
+export default class CoItem extends Item {
   constructor(...args) {
     let data = args[0];
     if (!data.img && game.co.config.itemIcons[data.type]) data.img = game.co.config.itemIcons[data.type];

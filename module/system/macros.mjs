@@ -1,4 +1,4 @@
-import { CoItem } from "../item/item.mjs";
+import CoItem from "../item/item.mjs";
 import { CoChat } from "../ui/chat.mjs";
 import { ITEM_TYPE } from "./constants.mjs";
 
