@@ -96,14 +96,38 @@ CO.equipment = {
 
 CO.action = {
   types: {
-    spell : "CO.actionType.spell",
-    melee : "CO.actionType.melee",
-    ranged : "CO.actionType.ranged",
-    magical : "CO.actionType.magical",
-    heal : "CO.actionType.heal",
-    protection : "CO.actionType.protection"
+    spell : "CO.action.types.spell",
+    melee : "CO.action.types.melee",
+    ranged : "CO.action.types.ranged",
+    magical : "CO.action.types.magical",
+    heal : "CO.action.types.heal",
+    buff : "CO.action.types.buff",
+    debuff : "CO.action.types.debuff"
   }
 };
+
+CO.condition = {
+  objects : {
+    item : "CO.condition.objects.item",
+    target : "CO.condition.objects.target",
+    _self : "CO.condition.objects._self",
+  },
+  predicates : {
+    isLearned : "CO.condition.predicates.isLearned",
+    isEquipped : "CO.condition.predicates.isEquipped"
+  }
+}
+
+CO.resolver = {
+  types: {
+    melee : "CO.action.types.melee",
+    ranged : "CO.action.types.ranged",
+    magical : "CO.action.types.magical",
+    heal : "CO.action.types.heal",
+    buff : "CO.action.types.buff",
+    debuff : "CO.action.types.debuff"
+  }
+}
 
 CO.path = {
   subtypes: {

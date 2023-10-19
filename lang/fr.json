@@ -362,6 +362,32 @@
       "fumble": "Échec critique",
       "failure": "Échec"
     },
+    "action" : {
+      "types" : {
+        "spell" : "Sort",
+        "melee" : "Attaque de contact",
+        "ranged" : "Attaque à distance",
+        "magical" : "Attaque magique",
+        "protection" : "Protection",
+        "heal" : "Soin",
+        "buff" : "Amélioration",
+        "debuff" : "Affaiblissement"
+      },
+      "equip" : "Équiper",
+      "unequip": "Déséquiper",
+      "consume" : "Consommer"
+    },
+    "condition" : {
+      "objects" : {
+        "item" : "Objet",
+        "target" : "Cible",
+        "_self" : "Soi-Même"
+      },
+      "predicates" : {
+        "isEquipped" : "est équipé par...",
+        "isLearned" : "a été appris par..."
+      }
+    },
     "modifier": {
       "type": {
         "equipment": "Equipement",
@@ -374,6 +400,14 @@
         "combat": "Combat",
         "attribute": "Attribut",
         "skill": "Jet de compétence"
+      }
+    },
+    "resolver" : {
+      "types" : {
+        "melee" : "Contact",
+        "ranged" : "À distance",
+        "magic" : "Magique",
+        "heal" : "Soin"
       }
     },
     "itemTypes" : {
@@ -452,21 +486,6 @@
       "large": "Grande",
       "huge": "Gigantesque"
 
-    },
-    "actions" : {
-      "equip" : "Équiper",
-      "unequip": "Déséquiper",
-      "consume" : "Consommer"
-    },
-    "actionType" : {
-      "spell" : "Sort",
-      "melee" : "Attaque de contact",
-      "ranged" : "Attaque à distance",
-      "magical" : "Attaque magique",
-      "protection" : "Protection",
-      "heal" : "Soin"
-    },
-    "config": {
     }
   },
   "SETTINGS": {
