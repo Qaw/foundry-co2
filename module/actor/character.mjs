@@ -50,6 +50,11 @@ export default class CoCharacter extends CoActor {
     // Level max
     const levelBonuses = Object.values(this.system.attributes.level.bonuses).reduce((prev, curr) => prev + curr);
     this.system.attributes.level.max = this.system.attributes.level.base + levelBonuses;
+
+    // XP dépensés dans les capacités des voies
+    this.system.attributes.xp.max = 2 * this.system.attributes.level.max;
+    this.system.attributes.xp.value = this._computeXP();
+
   }
 
   //#region accesseurs
@@ -132,5 +137,23 @@ export default class CoCharacter extends CoActor {
         defaultYes: false,
       });
     }
+  }
+
+  _computeXP() {
+    const paths = this.paths;
+    let xp = 0;
+    paths.forEach(path => {
+      const rank = path.system.rank;
+      const capacities = path.system.capacities;
+      for (let index = 0; index < rank; index++) {
+        let capacity = this.items.get(capacities[index]);
+        if (capacity.system.learned) {
+          if (index === 0 || index === 1) xp += 1;
+          else xp +=2;
+        }        
+      }
+    });
+    console.log('Compute XP : ', xp);
+    return xp;
   }
 }
