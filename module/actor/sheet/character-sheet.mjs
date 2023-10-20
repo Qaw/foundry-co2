@@ -19,6 +19,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   getData(options) {
     const context = super.getData(options);
     context.profiles = this.actor.profiles;
+    context.xpleft = parseInt(this.actor.system.attributes.xp.max) - parseInt(this.actor.system.attributes.xp.value);
     return context;
   }
 

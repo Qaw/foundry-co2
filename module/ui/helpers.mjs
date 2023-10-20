@@ -11,10 +11,28 @@ export const registerHandlebarsHelpers = function () {
     return a + b;
   });
   Handlebars.registerHelper("isset", function (value) {
-    return value == undefined ? false : true;
+    return value !== undefined;
   });
   Handlebars.registerHelper("not", function (value) {
     return !value;
+  });
+  Handlebars.registerHelper('eq', function(a, b) {
+    return (a === b);
+  });
+  Handlebars.registerHelper('gt', function(a, b) {
+    return (a > b);
+  });
+  Handlebars.registerHelper('gte', function(a, b) {
+    return (a >= b);
+  });
+  Handlebars.registerHelper('lt', function(a, b) {
+    return (a < b);
+  });
+  Handlebars.registerHelper('lte', function(a, b) {
+    return (a <= b);
+  });
+  Handlebars.registerHelper('ne', function(a, b) {
+    return (a !== b);
   });
   Handlebars.registerHelper("sum", function (arr, init) {
     return arr.reduce((previousValue, currentValue) => previousValue + currentValue, init);

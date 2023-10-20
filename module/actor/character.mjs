@@ -144,16 +144,19 @@ export default class CoCharacter extends CoActor {
     let xp = 0;
     paths.forEach(path => {
       const rank = path.system.rank;
-      const capacities = path.system.capacities;
-      for (let index = 0; index < rank; index++) {
-        let capacity = this.items.get(capacities[index]);
-        if (capacity.system.learned) {
-          if (index === 0 || index === 1) xp += 1;
-          else xp +=2;
-        }        
-      }
+      if(rank > 0 && rank <= 2) xp += rank
+      else if(rank > 2) xp += rank * 2 - 2
+
+      // const capacities = path.system.capacities;
+      // for (let index = 0; index < rank; index++) {
+      //   let capacity = this.items.get(capacities[index]);
+      //   if (capacity.system.learned) {
+      //     if (index === 0 || index === 1) xp += 1;
+      //     else xp +=2;
+      //   }
+      // }
     });
-    console.log('Compute XP : ', xp);
+    // console.log('Compute XP : ', xp);
     return xp;
   }
 }

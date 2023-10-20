@@ -49,6 +49,20 @@ export default class CoActor extends Actor {
     let pathGroups = [];
     this.paths.forEach((path) => {
       const capacities = path.system.capacities.map((cid) => this.items.find((i) => i._id === cid));
+      // console.log(path);
+      console.log(path.system.rank);
+      // console.log(capacities);
+      // const rank = path.system.rank;
+      // const capacities = path.system.capacities;
+      // for (let index = 0; index < rank; index++) {
+      //   let capacity = this.items.get(capacities[index]);
+      //   if (capacity.system.learned) {
+      //     if (index === 0 || index === 1) xp += 1;
+      //     else xp +=2;
+      //   }
+      // }
+
+
       pathGroups.push({
         path: path,
         items: capacities,

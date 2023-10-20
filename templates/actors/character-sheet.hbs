@@ -1,6 +1,6 @@
 {{!log 'character-sheet' this}}
 <form class="{{cssClass}} flexrow no-wrap" autocomplete="off">
-    {{!log "Chroniques Oubliées | actor" this}}
+    {{log "Chroniques Oubliées | actor" this}}
     {{> "systems/co/templates/actors/parts/character-sidebar.hbs"}}
     <div class="main">
         <header class="character-sheet-header">
@@ -18,7 +18,15 @@
         <nav class="sheet-tabs tabs" data-group="primary">
             <a class="item" data-tab="main" title="{{ localize "CO.tabs.main" }}">{{ localize "CO.tabs.main" }}</a>
             <a class="item" data-tab="inventory" title="{{ localize "CO.tabs.inventory" }}">{{ localize "CO.tabs.inventory" }}</a>
-            <a class="item" data-tab="capacities" title="{{ localize "CO.tabs.capacities" }}">{{ localize "CO.tabs.capacities" }}</a>
+            {{#if (lt xpleft 0)}}
+                <a class="item red" title="{{ localize "CO.notif.TooMuchSpentXP" }}" data-tab="capacities">{{ localize "CO.tabs.capacities" }}({{xpleft}}) <i class="fa-solid fa-triangle-exclamation"></i></a>
+            {{else}}
+                {{#if (gt xpleft 0)}}
+                    <a class="item blue" title="{{ localize "CO.notif.XPLeftToSpend" }}" data-tab="capacities">{{ localize "CO.tabs.capacities" }}({{xpleft}}) <i class="fa-solid fa-triangle-exclamation"></i></a>
+                {{else}}
+                <a class="item" data-tab="capacities" title="{{ localize "CO.tabs.capacities" }}">{{ localize "CO.tabs.capacities" }}</a>
+                {{/if}}
+            {{/if}}
             <a class="item" data-tab="effects" title="{{ localize "CO.tabs.effects" }}">{{ localize "CO.tabs.effects" }}</a>
             <a class="item" data-tab="bio" title="{{ localize "CO.tabs.bio" }}">{{ localize "CO.tabs.bio" }}</a>
             <a class="item sheet-change-lock" title="{{ localize "CO.tabs.lock" }}">{{#if unlocked}}<i class="fas fa-lock-open"></i>{{else}}<i class="fas fa-lock" ></i>{{/if}}</a>

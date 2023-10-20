@@ -31,7 +31,9 @@
       "conditions.empty" : "Aucune condition.",
       "resolvers.empty" : "Aucun resolveur.",
       "profilAlreadyExist": "Vous avez déjà un profil.",
-      "NotEnoughFreeHands": "Pas suffisament de mains libres pour équiper l'objet."
+      "NotEnoughFreeHands": "Pas suffisament de mains libres pour équiper l'objet.",
+      "TooMuchSpentXP": "Le montant d'XP dépensé est supérieur au maximum autorisé.",
+      "XPLeftToSpend": "Il vous reste des points d'XP à dépenser."
     },
     "label": {
       "long": {
