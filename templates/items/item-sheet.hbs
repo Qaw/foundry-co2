@@ -30,10 +30,10 @@
         <!--        </div>-->
     </header>
     <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description" title="{{ localize " CO.tabs.description" }}">{{ localize "CO.tabs.description" }}</a>
-        <a class="item" data-tab="details" title="{{ localize " CO.tabs.details" }}">{{ localize "CO.tabs.details" }}</a>
+        <a class="item" data-tab="description" title="{{ localize ' CO.tabs.description' }}">{{ localize "CO.tabs.description" }}</a>
+        <a class="item" data-tab="details" title="{{ localize ' CO.tabs.details' }}">{{ localize "CO.tabs.details" }}</a>
         {{#if (isActionable item.type)}}
-            <a class="item" data-tab="actions" title="{{ localize " CO.tabs.actions" }}">{{ localize "CO.tabs.actions" }} / {{ localize "CO.tabs.effects" }}</a>
+            <a class="item" data-tab="actions" title="{{ localize ' CO.tabs.actions' }}">{{ localize "CO.tabs.actions" }} / {{ localize "CO.tabs.effects" }}</a>
         {{/if}}
     </nav>
     {{!> "systems/co/templates/items/parts/item-sidebar.hbs"}}
