@@ -346,7 +346,8 @@
       "modifiers": "Modificateurs",
       "effects": "Effets",
       "features": "Features",
-      "lock": "Verrouiller/Déverrouiller"
+      "lock": "Verrouiller",
+      "unlock": "Déverrouiller"
     },
     "dialogs": {
       "skillCheck": "Test de compétence",

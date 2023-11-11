@@ -29,7 +29,11 @@
             {{/if}}
             <a class="item" data-tab="effects" title="{{ localize 'CO.tabs.effects' }}">{{ localize "CO.tabs.effects" }}</a>
             <a class="item" data-tab="bio" title="{{ localize 'CO.tabs.bio' }}">{{ localize "CO.tabs.bio" }}</a>
-            <a class="item sheet-change-lock" title="{{ localize 'CO.tabs.lock' }}">{{#if unlocked}}<i class="fas fa-lock-open"></i>{{else}}<i class="fas fa-lock"></i>{{/if}}</a>
+            {{#if unlocked}}
+                <a class="item sheet-change-lock" title="{{ localize 'CO.tabs.lock' }}"><i class="fas fa-lock-open"></i></a>
+            {{else}}
+                <a class="item sheet-change-lock" title="{{ localize 'CO.tabs.unlock' }}"><i class="fas fa-lock"></i></a>
+            {{/if}}
         </nav>
 
         <!--        <div class="content bg-red">-->
