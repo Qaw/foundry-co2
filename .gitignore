@@ -10,3 +10,6 @@ node_modules/
 .DS_Store
 foundry.js
 /editor.html
+
+# Foundry specific
+*.lock
