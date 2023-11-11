@@ -4,13 +4,13 @@
         <div class="form-group">
             <label>{{localize "CO.ui.id"}}</label>
             <div class="form-fields">
-                <input class="field-value" name="data._id" readonly type="text" value="{{data._id}}" placeholder="{{localize "CO.ui.id"}}" data-dtype="String">
+                <input class="field-value" name="data._id" readonly type="text" value="{{data._id}}" placeholder="{{localize 'CO.ui.id'}}" data-dtype="String">
             </div>
         </div>
         <div class="form-group">
             <label>{{localize "CO.ui.key"}}</label>
             <div class="form-fields">
-                <input class="field-value" name="system.common.slug" type="text" value="{{item.system.common.slug}}" placeholder="{{ localize "COF.ui.key" }}" data-dtype="String">
+                <input class="field-value" name="system.common.slug" type="text" value="{{item.system.common.slug}}" placeholder="{{ localize " COF.ui.key" }}" data-dtype="String">
             </div>
         </div>
     {{/if}}
@@ -30,12 +30,12 @@
         <div class="form-group">
             <label>{{localize "CO.ui.charges"}}</label>
             <div class="form-fields">
-                <input class="field-value" name="system.charges.current" type="text" value="{{system.charges.current}}" placeholder="{{localize "CO.ui.current"}}" data-dtype="Number">
+                <input class="field-value" name="system.charges.current" type="text" value="{{system.charges.current}}" placeholder="{{localize 'CO.ui.current'}}" data-dtype="Number">
                 /
-                <input class="field-value" name="system.charges.max" type="text" value="{{system.charges.max}}" placeholder="{{localize "CO.ui.max"}}" data-dtype="Number">
+                <input class="field-value" name="system.charges.max" type="text" value="{{system.charges.max}}" placeholder="{{localize 'CO.ui.max'}}" data-dtype="Number">
             </div>
         </div>
-        
+
     {{/if}}
 </div>
 {{!> "systems/co/templates/items/parts/actions/action-partial.hbs"}}

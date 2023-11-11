@@ -1,6 +1,6 @@
 <h4 class="form-header conditions flexrow">
     <a class="conditions-toggle section-toggle flex1">{{localize "CO.ui.conditions"}}</a>
-    <a class="condition-add flex0" title="{{localize "CO.ui.add"}}"><i class="fas fa-add"></i></a>
+    <a class="condition-add flex0" title="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
 
 </h4>
 <div class="conditions-container foldable">
@@ -11,40 +11,40 @@
             <div class="form-fields flex1">Objet</div>
         </div>
         {{#each action.conditions as |c id|}}
-        <div class="flexrow condition" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="condition">
-            <div class="form-fields flex1">
-<!--                <input name="system.actions.{{../idx}}.conditions.{{id}}.subject" type="text" value="{{c.subject}}" data-dtype="String" />-->
-                <select name="system.actions.{{../idx}}.conditions.{{id}}.subject" data-type="String" style="width:100%">
-                    {{#select c.subject}}
-                        {{#each @root.config.condition.objects as |label idx|}}
-                            <option value="{{idx}}">{{localize label}}</option>
-                        {{/each}}
-                    {{/select}}
-                </select>
-            </div>
-            <div class="form-fields flex1">
-<!--                <input name="system.actions.{{../idx}}.conditions.{{id}}.predicate" type="text" value="{{c.predicate}}" data-dtype="String" />-->
-                <select name="system.actions.{{../idx}}.conditions.{{id}}.predicate" data-type="String" style="width:100%">
-                    {{#select c.predicate}}
-                        {{#each @root.config.condition.predicates as |label idx|}}
-                            <option value="{{idx}}">{{localize label}}</option>
-                        {{/each}}
-                    {{/select}}
-                </select>
+            <div class="flexrow condition" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="condition">
+                <div class="form-fields flex1">
+                    <!--                <input name="system.actions.{{../idx}}.conditions.{{id}}.subject" type="text" value="{{c.subject}}" data-dtype="String" />-->
+                    <select name="system.actions.{{../idx}}.conditions.{{id}}.subject" data-type="String" style="width:100%">
+                        {{#select c.subject}}
+                            {{#each @root.config.condition.objects as |label idx|}}
+                                <option value="{{idx}}">{{localize label}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                </div>
+                <div class="form-fields flex1">
+                    <!--                <input name="system.actions.{{../idx}}.conditions.{{id}}.predicate" type="text" value="{{c.predicate}}" data-dtype="String" />-->
+                    <select name="system.actions.{{../idx}}.conditions.{{id}}.predicate" data-type="String" style="width:100%">
+                        {{#select c.predicate}}
+                            {{#each @root.config.condition.predicates as |label idx|}}
+                                <option value="{{idx}}">{{localize label}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
 
+                </div>
+                <div class="form-fields flex1">
+                    <!--                <input name="system.actions.{{../idx}}.conditions.{{id}}.object" type="text" value="{{c.object}}" data-dtype="String" />-->
+                    <select name="system.actions.{{../idx}}.conditions.{{id}}.object" data-type="String" style="width:100%">
+                        {{#select c.object}}
+                            {{#each @root.config.condition.objects as |label idx|}}
+                                <option value="{{idx}}">{{localize label}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                </div>
+                <div class="form-fields flex0"><a class="condition-delete"><i class="fas fa-trash"></i></a></div>
             </div>
-            <div class="form-fields flex1">
-<!--                <input name="system.actions.{{../idx}}.conditions.{{id}}.object" type="text" value="{{c.object}}" data-dtype="String" />-->
-                <select name="system.actions.{{../idx}}.conditions.{{id}}.object" data-type="String" style="width:100%">
-                    {{#select c.object}}
-                        {{#each @root.config.condition.objects as |label idx|}}
-                            <option value="{{idx}}">{{localize label}}</option>
-                        {{/each}}
-                    {{/select}}
-                </select>
-            </div>
-            <div class="form-fields flex0"><a class="condition-delete"><i class="fas fa-trash"></i></a></div>
-        </div>
         {{/each}}
     {{else}}
         <div class="flexrow">

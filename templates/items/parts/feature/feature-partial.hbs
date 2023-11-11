@@ -5,13 +5,13 @@
         <div class="form-group">
             <label>{{localize "CO.ui.id"}}</label>
             <div class="form-fields">
-                <input class="field-value" name="data._id" readonly type="text" value="{{data._id}}" placeholder="{{localize "CO.ui.id"}}" data-dtype="String">
+                <input class="field-value" name="data._id" readonly type="text" value="{{data._id}}" placeholder="{{localize 'CO.ui.id'}}" data-dtype="String">
             </div>
         </div>
         <div class="form-group">
             <label>{{localize "CO.ui.key"}}</label>
             <div class="form-fields">
-                <input class="field-value" name="system.common.slug" type="text" value="{{item.system.common.slug}}" placeholder="{{ localize "COF.ui.key" }}" data-dtype="String">
+                <input class="field-value" name="system.common.slug" type="text" value="{{item.system.common.slug}}" placeholder="{{ localize " COF.ui.key" }}" data-dtype="String">
             </div>
         </div>
     {{/if}}
@@ -32,8 +32,8 @@
 <div class="modifiers-container foldable">
     {{#if modifiers}}
         <div class="flexrow">
-<!--            <div class="form-fields flex1">{{!localize "CO.label.long.source"}}</div>-->
-<!--            <div class="form-fields flex1">{{!localize "CO.ui.id"}}</div>-->
+            <!--            <div class="form-fields flex1">{{!localize "CO.label.long.source"}}</div>-->
+            <!--            <div class="form-fields flex1">{{!localize "CO.ui.id"}}</div>-->
             <div class="form-fields flex1">{{localize "CO.ui.type"}}</div>
             <div class="form-fields flex1">{{localize "CO.ui.target"}}</div>
             <div class="form-fields flex1">{{localize "CO.ui.value"}}</div>
@@ -71,7 +71,7 @@
         </div>
     {{/if}}
     <div class="flexrow">
-        <a class="modifier-add" title="{{localize "CO.ui.add"}}"><i class="fas fa-add"></i></a>
+        <a class="modifier-add" title="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
     </div>
 </div>
 
@@ -83,7 +83,7 @@
     {{#each paths as |path id|}}
         {{!log 'path' path id}}
         <div class="cell center">
-            <img class="inline-img" src="{{path.img}}" title="{{path.name}}"/>
+            <img class="inline-img" src="{{path.img}}" title="{{path.name}}" />
         </div>
         <div class="cell left item" data-uuid="{{path.uuid}}" data-item-type="path">
             <div class="field-label ellipse"><a class="item-control item-edit" title="Edit Item">{{path.name}}</a></div>
@@ -98,9 +98,9 @@
 <h3 class="form-header"><a class="section-toggle">{{localize "CO.label.long.capacities"}}</a></h3>
 <div class="capacity-list list-3col foldable">
     {{#each capacities as |capacity id|}}
-    {{!log 'capacity' capacity id}}
+        {{!log 'capacity' capacity id}}
         <div class="cell center">
-            <img class="inline-img" src="{{capacity.img}}" title="{{capacity.name}}"/>
+            <img class="inline-img" src="{{capacity.img}}" title="{{capacity.name}}" />
         </div>
         <div class="cell left item" data-uuid="{{capacity.uuid}}" data-item-type="capacity">
             <div class="field-label ellipse"><a class="item-control item-edit" title="Edit Item">{{capacity.name}}</a></div>
