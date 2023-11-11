@@ -5,13 +5,13 @@
         <div class="form-group">
             <label>{{localize "CO.ui.id"}}</label>
             <div class="form-fields">
-                <input class="field-value" name="data._id" readonly type="text" value="{{data._id}}" placeholder="{{localize "CO.ui.id"}}" data-dtype="String">
+                <input class="field-value" name="data._id" readonly type="text" value="{{data._id}}" placeholder="{{localize 'CO.ui.id'}}" data-dtype="String">
             </div>
         </div>
         <div class="form-group">
             <label>{{localize "CO.ui.key"}}</label>
             <div class="form-fields">
-                <input class="field-value" name="system.common.slug" type="text" value="{{item.system.common.slug}}" placeholder="{{ localize "COF.ui.key" }}" data-dtype="String">
+                <input class="field-value" name="system.common.slug" type="text" value="{{item.system.common.slug}}" placeholder="{{ localize " COF.ui.key" }}" data-dtype="String">
             </div>
         </div>
     {{/if}}
@@ -30,7 +30,7 @@
     <div class="form-group">
         <label>{{localize "CO.label.long.rank"}}</label>
         <div class="form-fields">
-            <input class="field-value" name="system.rank" type="text" value="{{system.rank}}" placeholder="{{localize "CO.label.long.rank"}}" data-dtype="Number">
+            <input class="field-value" name="system.rank" type="text" value="{{system.rank}}" placeholder="{{localize 'CO.label.long.rank'}}" data-dtype="Number">
         </div>
     </div>
 </div>
@@ -52,7 +52,7 @@
             <span class="field-label">{{add id 1}}</span>
         </div>
         <div class="cell right">
-            <img class="inline-img" src="{{capacity.img}}" title="{{capacity.name}}"/>
+            <img class="inline-img" src="{{capacity.img}}" title="{{capacity.name}}" />
         </div>
         <div class="cell left item" data-uuid="{{capacity.uuid}}" data-item-type="capacity">
             <div class="field-label ellipse"><a class="item-control item-edit" title="Edit Item">{{capacity.name}}</a></div>

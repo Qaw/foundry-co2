@@ -1,4 +1,3 @@
-
 <div class="chatroll" data-actor-id="{{actorId}}">
     {{!log 'attack-card' this}}
     {{#if showDifficulty}}
@@ -32,11 +31,11 @@
         <h3><strong>{{label}}</strong>
     {{/if}}
     <div>
-        <p>Formule : {{formula}}</p>        
+        <p>Formule : {{formula}}</p>
     </div>
-    
+
     {{#if showDifficulty}}
-        <p>Difficulté : {{difficulty}}</p>  
+        <p>Difficulté : {{difficulty}}</p>
     {{/if}}
 
     <div class="tooltip">
@@ -44,26 +43,26 @@
         {{#if typeDamage}}
             <div class="flex1 right no-wrap">
                 <label for="dr" class="dr-checkbox">{{localize "CO.ui.dr"}}</label>
-                <input type="checkbox" id="dr" name="dr" class="dr-checkbox">            
+                <input type="checkbox" id="dr" name="dr" class="dr-checkbox">
                 <a class="btn apply-dmg" data-apply="full" data-total="{{total}}">
-                    <i class="fas fa-user-minus" title="{{localize "CO.ui.applyDamage"}}"></i>
+                    <i class="fas fa-user-minus" title="{{localize 'CO.ui.applyDamage'}}"></i>
                 </a>
                 <a class="btn apply-dmg" data-apply="half" data-total="{{total}}">
-                    <i class="fas fa-user-shield" title="{{localize "CO.ui.applyHalfDamage"}}"></i>
+                    <i class="fas fa-user-shield" title="{{localize 'CO.ui.applyHalfDamage'}}"></i>
                 </a>
                 <a class="btn apply-dmg" data-apply="double" data-total="{{total}}">
-                    <i class="fas fa-user-injured" title="{{localize "CO.ui.applyDoubleDamage"}}"></i>
+                    <i class="fas fa-user-injured" title="{{localize 'CO.ui.applyDoubleDamage'}}"></i>
                 </a>
                 <a class="btn apply-dmg" data-apply="heal" data-total="{{total}}">
-                    <i class="fas fa-user-plus" title="{{localize "CO.ui.applyHealing"}}"></i>
+                    <i class="fas fa-user-plus" title="{{localize 'CO.ui.applyHealing'}}"></i>
                 </a>
             </div>
         {{/if}}
         <span class="tooltiptext">{{{toolTip.string}}}</span>
     </div>
     {{#if hasDescription}}
-            <h4>
-                <pre class="rollDescr-line">{{{description}}}</pre>
-            </h4>
+        <h4>
+            <pre class="rollDescr-line">{{{description}}}</pre>
+        </h4>
     {{/if}}
 </div>

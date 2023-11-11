@@ -32,10 +32,10 @@
     </div>
     <!-- HP -->
     <div class="health-section sidebar-section">
-        <div class="sidebar-section-header" >
+        <div class="sidebar-section-header">
             <div class="sidebar-label">
                 <i class="fas fa-fw fa-heart"></i>
-                <h4 title="{{localize "CO.label.long.hp"}}">{{localize "CO.label.short.hp"}}</h4>
+                <h4 title="{{localize 'CO.label.long.hp'}}">{{localize "CO.label.short.hp"}}</h4>
                 <div class="hit-points">
                     <input class="current" name="system.attributes.hp.value" value="{{attributes.hp.value}}" type="number" data-dtype="Number" placeholder="0">
                     <span class="slash">/</span>
@@ -64,8 +64,8 @@
             <div class="sidebar-label init-label">
                 <i class="fa-solid fa-swords fa-fw"></i>
                 <h4>{{localize "CO.label.long.init"}}</h4>
-<!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
-<!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
+                <!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
+                <!--                <a class="roll-icon roll-init"><i class="fas fa-dice-d20"></i><i class="fas fa-fw fa-plus"></i><div>{{!combat.init.value}}</div></a>-->
             </div>
             <div class="init-value labelled-field" data-tooltip="{{combat.init.tooltipValue}}">
                 {{combat.init.value}}
@@ -228,7 +228,7 @@
     <!-- FP -->
     {{#if (isEnabled "useFortune")}}
         <div class="resource-section sidebar-section">
-            <div class="sidebar-section-header" title="{{localize "CO.resources.long.fortune"}}">
+            <div class="sidebar-section-header" title="{{localize 'CO.resources.long.fortune'}}">
                 <div class="sidebar-label">
                     <i class="fas fa-fw fa-clover"></i>
                     <h4>{{localize "CO.resources.medium.fortune"}}</h4>
@@ -258,10 +258,10 @@
     <!-- RP -->
     {{#if (isEnabled "useRecovery")}}
         <div class="resource-section sidebar-section">
-            <div class="sidebar-section-header" >
+            <div class="sidebar-section-header">
                 <div class="sidebar-label">
                     <i class="fas fa-fw fa-heart-pulse use-recovery" title="Dépenser un PR avec PV, SHIFT+click sans PV"></i>
-                    <h4 title="{{localize "CO.resources.long.recovery"}}">{{localize "CO.resources.medium.recovery"}}</h4>
+                    <h4 title="{{localize 'CO.resources.long.recovery'}}">{{localize "CO.resources.medium.recovery"}}</h4>
                     <div class="resource-points">
                         <input class="current" name="system.resources.recovery.value" value="{{resources.recovery.value}}" type="number" data-dtype="Number" placeholder="0">
                         <span class="slash">/</span>
@@ -286,9 +286,9 @@
         </div>
     {{/if}}
     <!-- MP -->
-    {{#if (isEnabled "useMana")}}    
+    {{#if (isEnabled "useMana")}}
         <div class="resource-section sidebar-section">
-            <div class="sidebar-section-header" title="{{localize "CO.resources.long.mana"}}">
+            <div class="sidebar-section-header" title="{{localize 'CO.resources.long.mana'}}">
                 <div class="sidebar-label">
                     <i class="fas fa-fw fa-bolt"></i>
                     <h4>{{localize "CO.resources.medium.mana"}}</h4>

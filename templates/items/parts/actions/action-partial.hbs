@@ -1,12 +1,12 @@
 <!--<h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.actions"}}</a></h3>-->
 <div class="actions-form foldable">
-    <button type="button" class="action-button action-add" title="{{localize "CO.ui.add"}}" tabindex="-1">
+    <button type="button" class="action-button action-add" title="{{localize 'CO.ui.add'}}" tabindex="-1">
         <i class="fas fa-add"></i>&nbsp;{{localize "CO.ui.add"}}
     </button>
     <div class="actions">
         <nav class="action-tabs tabs" data-group="actions">
             {{#each system.actions as |action idx|}}
-                <a class="item" data-tab="{{idx}}" title="{{action.label}}"><img class="action-icon-small" src="{{action.img}}" title="{{action.label}}"/></a>
+                <a class="item" data-tab="{{idx}}" title="{{action.label}}"><img class="action-icon-small" src="{{action.img}}" title="{{action.label}}" /></a>
             {{/each}}
         </nav>
         {{#if system.actions}}
@@ -18,8 +18,8 @@
                         <div class="form-group">
                             <label>{{localize "CO.ui.label"}}</label>
                             <div class="form-fields">
-                                <input class="field-value" name="system.actions.{{idx}}.label" type="text" value="{{action.label}}" placeholder="{{localize "CO.ui.label"}}" data-dtype="String">
-                                <button type="button" class="action-button action-delete" title="{{localize "CO.ui.remove"}}" tabindex="-1">
+                                <input class="field-value" name="system.actions.{{idx}}.label" type="text" value="{{action.label}}" placeholder="{{localize 'CO.ui.label'}}" data-dtype="String">
+                                <button type="button" class="action-button action-delete" title="{{localize 'CO.ui.remove'}}" tabindex="-1">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
@@ -27,9 +27,9 @@
                         <div class="form-group">
                             <label>{{localize "CO.ui.chatFlavor"}}</label>
                             <div class="form-fields">
-                                <input class="field-value" name="system.actions.{{idx}}.chatFlavor" type="text" value="{{action.chatFlavor}}" placeholder="{{localize "CO.ui.label"}}" data-dtype="String">
+                                <input class="field-value" name="system.actions.{{idx}}.chatFlavor" type="text" value="{{action.chatFlavor}}" placeholder="{{localize 'CO.ui.label'}}" data-dtype="String">
                             </div>
-                        </div>                        
+                        </div>
                         <div class="form-group">
                             <label>{{localize "CO.ui.type"}}</label>
                             <div class="form-fields">
@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <label>{{localize "CO.ui.img"}}</label>
                             <div class="form-fields">
-                                <input class="field-value" data-edit="img" name="system.actions.{{idx}}.img" type="text" value="{{action.img}}" placeholder="{{localize "CO.ui.img"}}" data-dtype="String">
+                                <input class="field-value" data-edit="img" name="system.actions.{{idx}}.img" type="text" value="{{action.img}}" placeholder="{{localize 'CO.ui.img'}}" data-dtype="String">
                                 <button type="button" class="action-button file-picker" data-type="imagevideo" data-target="system.actions.{{idx}}.img" title="Parcourir les fichiers" tabindex="-1">
                                     <i class="fas fa-file-import fa-fw"></i>
                                 </button>
@@ -59,7 +59,7 @@
                                 {{/each}}
                             </div>
                         </div>
-                        <br/>
+                        <br />
                         {{> "systems/co/templates/items/parts/actions/conditions-partial.hbs" action=action idx=idx}}
                         {{> "systems/co/templates/items/parts/actions/modifiers-partial.hbs" action=action idx=idx}}
                         {{> "systems/co/templates/items/parts/actions/resolvers-partial.hbs" action=action idx=idx}}
