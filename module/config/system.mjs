@@ -6,7 +6,7 @@ export const SYSTEM_ID = "co";
  * @type {Object}
  */
 export const SYSTEM = {
-    id: SYSTEM_ID,
+    ID: SYSTEM_ID,
     ABILITIES: CHARACTER.ABILITIES,
     RESOURCES: CHARACTER.RESOURCES,
     COMBAT: CHARACTER.COMBAT
