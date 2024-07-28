@@ -272,20 +272,22 @@
     },
     "abilities": {
       "long": {
-        "str": "Force",
-        "dex": "Dextérité",
+        "agi": "Agilité",
         "con": "Constitution",
-        "int": "Intelligence",
-        "wis": "Sagesse",
-        "cha": "Charisme"
+        "for": "Force",
+        "per": "Perception",
+        "cha": "Charisme",
+        "int": "Intelligence",        
+        "vol": "Volonté"
       },
       "short": {
-        "str": "FOR",
-        "dex": "DEX",
-        "con": "CON",
-        "int": "INT",
-        "wis": "SAG",
-        "cha": "CHA"
+        "agi": "AGI",
+        "con": "CON",        
+        "for": "FOR",
+        "per": "PER",
+        "cha": "CHA",
+        "int": "INT",        
+        "vol": "VOL"
       }
     },
     "combat": {

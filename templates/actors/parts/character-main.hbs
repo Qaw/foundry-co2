@@ -12,16 +12,13 @@
         <ol class="ability-scores">
             {{#each abilities as |ability id|}}
             {{!log (concat "Chroniques Oubliées | " id) ability}}
-                <li class="ability key" data-ability="str">
+                <li class="ability key" data-ability="{{id}}">
                     <label class="details-label ability-name">{{localize (concat 'CO.abilities.long.' id)}}</label>
                     <h2 class="ability-id">
                         {{localize (concat "CO.abilities.short." id)}}
                         {{#if ability.superior}}<i class="fas fa-asterisk"></i>{{/if}}
                     </h2>
-                    <h3 class="ability-mod rollable" data-rolling="@abilities.{{id}}" data-roll-type="skillcheck">{{numberFormat ability.mod decimals=0 sign=true}}</h3>
-                    <div class="ability-score" data-tooltip="{{ability.tooltipValue}}">
-                        <div>{{ability.value}}</div>
-                    </div>
+                    <h3 class="ability-mod rollable" data-rolling="@abilities.{{id}}" data-tooltip="{{ability.tooltipValue}}" data-roll-type="skillcheck" >{{numberFormat ability.value decimals=0 sign=true}}</h3>
                 </li>
             {{/each}}
         </ol>
@@ -66,6 +63,7 @@
         </ol>
     </div>
 </div>
+
 <div class="actions section-container">
     <div class="section-header">
         <h4>{{localize "CO.ui.actions"}}</h4>

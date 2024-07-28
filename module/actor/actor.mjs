@@ -21,6 +21,14 @@ export default class CoActor extends Actor {
 
   //#region accesseurs
 
+  get baseInitiative() {
+    return 10;
+  }
+
+  get baseDefense() {
+    return 10;
+  }
+
   /**
    * @returns les Items de type equipment
    */
@@ -237,7 +245,7 @@ export default class CoActor extends Actor {
   //#endregion
 
   //#region méthodes publiques
-  prepareDerivedData() {}
+  prepareDerivedData() { }
 
   /**
    * Return all skill modifiers
@@ -776,7 +784,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * Dans COF : 10 + Mod DEX + Bonus Armure + Bonus Bouclier + Bonus Capacités
+   * Dans COF : 10 + AGI + Modificateurs (Bonus Armure + Bonus Bouclier + Bonus Capacités)
    * @param {*} skill
    * @param {*} abilityBonus
    * @param {*} bonuses
@@ -784,8 +792,9 @@ export default class CoActor extends Actor {
   _prepareDef(skill, abilityBonus, bonuses) {
     const defModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, COMBAT.DEF);
 
-    skill.base = game.settings.get("co", "baseDef");
+    skill.base = this.baseDefense;
     skill.tooltipBase = Utils.getTooltip("Base", skill.base);
+
     skill.base += abilityBonus;
     skill.tooltipBase = skill.tooltipBase.concat(Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus));
 
@@ -793,20 +802,32 @@ export default class CoActor extends Actor {
     skill.tooltipValue = skill.tooltipBase.concat(defModifiers.tooltip, Utils.getTooltip("Bonus", bonuses));
   }
 
-  _prepareInit(skill, bonuses) {
-    const abilityValue = skill.ability && this.system.abilities[skill.ability].value ? this.system.abilities[skill.ability].value : 0;
+  /**
+   * Dans COF : 10 + PER + Bonus Capacités
+   * @param {*} skill 
+   * @param {*} abilityBonus 
+   * @param {*} bonuses 
+   */
+  _prepareInit(skill, abilityBonus, bonuses) {
     const initModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, COMBAT.INIT);
     const malus = this.getMalusToInitiative();
 
-    skill.base = abilityValue;
-    skill.tooltipBase = Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityValue);
+    skill.base = this.baseInitiative;
+    skill.tooltipBase = Utils.getTooltip("Base", skill.base);
+
+    skill.base += abilityBonus;
+    skill.tooltipBase = skill.tooltipBase.concat(Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus));
 
     skill.value = skill.base + bonuses + initModifiers.total + malus;
     skill.tooltipValue = skill.tooltipBase.concat(initModifiers.tooltip, Utils.getTooltip("Bonus", bonuses));
+    
+    if (malus < 0) {
+      skill.tooltipValue = skill.tooltipValue.concat(Utils.getTooltip("Malus", malus));
+    }
   }
 
   _prepareAttack(key, skill, abilityBonus, bonuses) {
-    const levelBonus = this.system.attributes.level.base ? this.system.attributes.level.base : 0;
+    const levelBonus = this.system.attributes.level.base ? Math.min(this.system.attributes.level.base, 10) : 0;
     const combatModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key);
 
     skill.base = abilityBonus + levelBonus;
@@ -894,7 +915,7 @@ export default class CoActor extends Actor {
     // Calcul du nombre de mains déjà utilisées
     let itemsInHands = this.items.filter((item) => item.system.equipped);
     let usedHands = 0;
-    itemsInHands.forEach((item) => (usedHands += item.system.usage.twoHand? 2 : 1));
+    itemsInHands.forEach((item) => (usedHands += item.system.usage.twoHand ? 2 : 1));
 
     return usedHands + neededHands <= 2;
   }

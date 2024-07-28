@@ -19,12 +19,13 @@ export const MODIFIER_SUBTYPE = {
 }
 
 export const MODIFIER_TARGET = {
-    STR: "str",
-    DEX: "dex",
+    AGI: "agi",
     CON: "con",
-    INT: "int",
-    WIS: "wis",
+    FOR: "for",
+    PER: "per",
     CHA: "cha",
+    INT: "int",
+    VOL: "vol",
     MELEE: 'melee',
     RANGED: 'ranged',
     MAGIC: 'magic',

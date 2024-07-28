@@ -1,27 +1,31 @@
 export const ABILITIES = Object.freeze({
-    str: {
-        id: "str",
-        label: "CO.abilities.long.str"
-    },
-    dex: {
-        id: "dex",
-        label: "CO.abilities.long.dex"
+    agi: {
+        id: "agi",
+        label: "CO.abilities.long.agi"
     },
     con: {
         id: "con",
         label: "CO.abilities.long.con"
     },
+    for: {
+        id: "for",
+        label: "CO.abilities.long.for"
+    },
+    per: {
+        id: "per",
+        label: "CO.abilities.long.per"
+    },
+    cha: {
+        id: "cha",
+        label: "CO.abilities.long.cha"
+    },
     int: {
         id: "int",
         label: "CO.abilities.long.int"
     },
-    wis: {
-        id: "wis",
-        label: "CO.abilities.long.wis"
-    },
-    stchar: {
-        id: "cha",
-        label: "CO.abilities.long.cha"
+    vol: {
+        id: "vol",
+        label: "CO.abilities.long.vol"
     }
 });
 
@@ -56,26 +60,26 @@ export const COMBAT = Object.freeze({
     init: {
         id: "init",
         label: "CO.combat.long.init",
-        ability: "dex"
+        ability: "per"
     },
     def: {
         id: "def",
         label: "CO.combat.long.def",
-        ability: "dex"
+        ability: "agi"
     },
     melee: {
         id: "melee",
         label: "CO.combat.long.melee",
-        ability: "str"
+        ability: "for"
     },
     ranged: {
         id: "ranged",
         label: "CO.combat.long.ranged",
-        ability: "dex"
+        ability: "agi"
     },
     magic: {
         id: "magic",
         label: "CO.combat.long.magic",
-        ability: "int"
+        ability: "vol"
     }
 });

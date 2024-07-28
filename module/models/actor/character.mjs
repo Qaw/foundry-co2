@@ -1,3 +1,4 @@
+import { SYSTEM } from "../../config/system.mjs";
 import { AbilityValue } from "./schemas/ability-value.mjs";
 import { BaseValue } from "./schemas/base-value.mjs";
 

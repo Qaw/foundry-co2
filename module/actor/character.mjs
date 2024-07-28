@@ -9,18 +9,18 @@ export default class CoCharacter extends CoActor {
     this._prepareAbilities();
     this._prepareHPMax();
 
+    // Préparation des données de combat : Attaque de contact, attaque à distance, attaque magique, initiative, défense
     for (const [key, skill] of Object.entries(this.system.combat)) {
-      // console.debug(skill);
       // Somme du bonus de la feuille et du bonus des effets
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr);
-      const abilityBonus = skill.ability && this.system.abilities[skill.ability].mod ? this.system.abilities[skill.ability].mod : 0;
+      const abilityBonus = this.system.abilities[skill.ability].value;
 
       if ([COMBAT.MELEE, COMBAT.RANGED, COMBAT.MAGIC].includes(key)) {
         this._prepareAttack(key, skill, abilityBonus, bonuses);
       }
 
       if (key === COMBAT.INIT) {
-        this._prepareInit(skill, bonuses);
+        this._prepareInit(skill, abilityBonus, bonuses);
       }
 
       if (key === COMBAT.DEF) {
@@ -57,8 +57,7 @@ export default class CoCharacter extends CoActor {
 
   }
 
-  //#region accesseurs
-
+  //#region accesseurs  
   /**
    * @returns les Items de type profile
    */
