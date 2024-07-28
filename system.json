@@ -32,7 +32,10 @@
       }
     ],
     "gridDistance": 1.5,
-    "gridUnits": "m",
+    "grid": {
+      "distance": 1.5,
+      "units": "m"
+    },
     "primaryTokenAttribute": "attributes.hp",
     "initiative": "1d20",
     "url": "",
