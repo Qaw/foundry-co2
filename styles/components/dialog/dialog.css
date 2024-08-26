@@ -1,0 +1,175 @@
+.dialog .dialog-field {
+  height: 27px;
+  margin-top: 1px;
+}
+.dialog .dialog-field .dialog-field-label {
+  padding: 4px;
+}
+.dialog.skillroll .skill-bonuses {
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove var(--color-border-light-highlight);
+  height: 140px;
+  overflow: auto;
+}
+.dialog.skillroll .skill-bonuses .bonus-item {
+  background: rgba(0, 0, 0, 0.1);
+  height: 27px;
+  padding: 4px;
+}
+.dialog.skillroll .skill-bonuses .bonus-item .bonus-name {
+  margin-left: 5px;
+}
+.dialog.skillroll .skill-bonuses .bonus-item.checked {
+  background: rgba(0, 0, 0, 0.3);
+}
+.dialog.skillroll .skill-bonuses .bonus-item:hover {
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.2);
+}
+.dialog.edit-abilities-dialog .window-content {
+  background: url("../ui/background.webp");
+  background-repeat: repeat-x, no-repeat;
+  background-size: cover;
+  background-attachment: local;
+  height: 100%;
+  padding: 10px 20px 10px 20px;
+  position: relative;
+}
+.dialog.edit-abilities-dialog .window-content h3 {
+  font: 400 var(--font-size-24) var(--serif-condensed);
+  line-height: var(--font-size-24);
+}
+.dialog.edit-abilities-dialog .window-content h4 {
+  font: 400 var(--font-size-10) var(--sans-serif);
+  text-transform: uppercase;
+  color: #605856;
+}
+.dialog.edit-abilities-dialog .window-content header.row {
+  align-items: normal;
+  padding-top: 10px;
+  height: 60px;
+}
+.dialog.edit-abilities-dialog .window-content header.row .abilities {
+  align-items: normal;
+}
+.dialog.edit-abilities-dialog .window-content header.row .row-column {
+  display: block;
+}
+.dialog.edit-abilities-dialog .window-content .row {
+  display: flex;
+  align-items: center;
+}
+.dialog.edit-abilities-dialog .window-content .row .row-heading {
+  width: 220px;
+}
+.dialog.edit-abilities-dialog .window-content .row .abilities {
+  display: grid;
+  grid-template-columns: repeat(7, 84px);
+  grid-template-rows: auto;
+  flex: 0 0 auto;
+}
+.dialog.edit-abilities-dialog .window-content .row-heading {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  grid-template-areas: "img description remaining";
+  align-items: center;
+}
+.dialog.edit-abilities-dialog .window-content .row-heading h3 {
+  grid-column: 1/4;
+  align-self: start;
+  font-size: var(--font-size-24);
+}
+.dialog.edit-abilities-dialog .window-content .row-heading .hint-container {
+  grid-column: 1/4;
+}
+.dialog.edit-abilities-dialog .window-content .row-column {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.dialog.edit-abilities-dialog .window-content .row-column button {
+  align-items: center;
+  border: 1px solid var(--button-color);
+  color: var(--button-color);
+  display: flex;
+  font-size: var(--font-size-12);
+  justify-content: space-around;
+  outline: none;
+  margin: 0;
+  padding: 0.1em 0 0;
+  position: relative;
+  text-transform: uppercase;
+  width: 6em;
+  height: 1.5em;
+}
+.dialog.edit-abilities-dialog .window-content .row-column button.locked,
+.dialog.edit-abilities-dialog .window-content .row-column button.selected {
+  color: white;
+}
+.dialog.edit-abilities-dialog .window-content .row-column button.selected {
+  background: var(--button-color);
+}
+.dialog.edit-abilities-dialog .window-content .row-column button.hidden {
+  pointer-events: none;
+  visibility: hidden;
+}
+.dialog.edit-abilities-dialog .window-content .row-column button.superior {
+  margin-top: auto;
+  --button-color: #316549;
+  --button-locked-color: #1b3c2a;
+}
+.dialog.edit-abilities-dialog .window-content .summary-row .row-heading {
+  display: block;
+}
+.dialog.edit-abilities-dialog .window-content .summary-row .abilities {
+  grid-template-rows: auto auto;
+}
+.dialog.edit-abilities-dialog .window-content .summary-row .row-column {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+}
+.dialog.edit-abilities-dialog .window-content .summary-row .row-column .value {
+  height: 40px;
+  font: 700 var(--font-size-24) var(--serif);
+  line-height: var(--font-size-30);
+}
+.dialog.edit-abilities-dialog .window-content .summary-row .complete {
+  grid-row: 2;
+  grid-column: 1/7;
+  margin-top: 10px;
+  margin-left: auto;
+}
+.dialog.edit-abilities-dialog .window-content .summary-row button.complete {
+  color: white;
+  background: var(--secondary);
+  height: 35px;
+  width: 131px;
+  border: 1px solid var(--tertiary);
+}
+.dialog.edit-abilities-dialog .window-content .summary-row .hint-container {
+  background: rgba(211, 204, 188, 0.4);
+  padding: 12px;
+  margin-right: 10px;
+  border: 1px solid #d3ccbc;
+  border-radius: 3px;
+  align-self: end;
+}
+.dialog.edit-abilities-dialog .window-content .summary-row .hint-container h3 {
+  font-size: var(--font-size-21);
+}
+.dialog.edit-abilities-dialog .window-content .background-stripes {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 50px;
+  right: 0;
+  padding: 10px 20px 10px 20px;
+  pointer-events: none;
+  align-items: normal;
+}
+.dialog.edit-abilities-dialog .window-content .background-stripes .abilities div:nth-child(odd) {
+  background-color: rgba(68, 55, 48, 0.1);
+}

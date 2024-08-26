@@ -3,14 +3,14 @@ export class CoChat {
    * @param {*} actor The emitter of the chat message
    */
   constructor(actor) {
-    this.actor = actor;
-    this.chat = null;
-    this.content = null;
-    this.template = null;
-    this.data = null;
-    this.flags = null;
-    this.roll = null;
-    this.whisper = null;
+    this.actor = actor
+    this.chat = null
+    this.content = null
+    this.template = null
+    this.data = null
+    this.flags = null
+    this.roll = null
+    this.whisper = null
   }
 
   /**
@@ -19,8 +19,8 @@ export class CoChat {
    * @returns the instance
    */
   withContent(content) {
-    this.content = content;
-    return this;
+    this.content = content
+    return this
   }
 
   /**
@@ -29,8 +29,8 @@ export class CoChat {
    * @returns the instance
    */
   withTemplate(template) {
-    this.template = template;
-    return this;
+    this.template = template
+    return this
   }
 
   /**
@@ -39,8 +39,8 @@ export class CoChat {
    * @returns the instance
    */
   withData(data) {
-    this.data = data;
-    return this;
+    this.data = data
+    return this
   }
 
   /**
@@ -49,8 +49,8 @@ export class CoChat {
    * @returns the instance
    */
   withFlags(flags) {
-    this.flags = flags;
-    return this;
+    this.flags = flags
+    return this
   }
 
   /**
@@ -59,8 +59,8 @@ export class CoChat {
    * @returns the instance.
    */
   withRoll(roll) {
-    this.roll = roll;
-    return this;
+    this.roll = roll
+    return this
   }
 
   /**
@@ -69,8 +69,8 @@ export class CoChat {
    * @returns the instance.
    */
   withWhisper(whisper) {
-    this.whisper = whisper;
-    return this;
+    this.whisper = whisper
+    return this
   }
 
   /**
@@ -80,12 +80,12 @@ export class CoChat {
   async create() {
     // Retrieve the message content
     if (!this.content && this.template && this.data) {
-      this.content = await this._createContent();
+      this.content = await this._createContent()
     }
 
     // Exit if message content can't be created
     if (!this.content) {
-      return null;
+      return null
     }
 
     // Create the chat data
@@ -98,39 +98,37 @@ export class CoChat {
         token: null,
       },
       content: this.content,
-    };
+    }
 
     // Set the roll parameter if necessary
     if (this.roll) {
-      (data.type = CONST.CHAT_MESSAGE_TYPES.ROLL), (data.roll = this.roll);
+      ;(data.type = CONST.CHAT_MESSAGE_TYPES.ROLL), (data.roll = this.roll)
     }
 
     // Set the flags parameter if necessary
     if (this.flags) {
-      d.flags = this.flags;
+      d.flags = this.flags
     }
 
     // If the whisper has not been defined, set the whisper and blind parameters according to the player roll mode settings
     if (this.whisper === null) {
-        switch (game.settings.get("core", "rollMode")) {
-            case "gmroll":
-              data.whisper = ChatMessage.getWhisperRecipients("GM").map((u) => u.id);
-              break;
-            case "blindroll":
-              data.whisper = ChatMessage.getWhisperRecipients("GM").map((u) => u.id);
-              data.blind = true;
-              break;
-            case "selfroll":
-              data.whisper = [game.user.id];
-              break;
-          }
-    }
-    else data.whisper = this.whisper;
-
+      switch (game.settings.get("core", "rollMode")) {
+        case "gmroll":
+          data.whisper = ChatMessage.getWhisperRecipients("GM").map((u) => u.id)
+          break
+        case "blindroll":
+          data.whisper = ChatMessage.getWhisperRecipients("GM").map((u) => u.id)
+          data.blind = true
+          break
+        case "selfroll":
+          data.whisper = [game.user.id]
+          break
+      }
+    } else data.whisper = this.whisper
 
     // Create the chat
-    this.chat = await ChatMessage.create(data);
-    return this;
+    this.chat = await ChatMessage.create(data)
+    return this
   }
 
   /**
@@ -140,10 +138,10 @@ export class CoChat {
    */
   async _createContent() {
     // Update the data to provide to the template
-    const data = duplicate(this.data);
-    data.owner = this.actor.id;
+    const data = duplicate(this.data)
+    data.owner = this.actor.id
 
     // Call the template renderer.
-    return await renderTemplate(this.template, data);
+    return await renderTemplate(this.template, data)
   }
 }

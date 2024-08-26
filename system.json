@@ -1,11 +1,11 @@
 {
     "id": "co",
-    "title": "Chroniques Oubliées",
+    "title": "Chroniques Oubliées V2",
     "description": "Le système Chroniques Oubliées pour FoundryVTT.",
-    "version": "11.306.0",
+    "version": "12.331.0",
     "compatibility": {
-      "minimum": 11,
-      "verified": "11.306"
+      "minimum": "12",
+      "verified": "12"
     },
     "authors": [
       {
@@ -41,5 +41,11 @@
     "url": "",
     "manifest": "",
     "download": "",
-    "license": ""
+    "license": "",
+    "flags": {
+      "hotReload": {
+        "extensions": ["css", "html", "hbs", "json", "mjs"],
+        "path": ["css", "templates", "lang", "module"]
+      }
+    }
   }

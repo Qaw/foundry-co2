@@ -10,7 +10,7 @@ export const registerSystemSettings = function () {
     type: Number,
     default: 10,
     requiresReload: true,
-  });
+  })
 
   /**
    * Mode DEBUG
@@ -23,7 +23,7 @@ export const registerSystemSettings = function () {
     type: Boolean,
     default: false,
     requiresReload: true,
-  });
+  })
 
   game.settings.register("co", "useVarInit", {
     name: "SETTINGS.VarInit.name",
@@ -33,7 +33,7 @@ export const registerSystemSettings = function () {
     type: Boolean,
     default: false,
     requiresReload: true,
-  });
+  })
 
   game.settings.register("co", "displayDifficulty", {
     name: "SETTINGS.DisplayDifficulty.name",
@@ -47,7 +47,7 @@ export const registerSystemSettings = function () {
       all: "SETTINGS.DisplayDifficulty.all",
       gm: "SETTINGS.DisplayDifficulty.gm",
     },
-  });
+  })
 
   game.settings.register("co", "useComboRolls", {
     name: "SETTINGS.UseComboRolls.name",
@@ -56,7 +56,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: true,
     type: Boolean,
-  });
+  })
 
   game.settings.register("co", "displayChatDamageButtonsToAll", {
     name: "SETTINGS.DisplayChatDamageButtonsToAll.name",
@@ -65,7 +65,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-  });
+  })
 
   game.settings.register("co", "useRecovery", {
     name: "SETTINGS.UseRecovery.name",
@@ -75,7 +75,7 @@ export const registerSystemSettings = function () {
     default: false,
     type: Boolean,
     requiresReload: true,
-  });
+  })
 
   game.settings.register("co", "useFortune", {
     name: "SETTINGS.UseFortune.name",
@@ -85,7 +85,7 @@ export const registerSystemSettings = function () {
     default: false,
     type: Boolean,
     requiresReload: true,
-  });
+  })
 
   game.settings.register("co", "useMana", {
     name: "SETTINGS.UseMana.name",
@@ -95,7 +95,7 @@ export const registerSystemSettings = function () {
     default: false,
     type: Boolean,
     requiresReload: true,
-  });
+  })
 
   game.settings.register("co", "checkFreeHandsBeforeEquip", {
     name: "SETTINGS.CheckFreeHandsBeforeEquip.name",
@@ -105,9 +105,9 @@ export const registerSystemSettings = function () {
     default: "none",
     type: String,
     choices: {
-        "none" : "SETTINGS.CheckFreeHandsBeforeEquip.none",
-        "all" : "SETTINGS.CheckFreeHandsBeforeEquip.all",
-        "gm" : "SETTINGS.CheckFreeHandsBeforeEquip.gm"
-    }
-});  
-};
+      none: "SETTINGS.CheckFreeHandsBeforeEquip.none",
+      all: "SETTINGS.CheckFreeHandsBeforeEquip.all",
+      gm: "SETTINGS.CheckFreeHandsBeforeEquip.gm",
+    },
+  })
+}

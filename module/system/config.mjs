@@ -1,4 +1,4 @@
-export const CO = {};
+export const CO = {}
 
 // ASCII Artwork
 CO.ASCII = `
@@ -9,20 +9,20 @@ CO.ASCII = `
 /**       /**      /**  
 //**    **//**     **       
  //******  //*******        
-  //////    ///////   `;
+  //////    ///////   `
 
 CO.itemIcons = {
-  "equipment": "icons/svg/item-bag.svg",
-  "capacity": "icons/svg/combat.svg",
-  "feature": "icons/svg/invisible.svg",
-  "profile": "icons/svg/upgrade.svg",
-  "path": "icons/svg/upgrade.svg",
-  "attack": "icons/svg/sword.svg"
+  equipment: "icons/svg/item-bag.svg",
+  capacity: "icons/svg/combat.svg",
+  feature: "icons/svg/invisible.svg",
+  profile: "icons/svg/upgrade.svg",
+  path: "icons/svg/upgrade.svg",
+  attack: "icons/svg/sword.svg",
 }
 
 CO.actorIcons = {
-  "character": "icons/svg/mystery-man.svg",
-  "encounter": "icons/svg/eye.svg"
+  character: "icons/svg/mystery-man.svg",
+  encounter: "icons/svg/eye.svg",
 }
 
 CO.abilities = {
@@ -31,8 +31,8 @@ CO.abilities = {
   con: "CO.abilities.long.con",
   int: "CO.abilities.long.int",
   wis: "CO.abilities.long.wis",
-  cha: "CO.abilities.long.cha"
-};
+  cha: "CO.abilities.long.cha",
+}
 
 CO.modifier = {
   type: {
@@ -40,7 +40,7 @@ CO.modifier = {
     feature: "CO.modifier.type.feature",
     profile: "CO.modifier.type.profile",
     capacity: "CO.modifier.type.capacity",
-    attack: "CO.modifier.type.attack"
+    attack: "CO.modifier.type.attack",
   },
   subtype: {
     ability: "CO.modifier.subtype.ability",
@@ -63,70 +63,70 @@ CO.modifier = {
     hp: "CO.label.long.hp",
     rp: "CO.label.long.rp",
   },
-};
+}
 
 CO.spellcasting = {
   modifiers: {
     int: "CO.abilities.long.int",
     wis: "CO.abilities.long.wis",
-    cha: "CO.abilities.long.cha"
-  }
-};
+    cha: "CO.abilities.long.cha",
+  },
+}
 
 CO.equipment = {
   subtypes: {
-    ARMOR : "CO.equipment.subtypes.armor",
-    SHIELD : "CO.equipment.subtypes.shield",
-    WEAPON : "CO.equipment.subtypes.weapon",
-    MISC : "CO.equipment.subtypes.misc"
+    ARMOR: "CO.equipment.subtypes.armor",
+    SHIELD: "CO.equipment.subtypes.shield",
+    WEAPON: "CO.equipment.subtypes.weapon",
+    MISC: "CO.equipment.subtypes.misc",
   },
   martialCategories: {
     MELEE: "CO.equipment.martialCategories.melee",
     RANGED: "CO.equipment.martialCategories.ranged",
     THROWN: "CO.equipment.martialCategories.thrown",
-    MAGICAL: "CO.equipment.martialCategories.magical"
+    MAGICAL: "CO.equipment.martialCategories.magical",
   },
   rarity: {
-    COMMON : "CO.rarity.common",
-    MEDIUM : "CO.rarity.medium",
-    RARE : "CO.rarity.rare",
-    UNIQUE : "CO.rarity.unique"
-  }
-};
+    COMMON: "CO.rarity.common",
+    MEDIUM: "CO.rarity.medium",
+    RARE: "CO.rarity.rare",
+    UNIQUE: "CO.rarity.unique",
+  },
+}
 
 CO.action = {
   types: {
-    spell : "CO.action.types.spell",
-    melee : "CO.action.types.melee",
-    ranged : "CO.action.types.ranged",
-    magical : "CO.action.types.magical",
-    heal : "CO.action.types.heal",
-    buff : "CO.action.types.buff",
-    debuff : "CO.action.types.debuff"
-  }
-};
+    spell: "CO.action.types.spell",
+    melee: "CO.action.types.melee",
+    ranged: "CO.action.types.ranged",
+    magical: "CO.action.types.magical",
+    heal: "CO.action.types.heal",
+    buff: "CO.action.types.buff",
+    debuff: "CO.action.types.debuff",
+  },
+}
 
 CO.condition = {
-  objects : {
-    item : "CO.condition.objects.item",
-    target : "CO.condition.objects.target",
-    _self : "CO.condition.objects._self",
+  objects: {
+    item: "CO.condition.objects.item",
+    target: "CO.condition.objects.target",
+    _self: "CO.condition.objects._self",
   },
-  predicates : {
-    isLearned : "CO.condition.predicates.isLearned",
-    isEquipped : "CO.condition.predicates.isEquipped"
-  }
+  predicates: {
+    isLearned: "CO.condition.predicates.isLearned",
+    isEquipped: "CO.condition.predicates.isEquipped",
+  },
 }
 
 CO.resolver = {
   types: {
-    melee : "CO.action.types.melee",
-    ranged : "CO.action.types.ranged",
-    magical : "CO.action.types.magical",
-    heal : "CO.action.types.heal",
-    buff : "CO.action.types.buff",
-    debuff : "CO.action.types.debuff"
-  }
+    melee: "CO.action.types.melee",
+    ranged: "CO.action.types.ranged",
+    magical: "CO.action.types.magical",
+    heal: "CO.action.types.heal",
+    buff: "CO.action.types.buff",
+    debuff: "CO.action.types.debuff",
+  },
 }
 
 CO.path = {
@@ -134,63 +134,63 @@ CO.path = {
     PROFILE: "CO.path.subtypes.profile",
     FEATURE: "CO.path.subtypes.feature",
     CREATURE: "CO.path.subtypes.creature",
-    PRESTIGE: "CO.path.subtypes.prestige"
-  }
-};
+    PRESTIGE: "CO.path.subtypes.prestige",
+  },
+}
 
 CO.feature = {
   subtypes: {
     RACE: "CO.feature.subtypes.race",
-    TRAIT: "CO.feature.subtypes.trait"
-  }
-};
+    TRAIT: "CO.feature.subtypes.trait",
+  },
+}
 
 CO.size = {
   tiny: "CO.size.tiny",
   small: "CO.size.small",
   medium: "CO.size.medium",
   large: "CO.size.large",
-  huge: "CO.size.huge"
-};
+  huge: "CO.size.huge",
+}
 
 CO.profile = {
   family: {
     enabled: false,
     values: [],
   },
-};
+}
 
 CO.encounter = {
-  archetypes : {
-    weak : "CO.encounter.archetype.weak",
-    quick : "CO.encounter.archetype.quick",
-    powerful : "CO.encounter.archetype.powerful",
-    standard : "CO.encounter.archetype.standard"
+  archetypes: {
+    weak: "CO.encounter.archetype.weak",
+    quick: "CO.encounter.archetype.quick",
+    powerful: "CO.encounter.archetype.powerful",
+    standard: "CO.encounter.archetype.standard",
   },
-  categories : {
+  categories: {
     living: "CO.encounter.category.living",
     humanoid: "CO.encounter.category.humanoid",
     plant: "CO.encounter.category.plant",
-    undead : "CO.encounter.category.undead"
+    undead: "CO.encounter.category.undead",
   },
-  sizes : {
+  sizes: {
     tiny: "CO.size.tiny",
     small: "CO.size.small",
     medium: "CO.size.medium",
     large: "CO.size.large",
-    huge: "CO.size.huge"
+    huge: "CO.size.huge",
   },
-  bossRank : {
+  bossRank: {
     noboss: "-",
     boss1: "Boss 1",
     boss2: "Boss 2",
     boss3: "Boss 3",
     boss4: "Boss 4",
-    boss5: "Boss 5"
+    boss5: "Boss 5",
   },
-  attackTypes : {
+  attackTypes: {
     MELEE: "CO.combat.long.melee",
     RANGED: "CO.combat.long.ranged",
-    MAGICAL: "CO.combat.long.magic"
-  }
-};
+    MAGICAL: "CO.combat.long.magic",
+  },
+}

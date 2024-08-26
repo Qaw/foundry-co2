@@ -1,24 +1,24 @@
 export class CommonData extends foundry.abstract.DataModel {
   static defineSchema() {
-    const fields = foundry.data.fields;
+    const fields = foundry.data.fields
     return {
       description: new fields.HTMLField(),
       source: new fields.StringField({
         required: false,
         nullable: true,
-        initial: ""
+        initial: "",
       }),
       origin: new fields.StringField({
         required: false,
         nullable: true,
-        initial: ""
+        initial: "",
       }),
       slug: new fields.StringField({
         required: false,
         nullable: true,
-        initial: ""
+        initial: "",
       }),
-      tags: new fields.ArrayField(new fields.StringField())
-    };
+      tags: new fields.ArrayField(new fields.StringField()),
+    }
   }
 }
