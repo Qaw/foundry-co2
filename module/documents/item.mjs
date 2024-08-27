@@ -12,14 +12,10 @@ export default class CoItem extends Item {
     super(...args)
   }
 
-  /** @override */
-  prepareDerivedData() {
-    this.system.common.slug = this.name.slugify({ strict: true })
-  }
-
   // #region accesseurs
   /**
-   * @returns undefined if the item is a path, true if the item has modifiers
+   * Does it have modifiers ?
+   * @returns {boolean} undefined if the item is a path, true if the item has modifiers
    * @type {boolean}
    */
   get hasModifiers() {
@@ -71,11 +67,11 @@ export default class CoItem extends Item {
   }
 
   get tags() {
-    return this.system.common.tags
+    return this.system.tags
   }
 
   /**
-   * @returns An array of all the actions of the item or empty if no actions or if it's an item without actions
+   * An array of all the actions of the item or empty if no actions or if it's an item without actions
    */
   get actions() {
     if (foundry.utils.isEmpty(this.system.actions)) return []
@@ -84,7 +80,7 @@ export default class CoItem extends Item {
   }
 
   /**
-   * @returns An array of all the visible actions of the item or empty if no actions or if it's an item without actions
+   * An array of all the visible actions of the item or empty if no actions or if it's an item without actions
    */
   get visibleActions() {
     if (foundry.utils.isEmpty(this.system.actions)) return []
@@ -93,7 +89,7 @@ export default class CoItem extends Item {
   }
 
   /**
-   * @returns Basic info for a capacity : uuid, name, img, description
+   * Basic info for a capacity : uuid, name, img, description
    */
   get infos() {
     if (this.type === ITEM_TYPE.CAPACITY || this.type === ITEM_TYPE.PATH) {
@@ -101,19 +97,20 @@ export default class CoItem extends Item {
         uuid: this.uuid,
         name: this.name,
         img: this.img,
-        description: this.system.common.description,
+        description: this.system.description,
       }
     }
+    return null
   }
 
   /**
-   * @returns Informations of the item to be displayed in the chat via sendToChat button
+   * Informations of the item to be displayed in the chat via sendToChat button
    * @param {*} chatType
    * item : Item and all actions
    * loot : Item without actions
    * action : Item and a specific action
-   * @param indice
-   * @param (String) Indice of the action, null for others
+   * @param {int} indice
+   * @param {String} Indice of the action, null for others
    */
   getChatData(chatType, indice = null) {
     if (this.type === ITEM_TYPE.CAPACITY || this.type === ITEM_TYPE.EQUIPMENT || this.type === ITEM_TYPE.ATTACK) {
@@ -134,7 +131,7 @@ export default class CoItem extends Item {
         id: this.id,
         name: this.name,
         img: this.img,
-        description: this.system.common.description,
+        description: this.system.description,
         actions: actions,
       }
     }
@@ -145,9 +142,8 @@ export default class CoItem extends Item {
   // #region méthodes publiques
 
   /**
-   *
-   * @param actor
-   * @returns the items of type Capacity based on the ids for a path in an actor
+   * The items of type Capacity based on the ids for a path in an actor
+   * @param {Actor} actor
    */
   async getEmbeddedCapacities(actor) {
     if ([ITEM_TYPE.PATH].includes(this.type)) {

@@ -1,10 +1,9 @@
-import { CommonData } from "./schemas/common.mjs"
+import ItemData from "./item.mjs"
 
-export class PathData extends foundry.abstract.DataModel {
+export class PathData extends ItemData {
   static defineSchema() {
     const fields = foundry.data.fields
-    return {
-      common: new fields.EmbeddedDataField(CommonData),
+    return foundry.utils.mergeObject(super.defineSchema(), {
       subtype: new fields.StringField({
         required: true,
         nullable: false,
@@ -17,6 +16,6 @@ export class PathData extends foundry.abstract.DataModel {
         initial: 0,
         integer: true,
       }),
-    }
+    })
   }
 }

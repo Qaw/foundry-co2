@@ -11,7 +11,6 @@ import CoEncounterSheet from "./actor/sheet/encounter-sheet.mjs"
 
 import { CharacterData } from "./models/actor/character.mjs"
 import { CoActorProxy } from "./actor/proxy.mjs"
-import { CoItemrProxy } from "./documents/proxy.mjs"
 import registerHooks from "./system/hooks.mjs"
 import { EncounterData } from "./models/actor/encounter.mjs"
 import { PathData } from "./models/item/path.mjs"
@@ -54,7 +53,7 @@ Hooks.once("init", async function () {
   }
 
   CONFIG.Actor.documentClass = CoActorProxy
-  CONFIG.Item.documentClass = CoItemrProxy
+  CONFIG.Item.documentClass = CoItem
 
   // Unregister legacy sheets
   Actors.unregisterSheet("core", ActorSheet)

@@ -1,10 +1,9 @@
-import { CommonData } from "./schemas/common.mjs"
-
-export class AttackData extends foundry.abstract.DataModel {
+import ItemData from "./item.mjs"
+export class AttackData extends ItemData {
   static defineSchema() {
     const fields = foundry.data.fields
-    return {
-      common: new fields.EmbeddedDataField(CommonData),
+
+    return foundry.utils.mergeObject(super.defineSchema(), {
       subtype: new fields.StringField({
         required: true,
         nullable: false,
@@ -37,6 +36,23 @@ export class AttackData extends foundry.abstract.DataModel {
         }),
       }),
       actions: new fields.ArrayField(new fields.ObjectField()),
+    })
+  }
+
+  get displayValues() {
+    let attack = ""
+    let damage = ""
+    let source = ""
+    let actions = this.actions
+    if (actions.length > 0) {
+      let action = Action.createFromExisting(actions[0])
+      if (action.hasResolvers) {
+        let resolver = action.resolvers[0]
+        attack = resolver?.skill?.formula[0].part
+        damage = resolver?.dmg?.formula[0].part
+      }
+      source = action.source
     }
+    return { attack, damage, source }
   }
 }

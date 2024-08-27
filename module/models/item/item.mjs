@@ -1,4 +1,4 @@
-export class CommonData extends foundry.abstract.DataModel {
+export default class ItemData extends foundry.abstract.TypeDataModel {
   static defineSchema() {
     const fields = foundry.data.fields
     return {
@@ -20,5 +20,10 @@ export class CommonData extends foundry.abstract.DataModel {
       }),
       tags: new fields.ArrayField(new fields.StringField()),
     }
+  }
+
+  /** @override */
+  prepareDerivedData() {
+    this.slug = this.parent.name.slugify({ strict: true })
   }
 }

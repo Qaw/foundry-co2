@@ -1,10 +1,8 @@
-import { CommonData } from "./schemas/common.mjs"
-
-export class CapacityData extends foundry.abstract.DataModel {
+import ItemData from "./item.mjs"
+export class CapacityData extends ItemData {
   static defineSchema() {
     const fields = foundry.data.fields
-    return {
-      common: new fields.EmbeddedDataField(CommonData),
+    return foundry.utils.mergeObject(super.defineSchema(), {
       subtype: new fields.StringField({
         required: true,
         nullable: false,
@@ -42,6 +40,6 @@ export class CapacityData extends foundry.abstract.DataModel {
         initial: null,
       }),
       actions: new fields.ArrayField(new fields.ObjectField()),
-    }
+    })
   }
 }
