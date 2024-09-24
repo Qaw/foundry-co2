@@ -218,7 +218,7 @@ export class CoSkillRoll {
 
   /**
    * @name weaponRoll
-   * @description Jet de dommages d'une arme
+   * Jet de dommages d'une arme
    *
    * @param {*} actor
    * @param {*} dmgFormula

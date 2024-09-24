@@ -14,7 +14,7 @@ export class CoChat {
   }
 
   /**
-   * @description Sets the specified message content
+   * Sets the specified message content
    * @param {*} content
    * @returns the instance
    */
@@ -24,7 +24,7 @@ export class CoChat {
   }
 
   /**
-   * @description Sets the specified template used to create the message content
+   * Sets the specified template used to create the message content
    * @param {*} template The path of the file template to set
    * @returns the instance
    */
@@ -34,7 +34,7 @@ export class CoChat {
   }
 
   /**
-   * @description Sets the specified data used to create the message content
+   * Sets the specified data used to create the message content
    * @param {*} data The data of the file template to set
    * @returns the instance
    */
@@ -44,7 +44,7 @@ export class CoChat {
   }
 
   /**
-   * @description Sets the flags parameter
+   * Sets the flags parameter
    * @param {*} flags
    * @returns the instance
    */
@@ -74,7 +74,7 @@ export class CoChat {
   }
 
   /**
-   * @description Creates the chat message
+   * Creates the chat message
    * @returns this instance
    */
   async create() {
@@ -132,7 +132,7 @@ export class CoChat {
   }
 
   /**
-   * @description Creates the message content from the registered template
+   * Creates the message content from the registered template
    * @returns the message content or null i an error occurs
    * @private
    */

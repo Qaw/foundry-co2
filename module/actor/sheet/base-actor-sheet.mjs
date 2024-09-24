@@ -57,7 +57,7 @@ export default class CoBaseActorSheet extends ActorSheet {
   }
 
   /**
-   * @description Manage the lock/unlock button on the sheet
+   * Manage the lock/unlock button on the sheet
    * @param {*} event
    */
   async _onSheetChangelock(event) {
@@ -69,7 +69,7 @@ export default class CoBaseActorSheet extends ActorSheet {
   }
 
   /**
-   * @description Send the item details to the chat
+   * Send the item details to the chat
    * Chat Type are :
    * - item : to display an item and all its actions
    * - action : to display the item and the action
@@ -108,7 +108,7 @@ export default class CoBaseActorSheet extends ActorSheet {
   }
 
   /**
-   * @description Create a new embedded item
+   * Create a new embedded item
    * @param {*} event
    */
   _onItemCreate(event) {

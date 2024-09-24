@@ -196,7 +196,7 @@ export default class CoActor extends Actor {
 
   /**
    * @name abilitiesModifiers
-   * @description Get all the modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype AbilityValue
+   * Get all the modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype AbilityValue
    * @public
    * @returns {Modifier[]} An empty array or an array of Modifiers
    */
@@ -268,7 +268,7 @@ export default class CoActor extends Actor {
 
   /**
    * @name getMalusToInitiative
-   * @description Retourne le malus à l'initiative lié à l'armure et à l'incompétence armes/armures
+   * Retourne le malus à l'initiative lié à l'armure et à l'incompétence armes/armures
    * @public
    *
    * @returns {int} retourne le malus (négatif) ou 0
@@ -280,7 +280,7 @@ export default class CoActor extends Actor {
 
   /**
    * @name getOverloadMalusToInitiative
-   * @description Retourne le malus à l'initiative lié à l'armure
+   * Retourne le malus à l'initiative lié à l'armure
    * @public
    *
    * @returns {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
@@ -291,7 +291,7 @@ export default class CoActor extends Actor {
 
   /**
    * @name getIncompetentMalusToInitiative
-   * @description Retourne le malus à l'initiative lié à l'incompétence armes/armures
+   * Retourne le malus à l'initiative lié à l'incompétence armes/armures
    * @public
    *
    * @returns {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
@@ -302,7 +302,7 @@ export default class CoActor extends Actor {
 
   /**
    * @name getDefenceFromArmorAndShield
-   * @description calcule la défense de l'armure et du bouclier équipés
+   * calcule la défense de l'armure et du bouclier équipés
    * @returns {Int} la somme des DEF
    */
   getDefenceFromArmorAndShield() {
@@ -311,7 +311,7 @@ export default class CoActor extends Actor {
 
   /**
    * @name getDefenceFromArmor
-   * @description calcule la défense de l'armure équipée
+   * calcule la défense de l'armure équipée
    * @returns {Int} la valeur de défense
    */
   getDefenceFromArmor() {
@@ -321,7 +321,7 @@ export default class CoActor extends Actor {
 
   /**
    * @name getDefenceFromShield
-   * @description calcule la défense du bouclier équipé
+   * calcule la défense du bouclier équipé
    * @returns {Int} la valeur de défense
    */
   getDefenceFromShield() {
@@ -428,7 +428,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @description Apprend/désapprend une capacité du personnage
+   * Apprend/désapprend une capacité du personnage
    * Change le champ learned de la capactié
    * Met à jour le rank de la voie correspondante
    * @param {*} capacityId
@@ -443,7 +443,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @description Equippe/Déséquippe un equipment du personnage
+   * Equippe/Déséquippe un equipment du personnage
    * Change le champ equipped de l'equipement
    * @param {*} itemId
    * @param {*} bypassChecks True to ignore the control of the hands
@@ -460,7 +460,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @description Create a feature, and the linked modifiers, paths and capacities if they exist
+   * Create a feature, and the linked modifiers, paths and capacities if they exist
    * @param {*} feature
    */
   async addFeature(feature) {
@@ -515,7 +515,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @description Create a profile, and the linked modifiers and paths if they exist
+   * Create a profile, and the linked modifiers and paths if they exist
    * @param {*} profile
    */
   async addProfile(profile) {
@@ -558,7 +558,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @description Add a path as an embedded item
+   * Add a path as an embedded item
    * It also create the capacities linked to the path
    * @param {CoItem} path
    * @returns {number} id of the created path
@@ -593,7 +593,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @description Add a capacity as an embedded item
+   * Add a capacity as an embedded item
    * @param {CoItem} capacity
    * @param {number} pathId id of the Path if the capacity is linked to a path
    * @returns {number} id of the created capacity
@@ -638,7 +638,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @description Add an equipment as an embedded item
+   * Add an equipment as an embedded item
    * @param {CoItem} equipment
    * @returns {number} id of the created path
    */
@@ -833,7 +833,7 @@ export default class CoActor extends Actor {
 
   /**
    * @name _prepareAbilities
-   * @description Calcule la valeur et le mod des caractéristiques <br/>
+   * Calcule la valeur et le mod des caractéristiques <br/>
    *              Valeur = base + bonus + modificateurs <br/>
    *              bonus est à la somme du bonus de la fiche et du champ dédié aux Active Effets <br/>
    *              modificateurs est la somme de tous les modificateurs modifiant la caractéristique, quelle que soit la source
@@ -851,7 +851,7 @@ export default class CoActor extends Actor {
 
   /**
    * @name _addAllValues
-   * @description Calcul la somme d'un tableau de valeurs positives ou négatives
+   * Calcul la somme d'un tableau de valeurs positives ou négatives
    *
    * @param {*} array Un tableau de valeurs
    * @returns {int} 0 ou la somme des valeurs
@@ -861,7 +861,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @description toggle the field of the items and the actions linked
+   * toggle the field of the items and the actions linked
    * @param {*} itemId
    * @param {*} fieldName
    */

@@ -157,7 +157,7 @@ export default class CoItem extends Item {
   }
 
   /**
-   * @description Calculate the sum of all bonus for a specific type and target
+   * Calculate the sum of all bonus for a specific type and target
    * @param {*} type      MODIFIER_TYPE
    * @param {*} subtype   MODIFIER_SUBTYPE
    * @param {*} target    MODIFIER_TARGET
@@ -173,7 +173,7 @@ export default class CoItem extends Item {
   }
 
   /**
-   * @description Calculate the sum of all bonus for a specific type and target
+   * Calculate the sum of all bonus for a specific type and target
    * @param {*} type trait
    * @param subtype
    * @param {*} target For trait type, target are str, dex, etc...

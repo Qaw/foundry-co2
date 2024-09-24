@@ -462,7 +462,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
   }
 
   /**
-   * @description For item of type Capacity or Equipment, add array for modifiers, conditions and resolvers when they are empty on the sheet
+   * For item of type Capacity or Equipment, add array for modifiers, conditions and resolvers when they are empty on the sheet
    * @param {*} event
    * @param {*} formData
    */

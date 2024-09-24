@@ -3,7 +3,7 @@ import { Utils } from "../../system/utils.mjs"
 
 export class Modifiers {
   /**
-   * @description Get all modifiers object from an array of items
+   * Get all modifiers object from an array of items
    * @param {CoItem[]} items
    * @param {*} type MODIFIER_TYPE
    * @param {*} subtype MODIFIER_SUBTYPE

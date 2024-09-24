@@ -2,6 +2,7 @@ import { ITEM_TYPE } from "../../system/constants.mjs"
 import CoBaseActorSheet from "./base-actor-sheet.mjs"
 import { CoEditAbilitiesDialog } from "../../dialogs/edit-abilities-dialog.mjs"
 import { Action } from "../../models/action/action.mjs"
+import { SYSTEM } from "../../config/system.mjs"
 
 export default class CoCharacterSheet extends CoBaseActorSheet {
   /** @override */
@@ -20,6 +21,9 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     const context = super.getData(options)
     context.profiles = this.actor.profiles
     context.xpleft = parseInt(this.actor.system.attributes.xp.max) - parseInt(this.actor.system.attributes.xp.value)
+    context.choiceAbilities = SYSTEM.ABILITIES
+    context.choiceMoveUnit = SYSTEM.MOVEMENT_UNIT
+    context.choiceSize = SYSTEM.SIZE
     return context
   }
 
@@ -40,7 +44,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Action d'utiliser : active ou désactive une action
+   * Action d'utiliser : active ou désactive une action
    * @param {*} event
    */
   _onUseAction(event) {
@@ -76,7 +80,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Dépense un point de récupération avec récupération de point de vie ou sans si Shift + Clic
+   * Dépense un point de récupération avec récupération de point de vie ou sans si Shift + Clic
    * @param {*} event
    * @private
    */
@@ -89,7 +93,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Learned or unlearned the capacity in the path view
+   * Learned or unlearned the capacity in the path view
    * @param {*} event
    * @private
    */
@@ -100,7 +104,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Equip or unequip the equipment
+   * Equip or unequip the equipment
    * @param {*} event
    * @param {boolean} status the target status of the capacity, true if selected, false elsewhere
    * @private
@@ -113,7 +117,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Open the item sheet
+   * Open the item sheet
    * For capacity, open the embededd item
    * @param event
    * @private
@@ -129,7 +133,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Delete the selected item
+   * Delete the selected item
    * @param event
    * @private
    */
@@ -157,7 +161,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Delete the selected feature
+   * Delete the selected feature
    * @param event
    * @private
    */
@@ -170,7 +174,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Delete the selected profile
+   * Delete the selected profile
    * @param event
    * @private
    */
@@ -183,7 +187,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Delete the selected path
+   * Delete the selected path
    * @param event
    * @private
    */
@@ -197,7 +201,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Delete the selected capacity
+   * Delete the selected capacity
    * @param event
    * @private
    */

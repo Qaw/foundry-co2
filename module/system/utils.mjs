@@ -21,7 +21,7 @@ export class Utils {
   }
 
   /**
-   * @description For an actor, evaluate the formula
+   * For an actor, evaluate the formula
    * @param {*} actor
    * @param {*} formula
    * @param toEvaluate
@@ -37,7 +37,7 @@ export class Utils {
   }
 
   /**
-   * @description For an actor, evaluate the formula
+   * For an actor, evaluate the formula
    * @param {*} actor
    * @param {*} formula
    * @param {*} source The item source's UUID : used for the #rank
@@ -50,7 +50,7 @@ export class Utils {
   }
 
   /**
-   * @description Evaluate a custom value
+   * Evaluate a custom value
    * Shortcuts
    * @str @dex @con @int @wis @cha @mel @ran @mag @lvl @rank[+1,0,+1,0,0]
    * @param {*} actor

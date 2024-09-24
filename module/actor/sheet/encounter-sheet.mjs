@@ -53,7 +53,7 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Learned or unlearned the capacity in the path view
+   * Learned or unlearned the capacity in the path view
    * @param {*} event
    * @private
    */
@@ -64,7 +64,7 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Select or unselect the capacity in the path view
+   * Select or unselect the capacity in the path view
    * @param {*} event
    * @param {boolean} status the target status of the capacity, true if selected, false elsewhere
    * @private
@@ -76,7 +76,7 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Open the item sheet
+   * Open the item sheet
    * For capacity, open the embededd item
    * @param event
    * @private
@@ -92,7 +92,7 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Delete the selected item
+   * Delete the selected item
    * @param event
    * @private
    */
@@ -108,7 +108,7 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Delete the selected feature
+   * Delete the selected feature
    * @param event
    * @private
    */
@@ -120,7 +120,7 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Delete the selected path
+   * Delete the selected path
    * @param event
    * @private
    */
@@ -133,7 +133,7 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @description Delete the selected capacity
+   * Delete the selected capacity
    * @param event
    * @private
    */

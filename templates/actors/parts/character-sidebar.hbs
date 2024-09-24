@@ -1,4 +1,4 @@
-{{!log 'character-sidebar' this}}
+{{log 'character-sidebar' this}}
 <div class="sidebar">
     <div class="image-container">
         <img class="actor-image" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="auto" width="100%" style="margin: 0 auto">
@@ -77,11 +77,7 @@
                     <label>{{localize "CO.label.short.ability"}}</label>
                     <div class="select-container">
                         <select name="system.combat.init.ability" data-type="String">
-                            {{#select system.combat.init.ability}}
-                                {{#each @root.config.abilities as |label idx|}}
-                                    <option value="{{idx}}">{{localize label}}</option>
-                                {{/each}}
-                            {{/select}}
+                            {{selectOptions choiceAbilities selected=combat.init.ability localize=true}}
                         </select>
                     </div>
                 </div>
@@ -117,11 +113,7 @@
                     <label>{{localize "CO.label.short.ability"}}</label>
                     <div class="select-container">
                         <select name="system.combat.melee.ability" data-type="String">
-                            {{#select system.combat.melee.ability}}
-                                {{#each @root.config.abilities as |label idx|}}
-                                    <option value="{{idx}}">{{localize label}}</option>
-                                {{/each}}
-                            {{/select}}
+                            {{selectOptions choiceAbilities selected=combat.melee.ability localize=true}}
                         </select>
                     </div>
                 </div>
@@ -160,11 +152,7 @@
                     <label>{{localize "CO.label.short.ability"}}</label>
                     <div class="select-container">
                         <select name="system.combat.ranged.ability" data-type="String">
-                            {{#select system.combat.ranged.ability}}
-                                {{#each @root.config.abilities as |label idx|}}
-                                    <option value="{{idx}}">{{localize label}}</option>
-                                {{/each}}
-                            {{/select}}
+                            {{selectOptions choiceAbilities selected=combat.ranged.ability localize=true}}
                         </select>
                     </div>
                 </div>
@@ -202,11 +190,7 @@
                     <label>{{localize "CO.label.short.ability"}}</label>
                     <div class="select-container">
                         <select name="system.combat.magic.ability" data-type="String">
-                            {{#select system.combat.magic.ability}}
-                                {{#each @root.config.abilities as |label idx|}}
-                                    <option value="{{idx}}">{{localize label}}</option>
-                                {{/each}}
-                            {{/select}}
+                            {{selectOptions choiceAbilities selected=combat.magic.ability localize=true}}
                         </select>
                     </div>
                 </div>
@@ -332,10 +316,7 @@
                     <label>{{localize "CO.label.long.base"}}</label>
                     <input class="mvt-base" type="number" name="system.attributes.movement.base" value="{{attributes.movement.base}}" data-dtype="Number" placeholder="0">
                     <select name="system.attributes.movement.unit" data-type="String">
-                        {{#select system.attributes.movement.unit}}
-                            <option value="m">{{localize "CO.label.long.meters"}}</option>
-                            <option value="ft">{{localize "CO.label.long.feet"}}</option>
-                        {{/select}}
+                        {{selectOptions choiceMoveUnit selected=system.attributes.movement.unit localize=true}}
                     </select>
                 </div>
             </div>

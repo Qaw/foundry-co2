@@ -62,7 +62,7 @@ export default class CoEncounter extends CoActor {
   // #endregion
 
   /**
-   * @description Add an attack as an embedded item
+   * Add an attack as an embedded item
    * @param {CoItem} attack
    * @returns {number} id of the created capacity
    */

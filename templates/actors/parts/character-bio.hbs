@@ -4,11 +4,7 @@
         <label>{{localize "CO.ui.size"}}</label>
         <div class="form-fields">
             <select name="system.details.size" data-type="String" style="width:100%">
-                {{#select details.size}}
-                    {{#each @root.config.size as |label idx|}}
-                        <option value="{{idx}}">{{localize label}}</option>
-                    {{/each}}
-                {{/select}}
+                {{selectOptions choiceSize selected=details.size localize=true}}
             </select>
         </div>
     </div>
