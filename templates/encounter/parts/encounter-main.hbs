@@ -1,7 +1,7 @@
 <!-- ABILITIES -->
 <div class="ability-scores section-container">
     <div class="section-header">
-        <h4>{{localize "CO.label.long.modifiers"}}</h4>
+        <h4>{{localize "CO.label.long.abilities"}}</h4>
     </div>
     <!-- ABILITY MODIFIERS -->
     <div class="section-body">
@@ -11,9 +11,9 @@
                     <label class="rollable"><a>{{localize (concat "CO.abilities.short." id)}} {{#if ability.superior}}*{{/if}}</a></label>
                     {{#if ../unlocked}}
                         <label class="checkbox"> <input type="checkbox" name="system.abilities.{{id}}.superior" {{checked ability.superior}}></label>
-                        <input class="modifier" type="text" name="system.abilities.{{id}}.mod" value="{{numberFormat ability.mod decimals=0 sign=true}}" data-dtype="Number" placeholder="0">
+                        <input class="modifier" type="text" name="system.abilities.{{id}}.base" value="{{numberFormat ability.base sign=true}}" data-dtype="Number" placeholder="0">
                     {{else}}
-                        <input class="modifier" type="text" name="system.abilities.{{id}}.mod" readonly="true" value="{{numberFormat ability.mod decimals=0 sign=true}}" data-dtype="Number" placeholder="0">
+                        <input class="modifier" type="text" name="system.abilities.{{id}}.base" readonly="true" value="{{numberFormat ability.base sign=true}}" data-dtype="Number" placeholder="0">
                     {{/if}}
                 </div>
             {{/each}}

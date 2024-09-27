@@ -5,6 +5,8 @@ import { Action } from "../models/action/action.mjs"
 export default class CoEncounter extends CoActor {
   prepareDerivedData() {
     super.prepareDerivedData()
+
+    this._prepareAbilities()
     console.debug(this)
 
     this._prepareHPMax()

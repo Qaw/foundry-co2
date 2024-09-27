@@ -1,8 +1,8 @@
-import { AbilityModifier } from "./schemas/ability-mod.mjs"
+import { AbilityValue } from "./schemas/ability-value.mjs"
 import { BaseValue } from "./schemas/base-value.mjs"
 import { AttackData } from "./schemas/attack.mjs"
 
-export default class EncounterData extends foundry.abstract.DataModel {
+export default class EncounterData extends foundry.abstract.TypeDataModel {
   static defineSchema() {
     const fields = foundry.data.fields
     const requiredInteger = { required: true, nullable: false, integer: true }
@@ -11,7 +11,7 @@ export default class EncounterData extends foundry.abstract.DataModel {
 
     schema.abilities = new fields.SchemaField(
       Object.values(SYSTEM.ABILITIES).reduce((obj, ability) => {
-        obj[ability.id] = new fields.EmbeddedDataField(AbilityModifier, { label: ability.label, nullable: false })
+        obj[ability.id] = new fields.EmbeddedDataField(AbilityValue, { label: ability.label, nullable: false })
         return obj
       }, {}),
     )
