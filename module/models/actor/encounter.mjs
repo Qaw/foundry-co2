@@ -2,7 +2,7 @@ import { AbilityModifier } from "./schemas/ability-mod.mjs"
 import { BaseValue } from "./schemas/base-value.mjs"
 import { AttackData } from "./schemas/attack.mjs"
 
-export class EncounterData extends foundry.abstract.DataModel {
+export default class EncounterData extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields
     const requiredInteger = { required: true, nullable: false, integer: true }

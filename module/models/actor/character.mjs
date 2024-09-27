@@ -2,7 +2,7 @@ import { SYSTEM } from "../../config/system.mjs"
 import { AbilityValue } from "./schemas/ability-value.mjs"
 import { BaseValue } from "./schemas/base-value.mjs"
 
-export class CharacterData extends foundry.abstract.DataModel {
+export default class CharacterData extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields
     const requiredInteger = { required: true, nullable: false, integer: true }

@@ -110,7 +110,7 @@ export default class CoItem extends Item {
    * loot : Item without actions
    * action : Item and a specific action
    * @param {int} indice
-   * @param {String} Indice of the action, null for others
+   * @param {string} Indice of the action, null for others
    */
   getChatData(chatType, indice = null) {
     if (this.type === ITEM_TYPE.CAPACITY || this.type === ITEM_TYPE.EQUIPMENT || this.type === ITEM_TYPE.ATTACK) {

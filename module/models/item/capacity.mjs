@@ -1,5 +1,5 @@
 import ItemData from "./item.mjs"
-export class CapacityData extends ItemData {
+export default class CapacityData extends ItemData {
   static defineSchema() {
     const fields = foundry.data.fields
     return foundry.utils.mergeObject(super.defineSchema(), {

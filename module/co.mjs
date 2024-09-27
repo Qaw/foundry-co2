@@ -9,19 +9,15 @@ import { Modifier } from "./models/action/modifiers.mjs"
 import { registerSystemSettings } from "./system/settings.js"
 import CoEncounterSheet from "./actor/sheet/encounter-sheet.mjs"
 
-import { CharacterData } from "./models/actor/character.mjs"
 import { CoActorProxy } from "./actor/proxy.mjs"
 import registerHooks from "./system/hooks.mjs"
-import { EncounterData } from "./models/actor/encounter.mjs"
-import { PathData } from "./models/item/path.mjs"
-import { FeatureData } from "./models/item/feature.mjs"
-import { ProfileData } from "./models/item/profile.mjs"
-import { EquipmentData } from "./models/item/equipment.mjs"
-import { CapacityData } from "./models/item/capacity.mjs"
+
 import { Macros } from "./system/macros.mjs"
-import { AttackData } from "./models/item/attack.mjs"
 
 globalThis.SYSTEM = SYSTEM
+
+// Import modules
+import * as models from "./models/_module.mjs"
 
 Hooks.once("init", async function () {
   game.co = {
@@ -39,17 +35,17 @@ Hooks.once("init", async function () {
 
   // Hook up system data types
   CONFIG.Actor.dataModels = {
-    character: CharacterData,
-    encounter: EncounterData,
+    character: models.CharacterData,
+    encounter: models.EncounterData,
   }
 
   CONFIG.Item.dataModels = {
-    capacity: CapacityData,
-    equipment: EquipmentData,
-    feature: FeatureData,
-    profile: ProfileData,
-    path: PathData,
-    attack: AttackData,
+    capacity: models.CapacityData,
+    equipment: models.EquipmentData,
+    feature: models.FeatureData,
+    profile: models.ProfileData,
+    path: models.PathData,
+    attack: models.AttackData,
   }
 
   CONFIG.Actor.documentClass = CoActorProxy

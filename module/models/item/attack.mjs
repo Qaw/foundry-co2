@@ -1,5 +1,5 @@
 import ItemData from "./item.mjs"
-export class AttackData extends ItemData {
+export default class AttackData extends ItemData {
   static defineSchema() {
     const fields = foundry.data.fields
 

@@ -861,7 +861,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * toggle the field of the items and the actions linked
+   * Toggle the field of the items and the actions linked
    * @param {*} itemId
    * @param {*} fieldName
    */

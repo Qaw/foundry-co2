@@ -1,6 +1,6 @@
 import ItemData from "./item.mjs"
 
-export class FeatureData extends ItemData {
+export default class FeatureData extends ItemData {
   static defineSchema() {
     const fields = foundry.data.fields
     return foundry.utils.mergeObject(super.defineSchema(), {
