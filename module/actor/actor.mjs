@@ -832,7 +832,6 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @name _prepareAbilities
    * Calcule la valeur et le mod des caractéristiques <br/>
    *              Valeur = base + bonus + modificateurs <br/>
    *              bonus est à la somme du bonus de la fiche et du champ dédié aux Active Effets <br/>
@@ -850,7 +849,6 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @name _addAllValues
    * Calcul la somme d'un tableau de valeurs positives ou négatives
    *
    * @param {*} array Un tableau de valeurs

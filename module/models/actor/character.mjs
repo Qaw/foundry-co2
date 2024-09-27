@@ -1,19 +1,12 @@
 import { SYSTEM } from "../../config/system.mjs"
-import { AbilityValue } from "./schemas/ability-value.mjs"
 import { BaseValue } from "./schemas/base-value.mjs"
+import ActorData from "./actor.mjs"
 
-export default class CharacterData extends foundry.abstract.TypeDataModel {
+export default class CharacterData extends ActorData {
   static defineSchema() {
     const fields = foundry.data.fields
     const requiredInteger = { required: true, nullable: false, integer: true }
     const schema = {}
-
-    schema.abilities = new fields.SchemaField(
-      Object.values(SYSTEM.ABILITIES).reduce((obj, ability) => {
-        obj[ability.id] = new fields.EmbeddedDataField(AbilityValue, { label: ability.label, nullable: false })
-        return obj
-      }, {}),
-    )
 
     schema.combat = new fields.SchemaField(
       Object.values(SYSTEM.COMBAT).reduce((obj, combat) => {
@@ -29,57 +22,6 @@ export default class CharacterData extends foundry.abstract.TypeDataModel {
         return obj
       }, {}),
     )
-
-    schema.attributes = new fields.SchemaField({
-      movement: new fields.EmbeddedDataField(BaseValue, {
-        label: "CO.label.long.movement",
-        nullable: false,
-        initial: { base: 10, unit: "m", bonuses: { sheet: 0, effects: 0 } },
-      }),
-      level: new fields.EmbeddedDataField(BaseValue, {
-        label: "CO.label.long.level",
-        nullable: false,
-        initial: { base: 1, bonuses: { sheet: 0, effects: 0 } },
-      }),
-      encumbrance: new fields.SchemaField({
-        value: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-        encumbered: new fields.BooleanField({
-          required: true,
-          initial: false,
-        }),
-      }),
-      hp: new fields.SchemaField(
-        {
-          base: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-          value: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-          temp: new fields.NumberField({
-            required: true,
-            nullable: true,
-            initial: null,
-            integer: true,
-          }),
-          max: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-          tempmax: new fields.NumberField({
-            required: true,
-            nullable: true,
-            initial: null,
-            integer: true,
-          }),
-          bonuses: new fields.SchemaField({
-            sheet: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-            effects: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-          }),
-        },
-        { label: "CO.label.long.hp", nullable: false },
-      ),
-      xp: new fields.SchemaField(
-        {
-          value: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-          max: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-        },
-        { label: "CO.label.long.xp", required: true, nullable: false },
-      ),
-    })
 
     const resourceField = (label) =>
       new fields.SchemaField(
@@ -123,6 +65,6 @@ export default class CharacterData extends foundry.abstract.TypeDataModel {
       languages: new fields.ArrayField(new fields.StringField()),
     })
 
-    return schema
+    return foundry.utils.mergeObject(super.defineSchema(), schema)
   }
 }
