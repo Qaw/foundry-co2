@@ -16,7 +16,7 @@ export class CoChat {
   /**
    * Sets the specified message content
    * @param {*} content
-   * @returns the instance
+   * @returns {CoChat} the instance
    */
   withContent(content) {
     this.content = content
@@ -26,7 +26,7 @@ export class CoChat {
   /**
    * Sets the specified template used to create the message content
    * @param {*} template The path of the file template to set
-   * @returns the instance
+   * @returns {CoChat} the instance
    */
   withTemplate(template) {
     this.template = template
@@ -36,7 +36,7 @@ export class CoChat {
   /**
    * Sets the specified data used to create the message content
    * @param {*} data The data of the file template to set
-   * @returns the instance
+   * @returns {CoChat} the instance
    */
   withData(data) {
     this.data = data
@@ -46,7 +46,7 @@ export class CoChat {
   /**
    * Sets the flags parameter
    * @param {*} flags
-   * @returns the instance
+   * @returns {CoChat} the instance
    */
   withFlags(flags) {
     this.flags = flags
@@ -56,7 +56,7 @@ export class CoChat {
   /**
    * Indicates if the chat is a roll.
    * @param roll The roll.
-   * @returns the instance.
+   * @returns {CoChat} the instance.
    */
   withRoll(roll) {
     this.roll = roll
@@ -66,7 +66,7 @@ export class CoChat {
   /**
    * Indicates if the chat is a whisper
    * @param whisper The array of user id to whisper.
-   * @returns the instance.
+   * @returns {CoChat} the instance.
    */
   withWhisper(whisper) {
     this.whisper = whisper
@@ -75,7 +75,7 @@ export class CoChat {
 
   /**
    * Creates the chat message
-   * @returns this instance
+   * @returns {CoChat} this instance
    */
   async create() {
     // Retrieve the message content
@@ -102,7 +102,8 @@ export class CoChat {
 
     // Set the roll parameter if necessary
     if (this.roll) {
-      ;(data.type = CONST.CHAT_MESSAGE_TYPES.ROLL), (data.roll = this.roll)
+      data.type = CONST.CHAT_MESSAGE_TYPES.ROLL
+      data.roll = this.roll
     }
 
     // Set the flags parameter if necessary

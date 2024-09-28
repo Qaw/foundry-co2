@@ -84,10 +84,8 @@ export const registerHandlebarsHelpers = function () {
         return '<i class="fa-solid fa-bolt"></i>'
       case "protection":
         return '<i class="fa-regular fa-fw fa-shield"></i>'
-        break
       case "heal":
         return '<i class="fas fa-fw fa-hand-holding-medical"></i>'
-        break
     }
   })
   Handlebars.registerHelper("isEnabled", function (configKey) {

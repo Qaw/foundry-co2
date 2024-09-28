@@ -89,7 +89,7 @@ export class Macros {
 
   /**
    * Find a document of the specified name and type on an assigned or selected actor.
-   * @param id
+   * @param {int} id
    * @param {string} name          Document name to locate.
    * @param {string} documentType  Type of embedded document (e.g. "Item").
    * @returns {Document}           Document if found, otherwise nothing.

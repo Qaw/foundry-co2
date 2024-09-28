@@ -38,10 +38,6 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
     html.find(".inventory-equip").click(this._onEquippedToggle.bind(this))
   }
 
-  /**
-   *
-   * @param {*} event
-   */
   _onUseAction(event) {
     const dataset = event.currentTarget.dataset
     const action = dataset.action
@@ -49,9 +45,9 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
     const source = dataset.source
     const indice = dataset.indice
 
-    if (action == "activate") {
+    if (action === "activate") {
       this.actor.activateAction(true, source, indice, type)
-    } else if (action == "unactivate") {
+    } else if (action === "unactivate") {
       this.actor.activateAction(false, source, indice, type)
     }
   }
@@ -70,7 +66,6 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
   /**
    * Select or unselect the capacity in the path view
    * @param {*} event
-   * @param {boolean} status the target status of the capacity, true if selected, false elsewhere
    * @private
    */
   _onEquippedToggle(event) {
@@ -96,8 +91,11 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * Delete the selected item
-   * @param event
+   * Handle the deletion of an item from the actor's inventory.
+   *
+   * @param {Event} event The event that triggered the deletion.
+   * @returns {Promise<void>} - A promise that resolves when the deletion is complete.
+   *
    * @private
    */
   async _onDeleteItem(event) {
@@ -112,9 +110,10 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * Delete the selected feature
-   * @param event
-   * @private
+   * Handles the deletion of a feature from the actor.
+   *
+   * @param {Event} event The event that triggered the deletion.
+   * @returns {Promise<void>} - A promise that resolves when the feature is deleted.
    */
   async _onDeleteFeature(event) {
     event.preventDefault()
@@ -124,9 +123,10 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * Delete the selected path
-   * @param event
-   * @private
+   * Handles the deletion of a path item.
+   *
+   * @param {Event} event The event that triggered the deletion.
+   * @returns {Promise<void>} A promise that resolves when the path is deleted.
    */
   async _onDeletePath(event) {
     event.preventDefault()
@@ -138,7 +138,7 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
 
   /**
    * Delete the selected capacity
-   * @param event
+   * @param {Event} event
    * @private
    */
   async _onDeleteCapacity(event) {

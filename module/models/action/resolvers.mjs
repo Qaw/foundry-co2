@@ -2,10 +2,12 @@ import { Utils } from "../../system/utils.mjs"
 import { CoAttackCheck } from "../../system/roll.mjs"
 export class Resolver {
   /**
+   * Creates an instance of the class.
    *
-   * @param {*} type
-   * @param {*} skill
-   * @param {*} dmg
+   * @class
+   * @param {string} type The type of the action.
+   * @param {number} skill The skill level required for the action.
+   * @param {number} dmg The damage value of the action.
    */
   constructor(type, skill, dmg) {
     this.type = type

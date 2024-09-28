@@ -17,10 +17,6 @@ class CoRoll {
 }
 
 export class CoSkillCheck extends CoRoll {
-  constructor(actor) {
-    super(actor)
-  }
-
   init(rolling) {
     return this.dialog(rolling)
   }
@@ -205,8 +201,8 @@ export class CoSkillRoll {
     await r.roll({ async: true })
     // Getting the dice kept in case of 2d12 or 2d20 rolls
     const result = r.terms[0].results.find((r) => r.active).result
-    this._isCritical = result >= this._critrange.split("-")[0] || result == 20
-    this._isFumble = result == 1
+    this._isCritical = result >= this._critrange.split("-")[0] || result === 20
+    this._isFumble = result === 1
     if (this._difficulty) {
       this._isSuccess = r.total >= this._difficulty
     }
@@ -269,8 +265,8 @@ export class CoAttackRoll {
     await r.roll({ async: true })
     // Getting the dice kept in case of 2d12 or 2d20 rolls
     const result = r.terms[0].results.find((r) => r.active).result
-    this._isCritical = result >= this._critrange.split("-")[0] || result == 20
-    this._isFumble = result == 1
+    this._isCritical = result >= this._critrange.split("-")[0] || result === 20
+    this._isFumble = result === 1
     if (this._difficulty) {
       this._isSuccess = r.total >= this._difficulty
     }

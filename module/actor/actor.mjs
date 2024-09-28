@@ -354,7 +354,7 @@ export default class CoActor extends Actor {
     const item = this.weapons.find((item) => item.id === itemId)
     if (!item) return null
     const profile = this.profile
-    if (profile.length == 0) return null
+    if (profile.length === 0) return null
     const training = item.system.martialCategory
     return profile.system.martialTrainingsWeapons[training]
   }
@@ -368,7 +368,7 @@ export default class CoActor extends Actor {
     const item = this.armors.find((item) => item.id === itemId)
     if (!item) return null
     const profile = this.profile
-    if (profile.length == 0) return null
+    if (profile.length === 0) return null
     const training = item.system.martialCategory
     return profile.system.martialTrainingsArmors[training]
   }
@@ -382,7 +382,7 @@ export default class CoActor extends Actor {
     const item = this.shields.find((item) => item.id === itemId)
     if (!item) return null
     const profile = this.profile
-    if (profile.length == 0) return null
+    if (profile.length === 0) return null
     const training = item.system.martialCategory
     return profile.system.martialTrainingsShields[training]
   }
