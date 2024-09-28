@@ -29,6 +29,7 @@ Hooks.once("init", async function () {
     macros: Macros,
   }
 
+  globalThis.cof = game.system
   game.system.CONST = SYSTEM
 
   console.info(game.co.log("Initializing..."))

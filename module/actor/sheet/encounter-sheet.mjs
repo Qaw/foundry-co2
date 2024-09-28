@@ -1,5 +1,6 @@
 import { ITEM_TYPE } from "../../system/constants.mjs"
 import CoBaseActorSheet from "./base-actor-sheet.mjs"
+import { SYSTEM } from "../../config/system.mjs"
 
 export default class CoEncounterSheet extends CoBaseActorSheet {
   /** @override */
@@ -19,6 +20,10 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
     console.debug(this.actor.attacks)
     context.attacks = this.actor.attacks
     context.attacksActions = this.actor.attacksActions
+    context.choiceArchetypes = SYSTEM.ENCOUNTER_ARCHETYPES
+    context.choiceCategories = SYSTEM.ENCOUNTER_CATEGORIES
+    context.choiceBossRanks = SYSTEM.ENCOUNTER_BOSS_RANKS
+    context.choiceSizes = SYSTEM.SIZES
     return context
   }
 

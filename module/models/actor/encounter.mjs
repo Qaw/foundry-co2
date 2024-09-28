@@ -1,6 +1,7 @@
 import { BaseValue } from "./schemas/base-value.mjs"
 import { AttackData } from "./schemas/attack.mjs"
 import ActorData from "./actor.mjs"
+import { SYSTEM } from "../../config/system.mjs"
 
 export default class EncounterData extends ActorData {
   static defineSchema() {
@@ -19,26 +20,26 @@ export default class EncounterData extends ActorData {
       archetype: new fields.StringField({
         required: false,
         nullable: true,
-        initial: game.co.config.encounter.archetypes.standard,
-        options: game.co.config.encounter.archetypes,
+        initial: SYSTEM.ENCOUNTER_ARCHETYPES.standard,
+        options: SYSTEM.ENCOUNTER_ARCHETYPES,
       }),
       category: new fields.StringField({
         required: false,
         nullable: true,
-        initial: game.co.config.encounter.categories.humanoid,
-        options: game.co.config.encounter.categories,
+        initial: SYSTEM.ENCOUNTER_CATEGORIES.humanoid,
+        options: SYSTEM.ENCOUNTER_CATEGORIES,
       }),
       size: new fields.StringField({
         required: false,
         nullable: true,
-        initial: game.co.config.encounter.sizes.medium,
-        options: game.co.config.encounter.sizes,
+        initial: SYSTEM.SIZES.medium,
+        options: SYSTEM.SIZES,
       }),
       bossRank: new fields.StringField({
         required: false,
         nullable: true,
-        initial: game.co.config.encounter.bossRank.noboss,
-        options: game.co.config.encounter.bossRank,
+        initial: SYSTEM.ENCOUNTER_BOSS_RANKS.noboss,
+        options: SYSTEM.ENCOUNTER_BOSS_RANKS,
       }),
       description: new fields.SchemaField({
         private: new fields.HTMLField(),
