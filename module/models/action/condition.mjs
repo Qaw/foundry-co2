@@ -1,4 +1,4 @@
-import { ITEM_TYPE } from "../../system/constants.mjs"
+import { SYSTEM } from "../../config/system.mjs"
 /**
  * The Condition class represents a conditional check that can be evaluated for a given item.
  */
@@ -25,9 +25,9 @@ export class Condition {
    */
   get conditions() {
     return {
-      isEquipped: (condition, object, item) => (item.type === ITEM_TYPE.EQUIPMENT ? item.system.equipped : false),
+      isEquipped: (condition, object, item) => (item.type === SYSTEM.ITEM_TYPE.EQUIPMENT ? item.system.equipped : false),
       isOwned: (condition, object, item) => item.isOwned,
-      isLearned: (condition, object, item) => (item.type === ITEM_TYPE.CAPACITY ? item.system.learned : false),
+      isLearned: (condition, object, item) => (item.type === SYSTEM.ITEM_TYPE.CAPACITY ? item.system.learned : false),
       isTagged: (condition, object, item) => {
         // Implement the isTagged condition
       },

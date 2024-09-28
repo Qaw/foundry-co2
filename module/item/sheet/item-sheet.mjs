@@ -1,11 +1,11 @@
 import CoBaseItemSheet from "./base-item-sheet.mjs"
-import { ITEM_TYPE } from "../../system/constants.mjs"
 
 import { Action } from "../../models/action/action.mjs"
 import { Condition } from "../../models/action/condition.mjs"
 import { Modifier } from "../../models/action/modifiers.mjs"
 import { Resolver } from "../../models/action/resolvers.mjs"
 
+import { SYSTEM } from "../../config/system.mjs"
 export default class CoItemSheet extends CoBaseItemSheet {
   /** @override */
   static get defaultOptions() {
@@ -30,13 +30,13 @@ export default class CoItemSheet extends CoBaseItemSheet {
   async getData(options = {}) {
     const context = super.getData(options)
     console.log(context)
-    if (this.item.type === ITEM_TYPE.EQUIPMENT || this.item.type === ITEM_TYPE.PROFILE) {
+    if (this.item.type === SYSTEM.ITEM_TYPE.EQUIPMENT || this.item.type === SYSTEM.ITEM_TYPE.PROFILE) {
       context.martialTrainingsWeaponsList = context.config.martialTrainingsWeapons
       context.martialTrainingsArmorsList = context.config.martialTrainingsArmors
       context.martialTrainingsShieldsList = context.config.martialTrainingsShields
     }
 
-    if (this.item.type === ITEM_TYPE.PATH || this.item.type === ITEM_TYPE.FEATURE) {
+    if (this.item.type === SYSTEM.ITEM_TYPE.PATH || this.item.type === SYSTEM.ITEM_TYPE.FEATURE) {
       let infosCapacities = []
       for (const capacity of this.item.system.capacities) {
         let item = null
@@ -57,7 +57,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
       context.capacities = infosCapacities
     }
 
-    if (this.item.type === ITEM_TYPE.FEATURE || this.item.type === ITEM_TYPE.PROFILE) {
+    if (this.item.type === SYSTEM.ITEM_TYPE.FEATURE || this.item.type === SYSTEM.ITEM_TYPE.PROFILE) {
       let infosPaths = []
       for (const path of this.item.system.paths) {
         let item = null
@@ -125,15 +125,15 @@ export default class CoItemSheet extends CoBaseItemSheet {
     // if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, itemData);
 
     switch (item.type) {
-      case ITEM_TYPE.EQUIPMENT:
+      case SYSTEM.ITEM_TYPE.EQUIPMENT:
         return this._onDropEquipmentItem(item)
-      case ITEM_TYPE.FEATURE:
+      case SYSTEM.ITEM_TYPE.FEATURE:
         return this._onDropFeatureItem(item)
-      case ITEM_TYPE.PROFILE:
+      case SYSTEM.ITEM_TYPE.PROFILE:
         return this._onDropProfileItem(item)
-      case ITEM_TYPE.PATH:
+      case SYSTEM.ITEM_TYPE.PATH:
         return this._onDropPathItem(item)
-      case ITEM_TYPE.CAPACITY:
+      case SYSTEM.ITEM_TYPE.CAPACITY:
         return this._onDropCapacityItem(item)
       default:
         return false
@@ -255,10 +255,10 @@ export default class CoItemSheet extends CoBaseItemSheet {
     let data = duplicate(this.item)
     // Console.log(itemType, uuid, data);
     switch (itemType) {
-      case ITEM_TYPE.PATH:
+      case SYSTEM.ITEM_TYPE.PATH:
         data.system.paths.splice(data.system.paths.indexOf(uuid), 1)
         break
-      case ITEM_TYPE.CAPACITY:
+      case SYSTEM.ITEM_TYPE.CAPACITY:
         data.system.capacities.splice(data.system.capacities.indexOf(uuid), 1)
         break
       default:
@@ -278,8 +278,8 @@ export default class CoItemSheet extends CoBaseItemSheet {
     const itemType = li.data("itemType")
 
     switch (itemType) {
-      case ITEM_TYPE.PATH:
-      case ITEM_TYPE.CAPACITY: {
+      case SYSTEM.ITEM_TYPE.PATH:
+      case SYSTEM.ITEM_TYPE.CAPACITY: {
         const uuid = li.data("uuid")
         return fromUuid(uuid).then((document) => document.sheet.render(true))
       }
@@ -467,7 +467,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
    * @param {*} formData
    */
   _updateObject(event, formData) {
-    if (this.item.type === ITEM_TYPE.CAPACITY || this.item.type === ITEM_TYPE.EQUIPMENT) {
+    if (this.item.type === SYSTEM.ITEM_TYPE.CAPACITY || this.item.type === SYSTEM.ITEM_TYPE.EQUIPMENT) {
       formData = expandObject(formData)
 
       // Parcours des actions pour ajouter les tableaux vides

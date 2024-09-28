@@ -1,4 +1,4 @@
-import { ATTRIBUTE, COMBAT, EQUIPMENT_SUBTYPE, ITEM_TYPE, MODIFIER_SUBTYPE, MODIFIER_TARGET, MODIFIER_TYPE } from "../system/constants.mjs"
+import { SYSTEM } from "../config/system.mjs"
 import { Action } from "../models/action/action.mjs"
 import { Modifier, Modifiers } from "../models/action/modifiers.mjs"
 import { Resolver } from "../models/action/resolvers.mjs"
@@ -92,40 +92,40 @@ export default class CoActor extends Actor {
   }
 
   get learnedCapacities() {
-    return this.items.filter((item) => item.type === ITEM_TYPE.CAPACITY && item.system.learned)
+    return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.CAPACITY && item.system.learned)
   }
 
   get capacitiesOffPaths() {
-    return this.items.filter((item) => item.type === ITEM_TYPE.CAPACITY && item.system.path === null)
+    return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.CAPACITY && item.system.path === null)
   }
 
   get equippedEquipments() {
-    return this.items.filter((item) => item.type === ITEM_TYPE.EQUIPMENT && item.system.equipped)
+    return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.EQUIPMENT && item.system.equipped)
   }
 
   /**
    * @returns les Items de type equipment et de sous-type armor
    */
   get armors() {
-    return this.equipments.filter((item) => item.system.subtype === EQUIPMENT_SUBTYPE.ARMOR)
+    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.ARMOR)
   }
 
   /**
    * @returns les Items de type equipment et de sous-type shield
    */
   get shields() {
-    return this.equipments.filter((item) => item.system.subtype === EQUIPMENT_SUBTYPE.SHIELD)
+    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.SHIELD)
   }
 
   /**
    * @returns les Items de type equipment et de sous-type weapon
    */
   get weapons() {
-    return this.equipments.filter((item) => item.system.subtype === EQUIPMENT_SUBTYPE.WEAPON)
+    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.WEAPON)
   }
 
   get misc() {
-    return this.equipments.filter((item) => item.system.subtype === EQUIPMENT_SUBTYPE.MISC)
+    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.MISC)
   }
 
   /**
@@ -159,7 +159,7 @@ export default class CoActor extends Actor {
   get visibleActions() {
     let allActions = []
     this.items.forEach((item) => {
-      if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
+      if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
         allActions.push(...item.visibleActions)
       }
     })
@@ -201,35 +201,35 @@ export default class CoActor extends Actor {
    * @returns {Modifier[]} An empty array or an array of Modifiers
    */
   get abilitiesModifiers() {
-    return this._getModifiersBySubtype(MODIFIER_SUBTYPE.ABILITY)
+    return this._getModifiersBySubtype(SYSTEM.MODIFIER.MODIFIER_SUBTYPE.ABILITY)
   }
 
   /**
    * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Combat
    */
   get combatModifiers() {
-    return this._getModifiersBySubtype(MODIFIER_SUBTYPE.COMBAT)
+    return this._getModifiersBySubtype(SYSTEM.MODIFIER.MODIFIER_SUBTYPE.SYSTEM.COMBAT_TYPE)
   }
 
   /**
    * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Attribute
    */
   get attributeModifiers() {
-    return this._getModifiersBySubtype(MODIFIER_SUBTYPE.ATTRIBUTE)
+    return this._getModifiersBySubtype(SYSTEM.MODIFIER.MODIFIER_SUBTYPE.ATTRIBUTE)
   }
 
   /**
    * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Skill
    */
   get skillModifiers() {
-    return this._getModifiersBySubtype(MODIFIER_SUBTYPE.SKILL)
+    return this._getModifiersBySubtype(SYSTEM.MODIFIER.MODIFIER_SUBTYPE.SKILL)
   }
 
   /**
    * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of typeEquipment, Feature, Profile or Capacity with the subtype Resource
    */
   get resourceModifiers() {
-    return this._getModifiersBySubtype(MODIFIER_SUBTYPE.RESOURCE)
+    return this._getModifiersBySubtype(SYSTEM.MODIFIER.MODIFIER_SUBTYPE.RESOURCE)
   }
 
   get isUnlocked() {
@@ -337,8 +337,8 @@ export default class CoActor extends Actor {
   deleteItem(itemId) {
     const item = this.items.find((item) => item.id === itemId)
     switch (item.type) {
-      case ITEM_TYPE.CAPACITY:
-      case ITEM_TYPE.FEATURE:
+      case SYSTEM.ITEM_TYPE.CAPACITY:
+      case SYSTEM.ITEM_TYPE.FEATURE:
         return this.deleteEmbeddedDocuments("Item", [itemId])
       default:
         break
@@ -734,7 +734,7 @@ export default class CoActor extends Actor {
 
   _prepareFP(skill, bonuses) {
     skill.base = this._computeBaseFP()
-    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, MODIFIER_TARGET.FP)
+    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER.MODIFIER_TARGET.FP)
 
     skill.max = skill.base + resourceModifiers.total + bonuses
   }
@@ -746,7 +746,7 @@ export default class CoActor extends Actor {
   // BASE : à partir du profile, lire la mpFormula
   _prepareMP(skill, bonuses) {
     skill.base = this._computeBaseMP()
-    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, MODIFIER_TARGET.MP)
+    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER.MODIFIER_TARGET.MP)
 
     skill.max = skill.base + resourceModifiers.total + bonuses
   }
@@ -761,7 +761,7 @@ export default class CoActor extends Actor {
 
   _prepareRP(skill, bonuses) {
     skill.base = this._computeBaseRP()
-    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, MODIFIER_TARGET.RP)
+    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER.MODIFIER_TARGET.RP)
 
     skill.max = skill.base + resourceModifiers.total + bonuses
   }
@@ -772,7 +772,7 @@ export default class CoActor extends Actor {
 
   _prepareHPMax() {
     const hpMaxBonuses = Object.values(this.system.attributes.hp.bonuses).reduce((prev, curr) => prev + curr)
-    const hpMaxModifiers = Modifiers.computeTotalModifiersByTarget(this, this.attributeModifiers, ATTRIBUTE.HP)
+    const hpMaxModifiers = Modifiers.computeTotalModifiersByTarget(this, this.attributeModifiers, SYSTEM.ATTRIBUTE.HP)
     this.system.attributes.hp.max = this.system.attributes.hp.base + hpMaxBonuses + hpMaxModifiers.total
     this.system.attributes.hp.tooltip = Utils.getTooltip("Base", this.system.attributes.hp.base).concat(hpMaxModifiers.tooltip, Utils.getTooltip("Bonus", hpMaxBonuses))
   }
@@ -784,7 +784,7 @@ export default class CoActor extends Actor {
    * @param {*} bonuses
    */
   _prepareDef(skill, abilityBonus, bonuses) {
-    const defModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, COMBAT.DEF)
+    const defModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, SYSTEM.COMBAT_TYPE.DEF)
 
     skill.base = this.baseDefense
     skill.tooltipBase = Utils.getTooltip("Base", skill.base)
@@ -803,7 +803,7 @@ export default class CoActor extends Actor {
    * @param {*} bonuses
    */
   _prepareInit(skill, abilityBonus, bonuses) {
-    const initModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, COMBAT.INIT)
+    const initModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, SYSTEM.COMBAT_TYPE.INIT)
     const malus = this.getMalusToInitiative()
 
     skill.base = this.baseInitiative
@@ -914,10 +914,10 @@ export default class CoActor extends Actor {
 
   _getModifiersBySubtype(subtype) {
     return [
-      ...Modifiers.getModifiersByTypeSubtype(this.equipments, MODIFIER_TYPE.EQUIPMENT, subtype),
-      ...Modifiers.getModifiersByTypeSubtype(this.features, MODIFIER_TYPE.FEATURE, subtype),
-      ...Modifiers.getModifiersByTypeSubtype(this.profiles, MODIFIER_TYPE.PROFILE, subtype),
-      ...Modifiers.getModifiersByTypeSubtype(this.capacities, MODIFIER_TYPE.CAPACITY, subtype),
+      ...Modifiers.getModifiersByTypeSubtype(this.equipments, SYSTEM.MODIFIER.MODIFIER_TYPE.EQUIPMENT, subtype),
+      ...Modifiers.getModifiersByTypeSubtype(this.features, SYSTEM.MODIFIER.MODIFIER_TYPE.FEATURE, subtype),
+      ...Modifiers.getModifiersByTypeSubtype(this.profiles, SYSTEM.MODIFIER.MODIFIER_TYPE.PROFILE, subtype),
+      ...Modifiers.getModifiersByTypeSubtype(this.capacities, SYSTEM.MODIFIER.MODIFIER_TYPE.CAPACITY, subtype),
     ]
   }
 
@@ -927,7 +927,7 @@ export default class CoActor extends Actor {
   //   const item = this.items.find(item => item.id === itemId);
   //
   //   switch (item.type) {
-  //     case ITEM_TYPE.PATH:
+  //     case SYSTEM.ITEM_TYPE.PATH:
   //       {
   //         // Path
   //         let itemsToDelete = [];
@@ -940,7 +940,7 @@ export default class CoActor extends Actor {
   //         });
   //         return this.deleteEmbeddedDocuments("Item", itemsToDelete);
   //       }
-  //     case ITEM_TYPE.CAPACITY:
+  //     case SYSTEM.ITEM_TYPE.CAPACITY:
   //       {
   //         // Check if the capacity was selected in a path
   //         this.paths.forEach(path => {

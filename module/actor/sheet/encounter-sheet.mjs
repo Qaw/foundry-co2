@@ -1,4 +1,3 @@
-import { ITEM_TYPE } from "../../system/constants.mjs"
 import CoBaseActorSheet from "./base-actor-sheet.mjs"
 import { SYSTEM } from "../../config/system.mjs"
 
@@ -188,21 +187,21 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
     const item = await Item.implementation.fromDropData(data)
 
     switch (item.type) {
-      case ITEM_TYPE.EQUIPMENT:
+      case SYSTEM.ITEM_TYPE.EQUIPMENT:
         return this.actor.addEquipment(item)
-      case ITEM_TYPE.FEATURE:
+      case SYSTEM.ITEM_TYPE.FEATURE:
       // Return this.actor.addFeature(item);
-      case ITEM_TYPE.PROFILE:
+      case SYSTEM.ITEM_TYPE.PROFILE:
       // If (this.actor.profiles.length > 0) {
       //   ui.notifications.warn(game.i18n.localize("CO.notif.profilAlreadyExist"));
       //   break;
       // }
       // return this.actor.addProfile(item);
-      case ITEM_TYPE.ATTACK:
+      case SYSTEM.ITEM_TYPE.ATTACK:
         return this.actor.addAttack(item)
-      case ITEM_TYPE.PATH:
+      case SYSTEM.ITEM_TYPE.PATH:
         return this.actor.addPath(item)
-      case ITEM_TYPE.CAPACITY:
+      case SYSTEM.ITEM_TYPE.CAPACITY:
         return this.actor.addCapacity(item, null)
       default:
         return false

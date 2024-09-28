@@ -1,10 +1,28 @@
 import * as CHARACTER from "./character.mjs"
 import * as ENCOUNTER from "./encounter.mjs"
+import * as MODIFIER from "./modifier.mjs"
+import * as ITEM from "./item.mjs"
 
 export const SYSTEM_ID = "co"
+export const SYSTEM_DESCRIPTION = "Chroniques Oubliées"
 export const MOVEMENT_UNIT = { m: "CO.label.long.meters", ft: "CO.label.long.feet" }
 export const SIZES = { tiny: "CO.size.tiny", small: "CO.size.small", medium: "CO.size.medium", large: "CO.size.large", huge: "CO.size.huge" }
 export const ATTACK_TYPES = { MELEE: "CO.combat.long.melee", RANGED: "CO.combat.long.ranged", MAGICAL: "CO.combat.long.magic" }
+export const ACTOR_TYPES = { CHARACTER: "character", ENCOUNTER: "encounter" }
+
+export const MAGIC_ATTACK_TYPE = { INT: "int", WIS: "wis", CHA: "cha" }
+
+export const PATH_TYPE = { PROFILE: "profile", SPECIE: "specie", CULTURAL: "cultural", PRESTIGE: "prestige", ENCOUNTER: "encounter" }
+
+export const PATH_MAX_RANK = 5
+
+export const EQUIPMENT_SUBTYPE = { ARMOR: "ARMOR", SHIELD: "SHIELD", WEAPON: "WEAPON", MISC: "MISC" }
+
+export const COMBAT_TYPE = { MELEE: "melee", RANGED: "ranged", MAGIC: "magic", INIT: "init", DEF: "def" }
+
+export const RESOURCES_TYPE = { FORTUNE: "fortune", MANA: "mana", RECOVERY: "recovery", PRIMARY: "primary", SECONDARY: "secondary", TERTIARY: "tertiary" }
+
+export const ATTRIBUTE = { HP: "hp" }
 
 /**
  * Include all constant definitions within the SYSTEM global export
@@ -12,6 +30,7 @@ export const ATTACK_TYPES = { MELEE: "CO.combat.long.melee", RANGED: "CO.combat.
  */
 export const SYSTEM = {
   ID: SYSTEM_ID,
+  SYSTEM_DESCRIPTION,
   ABILITIES: CHARACTER.ABILITIES,
   RESOURCES: CHARACTER.RESOURCES,
   COMBAT: CHARACTER.COMBAT,
@@ -21,4 +40,10 @@ export const SYSTEM = {
   ENCOUNTER_ARCHETYPES: ENCOUNTER.ARCHETYPES,
   ENCOUNTER_CATEGORIES: ENCOUNTER.CATEGORIES,
   ENCOUNTER_BOSS_RANKS: ENCOUNTER.BOSS_RANKS,
+  MODIFIER,
+  ACTOR_TYPES,
+  ITEM_TYPE: ITEM.ITEM_TYPE,
+  EQUIPMENT_SUBTYPE,
+  COMBAT_TYPE,
+  RESOURCES_TYPE,
 }

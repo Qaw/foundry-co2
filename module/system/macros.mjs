@@ -1,6 +1,6 @@
 import CoItem from "../documents/item.mjs"
 import { CoChat } from "../ui/chat.mjs"
-import { ITEM_TYPE } from "./constants.mjs"
+import { SYSTEM } from "../config/system.mjs"
 
 /**
  * Attempt to create a macro from the dropped data. Will use an existing macro if one exists.
@@ -53,8 +53,8 @@ export class Macros {
     if (item instanceof CoItem) {
       if (indice === null) {
         let itemChatData = item.getChatData(null)
-        if (item.type === ITEM_TYPE.CAPACITY && !item.system.learned) return ui.notifications.warn(game.i18n.format("MACRO.CoCapacityNotLearned", { name: itemName }))
-        if (item.type === ITEM_TYPE.EQUIPMENT && !item.system.equipped) return ui.notifications.warn(game.i18n.format("MACRO.CoItemNotEquipped", { name: itemName }))
+        if (item.type === SYSTEM.ITEM_TYPE.CAPACITY && !item.system.learned) return ui.notifications.warn(game.i18n.format("MACRO.CoCapacityNotLearned", { name: itemName }))
+        if (item.type === SYSTEM.ITEM_TYPE.EQUIPMENT && !item.system.equipped) return ui.notifications.warn(game.i18n.format("MACRO.CoItemNotEquipped", { name: itemName }))
         await new CoChat(actor)
           .withTemplate("systems/co/templates/chat/item-card.hbs")
           .withData({
@@ -69,8 +69,8 @@ export class Macros {
           .create()
       } else {
         let itemChatData = item.getChatData(indice)
-        if (item.type === ITEM_TYPE.CAPACITY && !item.system.learned) return ui.notifications.warn(game.i18n.format("MACRO.CoCapacityNotLearned", { name: itemName }))
-        if (item.type === ITEM_TYPE.EQUIPMENT && !item.system.equipped) return ui.notifications.warn(game.i18n.format("MACRO.CoItemNotEquipped", { name: itemName }))
+        if (item.type === SYSTEM.ITEM_TYPE.CAPACITY && !item.system.learned) return ui.notifications.warn(game.i18n.format("MACRO.CoCapacityNotLearned", { name: itemName }))
+        if (item.type === SYSTEM.ITEM_TYPE.EQUIPMENT && !item.system.equipped) return ui.notifications.warn(game.i18n.format("MACRO.CoItemNotEquipped", { name: itemName }))
         await new CoChat(actor)
           .withTemplate("systems/co/templates/chat/item-card.hbs")
           .withData({

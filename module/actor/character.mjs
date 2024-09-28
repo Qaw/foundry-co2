@@ -1,6 +1,6 @@
 import CoActor from "./actor.mjs"
-import { COMBAT, ITEM_TYPE, RESOURCES } from "../system/constants.mjs"
 import { CoChat } from "../ui/chat.mjs"
+import { SYSTEM } from "../config/system.mjs"
 
 export default class CoCharacter extends CoActor {
   prepareDerivedData() {
@@ -15,15 +15,15 @@ export default class CoCharacter extends CoActor {
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr)
       const abilityBonus = this.system.abilities[skill.ability].value
 
-      if ([COMBAT.MELEE, COMBAT.RANGED, COMBAT.MAGIC].includes(key)) {
+      if ([SYSTEM.COMBAT_TYPE.MELEE, SYSTEM.COMBAT_TYPE.RANGED, SYSTEM.COMBAT_TYPE.MAGIC].includes(key)) {
         this._prepareAttack(key, skill, abilityBonus, bonuses)
       }
 
-      if (key === COMBAT.INIT) {
+      if (key === SYSTEM.COMBAT_TYPE.INIT) {
         this._prepareInit(skill, abilityBonus, bonuses)
       }
 
-      if (key === COMBAT.DEF) {
+      if (key === SYSTEM.COMBAT_TYPE.DEF) {
         this._prepareDef(skill, abilityBonus, bonuses)
       }
     }
@@ -32,17 +32,17 @@ export default class CoCharacter extends CoActor {
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr)
 
       // Points de chance  - Fortune Points - FP
-      if (key === RESOURCES.FORTUNE) {
+      if (key === SYSTEM.RESOURCES_TYPE.FORTUNE) {
         this._prepareFP(skill, bonuses)
       }
 
       // Points de mana - Mana Points - MP
-      if (key === RESOURCES.MANA) {
+      if (key === SYSTEM.RESOURCES_TYPE.MANA) {
         this._prepareMP(skill, bonuses)
       }
 
       // Points de récupération - Recovery Points - RP
-      if (key === RESOURCES.RECOVERY) {
+      if (key === SYSTEM.RESOURCES_TYPE.RECOVERY) {
         this._prepareRP(skill, bonuses)
       }
     }
@@ -61,14 +61,14 @@ export default class CoCharacter extends CoActor {
    * @returns les Items de type profile
    */
   get profiles() {
-    return this.items.filter((item) => item.type === ITEM_TYPE.PROFILE)
+    return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.PROFILE)
   }
 
   /**
    * @returns le premier Item de type profile
    */
   get profile() {
-    const profile = this.items.find((item) => item.type === ITEM_TYPE.PROFILE)
+    const profile = this.items.find((item) => item.type === SYSTEM.ITEM_TYPE.PROFILE)
     return profile !== undefined ? [profile] : []
   }
 
@@ -84,7 +84,7 @@ export default class CoCharacter extends CoActor {
   get visibleActions() {
     let allActions = []
     this.items.forEach((item) => {
-      if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
+      if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
         allActions.push(...item.visibleActions)
       }
     })
