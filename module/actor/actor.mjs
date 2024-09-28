@@ -30,21 +30,21 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @returns les Items de type equipment
+   * Retourne les Items de type equipment
    */
   get equipments() {
     return this.itemTypes.equipment
   }
 
   /**
-   * @returns les Items de type feature
+   * Retourne les Items de type feature
    */
   get features() {
     return this.itemTypes.feature
   }
 
   /**
-   * @returns les Items de type path
+   * Retourne les Items de type path
    */
   get paths() {
     return this.itemTypes.path
@@ -55,7 +55,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @returns renvoie un tableau d'objets comprenant les voies et les capacités associées
+   * Retourne un tableau d'objets comprenant les voies et les capacités associées
    */
   get pathGroups() {
     let pathGroups = []
@@ -208,7 +208,7 @@ export default class CoActor extends Actor {
    * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Combat
    */
   get combatModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER.MODIFIER_SUBTYPE.SYSTEM.COMBAT_TYPE)
+    return this._getModifiersBySubtype(SYSTEM.MODIFIER.MODIFIER_SUBTYPE.COMBAT_TYPE)
   }
 
   /**
