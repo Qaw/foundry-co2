@@ -7,7 +7,7 @@
         <a class="item-control inventory-qty {{#if data.properties.stackable}}unlocked{{else}}locked{{/if}}" title="{{ localize 'COF.ui.modifyQuantity'}}">{{data.qty}}</a>
     </div>
     <div class="item-detail">{{#if data.value}}{{data.value}}{{else}}{{localize "COF.ui.nc"}}{{/if}}</div>
-    {{#if (or (equals owner.type "character") (equals owner.type "npc"))}}
+    {{#if (or (eq owner.type "character") (eq owner.type "npc"))}}
         <div class="item-detail">
             {{#if data.properties.equipable}}
                 {{#if data.worn}}

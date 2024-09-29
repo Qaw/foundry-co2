@@ -1,9 +1,6 @@
 import { CO } from "../system/config.mjs"
 
 export const registerHandlebarsHelpers = function () {
-  Handlebars.registerHelper("equals", function (a, b) {
-    return a === b
-  })
   Handlebars.registerHelper("add", function (a, b) {
     return parseInt(a) + parseInt(b)
   })
@@ -12,27 +9,6 @@ export const registerHandlebarsHelpers = function () {
   })
   Handlebars.registerHelper("isset", function (value) {
     return value !== undefined
-  })
-  Handlebars.registerHelper("not", function (value) {
-    return !value
-  })
-  Handlebars.registerHelper("eq", function (a, b) {
-    return a === b
-  })
-  Handlebars.registerHelper("gt", function (a, b) {
-    return a > b
-  })
-  Handlebars.registerHelper("gte", function (a, b) {
-    return a >= b
-  })
-  Handlebars.registerHelper("lt", function (a, b) {
-    return a < b
-  })
-  Handlebars.registerHelper("lte", function (a, b) {
-    return a <= b
-  })
-  Handlebars.registerHelper("ne", function (a, b) {
-    return a !== b
   })
   Handlebars.registerHelper("sum", function (arr, init) {
     return arr.reduce((previousValue, currentValue) => previousValue + currentValue, init)
