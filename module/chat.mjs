@@ -102,7 +102,6 @@ export default class CoChat {
 
     // Set the roll parameter if necessary
     if (this.roll) {
-      data.type = CONST.CHAT_MESSAGE_TYPES.ROLL
       data.roll = this.roll
     }
 
@@ -139,7 +138,7 @@ export default class CoChat {
    */
   async _createContent() {
     // Update the data to provide to the template
-    const data = duplicate(this.data)
+    const data = foundry.utils.duplicate(this.data)
     data.owner = this.actor.id
 
     // Call the template renderer.
