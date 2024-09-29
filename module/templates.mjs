@@ -3,7 +3,7 @@
  * Pre-loaded templates are compiled and cached for fast access when rendering
  * @returns {Promise}
  */
-import { SYSTEM } from "../config/system.mjs"
+import { SYSTEM } from "./config/system.mjs"
 
 export const preloadHandlebarsTemplates = async function () {
   // Define template paths to load

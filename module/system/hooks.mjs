@@ -1,8 +1,26 @@
-import { Hitpoints } from "../ui/hitpoints.js"
+import { Hitpoints } from "../hitpoints.mjs"
 import { createCoMacro } from "./macros.mjs"
 
 /**
+ * Registers various hooks for the game system.
  *
+ * Hooks:
+ * - `renderChatMessage`: Customizes the chat message rendering, including the display of damage buttons and difficulty.
+ * - `hotbarDrop`: Handles the dropping of items or actions onto the hotbar.
+ *
+ * @module system/hooks
+ *
+ * @function registerHooks
+ *
+ * @listens Hooks#renderChatMessage
+ * @param {Object} message - The chat message object.
+ * @param {Object} html - The HTML content of the chat message.
+ * @param {Object} data - Additional data related to the chat message.
+ *
+ * @listens Hooks#hotbarDrop
+ * @param {Object} bar - The hotbar object.
+ * @param {Object} data - The data being dropped onto the hotbar.
+ * @param {number} slot - The slot number where the data is being dropped.
  */
 export default function registerHooks() {
   Hooks.on("renderChatMessage", (message, html, data) => {

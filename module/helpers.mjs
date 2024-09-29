@@ -1,4 +1,4 @@
-import { CO } from "../system/config.mjs"
+import { CO } from "./system/config.mjs"
 
 export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("add", function (a, b) {
