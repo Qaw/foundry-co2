@@ -1,4 +1,4 @@
-export class CoChat {
+export default class CoChat {
   /**
    * @param {*} actor The emitter of the chat message
    */

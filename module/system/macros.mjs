@@ -1,5 +1,5 @@
 import CoItem from "../documents/item.mjs"
-import { CoChat } from "../ui/chat.mjs"
+import CoChat from "../chat.mjs"
 import { SYSTEM } from "../config/system.mjs"
 
 /**

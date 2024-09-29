@@ -99,7 +99,8 @@
         "ranged" : "Attaque à distance",
         "magic" : "Attaque magique",
         "meters" : "Mètres",
-        "feet" : "Pieds"
+        "feet" : "Pieds",
+        "carac" : "Caractéristique"
       },
       "short": {
         "label" : "Label",

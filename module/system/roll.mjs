@@ -1,5 +1,5 @@
 import { Utils } from "./utils.mjs"
-import { CoChat } from "../ui/chat.mjs"
+import CoChat from "../chat.mjs"
 import { CoAttackRollDialog, CoSkillRollDialog } from "../dialogs/dialog-roll.mjs"
 
 class CoRoll {
@@ -29,7 +29,7 @@ export class CoSkillCheck extends CoRoll {
 
     const rollingLabel = `${game.i18n.localize("CO.dialogs.skillCheck")} - ${game.i18n.localize(`CO.${parts[0]}.long.${parts[1]}`)}`
 
-    const mod = rollingSkill.mod
+    const carac = rollingSkill.value
 
     // CoSkillRollDialog
     this.label = rollingLabel
@@ -38,7 +38,7 @@ export class CoSkillCheck extends CoRoll {
       label: rollingLabel,
       bonus: 0,
       malus: 0,
-      mod: mod,
+      carac: carac,
       critrange: 20,
       superior: false,
       weakened: false,
@@ -198,7 +198,7 @@ export class CoSkillRoll {
    */
   async roll(actor) {
     let r = new Roll(this._formula)
-    await r.roll({ async: true })
+    await r.roll()
     // Getting the dice kept in case of 2d12 or 2d20 rolls
     const result = r.terms[0].results.find((r) => r.active).result
     this._isCritical = result >= this._critrange.split("-")[0] || result === 20
@@ -262,7 +262,7 @@ export class CoAttackRoll {
    */
   async roll(actor) {
     let r = new Roll(this._formula)
-    await r.roll({ async: true })
+    await r.roll()
     // Getting the dice kept in case of 2d12 or 2d20 rolls
     const result = r.terms[0].results.find((r) => r.active).result
     this._isCritical = result >= this._critrange.split("-")[0] || result === 20
@@ -290,7 +290,7 @@ export class CoDamageRoll {
    */
   async roll(actor) {
     let r = new Roll(this._formula)
-    await r.roll({ async: true })
+    await r.roll()
     this._roll = r
     this._rollTotal = r._total
     this._toolTip = new Handlebars.SafeString(await r.getTooltip())

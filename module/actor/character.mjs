@@ -1,5 +1,5 @@
 import CoActor from "./actor.mjs"
-import { CoChat } from "../ui/chat.mjs"
+import CoChat from "../chat.mjs"
 import { SYSTEM } from "../config/system.mjs"
 
 export default class CoCharacter extends CoActor {
