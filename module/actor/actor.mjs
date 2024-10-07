@@ -104,21 +104,21 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @returns les Items de type equipment et de sous-type armor
+   * Retourneles Items de type equipment et de sous-type armor
    */
   get armors() {
     return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.ARMOR)
   }
 
   /**
-   * @returns les Items de type equipment et de sous-type shield
+   * Retourneles Items de type equipment et de sous-type shield
    */
   get shields() {
     return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.SHIELD)
   }
 
   /**
-   * @returns les Items de type equipment et de sous-type weapon
+   * Retourneles Items de type equipment et de sous-type weapon
    */
   get weapons() {
     return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.WEAPON)
@@ -129,21 +129,21 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @returns les Items équipés de type equipment et de sous-type armor
+   * Retourneles Items équipés de type equipment et de sous-type armor
    */
   get equippedArmors() {
     return this.armors.filter((item) => item.system.equipped)
   }
 
   /**
-   * @returns les Items équipés de type equipment et de sous-type shield
+   * Retourneles Items équipés de type equipment et de sous-type shield
    */
   get equippedShields() {
     return this.shields.filter((item) => item.system.equipped)
   }
 
   /**
-   * @returns Toutes les actions de tous les objets
+   * RetourneToutes les actions de tous les objets
    */
   get actions() {
     let allActions = []
@@ -154,7 +154,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @returns Toutes les actions visibles des capacités et des équipements
+   * RetourneToutes les actions visibles des capacités et des équipements
    */
   get visibleActions() {
     let allActions = []
@@ -167,69 +167,67 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @returns Toutes les actions visibles et activables des capacités et des équipements
+   * RetourneToutes les actions visibles et activables des capacités et des équipements
    */
   get visibleActivableActions() {
     return this.visibleActions.filter((a) => a.properties.activable)
   }
 
   /**
-   * @returns Toutes les actions visibles, activables et temporaires des capacités et des équipements
+   * RetourneToutes les actions visibles, activables et temporaires des capacités et des équipements
    */
   get visibleActivableTemporaireActions() {
     return this.visibleActions.filter((a) => a.properties.activable && a.properties.temporary)
   }
 
   /**
-   * @returns Toutes les actions visibles et non activables des capacités et des équipements
+   * RetourneToutes les actions visibles et non activables des capacités et des équipements
    */
   get visibleNonActivableActions() {
     return this.visibleActions.filter((a) => !a.properties.activable)
   }
 
   /**
-   * @returns Toutes les actions visibles, non activables et non temporaires des capacités et des équipements
+   * RetourneToutes les actions visibles, non activables et non temporaires des capacités et des équipements
    */
   get visibleNonActivableNonTemporaireActions() {
     return this.visibleActions.filter((a) => !a.properties.activable && !a.properties.temporary)
   }
 
   /**
-   * @name abilitiesModifiers
    * Get all the modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype AbilityValue
-   * @public
-   * @returns {Modifier[]} An empty array or an array of Modifiers
+   * Retourne{Modifier[]} An empty array or an array of Modifiers
    */
   get abilitiesModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER.MODIFIER_SUBTYPE.ABILITY)
+    return this._getModifiersBySubtype(SYSTEM.MODIFIER_SUBTYPE.ABILITY)
   }
 
   /**
-   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Combat
+   * Retourne{Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Combat
    */
   get combatModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER.MODIFIER_SUBTYPE.COMBAT_TYPE)
+    return this._getModifiersBySubtype(SYSTEM.MODIFIER_SUBTYPE.COMBAT_TYPE)
   }
 
   /**
-   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Attribute
+   * Retourne{Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Attribute
    */
   get attributeModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER.MODIFIER_SUBTYPE.ATTRIBUTE)
+    return this._getModifiersBySubtype(SYSTEM.MODIFIER_SUBTYPE.ATTRIBUTE)
   }
 
   /**
-   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Skill
+   * Retourne{Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Skill
    */
   get skillModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER.MODIFIER_SUBTYPE.SKILL)
+    return this._getModifiersBySubtype(SYSTEM.MODIFIER_SUBTYPE.SKILL)
   }
 
   /**
-   * @returns {Modifier[]} All the Trait or Capacity modifiers from Items of typeEquipment, Feature, Profile or Capacity with the subtype Resource
+   * Retourne{Modifier[]} All the Trait or Capacity modifiers from Items of typeEquipment, Feature, Profile or Capacity with the subtype Resource
    */
   get resourceModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER.MODIFIER_SUBTYPE.RESOURCE)
+    return this._getModifiersBySubtype(SYSTEM.MODIFIER_SUBTYPE.RESOURCE)
   }
 
   get isUnlocked() {
@@ -245,7 +243,7 @@ export default class CoActor extends Actor {
   /**
    * Return all skill modifiers
    * @param {string} ability str, dex ...
-   * @returns {Object} Name, value, description
+   * Retourne{Object} Name, value, description
    */
   getSkillBonuses(ability) {
     const modifiersByTarget = this.skillModifiers.filter((m) => m.target === ability)
@@ -258,20 +256,17 @@ export default class CoActor extends Actor {
   }
 
   /**
-   *
+   * Retourne l'objet correspondant à la clé
    * @param {*} key
-   * @returns l'objet correspondant à la clé
    */
   getEmbeddedItemByKey(key) {
     return this.items.find((item) => item.system.key === key)
   }
 
   /**
-   * @name getMalusToInitiative
    * Retourne le malus à l'initiative lié à l'armure et à l'incompétence armes/armures
-   * @public
    *
-   * @returns {int} retourne le malus (négatif) ou 0
+   * Retourne{int} retourne le malus (négatif) ou 0
    */
   getMalusToInitiative() {
     return 0
@@ -279,40 +274,34 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @name getOverloadMalusToInitiative
    * Retourne le malus à l'initiative lié à l'armure
-   * @public
    *
-   * @returns {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
+   * Retourne{int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
    */
   getOverloadMalusToInitiative() {
     return 0
   }
 
   /**
-   * @name getIncompetentMalusToInitiative
    * Retourne le malus à l'initiative lié à l'incompétence armes/armures
-   * @public
    *
-   * @returns {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
+   * Retourne{int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
    */
   getIncompetentMalusToInitiative() {
     return 0
   }
 
   /**
-   * @name getDefenceFromArmorAndShield
-   * calcule la défense de l'armure et du bouclier équipés
-   * @returns {Int} la somme des DEF
+   * Calcule la défense de l'armure et du bouclier équipés
+   * Retourne {Int} la somme des DEF
    */
   getDefenceFromArmorAndShield() {
     return this.getDefenceFromArmor() + this.getDefenceFromShield()
   }
 
   /**
-   * @name getDefenceFromArmor
-   * calcule la défense de l'armure équipée
-   * @returns {Int} la valeur de défense
+   * Calcule la défense de l'armure équipée
+   * Retourne {Int} la valeur de défense
    */
   getDefenceFromArmor() {
     let protections = this.equippedArmors.map((i) => i.system.def)
@@ -320,9 +309,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @name getDefenceFromShield
-   * calcule la défense du bouclier équipé
-   * @returns {Int} la valeur de défense
+   * Retourne {Int} la valeur de défense
    */
   getDefenceFromShield() {
     let protections = this.equippedShields.map((i) => i.system.def)
@@ -332,7 +319,6 @@ export default class CoActor extends Actor {
   /**
    *
    * @param {*} itemId
-   * @returns
    */
   deleteItem(itemId) {
     const item = this.items.find((item) => item.id === itemId)
@@ -561,7 +547,7 @@ export default class CoActor extends Actor {
    * Add a path as an embedded item
    * It also create the capacities linked to the path
    * @param {CoItem} path
-   * @returns {number} id of the created path
+   * Retourne{number} id of the created path
    */
   async addPath(path) {
     let itemData = path.toObject()
@@ -596,7 +582,7 @@ export default class CoActor extends Actor {
    * Add a capacity as an embedded item
    * @param {CoItem} capacity
    * @param {number} pathId id of the Path if the capacity is linked to a path
-   * @returns {number} id of the created capacity
+   * Retourne{number} id of the created capacity
    */
   async addCapacity(capacity, pathId) {
     let capacityData = capacity.toObject()
@@ -640,7 +626,7 @@ export default class CoActor extends Actor {
   /**
    * Add an equipment as an embedded item
    * @param {CoItem} equipment
-   * @returns {number} id of the created path
+   * Retourne{number} id of the created path
    */
   async addEquipment(equipment) {
     let equipmentData = equipment.toObject()
@@ -734,7 +720,7 @@ export default class CoActor extends Actor {
 
   _prepareFP(skill, bonuses) {
     skill.base = this._computeBaseFP()
-    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER.MODIFIER_TARGET.FP)
+    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER_TARGET.FP)
 
     skill.max = skill.base + resourceModifiers.total + bonuses
   }
@@ -746,7 +732,7 @@ export default class CoActor extends Actor {
   // BASE : à partir du profile, lire la mpFormula
   _prepareMP(skill, bonuses) {
     skill.base = this._computeBaseMP()
-    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER.MODIFIER_TARGET.MP)
+    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER_TARGET.MP)
 
     skill.max = skill.base + resourceModifiers.total + bonuses
   }
@@ -761,7 +747,7 @@ export default class CoActor extends Actor {
 
   _prepareRP(skill, bonuses) {
     skill.base = this._computeBaseRP()
-    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER.MODIFIER_TARGET.RP)
+    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER_TARGET.RP)
 
     skill.max = skill.base + resourceModifiers.total + bonuses
   }
@@ -852,7 +838,7 @@ export default class CoActor extends Actor {
    * Calcul la somme d'un tableau de valeurs positives ou négatives
    *
    * @param {*} array Un tableau de valeurs
-   * @returns {int} 0 ou la somme des valeurs
+   * Retourne{int} 0 ou la somme des valeurs
    */
   _addAllValues(array) {
     return array.length > 0 ? array.reduce((acc, curr) => acc + curr, 0) : 0
@@ -914,10 +900,10 @@ export default class CoActor extends Actor {
 
   _getModifiersBySubtype(subtype) {
     return [
-      ...Modifiers.getModifiersByTypeSubtype(this.equipments, SYSTEM.MODIFIER.MODIFIER_TYPE.EQUIPMENT, subtype),
-      ...Modifiers.getModifiersByTypeSubtype(this.features, SYSTEM.MODIFIER.MODIFIER_TYPE.FEATURE, subtype),
-      ...Modifiers.getModifiersByTypeSubtype(this.profiles, SYSTEM.MODIFIER.MODIFIER_TYPE.PROFILE, subtype),
-      ...Modifiers.getModifiersByTypeSubtype(this.capacities, SYSTEM.MODIFIER.MODIFIER_TYPE.CAPACITY, subtype),
+      ...Modifiers.getModifiersByTypeSubtype(this.equipments, SYSTEM.MODIFIER_TYPE.EQUIPMENT, subtype),
+      ...Modifiers.getModifiersByTypeSubtype(this.features, SYSTEM.MODIFIER_TYPE.FEATURE, subtype),
+      ...Modifiers.getModifiersByTypeSubtype(this.profiles, SYSTEM.MODIFIER_TYPE.PROFILE, subtype),
+      ...Modifiers.getModifiersByTypeSubtype(this.capacities, SYSTEM.MODIFIER_TYPE.CAPACITY, subtype),
     ]
   }
 

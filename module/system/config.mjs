@@ -138,13 +138,6 @@ CO.path = {
   },
 }
 
-CO.feature = {
-  subtypes: {
-    RACE: "CO.feature.subtypes.race",
-    TRAIT: "CO.feature.subtypes.trait",
-  },
-}
-
 CO.size = {
   tiny: "CO.size.tiny",
   small: "CO.size.small",

@@ -5,8 +5,8 @@ export class Modifiers {
   /**
    * Get all modifiers object from an array of items
    * @param {CoItem[]} items
-   * @param {*} type SYSTEM.MODIFIER.MODIFIER_TYPE
-   * @param {*} subtype SYSTEM.MODIFIER.MODIFIER_SUBTYPE
+   * @param {*} type SYSTEM.MODIFIER_TYPE
+   * @param {*} subtype SYSTEM.MODIFIER_SUBTYPE
    * @returns {Modifier[]} all the modifiers
    */
   static getModifiersByTypeSubtype(items, type, subtype) {
@@ -23,7 +23,7 @@ export class Modifiers {
    *
    * @param {Object} actor The actor for which the modifiers are evaluated.
    * @param {Array} modifiers An array of modifier objects.
-   * @param {SYSTEM.MODIFIER.MODIFIER_TARGET} target The target for which the modifiers are filtered.
+   * @param {SYSTEM.MODIFIERS.MODIFIER_TARGET} target The target for which the modifiers are filtered.
    * @returns {Object} An object containing the total of the evaluated modifiers and a concatenated tooltip string.
    * @returns {number} returns.total - The sum of the evaluated modifiers.
    * @returns {string} returns.tooltip - The concatenated tooltip string from all relevant modifiers.
@@ -48,12 +48,12 @@ export class Modifier {
   // eslint-disable-next-line jsdoc/require-description
   /**
    * @param {*} source    UUID of the source
-   * @param {SYSTEM.MODIFIER.MODIFIER_TYPE} type
-   * @param {SYSTEM.MODIFIER.MODIFIER_SUBTYPE} subtype
-   * @param {SYSTEM.MODIFIER.MODIFIER_TARGET} target
+   * @param {SYSTEM.MODIFIERS.MODIFIER_TYPE} type
+   * @param {SYSTEM.MODIFIERS.MODIFIER_SUBTYPE} subtype
+   * @param {SYSTEM.MODIFIERS.MODIFIER_TARGET} target
    * @param {*} value     +/- X or custom like 2*@rank
    */
-  constructor(source = null, type, subtype, target, value = null) {
+  constructor(source, type, subtype, target, value = null) {
     this.source = source
     this.type = type
     this.subtype = subtype

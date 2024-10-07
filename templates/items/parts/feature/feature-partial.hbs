@@ -1,4 +1,4 @@
-{{!log "Chroniques Oubliées | feature" this}}
+{{log "Chroniques Oubliées | feature" this}}
 <!--<h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.details"}}</a></h3>-->
 <div class="details-form foldable">
     {{#if debugMode}}
@@ -19,11 +19,7 @@
         <label>{{localize "CO.label.long.subtype"}}</label>
         <div class="form-fields">
             <select name="system.subtype" data-type="String" style="width:100%">
-                {{#select system.subtype}}
-                    {{#each @root.config.feature.subtypes as |label idx|}}
-                        <option value="{{idx}}">{{localize label}}</option>
-                    {{/each}}
-                {{/select}}
+                {{selectOptions choiceFeatureSubtypes selected=system.subtype localize=true}}
             </select>
         </div>
     </div>
@@ -45,20 +41,12 @@
                 <input name="system.modifiers.{{id}}.source" type="hidden" value="{{m.source}}" data-dtype="String" />
                 <div class="form-fields flex1">
                     <select name="system.modifiers.{{id}}.subtype" data-type="String" style="width:100%">
-                        {{#select m.subtype}}
-                            {{#each @root.config.modifier.subtype as |label i|}}
-                                <option value="{{i}}">{{localize label}}</option>
-                            {{/each}}
-                        {{/select}}
+                        {{selectOptions @root.choiceModifierSubtypes selected=m.subtype localize=true}}
                     </select>
                 </div>
                 <div class="form-fields flex1">
                     <select name="system.modifiers.{{id}}.target" data-type="String" style="width:100%">
-                        {{#select m.target}}
-                            {{#each @root.config.modifier.target as |label i|}}
-                                <option value="{{i}}">{{localize label}}</option>
-                            {{/each}}
-                        {{/select}}
+                        {{selectOptions @root.choiceModifierTargets selected=m.target localize=true}}
                     </select>
                 </div>
                 <div class="form-fields flex1"><input name="system.modifiers.{{id}}.value" type="text" value="{{m.value}}" data-dtype="String" /></div>

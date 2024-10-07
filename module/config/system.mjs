@@ -1,7 +1,10 @@
 import * as CHARACTER from "./character.mjs"
 import * as ENCOUNTER from "./encounter.mjs"
-import * as MODIFIER from "./modifier.mjs"
+import * as MODIFIERS from "./modifier.mjs"
 import * as ITEM from "./item.mjs"
+
+import { MODIFIER_TYPE, MODIFIER_SUBTYPE, MODIFIER_TARGET } from "./constants.mjs"
+import { FEATURE_SUBTYPE } from "./feature.mjs"
 
 export const SYSTEM_ID = "co"
 export const SYSTEM_DESCRIPTION = "Chroniques Oubliées"
@@ -40,11 +43,15 @@ export const SYSTEM = {
   ENCOUNTER_ARCHETYPES: ENCOUNTER.ARCHETYPES,
   ENCOUNTER_CATEGORIES: ENCOUNTER.CATEGORIES,
   ENCOUNTER_BOSS_RANKS: ENCOUNTER.BOSS_RANKS,
-  MODIFIER,
+  MODIFIER_TYPE,
+  MODIFIER_SUBTYPE,
+  MODIFIER_TARGET,
   ACTOR_TYPES,
   ITEM_TYPE: ITEM.ITEM_TYPE,
   EQUIPMENT_SUBTYPE,
   COMBAT_TYPE,
   RESOURCES_TYPE,
   ATTRIBUTE,
+  FEATURE_SUBTYPE,
+  MODIFIERS,
 }

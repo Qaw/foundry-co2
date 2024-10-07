@@ -9,7 +9,7 @@ import { SYSTEM } from "../../config/system.mjs"
 export default class CoItemSheet extends CoBaseItemSheet {
   /** @override */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       width: 600,
       height: 720,
       classes: ["co", "sheet", "item"],
@@ -28,8 +28,8 @@ export default class CoItemSheet extends CoBaseItemSheet {
 
   /** @override */
   async getData(options = {}) {
-    const context = super.getData(options)
-    console.log(context)
+    const context = await super.getData(options)
+    console.log("Item-Sheet context", context)
     if (this.item.type === SYSTEM.ITEM_TYPE.EQUIPMENT || this.item.type === SYSTEM.ITEM_TYPE.PROFILE) {
       context.martialTrainingsWeaponsList = context.config.martialTrainingsWeapons
       context.martialTrainingsArmorsList = context.config.martialTrainingsArmors
@@ -76,6 +76,13 @@ export default class CoItemSheet extends CoBaseItemSheet {
         }
       }
       context.paths = infosPaths
+    }
+
+    // Context spécifique
+    if (this.item.type === SYSTEM.ITEM_TYPE.FEATURE) {
+      context.choiceFeatureSubtypes = SYSTEM.FEATURE_SUBTYPE
+      context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
+      context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
     }
     return context
   }

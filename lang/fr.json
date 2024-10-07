@@ -462,7 +462,7 @@
     },
     "feature" : {
       "subtypes": {
-        "race": "Race",
+        "people": "Peuple",
         "trait": "Trait"
       }
     },
