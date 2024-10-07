@@ -109,8 +109,7 @@ export default class CoItem extends Item {
    * item : Item and all actions
    * loot : Item without actions
    * action : Item and a specific action
-   * @param {int} indice
-   * @param {string} Indice of the action, null for others
+   * @param {string} indice of the action, null for others
    */
   getChatData(chatType, indice = null) {
     if (this.type === SYSTEM.ITEM_TYPE.CAPACITY || this.type === SYSTEM.ITEM_TYPE.EQUIPMENT || this.type === SYSTEM.ITEM_TYPE.ATTACK) {
@@ -213,7 +212,6 @@ export default class CoItem extends Item {
 
   /**
    * Update the rank for an embedded path item
-   * @returns
    */
   updateRank() {
     if (this.type !== SYSTEM.ITEM_TYPE.PATH || !this.actor) return
@@ -230,7 +228,6 @@ export default class CoItem extends Item {
 
   /**
    * Update the actions for an embedded capacity item
-   * @returns
    */
   toggleActions() {
     if ((this.type !== SYSTEM.ITEM_TYPE.CAPACITY && this.type !== SYSTEM.ITEM_TYPE.EQUIPMENT) || !this.actor) return

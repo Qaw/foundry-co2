@@ -10,7 +10,7 @@ export class Modifiers {
    * @returns {Modifier[]} all the modifiers
    */
   static getModifiersByTypeSubtype(items, type, subtype) {
-    if (!items || items.size == 0) return []
+    if (!items || items.size === 0) return []
     return items
       .reduce((mods, item) => mods.concat(item.enabledModifiers), [])
       .filter((m) => m.type === type && m.subtype === subtype)

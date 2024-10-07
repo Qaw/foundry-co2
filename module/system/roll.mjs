@@ -97,7 +97,7 @@ export class CoAttackCheck extends CoRoll {
   /**
    * Prepare la fenêtre de dialogue
    * @param {Object} rolling {actionName, itemName, skillFormula, skillFormulaEvaluated, damageFormulaEvaluated, crit, diff}
-   * @returns a dialog box
+   * @returns {Dialog} a dialog box
    */
   init(rolling) {
     return this.dialog(rolling)
@@ -124,7 +124,7 @@ export class CoAttackCheck extends CoRoll {
   }
 
   /**
-   *
+   * Lance le jet d'attaque
    * @param {*} label
    * @param {*} dice
    * @param {*} formulaAttack
@@ -149,7 +149,7 @@ export class CoAttackCheck extends CoRoll {
   }
 
   async chat(roll, type) {
-    await new CoChat(this.actor)
+    new CoChat(this.actor)
       .withTemplate("systems/co/templates/chat/attack-card.hbs")
       .withData({
         typeAttack: type === "attack",
@@ -192,9 +192,9 @@ export class CoSkillRoll {
   }
 
   /**
-   *
+   * Roll the dice
    * @param {*} actor
-   * @returns
+   * @returns {CoSkillRoll} the roll
    */
   async roll(actor) {
     let r = new Roll(this._formula)
@@ -213,13 +213,12 @@ export class CoSkillRoll {
   }
 
   /**
-   * @name weaponRoll
    * Jet de dommages d'une arme
    *
    * @param {*} actor
    * @param {*} dmgFormula
    * @param {*} dmgDescr
-   * @returns
+   * @returns {CoSkillRoll} the roll
    */
   async weaponRoll(actor, dmgFormula, dmgDescr) {
     await this.roll(actor)
@@ -256,9 +255,9 @@ export class CoAttackRoll {
   }
 
   /**
-   *
+   * Roll the dice
    * @param {*} actor
-   * @returns
+   * @returns {CoAttackRoll} the roll
    */
   async roll(actor) {
     let r = new Roll(this._formula)
@@ -284,9 +283,9 @@ export class CoDamageRoll {
   }
 
   /**
-   *
+   * Roll the dice
    * @param {*} actor
-   * @returns
+   * @returns {CoDamageRoll} the roll
    */
   async roll(actor) {
     let r = new Roll(this._formula)
