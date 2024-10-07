@@ -1,5 +1,5 @@
 import { CoSkillCheck } from "../../system/roll.mjs"
-import { CoChat } from "../../ui/chat.mjs"
+import CoChat from "../../chat.mjs"
 
 export default class CoBaseActorSheet extends ActorSheet {
   /** @override */

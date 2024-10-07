@@ -1,12 +1,12 @@
-import { MODIFIER_SUBTYPE, MODIFIER_TARGET, MODIFIER_TYPE } from "../../system/constants.mjs"
+import { SYSTEM } from "../../config/system.mjs"
 import { Utils } from "../../system/utils.mjs"
 
 export class Modifiers {
   /**
    * Get all modifiers object from an array of items
    * @param {CoItem[]} items
-   * @param {*} type MODIFIER_TYPE
-   * @param {*} subtype MODIFIER_SUBTYPE
+   * @param {*} type SYSTEM.MODIFIER.MODIFIER_TYPE
+   * @param {*} subtype SYSTEM.MODIFIER.MODIFIER_SUBTYPE
    * @returns {Modifier[]} all the modifiers
    */
   static getModifiersByTypeSubtype(items, type, subtype) {
@@ -17,12 +17,16 @@ export class Modifiers {
       .map((m) => new Modifier(m.source, m.type, m.subtype, m.target, m.value))
   }
 
+  // eslint-disable-next-line jsdoc/require-returns-check
   /**
-   * @name computeTotalModifiersByTarget
-   * @param {*} actor
-   * @param {*} modifiers array of Modifier objects
-   * @param {MODIFIER_TARGET} target
-   * @returns the sum of the modifier value for each Modifier
+   * Computes the total modifiers and tooltip for a given target.
+   *
+   * @param {Object} actor The actor for which the modifiers are evaluated.
+   * @param {Array} modifiers An array of modifier objects.
+   * @param {SYSTEM.MODIFIER.MODIFIER_TARGET} target The target for which the modifiers are filtered.
+   * @returns {Object} An object containing the total of the evaluated modifiers and a concatenated tooltip string.
+   * @returns {number} returns.total - The sum of the evaluated modifiers.
+   * @returns {string} returns.tooltip - The concatenated tooltip string from all relevant modifiers.
    */
   static computeTotalModifiersByTarget(actor, modifiers, target) {
     if (!modifiers) return { total: 0, tooltip: "" }
@@ -41,11 +45,12 @@ export class Modifiers {
 }
 
 export class Modifier {
+  // eslint-disable-next-line jsdoc/require-description
   /**
    * @param {*} source    UUID of the source
-   * @param {*} type      MODIFIER_TYPE
-   * @param {*} subtype   MODIFIER_SUBTYPE
-   * @param {*} target    MODIFIER_TARGET
+   * @param {SYSTEM.MODIFIER.MODIFIER_TYPE} type
+   * @param {SYSTEM.MODIFIER.MODIFIER_SUBTYPE} subtype
+   * @param {SYSTEM.MODIFIER.MODIFIER_TARGET} target
    * @param {*} value     +/- X or custom like 2*@rank
    */
   constructor(source = null, type, subtype, target, value = null) {
@@ -57,17 +62,20 @@ export class Modifier {
   }
 
   /**
+   * Evaluates the given actor using the specified value and source.
    *
-   * @param {*} actor
-   * @returns {int} the modifier's value
+   * @param {Object} actor The actor to be evaluated.
+   * @returns {int} The result of the evaluation.
    */
   evaluate(actor) {
     return Utils.evaluate(actor, this.value, this.source, true)
   }
 
   /**
-   * @param {*} actor
-   * @returns
+   * Generates a tooltip for a given actor's item.
+   *
+   * @param {Object} actor The actor object containing items.
+   * @returns {string|undefined} - The generated tooltip or undefined if the item is not found.
    */
   getTooltip(actor) {
     let item = actor.items.get(this.source)
@@ -86,9 +94,14 @@ export class Modifier {
   }
 
   /**
+   * Retrieves the source information for a given actor.
    * Pour un objet appartenant à un acteur, la source est l'id de l'objet (embedded item) ou du type Actor.id.Item.id
-   * @param {*} actor
-   * @returns Le nom et la description de l'objet à l'origine du modifier
+   * Retourne Le nom et la description de l'objet à l'origine du modifier
+   *
+   * @param {Object} actor The actor object containing items.
+   * @returns {Object|undefined} An object containing the name and description of the item, or undefined if the item is not found.
+   * @property {string} name - The name of the item.
+   * @property {string} description - The description of the item.
    */
   getSourceInfos(actor) {
     let item

@@ -1,10 +1,12 @@
 import CoActor from "./actor.mjs"
-import { COMBAT, ITEM_TYPE } from "../system/constants.mjs"
 import { Action } from "../models/action/action.mjs"
+import { SYSTEM } from "../config/system.mjs"
 
 export default class CoEncounter extends CoActor {
   prepareDerivedData() {
     super.prepareDerivedData()
+
+    this._prepareAbilities()
     console.debug(this)
 
     this._prepareHPMax()
@@ -15,12 +17,12 @@ export default class CoEncounter extends CoActor {
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr)
       // Const abilityBonus = skill.ability && this.system.abilities[skill.ability].mod ? this.system.abilities[skill.ability].mod : 0;
 
-      if (key === COMBAT.INIT) {
+      if (key === SYSTEM.COMBAT.INIT) {
         // This._prepareInit(skill, bonuses);
         skill.value = skill.base + bonuses
       }
 
-      if (key === COMBAT.DEF) {
+      if (key === SYSTEM.COMBAT.DEF) {
         // This._prepareDef(skill, abilityBonus, bonuses);
         skill.value = skill.base + bonuses
       }
@@ -30,12 +32,15 @@ export default class CoEncounter extends CoActor {
   // #region accesseurs
 
   /**
-   * @returns Toutes les actions visibles des capacités
+   * Toutes les actions visibles des capacités
+   * Retrieves all visible actions from items of type SYSTEM.ITEM_TYPE.CAPACITY.
+   *
+   * @returns {Array} An array of visible actions from the items.
    */
   get visibleActions() {
     let allActions = []
     this.items.forEach((item) => {
-      if ([ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
+      if ([SYSTEM.ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
         allActions.push(...item.visibleActions)
       }
     })
@@ -43,16 +48,16 @@ export default class CoEncounter extends CoActor {
   }
 
   get attacks() {
-    return this.items.filter((item) => item.type === ITEM_TYPE.ATTACK)
+    return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.ATTACK)
   }
 
   /**
-   * @returns Toutes les actions visibles des attaques
+   * Retourne toutes les actions visibles des attaques
    */
   get attacksActions() {
     let allActions = []
     this.items.forEach((item) => {
-      if ([ITEM_TYPE.ATTACK].includes(item.type) && item.actions.length > 0) {
+      if ([SYSTEM.ITEM_TYPE.ATTACK].includes(item.type) && item.actions.length > 0) {
         allActions.push(...item.visibleActions)
       }
     })

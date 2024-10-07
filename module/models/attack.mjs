@@ -1,7 +1,8 @@
 import ItemData from "./item.mjs"
-export class CapacityData extends ItemData {
+export default class AttackData extends ItemData {
   static defineSchema() {
     const fields = foundry.data.fields
+
     return foundry.utils.mergeObject(super.defineSchema(), {
       subtype: new fields.StringField({
         required: true,
@@ -34,12 +35,24 @@ export class CapacityData extends ItemData {
           initial: false,
         }),
       }),
-      path: new fields.StringField({
-        required: true,
-        nullable: true,
-        initial: null,
-      }),
       actions: new fields.ArrayField(new fields.ObjectField()),
     })
+  }
+
+  get displayValues() {
+    let attack = ""
+    let damage = ""
+    let source = ""
+    let actions = this.actions
+    if (actions.length > 0) {
+      let action = Action.createFromExisting(actions[0])
+      if (action.hasResolvers) {
+        let resolver = action.resolvers[0]
+        attack = resolver?.skill?.formula[0].part
+        damage = resolver?.dmg?.formula[0].part
+      }
+      source = action.source
+    }
+    return { attack, damage, source }
   }
 }

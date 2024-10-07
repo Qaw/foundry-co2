@@ -60,7 +60,7 @@ export class CoEditAbilitiesDialog extends Application {
     const { actor } = this
     // Construct the Roll instance
     let r = new Roll("{4d6kh3, 4d6kh3, 4d6kh3, 4d6kh3, 4d6kh3, 4d6kh3}")
-    await r.roll({ async: true })
+    await r.roll()
     const newAbilityScores = {
       str: { base: r.terms[0].results[0].result },
       dex: { base: r.terms[0].results[1].result },

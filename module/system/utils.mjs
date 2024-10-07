@@ -4,10 +4,11 @@ export class Utils {
   }
 
   /**
-   * @name getTooltip
-   * @param {*} name
-   * @param {*} value
-   * @returns {string} Chaine vide ou "Nom : valeur "
+   * Generates a tooltip string based on the provided name and value.
+   *
+   * @param {string} name The name to be included in the tooltip.
+   * @param {number} value The value to be included in the tooltip.
+   * @returns {string} "Nom : valeur " the formatted tooltip string if both name and value are valid, otherwise an empty string.
    */
   static getTooltip(name, value) {
     if (name !== "" && value !== 0) {
@@ -24,8 +25,8 @@ export class Utils {
    * For an actor, evaluate the formula
    * @param {*} actor
    * @param {*} formula
-   * @param toEvaluate
    * @param {*} source The item source's UUID : used for the #rank
+   * @param {boolean} toEvaluate
    * @returns
    */
   static evaluate(actor, formula, source, toEvaluate = false) {

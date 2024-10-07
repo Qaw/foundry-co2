@@ -21,11 +21,11 @@ export class CoSkillRollDialog extends Dialog {
             const dice = html.find("#dice").val()
             const difficulty = html.find("#difficulty").val()
             const critrange = html.find("input#critrange").val()
-            const mod = html.find("input#mod").val()
+            const carac = html.find("input#carac").val()
             const bonus = html.find("input#bonus").val()
             const malus = html.find("input#malus").val()
             const totalSkillBonuses = html.find("input#totalSkillBonuses").val()
-            let roll = await this.skillRoll.roll(this.skillRoll.label, dice, mod, bonus, malus, totalSkillBonuses, difficulty, critrange)
+            let roll = await this.skillRoll.roll(this.skillRoll.label, dice, carac, bonus, malus, totalSkillBonuses, difficulty, critrange)
             await this.skillRoll.chat(roll)
           },
         },

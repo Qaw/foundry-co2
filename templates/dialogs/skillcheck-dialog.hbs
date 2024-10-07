@@ -1,5 +1,5 @@
 <form class="{{cssClass}}" autocomplete="off" onsubmit="event.preventDefault();">
-    {{!log "Chroniques Oubliées | skillcheck" this}}
+    {{log "Chroniques Oubliées | skillcheck" this}}
     <header class="sheet-header"></header>
     <section class="sheet-body">
         <div class="form-group">
@@ -16,9 +16,9 @@
             </div>
         </div>
         <div class="form-group">
-                <label>{{localize 'CO.label.long.mod'}}</label>
+                <label>{{localize 'CO.label.long.carac'}}</label>
             <div class="form-fields">
-                <input class="field-value readonly" id="mod" name="mod" type="text" readonly="true" value="{{numberFormat mod decimals=0 sign=true}}" data-dtype="Number"/>
+                <input class="field-value readonly" id="carac" name="carac" type="text" readonly="true" value="{{numberFormat carac decimals=0 sign=true}}" data-dtype="Number"/>
             </div>
         </div>
         <div class="form-group">

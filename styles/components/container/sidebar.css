@@ -1,0 +1,155 @@
+.sidebar {
+  padding: 3px 0 0 3px;
+  margin: 0;
+  flex: 190px 0 0;
+  height: 100%;
+  min-width: 190px;
+  overflow: hidden scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
+}
+.sidebar .image-container {
+  border: 1px solid var(--color-border-dark);
+}
+.sidebar .image-container img.actor-image {
+  border: none;
+  min-width: 152px;
+}
+.sidebar .image-container .hover-icon {
+  visibility: hidden;
+  position: absolute;
+  top: 35px;
+  left: 3px;
+  font-size: var(--font-size-16);
+}
+.sidebar .image-container:hover .hover-icon {
+  visibility: visible;
+}
+.sidebar .health-section .hit-points,
+.sidebar .resource-section .hit-points,
+.sidebar .health-section .resource-points,
+.sidebar .resource-section .resource-points {
+  display: flex;
+  flex-direction: row;
+  flex: 0;
+  margin-left: auto;
+  font-size: var(--font-size-14);
+}
+.sidebar .health-section .hit-points .current,
+.sidebar .resource-section .hit-points .current,
+.sidebar .health-section .resource-points .current,
+.sidebar .resource-section .resource-points .current {
+  width: 36px;
+  text-align: right;
+  padding-right: 3px;
+}
+.sidebar .health-section .hit-points .max.lt1000,
+.sidebar .resource-section .hit-points .max.lt1000,
+.sidebar .health-section .resource-points .max.lt1000,
+.sidebar .resource-section .resource-points .max.lt1000,
+.sidebar .health-section .hit-points .max.lt1000,
+.sidebar .resource-section .hit-points .max.lt1000,
+.sidebar .health-section .resource-points .max.lt1000,
+.sidebar .resource-section .resource-points .max.lt1000 {
+  width: 36px;
+}
+.sidebar .health-section .hit-points .max,
+.sidebar .resource-section .hit-points .max,
+.sidebar .health-section .resource-points .max,
+.sidebar .resource-section .resource-points .max {
+  font-weight: 700;
+  margin-right: 4px;
+  text-align: center;
+  align-items: center;
+  display: flex;
+}
+.sidebar .health-section .hit-points .slash,
+.sidebar .resource-section .hit-points .slash,
+.sidebar .health-section .resource-points .slash,
+.sidebar .resource-section .resource-points .slash {
+  align-items: center;
+  display: flex;
+}
+.sidebar .armor-section .armor-value {
+  flex: 0;
+  text-align: right;
+  font-weight: 700;
+  padding-right: 4px;
+}
+.sidebar .init-section a.roll-init {
+  display: flex;
+  flex-wrap: nowrap;
+  font-weight: 700;
+  margin-left: auto;
+  margin-bottom: 2px;
+  padding-right: 0.5em;
+}
+.sidebar-section {
+  margin-bottom: 5px;
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.sidebar-section-header {
+  display: flex;
+  width: 100%;
+  font-size: 1rem;
+  border-bottom: 1px solid;
+  border-color: #7a7971;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+.sidebar-section-header .sidebar-label {
+  display: flex;
+  flex: auto;
+  flex-direction: row;
+  align-items: flex-start;
+  padding-bottom: 3px;
+}
+.sidebar-section-header .sidebar-label h4 {
+  font-size: 0.8rem;
+  margin-bottom: 0px;
+  padding-left: 2px;
+  font-weight: 600;
+}
+.sidebar-section-header .labelled-field {
+  font-size: var(--font-size-14);
+}
+.sidebar-section-content {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: 2px;
+}
+.sidebar-section-content .labelled-field {
+  display: flex;
+  font-size: var(--font-size-12);
+  align-self: center;
+}
+.sidebar-section-content .labelled-field label {
+  font-weight: normal;
+  color: var(--color-text-dark-secondary);
+}
+.sidebar-section-content .labelled-field .select-container {
+  display: flex;
+  flex: 1;
+  align-self: end;
+  justify-self: end;
+}
+.sidebar-section-content .labelled-field select {
+  background: none;
+  text-transform: unset;
+  font-size: var(--font-size-10);
+  font-weight: 500;
+  font-family: var(--sans-serif);
+  padding: 4px !important;
+  height: auto !important;
+  border: 1px solid var(--color-border-light-tertiary);
+  border-radius: 3px;
+  text-overflow: ellipsis;
+}

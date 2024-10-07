@@ -1,6 +1,6 @@
-import { ITEM_TYPE } from "../system/constants.mjs"
 import { Action } from "../models/action/action.mjs"
 import { Condition } from "../models/action/condition.mjs"
+import { SYSTEM } from "../config/system.mjs"
 /**
  * Extend the base Item entity
  * @extends {Item}
@@ -19,7 +19,7 @@ export default class CoItem extends Item {
    * @type {boolean}
    */
   get hasModifiers() {
-    if (![ITEM_TYPE.EQUIPMENT, ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined
+    if (![SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.FEATURE, SYSTEM.ITEM_TYPE.PROFILE, SYSTEM.ITEM_TYPE.CAPACITY].includes(this.type)) return undefined
     return this.modifiers.length > 0
   }
 
@@ -28,11 +28,11 @@ export default class CoItem extends Item {
    */
   get modifiers() {
     // For Equipement or Capacity Item, the modifiers are in the actions
-    if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(this.type)) {
+    if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(this.type)) {
       return this.getModifiersFromActions(false)
     }
     // For Feature or Profile, the modifiers are in the item
-    if ([ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE].includes(this.type)) {
+    if ([SYSTEM.ITEM_TYPE.FEATURE, SYSTEM.ITEM_TYPE.PROFILE].includes(this.type)) {
       return this.system.modifiers instanceof Array ? this.system.modifiers : Object.values(this.system.modifiers)
     } else return []
   }
@@ -62,7 +62,7 @@ export default class CoItem extends Item {
    */
   get enabledModifiers() {
     // For Equipement or Capacity Item, the modifiers are in the actions
-    if ([ITEM_TYPE.EQUIPMENT, ITEM_TYPE.CAPACITY].includes(this.type)) return this.getModifiersFromActions(true)
+    if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(this.type)) return this.getModifiersFromActions(true)
     else return this.modifiers
   }
 
@@ -92,7 +92,7 @@ export default class CoItem extends Item {
    * Basic info for a capacity : uuid, name, img, description
    */
   get infos() {
-    if (this.type === ITEM_TYPE.CAPACITY || this.type === ITEM_TYPE.PATH) {
+    if (this.type === SYSTEM.ITEM_TYPE.CAPACITY || this.type === SYSTEM.ITEM_TYPE.PATH) {
       return {
         uuid: this.uuid,
         name: this.name,
@@ -110,10 +110,10 @@ export default class CoItem extends Item {
    * loot : Item without actions
    * action : Item and a specific action
    * @param {int} indice
-   * @param {String} Indice of the action, null for others
+   * @param {string} Indice of the action, null for others
    */
   getChatData(chatType, indice = null) {
-    if (this.type === ITEM_TYPE.CAPACITY || this.type === ITEM_TYPE.EQUIPMENT || this.type === ITEM_TYPE.ATTACK) {
+    if (this.type === SYSTEM.ITEM_TYPE.CAPACITY || this.type === SYSTEM.ITEM_TYPE.EQUIPMENT || this.type === SYSTEM.ITEM_TYPE.ATTACK) {
       let actions = []
       // All actions
       if (chatType === "item" && indice === null) {
@@ -146,7 +146,7 @@ export default class CoItem extends Item {
    * @param {Actor} actor
    */
   async getEmbeddedCapacities(actor) {
-    if ([ITEM_TYPE.PATH].includes(this.type)) {
+    if ([SYSTEM.ITEM_TYPE.PATH].includes(this.type)) {
       let capacities = []
       for (const capacityId of this.system.capacities) {
         const capacity = actor.items.get(capacityId)
@@ -164,7 +164,7 @@ export default class CoItem extends Item {
    * @returns the value of the bonus
    */
   getTotalModifiersByTypeSubtypeAndTarget(type, subtype, target) {
-    if (![ITEM_TYPE.EQUIPMENT, ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined
+    if (![SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.FEATURE, SYSTEM.ITEM_TYPE.PROFILE, SYSTEM.ITEM_TYPE.CAPACITY].includes(this.type)) return undefined
     if (!this.hasModifiers) return 0
     return this.modifiers
       .filter((m) => m.type === type && m.subtype === subtype && m.target === target)
@@ -180,7 +180,7 @@ export default class CoItem extends Item {
    * @returns the value of the bonus
    */
   getModifiersByTypeAndSubtype(type, subtype) {
-    if (![ITEM_TYPE.EQUIPMENT, ITEM_TYPE.FEATURE, ITEM_TYPE.PROFILE, ITEM_TYPE.CAPACITY].includes(this.type)) return undefined
+    if (![SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.FEATURE, SYSTEM.ITEM_TYPE.PROFILE, SYSTEM.ITEM_TYPE.CAPACITY].includes(this.type)) return undefined
     if (!this.hasModifiers) return 0
     return this.modifiers.filter((m) => m.type === type && m.subtype === subtype)
   }
@@ -190,7 +190,7 @@ export default class CoItem extends Item {
    * @param {*} uuid
    */
   addCapacity(uuid) {
-    if (this.type === ITEM_TYPE.PATH || this.type === ITEM_TYPE.FEATURE) {
+    if (this.type === SYSTEM.ITEM_TYPE.PATH || this.type === SYSTEM.ITEM_TYPE.FEATURE) {
       let newCapacities = foundry.utils.duplicate(this.system.capacities)
       newCapacities.push(uuid)
       return this.update({ "system.capacities": newCapacities })
@@ -203,7 +203,7 @@ export default class CoItem extends Item {
    * @param {*} uuid
    */
   addPath(uuid) {
-    if (this.type === ITEM_TYPE.FEATURE || this.type === ITEM_TYPE.PROFILE) {
+    if (this.type === SYSTEM.ITEM_TYPE.FEATURE || this.type === SYSTEM.ITEM_TYPE.PROFILE) {
       let newPaths = foundry.utils.duplicate(this.system.paths)
       newPaths.push(uuid)
       return this.update({ "system.paths": newPaths })
@@ -216,7 +216,7 @@ export default class CoItem extends Item {
    * @returns
    */
   updateRank() {
-    if (this.type !== ITEM_TYPE.PATH || !this.actor) return
+    if (this.type !== SYSTEM.ITEM_TYPE.PATH || !this.actor) return
     let max = 0
     this.system.capacities.forEach((c) => {
       const capacity = this.actor.items.get(c)
@@ -233,7 +233,7 @@ export default class CoItem extends Item {
    * @returns
    */
   toggleActions() {
-    if ((this.type !== ITEM_TYPE.CAPACITY && this.type !== ITEM_TYPE.EQUIPMENT) || !this.actor) return
+    if ((this.type !== SYSTEM.ITEM_TYPE.CAPACITY && this.type !== SYSTEM.ITEM_TYPE.EQUIPMENT) || !this.actor) return
     let actions = this.actions
     for (const action of actions) {
       let act = new Action(action)

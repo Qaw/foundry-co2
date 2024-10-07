@@ -3,7 +3,7 @@ export class Hitpoints {
     // On prend les cibles s'il y en a, sinon on prend les tokens actifs.
     // notation [...] transforme un Set en Array
     let targets = [...game.user.targets].length > 0 ? [...game.user.targets] : canvas.tokens.objects.children.filter((t) => t._controlled)
-    if (targets.length == 0) {
+    if (targets.length === 0) {
       ui.notifications.error(game.i18n.localize("COF.notification.HitPointsNoTarget"))
     } else {
       for (let target of targets) {
