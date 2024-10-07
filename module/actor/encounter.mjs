@@ -52,7 +52,7 @@ export default class CoEncounter extends CoActor {
   }
 
   /**
-   * @returns Toutes les actions visibles des attaques
+   * Retourne toutes les actions visibles des attaques
    */
   get attacksActions() {
     let allActions = []

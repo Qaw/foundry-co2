@@ -1,5 +1,4 @@
 import { BaseValue } from "./schemas/base-value.mjs"
-import { AttackData } from "./schemas/attack.mjs"
 import ActorData from "./actor.mjs"
 import { SYSTEM } from "../../config/system.mjs"
 
@@ -12,8 +11,6 @@ export default class EncounterData extends ActorData {
       init: new fields.EmbeddedDataField(BaseValue),
       def: new fields.EmbeddedDataField(BaseValue),
     })
-
-    schema.attacks = new fields.ArrayField(new fields.EmbeddedDataField(AttackData))
 
     schema.pasteData = new fields.HTMLField()
     schema.details = new fields.SchemaField({
