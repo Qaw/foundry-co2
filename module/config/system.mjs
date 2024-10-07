@@ -2,6 +2,7 @@ import * as CHARACTER from "./character.mjs"
 import * as ENCOUNTER from "./encounter.mjs"
 import * as MODIFIERS from "./modifier.mjs"
 import * as ITEM from "./item.mjs"
+import * as PATH from "./path.mjs"
 
 import { MODIFIER_TYPE, MODIFIER_SUBTYPE, MODIFIER_TARGET } from "./constants.mjs"
 import { FEATURE_SUBTYPE } from "./feature.mjs"
@@ -54,4 +55,5 @@ export const SYSTEM = {
   ATTRIBUTE,
   FEATURE_SUBTYPE,
   MODIFIERS,
+  PATH_SUBTYPE: PATH.PATH_SUBTYPE,
 }

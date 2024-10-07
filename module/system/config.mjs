@@ -34,37 +34,6 @@ CO.abilities = {
   cha: "CO.abilities.long.cha",
 }
 
-CO.modifier = {
-  type: {
-    equipment: "CO.modifier.type.equipment",
-    feature: "CO.modifier.type.feature",
-    profile: "CO.modifier.type.profile",
-    capacity: "CO.modifier.type.capacity",
-    attack: "CO.modifier.type.attack",
-  },
-  subtype: {
-    ability: "CO.modifier.subtype.ability",
-    combat: "CO.modifier.subtype.combat",
-    attribute: "CO.modifier.subtype.attribute",
-    skill: "CO.modifier.subtype.skill",
-  },
-  target: {
-    str: "CO.abilities.long.str",
-    dex: "CO.abilities.long.dex",
-    con: "CO.abilities.long.con",
-    int: "CO.abilities.long.int",
-    wis: "CO.abilities.long.wis",
-    cha: "CO.abilities.long.cha",
-    melee: "CO.combat.long.melee",
-    ranged: "CO.combat.long.ranged",
-    magic: "CO.combat.long.magic",
-    init: "CO.combat.long.init",
-    def: "CO.combat.long.def",
-    hp: "CO.label.long.hp",
-    rp: "CO.label.long.rp",
-  },
-}
-
 CO.spellcasting = {
   modifiers: {
     int: "CO.abilities.long.int",
@@ -126,15 +95,6 @@ CO.resolver = {
     heal: "CO.action.types.heal",
     buff: "CO.action.types.buff",
     debuff: "CO.action.types.debuff",
-  },
-}
-
-CO.path = {
-  subtypes: {
-    PROFILE: "CO.path.subtypes.profile",
-    FEATURE: "CO.path.subtypes.feature",
-    CREATURE: "CO.path.subtypes.creature",
-    PRESTIGE: "CO.path.subtypes.prestige",
   },
 }
 

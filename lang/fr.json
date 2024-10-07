@@ -470,7 +470,7 @@
       "subtypes" : {
         "profile" : "Voie de profil",
         "feature" : "Voie de feature",
-        "creature" : "Voie de créature",
+        "encounter" : "Voie de créature",
         "prestige" : "Voie de prestige"
       },
       "martialCategories" : {

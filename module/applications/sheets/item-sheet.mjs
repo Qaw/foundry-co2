@@ -84,6 +84,10 @@ export default class CoItemSheet extends CoBaseItemSheet {
       context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
       context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
     }
+
+    if (this.item.type === SYSTEM.ITEM_TYPE.PATH) {
+      context.choicePathSubtypes = SYSTEM.PATH_SUBTYPE
+    }
     return context
   }
 
