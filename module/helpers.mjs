@@ -13,9 +13,6 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("sum", function (arr, init) {
     return arr.reduce((previousValue, currentValue) => previousValue + currentValue, init)
   })
-  Handlebars.registerHelper("isProfileFamilyEnabled", function () {
-    return CO.profile.family.enabled
-  })
   Handlebars.registerHelper("getKeyFromMartialTraining", function (training) {
     return training.key
   })

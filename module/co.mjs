@@ -32,6 +32,7 @@ Hooks.once("init", async function () {
   globalThis.cof = game.system
   game.system.CONST = SYSTEM
 
+  console.info(SYSTEM.ASCII)
   console.info(game.co.log("Initializing..."))
 
   // Hook up system data types
@@ -109,6 +110,8 @@ Hooks.once("init", async function () {
       decimals: 2,
     }
   }
+
+  console.info(game.co.log("Initialized"))
 })
 
 Hooks.once("ready", async function () {

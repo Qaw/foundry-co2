@@ -1,4 +1,4 @@
-{{!log "Chroniques Oubliées | profile" this}}
+{{log "Chroniques Oubliées | profile" this}}
 <!--<h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.details"}}</a></h3>-->
 <div class="details-form foldable">
     {{#if debugMode}}
@@ -16,18 +16,18 @@
         </div>
     {{/if}}
     <div class="form-group">
-        <label>{{localize "CO.label.long.hd"}}</label>
+        <label>{{localize "CO.ui.pvLevel"}}</label>
         <div class="form-fields">
-            <select name="system.hd" data-type="String" style="width:100%">
-                {{#select system.hd}}
-                    <option value="">{{localize "CO.ui.none"}}</option>
-                    <option value="1d4">d4</option>
-                    <option value="1d6">d6</option>
-                    <option value="1d8">d8</option>
-                    <option value="1d10">d10</option>
-                    <option value="1d12">d12</option>
-                    <option value="1d20">d20</option>
-                {{/select}}
+            <select name="system.pv" data-type="String" style="width:100%">
+                {{selectOptions @root.choicePv selected=system.pv blank=""}}
+            </select>
+        </div>
+    </div>    
+    <div class="form-group">
+        <label>{{localize "CO.ui.recovery"}}</label>
+        <div class="form-fields">
+            <select name="system.recovery" data-type="String" style="width:100%">
+                {{selectOptions @root.choiceRecoveryDices selected=system.recovery blank=""}}
             </select>
         </div>
     </div>
@@ -35,28 +35,18 @@
         <label>{{localize "CO.label.short.spellcasting"}}</label>
         <div class="form-fields">
             <select name="system.spellcasting" data-type="String" style="width:100%">
-                {{#select system.spellcasting}}
-                    {{#each @root.config.spellcasting.modifiers as |label idx|}}
-                        <option value="{{idx}}">{{localize label}}</option>
-                    {{/each}}
-                {{/select}}
+                  {{selectOptions @root.choiceAtmAbiity selected=system.spellcasting localize=true}}
             </select>
         </div>
     </div>
     <div class="form-group">
-        <label>{{localize "CO.label.short.mpFormula"}}</label>
+        <label>{{localize "CO.label.long.family"}}</label>
         <div class="form-fields">
-            <input class="field-value" name="system.mpFormula" type="text" value="{{system.mpFormula}}" placeholder="{{ localize ' CO.label.long.mpFormula' }}" data-dtype="String" />
+            <select name="system.family" data-type="String" style="width:100%">
+                  {{selectOptions @root.choiceProfileFamily selected=system.family localize=true}}
+            </select>
         </div>
     </div>
-    {{#if (isProfileFamilyEnabled)}}
-        <div class="form-group">
-            <label>{{localize "CO.label.long.family"}}</label>
-            <div class="form-fields">
-                <input class="field-value" name="system.family" type="text" value="{{system.family}}" placeholder="{{ localize ' CO.label.long.family' }}" data-dtype="String">
-            </div>
-        </div>
-    {{/if}}
 </div>
 
 <h3 class="form-header"><a class="section-toggle">{{localize "CO.label.long.martialTrainings"}}</a></h3>

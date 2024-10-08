@@ -1,7 +1,7 @@
 {
-  "TYPES" : {
-    "Actor" : {
-      "character" : "Personnage",
+  "TYPES": {
+    "Actor": {
+      "character": "Personnage",
       "encounter": "Rencontre",
       "vendor": "Vendeur/Trésor",
       "vehicle": "Véhicule",
@@ -26,10 +26,10 @@
       "ready": "Système Chroniques Oubliées initialisé.",
       "unknownCapacity": "Vous ne connaissez pas cette capacité.",
       "noCapacitySelected": "Aucune capacité sélectionnée.",
-      "inventory.empty" : "L'inventaire est vide.",
-      "modifiers.empty" : "Aucun modificateur.",
-      "conditions.empty" : "Aucune condition.",
-      "resolvers.empty" : "Aucun resolveur.",
+      "inventory.empty": "L'inventaire est vide.",
+      "modifiers.empty": "Aucun modificateur.",
+      "conditions.empty": "Aucune condition.",
+      "resolvers.empty": "Aucun resolveur.",
       "profilAlreadyExist": "Vous avez déjà un profil.",
       "NotEnoughFreeHands": "Pas suffisament de mains libres pour équiper l'objet.",
       "TooMuchSpentXP": "Le montant d'XP dépensé est supérieur au maximum autorisé.",
@@ -37,25 +37,25 @@
     },
     "label": {
       "long": {
-        "label" : "Label",
+        "label": "Label",
         "ability": "Caractéristique",
         "abilities": "Caractéristiques",
         "superior": "Supérieur",
         "base": "Base",
         "specie": "Espèce",
         "bonus": "Bonus",
-        "traits" : "Traits",
+        "traits": "Traits",
         "malus": "Malus",
         "value": "Valeur",
         "mod": "Modificateur",
         "max": "Maximum",
         "min": "Minimum",
-        "temp" : "Temporaire",
-        "tempmax" : "Maximum Temporaire",
+        "temp": "Temporaire",
+        "tempmax": "Maximum Temporaire",
         "modifiers": "Modificateurs",
         "name": "Nom",
         "level": "Niveau",
-        "nc" : "Niveau de Créature",
+        "nc": "Niveau de Créature",
         "profile": "Profil",
         "capacity": "Capacité",
         "capacities": "Capacités",
@@ -68,7 +68,7 @@
         "critrange": "Critique",
         "rank": "Rang",
         "add": "Ajouter",
-        "sendToChat" : "Envoyer sur le chat",
+        "sendToChat": "Envoyer sur le chat",
         "edit": "Editer",
         "delete": "Supprimer",
         "difficulty": "Difficulté",
@@ -81,36 +81,35 @@
         "init": "Initiative",
         "hd": "Dé de vie",
         "rp": "Points de récupération",
-        "type" : "Type",
-        "subtype" : "Sous-type",
-        "category" : "Catégorie",
-        "archetype" : "Archétype",
-        "family" : "Famille (de profil)",
-        "source" : "Source",
-        "spellcasting" : "Modificateur pour Attaque Magique",
-        "mpFormula": "Formule de calcul pour les Points de Magie",
-        "martialCategory" : "Catégorie martiale",
-        "martialTraining" : "Formation martiale",
-        "martialTrainings" : "Formations martiales",
-        "current" : "Actuel",
+        "type": "Type",
+        "subtype": "Sous-type",
+        "category": "Catégorie",
+        "archetype": "Archétype",
+        "family": "Famille",
+        "source": "Source",
+        "spellcasting": "Modificateur pour Attaque Magique",
+        "martialCategory": "Catégorie martiale",
+        "martialTraining": "Formation martiale",
+        "martialTrainings": "Formations martiales",
+        "current": "Actuel",
         "formulaAttack": "Formule d'attaque",
         "formulaDamage": "Formule des dommages",
-        "melee" : "Attaque de contact",
-        "ranged" : "Attaque à distance",
-        "magic" : "Attaque magique",
-        "meters" : "Mètres",
-        "feet" : "Pieds",
-        "carac" : "Caractéristique"
+        "melee": "Attaque de contact",
+        "ranged": "Attaque à distance",
+        "magic": "Attaque magique",
+        "meters": "Mètres",
+        "feet": "Pieds",
+        "carac": "Caractéristique"
       },
       "short": {
-        "label" : "Label",
+        "label": "Label",
         "ability": "Carac.",
         "abilities": "Caracs",
         "superior": "Sup.",
         "base": "Base",
         "specie": "Espèce",
         "bonus": "Bonus",
-        "traits" : "Traits",
+        "traits": "Traits",
         "malus": "Malus",
         "value": "Val.",
         "mod": "Mod",
@@ -120,12 +119,12 @@
         "attacks": "Att.",
         "attack": "Att.",
         "damage": "Dmg.",
-        "temp" : "Temp.",
-        "tempmax" : "Max. Temp.",
+        "temp": "Temp.",
+        "tempmax": "Max. Temp.",
         "modifiers": "Mods",
         "name": "Nom",
         "level": "Niv.",
-        "nc" : "NC",
+        "nc": "NC",
         "profile": "Profil",
         "capacity": "Capacité",
         "capacities": "Capacités",
@@ -144,37 +143,36 @@
         "init": "Init.",
         "hd": "DV",
         "rp": "PR",
-        "type" : "Tpe",
-        "subtype" : "Ss-tpe",
-        "category" : "Cat.",
-        "archetype" : "Arch.",
-        "quantity" : "Qté",
-        "family" : "Fam.",
-        "source" : "Src.",
-        "mpFormula": "Formule PM",
-        "spellcasting" : "Mod. pour ATM",
-        "martialCategory" : "Cat. martiale",
-        "martialTraining" : "Form. martiale",
-        "martialTrainings" : "Form. martiales",
-        "melee" : "Contact",
-        "ranged" : "Distance",
-        "magic" : "Magique",
-        "current" : "Actuel",
-        "meters" : "m",
-        "feet" : "ft"
+        "type": "Tpe",
+        "subtype": "Ss-tpe",
+        "category": "Cat.",
+        "archetype": "Arch.",
+        "quantity": "Qté",
+        "family": "Fam.",
+        "source": "Src.",
+        "spellcasting": "Mod. pour ATM",
+        "martialCategory": "Cat. martiale",
+        "martialTraining": "Form. martiale",
+        "martialTrainings": "Form. martiales",
+        "melee": "Contact",
+        "ranged": "Distance",
+        "magic": "Magique",
+        "current": "Actuel",
+        "meters": "m",
+        "feet": "ft"
       }
     },
     "ui": {
       "none": "--",
-      "id" : "ID",
-      "key" : "Clé",
+      "id": "ID",
+      "key": "Clé",
       "submit": "OK",
       "cancel": "Annuler",
-      "add" : "Ajouter",
+      "add": "Ajouter",
       "newItem": "Nouvel objet {item}",
-      "remove" : "Supprimer",
+      "remove": "Supprimer",
       "diceType": "Type de dé",
-      "data" : "Données",
+      "data": "Données",
       "kh": "Garder le plus haut",
       "kl": "Garder le plus bas",
       "description": "Description",
@@ -182,76 +180,78 @@
       "action": "Action",
       "details": "Détails",
       "actions": "Actions",
-      "quantity" : "Quantité",
-      "current" : "Courante",
-      "max" : "Maximum",
-      "destroyIfEmpty" : "Détruire si vide",
-      "charges" : "Charges",
-      "weight" : "Poids",
-      "unit" : "Unité",
-      "price" : "Prix",
-      "value" : "Valeur",
-      "currency" : "Monnaie",
-      "rarity" : "Rareté",
-      "usage" : "Usage",
-      "1h" : "Une main",
-      "2h" : "Deux mains",
-      "type" : "Type",
-      "label" : "Label",
-      "img" : "Image",
-      "chatFlavor" : "Message chat",
-      "activable" : "Activable",
-      "enabled" : "Activé(s)",
-      "disabled" : "Désactivé(s)",
-      "passive" : "Passif(s)",
-      "visible" : "Visible",
-      "conditions" : "Conditions",
-      "subject" : "Sujet",
-      "predicate" : "Prédicat",
-      "object" : "Objet",
-      "modifiers" : "Modificateurs",
-      "resolvers" : "Résolutions",
-      "skill" : "Compétence",
-      "formula" : "Formule",
-      "part" : "Composante",
-      "crit" : "Critique",
-      "difficulty" : "Difficulté",
-      "dmg" : "Dommages",
-      "saves" : "Sauvegarde",
-      "targets" : "Cible(s)",
-      "target" : "Cible",
-      "width" : "Largeur",
-      "range" : "Portée",
-      "consumes" : "Consomme",
-      "perUsage" : "Par utilisation",
-      "learned" : "Appris",
+      "quantity": "Quantité",
+      "current": "Courante",
+      "max": "Maximum",
+      "destroyIfEmpty": "Détruire si vide",
+      "charges": "Charges",
+      "weight": "Poids",
+      "unit": "Unité",
+      "price": "Prix",
+      "value": "Valeur",
+      "currency": "Monnaie",
+      "rarity": "Rareté",
+      "usage": "Usage",
+      "1h": "Une main",
+      "2h": "Deux mains",
+      "type": "Type",
+      "label": "Label",
+      "img": "Image",
+      "chatFlavor": "Message chat",
+      "activable": "Activable",
+      "enabled": "Activé(s)",
+      "disabled": "Désactivé(s)",
+      "passive": "Passif(s)",
+      "visible": "Visible",
+      "conditions": "Conditions",
+      "subject": "Sujet",
+      "predicate": "Prédicat",
+      "object": "Objet",
+      "modifiers": "Modificateurs",
+      "resolvers": "Résolutions",
+      "skill": "Compétence",
+      "formula": "Formule",
+      "part": "Composante",
+      "crit": "Critique",
+      "difficulty": "Difficulté",
+      "dmg": "Dommages",
+      "saves": "Sauvegarde",
+      "targets": "Cible(s)",
+      "target": "Cible",
+      "width": "Largeur",
+      "range": "Portée",
+      "consumes": "Consomme",
+      "perUsage": "Par utilisation",
+      "learned": "Appris",
       "equipped": "Équipé",
-      "biography" : "Biographie",
-      "appearance" : "Apparence",
-      "size" : "Taille",
-      "languages" : "Langages",
-      "private" : "Privée",
-      "public" : "Publique",
-      "misc" : "Divers",
-      "features" : "Traits",
-      "inventory" : "Inventaire",
-      "armors" : "Armures",
-      "weapons" : "Armes",
-      "shields" : "Boucliers",
-      "miscBonuses" : "Bonus divers",
-      "totalBonus" : "Bonus total",
+      "biography": "Biographie",
+      "appearance": "Apparence",
+      "size": "Taille",
+      "languages": "Langages",
+      "private": "Privée",
+      "public": "Publique",
+      "misc": "Divers",
+      "features": "Traits",
+      "inventory": "Inventaire",
+      "armors": "Armures",
+      "weapons": "Armes",
+      "shields": "Boucliers",
+      "miscBonuses": "Bonus divers",
+      "totalBonus": "Bonus total",
       "dr": "RD",
       "applyDamage": "Appliquer les dégâts",
       "applyHalfDamage": "Appliquer la moitié des dégâts",
       "applyDoubleDamage": "Appliquer le double des dégâts",
-      "applyHealing" : "Appliquer les soins",
-      "newAction" : "Nouvelle Action",
-      "capacitiesOffPaths" : "Capacités hors voies",
-      "capacitiesLearned" : "Capacités acquises",      
-      "capacitiesNotLearned" : "Capacités non-acquises",
-      "editYourAbilities" : "Éditez vos Caractéristiques",
+      "applyHealing": "Appliquer les soins",
+      "newAction": "Nouvelle Action",
+      "capacitiesOffPaths": "Capacités hors voies",
+      "capacitiesLearned": "Capacités acquises",
+      "capacitiesNotLearned": "Capacités non-acquises",
+      "editYourAbilities": "Éditez vos Caractéristiques",
       "buy": "Apprendre",
-      "unbuy": "Ne pas apprendre"
+      "unbuy": "Ne pas apprendre",
+      "recovery": "Dé de récupération",
+      "pvLevel": "Points de vigueur par niveau"
     },
     "properties": {
       "attack": "Attaque",
@@ -263,7 +263,7 @@
       "consumable": "Consommable",
       "tailored": "Sur-mesure",
       "2H": "Deux mains",
-      "reloadable": "Rechargeable",      
+      "reloadable": "Rechargeable",
       "spell": "Sort",
       "chargeable": "Chargeable",
       "enabled": "Activé(e)",
@@ -278,16 +278,16 @@
         "for": "Force",
         "per": "Perception",
         "cha": "Charisme",
-        "int": "Intelligence",        
+        "int": "Intelligence",
         "vol": "Volonté"
       },
       "short": {
         "agi": "AGI",
-        "con": "CON",        
+        "con": "CON",
         "for": "FOR",
         "per": "PER",
         "cha": "CHA",
-        "int": "INT",        
+        "int": "INT",
         "vol": "VOL"
       }
     },
@@ -331,8 +331,7 @@
         "primary": "Prim.",
         "secondary": "Sec.",
         "tertiary": "Ter."
-      },
-      "mpFormula": "Points de Magie (formule)"
+      }
     },
     "tabs": {
       "main": "Principal",
@@ -369,30 +368,30 @@
       "fumble": "Échec critique",
       "failure": "Échec"
     },
-    "action" : {
-      "types" : {
-        "spell" : "Sort",
-        "melee" : "Attaque de contact",
-        "ranged" : "Attaque à distance",
-        "magical" : "Attaque magique",
-        "protection" : "Protection",
-        "heal" : "Soin",
-        "buff" : "Amélioration",
-        "debuff" : "Affaiblissement"
+    "action": {
+      "types": {
+        "spell": "Sort",
+        "melee": "Attaque de contact",
+        "ranged": "Attaque à distance",
+        "magical": "Attaque magique",
+        "protection": "Protection",
+        "heal": "Soin",
+        "buff": "Amélioration",
+        "debuff": "Affaiblissement"
       },
-      "equip" : "Équiper",
+      "equip": "Équiper",
       "unequip": "Déséquiper",
-      "consume" : "Consommer"
+      "consume": "Consommer"
     },
-    "condition" : {
-      "objects" : {
-        "item" : "Objet",
-        "target" : "Cible",
-        "_self" : "Soi-Même"
+    "condition": {
+      "objects": {
+        "item": "Objet",
+        "target": "Cible",
+        "_self": "Soi-Même"
       },
-      "predicates" : {
-        "isEquipped" : "est équipé par...",
-        "isLearned" : "a été appris par..."
+      "predicates": {
+        "isEquipped": "est équipé par...",
+        "isLearned": "a été appris par..."
       }
     },
     "modifier": {
@@ -409,15 +408,15 @@
         "skill": "Jet de compétence"
       }
     },
-    "resolver" : {
-      "types" : {
-        "melee" : "Contact",
-        "ranged" : "À distance",
-        "magic" : "Magique",
-        "heal" : "Soin"
+    "resolver": {
+      "types": {
+        "melee": "Contact",
+        "ranged": "À distance",
+        "magic": "Magique",
+        "heal": "Soin"
       }
     },
-    "itemTypes" : {
+    "itemTypes": {
       "item": "Objet",
       "equipment": "Équipement",
       "feature": "Feature",
@@ -432,67 +431,74 @@
       "capacity": "Capacité",
       "attack": "Attaque (Rencontre)"
     },
-    "equipment" : {
-      "subtypes" : {
-        "armor" : "Armure",
-        "shield" : "Bouclier",
-        "weapon" : "Arme",
-        "misc" : "Divers"
+    "equipment": {
+      "subtypes": {
+        "armor": "Armure",
+        "shield": "Bouclier",
+        "weapon": "Arme",
+        "misc": "Divers"
       },
-      "martialCategories" : {
+      "martialCategories": {
         "melee": "Arme de contact",
         "ranged": "Arme à distance",
         "thrown": "Arme de jet",
         "magical": "Arme magique"
       }
     },
-    "encounter" : {
-      "archetype" : {
-        "weak" : "Inférieur",
-        "quick" : "Rapide",
-        "powerful" : "Puissant",
-        "standard" : "Standard"
+    "encounter": {
+      "archetype": {
+        "weak": "Inférieur",
+        "quick": "Rapide",
+        "powerful": "Puissant",
+        "standard": "Standard"
       },
-      "category" : {
+      "category": {
         "living": "Vivante",
         "humanoid": "Humanoïde",
         "plant": "Végétative",
-        "undead" : "Non-Vivante"
+        "undead": "Non-Vivante"
       }
     },
-    "feature" : {
+    "feature": {
       "subtypes": {
         "people": "Peuple",
         "trait": "Trait"
       }
     },
-    "path" : {
-      "subtypes" : {
-        "profile" : "Voie de profil",
-        "feature" : "Voie de feature",
-        "encounter" : "Voie de créature",
-        "prestige" : "Voie de prestige"
+    "path": {
+      "subtypes": {
+        "profile": "Voie de profil",
+        "feature": "Voie de feature",
+        "encounter": "Voie de créature",
+        "prestige": "Voie de prestige"
       },
-      "martialCategories" : {
+      "martialCategories": {
         "melee": "Arme de contact",
         "ranged": "Arme à distance",
         "thrown": "Arme de jet",
         "magical": "Arme magique"
       }
     },
-    "rarity" : {
-      "common" : "Commun",
-      "medium" : "Moyen",
-      "rare" : "Rare",
-      "unique" : "Unique"
+    "profile": {
+      "family": {
+        "aventurier": "Aventurier",
+        "combattant": "Combattant",
+        "mage": "Mage",
+        "mystique": "Mystique"
+      }
     },
-    "size" : {
+    "rarity": {
+      "common": "Commun",
+      "medium": "Moyen",
+      "rare": "Rare",
+      "unique": "Unique"
+    },
+    "size": {
       "tiny": "Minuscule",
       "small": "Petite",
       "medium": "Moyenne",
       "large": "Grande",
       "huge": "Gigantesque"
-
     }
   },
   "SETTINGS": {

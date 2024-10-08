@@ -95,6 +95,14 @@ export default class CoItemSheet extends CoBaseItemSheet {
       context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
       context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
     }
+
+    // Contexte spécifique Profil
+    if (this.item.type === SYSTEM.ITEM_TYPE.PROFILE) {
+      context.choiceAtmAbiity = SYSTEM.ATM_ABILITY
+      context.choicePv = SYSTEM.PV
+      context.choiceRecoveryDices = SYSTEM.RECOVERY_DICES
+      context.choiceProfileFamily = SYSTEM.PROFILE_FAMILY
+    }
     return context
   }
 

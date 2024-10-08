@@ -1,47 +1,5 @@
 export const CO = {}
 
-// ASCII Artwork
-CO.ASCII = `
-   ******    *******  
-  **////**  **/////**  
- **    //  **     //**      
-/**       /**      /** 
-/**       /**      /**  
-//**    **//**     **       
- //******  //*******        
-  //////    ///////   `
-
-CO.itemIcons = {
-  equipment: "icons/svg/item-bag.svg",
-  capacity: "icons/svg/combat.svg",
-  feature: "icons/svg/invisible.svg",
-  profile: "icons/svg/upgrade.svg",
-  path: "icons/svg/upgrade.svg",
-  attack: "icons/svg/sword.svg",
-}
-
-CO.actorIcons = {
-  character: "icons/svg/mystery-man.svg",
-  encounter: "icons/svg/eye.svg",
-}
-
-CO.abilities = {
-  str: "CO.abilities.long.str",
-  dex: "CO.abilities.long.dex",
-  con: "CO.abilities.long.con",
-  int: "CO.abilities.long.int",
-  wis: "CO.abilities.long.wis",
-  cha: "CO.abilities.long.cha",
-}
-
-CO.spellcasting = {
-  modifiers: {
-    int: "CO.abilities.long.int",
-    wis: "CO.abilities.long.wis",
-    cha: "CO.abilities.long.cha",
-  },
-}
-
 CO.equipment = {
   subtypes: {
     ARMOR: "CO.equipment.subtypes.armor",
@@ -71,9 +29,3 @@ CO.size = {
   huge: "CO.size.huge",
 }
 
-CO.profile = {
-  family: {
-    enabled: false,
-    values: [],
-  },
-}

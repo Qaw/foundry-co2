@@ -15,7 +15,7 @@ import { Utils } from "../system/utils.mjs"
 export default class CoActor extends Actor {
   constructor(...args) {
     let data = args[0]
-    if (!data.img && game.co.config.actorIcons[data.type]) data.img = game.co.config.actorIcons[data.type]
+    if (!data.img && SYSTEM.ACTOR_ICONS[data.type]) data.img = SYSTEM.ACTOR_ICONS[data.type]
     super(...args)
   }
 
@@ -729,6 +729,7 @@ export default class CoActor extends Actor {
     return 0
   }
 
+  // FIXME : changer la formule
   // BASE : à partir du profile, lire la mpFormula
   _prepareMP(skill, bonuses) {
     skill.base = this._computeBaseMP()
@@ -738,9 +739,10 @@ export default class CoActor extends Actor {
   }
 
   // 2 * @niv + @int
+  // FIXME : changer la formule
   _computeBaseMP() {
     let total = 0
-    let formula = this.profiles.length != 0 && this.profiles[0].system.mpFormula ? this.profiles[0].system.mpFormula : null
+    let formula = this.profiles.length !== 0 && this.profiles[0].system.mpFormula ? this.profiles[0].system.mpFormula : null
     total = formula ? Utils.evaluate(this, formula, null, true) : 0
     return total
   }

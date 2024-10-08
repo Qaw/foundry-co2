@@ -8,7 +8,7 @@ import { SYSTEM } from "../config/system.mjs"
 export default class CoItem extends Item {
   constructor(...args) {
     let data = args[0]
-    if (!data.img && game.co.config.itemIcons[data.type]) data.img = game.co.config.itemIcons[data.type]
+    if (!data.img && SYSTEM.ITEM_ICONS[data.type]) data.img = SYSTEM.ITEM_ICONS[data.type]
     super(...args)
   }
 

@@ -9,10 +9,11 @@ export default class ProfileData extends ItemData {
         required: false,
         nullable: true,
       }),
-      hd: new fields.StringField({
+      pv: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 3 }),
+      recovery: new fields.StringField({
         required: true,
         nullable: false,
-        initial: "1d4",
+        initial: "d6",
       }),
       proficiencies: new fields.ArrayField(new fields.StringField()),
       paths: new fields.ArrayField(new fields.StringField()),
@@ -22,12 +23,7 @@ export default class ProfileData extends ItemData {
       spellcasting: new fields.StringField({
         required: true,
         nullable: false,
-        initial: "int",
-      }),
-      mpFormula: new fields.StringField({
-        required: true,
-        nullable: true,
-        initial: "@lvl + @int",
+        initial: "vol",
       }),
     })
   }
