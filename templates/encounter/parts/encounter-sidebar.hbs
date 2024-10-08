@@ -147,10 +147,7 @@
                     <label>{{localize "CO.label.long.base"}}</label>
                     <input class="mvt-base" type="number" name="system.attributes.movement.base" value="{{attributes.movement.base}}" data-dtype="Number" placeholder="0">
                     <select name="system.attributes.movement.unit" data-type="String">
-                        {{#select system.attributes.movement.unit}}
-                            <option value="m">{{localize "CO.label.long.meters"}}</option>
-                            <option value="ft">{{localize "CO.label.long.feet"}}</option>
-                        {{/select}}
+                        {{selectOptions choiceMoveUnit selected=system.attributes.movement.unit localize=true}}
                     </select>
                 </div>
             </div>

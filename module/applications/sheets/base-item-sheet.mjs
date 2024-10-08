@@ -1,3 +1,4 @@
+import { SYSTEM } from "../../config/system.mjs"
 export default class CoBaseItemSheet extends ItemSheet {
   /** @override */
   async getData(options = {}) {
@@ -8,6 +9,11 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.modifiers = this.item.modifiers
     context.enrichedDescription = await TextEditor.enrichHTML(this.item.system.description, { async: true })
     context.tags = this.item.tags
+
+    context.choiceActionTypes = SYSTEM.ACTION_TYPES
+    context.choiceConditionObjects = SYSTEM.CONDITION_OBJECTS
+    context.choiceConditionPredicates = SYSTEM.CONDITION_PREDICATES
+    context.choiceResolverTypes = SYSTEM.RESOLVER_TYPES
     return context
   }
 }

@@ -1,4 +1,5 @@
 <!--<h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.actions"}}</a></h3>-->
+{{log 'action-partial' this}}
 <div class="actions-form foldable">
     <button type="button" class="action-button action-add" title="{{localize 'CO.ui.add'}}" tabindex="-1">
         <i class="fas fa-add"></i>&nbsp;{{localize "CO.ui.add"}}
@@ -33,12 +34,8 @@
                         <div class="form-group">
                             <label>{{localize "CO.ui.type"}}</label>
                             <div class="form-fields">
-                                <select name="system.actions.{{idx}}.type" data-type="String" style="width:100%">
-                                    {{#select action.type}}
-                                        {{#each @root.config.action.types as |label idx|}}
-                                            <option value="{{idx}}">{{localize label}}</option>
-                                        {{/each}}
-                                    {{/select}}
+                                <select name="system.actions.{{idx}}.type" data-type="String" style="width:100%">  
+                                    {{selectOptions @root.choiceActionTypes selected=action.type localize=true}}                               
                                 </select>
                             </div>
                         </div>
@@ -61,7 +58,7 @@
                         </div>
                         <br />
                         {{> "systems/co/templates/items/parts/actions/conditions-partial.hbs" action=action idx=idx}}
-                        {{> "systems/co/templates/items/parts/actions/modifiers-partial.hbs" action=action idx=idx}}
+                        {{> "systems/co/templates/items/parts/actions/modifiers-partial.hbs" action=action idx=idx choiceModifierSubtypes=@root.choiceModifierSubtypes choiceModifierTargets=@root.choiceModifierTargets}}
                         {{> "systems/co/templates/items/parts/actions/resolvers-partial.hbs" action=action idx=idx}}
                     </div>
                 {{/each}}

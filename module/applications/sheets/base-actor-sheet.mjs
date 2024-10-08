@@ -28,6 +28,9 @@ export default class CoBaseActorSheet extends ActorSheet {
     context.visibleNonActivableNonTemporaireActions = this.actor.visibleNonActivableNonTemporaireActions
     context.inventory = this.actor.inventory
     context.unlocked = this.actor.isUnlocked
+
+    // Select options
+    context.choiceMoveUnit = SYSTEM.MOVEMENT_UNIT
     return context
   }
 

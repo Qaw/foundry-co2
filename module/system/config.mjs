@@ -63,41 +63,6 @@ CO.equipment = {
   },
 }
 
-CO.action = {
-  types: {
-    spell: "CO.action.types.spell",
-    melee: "CO.action.types.melee",
-    ranged: "CO.action.types.ranged",
-    magical: "CO.action.types.magical",
-    heal: "CO.action.types.heal",
-    buff: "CO.action.types.buff",
-    debuff: "CO.action.types.debuff",
-  },
-}
-
-CO.condition = {
-  objects: {
-    item: "CO.condition.objects.item",
-    target: "CO.condition.objects.target",
-    _self: "CO.condition.objects._self",
-  },
-  predicates: {
-    isLearned: "CO.condition.predicates.isLearned",
-    isEquipped: "CO.condition.predicates.isEquipped",
-  },
-}
-
-CO.resolver = {
-  types: {
-    melee: "CO.action.types.melee",
-    ranged: "CO.action.types.ranged",
-    magical: "CO.action.types.magical",
-    heal: "CO.action.types.heal",
-    buff: "CO.action.types.buff",
-    debuff: "CO.action.types.debuff",
-  },
-}
-
 CO.size = {
   tiny: "CO.size.tiny",
   small: "CO.size.small",

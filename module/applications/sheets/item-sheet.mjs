@@ -78,15 +78,22 @@ export default class CoItemSheet extends CoBaseItemSheet {
       context.paths = infosPaths
     }
 
-    // Context spécifique
+    // Contexte spécifique Feature
     if (this.item.type === SYSTEM.ITEM_TYPE.FEATURE) {
       context.choiceFeatureSubtypes = SYSTEM.FEATURE_SUBTYPE
       context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
       context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
     }
 
+    // Contexte spécifique Voie
     if (this.item.type === SYSTEM.ITEM_TYPE.PATH) {
       context.choicePathSubtypes = SYSTEM.PATH_SUBTYPE
+    }
+
+    // Contexte spécifique Capacité
+    if (this.item.type === SYSTEM.ITEM_TYPE.CAPACITY) {
+      context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
+      context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
     }
     return context
   }
@@ -479,7 +486,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
    */
   _updateObject(event, formData) {
     if (this.item.type === SYSTEM.ITEM_TYPE.CAPACITY || this.item.type === SYSTEM.ITEM_TYPE.EQUIPMENT) {
-      formData = expandObject(formData)
+      formData = foundry.utils.expandObject(formData)
 
       // Parcours des actions pour ajouter les tableaux vides
       if (!foundry.utils.isEmpty(formData.system.actions)) {

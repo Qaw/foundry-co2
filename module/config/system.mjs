@@ -1,11 +1,12 @@
+import * as ACTION from "./action.mjs"
 import * as CHARACTER from "./character.mjs"
 import * as ENCOUNTER from "./encounter.mjs"
-import * as MODIFIERS from "./modifier.mjs"
+import * as FEATURE from "./feature.mjs"
 import * as ITEM from "./item.mjs"
+import * as MODIFIERS from "./modifier.mjs"
 import * as PATH from "./path.mjs"
 
 import { MODIFIER_TYPE, MODIFIER_SUBTYPE, MODIFIER_TARGET } from "./constants.mjs"
-import { FEATURE_SUBTYPE } from "./feature.mjs"
 
 export const SYSTEM_ID = "co"
 export const SYSTEM_DESCRIPTION = "Chroniques Oubliées"
@@ -53,7 +54,11 @@ export const SYSTEM = {
   COMBAT_TYPE,
   RESOURCES_TYPE,
   ATTRIBUTE,
-  FEATURE_SUBTYPE,
+  FEATURE_SUBTYPE: FEATURE.FEATURE_SUBTYPE,
   MODIFIERS,
   PATH_SUBTYPE: PATH.PATH_SUBTYPE,
+  ACTION_TYPES: ACTION.ACTION_TYPES,
+  CONDITION_OBJECTS: ACTION.CONDITION_OBJECTS,
+  CONDITION_PREDICATES: ACTION.CONDITION_PREDICATES,
+  RESOLVER_TYPES: ACTION.RESOLVER_TYPES,
 }
