@@ -29,8 +29,6 @@ export const ABILITIES = Object.freeze({
   },
 })
 
-export const RESOURCES_TYPE = { FORTUNE: "fortune", MANA: "mana", RECOVERY: "recovery" }
-
 export const RESOURCES = Object.freeze({
   fortune: {
     id: "fortune",
@@ -46,8 +44,6 @@ export const RESOURCES = Object.freeze({
   },
 })
 
-export const COMBAT_TYPE = { INIT: "init", DEF: "def", MELEE: "melee", RANGED: "ranged", MAGIC: "magic" }
-
 export const COMBAT = Object.freeze({
   init: {
     id: "init",
@@ -59,6 +55,24 @@ export const COMBAT = Object.freeze({
     label: "CO.combat.long.def",
     ability: "agi",
   },
+  melee: {
+    id: "melee",
+    label: "CO.combat.long.melee",
+    ability: "for",
+  },
+  ranged: {
+    id: "ranged",
+    label: "CO.combat.long.ranged",
+    ability: "agi",
+  },
+  magic: {
+    id: "magic",
+    label: "CO.combat.long.magic",
+    ability: "vol",
+  },
+})
+
+export const ATTACK_TYPE = Object.freeze({
   melee: {
     id: "melee",
     label: "CO.combat.long.melee",

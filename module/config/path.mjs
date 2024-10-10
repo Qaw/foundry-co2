@@ -1,7 +1,11 @@
-export const PATH_SUBTYPE = {
+export const PATH_TYPES = {
   profile: {
     id: "profile",
     label: "CO.path.subtypes.profile",
+  },
+  people: {
+    id: "people",
+    label: "CO.path.subtypes.people",
   },
   feature: {
     id: "feature",

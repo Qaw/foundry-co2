@@ -87,7 +87,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
 
     // Contexte spécifique Voie
     if (this.item.type === SYSTEM.ITEM_TYPE.PATH) {
-      context.choicePathSubtypes = SYSTEM.PATH_SUBTYPE
+      context.choicePathSubtypes = SYSTEM.PATH_TYPES
     }
 
     // Contexte spécifique Capacité
@@ -102,6 +102,12 @@ export default class CoItemSheet extends CoBaseItemSheet {
       context.choicePv = SYSTEM.PV
       context.choiceRecoveryDices = SYSTEM.RECOVERY_DICES
       context.choiceProfileFamily = SYSTEM.PROFILE_FAMILY
+    }
+
+    // Contexte spécifique Equipement
+    if (this.item.type === SYSTEM.ITEM_TYPE.EQUIPMENT) {
+      context.choiceEquipmentSubTypes = SYSTEM.EQUIPMENT_SUBTYPES
+      context.choiceEquipmentRarity = SYSTEM.EQUIPMENT_RARITY
     }
     return context
   }
@@ -136,6 +142,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
   }
 
   /**
+   * Handle the drop of an Item onto a character sheet.
    * @param {DragEvent} event            The concluding DragEvent which contains drop data
    * @param {object} data                The data transfer extracted from the event
    * @returns {Promise<Item[]|boolean>}  The created or updated Item instances, or false if the drop was not permitted.
@@ -197,45 +204,6 @@ export default class CoItemSheet extends CoBaseItemSheet {
     return false
   }
 
-  /**
-   *
-   * @param {*} itemData
-   * @param {string} uuid
-   * @returns
-   */
-  // _onDropCapacityItem(item) {
-  //     console.log("_onDropCapacityItem : ", item);
-  //     const itemData = item.toObject();
-  //
-  //     if (this.item.type == "path") {
-  //         if (this.item.hasCapacityBySource(itemData.flags.core.sourceId)) return;
-  //         let system = foundry.utils.duplicate(this.item.system);
-  //         system.capacities.push({
-  //             source: item.uuid,
-  //             key: item.system.key,
-  //             name: itemData.name,
-  //             img: itemData.img,
-  //             description: itemData.system.description,
-  //             selected: false
-  //         });
-  //         const rank = system.maxRank === null ? 1 : system.maxRank + 1;
-  //         system.maxRank = rank;
-  //
-  //         this.item.update({system: system});
-  //     }
-  // }
-
-  /**
-   * Handle the final creation of dropped Item data on the Actor.
-   * @param {object[]|object} itemData     The item data requested for creation
-   * @returns {Promise<Item[]>}
-   * @private
-   */
-  // async _onDropItemCreate(itemData) {
-  //     itemData = itemData instanceof Array ? itemData : [itemData];
-  //
-  //     //return this.actor.createEmbeddedDocuments("Item", itemData);
-  // }
 
   /** @inheritdoc */
   activateListeners(html) {
@@ -256,9 +224,12 @@ export default class CoItemSheet extends CoBaseItemSheet {
   }
 
   /**
+   * Handles the toggle action for a section.
+   * Prevents the default event action, finds the next foldable section,
+   * and toggles its visibility with a sliding animation.
    *
-   * @param {*} event
-   * @returns
+   * @param {Event} event The event object triggered by the section toggle action.
+   * @returns {boolean} - Always returns true.
    */
   _onSectionToggle(event) {
     event.preventDefault()
@@ -315,7 +286,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
   }
 
   /**
-   *
+   * Handles the addition of a new action to the item and updates the item with the new action list.
    * @param {*} event
    * @returns
    */
@@ -333,7 +304,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
   }
 
   /**
-   *
+   * Handles the deletion of an action from the item and updates the item with the new action list.
    * @param {*} event
    * @returns
    */
@@ -347,7 +318,7 @@ export default class CoItemSheet extends CoBaseItemSheet {
   }
 
   /**
-   *
+   * Handles the addition of a new condition to the item and updates the item with the new action list.
    * @param {*} event
    * @returns
    */
@@ -365,9 +336,11 @@ export default class CoItemSheet extends CoBaseItemSheet {
   }
 
   /**
+   * Handles the deletion of a condition from an item.
    *
-   * @param {*} event
-   * @returns
+   * @param {Event} event The event that triggered the deletion.
+   * @returns {Promise} - A promise that resolves when the item update is complete.
+   * @private
    */
   _onDeleteCondition(event) {
     event.preventDefault()
@@ -380,9 +353,10 @@ export default class CoItemSheet extends CoBaseItemSheet {
   }
 
   /**
+   * Handles the addition of a new action modifier.
    *
-   * @param {*} event
-   * @returns
+   * @param {Event} event The event that triggered the addition of the action modifier.
+   * @returns {Promise} - A promise that resolves once the item has been updated.
    */
   _onAddActionModifier(event) {
     event.preventDefault()
@@ -395,9 +369,11 @@ export default class CoItemSheet extends CoBaseItemSheet {
   }
 
   /**
+   * Handles the deletion of an action modifier from the item.
    *
-   * @param {*} event
-   * @returns
+   * @param {Event} event The event that triggered the deletion.
+   * @returns {Promise} - A promise that resolves once the item has been updated.
+   * @private
    */
   _onDeleteActionModifier(event) {
     event.preventDefault()
@@ -447,9 +423,10 @@ export default class CoItemSheet extends CoBaseItemSheet {
   }
 
   /**
+   * Handles the addition of a new resolver to an action item.
    *
-   * @param {*} event
-   * @returns
+   * @param {Event} event The event that triggered the addition of the resolver.
+   * @returns {Promise} - A promise that resolves when the item is updated.
    */
   _onAddResolver(event) {
     event.preventDefault()
@@ -473,9 +450,10 @@ export default class CoItemSheet extends CoBaseItemSheet {
   }
 
   /**
+   * Handles the deletion of a resolver from an action within the item.
    *
-   * @param {*} event
-   * @returns
+   * @param {Event} event The event that triggered the deletion.
+   * @returns {Promise} - A promise that resolves when the item update is complete.
    */
   _onDeleteResolver(event) {
     event.preventDefault()

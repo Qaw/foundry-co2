@@ -1,4 +1,4 @@
-{{!log "Chroniques Oubliées | equipment" this}}
+{{log "Chroniques Oubliées | equipment" this}}
 <!--<h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.details"}}</a></h3>-->
 <div class="details-form foldable">
     {{#if debugMode}}
@@ -19,11 +19,7 @@
         <label>{{localize "CO.label.long.subtype"}}</label>
         <div class="form-fields">
             <select name="system.subtype" data-type="String" style="width:100%">
-                {{#select system.subtype}}
-                    {{#each @root.config.equipment.subtypes as |label idx|}}
-                        <option value="{{idx}}">{{localize label}}</option>
-                    {{/each}}
-                {{/select}}
+                {{selectOptions @root.choiceEquipmentSubTypes selected=system.subtype localize=true}}
             </select>
         </div>
     </div>
@@ -94,11 +90,7 @@
         <label>{{localize "CO.ui.rarity"}}</label>
         <div class="form-fields">
             <select name="system.rarity" data-type="String" style="width:100%">
-                {{#select system.rarity}}
-                    {{#each @root.config.equipment.rarity as |label idx|}}
-                        <option value="{{idx}}">{{localize label}}</option>
-                    {{/each}}
-                {{/select}}
+                {{selectOptions @root.choiceEquipmentRarity selected=system.rarity localize=true}}
             </select>
         </div>
     </div>

@@ -1,12 +1,12 @@
 import * as ACTION from "./action.mjs"
 import * as CHARACTER from "./character.mjs"
 import * as ENCOUNTER from "./encounter.mjs"
+import * as EQUIPMENT from "./equipment.mjs"
 import * as FEATURE from "./feature.mjs"
-import * as ITEM from "./item.mjs"
 import * as MODIFIERS from "./modifier.mjs"
 import * as PATH from "./path.mjs"
 
-import { MODIFIER_TYPE, MODIFIER_SUBTYPE, MODIFIER_TARGET } from "./constants.mjs"
+import * as CONST from "./constants.mjs"
 
 export const ASCII = `
    ******    *******  
@@ -48,14 +48,6 @@ export const PROFILE_FAMILY = {
 
 export const PV = { 3: "3", 4: "4", 5: "5" }
 
-// Constantes used inside the system to check for specific values
-export const ATTACK_TYPE = { MELEE: "CO.combat.long.melee", RANGED: "CO.combat.long.ranged", MAGICAL: "CO.combat.long.magic" }
-export const ACTOR_TYPE = { CHARACTER: "character", ENCOUNTER: "encounter" }
-export const MAGIC_ATTACK_TYPE = { INT: "int", VOL: "vol", CHA: "cha" }
-export const PATH_TYPE = { PROFILE: "profile", SPECIE: "specie", CULTURAL: "cultural", PRESTIGE: "prestige", ENCOUNTER: "encounter" }
-export const EQUIPMENT_SUBTYPE = { ARMOR: "armor", SHIELD: "shield", WEAPON: "weapon", MISC: "misc" }
-export const ATTRIBUTE = { HP: "hp" }
-
 /**
  * Include all constant definitions within the SYSTEM global export
  * @type {Object}
@@ -66,27 +58,31 @@ export const SYSTEM = {
   ASCII,
   ABILITIES: CHARACTER.ABILITIES,
   ACTION_TYPES: ACTION.ACTION_TYPES,
-  ACTOR_TYPE: ACTOR_TYPE,
+  ACTOR_TYPE: CONST.ACTOR_TYPE,
   ACTOR_ICONS,
-  ATTRIBUTE,
-  ATTACK_TYPE: ATTACK_TYPE,
+  ATTRIBUTE: CONST.ATTRIBUTE,
+  ATTACK_TYPE: CHARACTER.ATTACK_TYPE,
   ATM_ABILITY,
   COMBAT: CHARACTER.COMBAT,
-  COMBAT_TYPE: CHARACTER.COMBAT_TYPE,
+  COMBAT_TYPE: CONST.COMBAT_TYPE,
   CONDITION_OBJECTS: ACTION.CONDITION_OBJECTS,
   CONDITION_PREDICATES: ACTION.CONDITION_PREDICATES,
   DICES,
   ENCOUNTER_ARCHETYPES: ENCOUNTER.ARCHETYPES,
   ENCOUNTER_CATEGORIES: ENCOUNTER.CATEGORIES,
   ENCOUNTER_BOSS_RANKS: ENCOUNTER.BOSS_RANKS,
-  EQUIPMENT_SUBTYPE,
+  EQUIPMENT_RARITY: EQUIPMENT.EQUIPMENT_RARITY,
+  EQUIPMENT_SUBTYPE: CONST.EQUIPMENT_SUBTYPE,
+  EQUIPMENT_SUBTYPES: EQUIPMENT.EQUIPMENT_SUBTYPES,
   FEATURE_SUBTYPE: FEATURE.FEATURE_SUBTYPE,
   ITEM_ICONS,
-  ITEM_TYPE: ITEM.ITEM_TYPE,
-  MODIFIER_TYPE,
-  MODIFIER_SUBTYPE,
-  MODIFIER_TARGET,
-  PATH_SUBTYPE: PATH.PATH_SUBTYPE,
+  ITEM_TYPE: CONST.ITEM_TYPE,
+  MAGIC_ATTACK_TYPE: CONST.MAGIC_ATTACK_TYPE,
+  MODIFIER_TYPE: CONST.MODIFIER_TYPE,
+  MODIFIER_SUBTYPE: CONST.MODIFIER_SUBTYPE,
+  MODIFIER_TARGET: CONST.MODIFIER_TARGET,
+  PATH_TYPE: CONST.PATH_TYPE,
+  PATH_TYPES: PATH.PATH_TYPES,
   PV,
   RECOVERY_DICES,
   PROFILE_FAMILY,
@@ -94,6 +90,6 @@ export const SYSTEM = {
   MOVEMENT_UNIT,
   RESOLVER_TYPE: ACTION.RESOLVER_TYPE,
   RESOURCES: CHARACTER.RESOURCES,
-  RESOURCES_TYPE: CHARACTER.RESOURCES_TYPE,
+  RESOURCES_TYPE: CONST.RESOURCES_TYPE,
   SIZES,
 }
