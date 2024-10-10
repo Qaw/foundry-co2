@@ -29,20 +29,24 @@ export const ABILITIES = Object.freeze({
   },
 })
 
+export const RESOURCES_TYPE = { FORTUNE: "fortune", MANA: "mana", RECOVERY: "recovery" }
+
 export const RESOURCES = Object.freeze({
-  recovery: {
-    id: "recovery",
-    label: "CO.resources.long.recovery",
-  },
   fortune: {
     id: "fortune",
     label: "CO.resources.long.fortune",
+  },
+  recovery: {
+    id: "recovery",
+    label: "CO.resources.long.recovery",
   },
   mana: {
     id: "mana",
     label: "CO.resources.long.mana",
   },
 })
+
+export const COMBAT_TYPE = { INIT: "init", DEF: "def", MELEE: "melee", RANGED: "ranged", MAGIC: "magic" }
 
 export const COMBAT = Object.freeze({
   init: {

@@ -55,7 +55,7 @@ export const CONDITION_PREDICATES = Object.freeze({
   },
 })
 
-export const RESOLVER_TYPES = Object.freeze({
+export const RESOLVER_TYPE = Object.freeze({
   melee: {
     id: "melee",
     label: "CO.action.types.melee",

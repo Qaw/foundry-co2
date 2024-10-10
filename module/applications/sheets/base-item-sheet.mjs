@@ -13,7 +13,7 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.choiceActionTypes = SYSTEM.ACTION_TYPES
     context.choiceConditionObjects = SYSTEM.CONDITION_OBJECTS
     context.choiceConditionPredicates = SYSTEM.CONDITION_PREDICATES
-    context.choiceResolverTypes = SYSTEM.RESOLVER_TYPES
+    context.choiceResolverTypes = SYSTEM.RESOLVER_TYPE
     return context
   }
 }
