@@ -21,7 +21,7 @@ export const registerHandlebarsHelpers = function () {
     return game.i18n.localize(training.label)
   })
   Handlebars.registerHelper("buildItemTemplatePath", function (root, itemType) {
-    return `${root + itemType}/${itemType}-partial.hbs`
+    return `${root}${itemType}-partial.hbs`
   })
   Handlebars.registerHelper("getEmbeddedItemName", function (actor, source) {
     const item = actor.items.get(source)
