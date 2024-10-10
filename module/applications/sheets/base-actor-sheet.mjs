@@ -5,10 +5,9 @@ export default class CoBaseActorSheet extends ActorSheet {
   /** @override */
   getData(options) {
     const context = super.getData(options)
-    context.config = game.co.config
+    //context.config = game.co.config
     context.debugMode = game.settings.get("co", "debugMode")
     context.system = this.actor.system
-    // Console.debug(game.co.log(this.actor.system.abilities));
     context.abilities = this.actor.system.abilities
     context.combat = this.actor.system.combat
     context.attributes = this.actor.system.attributes
@@ -159,17 +158,11 @@ export default class CoBaseActorSheet extends ActorSheet {
     return this.actor.createEmbeddedDocuments("Item", [itemData])
   }
 
-  /**
-   *
-   * @param {*} event
-   */
   _onRoll(event) {
     const element = event.currentTarget
     const dataset = element.dataset
     const rollType = dataset.rollType
     const rolling = dataset.rolling
-
-    // Console.debug(game.co.log(rolling));
 
     switch (rollType) {
       case "skillcheck":
@@ -177,7 +170,6 @@ export default class CoBaseActorSheet extends ActorSheet {
       case "combatcheck":
         break
     }
-    // Return this.actor.skillCheck(event, this.actor);
     // return this.actor.dmgRoll(event, this.actor);
     // return this.actor.attackRoll(event, this.actor)
     // return this.actor.initRoll(event, this.actor)

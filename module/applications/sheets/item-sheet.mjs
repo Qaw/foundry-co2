@@ -31,9 +31,9 @@ export default class CoItemSheet extends CoBaseItemSheet {
     const context = await super.getData(options)
     console.log("Item-Sheet context", context)
     if (this.item.type === SYSTEM.ITEM_TYPE.EQUIPMENT || this.item.type === SYSTEM.ITEM_TYPE.PROFILE) {
-      context.martialTrainingsWeaponsList = context.config.martialTrainingsWeapons
-      context.martialTrainingsArmorsList = context.config.martialTrainingsArmors
-      context.martialTrainingsShieldsList = context.config.martialTrainingsShields
+      context.martialTrainingsWeaponsList = game.system.CONST.martialTrainingsWeapons
+      context.martialTrainingsArmorsList = game.system.CONST.martialTrainingsArmors
+      context.martialTrainingsShieldsList = game.system.CONST.martialTrainingsShields
     }
 
     if (this.item.type === SYSTEM.ITEM_TYPE.PATH || this.item.type === SYSTEM.ITEM_TYPE.FEATURE) {
@@ -108,6 +108,11 @@ export default class CoItemSheet extends CoBaseItemSheet {
     if (this.item.type === SYSTEM.ITEM_TYPE.EQUIPMENT) {
       context.choiceEquipmentSubTypes = SYSTEM.EQUIPMENT_SUBTYPES
       context.choiceEquipmentRarity = SYSTEM.EQUIPMENT_RARITY
+    }
+
+    // Contexte spécifique Attaque
+    if (this.item.type === SYSTEM.ITEM_TYPE.ATTACK) {
+      context.choiceAttackType = SYSTEM.ATTACK_TYPE
     }
     return context
   }

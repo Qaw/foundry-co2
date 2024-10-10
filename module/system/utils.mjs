@@ -1,3 +1,4 @@
+import { SYSTEM } from "../config/system.mjs"
 export class Utils {
   static shortcutResolve(shortcut) {
     return shortcut.replace("@", "system.")
@@ -15,6 +16,10 @@ export class Utils {
       return `${name} : ${value} `
     }
     return ""
+  }
+
+  static log(message) {
+    return `${SYSTEM.SYSTEM_DESCRIPTION} | ${message}`
   }
 
   static getAbilityName(ability) {
@@ -62,7 +67,6 @@ export class Utils {
    * @returns {int} the modifier's value
    */
   static _evaluateCustom(actor, formula, source, toEvaluate, withDice) {
-    // Console.debug(game.co.log("Custom Formula : ", formula));
 
     let replacedFormula = formula
     const DSL = {
@@ -133,8 +137,6 @@ export class Utils {
       replacedFormula = replacedFormula.replace("@", "actor.system.")
     }
 
-    // Console.debug(game.co.log("Custom Formula evaluated : ", replacedFormula));
-
     if (withDice) return replacedFormula
     else {
       if (toEvaluate) return eval(replacedFormula)
@@ -142,9 +144,11 @@ export class Utils {
     }
   }
 
-  replacedFormula = _processFormulaKeyword("@rang", replacedFormula, source)
+  // FIXME !! C'est quoi ?
+  // replacedFormula = _processFormulaKeyword("@rang", replacedFormula, source)
 
-  replacedFormula = _processFormulaKeyword("@rank", replacedFormula, source)
+  // FIXME !! C'est quoi ?
+  //replacedFormula = _processFormulaKeyword("@rank", replacedFormula, source)
 
   _processFormulaKeyword(keyword, replacedFormula, source) {
     if (replacedFormula.includes(keyword)) {
@@ -173,4 +177,5 @@ export class Utils {
     }
     return replacedFormula
   }
+
 }

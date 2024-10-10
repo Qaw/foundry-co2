@@ -16,7 +16,7 @@ export async function createCoMacro(dropData, slot) {
       foundry.utils.mergeObject(macroData, {
         name: itemData.name,
         img: itemData.img,
-        command: `game.co.macros.sendToChat("${itemData.id}","${itemData.name}", null)`,
+        command: `game.system.api.macros.sendToChat("${itemData.id}","${itemData.name}", null)`,
         flags: { "co.itemMacro": true },
       })
       break
@@ -24,7 +24,7 @@ export async function createCoMacro(dropData, slot) {
       foundry.utils.mergeObject(macroData, {
         name: `${dropData.name} - ${dropData.actionName}`,
         img: dropData.img,
-        command: `game.co.macros.sendToChat("${dropData.source}","${dropData.name}","${dropData.indice}")`,
+        command: `game.system.api.macros.sendToChat("${dropData.source}","${dropData.name}","${dropData.indice}")`,
         flags: { "co.actionMacro": true },
       })
       break

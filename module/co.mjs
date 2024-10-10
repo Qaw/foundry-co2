@@ -1,39 +1,39 @@
+// Configuration
 import { SYSTEM } from "./config/system.mjs"
-import { CO } from "./system/config.mjs"
+globalThis.SYSTEM = SYSTEM
+
 import CoCharacterSheet from "./applications/sheets/character-sheet.mjs"
-import CoItemSheet from "./applications/sheets/item-sheet.mjs"
-import { preloadHandlebarsTemplates } from "./templates.mjs"
-import CoItem from "./documents/item.mjs"
-import { registerHandlebarsHelpers } from "./helpers.mjs"
-import { Modifier } from "./models/action/modifiers.mjs"
-import { registerSystemSettings } from "./system/settings.js"
 import CoEncounterSheet from "./applications/sheets/encounter-sheet.mjs"
+import CoItemSheet from "./applications/sheets/item-sheet.mjs"
 
 import { CoActorProxy } from "./actor/proxy.mjs"
-import registerHooks from "./system/hooks.mjs"
+import CoItem from "./documents/item.mjs"
 
-import { Macros } from "./system/macros.mjs"
-
-globalThis.SYSTEM = SYSTEM
+import { Modifier } from "./models/action/modifiers.mjs"
 
 // Import modules
 import * as models from "./models/_module.mjs"
 
+// Helpers
+import { preloadHandlebarsTemplates } from "./templates.mjs"
+import { registerHandlebarsHelpers } from "./helpers.mjs"
+import { registerSystemSettings } from "./system/settings.js"
+import registerHooks from "./system/hooks.mjs"
+import { Macros } from "./system/macros.mjs"
+import { Utils } from "./system/utils.mjs"
+
 Hooks.once("init", async function () {
-  game.co = {
-    log: function (message) {
-      return `Chroniques Oubliées | ${message}`
-    },
-    Modifier: Modifier,
-    config: CO,
-    macros: Macros,
-  }
+  console.info(SYSTEM.ASCII)
+  console.info(Utils.log("Initializing..."))
 
   globalThis.cof = game.system
   game.system.CONST = SYSTEM
 
-  console.info(SYSTEM.ASCII)
-  console.info(game.co.log("Initializing..."))
+  // Expose the system API
+  game.system.api = {
+    models,
+    macros: Macros,
+  }
 
   // Hook up system data types
   CONFIG.Actor.dataModels = {
@@ -88,14 +88,14 @@ Hooks.once("init", async function () {
   registerHooks()
 
   // Load Martial Training
-  if (!game.co.config.martialTrainingsWeapons) {
-    game.co.config.martialTrainingsWeapons = []
+  if (!game.system.CONST.martialTrainingsWeapons) {
+    game.system.CONST.martialTrainingsWeapons = []
   }
-  if (!game.co.config.martialTrainingsArmors) {
-    game.co.config.martialTrainingsArmors = []
+  if (!game.system.CONST.martialTrainingsArmors) {
+    game.system.CONST.martialTrainingsArmors = []
   }
-  if (!game.co.config.martialTrainingsShields) {
-    game.co.config.martialTrainingsShields = []
+  if (!game.system.CONST.martialTrainingsShields) {
+    game.system.CONST.martialTrainingsShields = []
   }
 
   // Initiative
@@ -111,9 +111,9 @@ Hooks.once("init", async function () {
     }
   }
 
-  console.info(game.co.log("Initialized"))
+  console.info(Utils.log("Initialized"))
 })
 
 Hooks.once("ready", async function () {
-  console.info(game.co.log(game.i18n.localize("CO.notif.ready")))
+  console.info(Utils.log(game.i18n.localize("CO.notif.ready")))
 })

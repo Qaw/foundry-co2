@@ -79,9 +79,7 @@ export class CoSkillCheck extends CoRoll {
 }
 
 export class CoDmgRoll extends CoRoll {
-  roll(event, actor, rolling) {
-    console.debug(game.co.log("DMG ROLL"))
-  }
+  roll(event, actor, rolling) {}
 
   dialog() {}
 

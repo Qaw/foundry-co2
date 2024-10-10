@@ -18,11 +18,7 @@
         <label>{{localize "CO.label.long.subtype"}}</label>
         <div class="form-fields">
             <select name="system.subtype" data-type="String" style="width:100%">
-                {{#select system.subtype}}
-                    {{#each @root.config.encounter.attackTypes as |label idx|}}
-                        <option value="{{idx}}">{{localize label}}</option>
-                    {{/each}}
-                {{/select}}
+                {{selectOptions @root.choiceAttackType selected=system.subtype localize=true}}
             </select>
         </div>
     </div>
