@@ -1,4 +1,4 @@
-import { Utils } from "./utils.mjs"
+import Utils from "../utils.mjs"
 import CoChat from "../chat.mjs"
 import { CoAttackRollDialog, CoSkillRollDialog } from "../dialogs/dialog-roll.mjs"
 
@@ -129,7 +129,7 @@ export class CoAttackCheck extends CoRoll {
    * @param {*} formulaDamage
    * @param {*} difficulty
    * @param {*} critrange
-   * @returns
+   * @returns {Roll} the roll
    */
   rollAttack(label, dice, formulaAttack, formulaDamage, difficulty, critrange) {
     let r = new CoAttackRoll(label, dice, formulaAttack, formulaDamage, difficulty, critrange)

@@ -273,7 +273,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
 
   /**
    * Edit Abilities event hander
-   * @param event
+   * @param {Event} event
    */
   async _onEditAbilities(event) {
     event.preventDefault()

@@ -1,26 +1,24 @@
 // Configuration
-import { SYSTEM } from "./config/system.mjs"
+import { SYSTEM } from "./module/config/system.mjs"
 globalThis.SYSTEM = SYSTEM
 
-import CoCharacterSheet from "./applications/sheets/character-sheet.mjs"
-import CoEncounterSheet from "./applications/sheets/encounter-sheet.mjs"
-import CoItemSheet from "./applications/sheets/item-sheet.mjs"
+import CoCharacterSheet from "./module/applications/sheets/character-sheet.mjs"
+import CoEncounterSheet from "./module/applications/sheets/encounter-sheet.mjs"
 
-import { CoActorProxy } from "./actor/proxy.mjs"
-import CoItem from "./documents/item.mjs"
-
-import { Modifier } from "./models/action/modifiers.mjs"
+import { CoActorProxy } from "./module/actor/proxy.mjs"
+import CoItem from "./module/documents/item.mjs"
 
 // Import modules
-import * as models from "./models/_module.mjs"
+import * as models from "./module/models/_module.mjs"
+import * as applications from "./module/applications/_module.mjs"
 
 // Helpers
-import { preloadHandlebarsTemplates } from "./templates.mjs"
-import { registerHandlebarsHelpers } from "./helpers.mjs"
-import { registerSystemSettings } from "./system/settings.js"
-import registerHooks from "./system/hooks.mjs"
-import { Macros } from "./system/macros.mjs"
-import { Utils } from "./system/utils.mjs"
+import preloadHandlebarsTemplates from "./module/templates.mjs"
+import registerHandlebarsHelpers from "./module/helpers.mjs"
+import registerSystemSettings from "./module/settings.mjs"
+import registerHooks from "./module/hooks.mjs"
+import { Macros } from "./module/system/macros.mjs"
+import Utils from "./module/utils.mjs"
 
 Hooks.once("init", async function () {
   console.info(SYSTEM.ASCII)
@@ -31,6 +29,7 @@ Hooks.once("init", async function () {
 
   // Expose the system API
   game.system.api = {
+    applications,
     models,
     macros: Macros,
   }
@@ -69,11 +68,12 @@ Hooks.once("init", async function () {
     label: "CO.sheet.encounter",
   })
 
-  Items.registerSheet(SYSTEM.ID, CoItemSheet, {
-    types: ["attack", "capacity", "equipment", "feature", "path", "profile"],
-    makeDefault: true,
-    label: "CO.sheet.item",
-  })
+  Items.registerSheet(SYSTEM.ID, applications.AttackSheet, { types: ["attack"], makeDefault: true })
+  Items.registerSheet(SYSTEM.ID, applications.CapacitySheet, { types: ["capacity"], makeDefault: true })
+  Items.registerSheet(SYSTEM.ID, applications.EquipmentSheet, { types: ["equipment"], makeDefault: true })
+  Items.registerSheet(SYSTEM.ID, applications.FeatureSheet, { types: ["feature"], makeDefault: true })
+  Items.registerSheet(SYSTEM.ID, applications.PathSheet, { types: ["path"], makeDefault: true })
+  Items.registerSheet(SYSTEM.ID, applications.ProfileSheet, { types: ["profile"], makeDefault: true })
 
   // Preload Handlebars Templates
   preloadHandlebarsTemplates()

@@ -1,4 +1,4 @@
-import { Utils } from "../../system/utils.mjs"
+import Utils from "../../utils.mjs"
 import { CoAttackCheck } from "../../system/roll.mjs"
 export class Resolver {
   /**

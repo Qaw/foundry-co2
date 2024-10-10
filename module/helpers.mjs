@@ -1,4 +1,7 @@
-export const registerHandlebarsHelpers = function () {
+/**
+ *
+ */
+export default function registerHandlebarsHelpers() {
   Handlebars.registerHelper("add", function (a, b) {
     return parseInt(a) + parseInt(b)
   })

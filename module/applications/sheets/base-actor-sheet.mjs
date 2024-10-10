@@ -5,7 +5,6 @@ export default class CoBaseActorSheet extends ActorSheet {
   /** @override */
   getData(options) {
     const context = super.getData(options)
-    //context.config = game.co.config
     context.debugMode = game.settings.get("co", "debugMode")
     context.system = this.actor.system
     context.abilities = this.actor.system.abilities
@@ -48,8 +47,8 @@ export default class CoBaseActorSheet extends ActorSheet {
   }
 
   /**
-   * @description
-   * @param {*} event
+   * Manage the toggle of the sections
+   * @param {Event} event
    */
   _onSectionToggle(event) {
     event.preventDefault()
@@ -60,7 +59,7 @@ export default class CoBaseActorSheet extends ActorSheet {
 
   /**
    * Manage the lock/unlock button on the sheet
-   * @param {*} event
+   * @param {Event} event
    */
   async _onSheetChangelock(event) {
     event.preventDefault()
@@ -76,7 +75,7 @@ export default class CoBaseActorSheet extends ActorSheet {
    * - item : to display an item and all its actions
    * - action : to display the item and the action
    * - loot : to only display informations on the item
-   * @param {*} event
+   * @param {Event} event
    */
   async _onSendToChat(event) {
     event.preventDefault()
@@ -111,7 +110,7 @@ export default class CoBaseActorSheet extends ActorSheet {
 
   /**
    * Create a new embedded item
-   * @param {*} event
+   * @param {Event} event
    */
   _onItemCreate(event) {
     event.preventDefault()
@@ -170,7 +169,7 @@ export default class CoBaseActorSheet extends ActorSheet {
       case "combatcheck":
         break
     }
-    // return this.actor.dmgRoll(event, this.actor);
+    // Return this.actor.dmgRoll(event, this.actor);
     // return this.actor.attackRoll(event, this.actor)
     // return this.actor.initRoll(event, this.actor)
   }

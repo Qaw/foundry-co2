@@ -1,4 +1,7 @@
-export const registerSystemSettings = function () {
+/**
+ * Enregistre les paramètres du système
+ */
+export default function registerSystemSettings() {
   /**
    * Valeur de Base pour le Calcul de la DEF
    */

@@ -2,7 +2,7 @@ import { SYSTEM } from "../config/system.mjs"
 import { Action } from "../models/action/action.mjs"
 import { Modifier, Modifiers } from "../models/action/modifiers.mjs"
 import { Resolver } from "../models/action/resolvers.mjs"
-import { Utils } from "../system/utils.mjs"
+import Utils from "../utils.mjs"
 
 /**
  * @class CoActor
@@ -453,7 +453,7 @@ export default class CoActor extends Actor {
     let itemData = feature.toObject()
     itemData = itemData instanceof Array ? itemData : [itemData]
     const newFeature = await this.createEmbeddedDocuments("Item", itemData)
-    // console.info(Utils.log("Feature created", newFeature));
+    // Console.info(Utils.log("Feature created", newFeature));
 
     // Update the source of all modifiers with the id of the new embedded feature created
     let newModifiers = Object.values(foundry.utils.deepClone(newFeature[0].system.modifiers)).map((m) => new Modifier(m.source, m.type, m.subtype, m.target, m.value))
@@ -508,7 +508,7 @@ export default class CoActor extends Actor {
     let itemData = profile.toObject()
     itemData = itemData instanceof Array ? itemData : [itemData]
     const newProfile = await this.createEmbeddedDocuments("Item", itemData)
-    // console.info(Utils.log("Profile created", newProfile));
+    // Console.info(Utils.log("Profile created", newProfile));
 
     if (newProfile[0].system.modifiers.length > 0) {
       // Update the source of all modifiers with the id of the new embedded profile created
@@ -593,7 +593,7 @@ export default class CoActor extends Actor {
 
     capacityData = capacityData instanceof Array ? capacityData : [capacityData]
     const newCapacity = await this.createEmbeddedDocuments("Item", capacityData)
-    // console.info(Utils.log("Capacity created", newCapacity))
+    // Console.info(Utils.log("Capacity created", newCapacity))
 
     // Update the source of all actions with the id of the new embedded capacity created
     let newActions = Object.values(foundry.utils.deepClone(newCapacity[0].system.actions)).map((m) => {

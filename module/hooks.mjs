@@ -1,5 +1,5 @@
-import { Hitpoints } from "../hitpoints.mjs"
-import { createCoMacro } from "./macros.mjs"
+import { Hitpoints } from "./hitpoints.mjs"
+import { createCoMacro } from "./system/macros.mjs"
 
 /**
  * Registers various hooks for the game system.

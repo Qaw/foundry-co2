@@ -1,5 +1,5 @@
 import { SYSTEM } from "../../config/system.mjs"
-import { Utils } from "../../system/utils.mjs"
+import Utils from "../../utils.mjs"
 
 export class Modifiers {
   /**

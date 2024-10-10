@@ -1,5 +1,6 @@
-import { SYSTEM } from "../config/system.mjs"
-export class Utils {
+import { SYSTEM } from "./config/system.mjs"
+
+export default class Utils {
   static shortcutResolve(shortcut) {
     return shortcut.replace("@", "system.")
   }
@@ -32,7 +33,7 @@ export class Utils {
    * @param {*} formula
    * @param {*} source The item source's UUID : used for the #rank
    * @param {boolean} toEvaluate
-   * @returns
+   * @returns {int} the formula's value
    */
   static evaluate(actor, formula, source, toEvaluate = false) {
     if (formula === "") return 0
@@ -57,8 +58,7 @@ export class Utils {
 
   /**
    * Evaluate a custom value
-   * Shortcuts
-   * @str @dex @con @int @wis @cha @mel @ran @mag @lvl @rank[+1,0,+1,0,0]
+   * Shortcuts : @str @dex @con @int @wis @cha @mel @ran @mag @lvl @rank[+1,0,+1,0,0]
    * @param {*} actor
    * @param {} formula
    * @param {} source The item source's UUID : used for the #rank
@@ -67,7 +67,6 @@ export class Utils {
    * @returns {int} the modifier's value
    */
   static _evaluateCustom(actor, formula, source, toEvaluate, withDice) {
-
     let replacedFormula = formula
     const DSL = {
       "@for": "system.abilities.str.mod",
@@ -148,7 +147,7 @@ export class Utils {
   // replacedFormula = _processFormulaKeyword("@rang", replacedFormula, source)
 
   // FIXME !! C'est quoi ?
-  //replacedFormula = _processFormulaKeyword("@rank", replacedFormula, source)
+  // replacedFormula = _processFormulaKeyword("@rank", replacedFormula, source)
 
   _processFormulaKeyword(keyword, replacedFormula, source) {
     if (replacedFormula.includes(keyword)) {
@@ -177,5 +176,4 @@ export class Utils {
     }
     return replacedFormula
   }
-
 }

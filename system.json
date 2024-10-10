@@ -15,7 +15,7 @@
         "name": "Zigmund"
       }
     ],
-    "esmodules": ["module/co.mjs"],
+    "esmodules": ["co.mjs"],
     "scripts": [],
     "styles": ["css/co.css"],
     "packs": [],
