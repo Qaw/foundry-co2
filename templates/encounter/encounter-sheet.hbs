@@ -1,12 +1,12 @@
 <form class="{{cssClass}} flexrow no-wrap" autocomplete="off">
-    {{!log "Chroniques Oubliées | encounter" this}}
+    {{log "Chroniques Oubliées | encounter" this}}
     {{> "systems/co/templates/encounter/parts/encounter-sidebar.hbs"}}
     <div class="main">
         <header class="npc-sheet-header">
             <div class="name flexrow bottom-separator">
                 <input class="name-value" name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'CO.label.long.name' }}" spellcheck="false">
                 <label class="level-label">{{ localize 'CO.label.short.nc' }}</label>
-                <input class="level adjustable" type="text" name="system.attributes.level.base" value="{{attributes.level.base}}" data-dtype="Number">
+                <input class="level adjustable" type="text" name="system.attributes.level" value="{{attributes.level}}" data-dtype="Number" {{#if locked}}readonly{{/if}}>
             </div>
             <div class="flexrow" style="justify-content: space-between; width: 100%;">
                 <div class="flexrow" style="flex: auto;">

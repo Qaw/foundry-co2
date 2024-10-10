@@ -5,6 +5,7 @@ import * as EQUIPMENT from "./equipment.mjs"
 import * as FEATURE from "./feature.mjs"
 import * as MODIFIERS from "./modifier.mjs"
 import * as PATH from "./path.mjs"
+import * as PROFILE from "./profile.mjs"
 
 import * as CONST from "./constants.mjs"
 
@@ -92,4 +93,5 @@ export const SYSTEM = {
   RESOURCES: CHARACTER.RESOURCES,
   RESOURCES_TYPE: CONST.RESOURCES_TYPE,
   SIZES,
+  FAMILIES: PROFILE.FAMILIES,
 }

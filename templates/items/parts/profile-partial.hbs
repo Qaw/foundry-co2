@@ -15,36 +15,24 @@
             </div>
         </div>
     {{/if}}
+        <div class="form-group">
+        <label>{{localize "CO.label.long.family"}}</label>
+        <div class="form-fields">
+            <select name="system.family" data-type="String" style="width:100%">
+                  {{selectOptions @root.choiceProfileFamily selected=system.family localize=true blank=""}}
+            </select>
+        </div>
+    </div>
     <div class="form-group">
         <label>{{localize "CO.ui.pvLevel"}}</label>
         <div class="form-fields">
-            <select name="system.pv" data-type="String" style="width:100%">
-                {{selectOptions @root.choicePv selected=system.pv blank=""}}
-            </select>
+            <input disabled>{{system.hp}}</input>
         </div>
     </div>    
     <div class="form-group">
         <label>{{localize "CO.ui.recovery"}}</label>
         <div class="form-fields">
-            <select name="system.recovery" data-type="String" style="width:100%">
-                {{selectOptions @root.choiceRecoveryDices selected=system.recovery blank=""}}
-            </select>
-        </div>
-    </div>
-    <div class="form-group">
-        <label>{{localize "CO.label.short.spellcasting"}}</label>
-        <div class="form-fields">
-            <select name="system.spellcasting" data-type="String" style="width:100%">
-                  {{selectOptions @root.choiceAtmAbiity selected=system.spellcasting localize=true}}
-            </select>
-        </div>
-    </div>
-    <div class="form-group">
-        <label>{{localize "CO.label.long.family"}}</label>
-        <div class="form-fields">
-            <select name="system.family" data-type="String" style="width:100%">
-                  {{selectOptions @root.choiceProfileFamily selected=system.family localize=true}}
-            </select>
+            <input disabled>{{system.recoveryDice}}</input>
         </div>
     </div>
 </div>

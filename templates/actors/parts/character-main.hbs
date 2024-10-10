@@ -11,7 +11,7 @@
     <div class="section-body">
         <ol class="ability-scores">
             {{#each abilities as |ability id|}}
-            {{!log (concat "Chroniques Oubliées | " id) ability}}
+            {{log (concat "Chroniques Oubliées | " id) ability}}
                 <li class="ability key" data-ability="{{id}}">
                     <label class="details-label ability-name">{{localize (concat 'CO.abilities.long.' id)}}</label>
                     <h2 class="ability-id">

@@ -1,6 +1,9 @@
-import { SYSTEM } from "../config/system.mjs"
+import { PROFILE_FAMILY, SYSTEM } from "../config/system.mjs"
 import { BaseValue } from "./schemas/base-value.mjs"
 import ActorData from "./actor.mjs"
+import { Modifiers } from "./action/modifiers.mjs"
+import Utils from "../utils.mjs"
+
 
 export default class CharacterData extends ActorData {
   static defineSchema() {
@@ -66,5 +69,28 @@ export default class CharacterData extends ActorData {
     })
 
     return foundry.utils.mergeObject(super.defineSchema(), schema)
+  }
+
+  /** @override */
+  prepareBaseData() {
+    // Calcul de la base de PV sans le bonus de constitution
+    // Au niveau 1 : 2 * PV de la famille
+    // Pour chaque niveau supplémentaire : + PV de la famille
+    const pvFromFamily = this.profile ? SYSTEM.FAMILIES[this.profile.system.family].hp : 0
+    this.attributes.hp.base = 2 * pvFromFamily + (this.attributes.level - 1) * pvFromFamily
+  }
+
+  getFpFromFamily() {
+    const fp = this.profile ? this.profile.system.fp : 0
+    return fp
+  }
+
+  /**
+   * Retrieves the profile item from the items array.
+   *
+   * @returns {Object|undefined} The profile item if found, otherwise undefined.
+   */
+  get profile() {
+    return this.parent.items.find((item) => item.type === SYSTEM.ITEM_TYPE.PROFILE)
   }
 }

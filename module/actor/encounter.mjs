@@ -4,11 +4,7 @@ import { SYSTEM } from "../config/system.mjs"
 
 export default class CoEncounter extends CoActor {
   prepareDerivedData() {
-    super.prepareDerivedData()
-
     this._prepareAbilities()
-    console.debug(this)
-
     this._prepareHPMax()
 
     for (const [key, skill] of Object.entries(this.system.combat)) {

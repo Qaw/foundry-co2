@@ -1,4 +1,4 @@
-{{!log 'character-sheet' this}}
+{{log 'character-sheet' this}}
 <form class="{{cssClass}} flexrow no-wrap" autocomplete="off">
     {{log "Chroniques Oubliées | actor" this}}
     {{> "systems/co/templates/actors/parts/character-sidebar.hbs"}}
@@ -8,9 +8,9 @@
                 <input class="name-value" name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'CO.label.long.name' }}" spellcheck="false">
                 <label class="level-label">{{ localize 'CO.label.short.level' }}</label>
                 {{#if unlocked}}
-                    <input class="level adjustable" type="text" name="system.attributes.level.base" value="{{attributes.level.base}}" data-dtype="Number">
+                    <input class="level adjustable" type="text" name="system.attributes.level" value="{{attributes.level}}" data-dtype="Number">
                 {{else}}
-                    <span class="level adjustable">{{attributes.level.max}}</span>
+                    <span class="level adjustable">{{attributes.level}}</span>
                 {{/if}}
             </div>
         </header>

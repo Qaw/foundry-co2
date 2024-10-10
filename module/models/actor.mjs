@@ -21,11 +21,7 @@ export default class ActorData extends foundry.abstract.TypeDataModel {
         nullable: false,
         initial: { base: 10, unit: "m", bonuses: { sheet: 0, effects: 0 } },
       }),
-      level: new fields.EmbeddedDataField(BaseValue, {
-        label: "CO.label.long.level",
-        nullable: false,
-        initial: { base: 1, bonuses: { sheet: 0, effects: 0 } },
-      }),
+      level: new fields.NumberField({ ...requiredInteger, initial: 1, min: 0 }),
       encumbrance: new fields.SchemaField({
         value: new fields.NumberField({ ...requiredInteger, initial: 0 }),
         encumbered: new fields.BooleanField({
