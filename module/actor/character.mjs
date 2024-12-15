@@ -80,7 +80,7 @@ export default class CoCharacter extends CoActor {
     const hpMaxModifiers = Modifiers.computeTotalModifiersByTarget(this, this.attributeModifiers, SYSTEM.ATTRIBUTE.HP)
     this.system.attributes.hp.max = this.system.attributes.hp.base + constitutionBonus + hpMaxBonuses + hpMaxModifiers.total
     this.system.attributes.hp.tooltip = Utils.getTooltip("Base", this.system.attributes.hp.base).concat(
-      "Mod CON : ",
+      "CONstitution : ",
       constitutionBonus,
       hpMaxModifiers.tooltip,
       Utils.getTooltip("Bonus", hpMaxBonuses),
@@ -88,7 +88,7 @@ export default class CoCharacter extends CoActor {
   }
 
   _prepareAttack(key, skill, abilityBonus, bonuses) {
-    const levelBonus = this.system.attributes.level.base ? Math.min(this.system.attributes.level.base, 10) : 0
+    const levelBonus = this.system.attributes.level
     const combatModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key)
 
     skill.base = abilityBonus + levelBonus
