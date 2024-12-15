@@ -48,12 +48,8 @@ export default class CoCharacter extends CoActor {
       }
     }
 
-    // Level max
-    const levelBonuses = Object.values(this.system.attributes.level.bonuses).reduce((prev, curr) => prev + curr)
-    this.system.attributes.level.max = this.system.attributes.level.base + levelBonuses
-
     // XP dépensés dans les capacités des voies
-    this.system.attributes.xp.max = 2 * this.system.attributes.level.max
+    this.system.attributes.xp.max = 2 * this.system.attributes.level
     this.system.attributes.xp.value = this._computeXP()
   }
 
@@ -88,7 +84,8 @@ export default class CoCharacter extends CoActor {
   }
 
   _prepareAttack(key, skill, abilityBonus, bonuses) {
-    const levelBonus = this.system.attributes.level
+    // Le bonus de niveau est limité à 10
+    const levelBonus = Math.min(this.system.attributes.level, 10)
     const combatModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key)
 
     skill.base = abilityBonus + levelBonus
@@ -142,14 +139,18 @@ export default class CoCharacter extends CoActor {
   }
 
   _prepareFP(skill, bonuses) {
-    skill.base = this._computeBaseFP()
     const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER_TARGET.FP)
 
-    skill.max = skill.base + resourceModifiers.total + bonuses
+    skill.base = this._computeBaseFP()
+    skill.tooltipBase = Utils.getTooltip("Base", skill.base)
+
+    skill.max = skill.base + bonuses + resourceModifiers.total
+    skill.tooltip = skill.tooltipBase.concat(resourceModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
 
   _computeBaseFP() {
-    return 0
+    // 2 + Modificateur de Charisme + 1 pour la famille des aventuriers
+    return 2 + this.system.abilities.cha.value + this.system.getFpFromFamily()
   }
 
   // FIXME : changer la formule
@@ -219,7 +220,7 @@ export default class CoCharacter extends CoActor {
   // #endregion
 
   useRecovery(withHpRecovery) {
-    if (!this.system.resources.recovery.value > 0) return
+    if (this.system.resources.recovery.value <= 0) return
     let hp = this.system.attributes.hp
     let rp = this.system.resources.recovery
     const level = this.system.attributes.level.max

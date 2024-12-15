@@ -81,8 +81,7 @@ export default class CharacterData extends ActorData {
   }
 
   getFpFromFamily() {
-    const fp = this.profile ? this.profile.system.fp : 0
-    return fp
+    return this.profile ? SYSTEM.FAMILIES[this.profile.system.family].fp : 0
   }
 
   /**

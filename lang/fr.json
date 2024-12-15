@@ -74,13 +74,13 @@
         "difficulty": "Difficulté",
         "effects": "Effets",
         "properties": "Propriétés",
-        "hp": "Points de vie",
+        "hp": "Points de vigueur",
         "xp": "Expérience",
         "movement": "Déplacement",
         "def": "Défense",
         "init": "Initiative",
         "hd": "Dé de vie",
-        "rp": "Points de récupération",
+        "rp": "Dés de récupération",
         "type": "Type",
         "subtype": "Sous-type",
         "category": "Catégorie",
@@ -136,7 +136,7 @@
         "difficulty": "Diff.",
         "effects": "FX",
         "properties": "Props",
-        "hp": "PV",
+        "hp": "Vigueur",
         "xp": "XP",
         "movement": "Dépl.",
         "def": "DEF",
@@ -319,7 +319,7 @@
       "medium": {
         "fortune": "Chance",
         "mana": "Mana",
-        "recovery": "Récup.",
+        "recovery": "Récupération",
         "primary": "Primaire",
         "secondary": "Secondaire",
         "tertiary": "Tertiaire"
@@ -524,18 +524,6 @@
     "DisplayChatDamageButtonsToAll": {
       "name": "Afficher les boutons de dommages",
       "hint": "Affiche les boutons d'application des dommages dans les messages de chat à tout le monde."
-    },
-    "UseRecovery": {
-      "name": "Points de Récupération",
-      "hint": "Utiliser la règle optionnelle des Points de Récupération (PR)."
-    },
-    "UseFortune": {
-      "name": "Points de Chance",
-      "hint": "Utiliser la règle optionnelle des Points de Chance (PC)."
-    },
-    "UseMana": {
-      "name": "Points de Mana",
-      "hint": "Utiliser la règle optionnelle des Points de Mana (PM)."
     },
     "CheckFreeHandsBeforeEquip": {
       "name": "Vérification des mains libres",

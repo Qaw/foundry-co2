@@ -70,36 +70,6 @@ export default function registerSystemSettings() {
     type: Boolean,
   })
 
-  game.settings.register("co", "useRecovery", {
-    name: "SETTINGS.UseRecovery.name",
-    hint: "SETTINGS.UseRecovery.hint",
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean,
-    requiresReload: true,
-  })
-
-  game.settings.register("co", "useFortune", {
-    name: "SETTINGS.UseFortune.name",
-    hint: "SETTINGS.UseFortune.hint",
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean,
-    requiresReload: true,
-  })
-
-  game.settings.register("co", "useMana", {
-    name: "SETTINGS.UseMana.name",
-    hint: "SETTINGS.UseMana.hint",
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean,
-    requiresReload: true,
-  })
-
   game.settings.register("co", "checkFreeHandsBeforeEquip", {
     name: "SETTINGS.CheckFreeHandsBeforeEquip.name",
     hint: "SETTINGS.CheckFreeHandsBeforeEquip.hint",
