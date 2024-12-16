@@ -1,13 +1,13 @@
 <!--<h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.actions"}}</a></h3>-->
 {{log 'action-partial' this}}
 <div class="actions-form foldable">
-    <button type="button" class="action-button action-add" title="{{localize 'CO.ui.add'}}" tabindex="-1">
+    <button type="button" class="action-button action-add" data-tooltip="{{localize 'CO.ui.add'}}" tabindex="-1">
         <i class="fas fa-add"></i>&nbsp;{{localize "CO.ui.add"}}
     </button>
     <div class="actions">
         <nav class="action-tabs tabs" data-group="actions">
             {{#each system.actions as |action idx|}}
-                <a class="item" data-tab="{{idx}}" title="{{action.label}}"><img class="action-icon-small" src="{{action.img}}" title="{{action.label}}" /></a>
+                <a class="item" data-tab="{{idx}}" data-tooltip="{{action.label}}"><img class="action-icon-small" src="{{action.img}}" data-tooltip="{{action.label}}" /></a>
             {{/each}}
         </nav>
         {{#if system.actions}}
@@ -20,7 +20,7 @@
                             <label>{{localize "CO.ui.label"}}</label>
                             <div class="form-fields">
                                 <input class="field-value" name="system.actions.{{idx}}.label" type="text" value="{{action.label}}" placeholder="{{localize 'CO.ui.label'}}" data-dtype="String">
-                                <button type="button" class="action-button action-delete" title="{{localize 'CO.ui.remove'}}" tabindex="-1">
+                                <button type="button" class="action-button action-delete" data-tooltip="{{localize 'CO.ui.remove'}}" tabindex="-1">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
@@ -43,7 +43,7 @@
                             <label>{{localize "CO.ui.img"}}</label>
                             <div class="form-fields">
                                 <input class="field-value" data-edit="img" name="system.actions.{{idx}}.img" type="text" value="{{action.img}}" placeholder="{{localize 'CO.ui.img'}}" data-dtype="String">
-                                <button type="button" class="action-button file-picker" data-type="imagevideo" data-target="system.actions.{{idx}}.img" title="Parcourir les fichiers" tabindex="-1">
+                                <button type="button" class="action-button file-picker" data-type="imagevideo" data-target="system.actions.{{idx}}.img" data-tooltip="Parcourir les fichiers" tabindex="-1">
                                     <i class="fas fa-file-import fa-fw"></i>
                                 </button>
                             </div>

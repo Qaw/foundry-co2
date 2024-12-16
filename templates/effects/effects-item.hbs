@@ -12,14 +12,14 @@
     {{#if @root.isEffectsEditable}}
         <div class="item-detail">
             {{#if data.disabled}}
-                <a class="item-control effect-toggle" title="{{localize 'CO.effect.activate'}}" style="color:lightgray;"><i class="fas fa-toggle-off"></i></a>
+                <a class="item-control effect-toggle" data-tooltip="{{localize 'CO.effect.activate'}}" style="color:lightgray;"><i class="fas fa-toggle-off"></i></a>
             {{else}}
-                <a class="item-control effect-toggle" title="{{localize 'CO.effect.deactivate'}}"><i class="fas fa-toggle-on"></i></a>
+                <a class="item-control effect-toggle" data-tooltip="{{localize 'CO.effect.deactivate'}}"><i class="fas fa-toggle-on"></i></a>
             {{/if}}
         </div>
         <div class="item-controls">
-            <a class="item-control effect-edit" title="{{localize 'CO.effect.edit'}}"><i class="fas fa-edit"></i></a>
-            <a class="item-control effect-delete" title="{{localize 'CO.effect.delete'}}"><i class="fas fa-trash"></i></a>
+            <a class="item-control effect-edit" data-tooltip="{{localize 'CO.effect.edit'}}"><i class="fas fa-edit"></i></a>
+            <a class="item-control effect-delete" data-tooltip="{{localize 'CO.effect.delete'}}"><i class="fas fa-trash"></i></a>
         </div>
     {{/if}}
 </li>

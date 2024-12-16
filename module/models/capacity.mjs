@@ -42,4 +42,8 @@ export default class CapacityData extends ItemData {
       actions: new fields.ArrayField(new fields.ObjectField()),
     })
   }
+
+  get isSpell() {
+    return this.properties.spell
+  }
 }

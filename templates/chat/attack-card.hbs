@@ -45,16 +45,16 @@
                 <label for="dr" class="dr-checkbox">{{localize "CO.ui.dr"}}</label>
                 <input type="checkbox" id="dr" name="dr" class="dr-checkbox">
                 <a class="btn apply-dmg" data-apply="full" data-total="{{total}}">
-                    <i class="fas fa-user-minus" title="{{localize 'CO.ui.applyDamage'}}"></i>
+                    <i class="fas fa-user-minus" data-tooltip="{{localize 'CO.ui.applyDamage'}}"></i>
                 </a>
                 <a class="btn apply-dmg" data-apply="half" data-total="{{total}}">
-                    <i class="fas fa-user-shield" title="{{localize 'CO.ui.applyHalfDamage'}}"></i>
+                    <i class="fas fa-user-shield" data-tooltip="{{localize 'CO.ui.applyHalfDamage'}}"></i>
                 </a>
                 <a class="btn apply-dmg" data-apply="double" data-total="{{total}}">
-                    <i class="fas fa-user-injured" title="{{localize 'CO.ui.applyDoubleDamage'}}"></i>
+                    <i class="fas fa-user-injured" data-tooltip="{{localize 'CO.ui.applyDoubleDamage'}}"></i>
                 </a>
                 <a class="btn apply-dmg" data-apply="heal" data-total="{{total}}">
-                    <i class="fas fa-user-plus" title="{{localize 'CO.ui.applyHealing'}}"></i>
+                    <i class="fas fa-user-plus" data-tooltip="{{localize 'CO.ui.applyHealing'}}"></i>
                 </a>
             </div>
         {{/if}}

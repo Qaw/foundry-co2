@@ -76,7 +76,7 @@ export default class CoCharacter extends CoActor {
     const hpMaxModifiers = Modifiers.computeTotalModifiersByTarget(this, this.attributeModifiers, SYSTEM.ATTRIBUTE.HP)
     this.system.attributes.hp.max = this.system.attributes.hp.base + constitutionBonus + hpMaxBonuses + hpMaxModifiers.total
     this.system.attributes.hp.tooltip = Utils.getTooltip("Base", this.system.attributes.hp.base).concat(
-      "CONstitution : ",
+      "Constitution : ",
       constitutionBonus,
       hpMaxModifiers.tooltip,
       Utils.getTooltip("Bonus", hpMaxBonuses),
@@ -139,11 +139,10 @@ export default class CoCharacter extends CoActor {
   }
 
   _prepareFP(skill, bonuses) {
-    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER_TARGET.FP)
-
     skill.base = this._computeBaseFP()
     skill.tooltipBase = Utils.getTooltip("Base", skill.base)
 
+    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER_TARGET.FP)
     skill.max = skill.base + bonuses + resourceModifiers.total
     skill.tooltip = skill.tooltipBase.concat(resourceModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
@@ -157,18 +156,30 @@ export default class CoCharacter extends CoActor {
   // BASE : à partir du profile, lire la mpFormula
   _prepareMP(skill, bonuses) {
     skill.base = this._computeBaseMP()
-    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER_TARGET.MP)
+    skill.tooltipBase = Utils.getTooltip("Base", skill.base)
 
+    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER_TARGET.MP)
     skill.max = skill.base + resourceModifiers.total + bonuses
+    skill.tooltip = skill.tooltipBase.concat(resourceModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
 
-  // 2 * @niv + @int
-  // FIXME : changer la formule
+  // Si le personnage a au moins une capacité signalée par un * (donc un sort), il a alors VOL + nb de sorts points de Mana
   _computeBaseMP() {
-    let total = 0
-    let formula = this.profiles.length !== 0 && this.profiles[0].system.mpFormula ? this.profiles[0].system.mpFormula : null
-    total = formula ? Utils.evaluate(this, formula, null, true) : 0
-    return total
+    if (!this.hasSpells) return 0
+    const nbSpells = this.nbSpells
+    return this.system.abilities.vol.value + nbSpells
+  }
+
+  get spells() {
+    return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.CAPACITY && item.system.isSpell)
+  }
+
+  get hasSpells() {
+    return this.spells.length > 0
+  }
+
+  get nbSpells() {
+    return this.spells.length
   }
 
   _prepareRP(skill, bonuses) {

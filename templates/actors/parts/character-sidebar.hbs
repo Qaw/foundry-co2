@@ -361,14 +361,14 @@
   </div>
   <!-- MP -->
   <div class="resource-section sidebar-section">
-    <div class="sidebar-section-header" data-tooltip="{{localize 'CO.resources.long.mana'}}">
+    <div class="sidebar-section-header">
       <div class="sidebar-label">
         <i class="fas fa-fw fa-bolt"></i>
         <h4>{{localize "CO.resources.medium.mana"}}</h4>
         <div class="resource-points">
           <input class="current" name="system.resources.mana.value" value="{{resources.mana.value}}" type="number" data-dtype="Number" placeholder="0" />
           <span class="slash">/</span>
-          <span class="max">{{resources.mana.max}}</span>
+          <span class="max" data-tooltip="{{resources.mana.tooltip}}">{{resources.mana.max}}</span>
         </div>
       </div>
     </div>

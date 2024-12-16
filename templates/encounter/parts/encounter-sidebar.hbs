@@ -1,6 +1,6 @@
 <div class="sidebar">
     <div class="image-container">
-        <img class="actor-image" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="auto" width="100%" style="margin: 0 auto">
+        <img class="actor-image" src="{{actor.img}}" data-edit="img" data-tooltip="{{actor.name}}" height="auto" width="100%" style="margin: 0 auto">
         <a class="hover-icon" data-action="show-image"><i class="fas fa-image fa-fw"></i></a>
     </div>
     <!-- DEF -->
@@ -34,7 +34,7 @@
         <div class="sidebar-section-header">
             <div class="sidebar-label">
                 <i class="fas fa-fw fa-heart"></i>
-                <h4 title="{{localize 'CO.label.long.hp'}}">{{localize "CO.label.short.hp"}}</h4>
+                <h4 data-tooltip="{{localize 'CO.label.long.hp'}}">{{localize "CO.label.short.hp"}}</h4>
                 <div class="hit-points">
                     <input class="current" name="system.attributes.hp.value" value="{{attributes.hp.value}}" type="number" data-dtype="Number" placeholder="0">
                     <span class="slash">/</span>
@@ -91,7 +91,7 @@
     <!--                <h4>Immunities</h4>-->
     <!--            </div>-->
     <!--            <div class="immunities-controls controls">-->
-    <!--                <a data-action="edit-immunities" title="Edit Immunities"><i class="fa-solid fa-edit"></i></a>-->
+    <!--                <a data-action="edit-immunities" data-tooltip="Edit Immunities"><i class="fa-solid fa-edit"></i></a>-->
     <!--            </div>-->
     <!--        </div>-->
 
@@ -107,7 +107,7 @@
     <!--                <h4>Weaknesses</h4>-->
     <!--            </div>-->
     <!--            <div class="weaknesses-controls controls">-->
-    <!--                <a data-action="edit-weaknesses" title="Edit Weaknesses"><i class="fa-solid fa-edit"></i></a>-->
+    <!--                <a data-action="edit-weaknesses" data-tooltip="Edit Weaknesses"><i class="fa-solid fa-edit"></i></a>-->
     <!--            </div>-->
     <!--        </div>-->
     <!--        <div class="sidebar-section-content">-->
@@ -124,7 +124,7 @@
     <!--                <h4>Resistances</h4>-->
     <!--            </div>-->
     <!--            <div class="resistances-controls controls">-->
-    <!--                <a data-action="edit-resistances" title="Edit Resistances"><i class="fa-solid fa-edit"></i></a>-->
+    <!--                <a data-action="edit-resistances" data-tooltip="Edit Resistances"><i class="fa-solid fa-edit"></i></a>-->
     <!--            </div>-->
     <!--        </div>-->
     <!--        <div class="sidebar-section-content">-->
