@@ -18,7 +18,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   /** @override */
   getData(options) {
     const context = super.getData(options)
-    context.profiles = this.actor.profiles
+    context.profiles = this.actor.system.profiles
     context.xpleft = parseInt(this.actor.system.attributes.xp.max) - parseInt(this.actor.system.attributes.xp.value)
     context.choiceAbilities = SYSTEM.ABILITIES
     context.choiceSize = SYSTEM.SIZES
@@ -257,7 +257,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
       case SYSTEM.ITEM_TYPE.FEATURE:
         return this.actor.addFeature(item)
       case SYSTEM.ITEM_TYPE.PROFILE:
-        if (this.actor.profiles.length > 0) {
+        if (this.actor.system.profiles.length > 0) {
           ui.notifications.warn(game.i18n.localize("CO.notif.profilAlreadyExist"))
           break
         }

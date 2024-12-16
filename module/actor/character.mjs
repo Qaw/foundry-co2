@@ -42,7 +42,7 @@ export default class CoCharacter extends CoActor {
         this._prepareMP(skill, bonuses)
       }
 
-      // Points de récupération - Recovery Points - RP
+      // Dés de récupération - Recovery Points - RP
       if (key === SYSTEM.RESOURCES_TYPE.RECOVERY) {
         this._prepareRP(skill, bonuses)
       }
@@ -147,13 +147,25 @@ export default class CoCharacter extends CoActor {
     skill.tooltip = skill.tooltipBase.concat(resourceModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
 
+  /**
+   * Computes the base FP (Force Points) for a character.
+   *
+   * The base FP is calculated as:
+   * 2 + Charisma MOD + 1 (for the adventurer's family).
+   *
+   * @returns {number} The computed base FP.
+   */
   _computeBaseFP() {
-    // 2 + Modificateur de Charisme + 1 pour la famille des aventuriers
-    return 2 + this.system.abilities.cha.value + this.system.getFpFromFamily()
+    return 2 + this.system.abilities.cha.value + this.system.fpFromFamily
   }
 
-  // FIXME : changer la formule
-  // BASE : à partir du profile, lire la mpFormula
+  /**
+   * Prepares the MP (Magic Points) for a given skill by calculating its base value,
+   * applying resource modifiers, and adding any additional bonuses.
+   *
+   * @param {Object} skill - The skill object to prepare MP for.
+   * @param {number} bonuses - Additional bonuses to be added to the skill's MP.
+   */
   _prepareMP(skill, bonuses) {
     skill.base = this._computeBaseMP()
     skill.tooltipBase = Utils.getTooltip("Base", skill.base)
@@ -163,13 +175,22 @@ export default class CoCharacter extends CoActor {
     skill.tooltip = skill.tooltipBase.concat(resourceModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
 
-  // Si le personnage a au moins une capacité signalée par un * (donc un sort), il a alors VOL + nb de sorts points de Mana
+  /**
+   * Computes the base MP (Magic Points) for the character.
+   * Si le personnage a au moins une capacité signalée par un * (donc un sort), il a alors VOL + nb de sorts points de Mana
+   * @returns {number} The base MP value. Returns 0 if the character has no spells.
+   */
   _computeBaseMP() {
     if (!this.hasSpells) return 0
     const nbSpells = this.nbSpells
     return this.system.abilities.vol.value + nbSpells
   }
 
+  /**
+   * Retrieves a list of spell items from the character's inventory : item of type capacity with property spell at true
+   *
+   * @returns {Array} An array of items that are of type 'CAPACITY' and are spells.
+   */
   get spells() {
     return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.CAPACITY && item.system.isSpell)
   }
@@ -178,6 +199,11 @@ export default class CoCharacter extends CoActor {
     return this.spells.length > 0
   }
 
+  /**
+   * Gets the number of spells : item of type capacity with property spell at true
+   *
+   * @returns {number} The number of spells.
+   */
   get nbSpells() {
     return this.spells.length
   }
@@ -189,30 +215,21 @@ export default class CoCharacter extends CoActor {
     skill.max = skill.base + resourceModifiers.total + bonuses
   }
 
+  // (2 + Modificateur de Constitution) Dés de récupération
+  // 1 dé supplémentaire pour la famille des mystiques
   _computeBaseRP() {
-    return 5
+    return 2 + this.system.abilities.con.value + this.system.rpFromFamily
   }
 
   // #region accesseurs
-  /**
-   * @returns les Items de type profile
-   */
-  get profiles() {
-    return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.PROFILE)
-  }
 
   /**
-   * @returns le premier Item de type profile
+   * Gets the hit dice (hd) for the character : it's the recovery dice value from the character's profile
+   *
+   * @returns {number|undefined} The recovery dice value from the character's profile system, or undefined if not available.
    */
-  get profile() {
-    const profile = this.items.find((item) => item.type === SYSTEM.ITEM_TYPE.PROFILE)
-    return profile !== undefined ? [profile] : []
-  }
-
   get hd() {
-    const profile = this.profile[0]
-    if (profile) return profile.system.hd
-    return undefined
+    return this.system.profile?.system.recoveryDice ?? undefined
   }
 
   /**

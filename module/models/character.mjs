@@ -80,8 +80,12 @@ export default class CharacterData extends ActorData {
     this.attributes.hp.base = 2 * pvFromFamily + (this.attributes.level - 1) * pvFromFamily
   }
 
-  getFpFromFamily() {
+  get fpFromFamily() {
     return this.profile ? SYSTEM.FAMILIES[this.profile.system.family].fp : 0
+  }
+
+  get rpFromFamily() {
+    return this.profile ? SYSTEM.FAMILIES[this.profile.system.family].recoveryBonus : 0
   }
 
   /**
@@ -91,5 +95,9 @@ export default class CharacterData extends ActorData {
    */
   get profile() {
     return this.parent.items.find((item) => item.type === SYSTEM.ITEM_TYPE.PROFILE)
+  }
+
+  get profiles() {
+    return this.parent.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.PROFILE)
   }
 }

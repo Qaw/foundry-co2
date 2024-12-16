@@ -338,8 +338,8 @@ export default class CoActor extends Actor {
   isTrainedWithWeapon(itemId) {
     const item = this.weapons.find((item) => item.id === itemId)
     if (!item) return null
-    const profile = this.profile
-    if (profile.length === 0) return null
+    const profile = this.system.profile
+    if (!profile) return null
     const training = item.system.martialCategory
     return profile.system.martialTrainingsWeapons[training]
   }
@@ -352,8 +352,8 @@ export default class CoActor extends Actor {
   isTrainedWithArmor(itemId) {
     const item = this.armors.find((item) => item.id === itemId)
     if (!item) return null
-    const profile = this.profile
-    if (profile.length === 0) return null
+    const profile = this.system.profile
+    if (!profile) return null
     const training = item.system.martialCategory
     return profile.system.martialTrainingsArmors[training]
   }
@@ -366,8 +366,8 @@ export default class CoActor extends Actor {
   isTrainedWithShield(itemId) {
     const item = this.shields.find((item) => item.id === itemId)
     if (!item) return null
-    const profile = this.profile
-    if (profile.length === 0) return null
+    const profile = this.system.profile
+    if (!profile) return null
     const training = item.system.martialCategory
     return profile.system.martialTrainingsShields[training]
   }
@@ -785,7 +785,7 @@ export default class CoActor extends Actor {
     return [
       ...Modifiers.getModifiersByTypeSubtype(this.equipments, SYSTEM.MODIFIER_TYPE.EQUIPMENT, subtype),
       ...Modifiers.getModifiersByTypeSubtype(this.features, SYSTEM.MODIFIER_TYPE.FEATURE, subtype),
-      ...Modifiers.getModifiersByTypeSubtype(this.profiles, SYSTEM.MODIFIER_TYPE.PROFILE, subtype),
+      ...Modifiers.getModifiersByTypeSubtype(this.system.profiles, SYSTEM.MODIFIER_TYPE.PROFILE, subtype),
       ...Modifiers.getModifiersByTypeSubtype(this.capacities, SYSTEM.MODIFIER_TYPE.CAPACITY, subtype),
     ]
   }
