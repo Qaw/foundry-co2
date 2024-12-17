@@ -45,8 +45,6 @@ export default class CoFeatureSheet extends CoBaseItemSheet {
     context.paths = infosPaths
 
     context.choiceFeatureSubtypes = SYSTEM.FEATURE_SUBTYPE
-    context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
-    context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
 
     return context
   }

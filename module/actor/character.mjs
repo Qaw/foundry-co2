@@ -163,8 +163,8 @@ export default class CoCharacter extends CoActor {
    * Prepares the MP (Magic Points) for a given skill by calculating its base value,
    * applying resource modifiers, and adding any additional bonuses.
    *
-   * @param {Object} skill - The skill object to prepare MP for.
-   * @param {number} bonuses - Additional bonuses to be added to the skill's MP.
+   * @param {Object} skill The skill object to prepare MP for.
+   * @param {number} bonuses Additional bonuses to be added to the skill's MP.
    */
   _prepareMP(skill, bonuses) {
     skill.base = this._computeBaseMP()

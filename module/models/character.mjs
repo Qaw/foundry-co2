@@ -4,7 +4,6 @@ import ActorData from "./actor.mjs"
 import { Modifiers } from "./action/modifiers.mjs"
 import Utils from "../utils.mjs"
 
-
 export default class CharacterData extends ActorData {
   static defineSchema() {
     const fields = foundry.data.fields

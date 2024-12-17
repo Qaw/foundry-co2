@@ -6,9 +6,6 @@ export default class CoCapacitySheet extends CoBaseItemSheet {
   async getData(options = {}) {
     const context = await super.getData(options)
 
-    context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
-    context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
-
     return context
   }
 }

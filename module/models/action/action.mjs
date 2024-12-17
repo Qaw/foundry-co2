@@ -2,7 +2,7 @@ import { Condition } from "./condition.mjs"
 
 export class Action {
   /**
-   *
+   * Définition d'une action
    * @param {*} source L'item de type Equipment ou Capacity à l'origine de l'action
    * @param {*} indice numéro de l'action
    * @param {*} type

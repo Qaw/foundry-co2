@@ -331,7 +331,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   *
+   * Vérifie si le personnage est entraîné avec une arme
    * @param {*} itemId
    * @returns
    */
@@ -345,7 +345,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   *
+   * Vérifie si le personnage est entraîné avec une armure
    * @param {*} itemId
    * @returns
    */
@@ -359,7 +359,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   *
+   * Vérifie si le personnage est entraîné avec un bouclier
    * @param {*} itemId
    * @returns
    */
@@ -373,7 +373,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * @description
+   * Active ou désactive une action
    * @param {*} state true to enable the action, false to disable the action
    * @param {*} source  uuid of the embedded item which is the source of the action
    * @param {*} indice  indice of the action in the array of actions
@@ -716,7 +716,7 @@ export default class CoActor extends Actor {
   // #endregion
 
   // #region méthodes privées
-  
+
   /**
    * Calcul la somme d'un tableau de valeurs positives ou négatives
    *

@@ -130,6 +130,8 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.choiceConditionObjects = SYSTEM.CONDITION_OBJECTS
     context.choiceConditionPredicates = SYSTEM.CONDITION_PREDICATES
     context.choiceResolverTypes = SYSTEM.RESOLVER_TYPE
+    context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
+    context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
     console.log("Base-Item-Sheet context", context)
     return context
   }
@@ -288,14 +290,16 @@ export default class CoBaseItemSheet extends ItemSheet {
    * @param {Event} event The event that triggered the addition of the action modifier.
    * @returns {Promise} - A promise that resolves once the item has been updated.
    */
-  _onAddActionModifier(event) {
+  async _onAddActionModifier(event) {
     event.preventDefault()
     const li = $(event.currentTarget).closest(".action")
     const rowId = li.data("itemId")
     let newActions = foundry.utils.deepClone(this.item.actions)
+    let modifier = new Modifier(this.item.uuid, this.item.type)
+
     if (!newActions[rowId].modifiers) newActions[rowId].modifiers = []
-    newActions[rowId].modifiers.push(new Modifier(this.item.uuid, this.item.type))
-    return this.item.update({ "system.actions": newActions })
+    newActions[rowId].modifiers.push(modifier)
+    await this.item.update({ "system.actions": newActions })
   }
 
   /**
