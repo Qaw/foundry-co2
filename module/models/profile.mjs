@@ -18,9 +18,11 @@ export default class ProfileData extends ItemData {
   /** @override */
   prepareBaseData() {
     super.prepareBaseData()
-    this.hp = SYSTEM.FAMILIES[this.family].hp
-    this.fp = SYSTEM.FAMILIES[this.family].fp
-    this.recoveryDice = SYSTEM.FAMILIES[this.family].recoveryDice
-    this.recoveryBonus = SYSTEM.FAMILIES[this.family].recoveryBonus
+    if (this.family) {
+      this.hp = SYSTEM.FAMILIES[this.family].hp
+      this.fp = SYSTEM.FAMILIES[this.family].fp
+      this.recoveryDice = SYSTEM.FAMILIES[this.family].recoveryDice
+      this.recoveryBonus = SYSTEM.FAMILIES[this.family].recoveryBonus
+    }
   }
 }
