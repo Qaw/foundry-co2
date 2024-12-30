@@ -27,14 +27,14 @@
 
 <div class="features section-container">
     <div class="section-header">
-        <h4>{{localize "CO.ui.features"}} & {{localize "CO.label.long.profile"}}</h4>
+        <h4>{{localize "CO.label.long.profile"}} & {{localize "CO.ui.features"}}</h4>
     </div>
     <!-- PROFILS & FEATURES-->
     <div class="section-body-no-flex">
         <ol class="features-container items-container">
             <ol class="item-list">
                 {{#each profiles as |item id|}}
-                    <li class="item flexrow" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="false">
+                    <li class="item flexrow" data-item-uuid="{{item.uuid}}" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="false">
                         <div class="item-name flexrow">
                             <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                             <h4><a class="item-control item-edit">{{item.name}}</a></h4>
@@ -47,7 +47,7 @@
                     </li>
                 {{/each}}
                 {{#each features as |item id|}}
-                    <li class="item flexrow" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="false">
+                    <li class="item flexrow" data-item-uuid="{{item.uuid}}" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="false">
                         <div class="item-name flexrow">
                             <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                             <h4><a class="item-control item-edit">{{item.name}}</a></h4>

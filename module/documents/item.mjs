@@ -213,16 +213,17 @@ export default class CoItem extends Item {
   /**
    * Update the rank for an embedded path item
    */
-  updateRank() {
+  async updateRank() {
     if (this.type !== SYSTEM.ITEM_TYPE.PATH || !this.actor) return
     let max = 0
-    this.system.capacities.forEach((c) => {
-      const capacity = this.actor.items.get(c)
+
+    for (const uuid of this.system.capacities) {
+      const capacity = await fromUuid(uuid)
       if (capacity && capacity.system.learned) {
-        const rank = this.system.capacities.indexOf(c) + 1
+        const rank = this.system.capacities.indexOf(uuid) + 1
         if (rank > max) max = rank
       }
-    })
+    }
     this.update({ "system.rank": max })
   }
 

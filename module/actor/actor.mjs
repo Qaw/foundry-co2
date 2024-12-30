@@ -60,19 +60,10 @@ export default class CoActor extends Actor {
   get pathGroups() {
     let pathGroups = []
     this.paths.forEach((path) => {
-      const capacities = path.system.capacities.map((cid) => this.items.find((i) => i._id === cid))
-      // Console.log(path);
-      console.log(path.system.rank)
-      // Console.log(capacities);
-      // const rank = path.system.rank;
-      // const capacities = path.system.capacities;
-      // for (let index = 0; index < rank; index++) {
-      //   let capacity = this.items.get(capacities[index]);
-      //   if (capacity.system.learned) {
-      //     if (index === 0 || index === 1) xp += 1;
-      //     else xp +=2;
-      //   }
-      // }
+      const capacitesId = path.system.capacities.map((uuid) => {
+        return foundry.utils.parseUuid(uuid).id
+      })
+      const capacities = capacitesId.map((id) => this.items.find((i) => i._id === id))
 
       pathGroups.push({
         path: path,
@@ -423,8 +414,8 @@ export default class CoActor extends Actor {
     await this._toggleItemFieldAndActions(capacityId, "learned")
 
     // Mise à jour du rang de la voie correspondante
-    let path = this.items.get(this.items.get(capacityId).system.path)
-    path.updateRank()
+    let path = await fromUuid(this.items.get(capacityId).system.path)
+    await path.updateRank()
   }
 
   /**
@@ -465,37 +456,37 @@ export default class CoActor extends Actor {
     await this.updateEmbeddedDocuments("Item", [updateModifiers])
 
     // Create all Paths
-    let updatedPathsIds = []
+    let updatedPathsUuids = []
     for (const path of feature.system.paths) {
       let originalPath = await fromUuid(path)
 
       // Item is null if the item has been deleted in the compendium or in the world
       // TODO Add a warning message and think about a global rollback
       if (originalPath != null) {
-        const newPathId = await this.addPath(originalPath)
-        updatedPathsIds.push(newPathId)
+        const newPathUuid = await this.addPath(originalPath)
+        updatedPathsUuids.push(newPathUuid)
       }
     }
 
     // Update the paths of the feature with ids of created paths
-    const updatePaths = { _id: newFeature[0].id, "system.paths": updatedPathsIds }
+    const updatePaths = { _id: newFeature[0].id, "system.paths": updatedPathsUuids }
     await this.updateEmbeddedDocuments("Item", [updatePaths])
 
-    // Create all Capacities
-    let updatedCapacitiesIds = []
+    // Create all Capacities which are linked to the feature
+    let updatedCapacitiesUuids = []
     for (const capacity of feature.system.capacities) {
       let capa = await fromUuid(capacity)
 
       // Item is null if the item has been deleted in the compendium or in the world
       // TODO Add a warning message and think about a global rollback
       if (capa != null) {
-        const newCapacityId = await this.addCapacity(capa, null)
-        updatedCapacitiesIds.push(newCapacityId)
+        const newCapacityUuid = await this.addCapacity(capa, null)
+        updatedCapacitiesUuids.push(newCapacityUuid)
       }
     }
 
     // Update the capacities of the feature with ids of created capacities
-    const updateCapacities = { _id: newFeature[0].id, "system.capacities": updatedCapacitiesIds }
+    const updateCapacities = { _id: newFeature[0].id, "system.capacities": updatedCapacitiesUuids }
     await this.updateEmbeddedDocuments("Item", [updateCapacities])
   }
 
@@ -556,7 +547,7 @@ export default class CoActor extends Actor {
     const newPath = await this.createEmbeddedDocuments("Item", itemData)
     // Console.log("Path created : ", newPath);
 
-    let updatedCapacitiesIds = []
+    let updatedCapacitiesUuids = []
 
     // Create all capacities
     for (const capacity of path.system.capacities) {
@@ -565,30 +556,30 @@ export default class CoActor extends Actor {
       // Item is null if the item has been deleted in the compendium or in the world
       // TODO Add a warning message and think about a global rollback
       if (capa != null) {
-        const newCapacityId = await this.addCapacity(capa, newPath[0].id)
-        updatedCapacitiesIds.push(newCapacityId)
+        const newCapacityUuid = await this.addCapacity(capa, newPath[0].uuid)
+        updatedCapacitiesUuids.push(newCapacityUuid)
       }
     }
 
     // Update the array of capacities of the path with ids of created path
-    const updateData = { _id: newPath[0].id, "system.capacities": updatedCapacitiesIds }
+    const updateData = { _id: newPath[0].id, "system.capacities": updatedCapacitiesUuids }
     await this.updateEmbeddedDocuments("Item", [updateData])
 
-    return newPath[0].id
+    return newPath[0].uuid
   }
 
   /**
    * Add a capacity as an embedded item
    * @param {CoItem} capacity
-   * @param {number} pathId id of the Path if the capacity is linked to a path
-   * Retourne{number} id of the created capacity
+   * @param {UUID} pathUuid id of the Path if the capacity is linked to a path
+   * Retourne{number} uuid of the created capacity
    */
-  async addCapacity(capacity, pathId) {
+  async addCapacity(capacity, pathUuid) {
     let capacityData = capacity.toObject()
-    if (pathId !== null) capacityData.system.path = pathId
+    if (pathUuid !== null) capacityData.system.path = pathUuid
 
     // Learned the capacity if the capacity is not linked to a path
-    if (pathId === null) capacityData.system.learned = true
+    if (pathUuid === null) capacityData.system.learned = true
 
     capacityData = capacityData instanceof Array ? capacityData : [capacityData]
     const newCapacity = await this.createEmbeddedDocuments("Item", capacityData)
@@ -619,7 +610,7 @@ export default class CoActor extends Actor {
     const updateActions = { _id: newCapacity[0].id, "system.actions": newActions }
     await this.updateEmbeddedDocuments("Item", [updateActions])
 
-    return newCapacity[0].id
+    return newCapacity[0].uuid
   }
 
   /**
@@ -662,18 +653,20 @@ export default class CoActor extends Actor {
     }
   }
 
-  deleteFeature(featureId) {
+  async deleteFeature(featureUuId) {
     // Delete linked paths
-    const pathsIds = this.items.get(featureId).system.paths
-    for (const pathId of pathsIds) {
-      this.deletePath(pathId)
+    const feature = await fromUuid(featureUuId)
+    if (!feature) return
+    const pathsUuids = feature.system.paths
+    for (const pathUuid of pathsUuids) {
+      this.deletePath(pathUuid)
     }
     // Delete linked capacities
-    const capacitiesIds = this.items.get(featureId).system.capacities
-    for (const capacityId of capacitiesIds) {
-      this.deleteCapacity(capacityId)
+    const capacitiesUuids = feature.system.capacities
+    for (const capacityUuid of capacitiesUuids) {
+      this.deleteCapacity(capacityUuid)
     }
-    this.deleteEmbeddedDocuments("Item", [featureId])
+    this.deleteEmbeddedDocuments("Item", [feature.id])
   }
 
   deleteProfile(profileId) {
@@ -685,22 +678,27 @@ export default class CoActor extends Actor {
     this.deleteEmbeddedDocuments("Item", [profileId])
   }
 
-  deletePath(pathId) {
+  async deletePath(pathUuid) {
     // Delete linked capacities
-    const path = this.items.get(pathId)
+    const path = await fromUuid(pathUuid)
     if (path) {
-      const capacitiesId = path.system.capacities
+      const capacitiesUuId = path.system.capacities
+      const capacitiesId = capacitiesUuId.map((capacityUuid) => {
+        const { id } = foundry.utils.parseUuid(capacityUuid)
+        return id
+      })
       this.deleteEmbeddedDocuments("Item", capacitiesId)
-      this.deleteEmbeddedDocuments("Item", [pathId])
+      this.deleteEmbeddedDocuments("Item", [path.id])
     }
   }
 
-  async deleteCapacity(capacityId) {
+  async deleteCapacity(capacityUuid) {
     // Remove the capacity from the capacities list of the linked Path
-    const capacity = this.items.get(capacityId)
+    const capacity = await fromUuid(capacityUuid)
 
     if (capacity) {
-      const pathId = capacity.system.path
+      // FIXME A quoi ca sert ???
+      /*const pathId = capacity.system.path
       if (pathId != null) {
         // If the linked path still exists in the items
         if (this.items.get(pathId)) {
@@ -708,8 +706,8 @@ export default class CoActor extends Actor {
           const updateData = { _id: pathId, "system.capacities": updatedCapacitiesIds }
           await this.updateEmbeddedDocuments("Item", [updateData])
         }
-      }
-      this.deleteEmbeddedDocuments("Item", [capacityId])
+      }*/
+      this.deleteEmbeddedDocuments("Item", [capacity.id])
     }
   }
 

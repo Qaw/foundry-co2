@@ -139,6 +139,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     event.preventDefault()
     const li = $(event.currentTarget).parents(".item")
     const itemId = li.data("itemId")
+    const itemUuid = li.data("itemUuid")
     const itemType = li.data("itemType")
     switch (itemType) {
       case "path":
@@ -148,7 +149,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
         this._onDeleteCapacity(event)
         break
       case "feature":
-        this._onDeleteFeature(event)
+        this._onDeleteFeature(itemUuid)
         break
       case "profile":
         this._onDeleteProfile(event)
@@ -160,15 +161,11 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
 
   /**
    * Delete the selected feature
-   * @param event
+   * @param itemUuid
    * @private
    */
-  async _onDeleteFeature(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).parents(".item")
-    const featureId = li.data("itemId")
-
-    this.actor.deleteFeature(featureId)
+  async _onDeleteFeature(itemUuid) {
+    this.actor.deleteFeature(itemUuid)
   }
 
   /**
