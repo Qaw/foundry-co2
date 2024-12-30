@@ -181,7 +181,7 @@ export default class CoBaseItemSheet extends ItemSheet {
     const itemType = li.data("itemType")
     // Const itemId = li.data("itemId");
     const uuid = li.data("uuid")
-    let data = duplicate(this.item)
+    let data = foundry.utils.duplicate(this.item)
     // Console.log(itemType, uuid, data);
     switch (itemType) {
       case SYSTEM.ITEM_TYPE.PATH:

@@ -1,24 +1,18 @@
+/**
+ * Define the data schema for an Item
+ * source : the uuid of the item or actor where the item comes from
+ * origin : the name of the book where the item comes from
+ * slug : slugify the name of the item
+ */
 export default class ItemData extends foundry.abstract.TypeDataModel {
   static defineSchema() {
     const fields = foundry.data.fields
     return {
-      description: new fields.HTMLField(),
-      source: new fields.StringField({
-        required: false,
-        nullable: true,
-        initial: "",
-      }),
-      origin: new fields.StringField({
-        required: false,
-        nullable: true,
-        initial: "",
-      }),
-      slug: new fields.StringField({
-        required: false,
-        nullable: true,
-        initial: "",
-      }),
-      tags: new fields.ArrayField(new fields.StringField()),
+      description: new fields.HTMLField({ textSearch: true }),
+      source: new fields.StringField({ required: true }),
+      origin: new fields.StringField({ required: true }),
+      slug: new fields.StringField({ required: true }),
+      tags: new fields.SetField(new fields.StringField({ required: true, blank: false })),
     }
   }
 
