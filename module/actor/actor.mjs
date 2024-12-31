@@ -50,8 +50,18 @@ export default class CoActor extends Actor {
     return this.itemTypes.path
   }
 
+  /**
+   * Retourne les Items de type capacity
+   */
   get capacities() {
     return this.itemTypes.capacity
+  }
+
+  /**
+   * Retourne les Items de type profile
+   */
+  get profiles() {
+    return this.itemTypes.profile
   }
 
   /**
@@ -526,9 +536,6 @@ export default class CoActor extends Actor {
     // Update the paths of the profile with ids of created paths
     const updatePaths = { _id: newProfile[0].id, "system.paths": updatedPathsIds }
     await this.updateEmbeddedDocuments("Item", [updatePaths])
-
-    // Update Hit Dice and Magick Attack base ability
-    this.update({ "system.combat.magic.ability": profile.system.spellcasting })
   }
 
   /**

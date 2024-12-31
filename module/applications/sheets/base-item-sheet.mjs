@@ -3,6 +3,7 @@ import { SYSTEM } from "../../config/system.mjs"
 import { Action } from "../../models/action/action.mjs"
 import { Condition } from "../../models/action/condition.mjs"
 import { Resolver } from "../../models/action/resolvers.mjs"
+import { Modifier } from "../../models/schemas/modifier.mjs"
 
 export default class CoBaseItemSheet extends ItemSheet {
   /** @override */
@@ -330,7 +331,7 @@ export default class CoBaseItemSheet extends ItemSheet {
     const currentModifiers = this.item.modifiers || []
     const newModifiers = foundry.utils.deepClone(currentModifiers)
 
-    newModifiers.push(new Modifier(this.item.uuid, this.item.type))
+    newModifiers.push(new Modifier({ source: this.item.uuid, type: this.item.type }))
 
     return this.item.update({ "system.modifiers": newModifiers })
   }

@@ -1,4 +1,4 @@
-{{!log "character-sidebar" this}}
+{{log "character-sidebar" this}}
 <div class="sidebar">
   <div class="image-container">
     <img class="actor-image" src="{{actor.img}}" data-edit="img" data-tooltip="{{actor.name}}" height="auto" width="100%" style="margin: 0 auto" />
@@ -210,7 +210,6 @@
       </div>
     {{/if}}
   </div>
-
   <!-- DEF -->
   <div class="sidebar-section armor-section">
     <div class="sidebar-section-header">
@@ -288,7 +287,6 @@
       </div>
     {{/if}}
   </div>
-
   <!-- FP -->
   <div class="resource-section sidebar-section">
     <div class="sidebar-section-header">
@@ -328,12 +326,12 @@
   <div class="resource-section sidebar-section">
     <div class="sidebar-section-header">
       <div class="sidebar-label">
-        <i class="fas fa-fw fa-heart-pulse use-recovery" data-tooltip="Dépenser un PR avec PV, SHIFT+click sans PV"></i>
+        <i class="fas fa-fw fa-heart-pulse use-recovery" data-tooltip="Dépenser un PR"></i>
         <h4 data-tooltip="{{localize 'CO.resources.long.recovery'}}">{{localize "CO.resources.medium.recovery"}}</h4>
         <div class="resource-points">
           <input class="current" name="system.resources.recovery.value" value="{{resources.recovery.value}}" type="number" data-dtype="Number" placeholder="0" />
           <span class="slash">/</span>
-          <span class="max">{{resources.recovery.max}}</span>
+          <span class="max" data-tooltip="{{resources.recovery.tooltip}}">{{resources.recovery.max}}</span>
         </div>
       </div>
     </div>
