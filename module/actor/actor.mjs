@@ -1,8 +1,8 @@
 import { SYSTEM } from "../config/system.mjs"
 import { Action } from "../models/action/action.mjs"
-import { Modifier, Modifiers } from "../models/action/modifiers.mjs"
+import { Modifiers } from "../models/action/modifiers.mjs"
 import { Resolver } from "../models/action/resolvers.mjs"
-import Utils from "../utils.mjs"
+import { Modifier } from "../models/schemas/modifier.mjs"
 
 /**
  * @class CoActor
@@ -443,13 +443,11 @@ export default class CoActor extends Actor {
     let itemData = feature.toObject()
     itemData = itemData instanceof Array ? itemData : [itemData]
     const newFeature = await this.createEmbeddedDocuments("Item", itemData)
-    // Console.info(Utils.log("Feature created", newFeature));
 
     // Update the source of all modifiers with the id of the new embedded feature created
-    let newModifiers = Object.values(foundry.utils.deepClone(newFeature[0].system.modifiers)).map((m) => new Modifier(m.source, m.type, m.subtype, m.target, m.value))
-    newModifiers.forEach((modifier) => {
-      modifier.updateSource(newFeature[0].id)
-    })
+    let newModifiers = foundry.utils
+      .deepClone(newFeature[0].system.modifiers)
+      .map((m) => new Modifier({ source: newFeature[0].uuid, type: m.type, subtype: m.subtype, target: m.target, value: m.value }))
 
     const updateModifiers = { _id: newFeature[0].id, "system.modifiers": newModifiers }
 
@@ -698,7 +696,7 @@ export default class CoActor extends Actor {
 
     if (capacity) {
       // FIXME A quoi ca sert ???
-      /*const pathId = capacity.system.path
+      /* const pathId = capacity.system.path
       if (pathId != null) {
         // If the linked path still exists in the items
         if (this.items.get(pathId)) {

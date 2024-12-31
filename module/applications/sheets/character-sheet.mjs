@@ -252,7 +252,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
       case SYSTEM.ITEM_TYPE.EQUIPMENT:
         return this.actor.addEquipment(item)
       case SYSTEM.ITEM_TYPE.FEATURE:
-        return this.actor.addFeature(item)
+        return await this.actor.addFeature(item)
       case SYSTEM.ITEM_TYPE.PROFILE:
         if (this.actor.system.profiles.length > 0) {
           ui.notifications.warn(game.i18n.localize("CO.notif.profilAlreadyExist"))

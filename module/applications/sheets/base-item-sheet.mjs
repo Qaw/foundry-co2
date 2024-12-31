@@ -2,7 +2,6 @@ import { SYSTEM } from "../../config/system.mjs"
 
 import { Action } from "../../models/action/action.mjs"
 import { Condition } from "../../models/action/condition.mjs"
-import { Modifier } from "../../models/action/modifiers.mjs"
 import { Resolver } from "../../models/action/resolvers.mjs"
 
 export default class CoBaseItemSheet extends ItemSheet {

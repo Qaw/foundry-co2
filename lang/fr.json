@@ -410,6 +410,24 @@
         "combat": "Combat",
         "attribute": "Attribut",
         "skill": "Jet de compétence"
+      },
+      "target": {
+        "agi": "Agilité",
+        "con": "Constitution",
+        "for": "Force",
+        "per": "Perception",
+        "cha": "Charisme",
+        "int": "Intelligence",
+        "vol": "Volonté",
+        "melee": "Attaque de contact",
+        "ranged": "Attaque à distance",
+        "magic": "Attaque magique",
+        "init": "Initiative",
+        "def": "Défense",
+        "hp": "Points de vigueur",
+        "rp": "Dés de récupération",
+        "mp": "Points de mana",
+        "fp": "Points de chance"
       }
     },
     "resolver": {
