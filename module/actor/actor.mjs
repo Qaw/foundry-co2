@@ -1,6 +1,5 @@
 import { SYSTEM } from "../config/system.mjs"
 import { Action } from "../models/action/action.mjs"
-import { Modifiers } from "../models/action/modifiers.mjs"
 import { Resolver } from "../models/action/resolvers.mjs"
 import { Modifier } from "../models/schemas/modifier.mjs"
 
@@ -193,42 +192,6 @@ export default class CoActor extends Actor {
    */
   get visibleNonActivableNonTemporaireActions() {
     return this.visibleActions.filter((a) => !a.properties.activable && !a.properties.temporary)
-  }
-
-  /**
-   * Get all the modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype AbilityValue
-   * Retourne{Modifier[]} An empty array or an array of Modifiers
-   */
-  get abilitiesModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER_SUBTYPE.ABILITY)
-  }
-
-  /**
-   * Retourne{Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Combat
-   */
-  get combatModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER_SUBTYPE.COMBAT_TYPE)
-  }
-
-  /**
-   * Retourne{Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Attribute
-   */
-  get attributeModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER_SUBTYPE.ATTRIBUTE)
-  }
-
-  /**
-   * Retourne{Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Skill
-   */
-  get skillModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER_SUBTYPE.SKILL)
-  }
-
-  /**
-   * Retourne{Modifier[]} All the Trait or Capacity modifiers from Items of typeEquipment, Feature, Profile or Capacity with the subtype Resource
-   */
-  get resourceModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER_SUBTYPE.RESOURCE)
   }
 
   get isUnlocked() {
@@ -783,48 +746,5 @@ export default class CoActor extends Actor {
     return usedHands + neededHands <= 2
   }
 
-  _getModifiersBySubtype(subtype) {
-    return [
-      ...Modifiers.getModifiersByTypeSubtype(this.equipments, SYSTEM.MODIFIER_TYPE.EQUIPMENT, subtype),
-      ...Modifiers.getModifiersByTypeSubtype(this.features, SYSTEM.MODIFIER_TYPE.FEATURE, subtype),
-      ...Modifiers.getModifiersByTypeSubtype(this.system.profiles, SYSTEM.MODIFIER_TYPE.PROFILE, subtype),
-      ...Modifiers.getModifiersByTypeSubtype(this.capacities, SYSTEM.MODIFIER_TYPE.CAPACITY, subtype),
-    ]
-  }
-
   // #endregion
-
-  // deleteItem(itemId) {
-  //   const item = this.items.find(item => item.id === itemId);
-  //
-  //   switch (item.type) {
-  //     case SYSTEM.ITEM_TYPE.PATH:
-  //       {
-  //         // Path
-  //         let itemsToDelete = [];
-  //         itemsToDelete.push (item.id);
-  //
-  //         // Capacities
-  //         item.system.capacities.map( c =>  {
-  //               const item = this.getEmbeddedItemByKey(c.key);
-  //               if (item) itemsToDelete.push(item.id);
-  //         });
-  //         return this.deleteEmbeddedDocuments("Item", itemsToDelete);
-  //       }
-  //     case SYSTEM.ITEM_TYPE.CAPACITY:
-  //       {
-  //         // Check if the capacity was selected in a path
-  //         this.paths.forEach(path => {
-  //           let capacities = duplicate(path.system.capacities);
-  //           let capacity = capacities.find((capacity) => capacity.key == item.system.key);
-  //           if (capacity)  {
-  //             capacity.selected = false;
-  //             const updateData = [{ _id: path.id, "system.capacities": capacities }];
-  //             this.updateEmbeddedDocuments("Item", updateData);
-  //           }
-  //         });
-  //         return this.deleteEmbeddedDocuments("Item", [itemId]);
-  //       }
-  //   }
-  // }
 }

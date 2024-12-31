@@ -1,7 +1,6 @@
 import CoActor from "./actor.mjs"
 import CoChat from "../chat.mjs"
 import { SYSTEM } from "../config/system.mjs"
-import { Modifiers } from "../models/action/modifiers.mjs"
 import Utils from "../utils.mjs"
 
 export default class CoCharacter extends CoActor {
