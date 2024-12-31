@@ -6,9 +6,9 @@ export class Modifier extends foundry.abstract.DataModel {
     const fields = foundry.data.fields
     return {
       source: new fields.DocumentUUIDField(),
-      type: new fields.StringField({ required: true, choices: SYSTEM.MODIFIER_TYPES, initial: "equipment" }),
-      subtype: new fields.StringField({ required: true, choices: SYSTEM.MODIFIER_SUBTYPES, initial: "ability" }),
-      target: new fields.StringField({ required: true, choices: SYSTEM.MODIFIER_TARGETS, initial: "agi" }),
+      type: new fields.StringField({ required: true, choices: SYSTEM.MODIFIERS_TYPE, initial: "equipment" }),
+      subtype: new fields.StringField({ required: true, choices: SYSTEM.MODIFIERS_SUBTYPE, initial: "ability" }),
+      target: new fields.StringField({ required: true, choices: SYSTEM.MODIFIERS_TARGET, initial: "agi" }),
       value: new fields.StringField({ required: true, initial: "0" }),
     }
   }

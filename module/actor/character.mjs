@@ -154,7 +154,7 @@ export default class CoCharacter extends CoActor {
     skill.base = baseFP.value
     skill.tooltipBase = baseFP.tooltip
 
-    const resourceModifiers = this.system.computeTotalModifiersByTarget(this.system.resourceModifiers, SYSTEM.MODIFIER_TARGET.FP)
+    const resourceModifiers = this.system.computeTotalModifiersByTarget(this.system.resourceModifiers, SYSTEM.MODIFIERS_TARGET.fp.id)
     skill.max = skill.base + bonuses + resourceModifiers.total
     skill.tooltip = skill.tooltipBase.concat(resourceModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
@@ -190,7 +190,7 @@ export default class CoCharacter extends CoActor {
     skill.base = baseMP.value
     skill.tooltipBase = baseMP.tooltip
 
-    const resourceModifiers = this.system.computeTotalModifiersByTarget(this.system.resourceModifiers, SYSTEM.MODIFIER_TARGET.MP)
+    const resourceModifiers = this.system.computeTotalModifiersByTarget(this.system.resourceModifiers, SYSTEM.MODIFIERS_TARGET.mp.id)
     skill.max = skill.base + bonuses + resourceModifiers.total
     skill.tooltip = skill.tooltipBase.concat(resourceModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
@@ -248,7 +248,7 @@ export default class CoCharacter extends CoActor {
     skill.base = baseRP.value
     skill.tooltipBase = baseRP.tooltip
 
-    const resourceModifiers = this.system.computeTotalModifiersByTarget(this.system.resourceModifiers, SYSTEM.MODIFIER_TARGET.RP)
+    const resourceModifiers = this.system.computeTotalModifiersByTarget(this.system.resourceModifiers, SYSTEM.MODIFIERS_TARGET.rp.id)
     skill.max = skill.base + bonuses + resourceModifiers.total 
     skill.tooltip = skill.tooltipBase.concat(resourceModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }

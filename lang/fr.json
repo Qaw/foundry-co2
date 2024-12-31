@@ -493,7 +493,8 @@
     "path": {
       "subtypes": {
         "profile": "Voie de profil",
-        "feature": "Voie de feature",
+        "people": "Voie de peuple",
+        "feature": "Voie de trait",
         "encounter": "Voie de créature",
         "prestige": "Voie de prestige"
       },

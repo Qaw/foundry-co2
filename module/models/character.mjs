@@ -100,7 +100,7 @@ export default class CharacterData extends ActorData {
    * @returns {Array} An array of ability modifiers.
    */
   get abilityModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIER_SUBTYPE.ABILITY)
+    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.ability.id)
   }
 
   /**
@@ -109,7 +109,7 @@ export default class CharacterData extends ActorData {
    * @returns {Array} An array of combat modifiers.
    */
   get combatModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIER_SUBTYPE.COMBAT)
+    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.combat.id)
   }
 
   /**
@@ -118,7 +118,7 @@ export default class CharacterData extends ActorData {
    * @returns {Array} An array of attribute modifiers.
    */
   get attributeModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIER_SUBTYPE.ATTRIBUTE)
+    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.attribute.id)
   }
 
   /**
@@ -127,7 +127,7 @@ export default class CharacterData extends ActorData {
    * @returns {Array} An array of resource modifiers.
    */
   get resourceModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIER_SUBTYPE.RESOURCE)
+    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.resource.id)
   }
 
   /**
@@ -136,7 +136,7 @@ export default class CharacterData extends ActorData {
    * @returns {Array} An array of skill modifiers.
    */
   get skillModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIER_SUBTYPE.SKILL)
+    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.skill.id)
   }
 
   /**

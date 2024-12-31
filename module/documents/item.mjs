@@ -157,9 +157,9 @@ export default class CoItem extends Item {
 
   /**
    * Calculate the sum of all bonus for a specific type and target
-   * @param {*} type      MODIFIER_TYPE
-   * @param {*} subtype   MODIFIER_SUBTYPE
-   * @param {*} target    MODIFIER_TARGET
+   * @param {*} type      MODIFIERS_TYPE
+   * @param {*} subtype   MODIFIERS_SUBTYPE
+   * @param {*} target    MODIFIERS_TARGET
    * @returns the value of the bonus
    */
   getTotalModifiersByTypeSubtypeAndTarget(type, subtype, target) {
