@@ -146,7 +146,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
         this._onDeletePath(event)
         break
       case "capacity":
-        this._onDeleteCapacity(event)
+        this._onDeleteCapacity(itemUuid)
         break
       case "feature":
         this._onDeleteFeature(itemUuid)
@@ -165,7 +165,7 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
    * @private
    */
   async _onDeleteFeature(itemUuid) {
-    this.actor.deleteFeature(itemUuid)
+    await this.actor.deleteFeature(itemUuid)
   }
 
   /**
@@ -190,22 +190,18 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     event.preventDefault()
 
     const li = $(event.currentTarget).closest(".item")
-    const pathId = li.data("itemId")
+    const pathUuid = li.data("itemUuid")
 
-    this.actor.deletePath(pathId)
+    this.actor.deletePath(pathUuid)
   }
 
   /**
    * Delete the selected capacity
-   * @param event
+   * @param itemUuid
    * @private
    */
-  async _onDeleteCapacity(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).parents(".item")
-    const capacityId = li.data("itemId")
-
-    await this.actor.deleteCapacity(capacityId)
+  async _onDeleteCapacity(itemUuid) {
+    await this.actor.deleteCapacity(itemUuid)
   }
 
   /** @inheritdoc */

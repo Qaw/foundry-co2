@@ -470,7 +470,7 @@ export default class CoActor extends Actor {
 
       // Item is null if the item has been deleted in the compendium or in the world
       // TODO Add a warning message and think about a global rollback
-      if (originalPath != null) {
+      if (originalPath !== null) {
         const newPathUuid = await this.addPath(originalPath)
         updatedPathsUuids.push(newPathUuid)
       }
@@ -487,7 +487,7 @@ export default class CoActor extends Actor {
 
       // Item is null if the item has been deleted in the compendium or in the world
       // TODO Add a warning message and think about a global rollback
-      if (capa != null) {
+      if (capa !== null) {
         const newCapacityUuid = await this.addCapacity(capa, null)
         updatedCapacitiesUuids.push(newCapacityUuid)
       }
@@ -521,20 +521,20 @@ export default class CoActor extends Actor {
     }
 
     // Create all Paths
-    let updatedPathsIds = []
+    let updatedPathsUuids = []
     for (const path of profile.system.paths) {
       let originalPath = await fromUuid(path)
 
       // Item is null if the item has been deleted in the compendium or in the world
       // TODO Add a warning message and think about a global rollback
-      if (originalPath != null) {
-        const newPathId = await this.addPath(originalPath)
-        updatedPathsIds.push(newPathId)
+      if (originalPath !== null) {
+        const newPathUuid = await this.addPath(originalPath)
+        updatedPathsUuids.push(newPathUuid)
       }
     }
 
     // Update the paths of the profile with ids of created paths
-    const updatePaths = { _id: newProfile[0].id, "system.paths": updatedPathsIds }
+    const updatePaths = { _id: newProfile[0].id, "system.paths": updatedPathsUuids }
     await this.updateEmbeddedDocuments("Item", [updatePaths])
   }
 
@@ -542,7 +542,7 @@ export default class CoActor extends Actor {
    * Add a path as an embedded item
    * It also create the capacities linked to the path
    * @param {CoItem} path
-   * Retourne{number} id of the created path
+   * Retourne{string} uuid of the created path
    */
   async addPath(path) {
     let itemData = path.toObject()
@@ -550,7 +550,6 @@ export default class CoActor extends Actor {
     // Create the path
     itemData = itemData instanceof Array ? itemData : [itemData]
     const newPath = await this.createEmbeddedDocuments("Item", itemData)
-    // Console.log("Path created : ", newPath);
 
     let updatedCapacitiesUuids = []
 
@@ -560,7 +559,7 @@ export default class CoActor extends Actor {
 
       // Item is null if the item has been deleted in the compendium or in the world
       // TODO Add a warning message and think about a global rollback
-      if (capa != null) {
+      if (capa !== null) {
         const newCapacityUuid = await this.addCapacity(capa, newPath[0].uuid)
         updatedCapacitiesUuids.push(newCapacityUuid)
       }
@@ -576,7 +575,7 @@ export default class CoActor extends Actor {
   /**
    * Add a capacity as an embedded item
    * @param {CoItem} capacity
-   * @param {UUID} pathUuid id of the Path if the capacity is linked to a path
+   * @param {UUID} pathUuid uuid of the Path if the capacity is linked to a path
    * Retourne{number} uuid of the created capacity
    */
   async addCapacity(capacity, pathUuid) {
@@ -704,7 +703,7 @@ export default class CoActor extends Actor {
     if (capacity) {
       // FIXME A quoi ca sert ???
       /* const pathId = capacity.system.path
-      if (pathId != null) {
+      if (pathId !== null) {
         // If the linked path still exists in the items
         if (this.items.get(pathId)) {
           let updatedCapacitiesIds = this.items.get(pathId).system.capacities.filter((id) => id !== capacityId)

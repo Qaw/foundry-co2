@@ -175,7 +175,7 @@ export default class CoCharacter extends CoActor {
     const value = 2 + this.system.abilities.cha.value + this.system.fpFromFamily
     let tooltip = Utils.getTooltip("Base", 2)
     tooltip = tooltip.concat(Utils.getTooltip("Charisme", this.system.abilities.cha.value))
-    if (this.system.fpFromFamily > 0) tooltip = tooltip.concat(Utils.getTooltip("Famille", this.system.fpFromFamily))
+    if (this.system.fpFromFamily > 0) tooltip = tooltip.concat(Utils.getTooltip("Profil", this.system.fpFromFamily))
     return { value, tooltip }
   }
 
@@ -268,7 +268,7 @@ export default class CoCharacter extends CoActor {
     const value = 2 + this.system.abilities.con.value + this.system.rpFromFamily
     let tooltip = Utils.getTooltip("Base", 2)
     tooltip = tooltip.concat(Utils.getTooltip("Constitution", this.system.abilities.con.value))
-    if (this.system.rpFromFamily > 0) tooltip = tooltip.concat(Utils.getTooltip("Famille", this.system.rpFromFamily))
+    if (this.system.rpFromFamily > 0) tooltip = tooltip.concat(Utils.getTooltip("Profil", this.system.rpFromFamily))
     return { value, tooltip }
   }
 
