@@ -1,5 +1,5 @@
-import { Action } from "../models/action/action.mjs"
-import { Condition } from "../models/action/condition.mjs"
+import { Action } from "../models/schemas/action.mjs"
+import { Condition } from "../models/schemas/condition.mjs"
 import { SYSTEM } from "../config/system.mjs"
 /**
  * Extend the base Item entity
@@ -29,12 +29,13 @@ export default class CoItem extends Item {
   get modifiers() {
     // For Equipement or Capacity Item, the modifiers are in the actions
     if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(this.type)) {
-      return this.getModifiersFromActions(false)
+      return this.getModifiersFromActions(true)
     }
     // For Feature or Profile, the modifiers are in the item
     if ([SYSTEM.ITEM_TYPE.FEATURE, SYSTEM.ITEM_TYPE.PROFILE].includes(this.type)) {
-      return this.system.modifiers instanceof Array ? this.system.modifiers : Object.values(this.system.modifiers)
-    } else return []
+      return this.system.modifiers
+    }
+    return []
   }
 
   /**
@@ -46,14 +47,11 @@ export default class CoItem extends Item {
   getModifiersFromActions(filterEnabled = false) {
     const filteredActions = filterEnabled ? this.actions.filter((action) => action.properties.enabled) : this.actions
 
-    // Use `flatMap` to create a new array containing the modifiers from each action.
-    // This will also flatten the resulting array of modifiers in a single step.
-    return filteredActions.flatMap((action) => {
-      // Destructure the `modifiers` property from the action object
-      const { modifiers } = action
-      if (!modifiers) return []
-      return Array.isArray(modifiers) ? modifiers : Object.values(modifiers)
-    })
+    let modifiers = []
+    for (const action of filteredActions) {
+      modifiers.push(...action.modifiers)
+    }
+    return modifiers
   }
 
   /**
@@ -75,8 +73,7 @@ export default class CoItem extends Item {
    */
   get actions() {
     if (foundry.utils.isEmpty(this.system.actions)) return []
-    if (this.system.actions instanceof Array) return this.system.actions
-    return Object.values(this.system.actions)
+    return this.system.actions
   }
 
   /**
@@ -85,7 +82,7 @@ export default class CoItem extends Item {
   get visibleActions() {
     if (foundry.utils.isEmpty(this.system.actions)) return []
 
-    return this.actions.map((i) => Action.createFromExisting(i)).filter((action) => action.isVisible(this))
+    return this.actions.filter((action) => action.isVisible(this))
   }
 
   /**
@@ -232,20 +229,19 @@ export default class CoItem extends Item {
    */
   toggleActions() {
     if ((this.type !== SYSTEM.ITEM_TYPE.CAPACITY && this.type !== SYSTEM.ITEM_TYPE.EQUIPMENT) || !this.actor) return
-    let actions = this.actions
+
+    const actions = this.toObject().system.actions
+
     for (const action of actions) {
-      let act = new Action(action)
-      // Let act = new Action(action.source, action.indice, action.type, action.img, action.label, action.chatFlavor, action.properties.visible, action.properties.activable, action.properties.enabled, action.properties.temporary, action.conditions, action.modifiers, action.resolvers);
-      // action.properties.visible = !action.properties.visible;
       // Si c'est une action non activable, l'activer automatiquement
       if (!action.properties.activable) {
         action.properties.enabled = !action.properties.enabled
       } else {
         // Vérifier si les conditions sont remplies
-        if (!act.hasConditions) {
+        if (!action.hasConditions) {
           action.properties.visible = !action.properties.visible
         } else {
-          action.properties.visible = act.isVisible(this)
+          action.properties.visible = action.isVisible(this)
         }
       }
     }

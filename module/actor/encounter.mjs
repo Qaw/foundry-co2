@@ -1,5 +1,5 @@
 import CoActor from "./actor.mjs"
-import { Action } from "../models/action/action.mjs"
+import { Action } from "../models/schemas/action.mjs"
 import { SYSTEM } from "../config/system.mjs"
 
 export default class CoEncounter extends CoActor {

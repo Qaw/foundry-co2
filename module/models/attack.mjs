@@ -1,4 +1,5 @@
 import ItemData from "./item.mjs"
+import { Action } from "./schemas/action.mjs"
 export default class AttackData extends ItemData {
   static defineSchema() {
     const fields = foundry.data.fields
@@ -35,7 +36,7 @@ export default class AttackData extends ItemData {
           initial: false,
         }),
       }),
-      actions: new fields.ArrayField(new fields.ObjectField()),
+      actions: new fields.ArrayField(new fields.EmbeddedDataField(Action)),
     })
   }
 

@@ -1,6 +1,6 @@
 import { SYSTEM } from "../config/system.mjs"
-import { Action } from "../models/action/action.mjs"
-import { Resolver } from "../models/action/resolvers.mjs"
+import { Action } from "../models/schemas/action.mjs"
+import { Resolver } from "../models/schemas/resolver.mjs"
 import { Modifier } from "../models/schemas/modifier.mjs"
 
 /**
@@ -465,7 +465,9 @@ export default class CoActor extends Actor {
 
     if (newProfile[0].system.modifiers.length > 0) {
       // Update the source of all modifiers with the id of the new embedded profile created
-      let newModifiers = Object.values(foundry.utils.deepClone(newProfile[0].system.modifiers)).map((m) => new Modifier(m.source, m.type, m.subtype, m.target, m.value))
+      let newModifiers = Object.values(foundry.utils.deepClone(newProfile[0].system.modifiers)).map(
+        (m) => new Modifier({ source: m.source, type: m.type, subtype: m.subtype, target: m.target, value: m.value }),
+      )
       newModifiers.forEach((modifier) => {
         modifier.updateSource(newProfile[0].id)
       })
@@ -503,8 +505,8 @@ export default class CoActor extends Actor {
     let itemData = path.toObject()
 
     // Create the path
-    itemData = itemData instanceof Array ? itemData : [itemData]
-    const newPath = await this.createEmbeddedDocuments("Item", itemData)
+    //itemData = itemData instanceof Array ? itemData : [itemData]
+    const newPath = await this.createEmbeddedDocuments("Item", [itemData])
 
     let updatedCapacitiesUuids = []
 
@@ -540,11 +542,12 @@ export default class CoActor extends Actor {
     // Learned the capacity if the capacity is not linked to a path
     if (pathUuid === null) capacityData.system.learned = true
 
-    capacityData = capacityData instanceof Array ? capacityData : [capacityData]
-    const newCapacity = await this.createEmbeddedDocuments("Item", capacityData)
+    //capacityData = capacityData instanceof Array ? capacityData : [capacityData]
+    const newCapacity = await this.createEmbeddedDocuments("Item", [capacityData])
     // Console.info(Utils.log("Capacity created", newCapacity))
 
     // Update the source of all actions with the id of the new embedded capacity created
+    /*
     let newActions = Object.values(foundry.utils.deepClone(newCapacity[0].system.actions)).map((m) => {
       const action = new Action(
         m.source,
@@ -565,9 +568,15 @@ export default class CoActor extends Actor {
       action.updateSource(newCapacity[0].id)
       return action
     })
+      
 
-    const updateActions = { _id: newCapacity[0].id, "system.actions": newActions }
-    await this.updateEmbeddedDocuments("Item", [updateActions])
+    const actions = newCapacity[0].system.actions
+    actions.forEach((action) => {
+      action.updateSource(newCapacity[0].id)
+    })
+
+    const updateActions = { _id: newCapacity[0].id, "system.actions": actions.toObject() }
+    await this.updateEmbeddedDocuments("Item", [updateActions])*/
 
     return newCapacity[0].uuid
   }

@@ -1,4 +1,5 @@
 import ItemData from "./item.mjs"
+import { Action } from "./schemas/action.mjs"
 export default class CapacityData extends ItemData {
   static defineSchema() {
     const fields = foundry.data.fields
@@ -14,7 +15,7 @@ export default class CapacityData extends ItemData {
         chargeable: new fields.BooleanField({}),
       }),
       path: new fields.StringField({ required: true, nullable: true, initial: null }),
-      actions: new fields.ArrayField(new fields.ObjectField()),
+      actions: new fields.ArrayField(new fields.EmbeddedDataField(Action)),
     })
   }
 

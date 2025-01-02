@@ -1,18 +1,22 @@
 import Utils from "../../utils.mjs"
 import { CoAttackCheck } from "../../system/roll.mjs"
-export class Resolver {
-  /**
-   * Creates an instance of the class.
-   *
-   * @class
-   * @param {string} type The type of the action.
-   * @param {number} skill The skill level required for the action.
-   * @param {number} dmg The damage value of the action.
-   */
-  constructor(type, skill, dmg) {
-    this.type = type
-    this.skill = skill
-    this.dmg = dmg
+
+/**
+ * Resolver
+ *
+ * @class
+ * @param {string} type The type of the action.
+ * @param {number} skill The skill level required for the action.
+ * @param {number} dmg The damage value of the action.
+ */
+export class Resolver extends foundry.abstract.DataModel {
+  static defineSchema() {
+    const fields = foundry.data.fields
+    return {
+      type: new fields.StringField({ required: true, initial: "auto" }),
+      skill: new fields.ObjectField(),
+      dmg: new fields.ObjectField(),
+    }
   }
 
   get resolvers() {

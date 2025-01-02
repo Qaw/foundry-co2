@@ -1,8 +1,8 @@
 import { SYSTEM } from "../../config/system.mjs"
 
-import { Action } from "../../models/action/action.mjs"
-import { Condition } from "../../models/action/condition.mjs"
-import { Resolver } from "../../models/action/resolvers.mjs"
+import { Action } from "../../models/schemas/action.mjs"
+import { Condition } from "../../models/schemas/condition.mjs"
+import { Resolver } from "../../models/schemas/resolver.mjs"
 import { Modifier } from "../../models/schemas/modifier.mjs"
 
 export default class CoBaseItemSheet extends ItemSheet {
@@ -122,7 +122,7 @@ export default class CoBaseItemSheet extends ItemSheet {
     const context = super.getData(options)
     context.debugMode = game.settings.get("co", "debugMode")
     context.system = this.item.system
-    context.modifiers = this.item.modifiers
+    context.modifiers = this.item.system.modifiers
     context.enrichedDescription = await TextEditor.enrichHTML(this.item.system.description, { async: true })
     context.tags = this.item.tags
 
@@ -220,12 +220,18 @@ export default class CoBaseItemSheet extends ItemSheet {
   /**
    * Handles the addition of a new action to the item and updates the item with the new action list.
    * @param {*} event
-   * @returns
+   * @returns {Item} The updated item.
    */
   _onAddAction(event) {
     event.preventDefault()
     let newActions = foundry.utils.deepClone(this.item.actions)
-    let action = new Action(this.item.uuid, newActions.length, "melee", "icons/svg/d20-highlight.svg", `${game.i18n.localize("CO.ui.newAction")} ${this.item.actions.length + 1}`)
+    let action = new Action({
+      source: this.item.uuid,
+      indice: newActions.length,
+      type: "melee",
+      img: "icons/svg/d20-highlight.svg",
+      label: `${game.i18n.localize("CO.ui.newAction")} ${this.item.actions.length + 1}`,
+    })
     // Attack action must be Visible and Activable by default
     if (this.item.type === "attack") {
       action.properties.visible = true
@@ -238,7 +244,7 @@ export default class CoBaseItemSheet extends ItemSheet {
   /**
    * Handles the deletion of an action from the item and updates the item with the new action list.
    * @param {*} event
-   * @returns
+   * @returns {Item} The updated item.
    */
   _onDeleteAction(event) {
     event.preventDefault()
@@ -252,19 +258,16 @@ export default class CoBaseItemSheet extends ItemSheet {
   /**
    * Handles the addition of a new condition to the item and updates the item with the new action list.
    * @param {*} event
-   * @returns
+   * @returns {Item} The updated item.
    */
-  _onAddCondition(event) {
+  async _onAddCondition(event) {
     event.preventDefault()
     const li = $(event.currentTarget).closest(".action")
-    const rowId = li.data("itemId")
-    let newActions = foundry.utils.deepClone(this.item.actions)
-    console.log(newActions[rowId])
-    let condition = new Condition("item", "isEquipped", "_self")
+    const actionId = li.data("itemId")
 
-    if (!newActions[rowId].conditions) newActions[rowId].conditions = []
-    newActions[rowId].conditions.push(condition)
-    return this.item.update({ "system.actions": newActions })
+    const actions = this.item.toObject().system.actions
+    actions[actionId].conditions.push({ source: this.item.uuid, type: this.item.type })
+    return this.item.update({ "system.actions": actions })
   }
 
   /**
@@ -277,11 +280,12 @@ export default class CoBaseItemSheet extends ItemSheet {
   _onDeleteCondition(event) {
     event.preventDefault()
     const li = $(event.currentTarget).closest(".condition")
-    const condId = li.data("itemId")
     const actionId = li.data("actionId")
-    let newActions = foundry.utils.deepClone(this.item.actions)
-    newActions[actionId].conditions.splice(condId, 1)
-    return this.item.update({ "system.actions": newActions })
+    const conditionId = li.data("itemId")
+
+    const actions = this.item.toObject().system.actions
+    actions[actionId].conditions.splice(conditionId, 1)
+    return this.item.update({ "system.actions": actions })
   }
 
   /**
@@ -293,13 +297,11 @@ export default class CoBaseItemSheet extends ItemSheet {
   async _onAddActionModifier(event) {
     event.preventDefault()
     const li = $(event.currentTarget).closest(".action")
-    const rowId = li.data("itemId")
-    let newActions = foundry.utils.deepClone(this.item.actions)
-    let modifier = new Modifier(this.item.uuid, this.item.type)
+    const actionId = li.data("itemId")
 
-    if (!newActions[rowId].modifiers) newActions[rowId].modifiers = []
-    newActions[rowId].modifiers.push(modifier)
-    await this.item.update({ "system.actions": newActions })
+    const actions = this.item.toObject().system.actions
+    actions[actionId].modifiers.push({ source: this.item.uuid, type: this.item.type })
+    return this.item.update({ "system.actions": actions })
   }
 
   /**
@@ -312,11 +314,56 @@ export default class CoBaseItemSheet extends ItemSheet {
   _onDeleteActionModifier(event) {
     event.preventDefault()
     const li = $(event.currentTarget).closest(".modifier")
-    const condId = li.data("itemId")
     const actionId = li.data("actionId")
-    let newActions = foundry.utils.deepClone(this.item.actions)
-    newActions[actionId].modifiers.splice(condId, 1)
-    return this.item.update({ "system.actions": newActions })
+    const modId = li.data("itemId")
+
+    const actions = this.item.toObject().system.actions
+    actions[actionId].modifiers.splice(modId, 1)
+    return this.item.update({ "system.actions": actions })
+  }
+
+  /**
+   * Handles the addition of a new resolver to an action item.
+   *
+   * @param {Event} event The event that triggered the addition of the resolver.
+   * @returns {Promise} - A promise that resolves when the item is updated.
+   */
+  _onAddResolver(event) {
+    event.preventDefault()
+    const li = $(event.currentTarget).closest(".action")
+    const actionId = li.data("itemId")
+
+    const actions = this.item.toObject().system.actions
+    actions[actionId].resolvers.push({
+      type: "melee",
+      skill: {
+        formula: [{ part: "@atc" }],
+        crit: "20",
+        difficulty: "@def",
+      },
+      damage: {
+        formula: [{ part: "" }],
+      },
+    })
+
+    return this.item.update({ "system.actions": actions })
+  }
+
+  /**
+   * Handles the deletion of a resolver from an action within the item.
+   *
+   * @param {Event} event The event that triggered the deletion.
+   * @returns {Promise} - A promise that resolves when the item update is complete.
+   */
+  _onDeleteResolver(event) {
+    event.preventDefault()
+    const li = $(event.currentTarget).closest(".resolver")
+    const actionId = li.data("actionId")
+    const modId = li.data("itemId")
+
+    const actions = this.item.toObject().system.actions
+    actions[actionId].resolvers.splice(modId, 1)
+    return this.item.update({ "system.actions": actions })
   }
 
   /**
@@ -328,12 +375,10 @@ export default class CoBaseItemSheet extends ItemSheet {
   _onAddModifier(event) {
     event.preventDefault()
 
-    const currentModifiers = this.item.modifiers || []
-    const newModifiers = foundry.utils.deepClone(currentModifiers)
+    const currentModifiers = this.item.modifiers
+    currentModifiers.push(new Modifier({ source: this.item.uuid, type: this.item.type }))
 
-    newModifiers.push(new Modifier({ source: this.item.uuid, type: this.item.type }))
-
-    return this.item.update({ "system.modifiers": newModifiers })
+    return this.item.update({ "system.modifiers": currentModifiers })
   }
 
   /**
@@ -348,55 +393,12 @@ export default class CoBaseItemSheet extends ItemSheet {
     const li = $(event.currentTarget).closest(".modifier")
     const rowId = li.data("itemId")
 
-    const currentModifiers = this.item.modifiers || []
-    const newModifiers = foundry.utils.deepClone(currentModifiers)
+    const currentModifiers = this.item.modifiers
+    if (currentModifiers.length === 0) return
 
-    newModifiers.splice(rowId, 1)
+    currentModifiers.splice(rowId, 1)
 
-    return this.item.update({ "system.modifiers": newModifiers })
-  }
-
-  /**
-   * Handles the addition of a new resolver to an action item.
-   *
-   * @param {Event} event The event that triggered the addition of the resolver.
-   * @returns {Promise} - A promise that resolves when the item is updated.
-   */
-  _onAddResolver(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).closest(".action")
-    const rowId = li.data("itemId")
-    let newActions = foundry.utils.deepClone(this.item.actions)
-    let resolver = new Resolver(
-      "melee",
-      {
-        formula: [{ part: "@atc" }],
-        crit: "20",
-        difficulty: "@def",
-      },
-      {
-        formula: [{ part: "" }],
-      },
-    )
-    if (!newActions[rowId].resolvers) newActions[rowId].resolvers = []
-    newActions[rowId].resolvers.push(resolver)
-    return this.item.update({ "system.actions": newActions })
-  }
-
-  /**
-   * Handles the deletion of a resolver from an action within the item.
-   *
-   * @param {Event} event The event that triggered the deletion.
-   * @returns {Promise} - A promise that resolves when the item update is complete.
-   */
-  _onDeleteResolver(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).closest(".resolver")
-    const condId = li.data("itemId")
-    const actionId = li.data("actionId")
-    let newActions = foundry.utils.deepClone(this.item.actions)
-    newActions[actionId].resolvers.splice(condId, 1)
-    return this.item.update({ "system.actions": newActions })
+    return this.item.update({ "system.modifiers": currentModifiers })
   }
 
   // TODO : Vérifier si c'est optimal

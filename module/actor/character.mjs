@@ -147,8 +147,8 @@ export default class CoCharacter extends CoActor {
    * Prepares the FP (Fortune Points) for a given skill by calculating its base value,
    * applying bonuses, and computing resource modifiers.
    *
-   * @param {Object} skill - The skill object to prepare FP for.
-   * @param {number} bonuses - The additional bonuses to apply to the skill's FP.
+   * @param {Object} skill The skill object to prepare FP for.
+   * @param {number} bonuses The additional bonuses to apply to the skill's FP.
    */
   _prepareFP(skill, bonuses) {
     const baseFP = this._computeBaseFP()
@@ -243,8 +243,8 @@ export default class CoCharacter extends CoActor {
    * Prepares the RP (Resource Points) for a given skill by computing its base value,
    * applying resource modifiers, and adding any additional bonuses.
    *
-   * @param {Object} skill - The skill object to prepare RP for.
-   * @param {number} bonuses - Additional bonuses to be added to the skill's RP.
+   * @param {Object} skill The skill object to prepare RP for.
+   * @param {number} bonuses Additional bonuses to be added to the skill's RP.
    */
   _prepareRP(skill, bonuses) {
     const baseRP = this._computeBaseRP()

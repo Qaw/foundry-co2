@@ -1,6 +1,6 @@
 import CoBaseActorSheet from "./base-actor-sheet.mjs"
 import { CoEditAbilitiesDialog } from "../../dialogs/edit-abilities-dialog.mjs"
-import { Action } from "../../models/action/action.mjs"
+import { Action } from "../../models/schemas/action.mjs"
 import { SYSTEM } from "../../config/system.mjs"
 
 export default class CoCharacterSheet extends CoBaseActorSheet {

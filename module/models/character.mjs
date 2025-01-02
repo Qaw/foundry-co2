@@ -158,8 +158,10 @@ export default class CharacterData extends ActorData {
    * Retrieves an array of modifiers from various sources associated with the character.
    * The sources include features, profiles, capacities, and equipment.
    * Each source is checked for enabled modifiers of the specified type and subtype.
+   * For features and profiles, the modifiers are in the item
+   * for capacities and equipment, the modifiers are in the actions
    *
-   * @param {string} subtype - The subtype of the modifier.
+   * @param {string} subtype The subtype of the modifier.
    * @returns {Array} An array of modifiers.
    */
   _getModifiers(subtype) {

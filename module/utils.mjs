@@ -48,7 +48,7 @@ export default class Utils {
    * @param {*} actor
    * @param {*} formula
    * @param {*} source The item source's UUID : used for the #rank
-   * @returns {String} the formula
+   * @returns {string} the formula
    */
   static evaluateWithDice(actor, formula, source) {
     if (formula === "") return ""
