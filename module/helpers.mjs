@@ -1,5 +1,5 @@
 /**
- *
+ * Register Handlebars helpers
  */
 export default function registerHandlebarsHelpers() {
   Handlebars.registerHelper("add", function (a, b) {

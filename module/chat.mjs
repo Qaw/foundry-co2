@@ -1,6 +1,16 @@
 export default class CoChat {
   /**
-   * @param {*} actor The emitter of the chat message
+   * Creates an instance of a chat
+   *
+   * @param {Object} actor The actor associated with the chat module. The emitter of the chat message
+   * @property {Object} actor - The actor associated with the chat module.
+   * @property {Object|null} chat - The chat instance.
+   * @property {Object|null} content - The content of the chat.
+   * @property {Object|null} template - The template for the chat.
+   * @property {Object|null} data - The data associated with the chat.
+   * @property {Object|null} flags - The flags for the chat.
+   * @property {Object|null} roll - The roll associated with the chat.
+   * @property {Object|null} whisper - The whisper settings for the chat.
    */
   constructor(actor) {
     this.actor = actor
@@ -55,7 +65,7 @@ export default class CoChat {
 
   /**
    * Indicates if the chat is a roll.
-   * @param roll The roll.
+   * @param {Roll} roll The roll.
    * @returns {CoChat} the instance.
    */
   withRoll(roll) {
@@ -65,7 +75,7 @@ export default class CoChat {
 
   /**
    * Indicates if the chat is a whisper
-   * @param whisper The array of user id to whisper.
+   * @param {Array} whisper The array of user id to whisper.
    * @returns {CoChat} the instance.
    */
   withWhisper(whisper) {
@@ -133,7 +143,7 @@ export default class CoChat {
 
   /**
    * Creates the message content from the registered template
-   * @returns the message content or null i an error occurs
+   * @returns {CoChat} the message content or null i an error occurs
    * @private
    */
   async _createContent() {
