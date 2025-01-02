@@ -301,10 +301,20 @@
       </div>
     </div>
     {{#if unlocked}}
+      <div class="sidebar-section-content flexrow">
+        <div class="labelled-field">
+          <label>{{localize "CO.label.short.ability"}}</label>
+          <div class="select-container">
+            <select name="system.resources.fortune.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=resources.fortune.ability localize=true}}
+            </select>
+          </div>
+        </div>
+      </div>
       <div class="sidebar-section-content">
         <div class="labelled-field">
           <label>{{localize "CO.label.long.base"}}</label>
-          <input class="hp-base" type="number" name="system.resources.fortune.base" value="{{resources.fortune.base}}" data-dtype="Number" placeholder="0" />
+          <input class="hp-base" type="number" name="system.resources.fortune.base" value="{{resources.fortune.base}}" data-dtype="Number" placeholder="0" readonly />
         </div>
       </div>
       <div class="sidebar-section-content">
@@ -336,10 +346,20 @@
       </div>
     </div>
     {{#if unlocked}}
+      <div class="sidebar-section-content flexrow">
+        <div class="labelled-field">
+          <label>{{localize "CO.label.short.ability"}}</label>
+          <div class="select-container">
+            <select name="system.resources.recovery.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=resources.recovery.ability localize=true}}
+            </select>
+          </div>
+        </div>
+      </div>
       <div class="sidebar-section-content">
         <div class="labelled-field">
           <label>{{localize "CO.label.long.base"}}</label>
-          <input class="hp-base" type="number" name="system.resources.recovery.base" value="{{resources.recovery.base}}" data-dtype="Number" placeholder="0" />
+          <input class="hp-base" type="number" name="system.resources.recovery.base" value="{{resources.recovery.base}}" data-dtype="Number" placeholder="0" readonly />
         </div>
       </div>
       <div class="sidebar-section-content">
@@ -371,6 +391,16 @@
       </div>
     </div>
     {{#if unlocked}}
+      <div class="sidebar-section-content flexrow">
+        <div class="labelled-field">
+          <label>{{localize "CO.label.short.ability"}}</label>
+          <div class="select-container">
+            <select name="system.resources.mana.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=resources.mana.ability localize=true}}
+            </select>
+          </div>
+        </div>
+      </div>
       <div class="sidebar-section-content">
         <div class="labelled-field">
           <label>{{localize "CO.label.long.base"}}</label>

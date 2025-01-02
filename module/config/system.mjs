@@ -49,6 +49,11 @@ export const PROFILE_FAMILY = {
 
 export const PV = { 3: "3", 4: "4", 5: "5" }
 
+export const BASE_FORTUNE = 2
+export const BASE_RECOVERY = 2
+export const BASE_INITIATIVE = 10
+export const BASE_DEFENSE = 10
+
 /**
  * Include all constant definitions within the SYSTEM global export
  * @type {Object}
@@ -94,4 +99,8 @@ export const SYSTEM = {
   RESOURCES_TYPE: CONST.RESOURCES_TYPE,
   SIZES,
   FAMILIES: PROFILE.FAMILIES,
+  BASE_INITIATIVE,
+  BASE_DEFENSE,
+  BASE_FORTUNE,
+  BASE_RECOVERY,
 }

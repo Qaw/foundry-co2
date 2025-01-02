@@ -23,23 +23,17 @@ export default class CharacterData extends ActorData {
       }, {}),
     )
 
-    const resourceField = (label) =>
-      new fields.SchemaField(
-        {
-          base: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-          value: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-          max: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-          bonuses: new fields.SchemaField({
-            sheet: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-            effects: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-          }),
-        },
-        { label, nullable: false },
-      )
-
     schema.resources = new fields.SchemaField(
       Object.values(SYSTEM.RESOURCES).reduce((obj, resource) => {
-        obj[resource.id] = resourceField(resource.label)
+        const initial = {
+          base: 0,
+          ability: resource.ability,
+          bonuses: {
+            sheet: 0,
+            effects: 0,
+          },
+        }
+        obj[resource.id] = new fields.EmbeddedDataField(BaseValue, { label: resource.label, nullable: false, initial: initial })
         return obj
       }, {}),
     )

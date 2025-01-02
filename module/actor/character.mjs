@@ -2,6 +2,7 @@ import CoActor from "./actor.mjs"
 import CoChat from "../chat.mjs"
 import { SYSTEM } from "../config/system.mjs"
 import Utils from "../utils.mjs"
+import DefaultConfiguration from "../configuration.mjs"
 
 export default class CoCharacter extends CoActor {
   prepareDerivedData() {
@@ -108,7 +109,7 @@ export default class CoCharacter extends CoActor {
     const initModifiers = this.system.computeTotalModifiersByTarget(this.system.combatModifiers, SYSTEM.COMBAT_TYPE.INIT)
     const malus = this.getMalusToInitiative()
 
-    skill.base = this.baseInitiative
+    skill.base = DefaultConfiguration.baseInitiative()
     skill.tooltipBase = Utils.getTooltip("Base", skill.base)
 
     skill.base += abilityBonus
@@ -132,7 +133,7 @@ export default class CoCharacter extends CoActor {
   _prepareDef(skill, abilityBonus, bonuses) {
     const defModifiers = this.system.computeTotalModifiersByTarget(this.system.combatModifiers, SYSTEM.COMBAT_TYPE.DEF)
 
-    skill.base = this.baseDefense
+    skill.base = DefaultConfiguration.baseDefense()
     skill.tooltipBase = Utils.getTooltip("Base", skill.base)
 
     skill.base += abilityBonus
@@ -171,9 +172,11 @@ export default class CoCharacter extends CoActor {
    *   - `tooltip` {string}: A tooltip string providing details on the components of the base FP.
    */
   _computeBaseFP() {
-    const value = 2 + this.system.abilities.cha.value + this.system.fpFromFamily
-    let tooltip = Utils.getTooltip("Base", 2)
-    tooltip = tooltip.concat(Utils.getTooltip("Charisme", this.system.abilities.cha.value))
+    const abilityBonus = this.system.abilities[this.system.resources.fortune.ability].value
+    const baseFP = DefaultConfiguration.baseFortune()
+    const value = baseFP + abilityBonus + this.system.fpFromFamily
+    let tooltip = Utils.getTooltip("Base", baseFP)
+    tooltip = tooltip.concat(Utils.getTooltip(Utils.getAbilityName(this.system.resources.fortune.ability), this.system.abilities.cha.value))
     if (this.system.fpFromFamily > 0) tooltip = tooltip.concat(Utils.getTooltip("Profil", this.system.fpFromFamily))
     return { value, tooltip }
   }
@@ -249,7 +252,7 @@ export default class CoCharacter extends CoActor {
     skill.tooltipBase = baseRP.tooltip
 
     const resourceModifiers = this.system.computeTotalModifiersByTarget(this.system.resourceModifiers, SYSTEM.MODIFIERS_TARGET.rp.id)
-    skill.max = skill.base + bonuses + resourceModifiers.total 
+    skill.max = skill.base + bonuses + resourceModifiers.total
     skill.tooltip = skill.tooltipBase.concat(resourceModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
 
@@ -264,8 +267,9 @@ export default class CoCharacter extends CoActor {
    * @returns {number} The computed base RP value.
    */
   _computeBaseRP() {
-    const value = 2 + this.system.abilities.con.value + this.system.rpFromFamily
-    let tooltip = Utils.getTooltip("Base", 2)
+    const baseRP = DefaultConfiguration.baseRecovery()
+    const value = baseRP + this.system.abilities.con.value + this.system.rpFromFamily
+    let tooltip = Utils.getTooltip("Base", baseRP)
     tooltip = tooltip.concat(Utils.getTooltip("Constitution", this.system.abilities.con.value))
     if (this.system.rpFromFamily > 0) tooltip = tooltip.concat(Utils.getTooltip("Profil", this.system.rpFromFamily))
     return { value, tooltip }

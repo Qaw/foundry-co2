@@ -33,14 +33,17 @@ export const RESOURCES = {
   fortune: {
     id: "fortune",
     label: "CO.resources.long.fortune",
+    ability: "cha",
   },
   recovery: {
     id: "recovery",
     label: "CO.resources.long.recovery",
+    ability: "con",
   },
   mana: {
     id: "mana",
     label: "CO.resources.long.mana",
+    ability: "vol",
   },
 }
 

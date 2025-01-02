@@ -28,8 +28,4 @@ export class ResourceValue extends foundry.abstract.DataModel {
       }),
     }
   }
-
-  get max() {
-    return this.base + this.bonuses.sheet + this.bonuses.effects
-  }
 }

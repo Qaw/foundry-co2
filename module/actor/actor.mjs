@@ -20,14 +20,6 @@ export default class CoActor extends Actor {
 
   // #region accesseurs
 
-  get baseInitiative() {
-    return 10
-  }
-
-  get baseDefense() {
-    return 10
-  }
-
   /**
    * Retourne les Items de type equipment
    */
