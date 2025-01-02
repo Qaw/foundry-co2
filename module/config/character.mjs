@@ -1,4 +1,4 @@
-export const ABILITIES = Object.freeze({
+export const ABILITIES = {
   agi: {
     id: "agi",
     label: "CO.abilities.long.agi",
@@ -27,9 +27,9 @@ export const ABILITIES = Object.freeze({
     id: "vol",
     label: "CO.abilities.long.vol",
   },
-})
+}
 
-export const RESOURCES = Object.freeze({
+export const RESOURCES = {
   fortune: {
     id: "fortune",
     label: "CO.resources.long.fortune",
@@ -42,9 +42,9 @@ export const RESOURCES = Object.freeze({
     id: "mana",
     label: "CO.resources.long.mana",
   },
-})
+}
 
-export const COMBAT = Object.freeze({
+export const COMBAT = {
   init: {
     id: "init",
     label: "CO.combat.long.init",
@@ -70,9 +70,9 @@ export const COMBAT = Object.freeze({
     label: "CO.combat.long.magic",
     ability: "vol",
   },
-})
+}
 
-export const ATTACK_TYPE = Object.freeze({
+export const ATTACK_TYPE = {
   melee: {
     id: "melee",
     label: "CO.combat.long.melee",
@@ -88,4 +88,4 @@ export const ATTACK_TYPE = Object.freeze({
     label: "CO.combat.long.magic",
     ability: "vol",
   },
-})
+}
