@@ -74,11 +74,11 @@
         <ol class="actions-container items-container">
             <ol class="item-list">
                 {{#each visibleActivableActions as |action id|}}
-                {{!log (concat "Chroniques Oubliées | action " id) action}}
+                {{log (concat "Chroniques Oubliées | action " id) action}}
                         <li class="item flexrow action"  draggable="true" data-source="{{action.source}}" data-indice="{{action.indice}}"   {{#if action.properties.temporary}}{{#unless action.properties.enabled}}style="opacity: 60%"{{/unless}}{{/if}}>
                             <div class="item-name flexrow">
-                                <div class="item-image" style="background-image: url('{{getActionImg action @root.actor source}}')"></div>
-                                <h4><a class="item-control item-edit">{{getEmbeddedItemName @root.actor source}} : {{action.label}}</a>&nbsp;{{{getActionIcon action}}}</h4>
+                                <div class="item-image" style="background-image: url('{{{actionImg}}}')"></div>
+                                <h4><a class="item-control item-edit">{{action.itemName}} : {{action.label}}</a>&nbsp;{{{action.icon}}}</h4>
                             </div>
                             <div class="item-controls-3">
                                 {{#if action.properties.activable}}

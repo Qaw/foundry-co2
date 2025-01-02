@@ -59,6 +59,38 @@ export class Action extends foundry.abstract.DataModel {
     } else return []
   }
 
+  get icon() {
+    switch (this.type) {
+      case "spell":
+        return '<i class="fas fa-fw fa-hand-sparkles"></i>'
+      case "melee":
+        return '<i class="fas fa-fw fa-sword"></i>'
+      case "ranged":
+        return '<i class="fas fa-fw fa-bow-arrow"></i>'
+      case "magical":
+        return '<i class="fa-solid fa-bolt"></i>'
+      case "protection":
+        return '<i class="fa-regular fa-fw fa-shield"></i>'
+      case "heal":
+        return '<i class="fas fa-fw fa-hand-holding-medical"></i>'
+    }
+    return ""
+  }
+
+  /**
+   * Gets the name of the item from the parent object's parent.
+   * this.parent is item's system
+   * @returns {string} The name of the item.
+   */
+  get itemName() {
+    return this.parent.parent.name
+  }
+
+  get actionImg() {
+    if (this.img !== "icons/svg/d20-highlight.svg") return this.img
+    else return this.parent.parent.img
+  }
+
   /**
    * Crée un nouvel objet Action basé sur un objet Action existant.
    * @param {Action} existingAction L'objet Action existant à partir duquel créer le nouvel objet.

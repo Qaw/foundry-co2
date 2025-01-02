@@ -21,42 +21,42 @@ export default class CoActor extends Actor {
   // #region accesseurs
 
   /**
-   * Retourne les Items de type equipment
+   * Retourne  les Items de type equipment
    */
   get equipments() {
     return this.itemTypes.equipment
   }
 
   /**
-   * Retourne les Items de type feature
+   * Retourne  les Items de type feature
    */
   get features() {
     return this.itemTypes.feature
   }
 
   /**
-   * Retourne les Items de type path
+   * Retourne  les Items de type path
    */
   get paths() {
     return this.itemTypes.path
   }
 
   /**
-   * Retourne les Items de type capacity
+   * Retourne  les Items de type capacity
    */
   get capacities() {
     return this.itemTypes.capacity
   }
 
   /**
-   * Retourne les Items de type profile
+   * Retourne  les Items de type profile
    */
   get profiles() {
     return this.itemTypes.profile
   }
 
   /**
-   * Retourne un tableau d'objets comprenant les voies et les capacités associées
+   * Retourne  un tableau d'objets comprenant les voies et les capacités associées
    */
   get pathGroups() {
     let pathGroups = []
@@ -96,21 +96,21 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * Retourneles Items de type equipment et de sous-type armor
+   * Retourne les Items de type equipment et de sous-type armor
    */
   get armors() {
     return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.ARMOR)
   }
 
   /**
-   * Retourneles Items de type equipment et de sous-type shield
+   * Retourne les Items de type equipment et de sous-type shield
    */
   get shields() {
     return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.SHIELD)
   }
 
   /**
-   * Retourneles Items de type equipment et de sous-type weapon
+   * Retourne les Items de type equipment et de sous-type weapon
    */
   get weapons() {
     return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.WEAPON)
@@ -121,21 +121,21 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * Retourneles Items équipés de type equipment et de sous-type armor
+   * Retourne les Items équipés de type equipment et de sous-type armor
    */
   get equippedArmors() {
     return this.armors.filter((item) => item.system.equipped)
   }
 
   /**
-   * Retourneles Items équipés de type equipment et de sous-type shield
+   * Retourne les Items équipés de type equipment et de sous-type shield
    */
   get equippedShields() {
     return this.shields.filter((item) => item.system.equipped)
   }
 
   /**
-   * RetourneToutes les actions de tous les objets
+   * Retourne Toutes les actions de tous les objets
    */
   get actions() {
     let allActions = []
@@ -146,7 +146,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * RetourneToutes les actions visibles des capacités et des équipements
+   * Retourne Toutes les actions visibles des capacités et des équipements
    */
   get visibleActions() {
     let allActions = []
@@ -159,28 +159,28 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * RetourneToutes les actions visibles et activables des capacités et des équipements
+   * Retourne Toutes les actions visibles et activables des capacités et des équipements
    */
   get visibleActivableActions() {
     return this.visibleActions.filter((a) => a.properties.activable)
   }
 
   /**
-   * RetourneToutes les actions visibles, activables et temporaires des capacités et des équipements
+   * Retourne Toutes les actions visibles, activables et temporaires des capacités et des équipements
    */
   get visibleActivableTemporaireActions() {
     return this.visibleActions.filter((a) => a.properties.activable && a.properties.temporary)
   }
 
   /**
-   * RetourneToutes les actions visibles et non activables des capacités et des équipements
+   * Retourne Toutes les actions visibles et non activables des capacités et des équipements
    */
   get visibleNonActivableActions() {
     return this.visibleActions.filter((a) => !a.properties.activable)
   }
 
   /**
-   * RetourneToutes les actions visibles, non activables et non temporaires des capacités et des équipements
+   * Retourne Toutes les actions visibles, non activables et non temporaires des capacités et des équipements
    */
   get visibleNonActivableNonTemporaireActions() {
     return this.visibleActions.filter((a) => !a.properties.activable && !a.properties.temporary)
@@ -198,7 +198,7 @@ export default class CoActor extends Actor {
   /**
    * Return all skill modifiers
    * @param {string} ability str, dex ...
-   * Retourne{Object} Name, value, description
+   * Retourne {Object} Name, value, description
    */
   getSkillBonuses(ability) {
     const modifiersByTarget = this.skillModifiers.filter((m) => m.target === ability)
@@ -211,7 +211,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * Retourne l'objet correspondant à la clé
+   * Retourne  l'objet correspondant à la clé
    * @param {*} key
    */
   getEmbeddedItemByKey(key) {
@@ -219,9 +219,9 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * Retourne le malus à l'initiative lié à l'armure et à l'incompétence armes/armures
+   * Retourne  le malus à l'initiative lié à l'armure et à l'incompétence armes/armures
    *
-   * Retourne{int} retourne le malus (négatif) ou 0
+   * Retourne {int} retourne le malus (négatif) ou 0
    */
   getMalusToInitiative() {
     return 0
@@ -229,18 +229,18 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * Retourne le malus à l'initiative lié à l'armure
+   * Retourne  le malus à l'initiative lié à l'armure
    *
-   * Retourne{int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
+   * Retourne {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
    */
   getOverloadMalusToInitiative() {
     return 0
   }
 
   /**
-   * Retourne le malus à l'initiative lié à l'incompétence armes/armures
+   * Retourne  le malus à l'initiative lié à l'incompétence armes/armures
    *
-   * Retourne{int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
+   * Retourne {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
    */
   getIncompetentMalusToInitiative() {
     return 0
@@ -248,7 +248,7 @@ export default class CoActor extends Actor {
 
   /**
    * Calcule la défense de l'armure et du bouclier équipés
-   * Retourne {Int} la somme des DEF
+   * Retourne  {Int} la somme des DEF
    */
   getDefenceFromArmorAndShield() {
     return this.getDefenceFromArmor() + this.getDefenceFromShield()
@@ -256,7 +256,7 @@ export default class CoActor extends Actor {
 
   /**
    * Calcule la défense de l'armure équipée
-   * Retourne {Int} la valeur de défense
+   * Retourne  {Int} la valeur de défense
    */
   getDefenceFromArmor() {
     let protections = this.equippedArmors.map((i) => i.system.def)
@@ -264,7 +264,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * Retourne {Int} la valeur de défense
+   * Retourne  {Int} la valeur de défense
    */
   getDefenceFromShield() {
     let protections = this.equippedShields.map((i) => i.system.def)
@@ -499,7 +499,7 @@ export default class CoActor extends Actor {
    * Add a path as an embedded item
    * It also create the capacities linked to the path
    * @param {CoItem} path
-   * Retourne{string} uuid of the created path
+   * Retourne {string} uuid of the created path
    */
   async addPath(path) {
     let itemData = path.toObject()
@@ -533,7 +533,7 @@ export default class CoActor extends Actor {
    * Add a capacity as an embedded item
    * @param {CoItem} capacity
    * @param {UUID} pathUuid uuid of the Path if the capacity is linked to a path
-   * Retourne{number} uuid of the created capacity
+   * Retourne {number} uuid of the created capacity
    */
   async addCapacity(capacity, pathUuid) {
     let capacityData = capacity.toObject()
@@ -584,7 +584,7 @@ export default class CoActor extends Actor {
   /**
    * Add an equipment as an embedded item
    * @param {CoItem} equipment
-   * Retourne{number} id of the created path
+   * Retourne {number} id of the created path
    */
   async addEquipment(equipment) {
     let equipmentData = equipment.toObject()
@@ -687,7 +687,7 @@ export default class CoActor extends Actor {
    * Calcul la somme d'un tableau de valeurs positives ou négatives
    *
    * @param {*} array Un tableau de valeurs
-   * Retourne{int} 0 ou la somme des valeurs
+   * Retourne {int} 0 ou la somme des valeurs
    */
   _addAllValues(array) {
     return array.length > 0 ? array.reduce((acc, curr) => acc + curr, 0) : 0
