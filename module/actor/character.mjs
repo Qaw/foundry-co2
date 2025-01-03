@@ -293,15 +293,16 @@ export default class CoCharacter extends CoActor {
   /**
    * Retourne Toutes les actions visibles des capacités et des équipements sous forme d'un tableau d'actions
    */
-  get visibleActions() {
-    let allActions = []
-    this.items.forEach((item) => {
-      if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
-        allActions.push(...item.visibleActions)
-      }
-    })
-    return allActions
-  }
+  async getVisibleActions() {
+    let allActions = [];
+    for (const item of this.items) {
+        if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
+            const itemActions = await item.getVisibleActions();
+            allActions.push(...itemActions);
+        }
+    }
+    return allActions;
+}
 
   // #endregion
 

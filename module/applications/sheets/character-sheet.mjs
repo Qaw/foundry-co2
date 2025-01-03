@@ -16,12 +16,18 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /** @override */
-  getData(options) {
+  async getData(options) {
     const context = super.getData(options)
     context.profiles = this.actor.profiles
     context.xpleft = parseInt(this.actor.system.attributes.xp.max) - parseInt(this.actor.system.attributes.xp.value)
     context.choiceAbilities = SYSTEM.ABILITIES
     context.choiceSize = SYSTEM.SIZES
+
+    context.visibleActions = await this.actor.getVisibleActions()
+    context.visibleActivableActions = await this.actor.getVisibleActivableActions()
+    context.visibleNonActivableActions = await this.actor.getVisibleNonActivableActions()
+    context.visibleActivableTemporaireActions = await this.actor.getVisibleActivableTemporaireActions()
+    context.visibleNonActivableNonTemporaireActions = await this.actor.getVisibleNonActivableNonTemporaireActions()
     return context
   }
 

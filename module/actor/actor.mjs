@@ -148,42 +148,47 @@ export default class CoActor extends Actor {
   /**
    * Retourne Toutes les actions visibles des capacités et des équipements
    */
-  get visibleActions() {
+  async getVisibleActions() {
     let allActions = []
-    this.items.forEach((item) => {
+    for (const item of this.items) {
       if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(item.type)) {
-        allActions.push(...item.visibleActions)
+        const itemActions = await item.getVisibleActions()
+        allActions.push(...itemActions)
       }
-    })
+    }
     return allActions
   }
 
   /**
    * Retourne Toutes les actions visibles et activables des capacités et des équipements
    */
-  get visibleActivableActions() {
-    return this.visibleActions.filter((a) => a.properties.activable)
+  async getVisibleActivableActions() {
+    const actions = await this.getVisibleActions()
+    return actions.filter((a) => a.properties.activable)
   }
 
   /**
    * Retourne Toutes les actions visibles, activables et temporaires des capacités et des équipements
    */
-  get visibleActivableTemporaireActions() {
-    return this.visibleActions.filter((a) => a.properties.activable && a.properties.temporary)
+  async getVisibleActivableTemporaireActions() {
+    const actions = await this.getVisibleActions()
+    return actions.filter((a) => a.properties.activable && a.properties.temporary)
   }
 
   /**
    * Retourne Toutes les actions visibles et non activables des capacités et des équipements
    */
-  get visibleNonActivableActions() {
-    return this.visibleActions.filter((a) => !a.properties.activable)
+  async getVisibleNonActivableActions() {
+    const actions = await this.getVisibleActions()
+    return actions.filter((a) => !a.properties.activable)
   }
 
   /**
    * Retourne Toutes les actions visibles, non activables et non temporaires des capacités et des équipements
    */
-  get visibleNonActivableNonTemporaireActions() {
-    return this.visibleActions.filter((a) => !a.properties.activable && !a.properties.temporary)
+  async getVisibleNonActivableNonTemporaireActions() {
+    const actions = await this.getVisibleActions()
+    return actions.filter((a) => !a.properties.activable && !a.properties.temporary)
   }
 
   get isUnlocked() {
@@ -336,7 +341,7 @@ export default class CoActor extends Actor {
      @param {string("attack","damage")} type  define if it's an attack or just a damage
    */
   async activateAction(state, source, indice, type) {
-    const item = this.items.get(source)
+    const item = await fromUuid(source)
 
     if (!item) return
 
@@ -357,7 +362,7 @@ export default class CoActor extends Actor {
     else {
       const action = Action.createFromExisting(item.system.actions[indice])
       // Recherche des resolvers de l'action
-      let resolvers = Object.values(action.resolvers).map((a) => new Resolver(a.type, a.skill, a.dmg))
+      let resolvers = Object.values(action.resolvers).map((a) => new Resolver({ type: a.type, skill: a.skill, dmg: a.dmg }))
       for (const resolver of resolvers) {
         let res = resolver.resolve(this, item, action, type)
       }

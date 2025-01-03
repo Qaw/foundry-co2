@@ -19,11 +19,6 @@ export default class CoBaseActorSheet extends ActorSheet {
     context.capacitiesOffPaths = this.actor.capacitiesOffPaths
     context.features = this.actor.features
     context.actions = this.actor.actions
-    context.visibleActions = this.actor.visibleActions
-    context.visibleActivableActions = this.actor.visibleActivableActions
-    context.visibleNonActivableActions = this.actor.visibleNonActivableActions
-    context.visibleActivableTemporaireActions = this.actor.visibleActivableTemporaireActions
-    context.visibleNonActivableNonTemporaireActions = this.actor.visibleNonActivableNonTemporaireActions
     context.inventory = this.actor.inventory
     context.unlocked = this.actor.isUnlocked
     context.locked = !this.actor.isUnlocked

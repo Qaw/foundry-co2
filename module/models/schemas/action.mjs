@@ -153,10 +153,13 @@ export class Action extends foundry.abstract.DataModel {
    * Elsewhere returns true if all conditions are true
    * @param {*} item
    */
-  isVisible(item) {
+  async isVisible(item) {
     if (this.hasConditions) {
-      return this.conditions.every((condition) => condition.evaluate(item))
-    } else return this.properties.visible
+      const results = await Promise.all(this.conditions.map((condition) => condition.evaluate(item)))
+      return results.every((result) => result)
+    } else {
+      return this.properties.visible
+    }
   }
 
   get chatData() {
