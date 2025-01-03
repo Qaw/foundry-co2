@@ -59,8 +59,9 @@ export default class CoItem extends Item {
    * If the item has actions, only enabled actions are taken into account
    */
   get enabledModifiers() {
-    // For Equipement or Capacity Item, the modifiers are in the actions
+    // For Equipement or Capacity Item, the modifiers are in enabled actions
     if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(this.type)) return this.getModifiersFromActions(true)
+    // For Feature or Profile, the modifiers are in the item
     else return this.modifiers
   }
 
@@ -225,7 +226,7 @@ export default class CoItem extends Item {
   }
 
   /**
-   * Update the actions for an embedded capacity item
+   * Update the actions for an embedded capacity or equipment item
    */
   toggleActions() {
     if ((this.type !== SYSTEM.ITEM_TYPE.CAPACITY && this.type !== SYSTEM.ITEM_TYPE.EQUIPMENT) || !this.actor) return

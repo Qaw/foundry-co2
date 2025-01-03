@@ -17,21 +17,61 @@ export class Condition extends foundry.abstract.DataModel {
 
   /**
    * Returns an object containing the available condition methods.
-   * isEquipped : is the item equiped
-   * isOwned : is the item in the inventory
-   * isLearned : is the capacity learned
-   * isTagged : To Do
    * @returns {object} An object containing condition methods.
    */
   get conditions() {
     return {
-      isEquipped: (condition, object, item) => (item.type === SYSTEM.ITEM_TYPE.EQUIPMENT ? item.system.equipped : false),
-      isOwned: (condition, object, item) => item.isOwned,
-      isLearned: (condition, object, item) => (item.type === SYSTEM.ITEM_TYPE.CAPACITY ? item.system.learned : false),
-      isTagged: (condition, object, item) => {
-        // Implement the isTagged condition
-      },
+      isEquipped: this.isEquipped,
+      isOwned: this.isOwned,
+      isLearned: this.isLearned,
+      isTagged: this.isTagged,
     }
+  }
+
+  /**
+   * Checks if the item is equipped.
+   * @param {object} condition The condition object.
+   * @param {object} object The object to check.
+   * @param {object} item The item to check.
+   * @returns {boolean} True if the item is equipped, false otherwise.
+   */
+  isEquipped(condition, object, item) {
+    return item.type === SYSTEM.ITEM_TYPE.EQUIPMENT ? item.system.equipped : false
+  }
+
+  /**
+   * Checks if the item is owned.
+   * @param {object} condition The condition object.
+   * @param {object} object The object to check.
+   * @param {object} item The item to check.
+   * @returns {boolean} True if the item is owned, false otherwise.
+   */
+  isOwned(condition, object, item) {
+    // Implement the isOwned condition
+    return false
+  }
+
+  /**
+   * Checks if the capacity is learned.
+   * @param {object} condition The condition object.
+   * @param {object} object The object to check.
+   * @param {object} item The item to check.
+   * @returns {boolean} True if the capacity is learned, false otherwise.
+   */
+  isLearned(condition, object, item) {
+    return item.type === SYSTEM.ITEM_TYPE.CAPACITY ? item.system.learned : false
+  }
+
+  /**
+   * Placeholder for the isTagged condition.
+   * @param {object} condition The condition object.
+   * @param {object} object The object to check.
+   * @param {object} item The item to check.
+   * @returns {boolean} To be implemented.
+   */
+  isTagged(condition, object, item) {
+    // Implement the isTagged condition
+    return false
   }
 
   /**
@@ -41,11 +81,27 @@ export class Condition extends foundry.abstract.DataModel {
    * @throws {Error} If the specified predicate is not a valid condition method.
    */
   async evaluate(item) {
-    const obj = this.object === "_self" ? item : await fromUuid(item)
-    if (!Object.prototype.hasOwnProperty.call(this.conditions, this.predicate)) {
-      throw new Error(`Invalid predicate ${this.predicate} for item ${obj.name} with Id ${obj.id}`)
-    }
-
+    const obj = await this.getObject(item)
+    this.validatePredicate()
     return this.conditions[this.predicate](this, obj, item)
+  }
+
+  /**
+   * Retrieves the object based on the condition's object property.
+   * @param {_self|UUID} item The item to retrieve the object for.
+   * @returns {object} The retrieved object.
+   */
+  async getObject(item) {
+    return this.object === "_self" ? item : await fromUuid(item)
+  }
+
+  /**
+   * Validates the predicate to ensure it is a valid condition method.
+   * @throws {Error} If the predicate is not valid.
+   */
+  validatePredicate() {
+    if (!Object.prototype.hasOwnProperty.call(this.conditions, this.predicate)) {
+      throw new Error(`Invalid predicate ${this.predicate}`)
+    }
   }
 }

@@ -151,7 +151,7 @@ export default class CoActor extends Actor {
   get visibleActions() {
     let allActions = []
     this.items.forEach((item) => {
-      if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
+      if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(item.type)) {
         allActions.push(...item.visibleActions)
       }
     })
