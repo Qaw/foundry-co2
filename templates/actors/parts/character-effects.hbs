@@ -11,13 +11,13 @@
                 <h3 class="item-name flexrow">{{localize "CO.ui.enabled"}}</h3>
             </li>
             <ol class="item-list">
-                <!-- Actions Visibles Activables Non temporaires et Activées -->
+                <!-- Actions Visibles Activables temporaires et Activées -->
                 {{#each visibleActivableTemporaireActions as |item id|}}                
-                    {{!log (concat "Chroniques Oubliées | action " id) item}}
+                    {{log (concat "Chroniques Oubliées | action " id) item}}
                     {{#if item.properties.enabled }}
-                        <li class="item flexrow" data-item-id="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
+                        <li class="item flexrow" data-item-uuid="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
                             <div class="item-name flexrow">
-                                <div class="item-image" style="background-image: url({{getActionImg item @root.actor source}})"></div>
+                                <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                                 <h4><a class="item-control item-edit" data-tooltip="{{item.type}}">{{item.label}}</a>&nbsp; {{{item.icon}}}
                                 </h4>
                             </div>
@@ -32,11 +32,11 @@
                 <h3 class="item-name flexrow">{{localize "CO.ui.disabled"}}</h3>
             </li>
             <ol class="item-list">
-                <!-- Actions Visibles Activables Non temporaires et Désactivées -->
+                <!-- Actions Visibles Activables temporaires et Désactivées -->
                 {{#each visibleActivableTemporaireActions as |item id|}}
                     {{!log (concat "Chroniques Oubliées | action " id) item}}
-                    {{#if (not item.properties.enabled) }}
-                        <li class="item flexrow" data-item-id="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
+                    {{#unless item.properties.enabled}}
+                        <li class="item flexrow" data-item-uuid="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
                             <div class="item-name flexrow">
                                 <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                                 <h4><a class="item-control item-edit" data-tooltip="{{item.type}}">{{item.label}}</a>&nbsp; {{{item.icon}}}
@@ -44,7 +44,7 @@
                             </div>
                             <div class="item-controls-2"></div>
                         </li>
-                    {{/if}}
+                    {{/unless}}
                 {{/each}}
             </ol>
         </ol>
@@ -55,9 +55,9 @@
             <ol class="item-list">
                 <!-- Actions Visibles non Activables Non temporaires et activées -->
                 {{#each visibleNonActivableNonTemporaireActions as |item id|}}
-                    {{!log (concat "Chroniques Oubliées | action " id) item}}
+                    {{log (concat "Chroniques Oubliées | action " id) item}}
                      {{#if item.properties.enabled }}
-                        <li class="item flexrow" data-item-id="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
+                        <li class="item flexrow" data-item-uuid="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
                             <div class="item-name flexrow">
                                 <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                                 <h4><a class="item-control item-edit" data-tooltip="{{item.type}}">{{item.label}}</a>&nbsp; {{{item.icon}}}

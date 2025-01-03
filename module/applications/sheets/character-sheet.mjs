@@ -122,12 +122,11 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
    */
   _onEditItem(event) {
     event.preventDefault()
-    const li = $(event.currentTarget).closest(".item")
-    const id = li.data("itemId")
-    if (!foundry.utils.isEmpty(id) && id !== "") {
-      let document = this.actor.items.get(id)
-      return document.sheet.render(true)
-    }
+    const li = event.currentTarget.closest(".item")
+    const uuid = li.dataset.itemUuid
+    const { id } = foundry.utils.parseUuid(uuid)
+    let document = this.actor.items.get(id)
+    return document.sheet.render(true)
   }
 
   /**
@@ -231,10 +230,11 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @param {DragEvent} event            The concluding DragEvent which contains drop data
-   * @param {object} data                The data transfer extracted from the event
-   * @returns {Promise<Item[]|boolean>}  The created or updated Item instances, or false if the drop was not permitted.
-   * @protected
+   * Handle the drop event for an item.
+   *
+   * @param {Event} event The drop event.
+   * @param {Object} data The data associated with the dropped item.
+   * @returns {Promise<boolean>} - Returns false if the actor is not the owner or if the item type is not handled.
    */
   async _onDropItem(event, data) {
     event.preventDefault()

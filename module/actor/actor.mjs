@@ -272,7 +272,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   *
+   * Supprime un item de type Capacity ou Feature
    * @param {*} itemId
    */
   deleteItem(itemId) {
@@ -380,6 +380,7 @@ export default class CoActor extends Actor {
 
     // Mise à jour du rang de la voie correspondante
     let path = await fromUuid(this.items.get(capacityId).system.path)
+    if (!path) return
     await path.updateRank()
   }
 
@@ -505,7 +506,6 @@ export default class CoActor extends Actor {
     let itemData = path.toObject()
 
     // Create the path
-    //itemData = itemData instanceof Array ? itemData : [itemData]
     const newPath = await this.createEmbeddedDocuments("Item", [itemData])
 
     let updatedCapacitiesUuids = []
@@ -542,41 +542,18 @@ export default class CoActor extends Actor {
     // Learned the capacity if the capacity is not linked to a path
     if (pathUuid === null) capacityData.system.learned = true
 
-    //capacityData = capacityData instanceof Array ? capacityData : [capacityData]
     const newCapacity = await this.createEmbeddedDocuments("Item", [capacityData])
-    // Console.info(Utils.log("Capacity created", newCapacity))
 
-    // Update the source of all actions with the id of the new embedded capacity created
-    /*
-    let newActions = Object.values(foundry.utils.deepClone(newCapacity[0].system.actions)).map((m) => {
-      const action = new Action(
-        m.source,
-        m.indice,
-        m.type,
-        m.img,
-        m.label,
-        m.chatFlavor,
-        m.properties.visible,
-        m.properties.activable,
-        m.properties.enabled,
-        m.properties.temporary,
-        m.conditions,
-        m.modifiers,
-        m.resolvers,
-      )
-      // Update the source and source's modifiers for the action
-      action.updateSource(newCapacity[0].id)
-      return action
-    })
-      
+    // Update the source of all actions
+    if (newCapacity[0].actions.length > 0) {
+      const actions = newCapacity[0].toObject().system.actions
+      for (const action of actions) {
+        action.source = newCapacity[0].uuid
+      }
 
-    const actions = newCapacity[0].system.actions
-    actions.forEach((action) => {
-      action.updateSource(newCapacity[0].id)
-    })
-
-    const updateActions = { _id: newCapacity[0].id, "system.actions": actions.toObject() }
-    await this.updateEmbeddedDocuments("Item", [updateActions])*/
+      const updateActions = { _id: newCapacity[0].id, "system.actions": actions }
+      await this.updateEmbeddedDocuments("Item", [updateActions])
+    }
 
     return newCapacity[0].uuid
   }
@@ -588,39 +565,29 @@ export default class CoActor extends Actor {
    */
   async addEquipment(equipment) {
     let equipmentData = equipment.toObject()
-    equipmentData = equipmentData instanceof Array ? equipmentData : [equipmentData]
 
     // Création de l'objet
-    const newEquipment = await this.createEmbeddedDocuments("Item", equipmentData)
+    const newEquipment = await this.createEmbeddedDocuments("Item", [equipmentData])
 
     // Update the source of all actions
     if (newEquipment[0].actions.length > 0) {
-      let newActions = Object.values(foundry.utils.deepClone(newEquipment[0].system.actions)).map((m) => {
-        const action = new Action(
-          m.source,
-          m.indice,
-          m.type,
-          m.img,
-          m.label,
-          m.chatFlavor,
-          m.properties.visible,
-          m.properties.activable,
-          m.properties.enabled,
-          m.properties.temporary,
-          m.conditions,
-          m.modifiers,
-          m.resolvers,
-        )
-        // Update the source and source's modifiers for the action
-        action.updateSource(newEquipment[0].id)
-        return action
-      })
+      const actions = newEquipment[0].toObject().system.actions
+      for (const action of actions) {
+        action.source = newEquipment[0].uuid
+      }
 
-      const updateActions = { _id: newEquipment[0].id, "system.actions": newActions }
+      const updateActions = { _id: newEquipment[0].id, "system.actions": actions }
       await this.updateEmbeddedDocuments("Item", [updateActions])
     }
+    return newEquipment[0].uuid
   }
 
+  /**
+   * Deletes a feature and its linked paths and capacities.
+   *
+   * @param {string} featureUuId - The UUID of the feature to delete.
+   * @returns {Promise<void>} A promise that resolves when the feature and its linked paths and capacities are deleted.
+   */
   async deleteFeature(featureUuId) {
     // Delete linked paths
     const feature = await fromUuid(featureUuId)
@@ -637,15 +604,26 @@ export default class CoActor extends Actor {
     this.deleteEmbeddedDocuments("Item", [feature.id])
   }
 
-  deleteProfile(profileId) {
+  /**
+   * Deletes a profile and its linked paths.
+   *
+   * @param {string} profileId The ID of the profile to delete.
+   */
+  async deleteProfile(profileId) {
     // Delete linked paths
-    const pathsIds = this.items.get(profileId).system.paths
-    for (const pathId of pathsIds) {
-      this.deletePath(pathId)
+    const pathsUuids = this.items.get(profileId).system.paths
+    for (const pathUuid of pathsUuids) {
+      this.deletePath(pathUuid)
     }
     this.deleteEmbeddedDocuments("Item", [profileId])
   }
 
+  /**
+   * Deletes a path and its linked capacities based on the provided UUID.
+   *
+   * @param {string} pathUuid The UUID of the path to be deleted.
+   * @returns {Promise<void>} - A promise that resolves when the deletion is complete.
+   */
   async deletePath(pathUuid) {
     // Delete linked capacities
     const path = await fromUuid(pathUuid)

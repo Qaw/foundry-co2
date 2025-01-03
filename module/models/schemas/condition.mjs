@@ -48,5 +48,4 @@ export class Condition extends foundry.abstract.DataModel {
 
     return this.conditions[this.predicate](this, obj, item)
   }
-
 }

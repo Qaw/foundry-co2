@@ -30,6 +30,8 @@ export default class CoBaseActorSheet extends ActorSheet {
 
     // Select options
     context.choiceMoveUnit = SYSTEM.MOVEMENT_UNIT
+
+    console.log("Actor Sheet context", context)
     return context
   }
 

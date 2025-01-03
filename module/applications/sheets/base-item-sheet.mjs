@@ -198,6 +198,7 @@ export default class CoBaseItemSheet extends ItemSheet {
   }
 
   /**
+   * Open the item sheet if it's a path or a capacity
    * @param event
    * @private
    */
