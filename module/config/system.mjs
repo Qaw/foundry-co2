@@ -1,5 +1,6 @@
 import * as ACTION from "./action.mjs"
 import * as CHARACTER from "./character.mjs"
+import * as CAPACITY from "./capacity.mjs"
 import * as ENCOUNTER from "./encounter.mjs"
 import * as EQUIPMENT from "./equipment.mjs"
 import * as FEATURE from "./feature.mjs"
@@ -73,6 +74,7 @@ export const SYSTEM = {
   BASE_DEFENSE,
   BASE_FORTUNE,
   BASE_RECOVERY,
+  CAPACITY_ACTION_TYPE: CAPACITY.CAPACITY_ACTION_TYPE,
   COMBAT: CHARACTER.COMBAT,
   COMBAT_TYPE: CONST.COMBAT_TYPE,
   CONDITION_OBJECTS: ACTION.CONDITION_OBJECTS,

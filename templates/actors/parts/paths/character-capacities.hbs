@@ -13,7 +13,7 @@
                 <li class="item flexrow" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity._id}}" data-item-type="capacity" draggable="true">
                     <div class="item-name flexrow">
                         <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>
-                        <h4><a class="item-control item-edit">{{capacity.name}}</a></h4>
+                        <h4><a class="item-control item-edit">{{capacity.name}}</a>{{#if capacity.system.hasActionType}} ({{capacity.system.actionTypeShort}}){{/if}}</h4>
                     </div>
                     <div class="item-controls-3">
                         <a class="item-chat chat" data-tooltip="Envoyer dans le chat" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>

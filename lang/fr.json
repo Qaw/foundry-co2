@@ -89,6 +89,7 @@
         "mp":"Points de mana",
         "type": "Type",
         "subtype": "Sous-type",
+        "actionType": "Type d'action",
         "category": "Catégorie",
         "archetype": "Archétype",
         "family": "Famille",
@@ -468,6 +469,24 @@
         "ranged": "Arme à distance",
         "thrown": "Arme de jet",
         "magical": "Arme magique"
+      }
+    },
+    "capacity": {
+      "action": {
+        "type": {
+          "none": "",
+          "l": "Action limitée",
+          "a": "Action d'attaque",
+          "m": "Action de mouvement",
+          "f": "Action gratuite"
+        },
+        "short": {
+          "none": "",
+          "l": "L",
+          "a": "A",
+          "m": "M",
+          "f": "G"
+        }
       }
     },
     "encounter": {

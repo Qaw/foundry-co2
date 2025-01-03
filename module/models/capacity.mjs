@@ -1,10 +1,12 @@
 import ItemData from "./item.mjs"
 import { Action } from "./schemas/action.mjs"
+import { SYSTEM } from "../config/system.mjs"
 export default class CapacityData extends ItemData {
   static defineSchema() {
     const fields = foundry.data.fields
     return foundry.utils.mergeObject(super.defineSchema(), {
       subtype: new fields.StringField({ required: true, nullable: false, initial: "" }),
+      actionType: new fields.StringField({ required: true, choices: SYSTEM.CAPACITY_ACTION_TYPE, initial: "none" }),
       learned: new fields.BooleanField({}),
       charges: new fields.SchemaField({
         current: new fields.NumberField({ required: false, nullable: true, integer: true }),
@@ -21,5 +23,14 @@ export default class CapacityData extends ItemData {
 
   get isSpell() {
     return this.properties.spell
+  }
+
+  get actionTypeShort() {
+    if (this.hasActionType) return game.i18n.localize(`CO.capacity.action.short.${SYSTEM.CAPACITY_ACTION_TYPE[this.actionType].id}`)
+    return ""
+  }
+
+  get hasActionType() {
+    return this.actionType !== "none"
   }
 }

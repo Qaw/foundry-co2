@@ -36,7 +36,7 @@
                         <div class="item-detail">{{add id 1}}</div>
                         <div class="item-name flexrow">
                             <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>
-                            <h4><a class="item-control item-edit">{{capacity.name}}</a></h4>
+                            <h4><a class="item-control item-edit">{{capacity.name}}</a>{{#if capacity.system.hasActionType}} ({{capacity.system.actionTypeShort}}){{/if}}</h4>
                         </div>
                         <div class="item-controls-3">
                             <a class="item-chat chat" data-tooltip="{{localize 'CO.label.long.sendToChat'}}" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
@@ -52,7 +52,7 @@
                             <div class="item-detail">{{add id 1}}</div>
                             <div class="item-name flexrow">
                                 <div class="item-image" style="background-image: url('{{capacity.img}}')"></div>
-                                <h4><a class="item-control item-edit" data-tooltip="{{localize 'CO.notif.unknownCapacity'}}">{{capacity.name}}</a></h4>
+                                <h4><a class="item-control item-edit" data-tooltip="{{localize 'CO.notif.unknownCapacity'}}">{{capacity.name}}</a>{{#if capacity.system.hasActionType}} ({{capacity.system.actionTypeShort}}){{/if}}</h4>
                             </div>
                             <div class="item-controls-2">
                                 <a class="item-edit edit" data-tooltip="{{localize 'CO.label.long.edit'}}"><i class="fas fa-fw fa-edit"></i></a>
