@@ -99,25 +99,25 @@ export default class CoActor extends Actor {
    * Retourne les Items de type equipment et de sous-type armor
    */
   get armors() {
-    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.ARMOR)
+    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.armor.id)
   }
 
   /**
    * Retourne les Items de type equipment et de sous-type shield
    */
   get shields() {
-    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.SHIELD)
+    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.shield.id)
   }
 
   /**
    * Retourne les Items de type equipment et de sous-type weapon
    */
   get weapons() {
-    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.WEAPON)
+    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.weapon.id)
   }
 
   get misc() {
-    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.MISC)
+    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.misc.id)
   }
 
   /**
@@ -201,7 +201,7 @@ export default class CoActor extends Actor {
    * Retourne {Object} Name, value, description
    */
   getSkillBonuses(ability) {
-    const modifiersByTarget = this.skillModifiers.filter((m) => m.target === ability)
+    const modifiersByTarget = this.system.skillModifiers.filter((m) => m.target === ability)
     let bonuses = []
     for (const modifier of modifiersByTarget) {
       const sourceInfos = modifier.getSourceInfos(this)

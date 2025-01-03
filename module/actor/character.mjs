@@ -76,7 +76,7 @@ export default class CoCharacter extends CoActor {
   _prepareHPMax() {
     const constitutionBonus = this.system.attributes.level * this.system.abilities.con.value
     const hpMaxBonuses = Object.values(this.system.attributes.hp.bonuses).reduce((prev, curr) => prev + curr)
-    const hpMaxModifiers = this.system.computeTotalModifiersByTarget(this.system.attributeModifiers, SYSTEM.ATTRIBUTE.HP)
+    const hpMaxModifiers = this.system.computeTotalModifiersByTarget(this.system.attributeModifiers, "hp")
 
     this.system.attributes.hp.max = this.system.attributes.hp.base + constitutionBonus + hpMaxBonuses + hpMaxModifiers.total
     this.system.attributes.hp.tooltip = Utils.getTooltip("Base", this.system.attributes.hp.base).concat(
@@ -125,7 +125,7 @@ export default class CoCharacter extends CoActor {
 
   /**
    * Calcule la défense
-   * Dans COF : 10 + AGI + Modificateurs (Bonus Armure + Bonus Bouclier + Bonus Capacités)
+   * Dans COF : 10 + AGILITE + Modificateurs (Bonus Armure + Bonus Bouclier + Bonus Capacités)
    * @param {*} skill
    * @param {*} abilityBonus
    * @param {*} bonuses
@@ -144,6 +144,8 @@ export default class CoCharacter extends CoActor {
   }
 
   /**
+   * Calcule les points de chance
+   * Dans COF : 2 + CHARISME + Modificateurs
    * Prepares the FP (Fortune Points) for a given skill by calculating its base value,
    * applying bonuses, and computing resource modifiers.
    *
@@ -182,6 +184,8 @@ export default class CoCharacter extends CoActor {
   }
 
   /**
+   * Calcule les points de mana
+   * Dans COF : si le personnage a au moins un sort, VOLONTE + Nombre de sorts Modificateurs
    * Prepares the MP (Magic Points) for a given skill by calculating its base value,
    * applying resource modifiers, and adding any additional bonuses.
    *
