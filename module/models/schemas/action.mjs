@@ -191,14 +191,4 @@ export class Action extends foundry.abstract.DataModel {
     dragData.indice = this.indice
     return dragData
   }
-
-  /** @override 
-  clone(data = {}, context = {}) {
-    data = foundry.utils.mergeObject(this.toObject(), data, { insertKeys: false, performDeletions: true, inplace: true })
-    data.conditions = this.conditions.map((cond) => cond.clone())
-    data.modifiers = this.modifiers.map((mod) => mod.clone())
-    data.resolvers = this.resolvers.map((res) => res.clone())
-
-    return new this.constructor(data, { parent: this.parent, ...context })
-  }*/
 }

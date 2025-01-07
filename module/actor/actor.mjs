@@ -590,7 +590,7 @@ export default class CoActor extends Actor {
   /**
    * Deletes a feature and its linked paths and capacities.
    *
-   * @param {string} featureUuId - The UUID of the feature to delete.
+   * @param {string} featureUuId The UUID of the feature to delete.
    * @returns {Promise<void>} A promise that resolves when the feature and its linked paths and capacities are deleted.
    */
   async deleteFeature(featureUuId) {

@@ -175,7 +175,6 @@ export default class CoItem extends Item {
    * Calculate the sum of all bonus for a specific type and target
    * @param {*} type trait
    * @param subtype
-   * @param {*} target For trait type, target are str, dex, etc...
    * @returns the value of the bonus
    */
   getModifiersByTypeAndSubtype(type, subtype) {

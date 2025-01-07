@@ -171,7 +171,7 @@ export default class CoBaseItemSheet extends ItemSheet {
   }
 
   /**
-   *
+   * Handles the deletion of an item from the item and updates the item with the new item list.
    * @param {*} event
    * @returns
    */

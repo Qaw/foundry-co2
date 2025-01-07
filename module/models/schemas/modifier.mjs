@@ -32,10 +32,10 @@ export class Modifier extends foundry.abstract.DataModel {
   }
 
   /**
-   * Asynchronously retrieves a tooltip for a given actor.
+   * Generates a tooltip for the given actor based on the item's name and evaluated value.
    *
-   * @param {Object} actor The actor for which the tooltip is being generated.
-   * @returns {Promise<string|undefined>} A promise that resolves to the tooltip string, or undefined if the item is not found.
+   * @param {Actor} actor The actor for which the tooltip is generated.
+   * @returns {string|undefined} The generated tooltip string or undefined if the item is not found.
    */
   getTooltip(actor) {
     const { id } = foundry.utils.parseUuid(this.source)
