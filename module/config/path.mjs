@@ -11,12 +11,12 @@ export const PATH_TYPES = {
     id: "feature",
     label: "CO.path.subtypes.feature",
   },
-  encounter: {
-    id: "encounter",
-    label: "CO.path.subtypes.encounter",
-  },
   prestige: {
     id: "prestige",
     label: "CO.path.subtypes.prestige",
+  },
+  encounter: {
+    id: "encounter",
+    label: "CO.path.subtypes.encounter",
   },
 }

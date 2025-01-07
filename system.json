@@ -1,51 +1,65 @@
 {
-    "id": "co",
-    "title": "Chroniques Oubliées V2",
-    "description": "Le système Chroniques Oubliées pour FoundryVTT.",
-    "version": "12.331.0",
-    "compatibility": {
-      "minimum": "12",
-      "verified": "12"
+  "id": "co",
+  "title": "Chroniques Oubliées V2",
+  "description": "Le système Chroniques Oubliées pour FoundryVTT.",
+  "version": "12.331.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12"
+  },
+  "authors": [
+    {
+      "name": "Kristov"
     },
-    "authors": [
-      {
-        "name": "Kristov"
-      },
-      {
-        "name": "Zigmund"
-      }
-    ],
-    "esmodules": ["co.mjs"],
-    "scripts": [],
-    "styles": ["css/co.css"],
-    "packs": [],
-    "languages": [
-       {
-        "lang": "fr",
-        "name": "French",
-        "path": "lang/fr.json"
-      },
-      {
-        "lang": "en",
-        "name": "English",
-        "path": "lang/fr.json"
-      }
-    ],
-    "gridDistance": 1.5,
-    "grid": {
-      "distance": 1.5,
-      "units": "m"
+    {
+      "name": "Zigmund"
+    }
+  ],
+  "esmodules": ["co.mjs"],
+  "scripts": [],
+  "styles": ["css/co.css"],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "fr",
+      "name": "French",
+      "path": "lang/fr.json"
     },
-    "primaryTokenAttribute": "attributes.hp",
-    "initiative": "1d20",
-    "url": "",
-    "manifest": "",
-    "download": "",
-    "license": "",
-    "flags": {
-      "hotReload": {
-        "extensions": ["css", "html", "hbs", "json", "mjs"],
-        "path": ["css", "templates", "lang", "module"]
-      }
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/fr.json"
+    }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "character": { "htmlFields": ["biography.private", "biography.public", "appearance.private", "appearance.public", "notes.private", "notes.public"] },
+      "encounter": { "htmlFields": ["description.private", "description.public", "notes.private", "notes.public"] }
+    },
+    "Item": {
+      "equipment": { "htmlFields": ["description"] },
+      "feature": { "htmlFields": ["description"] },
+      "profile": { "htmlFields": ["description"] },
+      "capacity": { "htmlFields": ["description"] },
+      "attack": { "htmlFields": ["description"] },
+      "path": { "htmlFields": ["description"] }
+    }
+  },
+  "gridDistance": 1.5,
+  "grid": {
+    "distance": 1.5,
+    "units": "m"
+  },
+  "primaryTokenAttribute": "attributes.hp",
+  "initiative": "1d20",
+  "url": "",
+  "manifest": "",
+  "download": "",
+  "license": "",
+  "flags": {
+    "hotReload": {
+      "extensions": ["css", "html", "hbs", "json", "mjs"],
+      "path": ["css", "templates", "lang", "module"]
     }
   }
+}

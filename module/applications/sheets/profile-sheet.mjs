@@ -12,18 +12,9 @@ export default class CoProfileSheet extends CoBaseItemSheet {
 
     let infosPaths = []
     for (const path of this.item.system.paths) {
-      let item = null
-      // Embedded item on actor
-      if (this.item.isEmbedded) {
-        const actor = this.item.parent
-        item = actor.items.get(path)
-      }
-      // World or compendium item
-      else {
-        item = await fromUuid(path)
-      }
-      // Item is null if the item has been deleted in the compendium
-      if (item != null) {
+      let item = await fromUuid(path)
+      // Item could be null if the item has been deleted in the compendium
+      if (item) {
         infosPaths.push(item.infos)
       }
     }

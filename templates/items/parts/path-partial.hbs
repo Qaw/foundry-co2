@@ -51,11 +51,10 @@
             <img class="inline-img" src="{{capacity.img}}" data-tooltip="{{capacity.name}}" />
         </div>
         <div class="cell left item" data-uuid="{{capacity.uuid}}" data-item-type="capacity">
-            <div class="field-label ellipse"><a class="item-control item-edit" data-tooltip="Edit Item">{{capacity.name}}</a></div>
+            <div class="field-label ellipse"><a class="item-control item-edit" data-tooltip="{{localize 'CO.label.long.editCapacity'}}" data-tooltip-direction="UP">{{capacity.name}}</a></div>
         </div>
         <div class="cell right item item-controls" data-uuid="{{capacity.uuid}}" data-item-type="capacity" draggable="true" data-rank="{{add id 1}}">
-            <a class="item-control item-edit" data-tooltip="Edit Item"><i class="fas fa-fw fa-edit"></i></a>
-            <a class="item-control item-delete" data-tooltip="Delete Item"><i class="fas fa-fw fa-trash"></i></a>
+            <a class="item-control item-delete" data-tooltip="{{localize 'CO.label.long.deleteCapacity'}}" data-tooltip-direction="UP"><i class="fas fa-fw fa-trash"></i></a>
         </div>
     {{/each}}
 </div>

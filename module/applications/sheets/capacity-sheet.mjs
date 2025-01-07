@@ -5,6 +5,7 @@ export default class CoCapacitySheet extends CoBaseItemSheet {
   /** @override */
   async getData(options = {}) {
     const context = await super.getData(options)
+    context.choiceCapacityActionTypes = SYSTEM.CAPACITY_ACTION_TYPE
 
     return context
   }

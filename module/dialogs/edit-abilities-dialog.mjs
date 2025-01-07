@@ -59,15 +59,16 @@ export class CoEditAbilitiesDialog extends Application {
   async _onResetAbilityScores(event) {
     const { actor } = this
     // Construct the Roll instance
-    let r = new Roll("{4d6kh3, 4d6kh3, 4d6kh3, 4d6kh3, 4d6kh3, 4d6kh3}")
+    let r = new Roll("{1d4,1d4,1d4,1d4,1d4,1d4}")
     await r.roll()
     const newAbilityScores = {
-      str: { base: r.terms[0].results[0].result },
-      dex: { base: r.terms[0].results[1].result },
-      con: { base: r.terms[0].results[2].result },
-      int: { base: r.terms[0].results[3].result },
-      wis: { base: r.terms[0].results[4].result },
-      cha: { base: r.terms[0].results[5].result },
+      agi: { base: r.terms[0].results[0].result },
+      con: { base: r.terms[0].results[1].result },
+      for: { base: r.terms[0].results[2].result },
+      per: { base: r.terms[0].results[3].result },
+      cha: { base: r.terms[0].results[4].result },
+      int: { base: r.terms[0].results[5].result },
+      vol: { base: r.terms[0].results[5].result },
     }
     r.toMessage({
       user: game.user.id,

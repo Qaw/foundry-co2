@@ -210,7 +210,6 @@
       </div>
     {{/if}}
   </div>
-
   <!-- DEF -->
   <div class="sidebar-section armor-section">
     <div class="sidebar-section-header">
@@ -288,7 +287,6 @@
       </div>
     {{/if}}
   </div>
-
   <!-- FP -->
   <div class="resource-section sidebar-section">
     <div class="sidebar-section-header">
@@ -303,10 +301,20 @@
       </div>
     </div>
     {{#if unlocked}}
+      <div class="sidebar-section-content flexrow">
+        <div class="labelled-field">
+          <label>{{localize "CO.label.short.ability"}}</label>
+          <div class="select-container">
+            <select name="system.resources.fortune.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=resources.fortune.ability localize=true}}
+            </select>
+          </div>
+        </div>
+      </div>
       <div class="sidebar-section-content">
         <div class="labelled-field">
           <label>{{localize "CO.label.long.base"}}</label>
-          <input class="hp-base" type="number" name="system.resources.fortune.base" value="{{resources.fortune.base}}" data-dtype="Number" placeholder="0" />
+          <input class="hp-base" type="number" name="system.resources.fortune.base" value="{{resources.fortune.base}}" data-dtype="Number" placeholder="0" readonly />
         </div>
       </div>
       <div class="sidebar-section-content">
@@ -328,20 +336,30 @@
   <div class="resource-section sidebar-section">
     <div class="sidebar-section-header">
       <div class="sidebar-label">
-        <i class="fas fa-fw fa-heart-pulse use-recovery" data-tooltip="Dépenser un PR avec PV, SHIFT+click sans PV"></i>
+        <i class="fas fa-fw fa-heart-pulse use-recovery" data-tooltip="Dépenser un PR"></i>
         <h4 data-tooltip="{{localize 'CO.resources.long.recovery'}}">{{localize "CO.resources.medium.recovery"}}</h4>
         <div class="resource-points">
           <input class="current" name="system.resources.recovery.value" value="{{resources.recovery.value}}" type="number" data-dtype="Number" placeholder="0" />
           <span class="slash">/</span>
-          <span class="max">{{resources.recovery.max}}</span>
+          <span class="max" data-tooltip="{{resources.recovery.tooltip}}">{{resources.recovery.max}}</span>
         </div>
       </div>
     </div>
     {{#if unlocked}}
+      <div class="sidebar-section-content flexrow">
+        <div class="labelled-field">
+          <label>{{localize "CO.label.short.ability"}}</label>
+          <div class="select-container">
+            <select name="system.resources.recovery.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=resources.recovery.ability localize=true}}
+            </select>
+          </div>
+        </div>
+      </div>
       <div class="sidebar-section-content">
         <div class="labelled-field">
           <label>{{localize "CO.label.long.base"}}</label>
-          <input class="hp-base" type="number" name="system.resources.recovery.base" value="{{resources.recovery.base}}" data-dtype="Number" placeholder="0" />
+          <input class="hp-base" type="number" name="system.resources.recovery.base" value="{{resources.recovery.base}}" data-dtype="Number" placeholder="0" readonly />
         </div>
       </div>
       <div class="sidebar-section-content">
@@ -373,6 +391,16 @@
       </div>
     </div>
     {{#if unlocked}}
+      <div class="sidebar-section-content flexrow">
+        <div class="labelled-field">
+          <label>{{localize "CO.label.short.ability"}}</label>
+          <div class="select-container">
+            <select name="system.resources.mana.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=resources.mana.ability localize=true}}
+            </select>
+          </div>
+        </div>
+      </div>
       <div class="sidebar-section-content">
         <div class="labelled-field">
           <label>{{localize "CO.label.long.base"}}</label>

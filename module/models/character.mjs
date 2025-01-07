@@ -1,8 +1,6 @@
-import { PROFILE_FAMILY, SYSTEM } from "../config/system.mjs"
+import { SYSTEM } from "../config/system.mjs"
 import { BaseValue } from "./schemas/base-value.mjs"
 import ActorData from "./actor.mjs"
-import { Modifiers } from "./action/modifiers.mjs"
-import Utils from "../utils.mjs"
 
 export default class CharacterData extends ActorData {
   static defineSchema() {
@@ -25,23 +23,17 @@ export default class CharacterData extends ActorData {
       }, {}),
     )
 
-    const resourceField = (label) =>
-      new fields.SchemaField(
-        {
-          base: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-          value: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-          max: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-          bonuses: new fields.SchemaField({
-            sheet: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-            effects: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-          }),
-        },
-        { label, nullable: false },
-      )
-
     schema.resources = new fields.SchemaField(
       Object.values(SYSTEM.RESOURCES).reduce((obj, resource) => {
-        obj[resource.id] = resourceField(resource.label)
+        const initial = {
+          base: 0,
+          ability: resource.ability,
+          bonuses: {
+            sheet: 0,
+            effects: 0,
+          },
+        }
+        obj[resource.id] = new fields.EmbeddedDataField(BaseValue, { label: resource.label, nullable: false, initial: initial })
         return obj
       }, {}),
     )
@@ -96,7 +88,94 @@ export default class CharacterData extends ActorData {
     return this.parent.items.find((item) => item.type === SYSTEM.ITEM_TYPE.PROFILE)
   }
 
-  get profiles() {
-    return this.parent.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.PROFILE)
+  /**
+   * Retrieves an array of ability modifiers from various sources associated with the character.
+   *
+   * @returns {Array} An array of ability modifiers.
+   */
+  get abilityModifiers() {
+    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.ability.id)
+  }
+
+  /**
+   * Retrieves an array of combat modifiers from various sources associated with the character.
+   *
+   * @returns {Array} An array of combat modifiers.
+   */
+  get combatModifiers() {
+    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.combat.id)
+  }
+
+  /**
+   * Retrieves the attribute modifiers for the character.
+   *
+   * @returns {Array} An array of attribute modifiers.
+   */
+  get attributeModifiers() {
+    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.attribute.id)
+  }
+
+  /**
+   * Gets the resource modifiers for the character.
+   *
+   * @returns {Array} An array of resource modifiers.
+   */
+  get resourceModifiers() {
+    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.resource.id)
+  }
+
+  /**
+   * Retrieves the skill modifiers for the character.
+   *
+   * @returns {Array} An array of skill modifiers.
+   */
+  get skillModifiers() {
+    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.skill.id)
+  }
+
+  /**
+   * Return the total modifier and the tooltip for the given target and an array of modifiers.
+   * @param {Array} modifiers An array of modifier objects.
+   * @param {SYSTEM.MODIFIERS.MODIFIER_TARGET} target The target for which the modifiers are filtered.
+   **/
+  computeTotalModifiersByTarget(modifiers, target) {
+    if (!modifiers) return { total: 0, tooltip: "" }
+
+    let modifiersByTarget = modifiers.filter((m) => m.target === target)
+
+    let total = modifiersByTarget.map((i) => i.evaluate(this.parent)).reduce((acc, curr) => acc + curr, 0)
+
+    let tooltip = ""
+    for (const modifier of modifiersByTarget) {
+      let partialTooltip = modifier.getTooltip(this.parent)
+      if (partialTooltip !== null) tooltip += partialTooltip
+    }
+
+    return { total: total, tooltip: tooltip }
+  }
+
+  /**
+   * Retrieves an array of modifiers from various sources associated with the character.
+   * The sources include features, profiles, capacities, and equipment.
+   * Each source is checked for enabled modifiers of the specified type and subtype.
+   * For features and profiles, the modifiers are in the item
+   * for capacities and equipment, the modifiers are in the actions
+   *
+   * @param {string} subtype The subtype of the modifier.
+   * @returns {Array} An array of modifiers.
+   */
+  _getModifiers(subtype) {
+    const sources = ["features", "profiles", "capacities", "equipments"]
+    let modifiersArray = []
+
+    sources.forEach((source) => {
+      let items = this.parent[source]
+      if (items) {
+        let allModifiers = items.reduce((mods, item) => mods.concat(item.enabledModifiers), []).filter((m) => m.subtype === subtype)
+        modifiersArray.push(...allModifiers)
+      }
+    })
+
+    return modifiersArray
   }
 }

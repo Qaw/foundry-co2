@@ -1,5 +1,5 @@
-import { Action } from "../models/action/action.mjs"
-import { Condition } from "../models/action/condition.mjs"
+import { Action } from "../models/schemas/action.mjs"
+import { Condition } from "../models/schemas/condition.mjs"
 import { SYSTEM } from "../config/system.mjs"
 /**
  * Extend the base Item entity
@@ -29,12 +29,13 @@ export default class CoItem extends Item {
   get modifiers() {
     // For Equipement or Capacity Item, the modifiers are in the actions
     if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(this.type)) {
-      return this.getModifiersFromActions(false)
+      return this.getModifiersFromActions(true)
     }
     // For Feature or Profile, the modifiers are in the item
     if ([SYSTEM.ITEM_TYPE.FEATURE, SYSTEM.ITEM_TYPE.PROFILE].includes(this.type)) {
-      return this.system.modifiers instanceof Array ? this.system.modifiers : Object.values(this.system.modifiers)
-    } else return []
+      return this.system.modifiers
+    }
+    return []
   }
 
   /**
@@ -46,14 +47,11 @@ export default class CoItem extends Item {
   getModifiersFromActions(filterEnabled = false) {
     const filteredActions = filterEnabled ? this.actions.filter((action) => action.properties.enabled) : this.actions
 
-    // Use `flatMap` to create a new array containing the modifiers from each action.
-    // This will also flatten the resulting array of modifiers in a single step.
-    return filteredActions.flatMap((action) => {
-      // Destructure the `modifiers` property from the action object
-      const { modifiers } = action
-      if (!modifiers) return []
-      return Array.isArray(modifiers) ? modifiers : Object.values(modifiers)
-    })
+    let modifiers = []
+    for (const action of filteredActions) {
+      modifiers.push(...action.modifiers)
+    }
+    return modifiers
   }
 
   /**
@@ -61,8 +59,9 @@ export default class CoItem extends Item {
    * If the item has actions, only enabled actions are taken into account
    */
   get enabledModifiers() {
-    // For Equipement or Capacity Item, the modifiers are in the actions
+    // For Equipement or Capacity Item, the modifiers are in enabled actions
     if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(this.type)) return this.getModifiersFromActions(true)
+    // For Feature or Profile, the modifiers are in the item
     else return this.modifiers
   }
 
@@ -75,17 +74,18 @@ export default class CoItem extends Item {
    */
   get actions() {
     if (foundry.utils.isEmpty(this.system.actions)) return []
-    if (this.system.actions instanceof Array) return this.system.actions
-    return Object.values(this.system.actions)
+    return this.system.actions
   }
 
   /**
    * An array of all the visible actions of the item or empty if no actions or if it's an item without actions
    */
-  get visibleActions() {
+  async getVisibleActions() {
     if (foundry.utils.isEmpty(this.system.actions)) return []
 
-    return this.actions.map((i) => Action.createFromExisting(i)).filter((action) => action.isVisible(this))
+    const visibilityResults = await Promise.all(this.actions.map((action) => action.isVisible(this)))
+
+    return this.actions.filter((_, index) => visibilityResults[index])
   }
 
   /**
@@ -157,9 +157,9 @@ export default class CoItem extends Item {
 
   /**
    * Calculate the sum of all bonus for a specific type and target
-   * @param {*} type      MODIFIER_TYPE
-   * @param {*} subtype   MODIFIER_SUBTYPE
-   * @param {*} target    MODIFIER_TARGET
+   * @param {*} type      MODIFIERS_TYPE
+   * @param {*} subtype   MODIFIERS_SUBTYPE
+   * @param {*} target    MODIFIERS_TARGET
    * @returns the value of the bonus
    */
   getTotalModifiersByTypeSubtypeAndTarget(type, subtype, target) {
@@ -213,38 +213,38 @@ export default class CoItem extends Item {
   /**
    * Update the rank for an embedded path item
    */
-  updateRank() {
+  async updateRank() {
     if (this.type !== SYSTEM.ITEM_TYPE.PATH || !this.actor) return
     let max = 0
-    this.system.capacities.forEach((c) => {
-      const capacity = this.actor.items.get(c)
+
+    for (const uuid of this.system.capacities) {
+      const capacity = await fromUuid(uuid)
       if (capacity && capacity.system.learned) {
-        const rank = this.system.capacities.indexOf(c) + 1
+        const rank = this.system.capacities.indexOf(uuid) + 1
         if (rank > max) max = rank
       }
-    })
+    }
     this.update({ "system.rank": max })
   }
 
   /**
-   * Update the actions for an embedded capacity item
+   * Update the actions for an embedded capacity or equipment item
    */
   toggleActions() {
     if ((this.type !== SYSTEM.ITEM_TYPE.CAPACITY && this.type !== SYSTEM.ITEM_TYPE.EQUIPMENT) || !this.actor) return
-    let actions = this.actions
+
+    const actions = this.toObject().system.actions
+
     for (const action of actions) {
-      let act = new Action(action)
-      // Let act = new Action(action.source, action.indice, action.type, action.img, action.label, action.chatFlavor, action.properties.visible, action.properties.activable, action.properties.enabled, action.properties.temporary, action.conditions, action.modifiers, action.resolvers);
-      // action.properties.visible = !action.properties.visible;
       // Si c'est une action non activable, l'activer automatiquement
       if (!action.properties.activable) {
         action.properties.enabled = !action.properties.enabled
       } else {
         // Vérifier si les conditions sont remplies
-        if (!act.hasConditions) {
+        if (!action.hasConditions) {
           action.properties.visible = !action.properties.visible
         } else {
-          action.properties.visible = act.isVisible(this)
+          action.properties.visible = action.isVisible(this)
         }
       }
     }

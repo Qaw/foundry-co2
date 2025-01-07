@@ -34,6 +34,10 @@ export const MODIFIERS_SUBTYPE = Object.freeze({
     id: "attribute",
     label: "CO.modifier.subtype.attribute",
   },
+  resource: {
+    id: "resource",
+    label: "CO.modifier.subtype.resource",
+  },
   skill: {
     id: "skill",
     label: "CO.modifier.subtype.skill",
@@ -96,5 +100,13 @@ export const MODIFIERS_TARGET = Object.freeze({
   rp: {
     id: "rp",
     label: "CO.label.long.rp",
+  },
+  fp: {
+    id: "fp",
+    label: "CO.label.long.fp",
+  },
+  mp: {
+    id: "mp",
+    label: "CO.label.long.mp",
   },
 })

@@ -1,4 +1,4 @@
-{{log 'modifiers-partial' this}}
+{{!log 'modifiers-partial' this}}
 <h4 class="form-header modifiers flexrow">
     <a class="modifiers-toggle section-toggle flex1">{{localize "CO.ui.modifiers"}}</a>
     <a class="action-modifier-add flex0" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
@@ -12,7 +12,7 @@
             <div class="form-fields flex0"></div>
         </div>
         {{#each action.modifiers as |m id|}}
-            {{log 'modifier' m id}}
+            {{!log 'modifier' m id}}
             <div class="modifier flexrow" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="modifier">
                 <input name="system.actions.{{../idx}}.modifiers.{{id}}.type" type="hidden" value="{{m.type}}" data-dtype="String" />
                 <input name="system.actions.{{../idx}}.modifiers.{{id}}.source" type="hidden" value="{{m.source}}" data-dtype="String" />

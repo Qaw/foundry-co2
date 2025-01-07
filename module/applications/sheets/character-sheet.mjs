@@ -1,6 +1,6 @@
 import CoBaseActorSheet from "./base-actor-sheet.mjs"
 import { CoEditAbilitiesDialog } from "../../dialogs/edit-abilities-dialog.mjs"
-import { Action } from "../../models/action/action.mjs"
+import { Action } from "../../models/schemas/action.mjs"
 import { SYSTEM } from "../../config/system.mjs"
 
 export default class CoCharacterSheet extends CoBaseActorSheet {
@@ -16,12 +16,18 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /** @override */
-  getData(options) {
+  async getData(options) {
     const context = super.getData(options)
-    context.profiles = this.actor.system.profiles
+    context.profiles = this.actor.profiles
     context.xpleft = parseInt(this.actor.system.attributes.xp.max) - parseInt(this.actor.system.attributes.xp.value)
     context.choiceAbilities = SYSTEM.ABILITIES
     context.choiceSize = SYSTEM.SIZES
+
+    context.visibleActions = await this.actor.getVisibleActions()
+    context.visibleActivableActions = await this.actor.getVisibleActivableActions()
+    context.visibleNonActivableActions = await this.actor.getVisibleNonActivableActions()
+    context.visibleActivableTemporaireActions = await this.actor.getVisibleActivableTemporaireActions()
+    context.visibleNonActivableNonTemporaireActions = await this.actor.getVisibleNonActivableNonTemporaireActions()
     return context
   }
 
@@ -122,12 +128,11 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
    */
   _onEditItem(event) {
     event.preventDefault()
-    const li = $(event.currentTarget).closest(".item")
-    const id = li.data("itemId")
-    if (!foundry.utils.isEmpty(id) && id !== "") {
-      let document = this.actor.items.get(id)
-      return document.sheet.render(true)
-    }
+    const li = event.currentTarget.closest(".item")
+    const uuid = li.dataset.itemUuid
+    const { id } = foundry.utils.parseUuid(uuid)
+    let document = this.actor.items.get(id)
+    return document.sheet.render(true)
   }
 
   /**
@@ -139,16 +144,17 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     event.preventDefault()
     const li = $(event.currentTarget).parents(".item")
     const itemId = li.data("itemId")
+    const itemUuid = li.data("itemUuid")
     const itemType = li.data("itemType")
     switch (itemType) {
       case "path":
         this._onDeletePath(event)
         break
       case "capacity":
-        this._onDeleteCapacity(event)
+        this._onDeleteCapacity(itemUuid)
         break
       case "feature":
-        this._onDeleteFeature(event)
+        this._onDeleteFeature(itemUuid)
         break
       case "profile":
         this._onDeleteProfile(event)
@@ -160,15 +166,11 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
 
   /**
    * Delete the selected feature
-   * @param event
+   * @param itemUuid
    * @private
    */
-  async _onDeleteFeature(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).parents(".item")
-    const featureId = li.data("itemId")
-
-    this.actor.deleteFeature(featureId)
+  async _onDeleteFeature(itemUuid) {
+    await this.actor.deleteFeature(itemUuid)
   }
 
   /**
@@ -193,22 +195,18 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
     event.preventDefault()
 
     const li = $(event.currentTarget).closest(".item")
-    const pathId = li.data("itemId")
+    const pathUuid = li.data("itemUuid")
 
-    this.actor.deletePath(pathId)
+    this.actor.deletePath(pathUuid)
   }
 
   /**
    * Delete the selected capacity
-   * @param event
+   * @param itemUuid
    * @private
    */
-  async _onDeleteCapacity(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).parents(".item")
-    const capacityId = li.data("itemId")
-
-    await this.actor.deleteCapacity(capacityId)
+  async _onDeleteCapacity(itemUuid) {
+    await this.actor.deleteCapacity(itemUuid)
   }
 
   /** @inheritdoc */
@@ -238,10 +236,11 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * @param {DragEvent} event            The concluding DragEvent which contains drop data
-   * @param {object} data                The data transfer extracted from the event
-   * @returns {Promise<Item[]|boolean>}  The created or updated Item instances, or false if the drop was not permitted.
-   * @protected
+   * Handle the drop event for an item.
+   *
+   * @param {Event} event The drop event.
+   * @param {Object} data The data associated with the dropped item.
+   * @returns {Promise<boolean>} - Returns false if the actor is not the owner or if the item type is not handled.
    */
   async _onDropItem(event, data) {
     event.preventDefault()
@@ -255,9 +254,9 @@ export default class CoCharacterSheet extends CoBaseActorSheet {
       case SYSTEM.ITEM_TYPE.EQUIPMENT:
         return this.actor.addEquipment(item)
       case SYSTEM.ITEM_TYPE.FEATURE:
-        return this.actor.addFeature(item)
+        return await this.actor.addFeature(item)
       case SYSTEM.ITEM_TYPE.PROFILE:
-        if (this.actor.system.profiles.length > 0) {
+        if (this.actor.profiles.length > 0) {
           ui.notifications.warn(game.i18n.localize("CO.notif.profilAlreadyExist"))
           break
         }

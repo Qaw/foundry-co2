@@ -1,8 +1,7 @@
 import { SYSTEM } from "../config/system.mjs"
-import { Action } from "../models/action/action.mjs"
-import { Modifier, Modifiers } from "../models/action/modifiers.mjs"
-import { Resolver } from "../models/action/resolvers.mjs"
-import Utils from "../utils.mjs"
+import { Action } from "../models/schemas/action.mjs"
+import { Resolver } from "../models/schemas/resolver.mjs"
+import { Modifier } from "../models/schemas/modifier.mjs"
 
 /**
  * @class CoActor
@@ -21,58 +20,51 @@ export default class CoActor extends Actor {
 
   // #region accesseurs
 
-  get baseInitiative() {
-    return 10
-  }
-
-  get baseDefense() {
-    return 10
-  }
-
   /**
-   * Retourne les Items de type equipment
+   * Retourne  les Items de type equipment
    */
   get equipments() {
     return this.itemTypes.equipment
   }
 
   /**
-   * Retourne les Items de type feature
+   * Retourne  les Items de type feature
    */
   get features() {
     return this.itemTypes.feature
   }
 
   /**
-   * Retourne les Items de type path
+   * Retourne  les Items de type path
    */
   get paths() {
     return this.itemTypes.path
   }
 
+  /**
+   * Retourne  les Items de type capacity
+   */
   get capacities() {
     return this.itemTypes.capacity
   }
 
   /**
-   * Retourne un tableau d'objets comprenant les voies et les capacités associées
+   * Retourne  les Items de type profile
+   */
+  get profiles() {
+    return this.itemTypes.profile
+  }
+
+  /**
+   * Retourne  un tableau d'objets comprenant les voies et les capacités associées
    */
   get pathGroups() {
     let pathGroups = []
     this.paths.forEach((path) => {
-      const capacities = path.system.capacities.map((cid) => this.items.find((i) => i._id === cid))
-      // Console.log(path);
-      console.log(path.system.rank)
-      // Console.log(capacities);
-      // const rank = path.system.rank;
-      // const capacities = path.system.capacities;
-      // for (let index = 0; index < rank; index++) {
-      //   let capacity = this.items.get(capacities[index]);
-      //   if (capacity.system.learned) {
-      //     if (index === 0 || index === 1) xp += 1;
-      //     else xp +=2;
-      //   }
-      // }
+      const capacitesId = path.system.capacities.map((uuid) => {
+        return foundry.utils.parseUuid(uuid).id
+      })
+      const capacities = capacitesId.map((id) => this.items.find((i) => i._id === id))
 
       pathGroups.push({
         path: path,
@@ -104,46 +96,46 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * Retourneles Items de type equipment et de sous-type armor
+   * Retourne les Items de type equipment et de sous-type armor
    */
   get armors() {
-    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.ARMOR)
+    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.armor.id)
   }
 
   /**
-   * Retourneles Items de type equipment et de sous-type shield
+   * Retourne les Items de type equipment et de sous-type shield
    */
   get shields() {
-    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.SHIELD)
+    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.shield.id)
   }
 
   /**
-   * Retourneles Items de type equipment et de sous-type weapon
+   * Retourne les Items de type equipment et de sous-type weapon
    */
   get weapons() {
-    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.WEAPON)
+    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.weapon.id)
   }
 
   get misc() {
-    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPE.MISC)
+    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.misc.id)
   }
 
   /**
-   * Retourneles Items équipés de type equipment et de sous-type armor
+   * Retourne les Items équipés de type equipment et de sous-type armor
    */
   get equippedArmors() {
     return this.armors.filter((item) => item.system.equipped)
   }
 
   /**
-   * Retourneles Items équipés de type equipment et de sous-type shield
+   * Retourne les Items équipés de type equipment et de sous-type shield
    */
   get equippedShields() {
     return this.shields.filter((item) => item.system.equipped)
   }
 
   /**
-   * RetourneToutes les actions de tous les objets
+   * Retourne Toutes les actions de tous les objets
    */
   get actions() {
     let allActions = []
@@ -154,80 +146,49 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * RetourneToutes les actions visibles des capacités et des équipements
+   * Retourne Toutes les actions visibles des capacités et des équipements
    */
-  get visibleActions() {
+  async getVisibleActions() {
     let allActions = []
-    this.items.forEach((item) => {
-      if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
-        allActions.push(...item.visibleActions)
+    for (const item of this.items) {
+      if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(item.type)) {
+        const itemActions = await item.getVisibleActions()
+        allActions.push(...itemActions)
       }
-    })
+    }
     return allActions
   }
 
   /**
-   * RetourneToutes les actions visibles et activables des capacités et des équipements
+   * Retourne Toutes les actions visibles et activables des capacités et des équipements
    */
-  get visibleActivableActions() {
-    return this.visibleActions.filter((a) => a.properties.activable)
+  async getVisibleActivableActions() {
+    const actions = await this.getVisibleActions()
+    return actions.filter((a) => a.properties.activable)
   }
 
   /**
-   * RetourneToutes les actions visibles, activables et temporaires des capacités et des équipements
+   * Retourne Toutes les actions visibles, activables et temporaires des capacités et des équipements
    */
-  get visibleActivableTemporaireActions() {
-    return this.visibleActions.filter((a) => a.properties.activable && a.properties.temporary)
+  async getVisibleActivableTemporaireActions() {
+    const actions = await this.getVisibleActions()
+    return actions.filter((a) => a.properties.activable && a.properties.temporary)
   }
 
   /**
-   * RetourneToutes les actions visibles et non activables des capacités et des équipements
+   * Retourne Toutes les actions visibles et non activables des capacités et des équipements
    */
-  get visibleNonActivableActions() {
-    return this.visibleActions.filter((a) => !a.properties.activable)
+  async getVisibleNonActivableActions() {
+    const actions = await this.getVisibleActions()
+    return actions.filter((a) => !a.properties.activable)
   }
 
   /**
-   * RetourneToutes les actions visibles, non activables et non temporaires des capacités et des équipements
+   * Retourne Toutes les actions visibles, non activables et non temporaires des capacités et des équipements
    */
-  get visibleNonActivableNonTemporaireActions() {
-    return this.visibleActions.filter((a) => !a.properties.activable && !a.properties.temporary)
-  }
-
-  /**
-   * Get all the modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype AbilityValue
-   * Retourne{Modifier[]} An empty array or an array of Modifiers
-   */
-  get abilitiesModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER_SUBTYPE.ABILITY)
-  }
-
-  /**
-   * Retourne{Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Combat
-   */
-  get combatModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER_SUBTYPE.COMBAT_TYPE)
-  }
-
-  /**
-   * Retourne{Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Attribute
-   */
-  get attributeModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER_SUBTYPE.ATTRIBUTE)
-  }
-
-  /**
-   * Retourne{Modifier[]} All the Trait or Capacity modifiers from Items of type Equipment, Feature, Profile or Capacity with the subtype Skill
-   */
-  get skillModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER_SUBTYPE.SKILL)
-  }
-
-  /**
-   * Retourne{Modifier[]} All the Trait or Capacity modifiers from Items of typeEquipment, Feature, Profile or Capacity with the subtype Resource
-   */
-  get resourceModifiers() {
-    return this._getModifiersBySubtype(SYSTEM.MODIFIER_SUBTYPE.RESOURCE)
+  async getVisibleNonActivableNonTemporaireActions() {
+    const actions = await this.getVisibleActions()
+    return actions.filter((a) => !a.properties.activable && !a.properties.temporary)
   }
 
   get isUnlocked() {
@@ -242,10 +203,10 @@ export default class CoActor extends Actor {
   /**
    * Return all skill modifiers
    * @param {string} ability str, dex ...
-   * Retourne{Object} Name, value, description
+   * Retourne {Object} Name, value, description
    */
   getSkillBonuses(ability) {
-    const modifiersByTarget = this.skillModifiers.filter((m) => m.target === ability)
+    const modifiersByTarget = this.system.skillModifiers.filter((m) => m.target === ability)
     let bonuses = []
     for (const modifier of modifiersByTarget) {
       const sourceInfos = modifier.getSourceInfos(this)
@@ -255,7 +216,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * Retourne l'objet correspondant à la clé
+   * Retourne  l'objet correspondant à la clé
    * @param {*} key
    */
   getEmbeddedItemByKey(key) {
@@ -263,9 +224,9 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * Retourne le malus à l'initiative lié à l'armure et à l'incompétence armes/armures
+   * Retourne  le malus à l'initiative lié à l'armure et à l'incompétence armes/armures
    *
-   * Retourne{int} retourne le malus (négatif) ou 0
+   * Retourne {int} retourne le malus (négatif) ou 0
    */
   getMalusToInitiative() {
     return 0
@@ -273,18 +234,18 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * Retourne le malus à l'initiative lié à l'armure
+   * Retourne  le malus à l'initiative lié à l'armure
    *
-   * Retourne{int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
+   * Retourne {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
    */
   getOverloadMalusToInitiative() {
     return 0
   }
 
   /**
-   * Retourne le malus à l'initiative lié à l'incompétence armes/armures
+   * Retourne  le malus à l'initiative lié à l'incompétence armes/armures
    *
-   * Retourne{int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
+   * Retourne {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
    */
   getIncompetentMalusToInitiative() {
     return 0
@@ -292,7 +253,7 @@ export default class CoActor extends Actor {
 
   /**
    * Calcule la défense de l'armure et du bouclier équipés
-   * Retourne {Int} la somme des DEF
+   * Retourne  {Int} la somme des DEF
    */
   getDefenceFromArmorAndShield() {
     return this.getDefenceFromArmor() + this.getDefenceFromShield()
@@ -300,7 +261,7 @@ export default class CoActor extends Actor {
 
   /**
    * Calcule la défense de l'armure équipée
-   * Retourne {Int} la valeur de défense
+   * Retourne  {Int} la valeur de défense
    */
   getDefenceFromArmor() {
     let protections = this.equippedArmors.map((i) => i.system.def)
@@ -308,7 +269,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   * Retourne {Int} la valeur de défense
+   * Retourne  {Int} la valeur de défense
    */
   getDefenceFromShield() {
     let protections = this.equippedShields.map((i) => i.system.def)
@@ -316,7 +277,7 @@ export default class CoActor extends Actor {
   }
 
   /**
-   *
+   * Supprime un item de type Capacity ou Feature
    * @param {*} itemId
    */
   deleteItem(itemId) {
@@ -380,7 +341,7 @@ export default class CoActor extends Actor {
      @param {string("attack","damage")} type  define if it's an attack or just a damage
    */
   async activateAction(state, source, indice, type) {
-    const item = this.items.get(source)
+    const item = await fromUuid(source)
 
     if (!item) return
 
@@ -401,7 +362,7 @@ export default class CoActor extends Actor {
     else {
       const action = Action.createFromExisting(item.system.actions[indice])
       // Recherche des resolvers de l'action
-      let resolvers = Object.values(action.resolvers).map((a) => new Resolver(a.type, a.skill, a.dmg))
+      let resolvers = Object.values(action.resolvers).map((a) => new Resolver({ type: a.type, skill: a.skill, dmg: a.dmg }))
       for (const resolver of resolvers) {
         let res = resolver.resolve(this, item, action, type)
       }
@@ -423,8 +384,9 @@ export default class CoActor extends Actor {
     await this._toggleItemFieldAndActions(capacityId, "learned")
 
     // Mise à jour du rang de la voie correspondante
-    let path = this.items.get(this.items.get(capacityId).system.path)
-    path.updateRank()
+    let path = await fromUuid(this.items.get(capacityId).system.path)
+    if (!path) return
+    await path.updateRank()
   }
 
   /**
@@ -452,50 +414,48 @@ export default class CoActor extends Actor {
     let itemData = feature.toObject()
     itemData = itemData instanceof Array ? itemData : [itemData]
     const newFeature = await this.createEmbeddedDocuments("Item", itemData)
-    // Console.info(Utils.log("Feature created", newFeature));
 
     // Update the source of all modifiers with the id of the new embedded feature created
-    let newModifiers = Object.values(foundry.utils.deepClone(newFeature[0].system.modifiers)).map((m) => new Modifier(m.source, m.type, m.subtype, m.target, m.value))
-    newModifiers.forEach((modifier) => {
-      modifier.updateSource(newFeature[0].id)
-    })
+    let newModifiers = foundry.utils
+      .deepClone(newFeature[0].system.modifiers)
+      .map((m) => new Modifier({ source: newFeature[0].uuid, type: m.type, subtype: m.subtype, target: m.target, value: m.value }))
 
     const updateModifiers = { _id: newFeature[0].id, "system.modifiers": newModifiers }
 
     await this.updateEmbeddedDocuments("Item", [updateModifiers])
 
     // Create all Paths
-    let updatedPathsIds = []
+    let updatedPathsUuids = []
     for (const path of feature.system.paths) {
       let originalPath = await fromUuid(path)
 
       // Item is null if the item has been deleted in the compendium or in the world
       // TODO Add a warning message and think about a global rollback
-      if (originalPath != null) {
-        const newPathId = await this.addPath(originalPath)
-        updatedPathsIds.push(newPathId)
+      if (originalPath !== null) {
+        const newPathUuid = await this.addPath(originalPath)
+        updatedPathsUuids.push(newPathUuid)
       }
     }
 
     // Update the paths of the feature with ids of created paths
-    const updatePaths = { _id: newFeature[0].id, "system.paths": updatedPathsIds }
+    const updatePaths = { _id: newFeature[0].id, "system.paths": updatedPathsUuids }
     await this.updateEmbeddedDocuments("Item", [updatePaths])
 
-    // Create all Capacities
-    let updatedCapacitiesIds = []
+    // Create all Capacities which are linked to the feature
+    let updatedCapacitiesUuids = []
     for (const capacity of feature.system.capacities) {
       let capa = await fromUuid(capacity)
 
       // Item is null if the item has been deleted in the compendium or in the world
       // TODO Add a warning message and think about a global rollback
-      if (capa != null) {
-        const newCapacityId = await this.addCapacity(capa, null)
-        updatedCapacitiesIds.push(newCapacityId)
+      if (capa !== null) {
+        const newCapacityUuid = await this.addCapacity(capa, null)
+        updatedCapacitiesUuids.push(newCapacityUuid)
       }
     }
 
     // Update the capacities of the feature with ids of created capacities
-    const updateCapacities = { _id: newFeature[0].id, "system.capacities": updatedCapacitiesIds }
+    const updateCapacities = { _id: newFeature[0].id, "system.capacities": updatedCapacitiesUuids }
     await this.updateEmbeddedDocuments("Item", [updateCapacities])
   }
 
@@ -511,7 +471,9 @@ export default class CoActor extends Actor {
 
     if (newProfile[0].system.modifiers.length > 0) {
       // Update the source of all modifiers with the id of the new embedded profile created
-      let newModifiers = Object.values(foundry.utils.deepClone(newProfile[0].system.modifiers)).map((m) => new Modifier(m.source, m.type, m.subtype, m.target, m.value))
+      let newModifiers = Object.values(foundry.utils.deepClone(newProfile[0].system.modifiers)).map(
+        (m) => new Modifier({ source: m.source, type: m.type, subtype: m.subtype, target: m.target, value: m.value }),
+      )
       newModifiers.forEach((modifier) => {
         modifier.updateSource(newProfile[0].id)
       })
@@ -522,41 +484,36 @@ export default class CoActor extends Actor {
     }
 
     // Create all Paths
-    let updatedPathsIds = []
+    let updatedPathsUuids = []
     for (const path of profile.system.paths) {
       let originalPath = await fromUuid(path)
 
       // Item is null if the item has been deleted in the compendium or in the world
       // TODO Add a warning message and think about a global rollback
-      if (originalPath != null) {
-        const newPathId = await this.addPath(originalPath)
-        updatedPathsIds.push(newPathId)
+      if (originalPath !== null) {
+        const newPathUuid = await this.addPath(originalPath)
+        updatedPathsUuids.push(newPathUuid)
       }
     }
 
     // Update the paths of the profile with ids of created paths
-    const updatePaths = { _id: newProfile[0].id, "system.paths": updatedPathsIds }
+    const updatePaths = { _id: newProfile[0].id, "system.paths": updatedPathsUuids }
     await this.updateEmbeddedDocuments("Item", [updatePaths])
-
-    // Update Hit Dice and Magick Attack base ability
-    this.update({ "system.combat.magic.ability": profile.system.spellcasting })
   }
 
   /**
    * Add a path as an embedded item
    * It also create the capacities linked to the path
    * @param {CoItem} path
-   * Retourne{number} id of the created path
+   * Retourne {string} uuid of the created path
    */
   async addPath(path) {
     let itemData = path.toObject()
 
     // Create the path
-    itemData = itemData instanceof Array ? itemData : [itemData]
-    const newPath = await this.createEmbeddedDocuments("Item", itemData)
-    // Console.log("Path created : ", newPath);
+    const newPath = await this.createEmbeddedDocuments("Item", [itemData])
 
-    let updatedCapacitiesIds = []
+    let updatedCapacitiesUuids = []
 
     // Create all capacities
     for (const capacity of path.system.capacities) {
@@ -564,152 +521,144 @@ export default class CoActor extends Actor {
 
       // Item is null if the item has been deleted in the compendium or in the world
       // TODO Add a warning message and think about a global rollback
-      if (capa != null) {
-        const newCapacityId = await this.addCapacity(capa, newPath[0].id)
-        updatedCapacitiesIds.push(newCapacityId)
+      if (capa !== null) {
+        const newCapacityUuid = await this.addCapacity(capa, newPath[0].uuid)
+        updatedCapacitiesUuids.push(newCapacityUuid)
       }
     }
 
     // Update the array of capacities of the path with ids of created path
-    const updateData = { _id: newPath[0].id, "system.capacities": updatedCapacitiesIds }
+    const updateData = { _id: newPath[0].id, "system.capacities": updatedCapacitiesUuids }
     await this.updateEmbeddedDocuments("Item", [updateData])
 
-    return newPath[0].id
+    return newPath[0].uuid
   }
 
   /**
    * Add a capacity as an embedded item
    * @param {CoItem} capacity
-   * @param {number} pathId id of the Path if the capacity is linked to a path
-   * Retourne{number} id of the created capacity
+   * @param {UUID} pathUuid uuid of the Path if the capacity is linked to a path
+   * Retourne {number} uuid of the created capacity
    */
-  async addCapacity(capacity, pathId) {
+  async addCapacity(capacity, pathUuid) {
     let capacityData = capacity.toObject()
-    if (pathId !== null) capacityData.system.path = pathId
+    if (pathUuid !== null) capacityData.system.path = pathUuid
 
     // Learned the capacity if the capacity is not linked to a path
-    if (pathId === null) capacityData.system.learned = true
+    if (pathUuid === null) capacityData.system.learned = true
 
-    capacityData = capacityData instanceof Array ? capacityData : [capacityData]
-    const newCapacity = await this.createEmbeddedDocuments("Item", capacityData)
-    // Console.info(Utils.log("Capacity created", newCapacity))
+    const newCapacity = await this.createEmbeddedDocuments("Item", [capacityData])
 
-    // Update the source of all actions with the id of the new embedded capacity created
-    let newActions = Object.values(foundry.utils.deepClone(newCapacity[0].system.actions)).map((m) => {
-      const action = new Action(
-        m.source,
-        m.indice,
-        m.type,
-        m.img,
-        m.label,
-        m.chatFlavor,
-        m.properties.visible,
-        m.properties.activable,
-        m.properties.enabled,
-        m.properties.temporary,
-        m.conditions,
-        m.modifiers,
-        m.resolvers,
-      )
-      // Update the source and source's modifiers for the action
-      action.updateSource(newCapacity[0].id)
-      return action
-    })
+    // Update the source of all actions
+    if (newCapacity[0].actions.length > 0) {
+      const actions = newCapacity[0].toObject().system.actions
+      for (const action of actions) {
+        action.source = newCapacity[0].uuid
+      }
 
-    const updateActions = { _id: newCapacity[0].id, "system.actions": newActions }
-    await this.updateEmbeddedDocuments("Item", [updateActions])
+      const updateActions = { _id: newCapacity[0].id, "system.actions": actions }
+      await this.updateEmbeddedDocuments("Item", [updateActions])
+    }
 
-    return newCapacity[0].id
+    return newCapacity[0].uuid
   }
 
   /**
    * Add an equipment as an embedded item
    * @param {CoItem} equipment
-   * Retourne{number} id of the created path
+   * Retourne {number} id of the created path
    */
   async addEquipment(equipment) {
     let equipmentData = equipment.toObject()
-    equipmentData = equipmentData instanceof Array ? equipmentData : [equipmentData]
 
     // Création de l'objet
-    const newEquipment = await this.createEmbeddedDocuments("Item", equipmentData)
+    const newEquipment = await this.createEmbeddedDocuments("Item", [equipmentData])
 
     // Update the source of all actions
     if (newEquipment[0].actions.length > 0) {
-      let newActions = Object.values(foundry.utils.deepClone(newEquipment[0].system.actions)).map((m) => {
-        const action = new Action(
-          m.source,
-          m.indice,
-          m.type,
-          m.img,
-          m.label,
-          m.chatFlavor,
-          m.properties.visible,
-          m.properties.activable,
-          m.properties.enabled,
-          m.properties.temporary,
-          m.conditions,
-          m.modifiers,
-          m.resolvers,
-        )
-        // Update the source and source's modifiers for the action
-        action.updateSource(newEquipment[0].id)
-        return action
-      })
+      const actions = newEquipment[0].toObject().system.actions
+      for (const action of actions) {
+        action.source = newEquipment[0].uuid
+      }
 
-      const updateActions = { _id: newEquipment[0].id, "system.actions": newActions }
+      const updateActions = { _id: newEquipment[0].id, "system.actions": actions }
       await this.updateEmbeddedDocuments("Item", [updateActions])
     }
+    return newEquipment[0].uuid
   }
 
-  deleteFeature(featureId) {
+  /**
+   * Deletes a feature and its linked paths and capacities.
+   *
+   * @param {string} featureUuId - The UUID of the feature to delete.
+   * @returns {Promise<void>} A promise that resolves when the feature and its linked paths and capacities are deleted.
+   */
+  async deleteFeature(featureUuId) {
     // Delete linked paths
-    const pathsIds = this.items.get(featureId).system.paths
-    for (const pathId of pathsIds) {
-      this.deletePath(pathId)
+    const feature = await fromUuid(featureUuId)
+    if (!feature) return
+    const pathsUuids = feature.system.paths
+    for (const pathUuid of pathsUuids) {
+      this.deletePath(pathUuid)
     }
     // Delete linked capacities
-    const capacitiesIds = this.items.get(featureId).system.capacities
-    for (const capacityId of capacitiesIds) {
-      this.deleteCapacity(capacityId)
+    const capacitiesUuids = feature.system.capacities
+    for (const capacityUuid of capacitiesUuids) {
+      this.deleteCapacity(capacityUuid)
     }
-    this.deleteEmbeddedDocuments("Item", [featureId])
+    this.deleteEmbeddedDocuments("Item", [feature.id])
   }
 
-  deleteProfile(profileId) {
+  /**
+   * Deletes a profile and its linked paths.
+   *
+   * @param {string} profileId The ID of the profile to delete.
+   */
+  async deleteProfile(profileId) {
     // Delete linked paths
-    const pathsIds = this.items.get(profileId).system.paths
-    for (const pathId of pathsIds) {
-      this.deletePath(pathId)
+    const pathsUuids = this.items.get(profileId).system.paths
+    for (const pathUuid of pathsUuids) {
+      this.deletePath(pathUuid)
     }
     this.deleteEmbeddedDocuments("Item", [profileId])
   }
 
-  deletePath(pathId) {
+  /**
+   * Deletes a path and its linked capacities based on the provided UUID.
+   *
+   * @param {string} pathUuid The UUID of the path to be deleted.
+   * @returns {Promise<void>} - A promise that resolves when the deletion is complete.
+   */
+  async deletePath(pathUuid) {
     // Delete linked capacities
-    const path = this.items.get(pathId)
+    const path = await fromUuid(pathUuid)
     if (path) {
-      const capacitiesId = path.system.capacities
+      const capacitiesUuId = path.system.capacities
+      const capacitiesId = capacitiesUuId.map((capacityUuid) => {
+        const { id } = foundry.utils.parseUuid(capacityUuid)
+        return id
+      })
       this.deleteEmbeddedDocuments("Item", capacitiesId)
-      this.deleteEmbeddedDocuments("Item", [pathId])
+      this.deleteEmbeddedDocuments("Item", [path.id])
     }
   }
 
-  async deleteCapacity(capacityId) {
+  async deleteCapacity(capacityUuid) {
     // Remove the capacity from the capacities list of the linked Path
-    const capacity = this.items.get(capacityId)
+    const capacity = await fromUuid(capacityUuid)
 
     if (capacity) {
-      const pathId = capacity.system.path
-      if (pathId != null) {
+      // FIXME A quoi ca sert ???
+      /* const pathId = capacity.system.path
+      if (pathId !== null) {
         // If the linked path still exists in the items
         if (this.items.get(pathId)) {
           let updatedCapacitiesIds = this.items.get(pathId).system.capacities.filter((id) => id !== capacityId)
           const updateData = { _id: pathId, "system.capacities": updatedCapacitiesIds }
           await this.updateEmbeddedDocuments("Item", [updateData])
         }
-      }
-      this.deleteEmbeddedDocuments("Item", [capacityId])
+      }*/
+      this.deleteEmbeddedDocuments("Item", [capacity.id])
     }
   }
 
@@ -721,7 +670,7 @@ export default class CoActor extends Actor {
    * Calcul la somme d'un tableau de valeurs positives ou négatives
    *
    * @param {*} array Un tableau de valeurs
-   * Retourne{int} 0 ou la somme des valeurs
+   * Retourne {int} 0 ou la somme des valeurs
    */
   _addAllValues(array) {
     return array.length > 0 ? array.reduce((acc, curr) => acc + curr, 0) : 0
@@ -781,48 +730,5 @@ export default class CoActor extends Actor {
     return usedHands + neededHands <= 2
   }
 
-  _getModifiersBySubtype(subtype) {
-    return [
-      ...Modifiers.getModifiersByTypeSubtype(this.equipments, SYSTEM.MODIFIER_TYPE.EQUIPMENT, subtype),
-      ...Modifiers.getModifiersByTypeSubtype(this.features, SYSTEM.MODIFIER_TYPE.FEATURE, subtype),
-      ...Modifiers.getModifiersByTypeSubtype(this.system.profiles, SYSTEM.MODIFIER_TYPE.PROFILE, subtype),
-      ...Modifiers.getModifiersByTypeSubtype(this.capacities, SYSTEM.MODIFIER_TYPE.CAPACITY, subtype),
-    ]
-  }
-
   // #endregion
-
-  // deleteItem(itemId) {
-  //   const item = this.items.find(item => item.id === itemId);
-  //
-  //   switch (item.type) {
-  //     case SYSTEM.ITEM_TYPE.PATH:
-  //       {
-  //         // Path
-  //         let itemsToDelete = [];
-  //         itemsToDelete.push (item.id);
-  //
-  //         // Capacities
-  //         item.system.capacities.map( c =>  {
-  //               const item = this.getEmbeddedItemByKey(c.key);
-  //               if (item) itemsToDelete.push(item.id);
-  //         });
-  //         return this.deleteEmbeddedDocuments("Item", itemsToDelete);
-  //       }
-  //     case SYSTEM.ITEM_TYPE.CAPACITY:
-  //       {
-  //         // Check if the capacity was selected in a path
-  //         this.paths.forEach(path => {
-  //           let capacities = duplicate(path.system.capacities);
-  //           let capacity = capacities.find((capacity) => capacity.key == item.system.key);
-  //           if (capacity)  {
-  //             capacity.selected = false;
-  //             const updateData = [{ _id: path.id, "system.capacities": capacities }];
-  //             this.updateEmbeddedDocuments("Item", updateData);
-  //           }
-  //         });
-  //         return this.deleteEmbeddedDocuments("Item", [itemId]);
-  //       }
-  //   }
-  // }
 }

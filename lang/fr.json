@@ -70,19 +70,26 @@
         "add": "Ajouter",
         "sendToChat": "Envoyer sur le chat",
         "edit": "Editer",
+        "editItem": "Editer l'objet",
+        "editCapacity": "Editer la capacité",
         "delete": "Supprimer",
+        "deleteItem": "Supprimer l'objet",
+        "deleteCapacity": "Supprimer la capacité",
         "difficulty": "Difficulté",
         "effects": "Effets",
         "properties": "Propriétés",
-        "hp": "Points de vigueur",
         "xp": "Expérience",
         "movement": "Déplacement",
         "def": "Défense",
         "init": "Initiative",
         "hd": "Dé de vie",
+        "hp": "Points de vigueur",
+        "fp": "Points de chance",
         "rp": "Dés de récupération",
+        "mp":"Points de mana",
         "type": "Type",
         "subtype": "Sous-type",
+        "actionType": "Type d'action",
         "category": "Catégorie",
         "archetype": "Archétype",
         "family": "Famille",
@@ -405,7 +412,26 @@
         "ability": "Caractéristique",
         "combat": "Combat",
         "attribute": "Attribut",
+        "resource": "Ressource",
         "skill": "Jet de compétence"
+      },
+      "target": {
+        "agi": "Agilité",
+        "con": "Constitution",
+        "for": "Force",
+        "per": "Perception",
+        "cha": "Charisme",
+        "int": "Intelligence",
+        "vol": "Volonté",
+        "melee": "Attaque de contact",
+        "ranged": "Attaque à distance",
+        "magic": "Attaque magique",
+        "init": "Initiative",
+        "def": "Défense",
+        "hp": "Points de vigueur",
+        "rp": "Dés de récupération",
+        "mp": "Points de mana",
+        "fp": "Points de chance"
       }
     },
     "resolver": {
@@ -445,6 +471,24 @@
         "magical": "Arme magique"
       }
     },
+    "capacity": {
+      "action": {
+        "type": {
+          "none": "",
+          "l": "Action limitée",
+          "a": "Action d'attaque",
+          "m": "Action de mouvement",
+          "f": "Action gratuite"
+        },
+        "short": {
+          "none": "",
+          "l": "L",
+          "a": "A",
+          "m": "M",
+          "f": "G"
+        }
+      }
+    },
     "encounter": {
       "archetype": {
         "weak": "Inférieur",
@@ -468,7 +512,8 @@
     "path": {
       "subtypes": {
         "profile": "Voie de profil",
-        "feature": "Voie de feature",
+        "people": "Voie de peuple",
+        "feature": "Voie de trait",
         "encounter": "Voie de créature",
         "prestige": "Voie de prestige"
       },

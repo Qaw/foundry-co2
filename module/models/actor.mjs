@@ -61,8 +61,6 @@ export default class ActorData extends foundry.abstract.TypeDataModel {
         { label: "CO.label.long.xp", required: true, nullable: false },
       ),
       recovery: new fields.SchemaField({
-        value: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-        max: new fields.NumberField({ ...requiredInteger, initial: 0 }),
         dice: new fields.StringField({ required: true, blank: true }),
       }),
     })

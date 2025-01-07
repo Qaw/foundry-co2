@@ -1,8 +1,8 @@
 import CoActor from "./actor.mjs"
 import CoChat from "../chat.mjs"
 import { SYSTEM } from "../config/system.mjs"
-import { Modifiers } from "../models/action/modifiers.mjs"
 import Utils from "../utils.mjs"
+import DefaultConfiguration from "../configuration.mjs"
 
 export default class CoCharacter extends CoActor {
   prepareDerivedData() {
@@ -12,7 +12,7 @@ export default class CoCharacter extends CoActor {
 
     // Préparation des données de combat : Attaque de contact, attaque à distance, attaque magique, initiative, défense
     for (const [key, skill] of Object.entries(this.system.combat)) {
-      // Somme du bonus de la feuille et du bonus des effets
+      // Somme du bonus de la feuille et du bonus des actives effects
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr)
       const abilityBonus = this.system.abilities[skill.ability].value
 
@@ -30,6 +30,7 @@ export default class CoCharacter extends CoActor {
     }
 
     for (const [key, skill] of Object.entries(this.system.resources)) {
+      // Somme du bonus de la feuille et du bonus des actives effects
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr)
 
       // Points de chance  - Fortune Points - FP
@@ -61,8 +62,10 @@ export default class CoCharacter extends CoActor {
    */
   _prepareAbilities() {
     for (const [key, ability] of Object.entries(this.system.abilities)) {
+      // Somme du bonus de la feuille et du bonus des actives effects
       const bonuses = Object.values(ability.bonuses).reduce((prev, curr) => prev + curr)
-      const abilityModifiers = Modifiers.computeTotalModifiersByTarget(this, this.abilitiesModifiers, key)
+      const abilityModifiers = this.system.computeTotalModifiersByTarget(this.system.abilityModifiers, key)
+
       ability.modifiers = abilityModifiers.total
 
       ability.value = ability.base + bonuses + ability.modifiers
@@ -73,7 +76,8 @@ export default class CoCharacter extends CoActor {
   _prepareHPMax() {
     const constitutionBonus = this.system.attributes.level * this.system.abilities.con.value
     const hpMaxBonuses = Object.values(this.system.attributes.hp.bonuses).reduce((prev, curr) => prev + curr)
-    const hpMaxModifiers = Modifiers.computeTotalModifiersByTarget(this, this.attributeModifiers, SYSTEM.ATTRIBUTE.HP)
+    const hpMaxModifiers = this.system.computeTotalModifiersByTarget(this.system.attributeModifiers, "hp")
+
     this.system.attributes.hp.max = this.system.attributes.hp.base + constitutionBonus + hpMaxBonuses + hpMaxModifiers.total
     this.system.attributes.hp.tooltip = Utils.getTooltip("Base", this.system.attributes.hp.base).concat(
       "Constitution : ",
@@ -86,7 +90,7 @@ export default class CoCharacter extends CoActor {
   _prepareAttack(key, skill, abilityBonus, bonuses) {
     // Le bonus de niveau est limité à 10
     const levelBonus = Math.min(this.system.attributes.level, 10)
-    const combatModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, key)
+    const combatModifiers = this.system.computeTotalModifiersByTarget(this.system.combatModifiers, key)
 
     skill.base = abilityBonus + levelBonus
     skill.tooltipBase = Utils.getTooltip(game.i18n.localize("CO.label.long.level"), levelBonus).concat(Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus))
@@ -102,10 +106,10 @@ export default class CoCharacter extends CoActor {
    * @param {*} bonuses
    */
   _prepareInit(skill, abilityBonus, bonuses) {
-    const initModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, SYSTEM.COMBAT_TYPE.INIT)
+    const initModifiers = this.system.computeTotalModifiersByTarget(this.system.combatModifiers, SYSTEM.COMBAT_TYPE.INIT)
     const malus = this.getMalusToInitiative()
 
-    skill.base = this.baseInitiative
+    skill.base = DefaultConfiguration.baseInitiative()
     skill.tooltipBase = Utils.getTooltip("Base", skill.base)
 
     skill.base += abilityBonus
@@ -120,15 +124,16 @@ export default class CoCharacter extends CoActor {
   }
 
   /**
-   * Dans COF : 10 + AGI + Modificateurs (Bonus Armure + Bonus Bouclier + Bonus Capacités)
+   * Calcule la défense
+   * Dans COF : 10 + AGILITE + Modificateurs (Bonus Armure + Bonus Bouclier + Bonus Capacités)
    * @param {*} skill
    * @param {*} abilityBonus
    * @param {*} bonuses
    */
   _prepareDef(skill, abilityBonus, bonuses) {
-    const defModifiers = Modifiers.computeTotalModifiersByTarget(this, this.combatModifiers, SYSTEM.COMBAT_TYPE.DEF)
+    const defModifiers = this.system.computeTotalModifiersByTarget(this.system.combatModifiers, SYSTEM.COMBAT_TYPE.DEF)
 
-    skill.base = this.baseDefense
+    skill.base = DefaultConfiguration.baseDefense()
     skill.tooltipBase = Utils.getTooltip("Base", skill.base)
 
     skill.base += abilityBonus
@@ -138,28 +143,49 @@ export default class CoCharacter extends CoActor {
     skill.tooltipValue = skill.tooltipBase.concat(defModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
 
+  /**
+   * Calcule les points de chance
+   * Dans COF : 2 + CHARISME + Modificateurs
+   * Prepares the FP (Fortune Points) for a given skill by calculating its base value,
+   * applying bonuses, and computing resource modifiers.
+   *
+   * @param {Object} skill The skill object to prepare FP for.
+   * @param {number} bonuses The additional bonuses to apply to the skill's FP.
+   */
   _prepareFP(skill, bonuses) {
-    skill.base = this._computeBaseFP()
-    skill.tooltipBase = Utils.getTooltip("Base", skill.base)
+    const baseFP = this._computeBaseFP()
+    skill.base = baseFP.value
+    skill.tooltipBase = baseFP.tooltip
 
-    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER_TARGET.FP)
+    const resourceModifiers = this.system.computeTotalModifiersByTarget(this.system.resourceModifiers, SYSTEM.MODIFIERS_TARGET.fp.id)
     skill.max = skill.base + bonuses + resourceModifiers.total
     skill.tooltip = skill.tooltipBase.concat(resourceModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
 
   /**
-   * Computes the base FP (Force Points) for a character.
+   * Computes the base FP (Force Points) for the character.
    *
-   * The base FP is calculated as:
+   * The base FP is calculated as the sum of a base value (2), the character's charisma ability value,
+   * and any additional FP from the character's family.
    * 2 + Charisma MOD + 1 (for the adventurer's family).
    *
-   * @returns {number} The computed base FP.
+   * @returns {Object} An object containing:
+   *   - `value` {number}: The computed base FP value.
+   *   - `tooltip` {string}: A tooltip string providing details on the components of the base FP.
    */
   _computeBaseFP() {
-    return 2 + this.system.abilities.cha.value + this.system.fpFromFamily
+    const abilityBonus = this.system.abilities[this.system.resources.fortune.ability].value
+    const baseFP = DefaultConfiguration.baseFortune()
+    const value = baseFP + abilityBonus + this.system.fpFromFamily
+    let tooltip = Utils.getTooltip("Base", baseFP)
+    tooltip = tooltip.concat(Utils.getTooltip(Utils.getAbilityName(this.system.resources.fortune.ability), this.system.abilities.cha.value))
+    if (this.system.fpFromFamily > 0) tooltip = tooltip.concat(Utils.getTooltip("Profil", this.system.fpFromFamily))
+    return { value, tooltip }
   }
 
   /**
+   * Calcule les points de mana
+   * Dans COF : si le personnage a au moins un sort, VOLONTE + Nombre de sorts Modificateurs
    * Prepares the MP (Magic Points) for a given skill by calculating its base value,
    * applying resource modifiers, and adding any additional bonuses.
    *
@@ -167,11 +193,12 @@ export default class CoCharacter extends CoActor {
    * @param {number} bonuses Additional bonuses to be added to the skill's MP.
    */
   _prepareMP(skill, bonuses) {
-    skill.base = this._computeBaseMP()
-    skill.tooltipBase = Utils.getTooltip("Base", skill.base)
+    const baseMP = this._computeBaseMP()
+    skill.base = baseMP.value
+    skill.tooltipBase = baseMP.tooltip
 
-    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER_TARGET.MP)
-    skill.max = skill.base + resourceModifiers.total + bonuses
+    const resourceModifiers = this.system.computeTotalModifiersByTarget(this.system.resourceModifiers, SYSTEM.MODIFIERS_TARGET.mp.id)
+    skill.max = skill.base + bonuses + resourceModifiers.total
     skill.tooltip = skill.tooltipBase.concat(resourceModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
 
@@ -181,9 +208,12 @@ export default class CoCharacter extends CoActor {
    * @returns {number} The base MP value. Returns 0 if the character has no spells.
    */
   _computeBaseMP() {
-    if (!this.hasSpells) return 0
+    let value = 0
+    if (!this.hasSpells) return { value, tooltip: "Pas de sorts" }
     const nbSpells = this.nbSpells
-    return this.system.abilities.vol.value + nbSpells
+    let tooltip = Utils.getTooltip("Nb de sorts", nbSpells)
+    tooltip = tooltip.concat(Utils.getTooltip("Volonté", this.system.abilities.vol.value))
+    return { value: this.system.abilities.vol.value + nbSpells, tooltip }
   }
 
   /**
@@ -195,6 +225,11 @@ export default class CoCharacter extends CoActor {
     return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.CAPACITY && item.system.isSpell)
   }
 
+  /**
+   * Checks if the character has any spells.
+   *
+   * @returns {boolean} True if the character has spells, otherwise false.
+   */
   get hasSpells() {
     return this.spells.length > 0
   }
@@ -208,17 +243,40 @@ export default class CoCharacter extends CoActor {
     return this.spells.length
   }
 
+  /**
+   * Prepares the RP (Resource Points) for a given skill by computing its base value,
+   * applying resource modifiers, and adding any additional bonuses.
+   *
+   * @param {Object} skill The skill object to prepare RP for.
+   * @param {number} bonuses Additional bonuses to be added to the skill's RP.
+   */
   _prepareRP(skill, bonuses) {
-    skill.base = this._computeBaseRP()
-    const resourceModifiers = Modifiers.computeTotalModifiersByTarget(this, this.resourceModifiers, SYSTEM.MODIFIER_TARGET.RP)
+    const baseRP = this._computeBaseRP()
+    skill.base = baseRP.value
+    skill.tooltipBase = baseRP.tooltip
 
-    skill.max = skill.base + resourceModifiers.total + bonuses
+    const resourceModifiers = this.system.computeTotalModifiersByTarget(this.system.resourceModifiers, SYSTEM.MODIFIERS_TARGET.rp.id)
+    skill.max = skill.base + bonuses + resourceModifiers.total
+    skill.tooltip = skill.tooltipBase.concat(resourceModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
 
-  // (2 + Modificateur de Constitution) Dés de récupération
-  // 1 dé supplémentaire pour la famille des mystiques
+  /**
+   * Computes the base RP (Resource Points) for the character.
+   *
+   * The base RP is calculated as the sum of:
+   * - A constant value of 2
+   * - The character's Constitution ability value
+   * - The RP value from the character's family : 1 dé supplémentaire pour la famille des mystiques
+   *
+   * @returns {number} The computed base RP value.
+   */
   _computeBaseRP() {
-    return 2 + this.system.abilities.con.value + this.system.rpFromFamily
+    const baseRP = DefaultConfiguration.baseRecovery()
+    const value = baseRP + this.system.abilities.con.value + this.system.rpFromFamily
+    let tooltip = Utils.getTooltip("Base", baseRP)
+    tooltip = tooltip.concat(Utils.getTooltip("Constitution", this.system.abilities.con.value))
+    if (this.system.rpFromFamily > 0) tooltip = tooltip.concat(Utils.getTooltip("Profil", this.system.rpFromFamily))
+    return { value, tooltip }
   }
 
   // #region accesseurs
@@ -233,17 +291,18 @@ export default class CoCharacter extends CoActor {
   }
 
   /**
-   * @returns Toutes les actions visibles des capacités et des équipements
+   * Retourne Toutes les actions visibles des capacités et des équipements sous forme d'un tableau d'actions
    */
-  get visibleActions() {
-    let allActions = []
-    this.items.forEach((item) => {
-      if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
-        allActions.push(...item.visibleActions)
-      }
-    })
-    return allActions
-  }
+  async getVisibleActions() {
+    let allActions = [];
+    for (const item of this.items) {
+        if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(item.type) && item.actions.length > 0) {
+            const itemActions = await item.getVisibleActions();
+            allActions.push(...itemActions);
+        }
+    }
+    return allActions;
+}
 
   // #endregion
 

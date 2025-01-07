@@ -14,7 +14,7 @@ export default class Utils {
    */
   static getTooltip(name, value) {
     if (name !== "" && value !== 0) {
-      return `${name} : ${value} `
+      return ` ${name} : ${value}`
     }
     return ""
   }
@@ -48,7 +48,7 @@ export default class Utils {
    * @param {*} actor
    * @param {*} formula
    * @param {*} source The item source's UUID : used for the #rank
-   * @returns
+   * @returns {string} the formula
    */
   static evaluateWithDice(actor, formula, source) {
     if (formula === "") return ""
@@ -60,8 +60,8 @@ export default class Utils {
    * Evaluate a custom value
    * Shortcuts : @str @dex @con @int @wis @cha @mel @ran @mag @lvl @rank[+1,0,+1,0,0]
    * @param {*} actor
-   * @param {} formula
-   * @param {} source The item source's UUID : used for the #rank
+   * @param {string} formula
+   * @param {UUID} source The item source's UUID : used for the #rank
    * @param {boolean} toEvaluate : true to evaluate the replaced formula
    * @param {boolean} withDice : true if there is dice in the formula ; if yes toEvaluate should be false
    * @returns {int} the modifier's value
