@@ -35,6 +35,13 @@ export default class CoActor extends Actor {
   }
 
   /**
+   * Retourne  les Items de type feature et sous type peuple
+   */
+  get people() {
+    return this.features.filter((i) => i.system.subtype === SYSTEM.FEATURE_SUBTYPE.people.id)
+  }
+
+  /**
    * Retourne  les Items de type path
    */
   get paths() {
@@ -412,6 +419,11 @@ export default class CoActor extends Actor {
    */
   async addFeature(feature) {
     let itemData = feature.toObject()
+    if (itemData.system.subtype == SYSTEM.FEATURE_SUBTYPE.people.id) {
+      if (!foundry.utils.isEmpty(this.people)) {
+        return
+      }
+    }
     itemData = itemData instanceof Array ? itemData : [itemData]
     const newFeature = await this.createEmbeddedDocuments("Item", itemData)
 
