@@ -375,7 +375,6 @@ export default class CoBaseItemSheet extends ItemSheet {
    */
   _onAddModifier(event) {
     event.preventDefault()
-
     const currentModifiers = this.item.modifiers
     currentModifiers.push(new Modifier({ source: this.item.uuid, type: this.item.type }))
 

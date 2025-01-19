@@ -23,7 +23,7 @@
       "item": "Fiche d'objet personnage"
     },
     "notif": {
-      "ready": "Système Chroniques Oubliées initialisé.",
+      "ready": "Système prêt.",
       "unknownCapacity": "Vous ne connaissez pas cette capacité.",
       "noCapacitySelected": "Aucune capacité sélectionnée.",
       "inventory.empty": "L'inventaire est vide.",
