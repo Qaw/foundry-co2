@@ -13,6 +13,9 @@
     },
     {
       "name": "Zigmund"
+    },
+    {
+      "name": "Caloup"
     }
   ],
   "esmodules": ["co.mjs"],
