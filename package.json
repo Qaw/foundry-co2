@@ -9,12 +9,12 @@
     "gulp": "gulp"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.15.4",
+    "@babel/eslint-parser": "^7.26.5",
     "@eslint/js": "^9.9.1",
     "@foundryvtt/foundryvtt-cli": "^1.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "commander": "^11.1.0",
-    "eslint": "^9.9.1",
+    "eslint": "^9.18.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jsdoc": "^48.11.0",
     "eslint-plugin-prettier": "^5.2.1",
