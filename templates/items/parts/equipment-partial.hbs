@@ -1,0 +1,130 @@
+{{!log "Chroniques Oubliées | equipment" this}}
+<!--<h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.details"}}</a></h3>-->
+<div class="details-form foldable">
+    {{#if debugMode}}
+        <div class="form-group">
+            <label>{{localize "CO.ui.id"}}</label>
+            <div class="form-fields">
+                <input class="field-value" name="data._id" readonly type="text" value="{{data._id}}" placeholder="{{localize 'CO.ui.id'}}" data-dtype="String">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>{{localize "CO.ui.key"}}</label>
+            <div class="form-fields">
+                <input class="field-value" name="system.slug" type="text" value="{{item.system.slug}}" placeholder="{{ localize 'COF.ui.key' }}" data-dtype="String">
+            </div>
+        </div>
+    {{/if}}
+    <div class="form-group">
+        <label>{{localize "CO.label.long.subtype"}}</label>
+        <div class="form-fields">
+            <select name="system.subtype" data-type="String" style="width:100%">
+                {{selectOptions @root.choiceEquipmentSubTypes selected=system.subtype localize=true}}
+            </select>
+        </div>
+    </div>
+
+    {{#if (or (eq system.subtype "WEAPON") (eq system.subtype "ARMOR") (eq system.subtype "SHIELD"))}}
+        <div class="form-group">
+            <label>{{localize "CO.label.long.martialCategory"}}</label>
+            <div class="form-fields">
+                <select name="system.martialCategory" data-type="String" style="width:100%">
+                    {{#select system.martialCategory}}
+                        {{#if (eq system.subtype "WEAPON")}}
+                            {{#each martialTrainingsWeaponsList as |training|}}
+                                <option value="{{key}}">{{localize label}}</option>
+                            {{/each}}
+                        {{else if (eq system.subtype "ARMOR")}}
+                            {{#each martialTrainingsArmorsList as |training|}}
+                                <option value="{{key}}">{{localize label}}</option>
+                            {{/each}}
+                        {{else if (eq system.subtype "SHIELD")}}
+                            {{#each martialTrainingsShieldsList as |training|}}
+                                <option value="{{key}}">{{localize label}}</option>
+                            {{/each}}
+                        {{/if}}
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+    {{/if}}
+    {{#if system.properties.equipable}}
+        <div class="form-group">
+            <label>{{localize "CO.ui.equipped"}}</label>
+            <div class="form-fields">
+                <label class="checkbox"> <input type="checkbox" name="system.equipped" {{checked system.equipped}}></label>
+            </div>
+        </div>
+    {{/if}}
+    <div class="form-group">
+        <label>{{localize "CO.label.long.properties"}}</label>
+        <div class="form-fields">
+            {{#each system.properties as |prop idx|}}
+                <label class="checkbox"> <input type="checkbox" name="system.properties.{{idx}}" {{checked prop}}> {{localize (concat "CO.properties." idx)}}</label>
+            {{/each}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label>{{localize "CO.ui.usage"}}</label>
+        <div class="form-fields">
+            <label class="checkbox"> <input type="checkbox" name="system.usage.oneHand" {{checked system.usage.oneHand}}> {{localize "CO.ui.1h"}}</label>
+            <label class="checkbox"> <input type="checkbox" name="system.usage.twoHand" {{checked system.usage.twoHand}}> {{localize "CO.ui.2h"}}</label>
+        </div>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>{{localize "CO.ui.weight"}}</label>
+        <div class="form-fields">
+            <input class="field-value" name="system.weight.value" type="text" value="{{system.weight.value}}" placeholder="{{localize 'CO.ui.weight'}}" data-dtype="Number">
+            <input class="field-value" name="system.weight.unit" type="text" value="{{system.weight.unit}}" placeholder="{{localize 'CO.ui.unit'}}" data-dtype="String">
+        </div>
+    </div>
+    <div class="form-group">
+        <label>{{localize "CO.ui.price"}}</label>
+        <div class="form-fields">
+            <input class="field-value" name="system.price.value" type="text" value="{{system.price.value}}" placeholder="{{localize 'CO.ui.price'}}" data-dtype="Number">
+            <input class="field-value" name="system.price.currency" type="text" value="{{system.price.currency}}" placeholder="{{localize 'CO.ui.currency'}}" data-dtype="String">
+        </div>
+    </div>
+    <div class="form-group">
+        <label>{{localize "CO.ui.rarity"}}</label>
+        <div class="form-fields">
+            <select name="system.rarity" data-type="String" style="width:100%">
+                {{selectOptions @root.choiceEquipmentRarity selected=system.rarity localize=true}}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>{{localize "CO.ui.quantity"}}</label>
+        <div class="form-fields">
+            <input class="field-value" name="system.quantity.current" type="text" value="{{system.quantity.current}}" placeholder="{{localize 'CO.ui.current'}}" data-dtype="Number">
+            {{#if system.properties.stackable}}
+                /
+                <input class="field-value" name="system.quantity.max" type="text" value="{{system.quantity.max}}" placeholder="{{localize 'CO.ui.max'}}" data-dtype="Number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label></label>
+        <div class="form-fields">
+            <label class="checkbox"><input type="checkbox" name="system.quantity.destroyIfEmpty" {{checked system.quantity.destroyIfEmpty}}> {{localize "CO.ui.destroyIfEmpty"}}</label>
+            {{/if}}
+        </div>
+    </div>
+    {{#if system.properties.reloadable}}
+        <div class="form-group">
+            <label>{{localize "CO.ui.charges"}}</label>
+            <div class="form-fields">
+                <input class="field-value" name="system.charges.current" type="text" value="{{system.charges.current}}" placeholder="{{localize 'CO.ui.current'}}" data-dtype="Number">
+                /
+                <input class="field-value" name="system.charges.max" type="text" value="{{system.charges.max}}" placeholder="{{localize 'CO.ui.max'}}" data-dtype="Number">
+            </div>
+        </div>
+        <div class="form-group">
+            <label></label>
+            <div class="form-fields">
+                <label class="checkbox"><input type="checkbox" name="system.charges.destroyIfEmpty" {{checked system.charges.destroyIfEmpty}}> {{localize "CO.ui.destroyIfEmpty"}}</label>
+            </div>
+        </div>
+    {{/if}}
+</div>
+{{!> "systems/co/templates/items/parts/actions/action-partial.hbs"}}

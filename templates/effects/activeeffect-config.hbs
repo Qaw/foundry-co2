@@ -117,15 +117,15 @@
         </header>
 
         {{#if (eq targetType "InputEffectTarget")}}
-            <i class="fa fa-list-ul changeEffectTarget" title="Passer en mode liste"></i>
+            <i class="fa fa-list-ul changeEffectTarget" data-tooltip="Passer en mode liste"></i>
         {{else}}
-            <i class="fas fa-file changeEffectTarget" title="Passer en mode libre"></i>
+            <i class="fas fa-file changeEffectTarget" data-tooltip="Passer en mode libre"></i>
         {{/if}}
 
         <ol class="changes-list">
             {{#each data.changes as |change i|}}
                 <li class="effect-change flexrow" data-index="{{i}}">
-                    {{#if (equals @root.targetType "SelectEffectTarget")}}
+                    {{#if (eq @root.targetType "SelectEffectTarget")}}
                         <div class="key SelectEffectTarget">
                             <select name="changes.{{i}}.key">
                                 {{selectOptions ../config.activeEffectChanges selected=change.key localize=true}}

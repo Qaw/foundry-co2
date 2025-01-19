@@ -1,0 +1,60 @@
+{{!log "Chroniques Oubliées | path" this}}
+<!--<h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.details"}}</a></h3>-->
+<div class="details-form foldable">
+    {{#if debugMode}}
+        <div class="form-group">
+            <label>{{localize "CO.ui.id"}}</label>
+            <div class="form-fields">
+                <input class="field-value" name="data._id" readonly type="text" value="{{data._id}}" placeholder="{{localize 'CO.ui.id'}}" data-dtype="String">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>{{localize "CO.ui.key"}}</label>
+            <div class="form-fields">
+                <input class="field-value" name="system.slug" type="text" value="{{item.system.slug}}" placeholder="{{ localize 'COF.ui.key' }}" data-dtype="String">
+            </div>
+        </div>
+    {{/if}}
+    <div class="form-group">
+        <label>{{localize "CO.label.long.subtype"}}</label>
+        <div class="form-fields">
+            <select name="system.subtype" data-type="String" style="width:100%">
+                 {{selectOptions @root.choicePathSubtypes selected=system.subtype localize=true}}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>{{localize "CO.label.long.rank"}}</label>
+        <div class="form-fields">
+            <input class="field-value" name="system.rank" type="text" value="{{system.rank}}" placeholder="{{localize 'CO.label.long.rank'}}" data-dtype="Number">
+        </div>
+    </div>
+</div>
+<h3 class="form-header"><a class="section-toggle">{{localize "CO.label.long.capacities"}}</a></h3>
+<div class="capacity-list list-4col foldable">
+    <div class="cell center">
+        <span class="field-label header">{{localize "CO.label.long.rank"}}</span>
+    </div>
+    <div class="cell"></div>
+    <div class="cell left">
+        <span class="field-label header"></span>
+    </div>
+    <div class="cell right item-controls">
+        <a class="item-control item-create cof-compendium-pack" data-pack="capacities" data-open="0" data-tooltip="Ajouter une capacité"><i class="fas fa-plus"></i>&nbsp; {{localize "CO.label.long.add"}}</a>
+    </div>
+    {{#each capacities as |capacity id|}}
+        {{!log 'capacity' capacity id}}
+        <div class="cell center">
+            <span class="field-label">{{add id 1}}</span>
+        </div>
+        <div class="cell right">
+            <img class="inline-img" src="{{capacity.img}}" data-tooltip="{{capacity.name}}" />
+        </div>
+        <div class="cell left item" data-uuid="{{capacity.uuid}}" data-item-type="capacity">
+            <div class="field-label ellipse"><a class="item-control item-edit" data-tooltip="{{localize 'CO.label.long.editCapacity'}}" data-tooltip-direction="UP">{{capacity.name}}</a></div>
+        </div>
+        <div class="cell right item item-controls" data-uuid="{{capacity.uuid}}" data-item-type="capacity" draggable="true" data-rank="{{add id 1}}">
+            <a class="item-control item-delete" data-tooltip="{{localize 'CO.label.long.deleteCapacity'}}" data-tooltip-direction="UP"><i class="fas fa-fw fa-trash"></i></a>
+        </div>
+    {{/each}}
+</div>

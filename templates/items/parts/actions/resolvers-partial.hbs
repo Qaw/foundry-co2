@@ -1,6 +1,6 @@
 <h4 class="form-header resolvers flexrow">
     <a class="resolvers-toggle section-toggle flex1">{{localize "CO.ui.resolvers"}}</a>
-    <a class="resolver-add flex0" title="{{localize "CO.ui.add"}}"><i class="fas fa-add"></i></a>
+    <a class="resolver-add flex0" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
 </h4>
 <div class="resolvers-container foldable">
     {{#if action.resolvers}}
@@ -14,14 +14,9 @@
         {{#each action.resolvers as |r id|}}
             <div class="flexrow resolver" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="resolver">
                 <div class="form-fields flex2">
-<!--                    <input name="system.actions.{{../idx}}.resolvers.{{id}}.type" type="text" value="{{r.type}}" data-dtype="String" />-->
                     <select name="system.actions.{{../idx}}.resolvers.{{id}}.type" data-type="String" style="width:100%">
-                        {{#select r.type}}
-                            {{#each @root.config.resolver.types as |label idx|}}
-                                <option value="{{idx}}">{{localize label}}</option>
-                            {{/each}}
-                        {{/select}}
-                    </select>
+                        {{selectOptions @root.choiceResolverTypes selected=r.type localize=true}}
+                    </select>                    
                 </div>
                 <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.formula.0.part" type="text" value="{{r.skill.formula.0.part}}" data-dtype="String" /></div>
                 <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.crit" type="text" value="{{r.skill.crit}}" data-dtype="Number" /></div>

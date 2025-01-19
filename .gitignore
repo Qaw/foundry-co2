@@ -2,6 +2,7 @@
 .idea/
 .nova/
 .vs/
+styles/*.css
 
 # Node Modules
 node_modules/
@@ -10,3 +11,9 @@ node_modules/
 .DS_Store
 foundry.js
 /editor.html
+
+# Foundry specific
+*.lock
+
+# Foundry VTT
+packs/

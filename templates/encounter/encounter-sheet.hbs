@@ -1,73 +1,55 @@
 <form class="{{cssClass}} flexrow no-wrap" autocomplete="off">
-    {{!log "Chroniques Oubliées | actor" this}}
+    {{!log "Chroniques Oubliées | encounter" this}}
     {{> "systems/co/templates/encounter/parts/encounter-sidebar.hbs"}}
     <div class="main">
         <header class="npc-sheet-header">
             <div class="name flexrow bottom-separator">
                 <input class="name-value" name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'CO.label.long.name' }}" spellcheck="false">
                 <label class="level-label">{{ localize 'CO.label.short.nc' }}</label>
-                <input class="level adjustable" type="text" name="system.attributes.level.base" value="{{attributes.level.base}}" data-dtype="Number">
+                <input class="level adjustable" type="text" name="system.attributes.level" value="{{attributes.level}}" data-dtype="Number" {{#if locked}}readonly{{/if}}>
             </div>
             <div class="flexrow" style="justify-content: space-between; width: 100%;">
                 <div class="flexrow" style="flex: auto;">
                     <select class="archetype-select traits-list-item" name="system.details.archetype" data-type="String" style="width:100%">
-                        {{#select system.details.archetype}}
-                            {{#each @root.config.encounter.archetypes as |label idx|}}
-                                <option value="{{idx}}">{{localize label}}</option>
-                            {{/each}}
-                        {{/select}}
+                        {{selectOptions choiceArchetypes selected=system.details.archetype localize=true}}
                     </select>
                     <select class="category-select traits-list-item" name="system.details.category" data-type="String" style="width:100%">
-                        {{#select system.details.category}}
-                            {{#each @root.config.encounter.categories as |label idx|}}
-                                <option value="{{idx}}">{{localize label}}</option>
-                            {{/each}}
-                        {{/select}}
+                        {{selectOptions choiceCategories selected=system.details.category localize=true}}
                     </select>
                     <select class="size-select traits-list-item" name="system.details.size" data-type="String" style="width:100%">
-                        {{#select system.details.size}}
-                            {{#each @root.config.encounter.sizes as |label idx|}}
-                                <option value="{{idx}}">{{localize label}}</option>
-                            {{/each}}
-                        {{/select}}
+                        {{selectOptions choiceSizes selected=system.details.size localize=true}}
                     </select>
                     <select class="bossrank-select traits-list-item" name="system.details.bossRank" data-type="String" style="width:100%">
-                        {{#select system.details.bossRank}}
-                            {{#each @root.config.encounter.bossRank as |label idx|}}
-                                <option value="{{idx}}">{{label}}</option>
-                            {{/each}}
-                        {{/select}}
+                        {{selectOptions choiceBossRanks selected=system.details.bossRank localize=true}}
                     </select>
                 </div>
             </div>
         </header>
         {{!-- Sheet Tab Navigation --}}
         <nav class="sheet-tabs tabs" data-group="primary">
-            <a class="item" data-tab="main" title="{{ localize "CO.tabs.main" }}">{{ localize 'CO.tabs.main' }}</a>
-            <a class="item" data-tab="loot" title="{{ localize "CO.tabs.loot" }}">{{ localize 'CO.tabs.loot' }}</a>
-            <a class="item" data-tab="capacities" title="{{ localize "CO.tabs.capacities" }}">{{ localize "CO.tabs.capacities" }}</a>
-            <a class="item" data-tab="notes" title="{{ localize "CO.tabs.notes" }}">{{ localize 'CO.tabs.notes' }}</a>
-            <a class="item sheet-change-lock" title="{{ localize "CO.tabs.lock" }}">{{#if unlocked}}<i class="fas fa-lock-open"></i>{{else}}<i class="fas fa-lock" ></i>{{/if}}</a>
+            <a class="item" data-tab="main" data-tooltip="{{ localize 'CO.tabs.main' }}">{{ localize 'CO.tabs.main' }}</a>
+            <a class="item" data-tab="loot" data-tooltip="{{ localize 'CO.tabs.loot' }}">{{ localize 'CO.tabs.loot' }}</a>
+            <a class="item" data-tab="capacities" data-tooltip="{{ localize 'CO.tabs.capacities' }}">{{ localize "CO.tabs.capacities" }}</a>
+            <a class="item" data-tab="notes" data-tooltip="{{ localize 'CO.tabs.notes' }}">{{ localize 'CO.tabs.notes' }}</a>
+            {{#if unlocked}}
+                <a class="item sheet-change-lock" data-tooltip="{{ localize 'CO.tabs.lock' }}"><i class="fas fa-lock-open"></i></a>
+            {{else}}
+                <a class="item sheet-change-lock" data-tooltip="{{ localize 'CO.tabs.unlock' }}"><i class="fas fa-lock"></i></a>
+            {{/if}}
         </nav>
-<!--        <div class="content flexrow">-->
-            {{! log "Chroniques Oubliées | detail" this}}
-            <section class="sheet-body">
-                <div class="tab main" data-group="primary" data-tab="main">
-                    {{> "systems/co/templates/encounter/parts/encounter-main.hbs"}}
-                </div>
-                <div class="tab loot" data-group="primary" data-tab="loot">
-                    {{> "systems/co/templates/encounter/parts/encounter-loot.hbs"}}
-                </div>
-                <div class="tab capacities" data-group="primary" data-tab="capacities">
-                    {{> "systems/co/templates/actors/parts/paths/character-paths.hbs"}}
-                </div>
-                <div class="tab notes" data-group="primary" data-tab="notes">
-                    {{> "systems/co/templates/encounter/parts/encounter-notes.hbs"}}
-                </div>
-<!--                <div class="tab data" data-group="primary" data-tab="data">-->
-<!--                    {{!> "systems/co/templates/encounter/parts/encounter-data.hbs"}}-->
-<!--                </div>-->
-            </section>
-<!--        </div>-->
+        <section class="sheet-body">
+            <div class="tab main" data-group="primary" data-tab="main">
+                {{> "systems/co/templates/encounter/parts/encounter-main.hbs"}}
+            </div>
+            <div class="tab loot" data-group="primary" data-tab="loot">
+                {{> "systems/co/templates/encounter/parts/encounter-loot.hbs"}}
+            </div>
+            <div class="tab capacities" data-group="primary" data-tab="capacities">
+                {{> "systems/co/templates/actors/parts/paths/character-paths.hbs"}}
+            </div>
+            <div class="tab notes" data-group="primary" data-tab="notes">
+                {{> "systems/co/templates/encounter/parts/encounter-notes.hbs"}}
+            </div>
+        </section>
     </div>
 </form>

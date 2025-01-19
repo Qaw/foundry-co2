@@ -151,10 +151,10 @@
   --primary2: #367620;
   --primary3: #6f0010;
   --secondary: #171f69;
-  --tertiary: #E9D7A1;
+  --tertiary: #e9d7a1;
   --alt: #786452;
   --alt-dark: #443730;
-  --bg: #F8F4F1;
+  --bg: #f8f4f1;
   --bg-dark: #e7d9cf;
   --sub: #605856;
   --color-disabled: #ababab;
@@ -169,7 +169,7 @@
   --tertiary-light: #f3e9ca;
   --body: var(--text-dark);
   --color-text-trait: #f5efe0;
-  --text-dark: #1C1C1C;
+  --text-dark: #1c1c1c;
   --text-light: white;
   --color-border-trait: #d8c384;
   --color-border-divider: #baa991;
@@ -447,16 +447,16 @@
 /*  LOCAL FONTS                             */
 /* ----------------------------------------- */
 @font-face {
-  font-family: 'Modesto Condensed';
+  font-family: "Modesto Condensed";
   font-style: normal;
   font-weight: 400;
-  src: url('../../../fonts/modesto-condensed/modesto-condensed.woff2') format('woff2');
+  src: url("../../../fonts/modesto-condensed/modesto-condensed.woff2") format("woff2");
 }
 @font-face {
-  font-family: 'Modesto Condensed';
+  font-family: "Modesto Condensed";
   font-style: normal;
   font-weight: 700;
-  src: url('../../../fonts/modesto-condensed/modesto-condensed-bold.woff2') format('woff2');
+  src: url("../../../fonts/modesto-condensed/modesto-condensed-bold.woff2") format("woff2");
 }
 /* ----------------------------------------- */
 /*  TEXT STYLES                             */
@@ -478,8 +478,8 @@ strong,
 }
 .chat-card .card-header {
   padding: 3px 0;
-  border-top: 2px groove #FFF;
-  border-bottom: 2px groove #FFF;
+  border-top: 2px groove #fff;
+  border-bottom: 2px groove #fff;
 }
 .chat-card .card-header img {
   flex: 0 0 36px;
@@ -535,7 +535,7 @@ strong,
   display: block;
   line-height: 28px;
   text-align: center;
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
 }
 .chat-card .card-buttons button {
   font-size: 12px;
@@ -545,10 +545,10 @@ strong,
 }
 .chat-card .card-footer {
   padding: 3px 0 0;
-  border-top: 2px groove #FFF;
+  border-top: 2px groove #fff;
 }
 .chat-card .card-footer span {
-  border-right: 2px groove #FFF;
+  border-right: 2px groove #fff;
   padding: 0 3px 0 0;
   font-size: 10px;
 }
@@ -606,8 +606,8 @@ strong,
   vertical-align: middle;
   background: transparent;
 }
-.co input[type=text],
-.co input[type=number] {
+.co input[type="text"],
+.co input[type="number"] {
   width: calc(100% - 2px);
   height: calc(100% - 2px);
   background: none;
@@ -873,7 +873,7 @@ strong,
 }
 .co.dialog.edit-abilities-dialog .window-content .row .abilities {
   display: grid;
-  grid-template-columns: repeat(6, 84px);
+  grid-template-columns: repeat(7, 84px);
   grid-template-rows: auto;
   flex: 0 0 auto;
 }
@@ -1098,16 +1098,16 @@ strong,
   color: #44a12b;
 }
 @font-face {
-  font-family: 'Modesto Condensed';
+  font-family: "Modesto Condensed";
   font-style: normal;
   font-weight: 400;
-  src: url('../../../fonts/modesto-condensed/modesto-condensed.woff2') format('woff2');
+  src: url("../../../fonts/modesto-condensed/modesto-condensed.woff2") format("woff2");
 }
 @font-face {
-  font-family: 'Modesto Condensed';
+  font-family: "Modesto Condensed";
   font-style: normal;
   font-weight: 700;
-  src: url('../../../fonts/modesto-condensed/modesto-condensed-bold.woff2') format('woff2');
+  src: url("../../../fonts/modesto-condensed/modesto-condensed-bold.woff2") format("woff2");
 }
 .co .empty {
   color: var(--sub);
@@ -1209,9 +1209,9 @@ strong,
 .co .sidebar {
   padding: 3px 0 0 3px;
   margin: 0;
-  flex: 160px 0 0;
+  flex: 190px 0 0;
   height: 100%;
-  min-width: 160px;
+  min-width: 190px;
   overflow: hidden scroll;
   scrollbar-width: thin;
   scrollbar-color: var(--primary) transparent;
@@ -1384,8 +1384,8 @@ strong,
   flex: 1;
   font-weight: bold;
 }
-.co .labelled-field input[type=text],
-.co .labelled-field input[type=number] {
+.co .labelled-field input[type="text"],
+.co .labelled-field input[type="number"] {
   flex: 0;
   font-weight: normal;
   margin: 1px 4px;
@@ -1473,18 +1473,18 @@ strong,
   --readonly-striped: 0;
 }
 .co .tagify {
-  --tags-disabled-bg: #F1F1F1;
-  --tags-border-color: #DDD;
-  --tags-hover-border-color: #CCC;
+  --tags-disabled-bg: #f1f1f1;
+  --tags-border-color: #ddd;
+  --tags-hover-border-color: #ccc;
   --tags-focus-border-color: #3595f6;
   --tag-border-radius: 3px;
-  --tag-bg: #E5E5E5;
-  --tag-hover: #D3E2E2;
+  --tag-bg: #e5e5e5;
+  --tag-hover: #d3e2e2;
   --tag-text-color: black;
   --tag-text-color--edit: black;
   --tag-pad: 0.3em 0.5em;
   --tag-inset-shadow-size: 1.1em;
-  --tag-invalid-color: #D39494;
+  --tag-invalid-color: #d39494;
   --tag-invalid-bg: rgba(211, 148, 148, 0.5);
   --tag-remove-bg: rgba(211, 148, 148, 0.3);
   --tag-remove-btn-color: black;
@@ -1637,7 +1637,9 @@ strong,
   font-size: var(--font-size-11);
   height: 18px;
   line-height: 18px;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3), inset 0 0 0 2px rgba(255, 255, 255, 0.2);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.2);
   background: var(--color-primary);
   color: #f5efe0;
   text-align: center;
@@ -1718,7 +1720,9 @@ strong,
 .co .currency {
   display: flex;
   padding: 3px;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3), inset 0 0 0 2px rgba(255, 255, 255, 0.2);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.2);
   background-color: var(--sub);
   margin: 0;
   align-items: center;
@@ -1737,7 +1741,9 @@ strong,
   margin-bottom: 10px;
   min-height: 22px;
   justify-content: flex-end;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3), inset 0 0 0 2px rgba(255, 255, 255, 0.2);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.2);
 }
 .co .inventory .inventory-header {
   align-items: center;
@@ -3095,7 +3101,7 @@ strong,
   margin: 0;
   padding: 0;
   display: grid;
-  grid: 1fr/repeat(6, 1fr);
+  grid: 1fr / repeat(7, 1fr);
   justify-content: center;
   list-style: none;
   gap: 12px;
@@ -3183,7 +3189,7 @@ strong,
   display: flex;
   border-radius: 0;
   font-size: 0;
-  border: 1px solid #D3CCBC;
+  border: 1px solid #d3ccbc;
   background: rgba(211, 204, 188, 0.2);
   margin-top: 4px;
   height: 30px;
@@ -5321,7 +5327,7 @@ strong,
   flex-wrap: wrap;
   align-items: baseline;
 }
-.co.sheet.item .window-content form .sheet-header .details input[name=name] {
+.co.sheet.item .window-content form .sheet-header .details input[name="name"] {
   font-family: var(--serif-condensed);
   font-size: var(--font-size-36);
   font-weight: 700;
@@ -5330,7 +5336,7 @@ strong,
   height: var(--font-size-34);
 }
 .co.sheet.item .window-content form .sheet-body .description {
-  height: 100%;
+  height: 80%;
 }
 .co.sheet.item .window-content form .sheet-body .details {
   padding: 10px;

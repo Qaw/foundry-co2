@@ -1,0 +1,59 @@
+<!--<h3 class="form-header"><a class="details-toggle">{{localize "CO.ui.details"}}</a></h3>-->
+<div class="details-form">
+  {{#if debugMode}}
+    <div class="form-group">
+      <label>{{localize "CO.ui.id"}}</label>
+      <div class="form-fields">
+        <input class="field-value" name="data._id" readonly type="text" value="{{data._id}}" placeholder="{{localize 'CO.ui.id'}}" data-dtype="String" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>{{localize "CO.ui.key"}}</label>
+      <div class="form-fields">
+        <input class="field-value" name="system.slug" type="text" value="{{item.system.slug}}" placeholder="{{localize 'COF.ui.key'}}" data-dtype="String" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>{{localize "CO.label.long.path"}}</label>
+      <div class="form-fields">
+        <input class="field-value" name="system.path" readonly type="text" value="{{system.path}}" placeholder="{{localize 'CO.label.long.path'}}" data-dtype="String" />
+      </div>
+    </div>
+  {{/if}}
+  <div class="form-group">
+    <label>{{localize "CO.ui.learned"}}</label>
+    <div class="form-fields">
+      <label class="checkbox"> <input type="checkbox" name="system.learned" {{checked system.learned}} /></label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>{{localize "CO.label.long.actionType"}}</label>
+    <div class="form-fields">
+      <select name="system.actionType" data-type="String" style="width:100%">
+        {{selectOptions choiceCapacityActionTypes selected=system.actionType localize=true}}
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>{{localize "CO.label.long.properties"}}</label>
+    <div class="form-fields">
+      {{#each system.properties as |prop idx|}}
+        <label class="checkbox"> <input type="checkbox" name="system.properties.{{idx}}" {{checked prop}} /> {{localize (concat "CO.properties." idx)}}</label>
+      {{/each}}
+    </div>
+  </div>
+  <br />
+
+  {{#if system.properties.chargeable}}
+    <div class="form-group">
+      <label>{{localize "CO.ui.charges"}}</label>
+      <div class="form-fields">
+        <input class="field-value" name="system.charges.current" type="text" value="{{system.charges.current}}" placeholder="{{localize 'CO.ui.current'}}" data-dtype="Number" />
+        /
+        <input class="field-value" name="system.charges.max" type="text" value="{{system.charges.max}}" placeholder="{{localize 'CO.ui.max'}}" data-dtype="Number" />
+      </div>
+    </div>
+
+  {{/if}}
+</div>
+{{!> "systems/co/templates/items/parts/actions/action-partial.hbs"}}
