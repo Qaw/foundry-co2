@@ -218,6 +218,7 @@
       "resolvers": "Résolutions",
       "skill": "Compétence",
       "formula": "Formule",
+      "skillformula": "Formule de compétence",
       "part": "Composante",
       "crit": "Critique",
       "difficulty": "Difficulté",
