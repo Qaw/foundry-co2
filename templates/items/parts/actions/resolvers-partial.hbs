@@ -5,11 +5,11 @@
 <div class="resolvers-container foldable">
     {{#if action.resolvers}}
         <div class="flexrow strong">
-            <div class="form-fields flex2">Type</div>
-            <div class="form-fields flex1">Skill formula</div>
-            <div class="form-fields flex1">Skill crit</div>
-            <div class="form-fields flex1">Skill difficulty</div>
-            <div class="form-fields flex1">Dmg formula</div>
+            <div class="form-fields flex2">{{localize "CO.ui.type"}}</div>
+            <div class="form-fields flex1">{{localize "CO.ui.skillformula"}}</div>
+            <div class="form-fields flex1">{{localize "CO.ui.crit"}}</div>
+            <div class="form-fields flex1">{{localize "CO.ui.difficulty"}}</div>
+            <div class="form-fields flex1">{{localize "CO.ui.dmg"}}</div>
         </div>
         {{#each action.resolvers as |r id|}}
             <div class="flexrow resolver" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="resolver">
