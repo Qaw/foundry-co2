@@ -585,6 +585,6 @@
     "CoNoActorSelected": "Aucun acteur sélectionné ou assigné ne peut être trouvé comme cible de la macro.",
     "CoUnownedWarn": "Vous ne pouvez créer une macro que pour un objet possédé.",
     "CoCapacityNotLearned": "La capacité {name} ciblée par la macro n'est pas apprise.",
-    "CoItemNotEquipped": "L'équipement {name} ciblé par la macro n'est pas équipé."
+    "COItemNotEquipped": "L'équipement {name} ciblé par la macro n'est pas équipé."
   }
 }

@@ -1,11 +1,10 @@
 import { Action } from "../models/schemas/action.mjs"
-import { Condition } from "../models/schemas/condition.mjs"
 import { SYSTEM } from "../config/system.mjs"
 /**
  * Extend the base Item entity
  * @extends {Item}
  */
-export default class CoItem extends Item {
+export default class COItem extends Item {
   constructor(...args) {
     let data = args[0]
     if (!data.img && SYSTEM.ITEM_ICONS[data.type]) data.img = SYSTEM.ITEM_ICONS[data.type]

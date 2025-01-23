@@ -2,14 +2,12 @@
 import { SYSTEM } from "./module/config/system.mjs"
 globalThis.SYSTEM = SYSTEM
 
-import CoCharacterSheet from "./module/applications/sheets/character-sheet.mjs"
-import CoEncounterSheet from "./module/applications/sheets/encounter-sheet.mjs"
-
-import { CoActorProxy } from "./module/actor/proxy.mjs"
-import CoItem from "./module/documents/item.mjs"
+import COCharacterSheet from "./module/applications/sheets/character-sheet.mjs"
+import COEncounterSheet from "./module/applications/sheets/encounter-sheet.mjs"
 
 // Import modules
 import * as models from "./module/models/_module.mjs"
+import * as documents from "./module/documents/_module.mjs"
 import * as applications from "./module/applications/_module.mjs"
 
 // Helpers
@@ -31,6 +29,7 @@ Hooks.once("init", async function () {
   game.system.api = {
     applications,
     models,
+    documents,
     macros: Macros,
   }
 
@@ -49,24 +48,16 @@ Hooks.once("init", async function () {
     attack: models.AttackData,
   }
 
-  CONFIG.Actor.documentClass = CoActorProxy
-  CONFIG.Item.documentClass = CoItem
+  CONFIG.Actor.documentClass = documents.COActor
+  CONFIG.Item.documentClass = documents.COItem
 
   // Unregister legacy sheets
   Actors.unregisterSheet("core", ActorSheet)
   Items.unregisterSheet("core", ItemSheet)
 
   // Register application sheets
-  Actors.registerSheet(SYSTEM.ID, CoCharacterSheet, {
-    types: ["character"],
-    makeDefault: true,
-    label: "CO.sheet.character",
-  })
-  Actors.registerSheet(SYSTEM.ID, CoEncounterSheet, {
-    types: ["encounter"],
-    makeDefault: true,
-    label: "CO.sheet.encounter",
-  })
+  Actors.registerSheet(SYSTEM.ID, COCharacterSheet, { types: ["character"], makeDefault: true, label: "CO.sheet.character" })
+  Actors.registerSheet(SYSTEM.ID, COEncounterSheet, { types: ["encounter"], makeDefault: true, label: "CO.sheet.encounter" })
 
   Items.registerSheet(SYSTEM.ID, applications.AttackSheet, { types: ["attack"], makeDefault: true })
   Items.registerSheet(SYSTEM.ID, applications.CapacitySheet, { types: ["capacity"], makeDefault: true })

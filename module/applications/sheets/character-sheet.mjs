@@ -3,7 +3,7 @@ import { CoEditAbilitiesDialog } from "../../dialogs/edit-abilities-dialog.mjs"
 import { Action } from "../../models/schemas/action.mjs"
 import { SYSTEM } from "../../config/system.mjs"
 
-export default class CoCharacterSheet extends CoBaseActorSheet {
+export default class COCharacterSheet extends CoBaseActorSheet {
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {

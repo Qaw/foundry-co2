@@ -1,4 +1,4 @@
-import CoItem from "../documents/item.mjs"
+import COItem from "../documents/item.mjs"
 import CoChat from "../chat.mjs"
 import { SYSTEM } from "../config/system.mjs"
 
@@ -50,11 +50,11 @@ export class Macros {
    */
   static async sendToChat(itemId, itemName, indice) {
     const { item, actor } = Macros.getMacroTarget(itemId, itemName, "Item")
-    if (item instanceof CoItem) {
+    if (item instanceof COItem) {
       if (indice === null) {
         let itemChatData = item.getChatData(null)
         if (item.type === SYSTEM.ITEM_TYPE.CAPACITY && !item.system.learned) return ui.notifications.warn(game.i18n.format("MACRO.CoCapacityNotLearned", { name: itemName }))
-        if (item.type === SYSTEM.ITEM_TYPE.EQUIPMENT && !item.system.equipped) return ui.notifications.warn(game.i18n.format("MACRO.CoItemNotEquipped", { name: itemName }))
+        if (item.type === SYSTEM.ITEM_TYPE.EQUIPMENT && !item.system.equipped) return ui.notifications.warn(game.i18n.format("MACRO.COItemNotEquipped", { name: itemName }))
         await new CoChat(actor)
           .withTemplate("systems/co/templates/chat/item-card.hbs")
           .withData({
@@ -70,7 +70,7 @@ export class Macros {
       } else {
         let itemChatData = item.getChatData(indice)
         if (item.type === SYSTEM.ITEM_TYPE.CAPACITY && !item.system.learned) return ui.notifications.warn(game.i18n.format("MACRO.CoCapacityNotLearned", { name: itemName }))
-        if (item.type === SYSTEM.ITEM_TYPE.EQUIPMENT && !item.system.equipped) return ui.notifications.warn(game.i18n.format("MACRO.CoItemNotEquipped", { name: itemName }))
+        if (item.type === SYSTEM.ITEM_TYPE.EQUIPMENT && !item.system.equipped) return ui.notifications.warn(game.i18n.format("MACRO.COItemNotEquipped", { name: itemName }))
         await new CoChat(actor)
           .withTemplate("systems/co/templates/chat/item-card.hbs")
           .withData({

@@ -1,7 +1,7 @@
 import CoBaseActorSheet from "./base-actor-sheet.mjs"
 import { SYSTEM } from "../../config/system.mjs"
 
-export default class CoEncounterSheet extends CoBaseActorSheet {
+export default class COEncounterSheet extends CoBaseActorSheet {
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -16,8 +16,7 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
   /** @override */
   getData(options) {
     const context = super.getData(options)
-    console.debug(this.actor.attacks)
-    context.attacks = this.actor.attacks
+    context.attacks = this.actor.system.attacks
     context.attacksActions = this.actor.attacksActions
     context.choiceArchetypes = SYSTEM.ENCOUNTER_ARCHETYPES
     context.choiceCategories = SYSTEM.ENCOUNTER_CATEGORIES
@@ -198,7 +197,7 @@ export default class CoEncounterSheet extends CoBaseActorSheet {
       // }
       // return this.actor.addProfile(item);
       case SYSTEM.ITEM_TYPE.ATTACK:
-        return this.actor.addAttack(item)
+        return this.actor.system.addAttack(item)
       case SYSTEM.ITEM_TYPE.PATH:
         return this.actor.addPath(item)
       case SYSTEM.ITEM_TYPE.CAPACITY:

@@ -4,18 +4,33 @@ import { Resolver } from "../models/schemas/resolver.mjs"
 import { Modifier } from "../models/schemas/modifier.mjs"
 
 /**
- * @class CoActor
+ * @class COActor
  * @classdesc
  * @extends {Actor}
  *
  * @function
  */
 
-export default class CoActor extends Actor {
-  constructor(...args) {
-    let data = args[0]
-    if (!data.img && SYSTEM.ACTOR_ICONS[data.type]) data.img = SYSTEM.ACTOR_ICONS[data.type]
-    super(...args)
+export default class COActor extends Actor {
+  async _preCreate(data, options, user) {
+    await super._preCreate(data, options, user)
+
+    // Configure the default image
+    if (SYSTEM.ACTOR_ICONS[this.type]) {
+      const img = SYSTEM.ACTOR_ICONS[this.type]
+      this.updateSource({ img })
+    }
+
+    // Configure prototype token settings
+    if (this.type === "character") {
+      const prototypeToken = {}
+      Object.assign(prototypeToken, {
+        sight: { enabled: true },
+        actorLink: true,
+        disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
+      })
+      this.updateSource({ prototypeToken })
+    }
   }
 
   // #region accesseurs
@@ -516,7 +531,7 @@ export default class CoActor extends Actor {
   /**
    * Add a path as an embedded item
    * It also create the capacities linked to the path
-   * @param {CoItem} path
+   * @param {COItem} path
    * Retourne {string} uuid of the created path
    */
   async addPath(path) {
@@ -548,7 +563,7 @@ export default class CoActor extends Actor {
 
   /**
    * Add a capacity as an embedded item
-   * @param {CoItem} capacity
+   * @param {COItem} capacity
    * @param {UUID} pathUuid uuid of the Path if the capacity is linked to a path
    * Retourne {number} uuid of the created capacity
    */
@@ -577,7 +592,7 @@ export default class CoActor extends Actor {
 
   /**
    * Add an equipment as an embedded item
-   * @param {CoItem} equipment
+   * @param {COItem} equipment
    * Retourne {number} id of the created path
    */
   async addEquipment(equipment) {
