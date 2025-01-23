@@ -87,7 +87,7 @@ Hooks.once("init", async function () {
   }
 
   // Initiative
-  if (game.settings.get("co", "useVarInit")) {
+  if (game.settings.get("co", "usevarInit")) {
     CONFIG.Combat.initiative = {
       formula: "1d6x + @combat.init.value + @abilities.wis.value/100",
       decimals: 2,
