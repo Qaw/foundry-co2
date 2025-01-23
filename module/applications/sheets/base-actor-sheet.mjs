@@ -77,19 +77,21 @@ export default class CoBaseActorSheet extends ActorSheet {
    */
   async _onSendToChat(event) {
     event.preventDefault()
+    // dataset has tooltip, chatType and if it's an action there are also indice and source
     const dataset = event.currentTarget.dataset
     const chatType = dataset.chatType
 
+    let item
     let id
-    let indice
+    let indice = null
     if (chatType === "item" || chatType === "loot") {
       id = $(event.currentTarget).parents(".item").data("itemId")
+      item = this.actor.items.get(id)
     } else if (chatType === "action") {
-      id = $(event.currentTarget).data("source")
-      indice = $(event.currentTarget).data("indice")
+      item = await fromUuid(dataset.source)
+      indice = dataset.indice
     }
 
-    let item = this.actor.items.get(id)
     let itemChatData = item.getChatData(chatType, indice)
 
     await new CoChat(this.actor)
