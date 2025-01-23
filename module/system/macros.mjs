@@ -55,7 +55,7 @@ export class Macros {
         let itemChatData = item.getChatData(null)
         if (item.type === SYSTEM.ITEM_TYPE.CAPACITY && !item.system.learned) return ui.notifications.warn(game.i18n.format("MACRO.CoCapacityNotLearned", { name: itemName }))
         if (item.type === SYSTEM.ITEM_TYPE.EQUIPMENT && !item.system.equipped) return ui.notifications.warn(game.i18n.format("MACRO.COItemNotEquipped", { name: itemName }))
-        await new CoChat(actor)
+        new CoChat(actor)
           .withTemplate("systems/co/templates/chat/item-card.hbs")
           .withData({
             actorId: actor.id,
@@ -71,7 +71,7 @@ export class Macros {
         let itemChatData = item.getChatData(indice)
         if (item.type === SYSTEM.ITEM_TYPE.CAPACITY && !item.system.learned) return ui.notifications.warn(game.i18n.format("MACRO.CoCapacityNotLearned", { name: itemName }))
         if (item.type === SYSTEM.ITEM_TYPE.EQUIPMENT && !item.system.equipped) return ui.notifications.warn(game.i18n.format("MACRO.COItemNotEquipped", { name: itemName }))
-        await new CoChat(actor)
+        new CoChat(actor)
           .withTemplate("systems/co/templates/chat/item-card.hbs")
           .withData({
             actorId: actor.id,
