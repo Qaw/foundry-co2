@@ -20,7 +20,12 @@
     "sheet": {
       "character": "Fiche de personnage",
       "encounter": "Fiche de rencontre",
-      "item": "Fiche d'objet personnage"
+      "attack": "Fiche d'attaque de rencontre",
+      "capacity": "Fiche de capacité",
+      "profile": "Fiche de profil",
+      "feature": "Fiche de feature",
+      "path": "Fiche de voie",
+      "equipement": "Fiche d'équipement"
     },
     "notif": {
       "ready": "Système prêt.",
