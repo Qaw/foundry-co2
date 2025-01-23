@@ -2,9 +2,6 @@
 import { SYSTEM } from "./module/config/system.mjs"
 globalThis.SYSTEM = SYSTEM
 
-import COCharacterSheet from "./module/applications/sheets/character-sheet.mjs"
-import COEncounterSheet from "./module/applications/sheets/encounter-sheet.mjs"
-
 // Import modules
 import * as models from "./module/models/_module.mjs"
 import * as documents from "./module/documents/_module.mjs"
@@ -15,7 +12,7 @@ import preloadHandlebarsTemplates from "./module/templates.mjs"
 import registerHandlebarsHelpers from "./module/helpers.mjs"
 import registerSystemSettings from "./module/settings.mjs"
 import registerHooks from "./module/hooks.mjs"
-import { Macros } from "./module/system/macros.mjs"
+import Macros from "./module/system/macros.mjs"
 import Utils from "./module/utils.mjs"
 
 Hooks.once("init", async function () {
@@ -56,8 +53,8 @@ Hooks.once("init", async function () {
   Items.unregisterSheet("core", ItemSheet)
 
   // Register application sheets
-  Actors.registerSheet(SYSTEM.ID, COCharacterSheet, { types: ["character"], makeDefault: true, label: "CO.sheet.character" })
-  Actors.registerSheet(SYSTEM.ID, COEncounterSheet, { types: ["encounter"], makeDefault: true, label: "CO.sheet.encounter" })
+  Actors.registerSheet(SYSTEM.ID, applications.CharacterSheet, { types: ["character"], makeDefault: true, label: "CO.sheet.character" })
+  Actors.registerSheet(SYSTEM.ID, applications.EncounterSheet, { types: ["encounter"], makeDefault: true, label: "CO.sheet.encounter" })
 
   Items.registerSheet(SYSTEM.ID, applications.AttackSheet, { types: ["attack"], makeDefault: true })
   Items.registerSheet(SYSTEM.ID, applications.CapacitySheet, { types: ["capacity"], makeDefault: true })

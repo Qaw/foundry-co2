@@ -3,19 +3,6 @@
  */
 export default function registerSystemSettings() {
   /**
-   * Valeur de Base pour le Calcul de la DEF
-   */
-  game.settings.register("co", "baseDef", {
-    name: "SETTINGS.BaseDef",
-    hint: "SETTINGS.BaseDefHint",
-    scope: "world",
-    config: true,
-    type: Number,
-    default: 10,
-    requiresReload: true,
-  })
-
-  /**
    * Mode DEBUG
    */
   game.settings.register("co", "debugMode", {

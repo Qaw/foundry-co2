@@ -7,7 +7,7 @@ import { SYSTEM } from "../config/system.mjs"
  * @param {object} dropData     The dropped data
  * @param {number} slot         The hotbar slot to use
  */
-export async function createCoMacro(dropData, slot) {
+export async function createCOMacro(dropData, slot) {
   const macroData = { type: "script", scope: "actor" }
   switch (dropData.type) {
     case "Item":
@@ -40,7 +40,7 @@ export async function createCoMacro(dropData, slot) {
   }
 }
 
-export class Macros {
+export default class Macros {
   /**
    * Send to Chat an Item or an action
    * @param {string} itemId          Id of the item on the selected actor to trigger.
