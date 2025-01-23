@@ -457,6 +457,7 @@ export default class CharacterData extends ActorData {
   get nbSpells() {
     return this.spells.length
   }
+
   /**
    * Gets the hit dice (hd) for the character : it's the recovery dice value from the character's profile
    *
