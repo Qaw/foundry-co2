@@ -58,7 +58,7 @@ export default class Utils {
 
   /**
    * Evaluate a custom value
-   * Shortcuts : @str @dex @con @int @wis @cha @mel @ran @mag @lvl @rank[+1,0,+1,0,0]
+   * Shortcuts : @for @str @dex @con @int @sag @wis @cha @atc @mel @atd @ran @atm @mag @def @niv @lvl @rang[+1,0,+1,0,0] @rank[+1,0,+1,0,0]
    * @param {*} actor
    * @param {string} formula
    * @param {UUID} source The item source's UUID : used for the #rank
@@ -69,20 +69,20 @@ export default class Utils {
   static _evaluateCustom(actor, formula, source, toEvaluate, withDice) {
     let replacedFormula = formula
     const DSL = {
-      "@for": "system.abilities.str.mod",
-      "@str": "system.abilities.str.mod",
-      "@dex": "system.abilities.dex.mod",
-      "@con": "system.abilities.con.mod",
-      "@int": "system.abilities.int.mod",
-      "@sag": "system.abilities.wis.mod",
-      "@wis": "system.abilities.wis.mod",
-      "@cha": "system.abilities.cha.mod",
+      "@for": "system.abilities.str.value",
+      "@str": "system.abilities.str.value",
+      "@dex": "system.abilities.dex.value",
+      "@con": "system.abilities.con.value",
+      "@int": "system.abilities.int.value",
+      "@sag": "system.abilities.wis.value",
+      "@wis": "system.abilities.wis.value",
+      "@cha": "system.abilities.cha.value",
       "@atc": "system.combat.melee.value",
-      "@melee": "system.combat.melee.value",
+      "@mel": "system.combat.melee.value",
       "@atd": "system.combat.ranged.value",
-      "@ranged": "system.combat.ranged.value",
+      "@ran": "system.combat.ranged.value",
       "@atm": "system.combat.magic.value",
-      "@magic": "system.combat.magic.value",
+      "@mag": "system.combat.magic.value",
       "@def": "system.combat.def.value",
       "@niv": "system.attributes.level.base",
       "@lvl": "system.attributes.level.base",
@@ -90,46 +90,46 @@ export default class Utils {
 
     // Shortcuts
     Object.keys(DSL).forEach((shortcut) => {
-      if (replacedFormula.includes(shortcut)) replacedFormula = replacedFormula.replace(shortcut, foundry.utils.getProperty(actor, DSL[shortcut]))
+      if (replacedFormula.includes(shortcut)) {
+        replacedFormula = replacedFormula.replace(shortcut, foundry.utils.getProperty(actor, DSL[shortcut]))
+      }
     })
 
-    if (replacedFormula.includes("@rang")) {
-      let startRank = replacedFormula.substring(replacedFormula.indexOf("@rang"))
-      let extract = startRank.substring(replacedFormula.indexOf("[") + 1, replacedFormula.indexOf("]"))
-      let ranks = extract.split(",")
-      let itemSource = actor.items.get(source)
-      const pathId = itemSource.system.path
-      const path = actor.items.get(pathId)
-      const rank = path.system.rank
-      let total = 0
-      if (rank) {
-        for (let index = 0; index < rank; index++) {
-          const element = ranks[index]
-          let val = parseInt(element)
-          if (val) total += val
+    /**
+     * Calculates the total rank based on a given formula and keyword.
+     *
+     * This function searches for a keyword within the provided formula and extracts
+     * a list of ranks enclosed in square brackets. It then sums up the ranks up to
+     * the current rank of the path associated with the actor's item source.
+     *
+     * @param {string} replacedFormula The formula string that may contain the keyword and ranks.
+     * @param {string} keyword The keyword to search for within the formula.
+     * @returns {string} - The updated formula with the total rank calculated and replaced.
+     */
+    function calculateTotalRank(replacedFormula, keyword) {
+      if (replacedFormula.includes(keyword)) {
+        let startRank = replacedFormula.substring(replacedFormula.indexOf(keyword))
+        let extract = startRank.substring(startRank.indexOf("[") + 1, startRank.indexOf("]"))
+        let ranks = extract.split(",")
+        let itemSource = actor.items.get(source)
+        const pathId = itemSource.system.path
+        const path = actor.items.get(pathId)
+        const rank = path.system.rank
+        let total = 0
+        if (rank) {
+          for (let index = 0; index < rank; index++) {
+            const element = ranks[index]
+            let val = parseInt(element)
+            if (val) total += val
+          }
         }
+        replacedFormula = replacedFormula.replace(`${keyword}[${extract}]`, total)
       }
-      replacedFormula = replacedFormula.replace(`@rang[${extract}]`, total)
+      return replacedFormula
     }
 
-    if (replacedFormula.includes("@rank")) {
-      let startRank = replacedFormula.substring(replacedFormula.indexOf("@rank"))
-      let extract = startRank.substring(replacedFormula.indexOf("[") + 1, replacedFormula.indexOf("]"))
-      let ranks = extract.split(",")
-      let itemSource = actor.items.get(source)
-      const pathId = itemSource.system.path
-      const path = actor.items.get(pathId)
-      const rank = path.system.rank
-      let total = 0
-      if (rank) {
-        for (let index = 0; index < rank; index++) {
-          const element = ranks[index]
-          let val = parseInt(element)
-          if (val) total += val
-        }
-      }
-      replacedFormula = replacedFormula.replace(`@rank[${extract}]`, total)
-    }
+    replacedFormula = calculateTotalRank(replacedFormula, "@rang")
+    replacedFormula = calculateTotalRank(replacedFormula, "@rank")
 
     // Remaining formula
     if (replacedFormula.includes("@")) {
@@ -141,39 +141,5 @@ export default class Utils {
       if (toEvaluate) return eval(replacedFormula)
       else return replacedFormula
     }
-  }
-
-  // FIXME !! C'est quoi ?
-  // replacedFormula = _processFormulaKeyword("@rang", replacedFormula, source)
-
-  // FIXME !! C'est quoi ?
-  // replacedFormula = _processFormulaKeyword("@rank", replacedFormula, source)
-
-  _processFormulaKeyword(keyword, replacedFormula, source) {
-    if (replacedFormula.includes(keyword)) {
-      let keywordIndex = replacedFormula.indexOf(keyword)
-      let startRank = replacedFormula.substring(keywordIndex)
-      let openBracketIndex = replacedFormula.indexOf("[", keywordIndex) + 1
-      let closeBracketIndex = replacedFormula.indexOf("]", keywordIndex)
-      let extract = startRank.substring(openBracketIndex, closeBracketIndex)
-
-      let ranks = extract.split(",")
-      let itemSource = actor.items.get(source)
-      const pathId = itemSource.system.path
-      const path = actor.items.get(pathId)
-      const rank = path.system.rank
-      let total = 0
-
-      if (rank) {
-        for (let index = 0; index < rank; index++) {
-          const element = ranks[index]
-          let val = parseInt(element, 10)
-          if (val) total += val
-        }
-      }
-
-      replacedFormula = replacedFormula.replace(`${keyword}[${extract}]`, total)
-    }
-    return replacedFormula
   }
 }
