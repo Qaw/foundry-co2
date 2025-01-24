@@ -12,7 +12,7 @@ import preloadHandlebarsTemplates from "./module/templates.mjs"
 import registerHandlebarsHelpers from "./module/helpers.mjs"
 import registerSystemSettings from "./module/settings.mjs"
 import registerHooks from "./module/hooks.mjs"
-import Macros from "./module/system/macros.mjs"
+import Macros from "./module/macros.mjs"
 import Utils from "./module/utils.mjs"
 
 Hooks.once("init", async function () {

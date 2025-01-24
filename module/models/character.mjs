@@ -3,7 +3,7 @@ import { BaseValue } from "./schemas/base-value.mjs"
 import ActorData from "./actor.mjs"
 import Utils from "../utils.mjs"
 import CoChat from "../chat.mjs"
-import DefaultConfiguration from "../configuration.mjs"
+import DefaultConfiguration from "../config/configuration.mjs"
 
 export default class CharacterData extends ActorData {
   static defineSchema() {
@@ -174,15 +174,15 @@ export default class CharacterData extends ActorData {
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr)
       const abilityBonus = this.abilities[skill.ability].value
 
-      if ([SYSTEM.COMBAT_TYPE.MELEE, SYSTEM.COMBAT_TYPE.RANGED, SYSTEM.COMBAT_TYPE.MAGIC].includes(key)) {
+      if ([SYSTEM.COMBAT.melee.id, SYSTEM.COMBAT.ranged.id, SYSTEM.COMBAT.magic.id].includes(key)) {
         this._prepareAttack(key, skill, abilityBonus, bonuses)
       }
 
-      if (key === SYSTEM.COMBAT_TYPE.INIT) {
+      if (key === SYSTEM.COMBAT.init.id) {
         this._prepareInit(skill, abilityBonus, bonuses)
       }
 
-      if (key === SYSTEM.COMBAT_TYPE.DEF) {
+      if (key === SYSTEM.COMBAT.def.id) {
         this._prepareDef(skill, abilityBonus, bonuses)
       }
     }
@@ -192,17 +192,17 @@ export default class CharacterData extends ActorData {
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr)
 
       // Points de chance  - Fortune Points - FP
-      if (key === SYSTEM.RESOURCES_TYPE.FORTUNE) {
+      if (key === SYSTEM.RESOURCES.fortune.id) {
         this._prepareFP(skill, bonuses)
       }
 
       // Points de mana - Mana Points - MP
-      if (key === SYSTEM.RESOURCES_TYPE.MANA) {
+      if (key === SYSTEM.RESOURCES.mana.id) {
         this._prepareMP(skill, bonuses)
       }
 
       // Dés de récupération - Recovery Points - RP
-      if (key === SYSTEM.RESOURCES_TYPE.RECOVERY) {
+      if (key === SYSTEM.RESOURCES.recovery.id) {
         this._prepareRP(skill, bonuses)
       }
     }
@@ -285,7 +285,7 @@ export default class CharacterData extends ActorData {
    * @param {*} bonuses
    */
   _prepareInit(skill, abilityBonus, bonuses) {
-    const initModifiers = this.computeTotalModifiersByTarget(this.combatModifiers, SYSTEM.COMBAT_TYPE.INIT)
+    const initModifiers = this.computeTotalModifiersByTarget(this.combatModifiers, SYSTEM.COMBAT.init.id)
     const malus = this.parent.getMalusToInitiative()
 
     skill.base = DefaultConfiguration.baseInitiative()
@@ -310,7 +310,7 @@ export default class CharacterData extends ActorData {
    * @param {*} bonuses
    */
   _prepareDef(skill, abilityBonus, bonuses) {
-    const defModifiers = this.computeTotalModifiersByTarget(this.combatModifiers, SYSTEM.COMBAT_TYPE.DEF)
+    const defModifiers = this.computeTotalModifiersByTarget(this.combatModifiers, SYSTEM.COMBAT.def.id)
 
     skill.base = DefaultConfiguration.baseDefense()
     skill.tooltipBase = Utils.getTooltip("Base", skill.base)

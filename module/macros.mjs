@@ -1,6 +1,6 @@
-import COItem from "../documents/item.mjs"
-import CoChat from "../chat.mjs"
-import { SYSTEM } from "../config/system.mjs"
+import COItem from "./documents/item.mjs"
+import CoChat from "./chat.mjs"
+import { SYSTEM } from "./config/system.mjs"
 
 /**
  * Attempt to create a macro from the dropped data. Will use an existing macro if one exists.
