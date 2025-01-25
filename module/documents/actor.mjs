@@ -316,7 +316,7 @@ export default class COActor extends Actor {
   /**
    * Vérifie si le personnage est entraîné avec une arme
    * @param {*} itemId
-   * @returns
+   * @returns {boolean}
    */
   isTrainedWithWeapon(itemId) {
     const item = this.weapons.find((item) => item.id === itemId)
@@ -331,7 +331,7 @@ export default class COActor extends Actor {
   /**
    * Vérifie si le personnage est entraîné avec une armure
    * @param {*} itemId
-   * @returns
+   * @returns {boolean}
    */
   isTrainedWithArmor(itemId) {
     const item = this.armors.find((item) => item.id === itemId)
@@ -346,7 +346,7 @@ export default class COActor extends Actor {
   /**
    * Vérifie si le personnage est entraîné avec un bouclier
    * @param {*} itemId
-   * @returns
+   * @returns {boolean}
    */
   isTrainedWithShield(itemId) {
     const item = this.shields.find((item) => item.id === itemId)
@@ -437,7 +437,7 @@ export default class COActor extends Actor {
    */
   async addFeature(feature) {
     let itemData = feature.toObject()
-    if (itemData.system.subtype == SYSTEM.FEATURE_SUBTYPE.people.id) {
+    if (itemData.system.subtype === SYSTEM.FEATURE_SUBTYPE.people.id) {
       if (!foundry.utils.isEmpty(this.people)) {
         return
       }
@@ -721,9 +721,12 @@ export default class COActor extends Actor {
   }
 
   /**
+   * Determines if the actor can equip the given item.
    * Check if an item can be equiped, if one Hand or two Hands property is true
-   * @param item
-   * @param bypassChecks
+   *
+   * @param {Object} item The item to be equipped.
+   * @param {boolean} bypassChecks Whether to bypass the usual checks.
+   * @returns {boolean} Returns true if the item can be equipped, otherwise false.
    */
   canEquipItem(item, bypassChecks) {
     if (!this._hasEnoughFreeHands(item, bypassChecks)) {
@@ -734,9 +737,11 @@ export default class COActor extends Actor {
   }
 
   /**
-   * Check if actor has enough free hands to equip this item
-   * @param item
-   * @param bypassChecks
+   * Checks if the actor has enough free hands to equip an item.
+   *
+   * @param {Object} item The item to be equipped.
+   * @param {boolean} bypassChecks Whether to bypass the free hands check.
+   * @returns {boolean} Returns true if the actor has enough free hands to equip the item, otherwise false.
    */
   _hasEnoughFreeHands(item, bypassChecks) {
     // Si le contrôle de mains libres n'est pas demandé, on renvoi Vrai

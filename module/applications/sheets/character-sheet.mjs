@@ -111,7 +111,6 @@ export default class COCharacterSheet extends CoBaseActorSheet {
   /**
    * Equip or unequip the equipment
    * @param {*} event
-   * @param {boolean} status the target status of the capacity, true if selected, false elsewhere
    * @private
    */
   _onEquippedToggle(event) {
@@ -124,7 +123,7 @@ export default class COCharacterSheet extends CoBaseActorSheet {
   /**
    * Open the item sheet
    * For capacity, open the embededd item
-   * @param event
+   * @param {*} event
    * @private
    */
   _onEditItem(event) {
@@ -138,7 +137,7 @@ export default class COCharacterSheet extends CoBaseActorSheet {
 
   /**
    * Delete the selected item
-   * @param event
+   * @param {*} event
    * @private
    */
   async _onDeleteItem(event) {
@@ -166,9 +165,10 @@ export default class COCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * Delete the selected feature
-   * @param itemUuid
-   * @private
+   * Deletes a feature from the actor.
+   *
+   * @param {string} itemUuid The UUID of the item to be deleted.
+   * @returns {Promise<void>} A promise that resolves when the feature is deleted.
    */
   async _onDeleteFeature(itemUuid) {
     await this.actor.deleteFeature(itemUuid)
@@ -176,7 +176,7 @@ export default class COCharacterSheet extends CoBaseActorSheet {
 
   /**
    * Delete the selected profile
-   * @param event
+   * @param {*} event
    * @private
    */
   async _onDeleteProfile(event) {
@@ -189,7 +189,7 @@ export default class COCharacterSheet extends CoBaseActorSheet {
 
   /**
    * Delete the selected path
-   * @param event
+   * @param {*} event
    * @private
    */
   async _onDeletePath(event) {
@@ -202,9 +202,10 @@ export default class COCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * Delete the selected capacity
-   * @param itemUuid
-   * @private
+   * Handles the deletion of a capacity item from the actor.
+   *
+   * @param {string} itemUuid The unique identifier of the item to be deleted.
+   * @returns {Promise<void>} A promise that resolves when the capacity item has been deleted.
    */
   async _onDeleteCapacity(itemUuid) {
     await this.actor.deleteCapacity(itemUuid)

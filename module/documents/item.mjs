@@ -160,11 +160,12 @@ export default class COItem extends Item {
   }
 
   /**
-   * Calculate the sum of all bonus for a specific type and target
-   * @param {*} type      MODIFIERS_TYPE
-   * @param {*} subtype   MODIFIERS_SUBTYPE
-   * @param {*} target    MODIFIERS_TARGET
-   * @returns the value of the bonus
+   * Calculates the total modifiers based on the specified type, subtype, and target.
+   *
+   * @param {string} type The type of the modifier. One of the MODIFIERS_TYPE values.
+   * @param {string} subtype The subtype of the modifier. One of the MODIFIERS_SUBTYPE values.
+   * @param {string} target The target of the modifier. One of the MODIFIERS_TARGET values.
+   * @returns {number|undefined} The total sum of the modifiers that match the criteria, or undefined if the item type is not valid.
    */
   getTotalModifiersByTypeSubtypeAndTarget(type, subtype, target) {
     if (![SYSTEM.ITEM_TYPE.equipment.id, SYSTEM.ITEM_TYPE.feature.id, SYSTEM.ITEM_TYPE.profile.id, SYSTEM.ITEM_TYPE.capacity.id].includes(this.type)) return undefined
@@ -176,10 +177,13 @@ export default class COItem extends Item {
   }
 
   /**
-   * Calculate the sum of all bonus for a specific type and target
-   * @param {*} type trait
-   * @param subtype
-   * @returns the value of the bonus
+   * Retrieves modifiers based on the specified type and subtype.
+   *
+   * @param {string} type The type of the modifier to filter.
+   * @param {string} subtype The subtype of the modifier to filter.
+   * @returns {Array|undefined|number} Returns an array of modifiers that match the type and subtype,
+   *                                     undefined if the item type is not one of the specified types,
+   *                                     or 0 if the item has no modifiers.
    */
   getModifiersByTypeAndSubtype(type, subtype) {
     if (![SYSTEM.ITEM_TYPE.equipment.id, SYSTEM.ITEM_TYPE.feature.id, SYSTEM.ITEM_TYPE.profile.id, SYSTEM.ITEM_TYPE.capacity.id].includes(this.type)) return undefined

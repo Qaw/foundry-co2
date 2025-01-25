@@ -175,18 +175,16 @@ export default class CoBaseItemSheet extends ItemSheet {
   }
 
   /**
-   * Handles the deletion of an item from the item and updates the item with the new item list.
-   * @param {*} event
-   * @returns
+   * Gère la suppression d'un élément de la feuille.
+   *
+   * @param {Event} event L'événement qui a déclenché la suppression.
    */
   _onDeleteItem(event) {
     event.preventDefault()
     const li = $(event.currentTarget).closest(".item")
     const itemType = li.data("itemType")
-    // Const itemId = li.data("itemId");
     const uuid = li.data("uuid")
     let data = foundry.utils.duplicate(this.item)
-    // Console.log(itemType, uuid, data);
     switch (itemType) {
       case SYSTEM.ITEM_TYPE.path.id:
         data.system.paths.splice(data.system.paths.indexOf(uuid), 1)
@@ -203,7 +201,7 @@ export default class CoBaseItemSheet extends ItemSheet {
 
   /**
    * Open the item sheet if it's a path or a capacity
-   * @param event
+   * @param {*} event
    * @private
    */
   _onEditItem(event) {
@@ -386,10 +384,9 @@ export default class CoBaseItemSheet extends ItemSheet {
   }
 
   /**
-   * Delete a Modifier from the item
-   * Only for the item of type Feature or Profile
-   * @param {Event} event The event object triggered by the user action.
-   * @returns {Promise} A promise that resolves when the item is successfully updated.
+   * Handles the deletion of a modifier from the item.
+   *
+   * @param {Event} event The event that triggered the deletion.
    */
   _onDeleteModifier(event) {
     event.preventDefault()
