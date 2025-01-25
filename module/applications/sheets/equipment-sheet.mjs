@@ -13,6 +13,11 @@ export default class CoEquipmentSheet extends CoBaseItemSheet {
     context.choiceEquipmentSubTypes = SYSTEM.EQUIPMENT_SUBTYPES
     context.choiceEquipmentRarity = SYSTEM.EQUIPMENT_RARITY
 
+    context.isWeapon = this.item.system.isWeapon
+    context.isArmor = this.item.system.isArmor
+    context.isShield = this.item.system.isShield
+    context.isMisc = this.item.system.isMisc
+
     return context
   }
 }

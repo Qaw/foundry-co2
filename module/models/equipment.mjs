@@ -1,5 +1,6 @@
 import ItemData from "./item.mjs"
 import { Action } from "./schemas/action.mjs"
+import { SYSTEM } from "../config/system.mjs"
 export default class EquipmentData extends ItemData {
   static defineSchema() {
     const fields = foundry.data.fields
@@ -37,5 +38,21 @@ export default class EquipmentData extends ItemData {
       }),
       actions: new fields.ArrayField(new fields.EmbeddedDataField(Action)),
     })
+  }
+
+  get isWeapon() {
+    return this.subtype === SYSTEM.EQUIPMENT_SUBTYPES.weapon.id
+  }
+
+  get isArmor() {
+    return this.subtype === SYSTEM.EQUIPMENT_SUBTYPES.armor.id
+  }
+
+  get isShield() {
+    return this.subtype === SYSTEM.EQUIPMENT_SUBTYPES.shield.id
+  }
+
+  get isMisc() {
+    return this.subtype === SYSTEM.EQUIPMENT_SUBTYPES.misc.id
   }
 }

@@ -1,5 +1,4 @@
 {{!log "Chroniques Oubliées | equipment" this}}
-<!--<h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.details"}}</a></h3>-->
 <div class="details-form foldable">
     {{#if debugMode}}
         <div class="form-group">
@@ -24,21 +23,21 @@
         </div>
     </div>
 
-    {{#if (or (eq system.subtype "WEAPON") (eq system.subtype "ARMOR") (eq system.subtype "SHIELD"))}}
+    {{#if (or isWeapon isArmor isShield)}}
         <div class="form-group">
             <label>{{localize "CO.label.long.martialCategory"}}</label>
             <div class="form-fields">
                 <select name="system.martialCategory" data-type="String" style="width:100%">
                     {{#select system.martialCategory}}
-                        {{#if (eq system.subtype "WEAPON")}}
+                        {{#if isWeapon}}
                             {{#each martialTrainingsWeaponsList as |training|}}
                                 <option value="{{key}}">{{localize label}}</option>
                             {{/each}}
-                        {{else if (eq system.subtype "ARMOR")}}
+                        {{else if isArmor}}
                             {{#each martialTrainingsArmorsList as |training|}}
                                 <option value="{{key}}">{{localize label}}</option>
                             {{/each}}
-                        {{else if (eq system.subtype "SHIELD")}}
+                        {{else if isShield}}
                             {{#each martialTrainingsShieldsList as |training|}}
                                 <option value="{{key}}">{{localize label}}</option>
                             {{/each}}
@@ -127,4 +126,3 @@
         </div>
     {{/if}}
 </div>
-{{!> "systems/co/templates/items/parts/actions/action-partial.hbs"}}
