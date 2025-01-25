@@ -71,15 +71,15 @@ export default class CoBaseItemSheet extends ItemSheet {
     // if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, itemData);
 
     switch (item.type) {
-      case SYSTEM.ITEM_TYPE.EQUIPMENT:
+      case SYSTEM.ITEM_TYPE.equipment.id:
         return this._onDropEquipmentItem(item)
-      case SYSTEM.ITEM_TYPE.FEATURE:
+      case SYSTEM.ITEM_TYPE.feature.id:
         return this._onDropFeatureItem(item)
-      case SYSTEM.ITEM_TYPE.PROFILE:
+      case SYSTEM.ITEM_TYPE.profile.id:
         return this._onDropProfileItem(item)
-      case SYSTEM.ITEM_TYPE.PATH:
+      case SYSTEM.ITEM_TYPE.path.id:
         return this._onDropPathItem(item)
-      case SYSTEM.ITEM_TYPE.CAPACITY:
+      case SYSTEM.ITEM_TYPE.capacity.id:
         return this._onDropCapacityItem(item)
       default:
         return false
@@ -188,10 +188,10 @@ export default class CoBaseItemSheet extends ItemSheet {
     let data = foundry.utils.duplicate(this.item)
     // Console.log(itemType, uuid, data);
     switch (itemType) {
-      case SYSTEM.ITEM_TYPE.PATH:
+      case SYSTEM.ITEM_TYPE.path.id:
         data.system.paths.splice(data.system.paths.indexOf(uuid), 1)
         break
-      case SYSTEM.ITEM_TYPE.CAPACITY:
+      case SYSTEM.ITEM_TYPE.capacity.id:
         data.system.capacities.splice(data.system.capacities.indexOf(uuid), 1)
         break
       default:
@@ -212,8 +212,8 @@ export default class CoBaseItemSheet extends ItemSheet {
     const itemType = li.data("itemType")
 
     switch (itemType) {
-      case SYSTEM.ITEM_TYPE.PATH:
-      case SYSTEM.ITEM_TYPE.CAPACITY: {
+      case SYSTEM.ITEM_TYPE.path.id:
+      case SYSTEM.ITEM_TYPE.capacity.id: {
         const uuid = li.data("uuid")
         return fromUuid(uuid).then((document) => document.sheet.render(true))
       }
@@ -412,7 +412,7 @@ export default class CoBaseItemSheet extends ItemSheet {
    * @param {*} formData
    */
   _updateObject(event, formData) {
-    if (this.item.type === SYSTEM.ITEM_TYPE.CAPACITY || this.item.type === SYSTEM.ITEM_TYPE.EQUIPMENT) {
+    if (this.item.type === SYSTEM.ITEM_TYPE.capacity.id || this.item.type === SYSTEM.ITEM_TYPE.equipment.id) {
       formData = foundry.utils.expandObject(formData)
 
       // Parcours des actions pour ajouter les tableaux vides

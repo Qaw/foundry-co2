@@ -18,7 +18,7 @@ export default class COItem extends Item {
    * @type {boolean}
    */
   get hasModifiers() {
-    if (![SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.FEATURE, SYSTEM.ITEM_TYPE.PROFILE, SYSTEM.ITEM_TYPE.CAPACITY].includes(this.type)) return undefined
+    if (![SYSTEM.ITEM_TYPE.equipment.id, SYSTEM.ITEM_TYPE.feature.id, SYSTEM.ITEM_TYPE.profile.id, SYSTEM.ITEM_TYPE.capacity.id].includes(this.type)) return undefined
     return this.modifiers.length > 0
   }
 
@@ -27,11 +27,11 @@ export default class COItem extends Item {
    */
   get modifiers() {
     // For Equipement or Capacity Item, the modifiers are in the actions
-    if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(this.type)) {
+    if ([SYSTEM.ITEM_TYPE.equipment.id, SYSTEM.ITEM_TYPE.capacity.id].includes(this.type)) {
       return this.getModifiersFromActions(true)
     }
     // For Feature or Profile, the modifiers are in the item
-    if ([SYSTEM.ITEM_TYPE.FEATURE, SYSTEM.ITEM_TYPE.PROFILE].includes(this.type)) {
+    if ([SYSTEM.ITEM_TYPE.feature.id, SYSTEM.ITEM_TYPE.profile.id].includes(this.type)) {
       return this.system.modifiers
     }
     return []
@@ -59,7 +59,7 @@ export default class COItem extends Item {
    */
   get enabledModifiers() {
     // For Equipement or Capacity Item, the modifiers are in enabled actions
-    if ([SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.CAPACITY].includes(this.type)) return this.getModifiersFromActions(true)
+    if ([SYSTEM.ITEM_TYPE.equipment.id, SYSTEM.ITEM_TYPE.capacity.id].includes(this.type)) return this.getModifiersFromActions(true)
     // For Feature or Profile, the modifiers are in the item
     else return this.modifiers
   }
@@ -91,7 +91,7 @@ export default class COItem extends Item {
    * Basic info for a capacity : uuid, name, img, description
    */
   get infos() {
-    if (this.type === SYSTEM.ITEM_TYPE.CAPACITY || this.type === SYSTEM.ITEM_TYPE.PATH) {
+    if (this.type === SYSTEM.ITEM_TYPE.capacity.id || this.type === SYSTEM.ITEM_TYPE.path.id) {
       return {
         uuid: this.uuid,
         name: this.name,
@@ -111,7 +111,7 @@ export default class COItem extends Item {
    * @param {string} indice of the action, null for others
    */
   getChatData(chatType, indice = null) {
-    if (this.type === SYSTEM.ITEM_TYPE.CAPACITY || this.type === SYSTEM.ITEM_TYPE.EQUIPMENT || this.type === SYSTEM.ITEM_TYPE.ATTACK) {
+    if (this.type === SYSTEM.ITEM_TYPE.capacity.id || this.type === SYSTEM.ITEM_TYPE.equipment.id || this.type === SYSTEM.ITEM_TYPE.attack.id) {
       let actions = []
       // All actions
       if (chatType === "item" && indice === null) {
@@ -149,7 +149,7 @@ export default class COItem extends Item {
    * @param {Actor} actor
    */
   async getEmbeddedCapacities(actor) {
-    if ([SYSTEM.ITEM_TYPE.PATH].includes(this.type)) {
+    if ([SYSTEM.ITEM_TYPE.path.id].includes(this.type)) {
       let capacities = []
       for (const capacityId of this.system.capacities) {
         const capacity = actor.items.get(capacityId)
@@ -167,7 +167,7 @@ export default class COItem extends Item {
    * @returns the value of the bonus
    */
   getTotalModifiersByTypeSubtypeAndTarget(type, subtype, target) {
-    if (![SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.FEATURE, SYSTEM.ITEM_TYPE.PROFILE, SYSTEM.ITEM_TYPE.CAPACITY].includes(this.type)) return undefined
+    if (![SYSTEM.ITEM_TYPE.equipment.id, SYSTEM.ITEM_TYPE.feature.id, SYSTEM.ITEM_TYPE.profile.id, SYSTEM.ITEM_TYPE.capacity.id].includes(this.type)) return undefined
     if (!this.hasModifiers) return 0
     return this.modifiers
       .filter((m) => m.type === type && m.subtype === subtype && m.target === target)
@@ -182,7 +182,7 @@ export default class COItem extends Item {
    * @returns the value of the bonus
    */
   getModifiersByTypeAndSubtype(type, subtype) {
-    if (![SYSTEM.ITEM_TYPE.EQUIPMENT, SYSTEM.ITEM_TYPE.FEATURE, SYSTEM.ITEM_TYPE.PROFILE, SYSTEM.ITEM_TYPE.CAPACITY].includes(this.type)) return undefined
+    if (![SYSTEM.ITEM_TYPE.equipment.id, SYSTEM.ITEM_TYPE.feature.id, SYSTEM.ITEM_TYPE.profile.id, SYSTEM.ITEM_TYPE.capacity.id].includes(this.type)) return undefined
     if (!this.hasModifiers) return 0
     return this.modifiers.filter((m) => m.type === type && m.subtype === subtype)
   }
@@ -192,7 +192,7 @@ export default class COItem extends Item {
    * @param {*} uuid
    */
   addCapacity(uuid) {
-    if (this.type === SYSTEM.ITEM_TYPE.PATH || this.type === SYSTEM.ITEM_TYPE.FEATURE) {
+    if (this.type === SYSTEM.ITEM_TYPE.path.id || this.type === SYSTEM.ITEM_TYPE.feature.id) {
       let newCapacities = foundry.utils.duplicate(this.system.capacities)
       newCapacities.push(uuid)
       return this.update({ "system.capacities": newCapacities })
@@ -205,7 +205,7 @@ export default class COItem extends Item {
    * @param {*} uuid
    */
   addPath(uuid) {
-    if (this.type === SYSTEM.ITEM_TYPE.FEATURE || this.type === SYSTEM.ITEM_TYPE.PROFILE) {
+    if (this.type === SYSTEM.ITEM_TYPE.feature.id || this.type === SYSTEM.ITEM_TYPE.profile.id) {
       let newPaths = foundry.utils.duplicate(this.system.paths)
       newPaths.push(uuid)
       return this.update({ "system.paths": newPaths })
@@ -217,7 +217,7 @@ export default class COItem extends Item {
    * Update the rank for an embedded path item
    */
   async updateRank() {
-    if (this.type !== SYSTEM.ITEM_TYPE.PATH || !this.actor) return
+    if (this.type !== SYSTEM.ITEM_TYPE.path.id || !this.actor) return
     let max = 0
 
     for (const uuid of this.system.capacities) {
@@ -234,7 +234,7 @@ export default class COItem extends Item {
    * Update the actions for an embedded capacity or equipment item
    */
   toggleActions() {
-    if ((this.type !== SYSTEM.ITEM_TYPE.CAPACITY && this.type !== SYSTEM.ITEM_TYPE.EQUIPMENT) || !this.actor) return
+    if ((this.type !== SYSTEM.ITEM_TYPE.capacity.id && this.type !== SYSTEM.ITEM_TYPE.equipment.id) || !this.actor) return
 
     const actions = this.toObject().system.actions
 

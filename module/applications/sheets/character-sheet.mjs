@@ -70,7 +70,7 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     const target = event.currentTarget
     let dragData
     if (target.classList.contains("action")) {
-      // dataset contient itemUuid, source et indice //TODO source et itemUuid sont identiques
+      // Dataset contient itemUuid, source et indice //TODO source et itemUuid sont identiques
       const { id } = foundry.utils.parseUuid(target.dataset.source)
       const indice = target.dataset.indice
       const item = this.actor.items.get(id)
@@ -252,19 +252,19 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     // if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, itemData);
 
     switch (item.type) {
-      case SYSTEM.ITEM_TYPE.EQUIPMENT:
+      case SYSTEM.ITEM_TYPE.equipment.id:
         return this.actor.addEquipment(item)
-      case SYSTEM.ITEM_TYPE.FEATURE:
+      case SYSTEM.ITEM_TYPE.feature.id:
         return await this.actor.addFeature(item)
-      case SYSTEM.ITEM_TYPE.PROFILE:
+      case SYSTEM.ITEM_TYPE.profile.id:
         if (this.actor.profiles.length > 0) {
           ui.notifications.warn(game.i18n.localize("CO.notif.profilAlreadyExist"))
           break
         }
         return this.actor.addProfile(item)
-      case SYSTEM.ITEM_TYPE.PATH:
+      case SYSTEM.ITEM_TYPE.path.id:
         return this.actor.addPath(item)
-      case SYSTEM.ITEM_TYPE.CAPACITY:
+      case SYSTEM.ITEM_TYPE.capacity.id:
         return this.actor.addCapacity(item, null)
       default:
         return false

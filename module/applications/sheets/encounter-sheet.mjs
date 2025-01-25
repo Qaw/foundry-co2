@@ -186,21 +186,21 @@ export default class COEncounterSheet extends CoBaseActorSheet {
     const item = await Item.implementation.fromDropData(data)
 
     switch (item.type) {
-      case SYSTEM.ITEM_TYPE.EQUIPMENT:
+      case SYSTEM.ITEM_TYPE.equipment.id:
         return this.actor.addEquipment(item)
-      case SYSTEM.ITEM_TYPE.FEATURE:
+      case SYSTEM.ITEM_TYPE.feature.id:
       // Return this.actor.addFeature(item);
-      case SYSTEM.ITEM_TYPE.PROFILE:
+      case SYSTEM.ITEM_TYPE.profile.id:
       // If (this.actor.profiles.length > 0) {
       //   ui.notifications.warn(game.i18n.localize("CO.notif.profilAlreadyExist"));
       //   break;
       // }
       // return this.actor.addProfile(item);
-      case SYSTEM.ITEM_TYPE.ATTACK:
+      case SYSTEM.ITEM_TYPE.attack.id:
         return this.actor.system.addAttack(item)
-      case SYSTEM.ITEM_TYPE.PATH:
+      case SYSTEM.ITEM_TYPE.path.id:
         return this.actor.addPath(item)
-      case SYSTEM.ITEM_TYPE.CAPACITY:
+      case SYSTEM.ITEM_TYPE.capacity.id:
         return this.actor.addCapacity(item, null)
       default:
         return false
