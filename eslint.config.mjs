@@ -143,7 +143,7 @@ export default [
         ignoreStrings: true,
         ignoreTemplateLiterals: true,
       }],
-      'prettier/prettier': ['error', { printWidth: 180 }],
+      'prettier/prettier': ['error', { printWidth: 180, "endOfLine": "auto"  }],
       'no-extra-boolean-cast': ['warn', { enforceForLogicalOperands: true }],
       'no-extra-semi': 'warn',
       'no-multi-spaces': ['warn', { ignoreEOLComments: true }],
