@@ -6,9 +6,21 @@ export default class CoEquipmentSheet extends CoBaseItemSheet {
   async getData(options = {}) {
     const context = await super.getData(options)
 
-    context.martialTrainingsWeaponsList = game.system.CONST.martialTrainingsWeapons
-    context.martialTrainingsArmorsList = game.system.CONST.martialTrainingsArmors
-    context.martialTrainingsShieldsList = game.system.CONST.martialTrainingsShields
+    // Transformation du tableau d'objets en objet
+    context.martialTrainingsWeaponsList = game.system.CONST.martialTrainingsWeapons.reduce((acc, item) => {
+      acc[item.key] = item.label
+      return acc
+    }, {})
+
+    context.martialTrainingsArmorsList = game.system.CONST.martialTrainingsArmors.reduce((acc, item) => {
+      acc[item.key] = item.label
+      return acc
+    }, {})
+
+    context.martialTrainingsShieldsList = game.system.CONST.martialTrainingsShields.reduce((acc, item) => {
+      acc[item.key] = item.label
+      return acc
+    }, {})
 
     context.choiceEquipmentSubTypes = SYSTEM.EQUIPMENT_SUBTYPES
     context.choiceEquipmentRarity = SYSTEM.EQUIPMENT_RARITY
