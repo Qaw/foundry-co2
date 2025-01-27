@@ -311,7 +311,8 @@
         "ranged": "Attaque à distance",
         "magic": "Attaque magique",
         "init": "Initiative",
-        "def": "Défense"
+        "def": "Défense",
+        "crit": "Critique"
       },
       "short": {
         "melee": "ATC",

@@ -97,6 +97,10 @@ export const MODIFIERS_TARGET = Object.freeze({
     id: "def",
     label: "CO.combat.long.def",
   },
+  crit: {
+    id: "crit",
+    label: "CO.combat.ui.crit",
+  },
   hp: {
     id: "hp",
     label: "CO.label.long.hp",

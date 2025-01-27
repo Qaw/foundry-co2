@@ -48,7 +48,7 @@ export class Resolver extends foundry.abstract.DataModel {
     const actionName = action.label
 
     const skillFormula = this.skill.formula[0].part
-    const crit = this.skill.crit
+    const crit = this.skill.crit ? this.skill.crit : actor.combat.crit.value
     const diffToEvaluate = this.skill.difficulty.match("[0-9]{0,}[d|D][0-9]{1,}")
     let diff = ""
     if (diffToEvaluate) {

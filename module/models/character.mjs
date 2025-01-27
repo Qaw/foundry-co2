@@ -72,6 +72,7 @@ export default class CharacterData extends ActorData {
     // Pour chaque niveau supplémentaire : + PV de la famille
     const pvFromFamily = this.profile ? SYSTEM.FAMILIES[this.profile.system.family].hp : 0
     this.attributes.hp.base = 2 * pvFromFamily + (this.attributes.level - 1) * pvFromFamily
+    this.combat.crit.base = SYSTEM.BASE_CRITIQUE
   }
 
   get fpFromFamily() {
@@ -195,6 +196,8 @@ export default class CharacterData extends ActorData {
         this._prepareDef(skill, abilityBonus, bonuses)
       }
     }
+
+    this._prepareCrit()
 
     for (const [key, skill] of Object.entries(this.resources)) {
       // Somme du bonus de la feuille et du bonus des actives effects
@@ -379,6 +382,13 @@ export default class CharacterData extends ActorData {
 
     skill.value = skill.base + bonuses + defModifiers.total
     skill.tooltipValue = skill.tooltipBase.concat(defModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
+  }
+
+  _prepareCrit() {
+    let mod = combatModifiers.find((m) => m.target === SYSTEM.COMBAT.crit.id)
+    if (mod) {
+      this.combat.crit.value = this.combat.crit.base + mod.value
+    }
   }
 
   /**
