@@ -74,4 +74,12 @@ export class Modifier extends foundry.abstract.DataModel {
     const description = item.system.description
     return { name, description }
   }
+
+  /**
+   * Permet de savoir si c'est un modifier type state ou pas
+   * return {boolean}
+   */
+  get isState() {
+    return this.subtype === SYSTEM.MODIFIERS_SUBTYPE.state.id
+  }
 }
