@@ -17,7 +17,7 @@
                 <div class="adjustment-select flexrow">                    
                     {{#each actions as |a aid|}}                    
                         {{#each a.modifiers as |m mid| }}                                                                                              
-                           {{#if (isActionState m)}}                                                         
+                           {{#if m.isState}}                                                         
                                 <span class="adjustment elite trait">{{localize (concat "CO.label.long." m.target)}}</span>
                           {{/if}}
                         {{/each}}

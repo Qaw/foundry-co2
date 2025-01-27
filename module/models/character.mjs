@@ -291,11 +291,17 @@ export default class CharacterData extends ActorData {
       //console.log("je vais assigner la darkvision à " + currentactor.name + " qui est de type " + currentactor.type)
       const prototypeToken = {}
       Object.assign(prototypeToken, {
-        sight: { enabled: true, visionMode: "darkvision" },
+        sight: { enabled: true, visionMode: "darkvision", range: modifiersVision.value, saturation: -1 },
         actorLink: true,
         disposition: 1,
       })
       this.parent?.updateSource({ prototypeToken })
+      let targets = this.parent.getActiveTokens(true, true)
+      for (let i = 0; i < targets.length; i++) {
+        let sight = {}
+        Object.assign(sight, { enabled: true, visionMode: "darkvision", range: modifiersVision.value, saturation: -1 })
+        targets[i].updateSource({ sight })
+      }
     }
 
     //inversement si on a pas de darkvision
@@ -303,11 +309,17 @@ export default class CharacterData extends ActorData {
       //on le retire
       const prototypeToken = {}
       Object.assign(prototypeToken, {
-        sight: { enabled: true, visionMode: "basic" },
+        sight: { enabled: true, visionMode: "basic", range: 0, saturation: 0 },
         actorLink: true,
         disposition: 1,
       })
       this.parent?.updateSource({ prototypeToken })
+      let targets = this.parent.getActiveTokens(true, true)
+      for (let i = 0; i < targets.length; i++) {
+        let sight = {}
+        Object.assign(sight, { enabled: true, visionMode: "basic", range: 0, saturation: 0 })
+        targets[i].updateSource({ sight })
+      }
     }
 
     return true
