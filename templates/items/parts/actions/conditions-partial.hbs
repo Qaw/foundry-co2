@@ -6,9 +6,9 @@
 <div class="conditions-container foldable">
     {{#if action.conditions}}
         <div class="flexrow strong">
-            <div class="form-fields flex1">{{localize "CO.ui.subject"}}</div>
-            <div class="form-fields flex1">{{localize "CO.ui.predicate"}}</div>           
-            <div class="form-fields flex1">{{localize "CO.ui.object"}}</div>
+            <div class="form-fields flex1 center">{{localize "CO.ui.subject"}}</div>
+            <div class="form-fields flex1 center">{{localize "CO.ui.predicate"}}</div>           
+            <div class="form-fields flex1 center">{{localize "CO.ui.target"}}</div>
         </div>
         {{#each action.conditions as |c id|}}
             <div class="flexrow condition" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="condition">
@@ -24,8 +24,8 @@
 
                 </div>
                 <div class="form-fields flex1">                    
-                    <select name="system.actions.{{../idx}}.conditions.{{id}}.object" data-type="String" style="width:100%">
-                        {{selectOptions @root.choiceConditionObjects selected=c.object localize=true}}
+                    <select name="system.actions.{{../idx}}.conditions.{{id}}.target" data-type="String" style="width:100%">
+                        {{selectOptions @root.choiceConditionTargets selected=c.object localize=true}}
                     </select>
                 </div>
                 <div class="form-fields flex0"><a class="condition-delete"><i class="fas fa-trash"></i></a></div>

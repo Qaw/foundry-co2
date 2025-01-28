@@ -5,11 +5,11 @@
 <div class="resolvers-container foldable">
     {{#if action.resolvers}}
         <div class="flexrow strong">
-            <div class="form-fields flex2">{{localize "CO.ui.type"}}</div>
-            <div class="form-fields flex1">{{localize "CO.ui.skillformula"}}</div>
-            <div class="form-fields flex1">{{localize "CO.ui.crit"}}</div>
-            <div class="form-fields flex1">{{localize "CO.ui.difficulty"}}</div>
-            <div class="form-fields flex1">{{localize "CO.ui.dmg"}}</div>
+            <div class="form-fields flex2 center">{{localize "CO.ui.type"}}</div>
+            <div class="form-fields flex1 center">{{localize "CO.ui.skillformula"}}</div>
+            <div class="form-fields flex1 center">{{localize "CO.ui.crit"}}</div>
+            <div class="form-fields flex1 center">{{localize "CO.ui.difficulty"}}</div>
+            <div class="form-fields flex1 center">{{localize "CO.ui.dmg"}}</div>
         </div>
         {{#each action.resolvers as |r id|}}
             <div class="flexrow resolver" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="resolver">
@@ -19,9 +19,9 @@
                     </select>                    
                 </div>
                 <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.formula.0.part" type="text" value="{{r.skill.formula.0.part}}" data-dtype="String" /></div>
-                <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.crit" type="text" value="{{r.skill.crit}}" data-dtype="Number" /></div>
+                <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.crit" type="text" value="{{r.skill.crit}}" data-dtype="Number" /></div>
                 <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.difficulty" type="text" value="{{r.skill.difficulty}}" data-dtype="String" /></div>
-                <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.dmg.formula.0.part" type="text" value="{{r.dmg.formula.0.part}}" data-dtype="String" /></div>
+                <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.resolvers.{{id}}.dmg.formula.0.part" type="text" value="{{r.dmg.formula.0.part}}" data-dtype="String" /></div>
                 <div class="form-fields flex0"><a class="resolver-delete"><i class="fas fa-trash"></i></a></div>
             </div>
         {{/each}}

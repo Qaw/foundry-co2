@@ -1,9 +1,9 @@
 import { SYSTEM } from "../../config/system.mjs"
 /**
- * The Condition class represents a conditional check that can be evaluated for a given item.
- * subject The subject of the condition.
-   predicate The predicate or method to evaluate the condition.
-   object The object of the condition, or '_self' to refer to the item being evaluated.
+ * La class Condition représente un contrôle de condition qui peux être évalué pour un élément donné.
+ * subject l'element à vérifier.
+   predicate ce que l'on veux utiliser pour évaluer la condition.
+   object l'objet ou la cible à atteindre de la condition, ou '_self' pour se référer à l'élément évalué.
  */
 export class Condition extends foundry.abstract.DataModel {
   static defineSchema() {

@@ -180,6 +180,9 @@ export default class CharacterData extends ActorData {
 
     // Préparation des données de combat : Attaque de contact, attaque à distance, attaque magique, initiative, défense
     for (const [key, skill] of Object.entries(this.combat)) {
+      if (key === SYSTEM.COMBAT.crit.id) {
+        continue
+      }
       // Somme du bonus de la feuille et du bonus des actives effects
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr)
       const abilityBonus = this.abilities[skill.ability].value
@@ -287,11 +290,8 @@ export default class CharacterData extends ActorData {
     if (!modifiers) return { total: 0, tooltip: "" }
     let currentactor = this.parent
     let modifiersVision = modifiers.find((m) => m.target === "darkvision")
-    //console.log("passage dans _prepareVision")
-    //console.log(this.parent.prototypeToken.sight)
 
     if (modifiersVision && this.parent.prototypeToken.sight.visionMode !== "darkvision") {
-      //console.log("je vais assigner la darkvision à " + currentactor.name + " qui est de type " + currentactor.type)
       const prototypeToken = {}
       Object.assign(prototypeToken, {
         sight: { enabled: true, visionMode: "darkvision", range: modifiersVision.value, saturation: -1 },
@@ -324,15 +324,12 @@ export default class CharacterData extends ActorData {
         targets[i].updateSource({ sight })
       }
     }
-
-    return true
   }
 
   _prepareAttack(key, skill, abilityBonus, bonuses) {
     // Le bonus de niveau est limité à 10
     const levelBonus = Math.min(this.attributes.level, 10)
     const combatModifiers = this.computeTotalModifiersByTarget(this.combatModifiers, key)
-
     skill.base = abilityBonus + levelBonus
     skill.tooltipBase = Utils.getTooltip(game.i18n.localize("CO.label.long.level"), levelBonus).concat(Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus))
 
@@ -385,9 +382,14 @@ export default class CharacterData extends ActorData {
   }
 
   _prepareCrit() {
-    let mod = combatModifiers.find((m) => m.target === SYSTEM.COMBAT.crit.id)
-    if (mod) {
-      this.combat.crit.value = this.combat.crit.base + mod.value
+    this.combat.crit.min = 16
+    if (this.combatModifiers) {
+      let mod = this.combatModifiers.find((m) => m.target === SYSTEM.COMBAT.crit.id)
+      if (mod) {
+        this.combat.crit.value = Math.max(16, this.combat.crit.base + mod.value)
+      } else {
+        this.combat.crit.value = this.combat.crit.base
+      }
     }
   }
 
