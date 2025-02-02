@@ -5,24 +5,24 @@
 .dialog .dialog-field .dialog-field-label {
   padding: 4px;
 }
-.dialog.skillroll .skill-bonuses {
+.dialog.skill-roll .skill-bonuses {
   background: rgba(0, 0, 0, 0.05);
   border: 2px groove var(--color-border-light-highlight);
   height: 140px;
   overflow: auto;
 }
-.dialog.skillroll .skill-bonuses .bonus-item {
+.dialog.skill-roll .skill-bonuses .bonus-item {
   background: rgba(0, 0, 0, 0.1);
   height: 27px;
   padding: 4px;
 }
-.dialog.skillroll .skill-bonuses .bonus-item .bonus-name {
+.dialog.skill-roll .skill-bonuses .bonus-item .bonus-name {
   margin-left: 5px;
 }
-.dialog.skillroll .skill-bonuses .bonus-item.checked {
+.dialog.skill-roll .skill-bonuses .bonus-item.checked {
   background: rgba(0, 0, 0, 0.3);
 }
-.dialog.skillroll .skill-bonuses .bonus-item:hover {
+.dialog.skill-roll .skill-bonuses .bonus-item:hover {
   cursor: pointer;
   background: rgba(0, 0, 0, 0.2);
 }

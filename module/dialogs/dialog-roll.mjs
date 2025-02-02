@@ -56,7 +56,8 @@ export class CoSkillRollDialog extends Dialog {
     let item = event.currentTarget.closest(".bonus-item")
     item.classList.toggle("checked")
     let total = this._calculateTotalSkillBonus(event)
-    $("#totalSkillBonuses")[0].value = total
+    // $("#totalSkillBonuses")[0].value = total
+    document.querySelector("#totalSkillBonuses").value = total
   }
 
   _onContextBonusItem(event) {
@@ -64,7 +65,8 @@ export class CoSkillRollDialog extends Dialog {
     console.log(`Skill description : ${value}`)
     let html = $(event.currentTarget).parents(".skillBonuses")
     let total = this._calculateTotalSkillBonus(html[0])
-    $("#totalSkillBonuses")[0].value = total
+    // $("#totalSkillBonuses")[0].value = total
+    document.querySelector("#totalSkillBonuses").value = total;
   }
 
   _onHoverBonusItem(event) {

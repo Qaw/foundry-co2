@@ -1,6 +1,7 @@
 import Utils from "../utils.mjs"
 import CoChat from "../chat.mjs"
 import { CoAttackRollDialog, CoSkillRollDialog } from "../dialogs/dialog-roll.mjs"
+import { CORoll } from "../documents/roll.mjs"
 
 class CoRoll {
   constructor(actor) {
@@ -195,7 +196,7 @@ export class CoSkillRoll {
    * @returns {CoSkillRoll} the roll
    */
   async roll(actor) {
-    let r = new Roll(this._formula)
+    let r = new CORoll(this._formula)
     await r.roll()
     // Getting the dice kept in case of 2d12 or 2d20 rolls
     const result = r.terms[0].results.find((r) => r.active).result

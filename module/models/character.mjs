@@ -5,6 +5,8 @@ import Utils from "../utils.mjs"
 import CoChat from "../chat.mjs"
 import DefaultConfiguration from "../config/configuration.mjs"
 
+import { CORoll, COAttackRoll, COSkillRoll } from "../documents/roll.mjs"
+
 export default class CharacterData extends ActorData {
   static defineSchema() {
     const fields = foundry.data.fields
@@ -225,7 +227,7 @@ export default class CharacterData extends ActorData {
     // XP dépensés dans les capacités des voies
     this.attributes.xp.max = 2 * this.attributes.level
     this.attributes.xp.value = this._computeXP()
-    this._prepareVision(this.stateModifiers)
+    this._prepareVision()
   }
 
   /**
@@ -284,9 +286,9 @@ export default class CharacterData extends ActorData {
 
   /**
    * On va regarder si on a un modifier qui modifie la vision
-   * @param {*} modifiers
    */
-  _prepareVision(modifiers) {
+  _prepareVision() {
+    const modifiers = this.stateModifiers
     if (!modifiers) return { total: 0, tooltip: "" }
     let currentactor = this.parent
     let modifiersVision = modifiers.find((m) => m.target === "darkvision")
@@ -619,5 +621,9 @@ export default class CharacterData extends ActorData {
     })
     // Console.log('Compute XP : ', xp);
     return xp
+  }
+
+  async rollAttack(target) {
+    if (type === "attack") return COAttackRoll.prompt(dialogContext)
   }
 }
