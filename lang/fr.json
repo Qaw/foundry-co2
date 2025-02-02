@@ -219,6 +219,7 @@
       "conditions": "Conditions",
       "subject": "Sujet",
       "predicate": "Prédicat",
+      "target": "Cible",
       "object": "Objet",
       "modifiers": "Modificateurs",
       "resolvers": "Résolutions",
@@ -311,7 +312,8 @@
         "ranged": "Attaque à distance",
         "magic": "Attaque magique",
         "init": "Initiative",
-        "def": "Défense"
+        "def": "Défense",
+        "crit": "Critique"
       },
       "short": {
         "melee": "ATC",
@@ -401,11 +403,33 @@
       "objects": {
         "item": "Objet",
         "target": "Cible",
-        "_self": "Soi-Même"
+        "_self": "Soi-Même",
+        "testresult": "Résultat du test",
+        "testtype": "Type de test",
+        "nc": "Niveau de Créature",
+        "hp": "Points de vie",
+        "armorType": "Port d'armure"
       },
       "predicates": {
         "isEquipped": "est équipé par...",
-        "isLearned": "a été appris par..."
+        "isLearned": "a été appris par...",
+        "isEqualTo": "est égale à...",
+        "isLowerOrEqualThan": "est inférieur ou égale à...",
+        "isHigherOrEqualThan": "est supérieur ou égale à...",
+        "isAbilityType": "est de type"
+      },
+      "targets": {
+        "item": "Objet",
+        "target": "Cible",
+        "_self": "Soi-Même",
+        "isSuccess": "est un succès",
+        "isFailed": "est un echec",
+        "isCritique": "est une réussite critique",
+        "formula": "une formule",
+        "melee": "attaque de mélée",
+        "ranged": "attaque à distance",
+        "magic": "attaque magique",
+        "noarmor": "pas d'armure"
       }
     },
     "modifier": {

@@ -72,6 +72,7 @@ export default class CharacterData extends ActorData {
     // Pour chaque niveau supplémentaire : + PV de la famille
     const pvFromFamily = this.profile ? SYSTEM.FAMILIES[this.profile.system.family].hp : 0
     this.attributes.hp.base = 2 * pvFromFamily + (this.attributes.level - 1) * pvFromFamily
+    this.combat.crit.base = SYSTEM.BASE_CRITIQUE
   }
 
   get fpFromFamily() {
@@ -179,6 +180,9 @@ export default class CharacterData extends ActorData {
 
     // Préparation des données de combat : Attaque de contact, attaque à distance, attaque magique, initiative, défense
     for (const [key, skill] of Object.entries(this.combat)) {
+      if (key === SYSTEM.COMBAT.crit.id) {
+        continue
+      }
       // Somme du bonus de la feuille et du bonus des actives effects
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr)
       const abilityBonus = this.abilities[skill.ability].value
@@ -195,6 +199,8 @@ export default class CharacterData extends ActorData {
         this._prepareDef(skill, abilityBonus, bonuses)
       }
     }
+
+    this._prepareCrit()
 
     for (const [key, skill] of Object.entries(this.resources)) {
       // Somme du bonus de la feuille et du bonus des actives effects
@@ -284,11 +290,8 @@ export default class CharacterData extends ActorData {
     if (!modifiers) return { total: 0, tooltip: "" }
     let currentactor = this.parent
     let modifiersVision = modifiers.find((m) => m.target === "darkvision")
-    //console.log("passage dans _prepareVision")
-    //console.log(this.parent.prototypeToken.sight)
 
     if (modifiersVision && this.parent.prototypeToken.sight.visionMode !== "darkvision") {
-      //console.log("je vais assigner la darkvision à " + currentactor.name + " qui est de type " + currentactor.type)
       const prototypeToken = {}
       Object.assign(prototypeToken, {
         sight: { enabled: true, visionMode: "darkvision", range: modifiersVision.value, saturation: -1 },
@@ -321,15 +324,12 @@ export default class CharacterData extends ActorData {
         targets[i].updateSource({ sight })
       }
     }
-
-    return true
   }
 
   _prepareAttack(key, skill, abilityBonus, bonuses) {
     // Le bonus de niveau est limité à 10
     const levelBonus = Math.min(this.attributes.level, 10)
     const combatModifiers = this.computeTotalModifiersByTarget(this.combatModifiers, key)
-
     skill.base = abilityBonus + levelBonus
     skill.tooltipBase = Utils.getTooltip(game.i18n.localize("CO.label.long.level"), levelBonus).concat(Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus))
 
@@ -379,6 +379,18 @@ export default class CharacterData extends ActorData {
 
     skill.value = skill.base + bonuses + defModifiers.total
     skill.tooltipValue = skill.tooltipBase.concat(defModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
+  }
+
+  _prepareCrit() {
+    this.combat.crit.min = 16
+    if (this.combatModifiers) {
+      let mod = this.combatModifiers.find((m) => m.target === SYSTEM.COMBAT.crit.id)
+      if (mod) {
+        this.combat.crit.value = Math.max(16, this.combat.crit.base + mod.value)
+      } else {
+        this.combat.crit.value = this.combat.crit.base
+      }
+    }
   }
 
   /**

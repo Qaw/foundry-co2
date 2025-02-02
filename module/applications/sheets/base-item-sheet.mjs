@@ -131,6 +131,7 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.choiceActionTypes = SYSTEM.ACTION_TYPES
     context.choiceConditionObjects = SYSTEM.CONDITION_OBJECTS
     context.choiceConditionPredicates = SYSTEM.CONDITION_PREDICATES
+    context.choiceConditionTargets = SYSTEM.CONDITION_TARGETS
     context.choiceResolverTypes = SYSTEM.RESOLVER_TYPE
     context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
     context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
@@ -155,7 +156,6 @@ export default class CoBaseItemSheet extends ItemSheet {
     html.find(".condition-delete").click(this._onDeleteCondition.bind(this))
     html.find(".action-add").click(this._onAddAction.bind(this))
     html.find(".action-delete").click(this._onDeleteAction.bind(this))
-
     html.find(".sheet-change-lock").click(this._onSheetChangelock.bind(this))
   }
 

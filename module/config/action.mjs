@@ -42,6 +42,26 @@ export const CONDITION_OBJECTS = Object.freeze({
     id: "_self",
     label: "CO.condition.objects._self",
   },
+  testResult: {
+    id: "testResult",
+    label: "CO.condition.objects.testresult",
+  },
+  testType: {
+    id: "testType",
+    label: "CO.condition.objects.testtype",
+  },
+  nc: {
+    id: "nc",
+    label: "CO.condition.objects.nc",
+  },
+  hp: {
+    id: "hp",
+    label: "CO.condition.objects.hp",
+  },
+  armorType: {
+    id: "armorType",
+    label: "CO.condition.objects.armorType",
+  },
 })
 
 export const CONDITION_PREDICATES = Object.freeze({
@@ -52,6 +72,69 @@ export const CONDITION_PREDICATES = Object.freeze({
   isEquipped: {
     id: "isEquipped",
     label: "CO.condition.predicates.isEquipped",
+  },
+  isEqualTo: {
+    id: "isEqualTo",
+    label: "CO.condition.predicates.isEqualTo",
+  },
+  isLowerOrEqualThan: {
+    id: "isLowerOrEqualThan",
+    label: "CO.condition.predicates.isLowerOrEqualThan",
+  },
+  isHigherOrEqualThan: {
+    id: "isHigherOrEqualThan",
+    label: "CO.condition.predicates.isHigherOrEqualThan",
+  },
+  isAbilityType: {
+    id: "isAbilityType",
+    label: "CO.condition.predicates.isAbilityType",
+  },
+})
+
+export const CONDITION_TARGETS = Object.freeze({
+  item: {
+    id: "item",
+    label: "CO.condition.targets.item",
+  },
+  target: {
+    id: "target",
+    label: "CO.condition.targets.target",
+  },
+  _self: {
+    id: "_self",
+    label: "CO.condition.targets._self",
+  },
+  isSuccess: {
+    id: "isSuccess",
+    label: "CO.condition.targets.isSuccess",
+  },
+  isFailed: {
+    id: "isFailed",
+    label: "CO.condition.targets.isFailed",
+  },
+  isCritique: {
+    id: "isAbilityType",
+    label: "CO.condition.targets.isCritique",
+  },
+  formula: {
+    id: "formula",
+    label: "CO.condition.targets.formula",
+  },
+  melee: {
+    id: "isAbilityType",
+    label: "CO.condition.targets.melee",
+  },
+  ranged: {
+    id: "isAbilityType",
+    label: "CO.condition.targets.ranged",
+  },
+  magic: {
+    id: "isAbilityType",
+    label: "CO.condition.targets.magic",
+  },
+  noarmor: {
+    id: "isAbilityType",
+    label: "CO.condition.targets.noarmor",
   },
 })
 

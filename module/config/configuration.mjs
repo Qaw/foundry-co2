@@ -14,4 +14,8 @@ export default class DefaultConfiguration {
   static baseRecovery() {
     return game.system.CONST.BASE_RECOVERY
   }
+
+  static baseCritique() {
+    return game.system.CONST.BASE_CRITIQUE
+  }
 }
