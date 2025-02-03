@@ -22,12 +22,17 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     context.xpleft = parseInt(this.actor.system.attributes.xp.max) - parseInt(this.actor.system.attributes.xp.value)
     context.choiceAbilities = SYSTEM.ABILITIES
     context.choiceSize = SYSTEM.SIZES
-
+    console.log("chargement charactersheet avant action")
     context.visibleActions = await this.actor.getVisibleActions()
+    console.log("chargement charactersheet apres getVisibleActions")
     context.visibleActivableActions = await this.actor.getVisibleActivableActions()
+    console.log("chargement charactersheet apres getVisibleActivableActions")
     context.visibleNonActivableActions = await this.actor.getVisibleNonActivableActions()
+    console.log("chargement charactersheet apres getVisibleNonActivableActions")
     context.visibleActivableTemporaireActions = await this.actor.getVisibleActivableTemporaireActions()
+    console.log("chargement charactersheet apres getVisibleActivableTemporaireActions")
     context.visibleNonActivableNonTemporaireActions = await this.actor.getVisibleNonActivableNonTemporaireActions()
+    console.log("chargement charactersheet apres action")
     return context
   }
 

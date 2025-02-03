@@ -1,12 +1,30 @@
 import ItemData from "./item.mjs"
 import { Action } from "./schemas/action.mjs"
 import { SYSTEM } from "../config/system.mjs"
+
+/**
+ * @class EquipmentData
+ * @extends {ItemData}
+ * @type {string} subtype : Arme/Armures etc sous typed 'equipement
+ * @type {string} martialCategory : catégorie de l'equiepement, ex : Baton, épée courte etc.
+ * @type {string} damagetype : Type de dégat : perforant, tranchant, contondant
+ * @type {object} quantity : Quantité stocké (nombre de flèches, ....)
+ * @type {object} charges : nombre de charge dnas le cas d'un objet magique
+ * @type {object} weight: Poid de l'équipement
+ * @type {object} price: prix de l'équipement
+ * @type {string} rarity: Difficultée à trouver l'objet en magasin
+ * @type {boolean} equipped: indique si l'objet est équipé ou non
+ * @type {object} properties: indique si l'objet peux ete équippé, cumulé, rechargé.
+ * @type {object} usage: indique si on peux l'utiliser à 1 main, 2 mains ou les deux (1 main et demi)
+ * @type {object} action : objet qui va gérer les effets de l'equiepement (ex : une attaque)
+ */
 export default class EquipmentData extends ItemData {
   static defineSchema() {
     const fields = foundry.data.fields
     return foundry.utils.mergeObject(super.defineSchema(), {
       subtype: new fields.StringField({ required: true }),
       martialCategory: new fields.StringField({ required: true }),
+      damagetype: new fields.StringField({ required: true }),
       quantity: new fields.SchemaField({
         current: new fields.NumberField({ required: true, nullable: false, initial: 1, integer: true }),
         max: new fields.NumberField({ required: true, nullable: false, initial: 1, integer: true }),

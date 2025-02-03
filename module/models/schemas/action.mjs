@@ -156,7 +156,9 @@ export class Action extends foundry.abstract.DataModel {
    */
   async isVisible(item) {
     if (this.hasConditions) {
+      console.log("l'action a des condition")
       const results = await Promise.all(this.conditions.map((condition) => condition.evaluate(item)))
+      console.log("apres evaluate")
       return results.every((result) => result)
     } else {
       return this.properties.visible

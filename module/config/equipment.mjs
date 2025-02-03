@@ -35,3 +35,22 @@ export const EQUIPMENT_RARITY = {
     label: "CO.rarity.unique",
   },
 }
+
+export const EQUIPMENT_DAMAGETYPE = {
+  slashing: {
+    id: "slashing",
+    label: "CO.damage.slashing",
+  },
+  impact: {
+    id: "impact",
+    label: "CO.damage.impact",
+  },
+  piercing: {
+    id: "piercing",
+    label: "CO.damage.piercing",
+  },
+  magic: {
+    id: "magic",
+    label: "CO.damage.magic",
+  },
+}
