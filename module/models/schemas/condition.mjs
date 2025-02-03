@@ -152,8 +152,6 @@ export class Condition extends foundry.abstract.DataModel {
    * @returns {object} The retrieved object.
    */
   async getObject(item) {
-    console.log("condition - getObject await fromUuid sur  : ")
-    console.log(item.uuid)
     return this.object === "_self" ? item : await fromUuid(item.uuid)
   }
 

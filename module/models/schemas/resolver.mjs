@@ -41,6 +41,13 @@ export class Resolver extends foundry.abstract.DataModel {
     return false
   }
 
+  /**
+   *
+   * @param {*} actor : l'acteur pour lequel s'applique l'action
+   * @param {*} item : la source de l'action
+   * @param {*} action : l'action
+   * @param {*} type : type de resolver (attack or damage)
+   */
   async melee(actor, item, action, type) {
     const auto = false
 
@@ -48,7 +55,7 @@ export class Resolver extends foundry.abstract.DataModel {
     const actionName = action.label
 
     const skillFormula = this.skill.formula[0].part
-    const crit = this.skill.crit ? this.skill.crit : actor.combat.crit.value
+    const crit = actor.system.combat.crit.value
     const diffToEvaluate = this.skill.difficulty.match("[0-9]{0,}[d|D][0-9]{1,}")
     let diff = ""
     if (diffToEvaluate) {

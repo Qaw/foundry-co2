@@ -191,16 +191,13 @@ export default class COActor extends Actor {
    * Retourne Toutes les actions visibles des capacités et des équipements
    */
   async getVisibleActions() {
-    console.log("action : getVisibleActions entree")
     let allActions = []
     for (const item of this.items) {
       if ([SYSTEM.ITEM_TYPE.equipment.id, SYSTEM.ITEM_TYPE.capacity.id].includes(item.type)) {
-        console.log(item)
         const itemActions = await item.getVisibleActions()
         allActions.push(...itemActions)
       }
     }
-    console.log("action : getVisibleActions sortie")
     return allActions
   }
 
@@ -775,6 +772,7 @@ export default class COActor extends Actor {
   async _toggleItemFieldAndActions(itemId, fieldName) {
     let item = this.items.get(itemId)
     let fieldValue = item.system[fieldName]
+    console.log(`fieldValue : ${fieldValue} fieldName : ${fieldName} itemId : ${itemId}`)
     await this.updateEmbeddedDocuments("Item", [{ _id: itemId, [`system.${fieldName}`]: !fieldValue }])
     if (item.actions.length > 0) {
       item.toggleActions()
