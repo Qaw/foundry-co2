@@ -13,11 +13,9 @@ export default function preloadHandlebarsTemplates() {
     `systems/${SYSTEM.ID}/templates/actors/parts/character-bio.hbs`,
     `systems/${SYSTEM.ID}/templates/actors/parts/character-details.hbs`,
     `systems/${SYSTEM.ID}/templates/actors/parts/character-effects.hbs`,
-    `systems/${SYSTEM.ID}/templates/actors/parts/character-features.hbs`,
     `systems/${SYSTEM.ID}/templates/actors/parts/character-main.hbs`,
     `systems/${SYSTEM.ID}/templates/actors/parts/character-sidebar.hbs`,
     `systems/${SYSTEM.ID}/templates/actors/parts/inventory/character-inventory.hbs`,
-    `systems/${SYSTEM.ID}/templates/actors/parts/inventory/character-inventory-item.hbs`,
     `systems/${SYSTEM.ID}/templates/actors/parts/paths/character-paths.hbs`,
     `systems/${SYSTEM.ID}/templates/actors/parts/paths/character-capacities.hbs`,
 

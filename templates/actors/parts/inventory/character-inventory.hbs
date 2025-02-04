@@ -1,7 +1,6 @@
 {{!log "Chroniques Oubliées | inventory " this}}
 {{#each inventory as |items category|}}
   {{log "Chroniques Oubliées | inventory group" this}}
-  {{!#if (gt items.length 0)}}
   <ol class="items-container foldable" data-tab="inventory" data-category="{{category}}">
     <li class="items-container-header flexrow">
       <h3 class="item-name flexrow">{{localize (concat "CO.ui." category)}}</h3>
@@ -60,11 +59,7 @@
             </div>
           {{/if}}
         </li>
-        <!--        {{!> "systems/cof/templates/actors/parts/inventory/actor-inventory-item.hbs" item owner=../../actor}}-->
       {{/each}}
     </ol>
   </ol>
-  {{!else}}
-  <!--        <p class="empty">{{!localize "CO.notif.inventory.empty"}}</p>-->
-  {{!/if}}
 {{/each}}
