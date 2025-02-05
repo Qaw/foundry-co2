@@ -387,7 +387,7 @@ export default class COActor extends Actor {
    */
   async activateAction(state, source, indice, type) {
     const item = await fromUuid(source)
-
+    console.log("passage dans activateAction")
     if (!item) return
 
     // Action avec une durée
@@ -405,6 +405,7 @@ export default class COActor extends Actor {
     }
     // Action instantanée
     else {
+      console.log("passage dans activateAction -> action instant")
       const action = Action.createFromExisting(item.system.actions[indice])
       // Recherche des resolvers de l'action
       let resolvers = Object.values(action.resolvers).map((a) => new Resolver({ type: a.type, skill: a.skill, dmg: a.dmg }))

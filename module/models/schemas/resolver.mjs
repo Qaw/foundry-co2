@@ -8,6 +8,7 @@ import { CoAttackCheck } from "../../system/roll.mjs"
  * @param {string} type The type of the action.
  * @param {number} skill The skill level required for the action.
  * @param {number} dmg The damage value of the action.
+ * @param {Actor} target La cible de l'action
  */
 export class Resolver extends foundry.abstract.DataModel {
   static defineSchema() {
@@ -16,6 +17,7 @@ export class Resolver extends foundry.abstract.DataModel {
       type: new fields.StringField({ required: true, initial: "auto" }),
       skill: new fields.ObjectField(),
       dmg: new fields.ObjectField(),
+      target: new fields.ObjectField(),
     }
   }
 
@@ -30,15 +32,19 @@ export class Resolver extends foundry.abstract.DataModel {
   }
 
   resolve(actor, item, action, type) {
-    if (this.type === "melee") {
-      this.melee(actor, item, action, type)
-      return true
-    } else if (this.type === "auto") {
-      this.auto(actor, item, action)
-      return true
+    switch (this.type) {
+      case "melee":
+        this.melee(actor, item, action, type)
+        return true
+      case "auto":
+        this.auto(actor, item, action)
+        return true
+      case "heal":
+        this.heal(actor, item, action)
+        return true
+      default:
+        return false
     }
-
-    return false
   }
 
   /**
@@ -88,6 +94,9 @@ export class Resolver extends foundry.abstract.DataModel {
   }
 
   async auto(actor, item, action) {
+    console.log(actor)
+    console.log(item)
+    console.log(action)
     const itemName = item.name
     const actionName = action.label
     const damageFormula = this.dmg.formula[0].part
@@ -98,5 +107,32 @@ export class Resolver extends foundry.abstract.DataModel {
       ? Utils.evaluateWithDice(actor, damageFormula, item.uuid)
       : Utils.evaluate(actor, damageFormula, item.uuid)
     new CoAttackCheck(actor, item).init({ auto, type, itemName, actionName, damageFormulaEvaluated })
+  }
+
+  /**
+   * Applique les soins sur l'acteur ciblé
+   * @param {*} actor : l'acteur ciblé
+   * @param {*} item : l'element contenant l'action (ex : capacity)
+   * @param {*} action : l'action à l'origine du soin
+   */
+  async heal(actor, item, action) {
+    console.log("passage dans heal")
+    console.log(actor)
+    console.log(item)
+    console.log(action)
+    const itemName = item.name
+    const actionName = action.label
+    const healFormula = this.dmg.formula[0].part
+    const type = "heal"
+
+    let healFormulaEvaluated = healFormula.match("[0-9]{0,}[d|D][0-9]{1,}") ? Utils.evaluateWithDice(actor, healFormula, item.uuid) : Utils.evaluate(actor, healFormula, item.uuid)
+    let r = new Roll(healFormulaEvaluated)
+    await r.roll()
+    const result = r.terms[0].results.find((r) => r.active).result
+    if (parseInt(result)) {
+      actor.system.attributes.hp.value += parseInt(result)
+      if (actor.system.attributes.hp.value > actor.system.attributes.hp.max) actor.system.attributes.hp.value = actor.system.attributes.hp.max
+      actor.update({ "system.attributes.hp.value": actor.system.attributes.hp.value })
+    }
   }
 }
