@@ -284,14 +284,15 @@
 .no-wrap {
   flex-wrap: nowrap !important;
 }
-.grid,
-.grid-2col {
+.grid {
   display: grid;
-  grid-column: span 2 / span 2;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin: 10px 0;
   padding: 0;
+}
+.grid-2col {
+  grid-column: span 2 / span 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .grid-3col {
   grid-column: span 3 / span 3;
@@ -815,24 +816,24 @@ strong,
 .co.dialog .dialog-field .dialog-field-label {
   padding: 4px;
 }
-.co.dialog.skillroll .skill-bonuses {
+.co.dialog.skill-roll .skill-bonuses {
   background: rgba(0, 0, 0, 0.05);
   border: 2px groove var(--color-border-light-highlight);
   height: 140px;
   overflow: auto;
 }
-.co.dialog.skillroll .skill-bonuses .bonus-item {
+.co.dialog.skill-roll .skill-bonuses .bonus-item {
   background: rgba(0, 0, 0, 0.1);
   height: 27px;
   padding: 4px;
 }
-.co.dialog.skillroll .skill-bonuses .bonus-item .bonus-name {
+.co.dialog.skill-roll .skill-bonuses .bonus-item .bonus-name {
   margin-left: 5px;
 }
-.co.dialog.skillroll .skill-bonuses .bonus-item.checked {
+.co.dialog.skill-roll .skill-bonuses .bonus-item.checked {
   background: rgba(0, 0, 0, 0.3);
 }
-.co.dialog.skillroll .skill-bonuses .bonus-item:hover {
+.co.dialog.skill-roll .skill-bonuses .bonus-item:hover {
   cursor: pointer;
   background: rgba(0, 0, 0, 0.2);
 }

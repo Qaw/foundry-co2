@@ -48,6 +48,9 @@ Hooks.once("init", async function () {
   CONFIG.Actor.documentClass = documents.COActor
   CONFIG.Item.documentClass = documents.COItem
 
+  // Dice system configuration
+  CONFIG.Dice.rolls.push(documents.CORoll, documents.COSkillRoll, documents.COAttackRoll, documents.CODmgRoll)
+
   // Unregister legacy sheets
   Actors.unregisterSheet("core", ActorSheet)
   Items.unregisterSheet("core", ItemSheet)

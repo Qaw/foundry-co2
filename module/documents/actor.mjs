@@ -2,6 +2,7 @@ import { SYSTEM } from "../config/system.mjs"
 import { Action } from "../models/schemas/action.mjs"
 import { Resolver } from "../models/schemas/resolver.mjs"
 import { Modifier } from "../models/schemas/modifier.mjs"
+import { COSkillRoll } from "./roll.mjs"
 
 /**
  * @class COActor
@@ -32,6 +33,26 @@ export default class COActor extends Actor {
     }
   }
 
+  getRollData() {
+    const rollData = { ...this.system }
+    rollData.agi = this.system.abilities.agi.value
+    rollData.for = this.system.abilities.for.value
+    rollData.con = this.system.abilities.con.value
+    rollData.per = this.system.abilities.per.value
+    rollData.cha = this.system.abilities.cha.value
+    rollData.int = this.system.abilities.int.value
+    rollData.vol = this.system.abilities.vol.value
+    rollData.mel = this.system.combat.melee.value
+    rollData.atc = this.system.combat.melee.value
+    rollData.dis = this.system.combat.ranged.value
+    rollData.atd = this.system.combat.ranged.value
+    rollData.mag = this.system.combat.magic.value
+    rollData.atm = this.system.combat.magic.value
+    rollData.def = this.system.combat.def.value
+    rollData.ini = this.system.combat.init.value
+    rollData.niv = this.system.attributes.level
+    return rollData
+  }
   // #region accesseurs
 
   /**
@@ -655,7 +676,7 @@ export default class COActor extends Actor {
    * Deletes a path and its linked capacities based on the provided UUID.
    *
    * @param {string} pathUuid The UUID of the path to be deleted.
-   * @returns {Promise<void>} - A promise that resolves when the deletion is complete.
+   * @returns {Promise<void>}  A promise that resolves when the deletion is complete.
    */
   async deletePath(pathUuid) {
     // Delete linked capacities
@@ -671,23 +692,62 @@ export default class COActor extends Actor {
     }
   }
 
+  /**
+   * Supprime une capacité des Embedded items par son UUID.
+   *
+   * @async
+   * @param {string} capacityUuid L'UUID de la capacité à supprimer.
+   * @returns {Promise<void>}  Une promesse qui se résout lorsque la capacité est supprimée.
+   */
   async deleteCapacity(capacityUuid) {
-    // Remove the capacity from the capacities list of the linked Path
     const capacity = await fromUuid(capacityUuid)
 
     if (capacity) {
-      // FIXME A quoi ca sert ???
-      /* const pathId = capacity.system.path
-      if (pathId !== null) {
-        // If the linked path still exists in the items
-        if (this.items.get(pathId)) {
-          let updatedCapacitiesIds = this.items.get(pathId).system.capacities.filter((id) => id !== capacityId)
-          const updateData = { _id: pathId, "system.capacities": updatedCapacitiesIds }
-          await this.updateEmbeddedDocuments("Item", [updateData])
-        }
-      }*/
       this.deleteEmbeddedDocuments("Item", [capacity.id])
     }
+  }
+
+  /**
+   * Lance un test de compétence pour l'acteur.
+   *
+   * @param {string} skillId L'ID de la compétence à lancer.
+   * @param {Object} [options] Options pour le test de compétence.
+   * @param {string} [options.dice="1d20"] Le type de dé à lancer.
+   * @param {number} [options.bonus=0] Le bonus à ajouter au test.
+   * @param {number} [options.malus=0] Le malus à soustraire du test.
+   * @param {number} [options.critical=20] Le seuil critique pour le test.
+   * @param {boolean} [options.superior=false] Si la compétence est supérieure.
+   * @param {boolean} [options.weakened=false] Si la compétence est affaiblie.
+   * @param {number} [options.difficulty=10] La difficulté du test.
+   * @param {boolean} [options.showDifficulty=true] Si la difficulté doit être affichée.
+   * @param {boolean} [options.withDialog=true] Si une boîte de dialogue doit être affichée.
+   * @returns {Promise} Le résultat du test de compétence.
+   */
+  async rollSkill(
+    skillId,
+    { dice = "1d20", bonus = 0, malus = 0, critical = 20, superior = false, weakened = false, difficulty = 10, showDifficulty = true, withDialog = true } = {},
+  ) {
+    const dialogContext = {
+      dice: dice,
+      actor: this,
+      skillId: skillId,
+      label: `${game.i18n.localize("CO.dialogs.skillCheck")}  ${game.i18n.localize(`CO.abilities.long.${skillId}`)}`,
+      bonus: bonus,
+      malus: malus,
+      skillValue: foundry.utils.getProperty(this, `system.abilities.${skillId}`).value,
+      critical: critical,
+      superior: superior,
+      weakened: weakened,
+      difficulty: difficulty,
+      showDifficulty: showDifficulty,
+      skillBonuses: this.getSkillBonuses(skillId),
+      totalSkillBonuses: 0,
+    }
+
+    let roll = await COSkillRoll.prompt(dialogContext, { withDialog: withDialog })
+    if (!roll) return null
+
+    await roll.toMessage()
   }
 
   // #endregion

@@ -1,4 +1,4 @@
-{{!log "Chroniques Oubliées | equipment" this}}
+{{log "Chroniques Oubliées | equipment" this}}
 <div class="details-form foldable">
     {{#if debugMode}}
         <div class="form-group">
@@ -27,23 +27,21 @@
         <div class="form-group">
             <label>{{localize "CO.label.long.martialCategory"}}</label>
             <div class="form-fields">
-                <select name="system.martialCategory" data-type="String" style="width:100%">
-                    {{#select system.martialCategory}}
+
                         {{#if isWeapon}}
-                            {{#each martialTrainingsWeaponsList as |training|}}
-                                <option value="{{key}}">{{localize label}}</option>
-                            {{/each}}
+                <select name="system.martialCategory" data-type="String" style="width:100%">
+                                {{selectOptions martialTrainingsWeaponsList selected=system.martialCategory localize=true}}
+                        </select>
                         {{else if isArmor}}
-                            {{#each martialTrainingsArmorsList as |training|}}
-                                <option value="{{key}}">{{localize label}}</option>
-                            {{/each}}
+                                           <select name="system.martialCategory" data-type="String" style="width:100%">
+                                {{selectOptions martialTrainingsArmorsList selected=system.martialCategory localize=true}}
+                         </select>
                         {{else if isShield}}
-                            {{#each martialTrainingsShieldsList as |training|}}
-                                <option value="{{key}}">{{localize label}}</option>
-                            {{/each}}
+                                       <select name="system.martialCategory" data-type="String" style="width:100%">
+                            {{selectOptions martialTrainingsShieldsList selected=system.martialCategory localize=true}}
+                        </select>
                         {{/if}}
-                    {{/select}}
-                </select>
+                
             </div>
         </div>
     {{/if}}

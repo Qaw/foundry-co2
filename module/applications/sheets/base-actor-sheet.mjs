@@ -1,5 +1,6 @@
 import { CoSkillCheck } from "../../system/roll.mjs"
 import CoChat from "../../chat.mjs"
+import { SYSTEM } from "../../config/system.mjs"
 
 export default class CoBaseActorSheet extends ActorSheet {
   /** @override */
@@ -112,40 +113,40 @@ export default class CoBaseActorSheet extends ActorSheet {
    */
   _onItemCreate(event) {
     event.preventDefault()
-    const header = event.currentTarget
-    const type = header.dataset.type
+    const target = event.currentTarget
+    const type = target.dataset.type
 
     const itemData = {
       type: type,
-      system: foundry.utils.expandObject({ ...header.dataset }),
+      system: foundry.utils.expandObject({ ...target.dataset }),
     }
     delete itemData.system.type
 
     switch (type) {
-      case "equipment":
+      case SYSTEM.ITEM_TYPE.equipment.id:
         itemData.name = game.i18n.format("CO.ui.newItem", { item: "Equipement" })
         let subtype
         switch (itemData.system.subtype) {
           case "armors":
-            subtype = "ARMOR"
+            subtype = SYSTEM.EQUIPMENT_SUBTYPES.armor.id
             break
           case "shields":
-            subtype = "SHIELD"
+            subtype = SYSTEM.EQUIPMENT_SUBTYPES.shield.id
             break
           case "weapons":
-            subtype = "WEAPON"
+            subtype = SYSTEM.EQUIPMENT_SUBTYPES.weapon.id
             break
           case "misc":
-            subtype = "MISC"
+            subtype = SYSTEM.EQUIPMENT_SUBTYPES.misc.id
             break
         }
         itemData.system.subtype = subtype
         break
-      case "capacity":
+      case SYSTEM.ITEM_TYPE.capacity.id:
         itemData.name = game.i18n.format("CO.ui.newItem", { item: "Capacité" })
         itemData.system.learned = true
         break
-      case "attack":
+      case SYSTEM.ITEM_TYPE.attack.id:
         itemData.name = game.i18n.format("CO.ui.newItem", { item: "Attaque" })
         itemData.system.subtype = "MELEE"
         itemData.system.learned = true
@@ -156,14 +157,13 @@ export default class CoBaseActorSheet extends ActorSheet {
   }
 
   _onRoll(event) {
-    const element = event.currentTarget
-    const dataset = element.dataset
-    const rollType = dataset.rollType
-    const rolling = dataset.rolling
+    const dataset = event.currentTarget.dataset
+    const type = dataset.rollType
+    const target = dataset.rollTarget
 
-    switch (rollType) {
+    switch (type) {
       case "skillcheck":
-        new CoSkillCheck(this.actor).init(rolling)
+        this.actor.rollSkill(target)
       case "combatcheck":
         break
     }

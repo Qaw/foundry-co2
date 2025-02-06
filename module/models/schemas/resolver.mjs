@@ -57,7 +57,8 @@ export class Resolver extends foundry.abstract.DataModel {
       diff = Utils.evaluate(actor, this.skill.difficulty, item.uuid, true)
     }
     const skillFormulaToEvaluate = !skillFormula.match("[0-9]{0,}[d|D][0-9]{1,}")
-    let skillFormulaEvaluated = skillFormulaToEvaluate ? Utils.evaluate(actor, skillFormula, item.uuid, true) : Utils.evaluateWithDice(actor, skillFormula, item.uuid)
+    // TODO let skillFormulaEvaluated = skillFormulaToEvaluate ? Utils.evaluate(actor, skillFormula, item.uuid, true) : Utils.evaluateWithDice(actor, skillFormula, item.uuid)
+    let skillFormulaEvaluated = Roll.replaceFormulaData(skillFormula, actor.getRollData())
 
     const damageFormula = this.dmg.formula[0].part
     const damageFormulaToEvaluate = !damageFormula.match("[0-9]{0,}[d|D][0-9]{1,}")
