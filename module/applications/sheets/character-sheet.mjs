@@ -22,7 +22,6 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     context.xpleft = parseInt(this.actor.system.attributes.xp.max) - parseInt(this.actor.system.attributes.xp.value)
     context.choiceAbilities = SYSTEM.ABILITIES
     context.choiceSize = SYSTEM.SIZES
-
     context.visibleActions = await this.actor.getVisibleActions()
     context.visibleActivableActions = await this.actor.getVisibleActivableActions()
     context.visibleNonActivableActions = await this.actor.getVisibleNonActivableActions()

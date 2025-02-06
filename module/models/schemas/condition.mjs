@@ -16,7 +16,7 @@ export class Condition extends foundry.abstract.DataModel {
   }
 
   /**
-   * Returns an object containing the available condition methods.
+   * Renvoi un objet contenant les méthodes de conditions disponibles.
    * @returns {object} An object containing condition methods.
    */
   get conditions() {
@@ -25,15 +25,25 @@ export class Condition extends foundry.abstract.DataModel {
       isOwned: this.isOwned,
       isLearned: this.isLearned,
       isTagged: this.isTagged,
+      isEqualTo: this.isEqualTo,
+      isSuccess: this.isSuccess,
+      isFailure: this.isFailure,
+      isCritique: this.isCritique,
+      isAbilityType: this.isAbilityType,
+      formula: this.formula,
+      melee: this.melee,
+      ranged: this.ranged,
+      magical: this.magical,
+      noarmor: this.noarmor,
     }
   }
 
   /**
-   * Checks if the item is equipped.
-   * @param {object} condition The condition object.
-   * @param {object} object The object to check.
-   * @param {object} item The item to check.
-   * @returns {boolean} True if the item is equipped, false otherwise.
+   * Vérifie si l'item est équipé.
+   * @param {object} condition L'objet condition.
+   * @param {object} object L'objet à vérifier.
+   * @param {object} item L'item à vérifier.
+   * @returns {boolean} True si l'item est équipé, false sinon.
    */
   isEquipped(condition, object, item) {
     return item.type === SYSTEM.ITEM_TYPE.equipment.id ? item.system.equipped : false
@@ -74,6 +84,56 @@ export class Condition extends foundry.abstract.DataModel {
     return false
   }
 
+  isEqualTo(condition, object, item) {
+    //to do : à faire
+    return false
+  }
+
+  isSuccess(condition, object, item) {
+    //to do : à faire
+    return false
+  }
+
+  isFailure(condition, object, item) {
+    //to do : à faire
+    return false
+  }
+
+  isCritique(condition, object, item) {
+    //to do : à faire
+    return false
+  }
+
+  isAbilityType(condition, object, item) {
+    //to do : à faire
+    return false
+  }
+
+  formula(condition, object, item) {
+    //to do : à faire
+    return false
+  }
+
+  melee(condition, object, item) {
+    //to do : à faire
+    return false
+  }
+
+  ranged(condition, object, item) {
+    //to do : à faire
+    return false
+  }
+
+  magical(condition, object, item) {
+    //to do : à faire
+    return false
+  }
+
+  noarmor(condition, object, item) {
+    //to do : à faire
+    return false
+  }
+
   /**
    * Evaluates the condition for a given item.
    * @param {object} item The item to evaluate the condition for.
@@ -92,7 +152,7 @@ export class Condition extends foundry.abstract.DataModel {
    * @returns {object} The retrieved object.
    */
   async getObject(item) {
-    return this.object === "_self" ? item : await fromUuid(item)
+    return this.object === "_self" ? item : await fromUuid(item.uuid)
   }
 
   /**

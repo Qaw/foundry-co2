@@ -74,6 +74,10 @@
         "rank": "Rang",
         "add": "Ajouter",
         "darkvision": "Vision dans le noir",
+        "fearimmunity": "Immunisé à la peur magique",
+        "sleepimmunity": "Immunisé au sommeil magique",
+        "poisonimmunity": "Immunisé aux poisons",
+        "diseaseimmunity": "Immunisé aux maladies",
         "sendToChat": "Envoyer sur le chat",
         "edit": "Editer",
         "editItem": "Editer l'objet",
@@ -112,7 +116,8 @@
         "magic": "Attaque magique",
         "meters": "Mètres",
         "feet": "Pieds",
-        "carac": "Caractéristique"
+        "carac": "Caractéristique",
+        "damagetype": "Type de dégât"
       },
       "short": {
         "label": "Label",
@@ -226,13 +231,13 @@
       "skill": "Compétence",
       "formula": "Formule",
       "skillformula": "Formule de compétence",
+      "healformula": "Formule de soin",
       "part": "Composante",
       "crit": "Critique",
       "difficulty": "Difficulté",
       "dmg": "Dommages",
       "saves": "Sauvegarde",
       "targets": "Cible(s)",
-      "target": "Cible",
       "width": "Largeur",
       "range": "Portée",
       "consumes": "Consomme",
@@ -266,7 +271,9 @@
       "buy": "Apprendre",
       "unbuy": "Ne pas apprendre",
       "recovery": "Dé de récupération",
-      "pvLevel": "Points de vigueur par niveau"
+      "pvLevel": "Points de vigueur par niveau",
+      "crittooltip": "Laisser vide pour utiliser le critique calculé du joueur",
+      "formuletooltip": "Vous pouvez utiliser : @for, @agi, @con, @int, @per, @vol, @cha, @atc/@mel (attaque melee), @atd/@ran (attaque distante),@atm/@mag (attaque magique), @def, @ini, @niv/@lvl"
     },
     "properties": {
       "attack": "Attaque",
@@ -423,7 +430,7 @@
         "target": "Cible",
         "_self": "Soi-Même",
         "isSuccess": "est un succès",
-        "isFailed": "est un echec",
+        "isFailure": "est un echec",
         "isCritique": "est une réussite critique",
         "formula": "une formule",
         "melee": "attaque de mélée",
@@ -569,6 +576,12 @@
       "medium": "Moyen",
       "rare": "Rare",
       "unique": "Unique"
+    },
+    "damage": {
+      "slashing": "Tranchant",
+      "piercing": "Perforant",
+      "impact": "Contondant",
+      "magic": "Magique"
     },
     "size": {
       "tiny": "Minuscule",

@@ -387,7 +387,7 @@ export default class COActor extends Actor {
    */
   async activateAction(state, source, indice, type) {
     const item = await fromUuid(source)
-
+    console.log("passage dans activateAction")
     if (!item) return
 
     // Action avec une durée
@@ -405,6 +405,7 @@ export default class COActor extends Actor {
     }
     // Action instantanée
     else {
+      console.log("passage dans activateAction -> action instant")
       const action = Action.createFromExisting(item.system.actions[indice])
       // Recherche des resolvers de l'action
       let resolvers = Object.values(action.resolvers).map((a) => new Resolver({ type: a.type, skill: a.skill, dmg: a.dmg }))
@@ -766,12 +767,13 @@ export default class COActor extends Actor {
 
   /**
    * Toggle the field of the items and the actions linked
-   * @param {*} itemId
-   * @param {*} fieldName
+   * @param {*} itemId    identifiant unique de l'objet
+   * @param {*} fieldName exemple : equipped
    */
   async _toggleItemFieldAndActions(itemId, fieldName) {
     let item = this.items.get(itemId)
     let fieldValue = item.system[fieldName]
+    console.log(`fieldValue : ${fieldValue} fieldName : ${fieldName} itemId : ${itemId}`)
     await this.updateEmbeddedDocuments("Item", [{ _id: itemId, [`system.${fieldName}`]: !fieldValue }])
     if (item.actions.length > 0) {
       item.toggleActions()

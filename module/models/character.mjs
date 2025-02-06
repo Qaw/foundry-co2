@@ -74,6 +74,7 @@ export default class CharacterData extends ActorData {
     // Pour chaque niveau supplémentaire : + PV de la famille
     const pvFromFamily = this.profile ? SYSTEM.FAMILIES[this.profile.system.family].hp : 0
     this.attributes.hp.base = 2 * pvFromFamily + (this.attributes.level - 1) * pvFromFamily
+    console.log("j'applique à critique base : " + SYSTEM.BASE_CRITIQUE)
     this.combat.crit.base = SYSTEM.BASE_CRITIQUE
   }
 
@@ -388,10 +389,12 @@ export default class CharacterData extends ActorData {
     if (this.combatModifiers) {
       let mod = this.combatModifiers.find((m) => m.target === SYSTEM.COMBAT.crit.id)
       if (mod) {
-        this.combat.crit.value = Math.max(16, this.combat.crit.base + mod.value)
+        this.combat.crit.value = Math.max(16, this.combat.crit.base + parseInt(mod.value))
       } else {
         this.combat.crit.value = this.combat.crit.base
       }
+    } else {
+      this.combat.crit.value = this.combat.crit.base
     }
   }
 

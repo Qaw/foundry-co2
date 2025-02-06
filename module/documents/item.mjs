@@ -81,9 +81,7 @@ export default class COItem extends Item {
    */
   async getVisibleActions() {
     if (foundry.utils.isEmpty(this.system.actions)) return []
-
     const visibilityResults = await Promise.all(this.actions.map((action) => action.isVisible(this)))
-
     return this.actions.filter((_, index) => visibilityResults[index])
   }
 
@@ -121,7 +119,6 @@ export default class COItem extends Item {
         }
       } else if (chatType === "action") {
         const action = this.actions.find((a) => a.indice === parseInt(indice))
-        console.log("getChatData action", action)
         let act = Action.createFromExisting(action)
         actions.push(...act.chatData)
       }

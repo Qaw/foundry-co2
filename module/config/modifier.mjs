@@ -149,4 +149,24 @@ export const MODIFIERS_TARGET = Object.freeze({
     label: "CO.label.long.darkvision",
     soustype: "state",
   },
+  fearimmunity: {
+    id: "fearimmunity",
+    label: "CO.label.long.fearimmunity",
+    soustype: "state",
+  },
+  sleepimmunity: {
+    id: "sleepimmunity",
+    label: "CO.label.long.sleepimmunity",
+    soustype: "state",
+  },
+  poisonimmunity: {
+    id: "poisonimmunity",
+    label: "CO.label.long.poisonimmunity",
+    soustype: "state",
+  },
+  diseaseimmunity: {
+    id: "diseaseimmunity",
+    label: "CO.label.long.diseaseimmunity",
+    soustype: "state",
+  },
 })

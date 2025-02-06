@@ -108,9 +108,9 @@ export const CONDITION_TARGETS = Object.freeze({
     id: "isSuccess",
     label: "CO.condition.targets.isSuccess",
   },
-  isFailed: {
-    id: "isFailed",
-    label: "CO.condition.targets.isFailed",
+  isFailure: {
+    id: "isFailure",
+    label: "CO.condition.targets.isFailure",
   },
   isCritique: {
     id: "isAbilityType",

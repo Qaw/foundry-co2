@@ -99,9 +99,15 @@
                                                 <i class="fa-regular fa-hand-back-fist green toggle-action" style="font-size:16px" data-tooltip="Dommages" data-action="activate" data-type="damage" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
                                             </a> 
                                         {{else}}
-                                        <a class="item-control">
-                                            <i class="fa-solid green fa-sword toggle-action" style="font-size:16px" data-tooltip="Utiliser" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
-                                        </a>     
+                                            {{#if (eq action.type 'heal') }}
+                                            <a class="item-control">
+                                                <i class="fa-solid green fa-flask-round-potion toggle-action" style="font-size:16px" data-tooltip="Utiliser" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                            </a>  
+                                            {{else}}
+                                            <a class="item-control">
+                                                <i class="fa-solid green fa-hand-back-point-up toggle-action" style="font-size:16px" data-tooltip="Utiliser" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                            </a>  
+                                            {{/if}}                                            
                                         {{/if}}             
                                     {{/if}}
                                 {{/if}}

@@ -22,7 +22,16 @@
             </select>
         </div>
     </div>
-
+    {{#if isWeapon}}
+        <div class="form-group">
+            <label>{{localize "CO.label.long.damagetype"}}</label>
+            <div class="form-fields">
+                <select name="system.damagetype" data-type="String" style="width:100%">
+                    {{selectOptions @root.choiceDamageType selected=system.damagetype localize=true}}
+                </select>
+            </div>
+        </div>
+    {{/if}}
     {{#if (or isWeapon isArmor isShield)}}
         <div class="form-group">
             <label>{{localize "CO.label.long.martialCategory"}}</label>
