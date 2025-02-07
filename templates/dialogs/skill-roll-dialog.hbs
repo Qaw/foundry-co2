@@ -1,5 +1,5 @@
 <div class="co-roll-dialog-skill">
-{{log "Chroniques Oubliées | skillcheck" this}}
+{{!log "Chroniques Oubliées | skillcheck" this}}
     <header class="sheet-header"></header>
     <section class="sheet-body">
         <div class="form-group">
@@ -53,7 +53,7 @@
             <div class="form-fields skillBonuses">
                 <div class="flex1 skill-bonuses" id="skill-bonuses">
                     {{#each skillBonuses as |bonus id|}}
-                    {{log 'skillBonus' bonus id}}
+                    {{!log 'skillBonus' bonus id}}
                         <div class="bonus-item flexrow" data-value="{{bonus.value}}" data-description="{{{bonus.description}}}" data-tooltip="{{{bonus.description}}}" data-tooltip-direction="UP">
                             <span class="bonus-value flex0">{{numberFormat bonus.value decimals=0 sign=true}}</span> &nbsp;
                             <span class="bonus-name flex1">{{bonus.name}}</span>

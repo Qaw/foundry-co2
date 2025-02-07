@@ -74,7 +74,7 @@ export default class CharacterData extends ActorData {
     // Pour chaque niveau supplémentaire : + PV de la famille
     const pvFromFamily = this.profile ? SYSTEM.FAMILIES[this.profile.system.family].hp : 0
     this.attributes.hp.base = 2 * pvFromFamily + (this.attributes.level - 1) * pvFromFamily
-    console.log("j'applique à critique base : " + SYSTEM.BASE_CRITIQUE)
+
     this.combat.crit.base = SYSTEM.BASE_CRITIQUE
   }
 
@@ -567,7 +567,6 @@ export default class CharacterData extends ActorData {
     let rp = this.resources.recovery
     const level = this.attributes.level.max
     const modCon = this.abilities.con.mod
-    console.log("level", level, "mod", modCon)
     if (!withHpRecovery) {
       rp.value -= 1
       this.update({ "system.resources.recovery": rp })
@@ -579,7 +578,6 @@ export default class CharacterData extends ActorData {
           const hd = this.hd
           const bonus = level + modCon
           const formula = `${hd} + ${bonus}`
-          console.log("formula", formula)
           const roll = await new Roll(formula, {}).roll({ async: true })
           const toolTip = new Handlebars.SafeString(await roll.getTooltip())
 

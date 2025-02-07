@@ -1,6 +1,7 @@
 import { CoSkillCheck } from "../../system/roll.mjs"
 import CoChat from "../../chat.mjs"
 import { SYSTEM } from "../../config/system.mjs"
+import Utils from "../../utils.mjs"
 
 export default class CoBaseActorSheet extends ActorSheet {
   /** @override */
@@ -25,7 +26,8 @@ export default class CoBaseActorSheet extends ActorSheet {
     context.locked = !this.actor.isUnlocked
     // Select options
     context.choiceMoveUnit = SYSTEM.MOVEMENT_UNIT
-    console.log("Actor Sheet context", context)
+
+    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseActorSheet - context`), context)
     return context
   }
 

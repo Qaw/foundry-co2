@@ -1,5 +1,6 @@
 import { Hitpoints } from "./hitpoints.mjs"
 import { createCOMacro } from "./macros.mjs"
+import Utils from "./utils.mjs"
 
 /**
  * Registers various hooks for the game system.
@@ -70,7 +71,7 @@ export default function registerHooks() {
 
   Hooks.on("hotbarDrop", (bar, data, slot) => {
     if (["Item", "co.action"].includes(data.type)) {
-      console.log("hotbardrop data", data)
+      if (CONFIG.debug.co?.hooks) console.debug(Utils.log(`HotbarDrop`), bar, data, slot)
       createCOMacro(data, slot)
     }
     return false

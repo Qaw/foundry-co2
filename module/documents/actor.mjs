@@ -4,6 +4,8 @@ import { Resolver } from "../models/schemas/resolver.mjs"
 import { Modifier } from "../models/schemas/modifier.mjs"
 import { COSkillRoll } from "./roll.mjs"
 
+import Utils from "../utils.mjs"
+
 /**
  * @class COActor
  * @classdesc
@@ -387,8 +389,9 @@ export default class COActor extends Actor {
    */
   async activateAction(state, source, indice, type) {
     const item = await fromUuid(source)
-    console.log("passage dans activateAction")
     if (!item) return
+
+    if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction`), state, source, indice, type, item)
 
     // Action avec une durée
     if (item.system.actions[indice].properties.temporary) {
@@ -405,7 +408,7 @@ export default class COActor extends Actor {
     }
     // Action instantanée
     else {
-      console.log("passage dans activateAction -> action instant")
+      if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction - Action instantanée`), state, source, indice, type, item)
       const action = Action.createFromExisting(item.system.actions[indice])
       // Recherche des resolvers de l'action
       let resolvers = Object.values(action.resolvers).map((a) => new Resolver({ type: a.type, skill: a.skill, dmg: a.dmg }))

@@ -4,6 +4,7 @@ import { Action } from "../../models/schemas/action.mjs"
 import { Condition } from "../../models/schemas/condition.mjs"
 import { Resolver } from "../../models/schemas/resolver.mjs"
 import { Modifier } from "../../models/schemas/modifier.mjs"
+import Utils from "../../utils.mjs"
 
 export default class CoBaseItemSheet extends ItemSheet {
   /** @override */
@@ -135,7 +136,7 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.choiceResolverTypes = SYSTEM.RESOLVER_TYPE
     context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
     context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
-    console.log("Base-Item-Sheet context", context)
+    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseItemSheet - context`), context)
     return context
   }
 

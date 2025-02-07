@@ -1,3 +1,4 @@
+import Utils from "../utils.mjs"
 export class CORoll extends Roll {
   static ROLL_TYPE = "standard"
 
@@ -8,83 +9,62 @@ export class CORoll extends Roll {
   static ROLL_CSS = ["co", "dialog", "roll"]
 
   static async prompt(dialogContext, options = {}) {
-    let rollContext
+    const content = await renderTemplate(this.DIALOG_TEMPLATE, dialogContext)
 
-    if (options.withDialog) {
-      const content = await renderTemplate(this.DIALOG_TEMPLATE, dialogContext)
-
-      rollContext = await foundry.applications.api.DialogV2.wait({
-        window: { title: dialogContext.label },
-        classes: this.ROLL_CSS,
-        content,
-        rejectClose: false,
-        buttons: [
-          {
-            action: "cancel",
-            label: game.i18n.localize("CO.ui.cancel"),
-            icon: "fas fa-times",
-            callback: () => false,
-          },
-          {
-            action: "ok",
-            label: game.i18n.localize("CO.ui.submit"),
-            icon: "fas fa-check",
-            default: true,
-            callback: (event, button, dialog) => {
-              const output = Array.from(button.form.elements).reduce((obj, input) => {
-                if (input.name) obj[input.name] = input.value
-                return obj
-              }, {})
-              /* Exemple d'output
-              {
-                  "dice": "1d20",
-                  "carac": "+4",
-                  "critrange": "20",
-                  "bonus": "+0",
-                  "malus": "+0",
-                  "difficulty": "10",
-                  "totalSkillBonuses": "0"
-              }
-              */
-              return output
-            },
-          },
-        ],
-        render: (event, dialog) => {
-          const inputs = dialog.querySelectorAll(".bonus-item")
-          if (inputs) {
-            inputs.forEach((input) => {
-              input.addEventListener("click", this._onToggleCheckSkillBonus.bind(this))
-            })
-          }
+    const rollContext = await foundry.applications.api.DialogV2.wait({
+      window: { title: dialogContext.label },
+      classes: this.ROLL_CSS,
+      content,
+      rejectClose: false,
+      buttons: [
+        {
+          action: "cancel",
+          label: game.i18n.localize("CO.ui.cancel"),
+          icon: "fas fa-times",
+          callback: () => false,
         },
-      })
-    } else {
-      rollContext = {
-        dice: dialogContext.dice,
-        skillValue: dialogContext.skillValue,
-        bonus: dialogContext.bonus,
-        malus: dialogContext.malus,
-        difficulty: dialogContext.difficulty,
-        totalSkillBonuses: dialogContext.totalSkillBonuses,
-      }
-    }
+        {
+          action: "ok",
+          label: game.i18n.localize("CO.ui.submit"),
+          icon: "fas fa-check",
+          default: true,
+          callback: (event, button, dialog) => {
+            if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`Roll prompt - Callback`), event, button, dialog)
+            const output = Array.from(button.form.elements).reduce((obj, input) => {
+              if (input.name) obj[input.name] = input.value
+              return obj
+            }, {})
+            if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`Roll prompt - Output`), output)
+            /* 
+            {
+                "dice": "1d20",
+                "carac": "+4",
+                "critrange": "20",
+                "bonus": "+0",
+                "malus": "+0",
+                "difficulty": "10",
+                "totalSkillBonuses": "0"
+            }
+            */
+            return output
+          },
+        },
+      ],
+      render: (event, dialog) => {
+        const inputs = dialog.querySelectorAll(".bonus-item")
+        if (inputs) {
+          inputs.forEach((input) => {
+            input.addEventListener("click", this._onToggleCheckSkillBonus.bind(this))
+          })
+        }
+      },
+    })
 
     if (rollContext === null) return
-    console.log("rollContext: ", rollContext)
+    if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`Roll - rollContext`), rollContext)
 
-    const rollData = dialogContext.actor.getRollData()
-    const modifier =
-      parseInt(rollContext.skillValue) +
-      eval(Roll.replaceFormulaData(rollContext.bonus, rollData)) +
-      eval(Roll.replaceFormulaData(rollContext.malus, rollData)) +
-      parseInt(rollContext.totalSkillBonuses)
-    //const formula = `${rollContext.dice} + ${rollContext.skillValue} + ${rollContext.bonus} + ${rollContext.malus} + ${rollContext.totalSkillBonuses}`
-    const formula = `${rollContext.dice} + ${modifier}`
-
-    if (Hooks.call("co.skillRoll.preRoll", formula, rollData, options) === false) return
-
-    const roll = new this(formula, rollData)
+    const formula = `${rollContext.dice}${rollContext.carac}${rollContext.bonus}${rollContext.malus}+${rollContext.totalSkillBonuses}`
+    const roll = new this(formula, dialogContext.actor.getRollData())
     await roll.evaluate()
 
     const result = roll.terms[0].results.find((r) => r.active).result
@@ -99,8 +79,7 @@ export class CORoll extends Roll {
       ...options,
     }
 
-    console.log("CORoll - roll ", roll)
-    if (Hooks.call("co.skillRoll.Roll", formula, rollData, options, roll) === false) return
+    if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`Roll - roll`), roll)
     return roll
   }
 
@@ -119,6 +98,7 @@ export class CORoll extends Roll {
   }
 
   async toMessage(messageData = {}, { rollMode, create = true } = {}) {
+
     super.toMessage(
       {
         showDifficulty: this.options.showDifficulty,

@@ -15,6 +15,8 @@ import registerHooks from "./module/hooks.mjs"
 import Macros from "./module/macros.mjs"
 import Utils from "./module/utils.mjs"
 
+const DEVELOPMENT_MODE = true
+
 Hooks.once("init", async function () {
   console.info(SYSTEM.ASCII)
   console.info(Utils.log("Initializing..."))
@@ -106,5 +108,27 @@ Hooks.once("init", async function () {
 })
 
 Hooks.once("ready", async function () {
+  if (DEVELOPMENT_MODE) {
+    game.settings.set("co", "debugMode", true)
+  }
+
+  if (!CONFIG.debug.co) {
+    if (DEVELOPMENT_MODE) {
+      CONFIG.debug.co = {
+        hooks: true,
+        resolvers: true,
+        rolls: true,
+        sheets: true,
+        actions: true,
+      }
+    } else
+      CONFIG.debug.co = {
+        hooks: false,
+        resolvers: false,
+        rolls: false,
+        sheets: false,
+        actions: false,
+      }
+  }
   console.info(Utils.log(game.i18n.localize("CO.notif.ready")))
 })

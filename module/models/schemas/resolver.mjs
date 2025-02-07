@@ -48,13 +48,15 @@ export class Resolver extends foundry.abstract.DataModel {
   }
 
   /**
-   *
+   * Resolver pour les actions de type melee
    * @param {*} actor : l'acteur pour lequel s'applique l'action
    * @param {*} item : la source de l'action
    * @param {*} action : l'action
    * @param {*} type : type de resolver (attack or damage)
    */
   async melee(actor, item, action, type) {
+    if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver - melee`), actor, item, action, type)
+
     const auto = false
 
     const itemName = item.name
@@ -93,10 +95,16 @@ export class Resolver extends foundry.abstract.DataModel {
     })
   }
 
+  /**
+   * Résout automatiquement une action effectuée par un acteur sur un objet.
+   *
+   * @param {Object} actor L'acteur effectuant l'action.
+   * @param {Object} item L'objet impliqué dans l'action.
+   * @param {Object} action L'action en cours d'exécution.
+   * @returns {Promise<void>} Une promesse qui se résout lorsque l'action est terminée.
+   */
   async auto(actor, item, action) {
-    console.log(actor)
-    console.log(item)
-    console.log(action)
+    if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver - auto`), actor, item, action)
     const itemName = item.name
     const actionName = action.label
     const damageFormula = this.dmg.formula[0].part
@@ -116,10 +124,7 @@ export class Resolver extends foundry.abstract.DataModel {
    * @param {*} action : l'action à l'origine du soin
    */
   async heal(actor, item, action) {
-    console.log("passage dans heal")
-    console.log(actor)
-    console.log(item)
-    console.log(action)
+    if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver - heal`), actor, item, action)
     const itemName = item.name
     const actionName = action.label
     const healFormula = this.dmg.formula[0].part

@@ -13,7 +13,7 @@
             <ol class="item-list">
                 <!-- Actions Visibles Activables temporaires et Activées -->
                 {{#each visibleActivableTemporaireActions as |item id|}}                
-                    {{log (concat "Chroniques Oubliées | action " id) item}}
+                    {{!log (concat "Chroniques Oubliées | action " id) item}}
                     {{#if item.properties.enabled }}
                         <li class="item flexrow" data-item-uuid="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
                             <div class="item-name flexrow">
@@ -55,7 +55,7 @@
             <ol class="item-list">
                 <!-- Actions Visibles non Activables Non temporaires et activées -->
                 {{#each visibleNonActivableNonTemporaireActions as |item id|}}
-                    {{log (concat "Chroniques Oubliées | action " id) item}}
+                    {{!log (concat "Chroniques Oubliées | action " id) item}}
                      {{#if item.properties.enabled }}
                         <li class="item flexrow" data-item-uuid="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
                             <div class="item-name flexrow">
