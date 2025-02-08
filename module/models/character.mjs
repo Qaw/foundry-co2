@@ -183,7 +183,7 @@ export default class CharacterData extends ActorData {
 
     // Préparation des données de combat : Attaque de contact, attaque à distance, attaque magique, initiative, défense
     for (const [key, skill] of Object.entries(this.combat)) {
-      if (key === SYSTEM.COMBAT.crit.id) {
+      if (key === SYSTEM.COMBAT.crit.id || key === SYSTEM.COMBAT.dr.id) {
         continue
       }
       // Somme du bonus de la feuille et du bonus des actives effects
@@ -204,6 +204,8 @@ export default class CharacterData extends ActorData {
     }
 
     this._prepareCrit()
+
+    this._prepareDR()
 
     for (const [key, skill] of Object.entries(this.resources)) {
       // Somme du bonus de la feuille et du bonus des actives effects
@@ -384,12 +386,33 @@ export default class CharacterData extends ActorData {
     skill.tooltipValue = skill.tooltipBase.concat(defModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
 
+  /**
+   * Calcule la valeur du critique en ajoutant les bonus
+   */
   _prepareCrit() {
     this.combat.crit.min = 16
     if (this.combatModifiers) {
       let mod = this.combatModifiers.find((m) => m.target === SYSTEM.COMBAT.crit.id)
       if (mod) {
         this.combat.crit.value = Math.max(16, this.combat.crit.base + parseInt(mod.value))
+      } else {
+        this.combat.crit.value = this.combat.crit.base
+      }
+    } else {
+      this.combat.crit.value = this.combat.crit.base
+    }
+  }
+
+  /**
+   * Calcule la valeur de la rÃ©sistance au dÃ©gat en ajoutant les bonus
+   */
+  _prepareDR() {
+    this.combat.dr.value = 0
+    if (this.combatModifiers) {
+      console.log(this.combatModifiers)
+      let mod = this.combatModifiers.find((m) => m.target === SYSTEM.COMBAT.dr.id)
+      if (mod) {
+        this.combat.crit.value = this.combat.crit.base + parseInt(mod.value)
       } else {
         this.combat.crit.value = this.combat.crit.base
       }

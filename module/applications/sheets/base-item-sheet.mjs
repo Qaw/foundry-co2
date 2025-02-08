@@ -134,6 +134,7 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.choiceConditionPredicates = SYSTEM.CONDITION_PREDICATES
     context.choiceConditionTargets = SYSTEM.CONDITION_TARGETS
     context.choiceResolverTypes = SYSTEM.RESOLVER_TYPE
+    context.choiceResolverTargets = SYSTEM.RESOLVER_TARGET
     context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
     context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
     if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseItemSheet - context`), context)

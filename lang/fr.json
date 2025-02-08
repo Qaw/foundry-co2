@@ -272,6 +272,7 @@
       "unbuy": "Ne pas apprendre",
       "recovery": "Dé de récupération",
       "pvLevel": "Points de vigueur par niveau",
+      "notarget": "Vous n'avez ciblé personne",
       "crittooltip": "Laisser vide pour utiliser le critique calculé du joueur",
       "formuletooltip": "Vous pouvez utiliser : @for, @agi, @con, @int, @per, @vol, @cha, @atc/@mel (attaque melee), @atd/@ran (attaque distante),@atm/@mag (attaque magique), @def, @ini, @niv/@lvl"
     },
@@ -320,7 +321,8 @@
         "magic": "Attaque magique",
         "init": "Initiative",
         "def": "Défense",
-        "crit": "Critique"
+        "crit": "Critique",
+        "dr": "Réduction de dégats"
       },
       "short": {
         "melee": "ATC",
@@ -415,7 +417,8 @@
         "testtype": "Type de test",
         "nc": "Niveau de Créature",
         "hp": "Points de vie",
-        "armorType": "Port d'armure"
+        "equippedarmor": "Port d'armure",
+        "equipedweapon": "Arme équipée"
       },
       "predicates": {
         "isEquipped": "est équipé par...",
@@ -479,7 +482,13 @@
         "ranged": "À distance",
         "magic": "Magique",
         "heal": "Soin"
-      }
+      },
+      "target": {
+        "self": "Soi-même",
+        "player": "Joueur",
+        "encounter": "PNJ"
+      },
+      "isMultiTarget": "Multicibles"
     },
     "itemTypes": {
       "item": "Objet",

@@ -10,6 +10,7 @@ export default class EncounterData extends ActorData {
     schema.combat = new fields.SchemaField({
       init: new fields.EmbeddedDataField(BaseValue),
       def: new fields.EmbeddedDataField(BaseValue),
+      dr: new fields.EmbeddedDataField(BaseValue),
     })
 
     schema.pasteData = new fields.HTMLField()
@@ -65,6 +66,10 @@ export default class EncounterData extends ActorData {
       }
 
       if (key === SYSTEM.COMBAT.DEF) {
+        skill.value = skill.base + bonuses
+      }
+
+      if (key === SYSTEM.COMBAT.DR) {
         skill.value = skill.base + bonuses
       }
     }

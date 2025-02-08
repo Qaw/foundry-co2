@@ -14,6 +14,7 @@ import registerSystemSettings from "./module/settings.mjs"
 import registerHooks from "./module/hooks.mjs"
 import Macros from "./module/macros.mjs"
 import Utils from "./module/utils.mjs"
+import { handleSocketEvent } from "./module/socket.mjs"
 
 const DEVELOPMENT_MODE = true
 
@@ -67,6 +68,9 @@ Hooks.once("init", async function () {
   Items.registerSheet(SYSTEM.ID, applications.FeatureSheet, { types: ["feature"], makeDefault: true, label: "CO.sheet.feature" })
   Items.registerSheet(SYSTEM.ID, applications.PathSheet, { types: ["path"], makeDefault: true, label: "CO.sheet.path" })
   Items.registerSheet(SYSTEM.ID, applications.ProfileSheet, { types: ["profile"], makeDefault: true, label: "CO.sheet.profile" })
+
+  // Activate le gestionnaire de socket
+  game.socket.on(`system.${SYSTEM.id}`, handleSocketEvent)
 
   // Preload Handlebars Templates
   preloadHandlebarsTemplates()

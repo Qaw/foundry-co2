@@ -58,9 +58,13 @@ export const CONDITION_OBJECTS = Object.freeze({
     id: "hp",
     label: "CO.condition.objects.hp",
   },
-  armorType: {
-    id: "armorType",
-    label: "CO.condition.objects.armorType",
+  equippedarmor: {
+    id: "equippedarmor",
+    label: "CO.condition.objects.equippedarmor",
+  },
+  equipedweapon: {
+    id: "equipedweapon",
+    label: "CO.condition.objects.equipedweapon",
   },
 })
 
@@ -162,5 +166,20 @@ export const RESOLVER_TYPE = Object.freeze({
   debuff: {
     id: "debuff",
     label: "CO.action.types.debuff",
+  },
+})
+
+export const RESOLVER_TARGET = Object.freeze({
+  self: {
+    id: "self",
+    label: "CO.resolver.target.self",
+  },
+  player: {
+    id: "player",
+    label: "CO.resolver.target.player",
+  },
+  encounter: {
+    id: "encounter",
+    label: "CO.resolver.target.encounter",
   },
 })

@@ -34,7 +34,8 @@ export class Condition extends foundry.abstract.DataModel {
       melee: this.melee,
       ranged: this.ranged,
       magical: this.magical,
-      noarmor: this.noarmor,
+      armor: this.armor,
+      weapon: this.weapon,
     }
   }
 
@@ -129,7 +130,12 @@ export class Condition extends foundry.abstract.DataModel {
     return false
   }
 
-  noarmor(condition, object, item) {
+  armor(condition, object, item) {
+    //to do : à faire
+    return false
+  }
+
+  weapon(condition, object, item) {
     //to do : à faire
     return false
   }

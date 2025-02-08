@@ -78,6 +78,11 @@ export const COMBAT = {
     label: "CO.combat.long.crit",
     ability: "",
   },
+  dr: {
+    id: "dr",
+    label: "CO.ui.dr",
+    ability: "",
+  },
 }
 
 export const ATTACK_TYPE = {

@@ -210,7 +210,50 @@
       </div>
     {{/if}}
   </div>
+  <!-- DR -->
+  <div class="sidebar-section dr-section">
+    <div class="sidebar-section-header">
+      <div class="sidebar-label dr-label">
+        <i class="fas fa-fw fa-universal-access"></i>
+        <h4>{{localize "CO.ui.dr"}}</h4>
+      </div>
+      <div class="dr-base labelled-field" data-tooltip="{{combat.dr.tooltipValue}}">
+        {{combat.dr.value}}
+      </div>
+    </div>
+    {{#if unlocked}}
+      <div class="sidebar-section-content">
+        <div class="labelled-field">
+          <label>{{localize "CO.label.long.base"}}</label>
+          <input
+            class="dr-base"
+            type="number"
+            name="system.combat.dr.base"
+            value="{{combat.dr.base}}"
+            data-dtype="Number"
+            placeholder="0"
+            readonly
+            data-tooltip="{{combat.dr.tooltipBase}}"
+          />
+        </div>
+      </div>
+      <div class="sidebar-section-content">
+        <div class="labelled-field">
+          <label>{{localize "CO.label.long.bonus"}}</label>
+          <input
+            class="def-bonus"
+            type="text"
+            name="system.combat.def.bonuses.sheet"
+            value="{{numberFormat combat.def.bonuses.sheet decimals=0 sign=true}}"
+            data-dtype="Number"
+            placeholder="0"
+          />
+        </div>
+      </div>
+    {{/if}}
+  </div>
   <!-- DEF -->
+
   <div class="sidebar-section armor-section">
     <div class="sidebar-section-header">
       <div class="sidebar-label armor-label">
@@ -222,6 +265,16 @@
       </div>
     </div>
     {{#if unlocked}}
+      <div class="sidebar-section-content flexrow">
+        <div class="labelled-field">
+          <label>{{localize "CO.label.short.ability"}}</label>
+          <div class="select-container">
+            <select name="system.combat.def.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=combat.def.ability localize=true}}
+            </select>
+          </div>
+        </div>
+      </div>
       <div class="sidebar-section-content">
         <div class="labelled-field">
           <label>{{localize "CO.label.long.base"}}</label>
