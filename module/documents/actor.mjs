@@ -2,7 +2,7 @@ import { SYSTEM } from "../config/system.mjs"
 import { Action } from "../models/schemas/action.mjs"
 import { Resolver } from "../models/schemas/resolver.mjs"
 import { Modifier } from "../models/schemas/modifier.mjs"
-import { COSkillRoll } from "./roll.mjs"
+import { COSkillRoll, COAttackRoll } from "./roll.mjs"
 
 import Utils from "../utils.mjs"
 
@@ -749,6 +749,43 @@ export default class COActor extends Actor {
     }
 
     let roll = await COSkillRoll.prompt(dialogContext, { withDialog: withDialog })
+    if (!roll) return null
+
+    await roll.toMessage()
+  }
+
+  async rollAttack(
+    item,
+    {
+      auto = false,
+      type = "attack",
+      actionName = "",
+      dice = "1d20",
+      bonus = 0,
+      malus = 0,
+      skillFormula = undefined,
+      damageFormula = undefined,
+      critical = 20,
+      difficulty = 10,
+      showDifficulty = true,
+      withDialog = true,
+    } = {},
+  ) {
+    const dialogContext = {
+      auto: auto,
+      type: type,
+      actionName: actionName,
+      label: `${item.name} - ${actionName}`,
+      dice: dice,
+      actor: this,
+      formulaAttack: skillFormula,
+      formulaDamage: damageFormula,
+      critical: critical,
+      difficulty: difficulty,
+      showDifficulty: showDifficulty,
+    }
+
+    let roll = await COAttackRoll.prompt(dialogContext, { withDialog: withDialog })
     if (!roll) return null
 
     await roll.toMessage()

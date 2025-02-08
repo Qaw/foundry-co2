@@ -623,8 +623,4 @@ export default class CharacterData extends ActorData {
     // Console.log('Compute XP : ', xp);
     return xp
   }
-
-  async rollAttack(target) {
-    if (type === "attack") return COAttackRoll.prompt(dialogContext)
-  }
 }

@@ -1,0 +1,68 @@
+{{log 'attack-roll-card' this}}
+<div class="chatroll" data-actor-id="{{actorId}}">
+    {{#if showDifficulty}}
+        {{#if isSuccess}}
+            {{#if isCritical}}
+                <h2 class="success critical"><i class="fas fa-check-double"></i>&nbsp;{{localize "CO.roll.critical"}}...</h2>
+            {{else}}
+                <h2 class="success"><i class="fas fa-check"></i>&nbsp;{{localize "CO.roll.success"}}...</h2>
+            {{/if}}
+        {{/if}}
+
+        {{#if isFailure}}
+            {{#if isFumble}}
+                <h2 class="failure fumble"><i class="fas fa-skull-crossbones"></i>&nbsp;{{localize "CO.roll.fumble"}}...</h2>
+            {{else}}
+                <h2 class="failure"><i class="fas fa-times"></i>&nbsp;{{localize "CO.roll.failure"}}...</h2>
+            {{/if}}
+        {{/if}}
+        <strong>{{label}}</strong><br>
+        <label class="display-difficulty">{{localize "CO.label.long.difficulty"}} : </label><strong class="display-difficulty">{{difficulty}}</strong>
+    {{else}}
+        {{#if isCritical}}
+            <h2 class="standard critical"><i class="fas fa-check-double"></i>&nbsp;{{localize "CO.roll.critical"}}...</h2>
+        {{else}}
+            {{#if isFumble}}
+                <h2 class="failure fumble"><i class="fas fa-skull-crossbones"></i>&nbsp;{{localize "CO.roll.fumble"}}...</h2>
+            {{else}}
+                <h2 class="standard"><i class="fas fa-dice-d20"></i>&nbsp; {{#if typeAttack}}{{localize "CO.roll.attackcheck"}} {{else}}{{localize "CO.roll.damagecheck"}} {{/if}}</h2>
+            {{/if}}
+        {{/if}}
+        <h3><strong>{{label}}</strong>
+    {{/if}}
+    <div>
+        <p>Formule : {{formula}}</p>
+    </div>
+
+    {{#if showDifficulty}}
+        <p>Difficulté : {{difficulty}}</p>
+    {{/if}}
+
+    <div class="tooltip">
+        <p>Résultat : {{total}}</p>
+        {{#if typeDamage}}
+            <div class="flex1 right no-wrap">
+                <label for="dr" class="dr-checkbox">{{localize "CO.ui.dr"}}</label>
+                <input type="checkbox" id="dr" name="dr" class="dr-checkbox">
+                <a class="btn apply-dmg" data-apply="full" data-total="{{total}}">
+                    <i class="fas fa-user-minus" data-tooltip="{{localize 'CO.ui.applyDamage'}}"></i>
+                </a>
+                <a class="btn apply-dmg" data-apply="half" data-total="{{total}}">
+                    <i class="fas fa-user-shield" data-tooltip="{{localize 'CO.ui.applyHalfDamage'}}"></i>
+                </a>
+                <a class="btn apply-dmg" data-apply="double" data-total="{{total}}">
+                    <i class="fas fa-user-injured" data-tooltip="{{localize 'CO.ui.applyDoubleDamage'}}"></i>
+                </a>
+                <a class="btn apply-dmg" data-apply="heal" data-total="{{total}}">
+                    <i class="fas fa-user-plus" data-tooltip="{{localize 'CO.ui.applyHealing'}}"></i>
+                </a>
+            </div>
+        {{/if}}
+        <span class="tooltiptext">{{{toolTip.string}}}</span>
+    </div>
+    {{#if hasDescription}}
+        <h4>
+            <pre class="rollDescr-line">{{{description}}}</pre>
+        </h4>
+    {{/if}}
+</div>

@@ -1,4 +1,3 @@
-import { CoSkillCheck } from "../../system/roll.mjs"
 import CoChat from "../../chat.mjs"
 import { SYSTEM } from "../../config/system.mjs"
 import Utils from "../../utils.mjs"
