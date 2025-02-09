@@ -27,14 +27,14 @@ export class COSkillRoll extends CORoll {
 
   static CHAT_TEMPLATE = "systems/co/templates/chat/skill-roll-card.hbs"
 
-  static ROLL_CSS = ["co", "dialog", "skill-roll"]
+  static ROLL_CSS = ["co", "skill-roll"]
 
   /**
    * Affiche une boîte de dialogue pour lancer un jet de compétence et retourne le résultat du jet.
    *
-   * @param {Object} dialogContext - Le contexte de la boîte de dialogue, contenant des informations comme l'acteur et le label.
-   * @param {Object} [options={}] - Options supplémentaires pour le jet de compétence.
-   * @returns {Promise<Object|null>} - Le résultat du jet de compétence ou null si la boîte de dialogue a été annulée.
+   * @param {Object} dialogContext Le contexte de la boîte de dialogue, contenant des informations comme l'acteur et le label.
+   * @param {Object} [options={}] Options supplémentaires pour le jet de compétence.
+   * @returns {Promise<Object|null>} Le résultat du jet de compétence ou null si la boîte de dialogue a été annulée.
    *
    * @example
    * const dialogContext = {
@@ -51,6 +51,7 @@ export class COSkillRoll extends CORoll {
 
     const rollContext = await foundry.applications.api.DialogV2.wait({
       window: { title: dialogContext.label },
+      position: { width: "auto" },
       classes: this.ROLL_CSS,
       content,
       rejectClose: false,
@@ -103,7 +104,8 @@ export class COSkillRoll extends CORoll {
     rollContext.label = dialogContext.label
     if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll - rollContext`), rollContext)
 
-    const formula = `${rollContext.dice}${rollContext.skillValue}${rollContext.bonus}${rollContext.malus}+${rollContext.totalSkillBonuses}`
+    // TODO : Gérer les cas avec des chiffres ou des @
+    const formula = `${rollContext.dice}+${parseInt(rollContext.skillValue)}+${parseInt(rollContext.bonus)}+${parseInt(rollContext.malus)}+${parseInt(rollContext.totalSkillBonuses)}`
     const roll = new this(formula, dialogContext.actor.getRollData())
     await roll.evaluate()
 
@@ -174,13 +176,14 @@ export class COAttackRoll extends CORoll {
 
   static CHAT_TEMPLATE = "systems/co/templates/chat/attack-roll-card.hbs"
 
-  static ROLL_CSS = ["co", "dialog", "attack-roll"]
+  static ROLL_CSS = ["co", "attack-roll"]
 
   static async prompt(dialogContext, options = {}) {
     const content = await renderTemplate(this.DIALOG_TEMPLATE, dialogContext)
 
     const rollContext = await foundry.applications.api.DialogV2.wait({
       window: { title: dialogContext.label },
+      position: { width: "auto" },
       classes: this.ROLL_CSS,
       content,
       rejectClose: false,

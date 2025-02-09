@@ -1,8 +1,7 @@
 # IDE
 .idea/
-.nova/
 .vs/
-styles/*.css
+styles/**/*.css
 
 # Node Modules
 node_modules/
@@ -10,7 +9,6 @@ node_modules/
 # OS Specific
 .DS_Store
 foundry.js
-/editor.html
 
 # Foundry specific
 *.lock

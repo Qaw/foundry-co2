@@ -583,6 +583,9 @@ strong,
   text-shadow: 0 0 10px red;
   cursor: pointer;
 }
+.application.dialog.co.skill-roll .dialog-content {
+  gap: 0;
+}
 .co {
   /* Form Groups */
   /*

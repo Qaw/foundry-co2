@@ -40,6 +40,10 @@
       "TooMuchSpentXP": "Le montant d'XP dépensé est supérieur au maximum autorisé.",
       "XPLeftToSpend": "Il vous reste des points de capacités à dépenser."
     },
+    "tooltip": {
+      "formulaAttack": "Formule d'attaque (sans le dé)",
+      "formulaDamage": "Formule des dommages (avec le dé)"
+    },
     "label": {
       "long": {
         "label": "Label",
@@ -109,8 +113,8 @@
         "martialTraining": "Formation martiale",
         "martialTrainings": "Formations martiales",
         "current": "Actuel",
-        "formulaAttack": "Formule d'attaque",
-        "formulaDamage": "Formule des dommages",
+        "formulaAttack": "Attaque",
+        "formulaDamage": "Dommages",
         "melee": "Attaque de contact",
         "ranged": "Attaque à distance",
         "magic": "Attaque magique",

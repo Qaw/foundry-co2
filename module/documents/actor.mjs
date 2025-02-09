@@ -731,11 +731,12 @@ export default class COActor extends Actor {
     skillId,
     { dice = "1d20", bonus = 0, malus = 0, critical = 20, superior = false, weakened = false, difficulty = 10, showDifficulty = true, withDialog = true } = {},
   ) {
+    // TODO Gestion de showDifficulty selon le settings du système
     const dialogContext = {
       dice: dice,
       actor: this,
       skillId: skillId,
-      label: `${game.i18n.localize("CO.dialogs.skillCheck")}  ${game.i18n.localize(`CO.abilities.long.${skillId}`)}`,
+      label: `${game.i18n.localize("CO.dialogs.skillCheck")} - ${game.i18n.localize(`CO.abilities.long.${skillId}`)}`,
       bonus: bonus,
       malus: malus,
       skillValue: foundry.utils.getProperty(this, `system.abilities.${skillId}`).value,
@@ -744,7 +745,7 @@ export default class COActor extends Actor {
       weakened: weakened,
       difficulty: difficulty,
       showDifficulty: showDifficulty,
-      skillBonuses: this.getSkillBonuses(skillId),
+      skillBonuses: this.getSkillBonuses(skillId), // Récupère un tableau d'objets avec {name, description, value}
       totalSkillBonuses: 0,
     }
 
