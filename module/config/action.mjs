@@ -58,9 +58,13 @@ export const CONDITION_OBJECTS = Object.freeze({
     id: "hp",
     label: "CO.condition.objects.hp",
   },
-  armorType: {
-    id: "armorType",
-    label: "CO.condition.objects.armorType",
+  equippedArmor: {
+    id: "equippedArmor",
+    label: "CO.condition.objects.equippedArmor",
+  },
+  equipedWeapon: {
+    id: "equipedWeapon",
+    label: "CO.condition.objects.equipedWeapon",
   },
 })
 
@@ -112,9 +116,9 @@ export const CONDITION_TARGETS = Object.freeze({
     id: "isFailure",
     label: "CO.condition.targets.isFailure",
   },
-  isCritique: {
+  isCritical: {
     id: "isAbilityType",
-    label: "CO.condition.targets.isCritique",
+    label: "CO.condition.targets.isCritical",
   },
   formula: {
     id: "formula",
@@ -132,9 +136,9 @@ export const CONDITION_TARGETS = Object.freeze({
     id: "isAbilityType",
     label: "CO.condition.targets.magic",
   },
-  noarmor: {
+  noArmor: {
     id: "isAbilityType",
-    label: "CO.condition.targets.noarmor",
+    label: "CO.condition.targets.noArmor",
   },
 })
 
@@ -162,5 +166,20 @@ export const RESOLVER_TYPE = Object.freeze({
   debuff: {
     id: "debuff",
     label: "CO.action.types.debuff",
+  },
+})
+
+export const RESOLVER_TARGET = Object.freeze({
+  self: {
+    id: "self",
+    label: "CO.resolver.target.self",
+  },
+  character: {
+    id: "character",
+    label: "CO.resolver.target.character",
+  },
+  encounter: {
+    id: "encounter",
+    label: "CO.resolver.target.encounter",
   },
 })

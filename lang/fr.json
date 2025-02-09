@@ -272,8 +272,9 @@
       "unbuy": "Ne pas apprendre",
       "recovery": "Dé de récupération",
       "pvLevel": "Points de vigueur par niveau",
-      "crittooltip": "Laisser vide pour utiliser le critique calculé du joueur",
-      "formuletooltip": "Vous pouvez utiliser : @for, @agi, @con, @int, @per, @vol, @cha, @atc/@mel (attaque melee), @atd/@ran (attaque distante),@atm/@mag (attaque magique), @def, @ini, @niv/@lvl"
+      "noTarget": "Vous n'avez ciblé personne",
+      "critTooltip": "Laisser vide pour utiliser le critique calculé du joueur",
+      "formulaTooltip": "Vous pouvez utiliser : @for, @agi, @con, @int, @per, @vol, @cha, @atc/@mel (attaque melee), @atd/@ran (attaque distante),@atm/@mag (attaque magique), @def, @ini, @niv/@lvl"
     },
     "properties": {
       "attack": "Attaque",
@@ -320,7 +321,8 @@
         "magic": "Attaque magique",
         "init": "Initiative",
         "def": "Défense",
-        "crit": "Critique"
+        "crit": "Critique",
+        "dr": "Réduction de dégats"
       },
       "short": {
         "melee": "ATC",
@@ -415,12 +417,13 @@
         "testtype": "Type de test",
         "nc": "Niveau de Créature",
         "hp": "Points de vie",
-        "armorType": "Port d'armure"
+        "equippedArmor": "Port d'armure",
+        "equipedWeapon": "Arme équipée"
       },
       "predicates": {
         "isEquipped": "est équipé par...",
         "isLearned": "a été appris par...",
-        "isEqualTo": "est égale à...",
+        "isEqualTo": "est égal à...",
         "isLowerOrEqualThan": "est inférieur ou égale à...",
         "isHigherOrEqualThan": "est supérieur ou égale à...",
         "isAbilityType": "est de type"
@@ -430,13 +433,13 @@
         "target": "Cible",
         "_self": "Soi-Même",
         "isSuccess": "est un succès",
-        "isFailure": "est un echec",
-        "isCritique": "est une réussite critique",
+        "isFailure": "est un échec",
+        "isCritical": "est une réussite critique",
         "formula": "une formule",
-        "melee": "attaque de mélée",
+        "melee": "attaque de mêlée",
         "ranged": "attaque à distance",
         "magic": "attaque magique",
-        "noarmor": "pas d'armure"
+        "noArmor": "pas d'armure"
       }
     },
     "modifier": {
@@ -479,7 +482,13 @@
         "ranged": "À distance",
         "magic": "Magique",
         "heal": "Soin"
-      }
+      },
+      "target": {
+        "self": "Soi-même",
+        "character": "Personnage",
+        "encounter": "Adversaire"
+      },
+      "isMultiTarget": "Multicibles"
     },
     "itemTypes": {
       "item": "Objet",

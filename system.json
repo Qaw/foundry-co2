@@ -54,6 +54,7 @@
     "units": "m"
   },
   "primaryTokenAttribute": "attributes.hp",
+  "socket": true,
   "initiative": "1d20",
   "url": "",
   "manifest": "",

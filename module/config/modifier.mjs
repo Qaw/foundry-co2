@@ -119,6 +119,11 @@ export const MODIFIERS_TARGET = Object.freeze({
     label: "CO.label.long.damage",
     soustype: "combat",
   },
+  dr: {
+    id: "dr",
+    label: "CO.combat.long.dr",
+    soustype: "combat",
+  },
   hp: {
     id: "hp",
     label: "CO.label.long.hp",

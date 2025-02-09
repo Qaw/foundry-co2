@@ -2,7 +2,7 @@ import { SYSTEM } from "../../config/system.mjs"
 /**
  * La class Condition représente un contrôle de condition qui peux être évalué pour un élément donné.
  * subject l'element à vérifier.
-   predicate ce que l'on veux utiliser pour évaluer la condition.
+   predicate ce que l'on veut utiliser pour évaluer la condition.
    object l'objet ou la cible à atteindre de la condition, ou '_self' pour se référer à l'élément évalué.
  */
 export class Condition extends foundry.abstract.DataModel {
@@ -16,7 +16,7 @@ export class Condition extends foundry.abstract.DataModel {
   }
 
   /**
-   * Renvoi un objet contenant les méthodes de conditions disponibles.
+   * Renvoie un objet contenant les méthodes de conditions disponibles.
    * @returns {object} An object containing condition methods.
    */
   get conditions() {
@@ -28,13 +28,14 @@ export class Condition extends foundry.abstract.DataModel {
       isEqualTo: this.isEqualTo,
       isSuccess: this.isSuccess,
       isFailure: this.isFailure,
-      isCritique: this.isCritique,
+      isCritical: this.isCritical,
       isAbilityType: this.isAbilityType,
       formula: this.formula,
       melee: this.melee,
       ranged: this.ranged,
       magical: this.magical,
-      noarmor: this.noarmor,
+      armor: this.armor,
+      weapon: this.weapon,
     }
   }
 
@@ -80,57 +81,62 @@ export class Condition extends foundry.abstract.DataModel {
    * @returns {boolean} To be implemented.
    */
   isTagged(condition, object, item) {
-    // Implement the isTagged condition
+    //TODO Définir la condition
     return false
   }
 
   isEqualTo(condition, object, item) {
-    //to do : à faire
+    //TODO Définir la condition
     return false
   }
 
   isSuccess(condition, object, item) {
-    //to do : à faire
+    //TODO Définir la condition
     return false
   }
 
   isFailure(condition, object, item) {
-    //to do : à faire
+    //TODO Définir la condition
     return false
   }
 
-  isCritique(condition, object, item) {
-    //to do : à faire
+  isCritical(condition, object, item) {
+    //TODO Définir la condition
     return false
   }
 
   isAbilityType(condition, object, item) {
-    //to do : à faire
+    //TODO Définir la condition
     return false
   }
 
   formula(condition, object, item) {
-    //to do : à faire
+    //TODO Définir la condition
     return false
   }
 
   melee(condition, object, item) {
-    //to do : à faire
+    //TODO Définir la condition
     return false
   }
 
   ranged(condition, object, item) {
-    //to do : à faire
+    //TODO Définir la condition
     return false
   }
 
   magical(condition, object, item) {
-    //to do : à faire
+    //TODO Définir la condition
     return false
   }
 
-  noarmor(condition, object, item) {
-    //to do : à faire
+  armor(condition, object, item) {
+    //TODO Définir la condition
+    return false
+  }
+
+  weapon(condition, object, item) {
+    //TODO Définir la condition
     return false
   }
 
@@ -141,9 +147,9 @@ export class Condition extends foundry.abstract.DataModel {
    * @throws {Error} If the specified predicate is not a valid condition method.
    */
   async evaluate(item) {
-    const obj = await this.getObject(item)
+    const object = await this.getObject(item)
     this.validatePredicate()
-    return this.conditions[this.predicate](this, obj, item)
+    return this.conditions[this.predicate](this, object, item)
   }
 
   /**

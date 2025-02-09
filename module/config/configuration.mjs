@@ -16,6 +16,6 @@ export default class DefaultConfiguration {
   }
 
   static baseCritique() {
-    return game.system.CONST.BASE_CRITIQUE
+    return game.system.CONST.BASE_CRITICAL
   }
 }

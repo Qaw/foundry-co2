@@ -78,6 +78,11 @@ export const COMBAT = {
     label: "CO.combat.long.crit",
     ability: "",
   },
+  dr: {
+    id: "dr",
+    label: "CO.ui.dr",
+    ability: "",
+  },
 }
 
 export const ATTACK_TYPE = {
@@ -102,4 +107,4 @@ export const BASE_FORTUNE = 2
 export const BASE_RECOVERY = 2
 export const BASE_INITIATIVE = 10
 export const BASE_DEFENSE = 10
-export const BASE_CRITIQUE = 20
+export const BASE_CRITICAL = 20
