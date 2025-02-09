@@ -69,7 +69,7 @@ Hooks.once("init", async function () {
   Items.registerSheet(SYSTEM.ID, applications.PathSheet, { types: ["path"], makeDefault: true, label: "CO.sheet.path" })
   Items.registerSheet(SYSTEM.ID, applications.ProfileSheet, { types: ["profile"], makeDefault: true, label: "CO.sheet.profile" })
 
-  // Activate le gestionnaire de socket
+  // Activate socket handler
   game.socket.on(`system.${SYSTEM.id}`, handleSocketEvent)
 
   // Preload Handlebars Templates

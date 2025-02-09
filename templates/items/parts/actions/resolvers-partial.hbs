@@ -23,9 +23,9 @@
             {{#if (or (eq r.type @root.choiceResolverTypes.melee.id) (eq r.type @root.choiceResolverTypes.ranged.id) (eq r.type @root.choiceResolverTypes.magical.id)) }}
             <!-- Type attaque -->
                 <div class="flexrow strong">
-                    <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.formuletooltip"}}">{{localize "CO.ui.skillformula"}}</div>
-                    <!--<div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.crittooltip"}}">{{localize "CO.ui.crit"}}</div>-->
-                    <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.formuletooltip"}}">{{localize "CO.ui.difficulty"}}</div>
+                    <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.formulaTooltip"}}">{{localize "CO.ui.skillformula"}}</div>
+                    <!--<div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.critTooltip"}}">{{localize "CO.ui.crit"}}</div>-->
+                    <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.formulaTooltip"}}">{{localize "CO.ui.difficulty"}}</div>
                     <div class="form-fields flex1 center" >{{localize "CO.ui.dmg"}}</div>
                 </div>      
                 <div class="flexrow"> 
@@ -36,13 +36,13 @@
             {{/if}}
             {{#if (eq r.type @root.choiceResolverTypes.heal.id)}}
                 <div class="flexrow strong">
-                    <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.formuletooltip"}}">{{localize "CO.ui.healformula"}}</div>
+                    <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.formulaTooltip"}}">{{localize "CO.ui.healformula"}}</div>
                 </div>
                 <div class="flexrow"> 
                     <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.dmg.formula.0.part" type="text" value="{{r.dmg.formula.0.part}}" data-dtype="String" /></div>
                     <div class="form-fields flex1">                    
                         <select name="system.actions.{{../idx}}.resolvers.{{id}}.target" data-type="String" style="width:100%">
-                            {{selectOptions @root.choiceResolverTargets selected=c.target localize=true}}
+                            {{selectOptions @root.choiceResolverTargets selected=r.target localize=true}}
                         </select>
                     </div>
                     <div class="form-fields flex1">    

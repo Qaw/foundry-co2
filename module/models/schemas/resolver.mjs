@@ -7,9 +7,10 @@ import COActor from "../../documents/actor.mjs"
  * @class
  * @param {string} type Le type d'action.
  * @param {number} skill Le niveau de skill requis pour l'action ? ou la formule de skill a utiliser (attaque)
- * @param {number} dmg La valeur de dégat/soin de l'action.
- * @param {string} target Le type de cible de l'action : self, player, encounter
- * @param {boolean} isMultiTarget Est ce pour une cible unique (false) ou multiple (true)
+ *  skill.difficulty skill.formula (array)
+ * @param {number} dmg La valeur de dégâts ou de soin de l'action.
+ * @param {string} target Le type de cible de l'action : self, character, encounter
+ * @param {boolean} isMultiTarget Est-ce pour une cible unique (false) ou multiple (true) ?
  */
 export class Resolver extends foundry.abstract.DataModel {
   static defineSchema() {
@@ -124,57 +125,60 @@ export class Resolver extends foundry.abstract.DataModel {
     let healFormulaEvaluated = healFormula.match("[0-9]{0,}[d|D][0-9]{1,}") ? Utils.evaluateWithDice(actor, healFormula, item.uuid) : Utils.evaluate(actor, healFormula, item.uuid)
     let r = new Roll(healFormulaEvaluated)
     await r.roll()
-    const result = r.terms[0].results.find((r) => r.active).result
-    if (parseInt(result)) {
-      switch (cible) {
-        case "self": //L'acteur se soigne lui meme
-          actor.system.attributes.hp.value += parseInt(result)
-          if (actor.system.attributes.hp.value > actor.system.attributes.hp.max) actor.system.attributes.hp.value = actor.system.attributes.hp.max
-          actor.update({ "system.attributes.hp.value": actor.system.attributes.hp.value })
-          break
-        case "player": //On envoi un message à la cible pour lui proposer de se soigner via un message chat
-          if (game.user.targets.size === 0) {
-            throw new Error(game.i18n.localize("co.ui.notarget"))
-          }
-          if (this.isMultiTarget) {
-            const targetedTokens = Array.from(game.user.targets)
-            targetedTokens.forEach((token) => {
-              game.socket.emit(`system.${SYSTEM.id}`, {
-                action: "heal",
-                data: {
-                  toUserId: targetedTokens.actor.id,
-                  healAmount: parseInt(result),
-                  fromUserId: actor.id,
-                  resolver: this,
-                  targets: [targetedTokens.actor.id],
-                },
-              })
-            })
-          } else {
-            const targetedToken = game.user.targets[0]
+
+    const result = r.total
+    if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver - heal - result`), r, result)
+
+    switch (cible) {
+      // L'acteur se soigne lui même
+      case "self":
+        let newValue = Math.min(actor.system.attributes.hp.value + result, actor.system.attributes.hp.max)
+        actor.update({ "system.attributes.hp.value": newValue })
+        break
+      // On envoie un message à la cible pour lui proposer de se soigner via un message chat
+      case "character":
+        if (game.user.targets.size === 0) {
+          throw new Error(game.i18n.localize("co.ui.noTarget"))
+        }
+        if (this.isMultiTarget) {
+          const targetedTokens = Array.from(game.user.targets)
+          targetedTokens.forEach((token) => {
             game.socket.emit(`system.${SYSTEM.id}`, {
               action: "heal",
               data: {
-                toUserId: targetedToken.actor.id,
-                healAmount: parseInt(result),
+                toUserId: targetedTokens.actor.id,
+                healAmount: result,
                 fromUserId: actor.id,
                 resolver: this,
-                targets: [targetedToken.actor.id],
+                targets: [targetedTokens.actor.id],
               },
             })
-          }
-          break
-        case "encounter": //on envoi au maitre de jeu un message pour appliquer les effets sur des creatures
-          if (game.user.targets.size === 0) {
-            throw new Error(game.i18n.localize("co.ui.notarget"))
-          }
-          const GM = game.users.find((user) => user.isGM)
-          if (GM) {
-            //creer un message chat pour proposer d'appliquer les soins aux creatures
-            console.log("devrait envoyer un message au mj pour appliquer les effets")
-          }
-          break
-      }
+          })
+        } else {
+          const targetedToken = game.user.targets[0]
+          game.socket.emit(`system.${SYSTEM.id}`, {
+            action: "heal",
+            data: {
+              toUserId: targetedToken.actor.id,
+              healAmount: result,
+              fromUserId: actor.id,
+              resolver: this,
+              targets: [targetedToken.actor.id],
+            },
+          })
+        }
+        break
+      // On envoie un message au maitre de jeu pour appliquer les effets sur des créatures
+      case "encounter":
+        if (game.user.targets.size === 0) {
+          throw new Error(game.i18n.localize("co.ui.noTarget"))
+        }
+        const GM = game.users.find((user) => user.isGM)
+        if (GM) {
+          // TODO Créer un message chat pour proposer d'appliquer les soins aux creatures
+          console.log("devrait envoyer un message au mj pour appliquer les effets")
+        }
+        break
     }
   }
 }

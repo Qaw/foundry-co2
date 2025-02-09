@@ -210,6 +210,7 @@
       </div>
     {{/if}}
   </div>
+
   <!-- DR -->
   <div class="sidebar-section dr-section">
     <div class="sidebar-section-header">
@@ -241,10 +242,10 @@
         <div class="labelled-field">
           <label>{{localize "CO.label.long.bonus"}}</label>
           <input
-            class="def-bonus"
+            class="dr-bonus"
             type="text"
-            name="system.combat.def.bonuses.sheet"
-            value="{{numberFormat combat.def.bonuses.sheet decimals=0 sign=true}}"
+            name="system.combat.dr.bonuses.sheet"
+            value="{{numberFormat combat.dr.bonuses.sheet decimals=0 sign=true}}"
             data-dtype="Number"
             placeholder="0"
           />
@@ -252,8 +253,8 @@
       </div>
     {{/if}}
   </div>
-  <!-- DEF -->
 
+  <!-- DEF -->
   <div class="sidebar-section armor-section">
     <div class="sidebar-section-header">
       <div class="sidebar-label armor-label">

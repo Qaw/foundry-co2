@@ -74,8 +74,6 @@ export default class CharacterData extends ActorData {
     // Pour chaque niveau supplémentaire : + PV de la famille
     const pvFromFamily = this.profile ? SYSTEM.FAMILIES[this.profile.system.family].hp : 0
     this.attributes.hp.base = 2 * pvFromFamily + (this.attributes.level - 1) * pvFromFamily
-
-    this.combat.crit.base = SYSTEM.BASE_CRITIQUE
   }
 
   get fpFromFamily() {
@@ -388,37 +386,37 @@ export default class CharacterData extends ActorData {
 
   /**
    * Calcule la valeur du critique en ajoutant les bonus
+   * Un bonus de 1 au critique donne une valeur de 19 au lieu de 20
+   * La valeur minimum est 16
    */
   _prepareCrit() {
-    this.combat.crit.min = 16
-    if (this.combatModifiers) {
-      let mod = this.combatModifiers.find((m) => m.target === SYSTEM.COMBAT.crit.id)
-      if (mod) {
-        this.combat.crit.value = Math.max(16, this.combat.crit.base + parseInt(mod.value))
-      } else {
-        this.combat.crit.value = this.combat.crit.base
-      }
+    this.combat.crit.base = SYSTEM.BASE_CRITICAL
+
+    // Somme des bonus des modifiers
+    const critModifiers = this.computeTotalModifiersByTarget(this.combatModifiers, SYSTEM.COMBAT.crit.id)
+
+    if (critModifiers.total > 0) {
+      this.combat.crit.value = Math.max(16, SYSTEM.BASE_CRITICAL - critModifiers.total)
+      this.combat.crit.tooltipValue = Utils.getTooltip("Bonus", critModifiers.total)
     } else {
       this.combat.crit.value = this.combat.crit.base
     }
   }
 
   /**
-   * Calcule la valeur de la rÃ©sistance au dÃ©gat en ajoutant les bonus
+   * Calcule la valeur de la résistance aux dégâts en ajoutant les bonus
    */
   _prepareDR() {
-    this.combat.dr.value = 0
-    if (this.combatModifiers) {
-      console.log(this.combatModifiers)
-      let mod = this.combatModifiers.find((m) => m.target === SYSTEM.COMBAT.dr.id)
-      if (mod) {
-        this.combat.crit.value = this.combat.crit.base + parseInt(mod.value)
-      } else {
-        this.combat.crit.value = this.combat.crit.base
-      }
-    } else {
-      this.combat.crit.value = this.combat.crit.base
-    }
+    this.combat.dr.base = 0
+    this.combat.dr.tooltipBase = Utils.getTooltip("Base", 0)
+
+    // Somme des bonus des modifiers
+    const drModifiers = this.computeTotalModifiersByTarget(this.combatModifiers, SYSTEM.COMBAT.dr.id)
+
+    // Somme du bonus de la feuille et du bonus des actives effects
+    const bonuses = Object.values(this.combat.dr.bonuses).reduce((prev, curr) => prev + curr)
+    this.combat.dr.value = this.combat.dr.base + bonuses + drModifiers.total
+    this.combat.dr.tooltipValue = this.combat.dr.tooltipBase.concat(drModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
 
   /**

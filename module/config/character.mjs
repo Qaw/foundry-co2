@@ -107,4 +107,4 @@ export const BASE_FORTUNE = 2
 export const BASE_RECOVERY = 2
 export const BASE_INITIATIVE = 10
 export const BASE_DEFENSE = 10
-export const BASE_CRITIQUE = 20
+export const BASE_CRITICAL = 20

@@ -272,9 +272,9 @@
       "unbuy": "Ne pas apprendre",
       "recovery": "Dé de récupération",
       "pvLevel": "Points de vigueur par niveau",
-      "notarget": "Vous n'avez ciblé personne",
-      "crittooltip": "Laisser vide pour utiliser le critique calculé du joueur",
-      "formuletooltip": "Vous pouvez utiliser : @for, @agi, @con, @int, @per, @vol, @cha, @atc/@mel (attaque melee), @atd/@ran (attaque distante),@atm/@mag (attaque magique), @def, @ini, @niv/@lvl"
+      "noTarget": "Vous n'avez ciblé personne",
+      "critTooltip": "Laisser vide pour utiliser le critique calculé du joueur",
+      "formulaTooltip": "Vous pouvez utiliser : @for, @agi, @con, @int, @per, @vol, @cha, @atc/@mel (attaque melee), @atd/@ran (attaque distante),@atm/@mag (attaque magique), @def, @ini, @niv/@lvl"
     },
     "properties": {
       "attack": "Attaque",
@@ -417,13 +417,13 @@
         "testtype": "Type de test",
         "nc": "Niveau de Créature",
         "hp": "Points de vie",
-        "equippedarmor": "Port d'armure",
-        "equipedweapon": "Arme équipée"
+        "equippedArmor": "Port d'armure",
+        "equipedWeapon": "Arme équipée"
       },
       "predicates": {
         "isEquipped": "est équipé par...",
         "isLearned": "a été appris par...",
-        "isEqualTo": "est égale à...",
+        "isEqualTo": "est égal à...",
         "isLowerOrEqualThan": "est inférieur ou égale à...",
         "isHigherOrEqualThan": "est supérieur ou égale à...",
         "isAbilityType": "est de type"
@@ -433,13 +433,13 @@
         "target": "Cible",
         "_self": "Soi-Même",
         "isSuccess": "est un succès",
-        "isFailure": "est un echec",
-        "isCritique": "est une réussite critique",
+        "isFailure": "est un échec",
+        "isCritical": "est une réussite critique",
         "formula": "une formule",
-        "melee": "attaque de mélée",
+        "melee": "attaque de mêlée",
         "ranged": "attaque à distance",
         "magic": "attaque magique",
-        "noarmor": "pas d'armure"
+        "noArmor": "pas d'armure"
       }
     },
     "modifier": {
@@ -485,8 +485,8 @@
       },
       "target": {
         "self": "Soi-même",
-        "player": "Joueur",
-        "encounter": "PNJ"
+        "character": "Personnage",
+        "encounter": "Adversaire"
       },
       "isMultiTarget": "Multicibles"
     },
