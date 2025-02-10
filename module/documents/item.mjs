@@ -202,7 +202,7 @@ export default class COItem extends Item {
   }
 
   /**
-   * Add a path to an item of type Path or Feature
+   * Add a path to an item of type Profile or Feature
    * @param {*} uuid
    */
   addPath(uuid) {
