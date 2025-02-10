@@ -216,15 +216,14 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     const actor = this.actor
 
     /**
-     * A hook event that fires when some useful data is dropped onto an ItemSheet.
-     * @function dropActorSheetData
+     * A hook event that fires when some useful data is dropped onto an CharacterSheet.
+     * @function dropCharacterSheetData
      * @memberof hookEvents
-     * @param {Item} item      The Item
-     * @param {ItemSheet} sheet The ItemSheet application
+     * @param {Actor} actor      The Actor
+     * @param {ActorSheet} sheet The ActorSheet application
      * @param {object} data      The data that has been dropped onto the sheet
      */
-    const allowed = Hooks.call("dropActorSheetData", actor, this, data)
-    if (allowed === false) return
+    if (Hooks.call("co.dropCharacterSheetData", actor, this, data) === false) return
 
     // Handle different data types
     switch (data.type) {

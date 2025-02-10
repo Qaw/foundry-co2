@@ -33,30 +33,20 @@ export default class CoBaseItemSheet extends ItemSheet {
 
     /**
      * A hook event that fires when some useful data is dropped onto an ItemSheet.
-     * @function dropActorSheetData
+     * @function dropItemSheetData
      * @memberof hookEvents
      * @param {Item} item      The Item
      * @param {ItemSheet} sheet The ItemSheet application
      * @param {object} data      The data that has been dropped onto the sheet
      */
-    const allowed = Hooks.call("dropItemSheetData", item, this, data)
-    if (allowed === false) return
+    if (Hooks.call("co.dropItemSheetData", item, this, data) === false) return
 
-    // Handle different data types
-    switch (data.type) {
-      case "ActiveEffect":
-        return // This._onDropActiveEffect(event, data);
-      case "Actor":
-        return // This._onDropActor(event, data);
-      case "Item":
-        return this._onDropItem(event, data)
-      case "Folder":
-      // This._onDropFolder(event, data);
-    }
+    if (data.type !== "Item") return
+    return this._onDropItem(event, data)
   }
 
   /**
-   * Handle the drop of an Item onto a character sheet.
+   * Handle the drop of an Item onto a item sheet.
    * @param {DragEvent} event            The concluding DragEvent which contains drop data
    * @param {object} data                The data transfer extracted from the event
    * @returns {Promise<Item[]|boolean>}  The created or updated Item instances, or false if the drop was not permitted.
@@ -66,10 +56,6 @@ export default class CoBaseItemSheet extends ItemSheet {
     event.preventDefault()
     if (!this.item.isOwner) return false
     const item = await Item.implementation.fromDropData(data)
-    // Const itemData = item.toObject();
-
-    // Handle item sorting within the same Actor
-    // if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, itemData);
 
     switch (item.type) {
       case SYSTEM.ITEM_TYPE.equipment.id:
@@ -88,31 +74,36 @@ export default class CoBaseItemSheet extends ItemSheet {
   }
 
   _onDropEquipmentItem(item) {
-    let itemData = item.object
-    /* ItemData = itemData instanceof Array ? itemData : [itemData];
-            return this.item.createEmbeddedDocuments("Item", itemData); */
     return false
   }
 
   _onDropFeatureItem(item) {
-    let itemData = item.object
-    /* ItemData = itemData instanceof Array ? itemData : [itemData];
-            return this.item.createEmbeddedDocuments("Item", itemData); */
     return false
   }
 
   _onDropProfileItem(item) {
-    let itemData = item.object
-    /* ItemData = itemData instanceof Array ? itemData : [itemData];
-            return this.item.createEmbeddedDocuments("Item", itemData); */
     return false
   }
 
+  /**
+   * Handles the drop event for a path item.
+   *
+   * @param {Object} item The item being dropped.
+   * @param {string} item.uuid The unique identifier of the item.
+   * @returns {boolean} Returns true if the item was successfully added, otherwise false.
+   */
   _onDropPathItem(item) {
     if (item.uuid) return this.item.addPath(item.uuid)
     return false
   }
 
+  /**
+   * Handles the drop event for a capacity item.
+   *
+   * @param {Object} item The item being dropped.
+   * @param {string} item.uuid The unique identifier of the item.
+   * @returns {boolean} Returns true if the item was successfully added, otherwise false.
+   */
   _onDropCapacityItem(item) {
     if (item.uuid) return this.item.addCapacity(item.uuid)
     return false
