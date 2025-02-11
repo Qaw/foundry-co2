@@ -555,10 +555,12 @@ export default class COActor extends Actor {
   }
 
   /**
-   * Add a path as an embedded item
+   * Adds a new path and its associated capacities to the system.
    * It also create the capacities linked to the path
-   * @param {COItem} path
-   * Retourne {string} uuid of the created path
+   * @param {COItem} path The path object to be added.
+   * @returns {Promise<string>} A promise that resolves to the UUID of the newly created path.
+   *
+   * @throws {Error} Throws an error if the path creation or update fails.
    */
   async addPath(path) {
     let itemData = path.toObject()
@@ -591,11 +593,13 @@ export default class COActor extends Actor {
    * Add a capacity as an embedded item
    * @param {COItem} capacity
    * @param {UUID} pathUuid uuid of the Path if the capacity is linked to a path
-   * Retourne {number} uuid of the created capacity
+   * @returns {Promise<string>} A promise that resolves to the UUID of the newly created capacity.
    */
   async addCapacity(capacity, pathUuid) {
     let capacityData = capacity.toObject()
     if (pathUuid !== null) capacityData.system.path = pathUuid
+    // Sinon le path n'est plus null mais vaut ""
+    else capacityData.system.path = null
 
     // Learned the capacity if the capacity is not linked to a path
     if (pathUuid === null) capacityData.system.learned = true

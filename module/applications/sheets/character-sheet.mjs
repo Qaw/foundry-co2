@@ -225,14 +225,8 @@ export default class COCharacterSheet extends CoBaseActorSheet {
      */
     if (Hooks.call("co.dropCharacterSheetData", actor, this, data) === false) return
 
-    // Handle different data types
-    switch (data.type) {
-      case "Actor":
-        return
-      case "Item":
-        return this._onDropItem(event, data)
-      case "Folder":
-    }
+    if (data.type !== "Item") return
+    return this._onDropItem(event, data)
   }
 
   /**
@@ -246,9 +240,6 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     event.preventDefault()
     if (!this.actor.isOwner) return false
     const item = await Item.implementation.fromDropData(data)
-
-    // Handle item sorting within the same Actor
-    // if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, itemData);
 
     switch (item.type) {
       case SYSTEM.ITEM_TYPE.equipment.id:
