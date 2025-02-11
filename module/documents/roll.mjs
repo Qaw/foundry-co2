@@ -179,6 +179,8 @@ export class COAttackRoll extends CORoll {
   static ROLL_CSS = ["co", "attack-roll"]
 
   static async prompt(dialogContext, options = {}) {
+    // Le résultat est un jet d'attaque ou un jet d'attaque et un jet de dégâts
+    let rolls = []
     const content = await renderTemplate(this.DIALOG_TEMPLATE, dialogContext)
 
     const rollContext = await foundry.applications.api.DialogV2.wait({
@@ -236,11 +238,11 @@ export class COAttackRoll extends CORoll {
     rollContext.label = dialogContext.label
     if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll - rollContext`), rollContext)
 
-    const formula = dialogContext.type === "attack" ? `${rollContext.dice}+${rollContext.formulaAttack}` : `${rollContext.formulaDamage}`
-    const roll = new this(formula, dialogContext.actor.getRollData())
-    await roll.evaluate()
-
     if (dialogContext.type === "attack") {
+      const formula = `${rollContext.dice}+${rollContext.formulaAttack}`
+      const roll = new this(formula, dialogContext.actor.getRollData())
+      await roll.evaluate()
+
       // Récupération du résultat du jet (pour gérer les jets avec avantages/désavantages)
       const result = roll.terms[0].results.find((r) => r.active).result
       const isCritical = result >= rollContext.critrange || result === 20
@@ -253,6 +255,7 @@ export class COAttackRoll extends CORoll {
       const toolTip = new Handlebars.SafeString(await roll.getTooltip())
 
       roll.options = {
+        type: dialogContext.type,
         label: dialogContext.label,
         actorId: dialogContext.actor.id,
         isSuccess,
@@ -263,18 +266,42 @@ export class COAttackRoll extends CORoll {
         toolTip,
         ...options,
       }
+
+      rolls.push(roll)
+
+      // Jet de dégâts si l'option Jet combiné est activée et que l'attaque est une réussite
+      if (dialogContext.useComboRolls && isSuccess) {
+        const damageFormula = `${rollContext.formulaDamage}`
+        const damageRoll = new this(damageFormula, dialogContext.actor.getRollData())
+        await damageRoll.evaluate()
+        const damageRollToolTip = new Handlebars.SafeString(await damageRoll.getTooltip())
+        damageRoll.options = {
+          type: dialogContext.type,
+          label: dialogContext.label,
+          actorId: dialogContext.actor.id,
+          damageRollToolTip,
+          ...options,
+        }
+        rolls.push(damageRoll)
+      }
     } else if (dialogContext.type === "damage") {
+      const formula = `${rollContext.formulaDamage}`
+      const roll = new this(formula, dialogContext.actor.getRollData())
+      await roll.evaluate()
+
       const toolTip = new Handlebars.SafeString(await roll.getTooltip())
       roll.options = {
+        type: dialogContext.type,
         label: dialogContext.label,
         actorId: dialogContext.actor.id,
         toolTip,
         ...options,
       }
+      rolls.push(roll)
     }
 
-    if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll - roll`), roll)
-    return roll
+    if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll - rolls`), rolls)
+    return rolls
   }
 
   async _getChatCardData(flavor, isPrivate) {

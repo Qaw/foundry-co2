@@ -73,16 +73,13 @@ export class Resolver extends foundry.abstract.DataModel {
     } else {
       difficulty = Utils.evaluate(actor, this.skill.difficulty, item.uuid, true)
     }
-    // const skillFormulaToEvaluate = !skillFormula.match("[0-9]{0,}[d|D][0-9]{1,}")
-    // TODO let skillFormulaEvaluated = skillFormulaToEvaluate ? Utils.evaluate(actor, skillFormula, item.uuid, true) : Utils.evaluateWithDice(actor, skillFormula, item.uuid)
     let skillFormulaEvaluated = Roll.replaceFormulaData(skillFormula, actor.getRollData())
 
     const damageFormula = this.dmg.formula
-    // const damageFormulaToEvaluate = !damageFormula.match("[0-9]{0,}[d|D][0-9]{1,}")
-    // let damageFormulaEvaluated = damageFormulaToEvaluate ? Utils.evaluate(actor, damageFormula, item.uuid, true) : Utils.evaluateWithDice(actor, damageFormula, item.uuid)
+
     let damageFormulaEvaluated = Roll.replaceFormulaData(damageFormula, actor.getRollData())
 
-    actor.rollAttack(item, { auto, type, actionName, skillFormula: skillFormulaEvaluated, damageFormula: damageFormulaEvaluated, critical, difficulty })
+    await actor.rollAttack(item, { auto, type, actionName, skillFormula: skillFormulaEvaluated, damageFormula: damageFormulaEvaluated, critical, difficulty })
   }
 
   /**
@@ -105,7 +102,7 @@ export class Resolver extends foundry.abstract.DataModel {
       ? Utils.evaluateWithDice(actor, damageFormula, item.uuid)
       : Utils.evaluate(actor, damageFormula, item.uuid)
 
-    actor.rollAttack(item, { auto, type, actionName, damageFormula: damageFormulaEvaluated })
+    await actor.rollAttack(item, { auto, type, actionName, damageFormula: damageFormulaEvaluated })
   }
 
   /**

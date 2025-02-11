@@ -779,6 +779,7 @@ export default class COActor extends Actor {
     const dialogContext = {
       auto: auto,
       type: type,
+      useComboRolls: game.settings.get("co", "useComboRolls"),
       actionName: actionName,
       label: `${item.name} - ${actionName}`,
       dice: dice,
@@ -790,10 +791,16 @@ export default class COActor extends Actor {
       showDifficulty: showDifficulty,
     }
 
-    let roll = await COAttackRoll.prompt(dialogContext, { withDialog: withDialog })
-    if (!roll) return null
+    let rolls = await COAttackRoll.prompt(dialogContext, { withDialog: withDialog })
+    if (!rolls) return null
 
-    await roll.toMessage()
+    // Affichage du get d'attaque
+    await rolls[0].toMessage()
+
+    // Affichage du jet de dégâts dans le cas d'un jet combiné
+    if (game.settings.get("co", "useComboRolls")) {
+      await rolls[1].toMessage()
+    }
   }
 
   // #endregion
