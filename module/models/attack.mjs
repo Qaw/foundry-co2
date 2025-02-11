@@ -40,6 +40,7 @@ export default class AttackData extends ItemData {
     })
   }
 
+  // FIXME : à revoir
   get displayValues() {
     let attack = ""
     let damage = ""

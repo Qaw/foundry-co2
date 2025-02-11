@@ -9,6 +9,7 @@
             
         </div>
         {{#each action.resolvers as |r id|}}
+            {{log 'action.resolver' r}}
             <div class="flexrow resolver" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="resolver">
                 <div class="form-fields flex2">
                     <div class="form-group">
@@ -24,14 +25,15 @@
             <!-- Type attaque -->
                 <div class="flexrow strong">
                     <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.formulaTooltip"}}">{{localize "CO.ui.skillformula"}}</div>
-                    <!--<div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.critTooltip"}}">{{localize "CO.ui.crit"}}</div>-->
+                    <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.critTooltip"}}">{{localize "CO.ui.crit"}}</div>
                     <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.formulaTooltip"}}">{{localize "CO.ui.difficulty"}}</div>
                     <div class="form-fields flex1 center" >{{localize "CO.ui.dmg"}}</div>
                 </div>      
                 <div class="flexrow"> 
-                    <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.formula.0.part" type="text" value="{{r.skill.formula.0.part}}" data-dtype="String"  /></div>                
+                    <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.formula" type="text" value="{{r.skill.formula}}" data-dtype="String"  /></div>                
+                    <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.crit" type="text" value="{{r.skill.crit}}" data-dtype="String"  /></div>
                     <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.difficulty" type="text" value="{{r.skill.difficulty}}" data-dtype="String"  /></div>
-                    <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.resolvers.{{id}}.dmg.formula.0.part" type="text" value="{{r.dmg.formula.0.part}}" data-dtype="String" /></div>
+                    <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.resolvers.{{id}}.dmg.formula" type="text" value="{{r.dmg.formula}}" data-dtype="String" /></div>
                 </div>
             {{/if}}
             {{#if (eq r.type @root.choiceResolverTypes.heal.id)}}

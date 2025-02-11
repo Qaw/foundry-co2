@@ -61,12 +61,11 @@ export class Resolver extends foundry.abstract.DataModel {
     if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver - melee`), actor, item, action, type)
 
     const auto = false
-
-    const itemName = item.name
     const actionName = action.label
 
-    const skillFormula = this.skill.formula[0].part
-    const critical = actor.system.combat.crit.value
+    const skillFormula = this.skill.formula
+    const critical = this.skill.crit === "" ? actor.system.combat.crit.value : this.skill.crit
+
     const diffToEvaluate = this.skill.difficulty.match("[0-9]{0,}[d|D][0-9]{1,}")
     let difficulty = ""
     if (diffToEvaluate) {
@@ -74,13 +73,14 @@ export class Resolver extends foundry.abstract.DataModel {
     } else {
       difficulty = Utils.evaluate(actor, this.skill.difficulty, item.uuid, true)
     }
-    const skillFormulaToEvaluate = !skillFormula.match("[0-9]{0,}[d|D][0-9]{1,}")
+    // const skillFormulaToEvaluate = !skillFormula.match("[0-9]{0,}[d|D][0-9]{1,}")
     // TODO let skillFormulaEvaluated = skillFormulaToEvaluate ? Utils.evaluate(actor, skillFormula, item.uuid, true) : Utils.evaluateWithDice(actor, skillFormula, item.uuid)
     let skillFormulaEvaluated = Roll.replaceFormulaData(skillFormula, actor.getRollData())
 
-    const damageFormula = this.dmg.formula[0].part
-    const damageFormulaToEvaluate = !damageFormula.match("[0-9]{0,}[d|D][0-9]{1,}")
-    let damageFormulaEvaluated = damageFormulaToEvaluate ? Utils.evaluate(actor, damageFormula, item.uuid, true) : Utils.evaluateWithDice(actor, damageFormula, item.uuid)
+    const damageFormula = this.dmg.formula
+    // const damageFormulaToEvaluate = !damageFormula.match("[0-9]{0,}[d|D][0-9]{1,}")
+    // let damageFormulaEvaluated = damageFormulaToEvaluate ? Utils.evaluate(actor, damageFormula, item.uuid, true) : Utils.evaluateWithDice(actor, damageFormula, item.uuid)
+    let damageFormulaEvaluated = Roll.replaceFormulaData(damageFormula, actor.getRollData())
 
     actor.rollAttack(item, { auto, type, actionName, skillFormula: skillFormulaEvaluated, damageFormula: damageFormulaEvaluated, critical, difficulty })
   }

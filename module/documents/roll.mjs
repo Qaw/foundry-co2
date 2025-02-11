@@ -240,27 +240,37 @@ export class COAttackRoll extends CORoll {
     const roll = new this(formula, dialogContext.actor.getRollData())
     await roll.evaluate()
 
-    // Récupération du résultat du jet (pour gérer les jets avec avantages/désavantages)
-    const result = roll.terms[0].results.find((r) => r.active).result
-    const isCritical = result >= rollContext.critrange || result === 20
-    const isFumble = result === 1
-    const showDifficulty = !!rollContext.difficulty
-    let isSuccess = false
-    if (rollContext.difficulty) {
-      isSuccess = roll.total >= rollContext.difficulty
-    }
-    const toolTip = new Handlebars.SafeString(await roll.getTooltip())
+    if (dialogContext.type === "attack") {
+      // Récupération du résultat du jet (pour gérer les jets avec avantages/désavantages)
+      const result = roll.terms[0].results.find((r) => r.active).result
+      const isCritical = result >= rollContext.critrange || result === 20
+      const isFumble = result === 1
+      const showDifficulty = !!rollContext.difficulty
+      let isSuccess = false
+      if (rollContext.difficulty) {
+        isSuccess = roll.total >= rollContext.difficulty
+      }
+      const toolTip = new Handlebars.SafeString(await roll.getTooltip())
 
-    roll.options = {
-      label: dialogContext.label,
-      actorId: dialogContext.actor.id,
-      isSuccess,
-      isCritical,
-      isFumble,
-      showDifficulty,
-      difficulty: rollContext.difficulty,
-      toolTip,
-      ...options,
+      roll.options = {
+        label: dialogContext.label,
+        actorId: dialogContext.actor.id,
+        isSuccess,
+        isCritical,
+        isFumble,
+        showDifficulty,
+        difficulty: rollContext.difficulty,
+        toolTip,
+        ...options,
+      }
+    } else if (dialogContext.type === "damage") {
+      const toolTip = new Handlebars.SafeString(await roll.getTooltip())
+      roll.options = {
+        label: dialogContext.label,
+        actorId: dialogContext.actor.id,
+        toolTip,
+        ...options,
+      }
     }
 
     if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll - roll`), roll)
