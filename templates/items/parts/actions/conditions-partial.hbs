@@ -5,28 +5,13 @@
 </h4>
 <div class="conditions-container foldable">
     {{#if action.conditions}}
-        <div class="flexrow strong">
-            <div class="form-fields flex1 center">{{localize "CO.ui.subject"}}</div>
-            <div class="form-fields flex1 center">{{localize "CO.ui.predicate"}}</div>           
-            <div class="form-fields flex1 center">{{localize "CO.ui.target"}}</div>
-        </div>
         {{#each action.conditions as |c id|}}
             <div class="flexrow condition" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="condition">
-                <div class="form-fields flex1">
-                    <select name="system.actions.{{../idx}}.conditions.{{id}}.subject" data-type="String" style="width:100%">
-                        {{selectOptions @root.choiceConditionObjects selected=c.subject localize=true}}
-                    </select>
-                </div>
                 <div class="form-fields flex1">
                     <select name="system.actions.{{../idx}}.conditions.{{id}}.predicate" data-type="String" style="width:100%">
                         {{selectOptions @root.choiceConditionPredicates selected=c.predicate localize=true}}
                     </select>
 
-                </div>
-                <div class="form-fields flex1">                    
-                    <select name="system.actions.{{../idx}}.conditions.{{id}}.object" data-type="String" style="width:100%">
-                        {{selectOptions @root.choiceConditionTargets selected=c.object localize=true}}
-                    </select>
                 </div>
                 <div class="form-fields flex0"><a class="condition-delete"><i class="fas fa-trash"></i></a></div>
             </div>

@@ -425,12 +425,10 @@
         "equipedWeapon": "Arme équipée"
       },
       "predicates": {
-        "isEquipped": "est équipé par...",
-        "isLearned": "a été appris par...",
-        "isEqualTo": "est égal à...",
-        "isLowerOrEqualThan": "est inférieur ou égale à...",
-        "isHigherOrEqualThan": "est supérieur ou égale à...",
-        "isAbilityType": "est de type"
+        "isEquipped": "est équipé",
+        "isLearned": "est appris",
+        "isOwned": "est possédé",
+        "isTagged": "a le tag"
       },
       "targets": {
         "item": "Objet",

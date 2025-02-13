@@ -196,7 +196,7 @@ export default class COActor extends Actor {
     let allActions = []
     for (const item of this.items) {
       if ([SYSTEM.ITEM_TYPE.equipment.id, SYSTEM.ITEM_TYPE.capacity.id].includes(item.type)) {
-        const itemActions = await item.getVisibleActions()
+        const itemActions = await item.getVisibleActions(this)
         allActions.push(...itemActions)
       }
     }
@@ -207,7 +207,7 @@ export default class COActor extends Actor {
    * Retourne Toutes les actions visibles et activables des capacités et des équipements
    */
   async getVisibleActivableActions() {
-    const actions = await this.getVisibleActions()
+    const actions = await this.getVisibleActions(this)
     return actions.filter((a) => a.properties.activable)
   }
 
@@ -215,7 +215,7 @@ export default class COActor extends Actor {
    * Retourne Toutes les actions visibles, activables et temporaires des capacités et des équipements
    */
   async getVisibleActivableTemporaireActions() {
-    const actions = await this.getVisibleActions()
+    const actions = await this.getVisibleActions(this)
     return actions.filter((a) => a.properties.activable && a.properties.temporary)
   }
 
@@ -223,7 +223,7 @@ export default class COActor extends Actor {
    * Retourne Toutes les actions visibles et non activables des capacités et des équipements
    */
   async getVisibleNonActivableActions() {
-    const actions = await this.getVisibleActions()
+    const actions = await this.getVisibleActions(this)
     return actions.filter((a) => !a.properties.activable)
   }
 
@@ -231,7 +231,7 @@ export default class COActor extends Actor {
    * Retourne Toutes les actions visibles, non activables et non temporaires des capacités et des équipements
    */
   async getVisibleNonActivableNonTemporaireActions() {
-    const actions = await this.getVisibleActions()
+    const actions = await this.getVisibleActions(this)
     return actions.filter((a) => !a.properties.activable && !a.properties.temporary)
   }
 
