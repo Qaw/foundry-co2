@@ -39,15 +39,15 @@ export default function registerHandlebarsHelpers() {
     return true
   })
   Handlebars.registerHelper("isTrainedWithWeapon", function (actor, itemId) {
-    if (actor.isTrainedWithWeapon(itemId)) return "MAITRISE"
-    return "NON MAITRISE"
+    if (actor.isTrainedWithWeapon(itemId)) return '<i class="fa-solid fa-circle-check" data-tooltip="Maitrise" data-tooltip-direction="UP"></i>'
+    return '<i class="fa-regular fa-circle-xmark" data-tooltip="Pas de maitrise" data-tooltip-direction="UP"></i>'
   })
   Handlebars.registerHelper("isTrainedWithArmor", function (actor, itemId) {
-    if (actor.isTrainedWithArmor(itemId)) return "MAITRISE"
-    return "NON MAITRISE"
+    if (actor.isTrainedWithArmor(itemId)) return '<i class="fa-solid fa-circle-check" data-tooltip="Maitrise" data-tooltip-direction="UP"></i>'
+    return '<i class="fa-regular fa-circle-xmark" data-tooltip="Pas de maitrise" data-tooltip-direction="UP"></i>'
   })
   Handlebars.registerHelper("isTrainedWithShield", function (actor, itemId) {
-    if (actor.isTrainedWithShield(itemId)) return "MAITRISE"
-    return "NON MAITRISE"
+    if (actor.isTrainedWithShield(itemId)) return '<i class="fa-solid fa-circle-check" data-tooltip="Maitrise" data-tooltip-direction="UP"></i>'
+    return '<i class="fa-regular fa-circle-xmark" data-tooltip="Pas de maitrise" data-tooltip-direction="UP"></i>'
   })
 }
