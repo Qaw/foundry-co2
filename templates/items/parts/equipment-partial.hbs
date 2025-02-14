@@ -36,21 +36,19 @@
         <div class="form-group">
             <label>{{localize "CO.label.long.martialCategory"}}</label>
             <div class="form-fields">
-
-                        {{#if isWeapon}}
-                <select name="system.martialCategory" data-type="String" style="width:100%">
-                                {{selectOptions martialTrainingsWeaponsList selected=system.martialCategory localize=true}}
-                        </select>
-                        {{else if isArmor}}
-                                           <select name="system.martialCategory" data-type="String" style="width:100%">
-                                {{selectOptions martialTrainingsArmorsList selected=system.martialCategory localize=true}}
-                         </select>
-                        {{else if isShield}}
-                                       <select name="system.martialCategory" data-type="String" style="width:100%">
-                            {{selectOptions martialTrainingsShieldsList selected=system.martialCategory localize=true}}
-                        </select>
-                        {{/if}}
-                
+                {{#if isWeapon}}
+                    <select name="system.martialCategory" data-type="String" style="width:100%">
+                        {{selectOptions martialTrainingsWeaponsList selected=system.martialCategory localize=true}}
+                    </select>
+                {{else if isArmor}}
+                    <select name="system.martialCategory" data-type="String" style="width:100%">
+                        {{selectOptions martialTrainingsArmorsList selected=system.martialCategory localize=true}}
+                    </select>
+                {{else if isShield}}
+                    <select name="system.martialCategory" data-type="String" style="width:100%">
+                        {{selectOptions martialTrainingsShieldsList selected=system.martialCategory localize=true}}
+                    </select>
+                {{/if}}                
             </div>
         </div>
     {{/if}}
@@ -65,19 +63,22 @@
     <div class="form-group">
         <label>{{localize "CO.label.long.properties"}}</label>
         <div class="form-fields">
-            {{#each system.properties as |prop idx|}}
-                <label class="checkbox"> <input type="checkbox" name="system.properties.{{idx}}" {{checked prop}}> {{localize (concat "CO.properties." idx)}}</label>
-            {{/each}}
+            <label class="checkbox"> <input type="checkbox" name="system.properties.equipable" {{checked system.properties.equipable}}> {{localize "CO.properties.equipable"}}</label>
+            {{#if isWeapon}}
+                <label class="checkbox"> <input type="checkbox" name="system.properties.reloadable" {{checked system.properties.reloadable}}> {{localize "CO.properties.reloadable"}}</label>
+                <label class="checkbox"> <input type="checkbox" name="system.properties.stackable" {{checked system.properties.stackable}}> {{localize "CO.properties.stackable"}}</label>
+            {{/if}}
         </div>
     </div>
-    <div class="form-group">
-        <label>{{localize "CO.ui.usage"}}</label>
-        <div class="form-fields">
-            <label class="checkbox"> <input type="checkbox" name="system.usage.oneHand" {{checked system.usage.oneHand}}> {{localize "CO.ui.1h"}}</label>
-            <label class="checkbox"> <input type="checkbox" name="system.usage.twoHand" {{checked system.usage.twoHand}}> {{localize "CO.ui.2h"}}</label>
+    {{#if isWeapon}}
+        <div class="form-group">
+            <label>{{localize "CO.ui.usage"}}</label>
+            <div class="form-fields">
+                <label class="checkbox"> <input type="checkbox" name="system.usage.oneHand" {{checked system.usage.oneHand}}> {{localize "CO.ui.1h"}}</label>
+                <label class="checkbox"> <input type="checkbox" name="system.usage.twoHand" {{checked system.usage.twoHand}}> {{localize "CO.ui.2h"}}</label>
+            </div>
         </div>
-    </div>
-    <br />
+    {{/if}}
     <div class="form-group">
         <label>{{localize "CO.ui.weight"}}</label>
         <div class="form-fields">
