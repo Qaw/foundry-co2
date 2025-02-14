@@ -69,29 +69,21 @@ export const CONDITION_OBJECTS = Object.freeze({
 })
 
 export const CONDITION_PREDICATES = Object.freeze({
-  isLearned: {
-    id: "isLearned",
-    label: "CO.condition.predicates.isLearned",
-  },
   isEquipped: {
     id: "isEquipped",
     label: "CO.condition.predicates.isEquipped",
   },
-  isEqualTo: {
-    id: "isEqualTo",
-    label: "CO.condition.predicates.isEqualTo",
+  isLearned: {
+    id: "isLearned",
+    label: "CO.condition.predicates.isLearned",
   },
-  isLowerOrEqualThan: {
-    id: "isLowerOrEqualThan",
-    label: "CO.condition.predicates.isLowerOrEqualThan",
+  isOwned: {
+    id: "isOwned",
+    label: "CO.condition.predicates.isOwned",
   },
-  isHigherOrEqualThan: {
-    id: "isHigherOrEqualThan",
-    label: "CO.condition.predicates.isHigherOrEqualThan",
-  },
-  isAbilityType: {
-    id: "isAbilityType",
-    label: "CO.condition.predicates.isAbilityType",
+  isTagged: {
+    id: "isTagged",
+    label: "CO.condition.predicates.isTagged",
   },
 })
 

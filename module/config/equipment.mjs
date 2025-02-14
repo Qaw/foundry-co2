@@ -42,8 +42,8 @@ export const EQUIPMENT_DAMAGETYPE = {
     label: "CO.damage.slashing",
   },
   impact: {
-    id: "impact",
-    label: "CO.damage.impact",
+    id: "bludgeoning",
+    label: "CO.damage.bludgeoning",
   },
   piercing: {
     id: "piercing",

@@ -79,9 +79,9 @@ export default class COItem extends Item {
   /**
    * An array of all the visible actions of the item or empty if no actions or if it's an item without actions
    */
-  async getVisibleActions() {
+  async getVisibleActions(actor) {
     if (foundry.utils.isEmpty(this.system.actions)) return []
-    const visibilityResults = await Promise.all(this.actions.map((action) => action.isVisible(this)))
+    const visibilityResults = await Promise.all(this.actions.map((action) => action.isVisible(this, actor)))
     return this.actions.filter((_, index) => visibilityResults[index])
   }
 

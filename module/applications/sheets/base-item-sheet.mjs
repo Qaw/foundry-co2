@@ -228,11 +228,6 @@ export default class CoBaseItemSheet extends ItemSheet {
       img: "icons/svg/d20-highlight.svg",
       label: `${game.i18n.localize("CO.ui.newAction")} ${this.item.actions.length + 1}`,
     })
-    // Attack action must be Visible and Activable by default
-    if (this.item.type === "attack") {
-      action.properties.visible = true
-      action.properties.activable = true
-    }
     newActions.push(action)
     return this.item.update({ "system.actions": newActions })
   }
@@ -262,7 +257,7 @@ export default class CoBaseItemSheet extends ItemSheet {
     const actionId = li.data("itemId")
 
     const actions = this.item.toObject().system.actions
-    actions[actionId].conditions.push({ source: this.item.uuid, type: this.item.type })
+    actions[actionId].conditions.push(new Condition())
     return this.item.update({ "system.actions": actions })
   }
 
@@ -296,7 +291,7 @@ export default class CoBaseItemSheet extends ItemSheet {
     const actionId = li.data("itemId")
 
     const actions = this.item.toObject().system.actions
-    actions[actionId].modifiers.push({ source: this.item.uuid, type: this.item.type })
+    actions[actionId].modifiers.push(new Modifier({ source: this.item.uuid, type: this.item.type }))
     return this.item.update({ "system.actions": actions })
   }
 
@@ -330,17 +325,19 @@ export default class CoBaseItemSheet extends ItemSheet {
     const actionId = li.data("itemId")
 
     const actions = this.item.toObject().system.actions
-    actions[actionId].resolvers.push({
-      type: "melee",
-      skill: {
-        formula: [{ part: "@atc" }],
-        crit: "20",
-        difficulty: "@target.def",
-      },
-      damage: {
-        formula: [{ part: "" }],
-      },
-    })
+    actions[actionId].resolvers.push(
+      new Resolver({
+        type: "melee",
+        skill: {
+          formula: "@atc",
+          crit: "20",
+          difficulty: "@target.def",
+        },
+        damage: {
+          formula: "",
+        },
+      }),
+    )
 
     return this.item.update({ "system.actions": actions })
   }
