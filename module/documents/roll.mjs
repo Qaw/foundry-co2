@@ -100,7 +100,7 @@ export class COSkillRoll extends CORoll {
       },
     })
 
-    if (rollContext === null) return
+    if (!rollContext) return
     rollContext.label = dialogContext.label
     if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll - rollContext`), rollContext)
 
@@ -238,7 +238,7 @@ export class COAttackRoll extends CORoll {
       },
     })
 
-    if (rollContext === null) return
+    if (!rollContext) return
     rollContext.label = dialogContext.label
     if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll - rollContext`), rollContext)
 
