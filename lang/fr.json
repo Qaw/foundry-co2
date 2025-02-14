@@ -591,7 +591,7 @@
     "damage": {
       "slashing": "Tranchant",
       "piercing": "Perforant",
-      "impact": "Contondant",
+      "bludgeoning": "Contondant",
       "magic": "Magique"
     },
     "size": {
