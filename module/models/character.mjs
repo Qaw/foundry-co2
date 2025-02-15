@@ -248,6 +248,20 @@ export default class CharacterData extends ActorData {
       ability.value = ability.base + bonuses + ability.modifiers
       ability.tooltipValue = Utils.getTooltip(Utils.getAbilityName(key), ability.base).concat(abilityModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
     }
+
+    // Cas particulier de l'agilité : la valeur maximum est définie par l'armure. La formule est : le max est 8 - DEF de l'armure
+    let maxAgility = 8
+    let armors = this.parent.equippedArmors
+    if (armors) {
+      const armor = armors[0]
+      // La défense est un modificateur de type Combat/Défense
+      if (armor) {
+        const defense = armor.system.defense
+        maxAgility = 8 - defense
+      }
+      this.abilities.agi.value = Math.min(this.abilities.agi.value, maxAgility)
+      if (maxAgility < 8) this.abilities.agi.tooltipValue = this.abilities.agi.tooltipValue.concat(Utils.getTooltip("Max armure", maxAgility))
+    }
   }
 
   _prepareHPMax() {

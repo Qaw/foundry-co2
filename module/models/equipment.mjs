@@ -73,4 +73,10 @@ export default class EquipmentData extends ItemData {
   get isMisc() {
     return this.subtype === SYSTEM.EQUIPMENT_SUBTYPES.misc.id
   }
+
+  get defense() {
+    if (!this.isArmor) return 0
+    // TODO Chercher le bonus de Combat/Défense dans les modifiers des actions
+    return this.parent.getTotalModifiersByTypeSubtypeAndTarget(SYSTEM.MODIFIERS_TYPE.equipment.id, SYSTEM.MODIFIERS_SUBTYPE.combat.id, SYSTEM.MODIFIERS_TARGET.def.id)
+  }
 }

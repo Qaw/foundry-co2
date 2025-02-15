@@ -169,7 +169,7 @@ export default class COItem extends Item {
     if (!this.hasModifiers) return 0
     return this.modifiers
       .filter((m) => m.type === type && m.subtype === subtype && m.target === target)
-      .map((i) => i.modifier)
+      .map((i) => parseInt(i.value))
       .reduce((acc, curr) => acc + curr, 0)
   }
 
