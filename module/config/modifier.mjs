@@ -174,4 +174,14 @@ export const MODIFIERS_TARGET = Object.freeze({
     label: "CO.label.long.diseaseimmunity",
     soustype: "state",
   },
+  enslavement: {
+    id: "enslavement",
+    label: "CO.label.long.enslavement",
+    soustype: "state",
+  },
+  movementImpairment: {
+    id: "movementImpairment",
+    label: "CO.label.long.movementImpairment",
+    soustype: "state",
+  },
 })

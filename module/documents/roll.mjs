@@ -105,7 +105,11 @@ export class COSkillRoll extends CORoll {
     if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll - rollContext`), rollContext)
 
     // TODO : Gérer les cas avec des chiffres ou des @
-    const formula = `${rollContext.dice}+${parseInt(rollContext.skillValue)}+${parseInt(rollContext.bonus)}+${parseInt(rollContext.malus)}+${parseInt(rollContext.totalSkillBonuses)}`
+    const formula = Utils.evaluateFormula(
+      dialogContext.actor,
+      `${rollContext.dice}+${parseInt(rollContext.skillValue)}+${parseInt(rollContext.bonus)}+${parseInt(rollContext.malus)}+${parseInt(rollContext.totalSkillBonuses)}`,
+    )
+
     const roll = new this(formula, dialogContext.actor.getRollData())
     await roll.evaluate()
 
@@ -239,7 +243,7 @@ export class COAttackRoll extends CORoll {
     if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll - rollContext`), rollContext)
 
     if (dialogContext.type === "attack") {
-      const formula = `${rollContext.dice}+${rollContext.formulaAttack}`
+      const formula = Utils.evaluateFormula(dialogContext.actor, `${rollContext.dice}+${rollContext.formulaAttack}`)
       const roll = new this(formula, dialogContext.actor.getRollData())
       await roll.evaluate()
 
@@ -271,7 +275,7 @@ export class COAttackRoll extends CORoll {
 
       // Jet de dégâts si l'option Jet combiné est activée et que l'attaque est une réussite
       if (dialogContext.useComboRolls && isSuccess) {
-        const damageFormula = `${rollContext.formulaDamage}`
+        const damageFormula = Utils.evaluateFormula(dialogContext.actor, `${rollContext.formulaDamage}`)
         const damageRoll = new this(damageFormula, dialogContext.actor.getRollData())
         await damageRoll.evaluate()
         const damageRollToolTip = new Handlebars.SafeString(await damageRoll.getTooltip())
