@@ -76,12 +76,12 @@ export class Resolver extends foundry.abstract.DataModel {
     const critical = this.skill.crit === "" ? actor.system.combat.crit.value : this.skill.crit
 
     let skillFormula = this.skill.formula
-    skillFormula = Utils.evaluateFormulaCustomValues(actor, skillFormula)
+    skillFormula = Utils.evaluateFormulaCustomValues(actor, skillFormula, item.uuid)
     let skillFormulaEvaluated = Roll.replaceFormulaData(skillFormula, actor.getRollData())
     const skillFormulaTooltip = this.skill.formula
 
     let damageFormula = this.dmg.formula
-    damageFormula = Utils.evaluateFormulaCustomValues(actor, damageFormula)
+    damageFormula = Utils.evaluateFormulaCustomValues(actor, damageFormula, item.uuid)
     let damageFormulaEvaluated = Roll.replaceFormulaData(damageFormula, actor.getRollData())
     const damageFormulaTooltip = this.dmg.formula
 

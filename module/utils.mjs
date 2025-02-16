@@ -63,10 +63,10 @@ export default class Utils {
    * Pour un acteur, évalue une formule  en remplaçant les valeurs custom pour le rang ou le dé évolutif
    * @param {*} actor : l'acteur concerné
    * @param {*} formula : une formule de type texte qui peut potentiellement contenir des @rank/@rang ou du dé évolutif
-   * @param {UUID} source The item source's UUID : used for the #rank
+   * @param {UUID} sourceUuid The item source's UUID : used for the #rank
    * @returns {string} la formule avec les éléments remplacés
    */
-  static evaluateFormulaCustomValues(actor, formula, source = null) {
+  static evaluateFormulaCustomValues(actor, formula, sourceUuid = null) {
     let replacedFormula = foundry.utils.duplicate(formula)
     // Cas du dé évolutif
     if (replacedFormula.includes("d4°")) {
@@ -74,10 +74,10 @@ export default class Utils {
     }
     // Cas du rang
     if (replacedFormula.includes("@rank") || replacedFormula.includes("@rang")) {
-      if (source) replacedFormula = this._replaceRank(actor, replacedFormula, source)
+      if (sourceUuid) replacedFormula = this._replaceRank(actor, replacedFormula, sourceUuid)
     }
     if (replacedFormula.includes("@allrank") || replacedFormula.includes("@toutrang")) {
-      if (source) replacedFormula = this._replaceAllRank(actor, replacedFormula, source)
+      if (sourceUuid) replacedFormula = this._replaceAllRank(actor, replacedFormula, sourceUuid)
     }
     return replacedFormula
   }
@@ -116,19 +116,19 @@ export default class Utils {
     const rank = path.system.rank
 
     // Cas @rank
-    let regexSimple = /^@rank$/
+    let regexSimple = /@rank/
     if (regexSimple.test(content)) {
       console.log("Cas simple détecté : @rank")
       content = content.replace("@rank", rank)
     }
-    regexSimple = /^@rang$/
+    regexSimple = /@rang/
     if (regexSimple.test(content)) {
       console.log("Cas simple détecté : @rang")
       content = content.replace("@rang", rank)
     }
 
     // Cas @rank[x,x,x,x,x]
-    let regexBracket = /^@rank\[(.*?)\]$/
+    let regexBracket = /@rank\[(.*?)\]/
     if (regexBracket.test(content)) {
       // Utilisation de replace avec une fonction de rappel pour calculer la somme
       content = content.replace(regexBracket, (match, numbersStr) => {
@@ -145,7 +145,7 @@ export default class Utils {
         return sum.toString()
       })
     }
-    regexBracket = /^@rang\[(.*?)\]$/
+    regexBracket = /@rang\[(.*?)\]/
     if (regexBracket.test(content)) {
       // Utilisation de replace avec une fonction de rappel pour calculer la somme
       content = content.replace(regexBracket, (match, numbersStr) => {
