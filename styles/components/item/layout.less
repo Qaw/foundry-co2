@@ -19,7 +19,6 @@
         flex-wrap: nowrap;
         width: 100%;
         height: 100%;
-        overflow: hidden;
 
         .sheet-header {
           display: flex;
@@ -57,7 +56,7 @@
             flex-wrap: wrap;
             align-items: baseline;
 
-            input[name=name] {
+            input[name="name"] {
               //font-family: var(--sans-serif-condensed);
               //font-size: var(--font-size-28);
               font-family: var(--serif-condensed);
@@ -72,12 +71,12 @@
 
         .sheet-body {
           .description {
-            height:100%
+            height: 100%;
           }
           .details {
             padding: 10px;
 
-            .list-3col{
+            .list-3col {
               display: grid;
               grid-template-columns: 1fr 8fr 2fr;
               grid-gap: 1px;
@@ -101,7 +100,7 @@
                 }
               }
             }
-            .list-4col{
+            .list-4col {
               display: grid;
               grid-template-columns: 1fr 1fr 8fr 2fr;
               grid-gap: 1px;
@@ -128,12 +127,14 @@
           }
           .actions {
             .actions {
-              padding : 20px;
+              padding: 20px;
               button.action-button {
                 flex: 0;
               }
             }
-            .conditions, .modifiers, .resolvers{
+            .conditions,
+            .modifiers,
+            .resolvers {
               font-family: var(--sans-serif-condensed);
               margin-top: 5px;
               border: 1px solid #5e0000;
@@ -148,15 +149,15 @@
             }
             .conditions-container,
             .modifiers-container,
-            .resolvers-container{
+            .resolvers-container {
               border: 1px solid #5e0000;
               border-radius: 0px 0px 3px 3px;
-              padding:10px;
+              padding: 10px;
               margin-top: 0;
               .condition,
               .modifier,
               .resolver {
-                padding-bottom:2px;
+                padding-bottom: 2px;
               }
             }
           }

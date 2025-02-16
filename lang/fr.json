@@ -82,6 +82,8 @@
         "sleepimmunity": "Immunisé au sommeil magique",
         "poisonimmunity": "Immunisé aux poisons",
         "diseaseimmunity": "Immunisé aux maladies",
+        "enslavement": "Immunisé à l'asservissement",
+        "movementImpairment": "Immunisé aux altérations de mouvement",
         "sendToChat": "Envoyer sur le chat",
         "edit": "Editer",
         "editItem": "Editer l'objet",
