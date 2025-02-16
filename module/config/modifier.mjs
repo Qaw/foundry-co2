@@ -46,6 +46,14 @@ export const MODIFIERS_SUBTYPE = Object.freeze({
     id: "state",
     label: "CO.modifier.subtype.state",
   },
+  bonusDice: {
+    id: "bonusDice",
+    label: "CO.modifier.subtype.bonusDice",
+  },
+  malusDice: {
+    id: "malusDice",
+    label: "CO.modifier.subtype.malusDice",
+  },
 })
 
 export const MODIFIERS_TARGET = Object.freeze({

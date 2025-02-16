@@ -12,7 +12,8 @@
     min-width: 585px;
     .window-content {
       padding: 0;
-      form.editable, form.locked {
+      form.editable,
+      form.locked {
         padding: 0;
         margin: 0;
         .main {
@@ -59,6 +60,9 @@
               font-size: var(--font-size-10);
               background: rgba(255, 255, 255, 0.5);
             }
+            option {
+              color: black;
+            }
             .traits-list-item {
               border: 2px solid #d8c384;
               color: white;
@@ -83,18 +87,19 @@
             padding: 5px;
             margin: 0;
 
-            .main, .effects{
-              .actions-container, .effects-container{
-                .items-container()
+            .main,
+            .effects {
+              .actions-container,
+              .effects-container {
+                .items-container();
               }
             }
             .loot {
-              .items-container()
+              .items-container();
             }
             .capacities {
-              .items-container()
+              .items-container();
             }
-
           }
         }
       }

@@ -148,6 +148,15 @@ export default class CharacterData extends ActorData {
   }
 
   /**
+   * Retrieves the bonusDice modifiers for the character.
+   *
+   * @returns {Array} An array of state modifiers.
+   */
+  get bonusDiceModifiers() {
+    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.bonusDice.id)
+  }
+
+  /**
    * Retrieves an array of modifiers from various sources associated with the character.
    * The sources include features, profiles, capacities, and equipment.
    * Each source is checked for enabled modifiers of the specified type and subtype.
@@ -242,6 +251,16 @@ export default class CharacterData extends ActorData {
       // Somme du bonus de la feuille et du bonus des actives effects
       const bonuses = Object.values(ability.bonuses).reduce((prev, curr) => prev + curr)
       const abilityModifiers = this.computeTotalModifiersByTarget(this.abilityModifiers, key)
+
+      // Prise en compte d'un modifier qui donne un dé bonus
+      if (this.bonusDiceModifiers) {
+        let bonusDice = this.bonusDiceModifiers.find((m) => m.target === key)
+        if (bonusDice) {
+          ability.superior = true
+        } else {
+          ability.superior = false
+        }
+      }
 
       ability.modifiers = abilityModifiers.total
 

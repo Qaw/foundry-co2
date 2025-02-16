@@ -3,47 +3,6 @@
     <img class="actor-image" src="{{actor.img}}" data-edit="img" data-tooltip="{{actor.name}}" height="auto" width="100%" style="margin: 0 auto" />
     <a class="hover-icon" data-action="show-image"><i class="fas fa-image fa-fw"></i></a>
   </div>
-  <!-- DR -->
-  <div class="sidebar-section dr-section">
-    <div class="sidebar-section-header">
-      <div class="sidebar-label dr-label">
-        <i class="fas fa-fw fa-universal-access"></i>
-        <h4>{{localize "CO.ui.dr"}}</h4>
-      </div>
-      <div class="dr-base labelled-field" data-tooltip="{{combat.dr.tooltipValue}}">
-        {{combat.dr.value}}
-      </div>
-    </div>
-    {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="labelled-field">
-          <label>{{localize "CO.label.long.base"}}</label>
-          <input
-            class="dr-base"
-            type="number"
-            name="system.combat.dr.base"
-            value="{{combat.dr.base}}"
-            data-dtype="Number"
-            placeholder="0"
-            data-tooltip="{{combat.dr.tooltipBase}}"
-          />
-        </div>
-      </div>
-      <div class="sidebar-section-content">
-        <div class="labelled-field">
-          <label>{{localize "CO.label.long.bonus"}}</label>
-          <input
-            class="dr-bonus"
-            type="text"
-            name="system.combat.dr.bonuses.sheet"
-            value="{{numberFormat combat.dr.bonuses.sheet decimals=0 sign=true}}"
-            data-dtype="Number"
-            placeholder="0"
-          />
-        </div>
-      </div>
-    {{/if}}
-  </div>
   <!-- DEF -->
   <div class="sidebar-section armor-section">
     <div class="sidebar-section-header">
@@ -146,6 +105,47 @@
             type="text"
             name="system.combat.init.bonuses.sheet"
             value="{{numberFormat combat.init.bonuses.sheet decimals=0 sign=true}}"
+            data-dtype="Number"
+            placeholder="0"
+          />
+        </div>
+      </div>
+    {{/if}}
+  </div>
+  <!-- DR -->
+  <div class="sidebar-section dr-section">
+    <div class="sidebar-section-header">
+      <div class="sidebar-label dr-label">
+        <i class="fas fa-fw fa-universal-access"></i>
+        <h4>{{localize "CO.ui.dr"}}</h4>
+      </div>
+      <div class="dr-base labelled-field" data-tooltip="{{combat.dr.tooltipValue}}">
+        {{combat.dr.value}}
+      </div>
+    </div>
+    {{#if unlocked}}
+      <div class="sidebar-section-content">
+        <div class="labelled-field">
+          <label>{{localize "CO.label.long.base"}}</label>
+          <input
+            class="dr-base"
+            type="number"
+            name="system.combat.dr.base"
+            value="{{combat.dr.base}}"
+            data-dtype="Number"
+            placeholder="0"
+            data-tooltip="{{combat.dr.tooltipBase}}"
+          />
+        </div>
+      </div>
+      <div class="sidebar-section-content">
+        <div class="labelled-field">
+          <label>{{localize "CO.label.long.bonus"}}</label>
+          <input
+            class="dr-bonus"
+            type="text"
+            name="system.combat.dr.bonuses.sheet"
+            value="{{numberFormat combat.dr.bonuses.sheet decimals=0 sign=true}}"
             data-dtype="Number"
             placeholder="0"
           />

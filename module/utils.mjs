@@ -102,7 +102,7 @@ export default class Utils {
       }
     })
 
-    /* Remplacer aussi des valeurs d'un toekn ciblé si c'est le cas */
+    /* Remplacer aussi des valeurs d'un token ciblé si c'est le cas */
 
     const CBL = {
       "@target.for": "system.abilities.for.base",
@@ -145,18 +145,28 @@ export default class Utils {
       })
     }
 
+    /*Remplacer aussi des valeurs d'un item equipé */
+    if (replacedFormula.includes("@weapon.dmg")) {
+      let weapons = actor.equippedWeapons()
+      //normalement il a soit une arme à 2 main et donc une seul ou deux armes à 1 mains ou encore 1 armes à 1M et un bouclier. Dans ce dernier car je n'ai aps le bouclier dans la liste donc je prend la premiere armes si il y en a une
+      if (weapons.length > 0 && weapon.system.actions[0] && weapon.system.actions[0].resolvers[0]) {
+        let weapon = weapons[0]
+        replacedFormula = replacedFormula.replace("@weapon.dmg", weapon.system.actions[0].resolvers[0].dmg)
+      } else {
+        replacedFormula = replacedFormula.replace("@weapon.dmg", "")
+      }
+    }
+
     if (replacedFormula.includes("@rang") || replacedFormula.includes("@rank")) replacedFormula = _replaceRank(actor, replacedFormula, source)
     if (replacedFormula.includes("@allrang") || replacedFormula.includes("@allrank")) replacedFormula = _replaceAllRank(actor, replacedFormula, source)
 
     /* ancien system avec @rang[0,1,0,0,1]
     replacedFormula = this.calculateTotalRank(replacedFormula, "@rang")
     replacedFormula = this.calculateTotalRank(replacedFormula, "@rank")*/
-    console.log(replacedFormula)
     // Remaining formula
     if (replacedFormula.includes("@")) {
       replacedFormula = replacedFormula.replace("@", "actor.system.")
     }
-    console.log(replacedFormula)
     if (withDice) return replacedFormula
     else {
       if (toEvaluate) return eval(replacedFormula)

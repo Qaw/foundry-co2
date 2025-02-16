@@ -37,6 +37,7 @@ export default class COActor extends Actor {
 
   getRollData() {
     const rollData = { ...this.system }
+
     rollData.agi = this.system.abilities.agi.value
     rollData.for = this.system.abilities.for.value
     rollData.con = this.system.abilities.con.value
@@ -44,15 +45,19 @@ export default class COActor extends Actor {
     rollData.cha = this.system.abilities.cha.value
     rollData.int = this.system.abilities.int.value
     rollData.vol = this.system.abilities.vol.value
-    rollData.mel = this.system.combat.melee.value
-    rollData.atc = this.system.combat.melee.value
-    rollData.dis = this.system.combat.ranged.value
-    rollData.atd = this.system.combat.ranged.value
-    rollData.mag = this.system.combat.magic.value
-    rollData.atm = this.system.combat.magic.value
     rollData.def = this.system.combat.def.value
     rollData.ini = this.system.combat.init.value
     rollData.niv = this.system.attributes.level
+
+    if (this.type === "character") {
+      rollData.mel = this.system.combat.melee.value
+      rollData.atc = this.system.combat.melee.value
+      rollData.dis = this.system.combat.ranged.value
+      rollData.atd = this.system.combat.ranged.value
+      rollData.mag = this.system.combat.magic.value
+      rollData.atm = this.system.combat.magic.value
+    }
+
     return rollData
   }
   // #region accesseurs
@@ -137,6 +142,10 @@ export default class COActor extends Actor {
 
   get equippedEquipments() {
     return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.equipped)
+  }
+
+  get equippedWeapons() {
+    return this.weapons.filter((item) => item.system.equipped)
   }
 
   /**

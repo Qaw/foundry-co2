@@ -63,9 +63,6 @@ export class Resolver extends foundry.abstract.DataModel {
     const auto = false
     const actionName = action.label
 
-    const skillFormula = this.skill.formula
-    const critical = this.skill.crit === "" ? actor.system.combat.crit.value : this.skill.crit
-
     const diffToEvaluate = this.skill.difficulty.match("[0-9]{0,}[d|D][0-9]{1,}")
     let difficulty = ""
     if (diffToEvaluate) {
@@ -73,10 +70,13 @@ export class Resolver extends foundry.abstract.DataModel {
     } else {
       difficulty = Utils.evaluate(actor, this.skill.difficulty, item.uuid, true)
     }
+
+    const critical = this.skill.crit === "" ? actor.system.combat.crit.value : this.skill.crit
+
+    const skillFormula = this.skill.formula
     let skillFormulaEvaluated = Roll.replaceFormulaData(skillFormula, actor.getRollData())
 
     const damageFormula = this.dmg.formula
-
     let damageFormulaEvaluated = Roll.replaceFormulaData(damageFormula, actor.getRollData())
 
     await actor.rollAttack(item, { auto, type, actionName, skillFormula: skillFormulaEvaluated, damageFormula: damageFormulaEvaluated, critical, difficulty })

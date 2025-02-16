@@ -459,7 +459,9 @@
         "attribute": "Attribut",
         "resource": "Ressource",
         "skill": "Jet de compétence",
-        "state": "Etat"
+        "state": "Etat",
+        "bonusDice": "Dé bonus",
+        "malusDice": "Dé malus"
       },
       "target": {
         "agi": "Agilité",

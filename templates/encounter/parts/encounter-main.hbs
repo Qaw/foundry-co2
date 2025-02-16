@@ -39,13 +39,13 @@
                 <li class="item attack flexrow" data-item-type="attack" data-item-id="{{attack._id}}" draggable="false">
                     <div class="attack-header">
                         <h4 class="attack-name tags">
-                            {{#if (eq attack.system.subtype "MELEE")}}
+                            {{#if (eq attack.system.subtype "melee")}}
                                 <span><strong>{{localize "CO.label.short.melee"}}</strong><span class="activity-icon"><i class="fas fa-fw fa-sword"></i></span>{{attack.name}}</span>
                             {{/if}}
-                            {{#if (eq attack.system.subtype "RANGED")}}
+                            {{#if (eq attack.system.subtype "ranged")}}
                                 <span><strong>{{localize "CO.label.short.ranged"}}</strong><span class="activity-icon"><i class="fas fa-fw fa-bow-arrow"></i></span>{{attack.name}}</span>
                             {{/if}}
-                            {{#if (eq attack.system.subtype "MAGICAL")}}
+                            {{#if (eq attack.system.subtype "magical")}}
                                 <span><strong>{{localize "CO.label.short.magic"}}</strong><span class="activity-icon"><i class="fas fa-fw fa-wand-magic-sparkles"></i></span>{{attack.name}}</span>
                             {{/if}}
                         </h4>
