@@ -51,7 +51,7 @@ export class Resolver extends foundry.abstract.DataModel {
   }
 
   /**
-   * Resolver pour les actions de type melee
+   * Resolver pour les actions de type Attaque
    * @param {COActor} actor : l'acteur pour lequel s'applique l'action
    * @param {COItem} item : la source de l'action
    * @param {Action} action : l'action
@@ -60,9 +60,7 @@ export class Resolver extends foundry.abstract.DataModel {
   async melee(actor, item, action, type) {
     if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver - melee`), actor, item, action, type)
 
-    const auto = false
-    const actionName = action.label
-
+    // TODO : Gérer la difficulté de l'action
     const diffToEvaluate = this.skill.difficulty.match("[0-9]{0,}[d|D][0-9]{1,}")
     let difficulty = ""
     if (diffToEvaluate) {
@@ -73,109 +71,46 @@ export class Resolver extends foundry.abstract.DataModel {
 
     const critical = this.skill.crit === "" ? actor.system.combat.crit.value : this.skill.crit
 
-    const skillFormula = this.skill.formula
+    let skillFormula = this.skill.formula
+    skillFormula = Utils.evaluateFormulaCustomValues(actor, skillFormula)
     let skillFormulaEvaluated = Roll.replaceFormulaData(skillFormula, actor.getRollData())
 
-    const damageFormula = this.dmg.formula
+    let damageFormula = this.dmg.formula
+    damageFormula = Utils.evaluateFormulaCustomValues(actor, damageFormula)
     let damageFormulaEvaluated = Roll.replaceFormulaData(damageFormula, actor.getRollData())
 
-    await actor.rollAttack(item, { auto, type, actionName, skillFormula: skillFormulaEvaluated, damageFormula: damageFormulaEvaluated, critical, difficulty })
+    await actor.rollAttack(item, { auto: false, type, actionName: action.label, skillFormula: skillFormulaEvaluated, damageFormula: damageFormulaEvaluated, critical, difficulty })
   }
 
   /**
-   * Résout automatiquement une action effectuée par un acteur sur un objet.
-   *
-   * @param {Object} actor L'acteur effectuant l'action.
-   * @param {Object} item L'objet impliqué dans l'action.
-   * @param {Object} action L'action en cours d'exécution.
-   * @returns {Promise<void>} Une promesse qui se résout lorsque l'action est terminée.
+   * Resolver pour les actions de type Attaque automatique
+   * @param {COActor} actor : l'acteur pour lequel s'applique l'action
+   * @param {COItem} item : la source de l'action
+   * @param {Action} action : l'action
    */
   async auto(actor, item, action) {
     if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver - auto`), actor, item, action)
-    const itemName = item.name
-    const actionName = action.label
-    const damageFormula = this.dmg.formula[0].part
-    const auto = true
-    const type = "damage"
 
-    let damageFormulaEvaluated = damageFormula.match("[0-9]{0,}[d|D][0-9]{1,}")
-      ? Utils.evaluateWithDice(actor, damageFormula, item.uuid)
-      : Utils.evaluate(actor, damageFormula, item.uuid)
+    let damageFormula = this.dmg.formula
+    damageFormula = Utils.evaluateFormulaCustomValues(actor, damageFormula)
+    let damageFormulaEvaluated = Roll.replaceFormulaData(damageFormula, actor.getRollData())
 
-    await actor.rollAttack(item, { auto, type, actionName, damageFormula: damageFormulaEvaluated })
+    await actor.rollAttack(item, { auto: true, type: "damage", actionName: action.label, damageFormula: damageFormulaEvaluated })
   }
 
   /**
-   * Applique les soins sur l'acteur ciblé
-   * @param {*} actor : l'acteur ciblé
-   * @param {*} item : l'element contenant l'action (ex : capacity)
-   * @param {*} action : l'action à l'origine du soin
+   * Resolver pour les actions de type Soin
+   * @param {COActor} actor : l'acteur pour lequel s'applique l'action
+   * @param {COItem} item : la source de l'action
+   * @param {Action} action : l'action.
    */
   async heal(actor, item, action) {
     if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver - heal`), actor, item, action)
-    const itemName = item.name
-    const actionName = action.label
-    const healFormula = this.dmg.formula[0].part
-    const type = "heal"
-    const cible = this.target
 
-    let healFormulaEvaluated = healFormula.match("[0-9]{0,}[d|D][0-9]{1,}") ? Utils.evaluateWithDice(actor, healFormula, item.uuid) : Utils.evaluate(actor, healFormula, item.uuid)
-    let r = new Roll(healFormulaEvaluated)
-    await r.roll()
+    let healFormula = this.skill.formula
+    healFormula = Utils.evaluateFormulaCustomValues(actor, healFormula)
+    let healFormulaEvaluated = Roll.replaceFormulaData(healFormula, actor.getRollData())
 
-    const result = r.total
-    if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver - heal - result`), r, result)
-
-    switch (cible) {
-      // L'acteur se soigne lui même
-      case "self":
-        let newValue = Math.min(actor.system.attributes.hp.value + result, actor.system.attributes.hp.max)
-        actor.update({ "system.attributes.hp.value": newValue })
-        break
-      // On envoie un message à la cible pour lui proposer de se soigner via un message chat
-      case "character":
-        if (game.user.targets.size === 0) {
-          throw new Error(game.i18n.localize("co.ui.noTarget"))
-        }
-        if (this.isMultiTarget) {
-          const targetedTokens = Array.from(game.user.targets)
-          targetedTokens.forEach((token) => {
-            game.socket.emit(`system.${SYSTEM.id}`, {
-              action: "heal",
-              data: {
-                toUserId: targetedTokens.actor.id,
-                healAmount: result,
-                fromUserId: actor.id,
-                resolver: this,
-                targets: [targetedTokens.actor.id],
-              },
-            })
-          })
-        } else {
-          const targetedToken = game.user.targets[0]
-          game.socket.emit(`system.${SYSTEM.id}`, {
-            action: "heal",
-            data: {
-              toUserId: targetedToken.actor.id,
-              healAmount: result,
-              fromUserId: actor.id,
-              resolver: this,
-              targets: [targetedToken.actor.id],
-            },
-          })
-        }
-        break
-      // On envoie un message au maitre de jeu pour appliquer les effets sur des créatures
-      case "encounter":
-        if (game.user.targets.size === 0) {
-          throw new Error(game.i18n.localize("co.ui.noTarget"))
-        }
-        const GM = game.users.find((user) => user.isGM)
-        if (GM) {
-          // TODO Créer un message chat pour proposer d'appliquer les soins aux creatures
-          console.log("devrait envoyer un message au mj pour appliquer les effets")
-        }
-        break
-    }
+    await actor.rollHeal(item, { actionName: action.label, healFormula: healFormulaEvaluated })
   }
 }

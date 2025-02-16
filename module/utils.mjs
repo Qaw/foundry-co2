@@ -28,7 +28,7 @@ export default class Utils {
   }
 
   /**
-   * For an actor, evaluate the formula
+   * For an actor, evaluate the formula : this formula could'nt have a dice
    * @param {*} actor
    * @param {*} formula
    * @param {*} source The item source's UUID : used for the #rank
@@ -38,6 +38,30 @@ export default class Utils {
   static evaluate(actor, formula, source, toEvaluate = false) {
     if (formula === "") return 0
     if (formula.includes("@")) return this._evaluateCustom(actor, formula, source, toEvaluate, false)
+    const resultat = parseInt(formula)
+    if (isNaN(resultat)) return 0
+    return resultat
+  }
+
+  /**
+   * Évalue un modificateur basé sur la formule fournie.
+   *
+   * @param {Object} actor L'objet acteur contenant les données pertinentes.
+   * @param {string} formula La formule à évaluer.
+   * @param {Object} source L'objet source pour les valeurs personnalisées.
+   * @returns {number} Le résultat de la formule évaluée ou 0 si invalide.
+   */
+  static evaluateModifier(actor, formula, source) {
+    if (formula === "" || formula.includes("d") || formula.includes("D")) return 0
+
+    // Formule avec des raccourcis
+    if (formula.includes("@")) {
+      let newFormula = Utils.evaluateFormulaCustomValues(actor, formula, source)
+      newFormula = Roll.replaceFormulaData(newFormula, actor.getRollData())
+      return eval(newFormula)
+    }
+
+    // Un simple chiffre
     const resultat = parseInt(formula)
     if (isNaN(resultat)) return 0
     return resultat
@@ -214,11 +238,11 @@ export default class Utils {
    * @returns un temps avec le vrai dé à utiliser
    */
   static _replaceEvolvingDice(actor, content) {
-    let result = content
-    if (actor.attributes.level < 6) result = content.replace("d4°", "d4")
-    else if (actor.attributes.level <= 8) result = content.replace("d4°", "d6")
-    else if (actor.attributes.level <= 11) result = content.replace("d4°", "d8")
-    else if (actor.attributes.level <= 14) result = content.replace("d4°", "d10")
+    let result
+    if (actor.system.attributes.level < 6) result = content.replace("d4°", "d4")
+    else if (actor.system.attributes.level <= 8) result = content.replace("d4°", "d6")
+    else if (actor.system.attributes.level <= 11) result = content.replace("d4°", "d8")
+    else if (actor.system.attributes.level <= 14) result = content.replace("d4°", "d10")
     else result = content.replace("d4°", "d12")
     return result
   }
@@ -226,19 +250,22 @@ export default class Utils {
   /**
    * Retourne un texte dans lequel on a remplacé le rang dans une categorie par sa valeur
    * @param {*} actor : acteur concerné
-   * @param {*} content : le texte contenant une référence à un rang
+   * @param {*} formula : le texte contenant une référence à un rang
    * @param {UUID} source The item source's UUID : used for the #rank
    */
-  static _replaceRank(actor, content, source) {
-    //Pour connaitre le rang d'une voie il faut remonter à la source pour savoir de quelle voie il s'agit
-    let itemSource = actor.items.get(source)
+  static _replaceRank(actor, formula, source) {
+    // Pour connaitre le rang d'une voie il faut remonter à la source pour savoir de quelle voie il s'agit
+    const { id } = foundry.utils.parseUuid(source)
+    const itemSource = actor.items.get(id)
     if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`Utils - _replaceRank - itemSource`), itemSource)
+    if (itemSource.type !== "capacity") return formula
+
     const pathId = itemSource.system.path
-    const path = actor.items.get(pathId) //la voie du joueur
-    const rank = path.system.rank //le rang qu'il a dans la voie
-    if (content.includes("@rang")) content = content.replace("@rang", rank)
-    if (content.includes("@rank")) content = content.replace("@rank", rank)
-    return content
+    const path = actor.items.get(pathId) // La voie de l'acteur
+    const rank = path.system.rank // Le rang qu'il a dans la voie
+    if (formula.includes("@rang")) formula = formula.replace("@rang", rank)
+    if (formula.includes("@rank")) formula = formula.replace("@rank", rank)
+    return formula
   }
 
   /**
@@ -248,12 +275,15 @@ export default class Utils {
    * @param {UUID} source The item source's UUID : used for the #rank
    */
   static _replaceAllRank(actor, content, source) {
+    const { id } = foundry.utils.parseUuid(source)
+    const itemSource = actor.items.get(id)
+    if (itemSource.type !== "capacity") return formula
+
     let startRank = replacedFormula.substring(replacedFormula.indexOf("@allrank"))
     let extract = startRank.substring(startRank.indexOf("[") + 1, startRank.indexOf("]"))
     if (extract) {
       let level = parseInt(extract)
       if (level) {
-        let itemSource = actor.items.get(source)
         if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`Utils - _replaceAllRank - itemSource`), itemSource)
         const pathId = itemSource.system.path
         let profiles = actor.profiles().filter((p) => p.paths.filter((o) => o.id === pathId))
@@ -274,24 +304,25 @@ export default class Utils {
   }
 
   /**
-   * Fonction qui va prendre un formule en paramètre et va voir s'il faut remplacer des valeurs custom de rang dans la voie ou des dés évolutifs
+   * Pour un acteur, évalue une formule  en remplaçant les valeurs custom pour le rang ou le dé évolutif
    * @param {*} actor : l'acteur concerné
-   * @param {*} formule : une formule de type texte qui peux potentiellement contenir des @rank/@rang ou du dé évolutif
+   * @param {*} formula : une formule de type texte qui peut potentiellement contenir des @rank/@rang ou du dé évolutif
    * @param {UUID} source The item source's UUID : used for the #rank
-   * @returns renvoi le context modifié
+   * @returns {string} la formule avec les éléments remplacés
    */
-  static evaluateFormula(actor, formule, source) {
-    //Si j'ai un élément custom je le remplace par sa valeur
-    if (formule.includes("@rank") || formule.includes("@rang")) {
-      if (source) formule = this._replaceRank(actor, formule, source)
+  static evaluateFormulaCustomValues(actor, formula, source) {
+    let replacedFormula = foundry.utils.duplicate(formula)
+    // Cas du dé évolutif
+    if (replacedFormula.includes("d4°")) {
+      replacedFormula = Utils._replaceEvolvingDice(actor, replacedFormula)
     }
-    if (formule.includes("@allrank") || formule.includes("@allrang")) {
-      if (source) formule = this._replaceAllRank(actor, formule, source)
+    // Cas du rang
+    if (replacedFormula.includes("@rank") || replacedFormula.includes("@rang")) {
+      if (source) replacedFormula = this._replaceRank(actor, replacedFormula, source)
     }
-    //Si j'ai un dé bonus
-    if (formule.includes("d4°")) {
-      formule = Utils._replaceEvolvingDice(actor, formule)
+    if (replacedFormula.includes("@allrank") || replacedFormula.includes("@toutrang")) {
+      if (source) replacedFormula = this._replaceAllRank(actor, replacedFormula, source)
     }
-    return formule
+    return replacedFormula
   }
 }

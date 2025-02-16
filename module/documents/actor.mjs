@@ -812,6 +812,13 @@ export default class COActor extends Actor {
     }
   }
 
+  // FIXME Finir la méthode
+  async rollHeal(item, { actionName = "", healFormula = undefined, damageFormula = undefined } = {}) {
+    let roll = new Roll(healFormula)
+    await roll.roll()
+    await roll.toMessage()
+  }
+
   // #endregion
 
   // #region méthodes privées
