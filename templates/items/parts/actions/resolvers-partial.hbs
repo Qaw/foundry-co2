@@ -22,7 +22,6 @@
                 </div>    
             </div>            
             {{#if (or (eq r.type @root.choiceResolverTypes.melee.id) (eq r.type @root.choiceResolverTypes.ranged.id) (eq r.type @root.choiceResolverTypes.magical.id)) }}
-            <!-- Type attaque -->
                 <div class="flexrow strong">
                     <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.formulaTooltip"}}">{{localize "CO.ui.skillformula"}}</div>
                     <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.critTooltip"}}">{{localize "CO.ui.crit"}}</div>
@@ -39,17 +38,20 @@
             {{#if (eq r.type @root.choiceResolverTypes.heal.id)}}
                 <div class="flexrow strong">
                     <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.formulaTooltip"}}">{{localize "CO.ui.healformula"}}</div>
+                    <div></div>
+                    <div class="form-fields flex1 center">{{localize "CO.ui.target"}}</div>
+                    <div class="form-fields flex1 center">{{localize "CO.resolver.isMultiTarget"}}</div>
                 </div>
                 <div class="flexrow"> 
-                    <div class="form-fields flex1"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.formula" type="text" value="{{r.skill.formula}}" data-dtype="String" /></div>
-                    <div class="form-fields flex1">                    
+                    <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.formula" type="text" value="{{r.skill.formula}}" data-dtype="String" /></div>
+                    <div></div>
+                    <div class="form-fields flex1 center">                    
                         <select name="system.actions.{{../idx}}.resolvers.{{id}}.target" data-type="String" style="width:100%">
                             {{selectOptions @root.choiceResolverTargets selected=r.target localize=true}}
                         </select>
                     </div>
-                    <div class="form-fields flex1">    
-                        <label for="c.isMultiTarget" class="isMultiTarget-checkbox">{{localize "CO.resolver.isMultiTarget"}}</label>
-                        <input type="checkbox" id="isMultiTarget" name="isMultiTarget" class="isMultiTarget-checkbox" />
+                    <div class="form-fields flex1 center">    
+                        <input type="checkbox" class="isMultiTarget-checkbox" id="isMultiTarget" name="system.actions.{{../idx}}.resolvers.{{id}}.isMultiTarget" {{checked r.isMultiTarget}} />
                     </div>
                 </div>
             {{/if}}
