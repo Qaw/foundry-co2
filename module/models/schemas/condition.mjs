@@ -2,7 +2,7 @@ import { SYSTEM } from "../../config/system.mjs"
 import RulesEngine from "../../rules-engine.mjs"
 
 /**
- * La class Condition représente un contrôle de condition qui peux être évalué pour un élément donné.
+ * La classe Condition représente un contrôle de condition qui peut être évalué pour un élément donné.
  * predicate ce que l'on veut utiliser pour évaluer la condition
  */
 export class Condition extends foundry.abstract.DataModel {
@@ -14,13 +14,13 @@ export class Condition extends foundry.abstract.DataModel {
   }
 
   /**
-   * Evaluates the condition for a given item.
-   * @param {object} item The item to evaluate the condition for.
-   * @returns {boolean} The result of the condition evaluation.
-   * @throws {Error} If the specified predicate is not a valid condition method.
+   * Évalue une condition basée sur l'élément et l'acteur fournis.
+   *
+   * @param {Object} item L'élément à évaluer.
+   * @param {Object} actor L'acteur effectuant l'évaluation.
+   * @returns {Promise<boolean>} Une promesse qui se résout avec le résultat de l'évaluation.
    */
   async evaluate(item, actor) {
-    console.log("Condition.evaluate", this, item, actor)
     return RulesEngine.evaluate(this.predicate, item, actor) // Utilisation de l'évaluation statique
   }
 }

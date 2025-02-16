@@ -104,7 +104,6 @@ export class COSkillRoll extends CORoll {
     rollContext.label = dialogContext.label
     if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll - rollContext`), rollContext)
 
-    // TODO : Gérer les cas avec des chiffres ou des @
     const formula = Utils.evaluateFormulaCustomValues(
       dialogContext.actor,
       `${rollContext.dice}+${parseInt(rollContext.skillValue)}+${parseInt(rollContext.bonus)}+${parseInt(rollContext.malus)}+${parseInt(rollContext.totalSkillBonuses)}`,
@@ -274,7 +273,9 @@ export class COAttackRoll extends CORoll {
       rolls.push(roll)
 
       // Jet de dégâts si l'option Jet combiné est activée et que l'attaque est une réussite
-      if (dialogContext.useComboRolls && isSuccess) {
+      // FIXME isSuccess n'a de sens que si l'option activée est celle d'utiliser la difficultés
+      // Ajouter && isSuccess ?
+      if (dialogContext.useComboRolls) {
         const damageFormula = Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaDamage}`)
         const damageRoll = new this(damageFormula, dialogContext.actor.getRollData())
         await damageRoll.evaluate()

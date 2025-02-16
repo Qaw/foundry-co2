@@ -768,6 +768,7 @@ export default class COActor extends Actor {
     await roll.toMessage()
   }
 
+  // Jet d'attaque et jet de dégâts
   async rollAttack(
     item,
     {
@@ -803,12 +804,20 @@ export default class COActor extends Actor {
     let rolls = await COAttackRoll.prompt(dialogContext, { withDialog: withDialog })
     if (!rolls) return null
 
-    // Affichage du get d'attaque
-    await rolls[0].toMessage()
+    // Jet d'attaque
+    if (type === "attack") {
+      // Affichage du get d'attaque
+      await rolls[0].toMessage()
 
-    // Affichage du jet de dégâts dans le cas d'un jet combiné
-    if (game.settings.get("co", "useComboRolls")) {
-      await rolls[1].toMessage()
+      // Affichage du jet de dégâts dans le cas d'un jet combiné
+      if (game.settings.get("co", "useComboRolls")) {
+        await rolls[1].toMessage()
+      }
+    }
+
+    // Jet de dégâts
+    else if (type === "damage") {
+      await rolls[0].toMessage()
     }
   }
 
@@ -893,5 +902,11 @@ export default class COActor extends Actor {
     return usedHands + neededHands <= 2
   }
 
+  getItemFromUuid(uuid) {
+    let { id } = foundry.utils.parseUuid(uuid)
+    const item = this.items.get(id)
+    if (item) return item
+    return null
+  }
   // #endregion
 }

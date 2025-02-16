@@ -61,13 +61,15 @@ export class Resolver extends foundry.abstract.DataModel {
     if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver - melee`), actor, item, action, type)
 
     // TODO : Gérer la difficulté de l'action
-    const diffToEvaluate = this.skill.difficulty.match("[0-9]{0,}[d|D][0-9]{1,}")
-    let difficulty = ""
+    /*
+    const diffToEvaluate = this.skill.difficulty.match("[0-9]{0,}[d|D][0-9]{1,}")    
     if (diffToEvaluate) {
       difficulty = Utils.evaluateWithDice(actor, this.skill.difficulty, item.uuid)
     } else {
       difficulty = Utils.evaluate(actor, this.skill.difficulty, item.uuid, true)
     }
+    */
+    let difficulty = ""
 
     const critical = this.skill.crit === "" ? actor.system.combat.crit.value : this.skill.crit
 

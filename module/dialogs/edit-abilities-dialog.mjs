@@ -56,6 +56,7 @@ export class CoEditAbilitiesDialog extends Application {
     return actor.update({ [`system.abilities.${ability}.superior`]: value }).then(() => this.render(true))
   }
 
+  // TODO Garder ou refaire ?
   async _onResetAbilityScores(event) {
     const { actor } = this
     // Construct the Roll instance

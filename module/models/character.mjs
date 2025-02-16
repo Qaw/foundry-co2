@@ -307,7 +307,7 @@ export default class CharacterData extends ActorData {
 
     let modifiersByTarget = modifiers.filter((m) => m.target === target)
 
-    let total = modifiersByTarget.map((i) => i.evaluate(this.parent)).reduce((acc, curr) => acc + curr, 0)
+    let total = modifiersByTarget.map((m) => m.evaluate(this.parent)).reduce((acc, curr) => acc + curr, 0)
 
     let tooltip = ""
     for (const modifier of modifiersByTarget) {
