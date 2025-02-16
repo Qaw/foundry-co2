@@ -13,14 +13,14 @@
     <div class="form-group">
         <label data-tooltip="{{localize 'CO.tooltip.formulaAttack'}}">{{localize 'CO.label.long.formulaAttack'}}</label>
         <div class="form-fields">
-            <input class="field-value" id="formulaAttack" name="formulaAttack" type="text" value="{{formulaAttack}}" data-dtype="String" data-tooltip="{{skillFormula}}" {{#if auto}}readonly{{/if}} />
+            <input class="field-value" id="formulaAttack" name="formulaAttack" type="text" value="{{formulaAttack}}" data-dtype="String" data-tooltip="{{formulaAttackTooltip}}" {{#if auto}}readonly{{/if}} />
         </div>
     </div>
     {{#if useComboRolls}}
         <div class="form-group">
             <label data-tooltip="{{localize 'CO.tooltip.formulaDamage'}}">{{localize 'CO.label.long.formulaDamage'}}</label>
             <div class="form-fields">
-                <input class="field-value" id="formulaDamage" name="formulaDamage" type="text" value="{{formulaDamage}}" data-dtype="String" data-tooltip="{{damageFormula}}"/>
+                <input class="field-value" id="formulaDamage" name="formulaDamage" type="text" value="{{formulaDamage}}" data-dtype="String" data-tooltip="{{formulaDamageTooltip}}"/>
             </div>
         </div>   
     {{/if}}     

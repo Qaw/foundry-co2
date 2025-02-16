@@ -37,7 +37,9 @@ export class Resolver extends foundry.abstract.DataModel {
   resolve(actor, item, action, type) {
     switch (this.type) {
       case "melee":
-        this.melee(actor, item, action, type)
+      case "ranged":
+      case "magical":
+        this.attack(actor, item, action, type)
         return true
       case "auto":
         this.auto(actor, item, action)
@@ -57,8 +59,8 @@ export class Resolver extends foundry.abstract.DataModel {
    * @param {Action} action : l'action
    * @param {("attack"|"damage")} type : type de resolver
    */
-  async melee(actor, item, action, type) {
-    if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver - melee`), actor, item, action, type)
+  async attack(actor, item, action, type) {
+    if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver - attack`), actor, item, action, type)
 
     // TODO : Gérer la difficulté de l'action
     /*
@@ -76,12 +78,24 @@ export class Resolver extends foundry.abstract.DataModel {
     let skillFormula = this.skill.formula
     skillFormula = Utils.evaluateFormulaCustomValues(actor, skillFormula)
     let skillFormulaEvaluated = Roll.replaceFormulaData(skillFormula, actor.getRollData())
+    const skillFormulaTooltip = this.skill.formula
 
     let damageFormula = this.dmg.formula
     damageFormula = Utils.evaluateFormulaCustomValues(actor, damageFormula)
     let damageFormulaEvaluated = Roll.replaceFormulaData(damageFormula, actor.getRollData())
+    const damageFormulaTooltip = this.dmg.formula
 
-    await actor.rollAttack(item, { auto: false, type, actionName: action.label, skillFormula: skillFormulaEvaluated, damageFormula: damageFormulaEvaluated, critical, difficulty })
+    await actor.rollAttack(item, {
+      auto: false,
+      type,
+      actionName: action.label,
+      skillFormula: skillFormulaEvaluated,
+      damageFormula: damageFormulaEvaluated,
+      skillFormulaTooltip,
+      damageFormulaTooltip,
+      critical,
+      difficulty,
+    })
   }
 
   /**
@@ -96,8 +110,9 @@ export class Resolver extends foundry.abstract.DataModel {
     let damageFormula = this.dmg.formula
     damageFormula = Utils.evaluateFormulaCustomValues(actor, damageFormula)
     let damageFormulaEvaluated = Roll.replaceFormulaData(damageFormula, actor.getRollData())
+    const damageFormulaTooltip = this.dmg.formula
 
-    await actor.rollAttack(item, { auto: true, type: "damage", actionName: action.label, damageFormula: damageFormulaEvaluated })
+    await actor.rollAttack(item, { auto: true, type: "damage", actionName: action.label, damageFormula: damageFormulaEvaluated, damageFormulaTooltip })
   }
 
   /**

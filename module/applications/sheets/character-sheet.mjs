@@ -1,7 +1,8 @@
 import CoBaseActorSheet from "./base-actor-sheet.mjs"
+import { SYSTEM } from "../../config/system.mjs"
+import Utils from "../../utils.mjs"
 import { CoEditAbilitiesDialog } from "../../dialogs/edit-abilities-dialog.mjs"
 import { Action } from "../../models/schemas/action.mjs"
-import { SYSTEM } from "../../config/system.mjs"
 
 export default class COCharacterSheet extends CoBaseActorSheet {
   /** @override */
@@ -27,6 +28,8 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     context.visibleNonActivableActions = await this.actor.getVisibleNonActivableActions()
     context.visibleActivableTemporaireActions = await this.actor.getVisibleActivableTemporaireActions()
     context.visibleNonActivableNonTemporaireActions = await this.actor.getVisibleNonActivableNonTemporaireActions()
+
+    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`COCharacterSheet - context`), context)
     return context
   }
 

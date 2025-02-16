@@ -392,31 +392,6 @@ export default class CoBaseItemSheet extends ItemSheet {
     return this.item.update({ "system.modifiers": currentModifiers })
   }
 
-  // TODO : Vérifier si c'est optimal
-  /**
-   * For item of type Capacity or Equipment, add array for modifiers, conditions and resolvers when they are empty on the sheet
-   * @param {*} event
-   * @param {*} formData
-   */
-  _updateObject(event, formData) {
-    if (this.item.type === SYSTEM.ITEM_TYPE.capacity.id || this.item.type === SYSTEM.ITEM_TYPE.equipment.id) {
-      formData = foundry.utils.expandObject(formData)
-
-      // Parcours des actions pour ajouter les tableaux vides
-      if (!foundry.utils.isEmpty(formData.system.actions)) {
-        Object.values(formData.system.actions).forEach((action) => {
-          if (foundry.utils.isEmpty(action.modifiers)) action.modifiers = []
-          else action.modifiers = Object.values(action.modifiers)
-          if (foundry.utils.isEmpty(action.conditions)) action.conditions = []
-          else action.conditions = Object.values(action.conditions)
-          if (foundry.utils.isEmpty(action.resolvers)) action.resolvers = []
-          else action.resolvers = Object.values(action.resolvers)
-        })
-      }
-    }
-    super._updateObject(event, formData)
-  }
-
   /**
    * Manage the lock/unlock button on the sheet
    * @param {Event} event
