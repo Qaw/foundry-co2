@@ -279,8 +279,8 @@
       "recovery": "Dé de récupération",
       "pvLevel": "Points de vigueur par niveau",
       "noTarget": "Vous n'avez ciblé personne",
-      "critTooltip": "Laisser vide pour utiliser le critique calculé du joueur",
-      "formulaTooltip": "Vous pouvez utiliser : @for, @agi, @con, @int, @per, @vol, @cha, @atc/@mel (attaque melee), @atd/@ran (attaque distante),@atm/@mag (attaque magique), @def, @ini, @niv/@lvl"
+      "critTooltip": "Laisser vide pour utiliser la valeur par défaut du personnage",
+      "formulaTooltip": "Vous pouvez utiliser : @agi, @con, @for, @per, @cha, @int, @vol, @atc/@mel, @atd/@dis, @atm/@mag, @def, @ini, @niv, d4°, @toutrang[x], @rang, @rang[x,x,x,x,x]"
     },
     "properties": {
       "attack": "Attaque",
@@ -619,8 +619,8 @@
         "hint": "Affiche certaines valeurs techniques. Utile pour les développeurs exclusivement."
       },
       "varInit": {
-        "name": "Utiliser la règle de l'initiative variable",
-        "hint": "Le résultat d’un d6 explosif est ajouté à l'initiative : ajout et relance sur 6."
+        "name": "Utiliser la règle de l'initiative aléatoire",
+        "hint": "Le résultat d’un d6 explosif (ajout et relance sur 6) est ajouté à l'initiative."
       },
       "displayDifficulty": {
         "name": "Afficher la difficulté",

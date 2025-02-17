@@ -23,9 +23,9 @@
             </div>            
             {{#if (or (eq r.type @root.choiceResolverTypes.melee.id) (eq r.type @root.choiceResolverTypes.ranged.id) (eq r.type @root.choiceResolverTypes.magical.id)) }}
                 <div class="flexrow strong">
-                    <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.formulaTooltip"}}">{{localize "CO.ui.skillformula"}}</div>
-                    <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.critTooltip"}}">{{localize "CO.ui.crit"}}</div>
-                    <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.formulaTooltip"}}">{{localize "CO.ui.difficulty"}}</div>
+                    <div class="form-fields flex1 center" data-tooltip="{{localize 'CO.ui.formulaTooltip'}}" data-tooltip-direction="UP">{{localize "CO.ui.skillformula"}}</div>
+                    <div class="form-fields flex1 center" data-tooltip="{{localize 'CO.ui.critTooltip'}}" data-tooltip-direction="UP">{{localize "CO.ui.crit"}}</div>
+                    <div class="form-fields flex1 center" data-tooltip="{{localize 'CO.ui.formulaTooltip'}}" data-tooltip-direction="UP">{{localize "CO.ui.difficulty"}}</div>
                     <div class="form-fields flex1 center" >{{localize "CO.ui.dmg"}}</div>
                 </div>      
                 <div class="flexrow"> 
