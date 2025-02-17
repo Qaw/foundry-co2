@@ -86,6 +86,13 @@ export class Action extends foundry.abstract.DataModel {
     return this.parent.parent.name
   }
 
+  /**
+   * Retrieves the image associated with the action.
+   * If the current image is not the default "d20-highlight" icon, it returns the current image.
+   * Otherwise, it returns the image from the parent object.
+   *
+   * @returns {string} The URL of the action image.
+   */
   get actionImg() {
     if (this.img !== "icons/svg/d20-highlight.svg") return this.img
     else return this.parent.parent.img

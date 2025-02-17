@@ -280,7 +280,11 @@
       "pvLevel": "Points de vigueur par niveau",
       "noTarget": "Vous n'avez ciblé personne",
       "critTooltip": "Laisser vide pour utiliser la valeur par défaut du personnage",
-      "formulaTooltip": "Vous pouvez utiliser : @agi, @con, @for, @per, @cha, @int, @vol, @atc/@mel, @atd/@dis, @atm/@mag, @def, @ini, @niv, d4°, @toutrang[x], @rang, @rang[x,x,x,x,x]"
+      "formulaTooltip": "Vous pouvez utiliser : @agi, @con, @for, @per, @cha, @int, @vol, @atc/@mel, @atd/@dis, @atm/@mag, @def, @ini, @niv, d4°, @toutrang[x], @rang, @rang[x,x,x,x,x]",
+      "activate": "Activer",
+      "deactivate": "Désactiver",
+      "use": "Utiliser",
+      "editStats": "Editez vos caractéristiques"
     },
     "properties": {
       "attack": "Attaque",

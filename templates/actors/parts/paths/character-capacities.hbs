@@ -16,7 +16,7 @@
                         <h4><a class="item-control item-edit">{{capacity.name}}</a>{{#if capacity.system.isSpell}} * {{/if}}{{#if capacity.system.hasActionType}} ({{capacity.system.actionTypeShort}}){{/if}}</h4>
                     </div>
                     <div class="item-controls-3">
-                        <a class="item-chat chat" data-tooltip="Envoyer dans le chat" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
+                        <a class="item-chat chat" data-tooltip="{{localize 'CO.label.long.sendToChat'}}" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
                         {{#if ../unlocked}}
                             <a class="item-edit edit" data-tooltip="{{localize 'CO.label.long.edit'}}"><i class="fas fa-fw fa-edit"></i></a>
                             <a class="item-control item-delete" data-tooltip="{{localize 'CO.ui.remove'}}"><i class="fas fa-trash"></i></a>
