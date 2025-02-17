@@ -898,10 +898,11 @@ export default class COActor extends Actor {
     // Nombre de mains nécessaire pour l'objet que l'on veux équipper
     let neededHands = item.system.usage.twoHand ? 2 : 1
 
-    // Calcul du nombre de mains déjà utilisées
-    let itemsInHands = this.items.filter((item) => item.system.equipped)
-    let usedHands = 0
-    itemsInHands.forEach((item) => (usedHands += item.system.usage.twoHand ? 2 : 1))
+    // Calcul du nombre de mains déjà utilisées : on récupère les armes ou les boucliers équipés
+    let itemsInHands = this.items.filter(
+      (item) => (item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.weapon.id || item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.shield.id) && item.system.equipped,
+    )
+    let usedHands = itemsInHands.reduce((total, item) => total + (item.system.usage.twoHand ? 2 : 1), 0)
 
     return usedHands + neededHands <= 2
   }
