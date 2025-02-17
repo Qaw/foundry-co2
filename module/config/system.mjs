@@ -24,7 +24,15 @@ export const SYSTEM_ID = "co"
 export const SYSTEM_DESCRIPTION = "Chroniques Oubliées"
 
 export const MOVEMENT_UNIT = { m: "CO.label.long.meters", ft: "CO.label.long.feet" }
-export const SIZES = { tiny: "CO.size.tiny", small: "CO.size.small", medium: "CO.size.medium", large: "CO.size.large", huge: "CO.size.huge" }
+export const SIZES = {
+  tiny: "CO.size.tiny",
+  verSmall: "CO.size.verySmall",
+  small: "CO.size.small",
+  medium: "CO.size.medium",
+  large: "CO.size.large",
+  huge: "CO.size.huge",
+  colossal: "CO.size.colossal",
+}
 
 export const DICES = { d4: "d4", d6: "d6", d8: "d8", d10: "d10", d12: "d12", d20: "d20" }
 export const RECOVERY_DICES = { d6: "d6", d8: "d8", d10: "d10" }

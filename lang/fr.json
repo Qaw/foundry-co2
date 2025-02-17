@@ -600,10 +600,12 @@
     },
     "size": {
       "tiny": "Minuscule",
+      "verySmall": "Très petite",
       "small": "Petite",
       "medium": "Moyenne",
-      "large": "Grande",
-      "huge": "Gigantesque"
+      "large": "Grande",      
+      "huge": "Enorme",
+      "colossal": "Colossale"
     },
     "macro": {
       "missingTargetWarn": "Votre acteur contrôlé '{actor}' n'a pas de {type} avec le nom '{name}'.",

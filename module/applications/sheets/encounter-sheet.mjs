@@ -1,5 +1,6 @@
 import CoBaseActorSheet from "./base-actor-sheet.mjs"
 import { SYSTEM } from "../../config/system.mjs"
+import Utils from "../../utils.mjs"
 
 export default class COEncounterSheet extends CoBaseActorSheet {
   /** @override */
