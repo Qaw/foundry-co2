@@ -85,27 +85,27 @@
                                     {{#if action.properties.temporary}}
                                         <a class="item-control item-activate" >
                                             {{#if action.properties.enabled}}
-                                                <i class="fas fa-dice-d20 green toggle-action" style="font-size:16px" data-tooltip="{{localize 'CO.ui.deactivate'}}" data-action="unactivate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                                <i class="fas fa-dice-d20 green toggle-action" data-tooltip="{{localize 'CO.ui.deactivate'}}" data-action="unactivate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
                                             {{else}}
-                                                <i class="fas fa-dice-d20 gray toggle-action" style="font-size:16px" data-tooltip="{{localize 'CO.ui.activate'}}" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                                <i class="fas fa-dice-d20 gray toggle-action" data-tooltip="{{localize 'CO.ui.activate'}}" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
                                             {{/if}}
                                         </a>
                                     {{else}}
                                         {{#if (or (eq action.type 'melee') (eq action.type 'ranged'))}}
                                             <a class="item-control">
-                                                <i class="fas fa-dice-d20 green toggle-action" style="font-size:16px" data-tooltip="{{localize 'CO.label.long.attack'}}" data-action="activate" data-type="attack" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                                <i class="fas fa-dice-d20 green toggle-action" data-tooltip="{{localize 'CO.label.long.attack'}}" data-action="activate" data-type="attack" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
                                             </a> 
                                             <a class="item-control">
-                                                <i class="fa-regular fa-hand-back-fist green toggle-action" style="font-size:16px" data-tooltip="{{localize 'CO.label.long.damage'}}" data-action="activate" data-type="damage" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                                <i class="fa-regular fa-hand-back-fist green toggle-action" data-tooltip="{{localize 'CO.label.long.damage'}}" data-action="activate" data-type="damage" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
                                             </a> 
                                         {{else}}
                                             {{#if (eq action.type 'heal') }}
                                             <a class="item-control">
-                                                <i class="fa-solid green fa-flask-round-potion toggle-action" style="font-size:16px" data-tooltip="{{localize 'CO.ui.use'}}" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                                <i class="fa-solid green fa-flask-round-potion toggle-action" data-tooltip="{{localize 'CO.ui.use'}}" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
                                             </a>  
                                             {{else}}
                                             <a class="item-control">
-                                                <i class="fa-solid green fa-hand-back-point-up toggle-action" style="font-size:16px" data-tooltip="{{localize 'CO.ui.use'}}" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                                <i class="fa-solid green fa-hand-back-point-up toggle-action" data-tooltip="{{localize 'CO.ui.use'}}" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
                                             </a>  
                                             {{/if}}                                            
                                         {{/if}}             
