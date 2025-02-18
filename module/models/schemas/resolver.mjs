@@ -65,18 +65,18 @@ export class Resolver extends foundry.abstract.DataModel {
   async attack(actor, item, action, type) {
     if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver attack`), actor, item, action, type)
 
-    // TODO : Gérer la difficulté de l'action
-    /*
-    const diffToEvaluate = this.skill.difficulty.match("[0-9]{0,}[d|D][0-9]{1,}")    
-    if (diffToEvaluate) {
-      difficulty = Utils.evaluateWithDice(actor, this.skill.difficulty, item.uuid)
-    } else {
-      difficulty = Utils.evaluate(actor, this.skill.difficulty, item.uuid, true)
-    }
-    */
-    const difficulty = this.skill.difficulty
     const displayDifficulty = game.settings.get("co", "displayDifficulty")
     const showDifficulty = displayDifficulty === "all" || (displayDifficulty === "gm" && game.user.isGM)
+    let difficulty = this.skill.difficulty
+    // Si la difficulté dépend de la cible
+    let targets = []
+    if (difficulty.includes("target.def")) {
+      targets = this.acquireTargets(actor, "single", "all", action)
+    }
+    if (targets.length > 0) {
+      difficulty = difficulty.replace("@target.def", targets[0].actor.system.combat.def.base)
+    }
+    // TODO Gérer les autres valeurs pour @target
 
     const critical = this.skill.crit === "" ? actor.system.combat.crit.value : this.skill.crit
 
