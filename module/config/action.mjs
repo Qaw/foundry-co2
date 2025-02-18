@@ -162,16 +162,35 @@ export const RESOLVER_TYPE = Object.freeze({
 })
 
 export const RESOLVER_TARGET = Object.freeze({
+  none: {
+    id: "none",
+    label: "CO.resolver.target.none",
+  },
   self: {
     id: "self",
     label: "CO.resolver.target.self",
   },
-  character: {
-    id: "character",
-    label: "CO.resolver.target.character",
+  single: {
+    id: "single",
+    label: "CO.resolver.target.single",
   },
-  encounter: {
-    id: "encounter",
-    label: "CO.resolver.target.encounter",
+  multiple: {
+    id: "multiple",
+    label: "CO.resolver.target.multiple",
+  },
+})
+
+export const RESOLVER_SCOPE = Object.freeze({
+  allies: {
+    id: "allies",
+    label: "CO.resolver.scope.allies",
+  },
+  enemies: {
+    id: "enemies",
+    label: "CO.resolver.scope.enemies",
+  },
+  all: {
+    id: "all",
+    label: "CO.resolver.scope.all",
   },
 })

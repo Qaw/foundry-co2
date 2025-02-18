@@ -28,7 +28,7 @@ export default class Utils {
   /**
    * Retrieves the localized name of an ability.
    *
-   * @param {string} ability - The ability identifier.
+   * @param {string} ability The ability identifier.
    * @returns {string} The localized name of the ability.
    */
   static getAbilityName(ability) {
@@ -118,12 +118,10 @@ export default class Utils {
     // Cas @rank
     let regexSimple = /@rank/
     if (regexSimple.test(content)) {
-      console.log("Cas simple détecté : @rank")
       content = content.replace("@rank", rank)
     }
     regexSimple = /@rang/
     if (regexSimple.test(content)) {
-      console.log("Cas simple détecté : @rang")
       content = content.replace("@rang", rank)
     }
 

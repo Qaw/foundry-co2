@@ -826,7 +826,7 @@ export default class COActor extends Actor {
   }
 
   // FIXME Finir la méthode
-  async rollHeal(item, { actionName = "", healFormula = undefined, damageFormula = undefined } = {}) {
+  async rollHeal(item, { actionName = "", healFormula = undefined, targetType = SYSTEM.RESOLVER_TARGET.none.id, targets = [] } = {}) {
     let roll = new Roll(healFormula)
     await roll.roll()
     await roll.toMessage()
@@ -854,7 +854,7 @@ export default class COActor extends Actor {
   async _toggleItemFieldAndActions(itemId, fieldName) {
     let item = this.items.get(itemId)
     let fieldValue = item.system[fieldName]
-    console.log(`fieldValue : ${fieldValue} fieldName : ${fieldName} itemId : ${itemId}`)
+    // console.log(`fieldValue : ${fieldValue} fieldName : ${fieldName} itemId : ${itemId}`)
     await this.updateEmbeddedDocuments("Item", [{ _id: itemId, [`system.${fieldName}`]: !fieldValue }])
     if (item.actions.length > 0) {
       item.toggleActions()

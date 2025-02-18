@@ -38,7 +38,9 @@
       "profilAlreadyExist": "Vous avez déjà un profil.",
       "NotEnoughFreeHands": "Pas suffisament de mains libres pour équiper l'objet.",
       "TooMuchSpentXP": "Le montant d'XP dépensé est supérieur au maximum autorisé.",
-      "XPLeftToSpend": "Il vous reste des points de capacités à dépenser."
+      "XPLeftToSpend": "Il vous reste des points de capacités à dépenser.",
+      "warningIncorrectTargets": "Vous ne pouvez désigner que {number} cible(s) pour l'action {action} !",
+      "warningCannotTargetSelf": "Vous ne pouvez pas cibler vous-même !"
     },
     "tooltip": {
       "formulaAttack": "Formule d'attaque (sans le dé)",
@@ -494,11 +496,20 @@
         "heal": "Soin"
       },
       "target": {
+        "none": "Aucune",
         "self": "Soi-même",
-        "character": "Personnage",
-        "encounter": "Adversaire"
+        "single": "Unique",
+        "multiple": "Multiple",
+        "number": "Nombre"
       },
-      "isMultiTarget": "Multicibles"
+      "scope": {
+        "none": "Aucune",
+        "self": "Soi-même",
+        "allies": "Alliés",
+        "enemies": "Ennemis",
+        "all": "Tout le monde",
+        "title": "Catégorie"
+      }
     },
     "itemTypes": {
       "item": "Objet",
