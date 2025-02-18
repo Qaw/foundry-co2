@@ -754,7 +754,7 @@ export default class COActor extends Actor {
       malus: malus,
       skillValue: foundry.utils.getProperty(this, `system.abilities.${skillId}`).value,
       critical: critical,
-      superior: superior,
+      superior: foundry.utils.getProperty(this, `system.abilities.${skillId}`).superior,
       weakened: weakened,
       difficulty: difficulty,
       showDifficulty: showDifficulty,
