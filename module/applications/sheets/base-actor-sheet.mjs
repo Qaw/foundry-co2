@@ -2,6 +2,34 @@ import CoChat from "../../chat.mjs"
 import { SYSTEM } from "../../config/system.mjs"
 
 export default class CoBaseActorSheet extends ActorSheet {
+  /**
+   * Different sheet modes.
+   * @enum {number}
+   */
+  static SHEET_MODES = { EDIT: 0, PLAY: 1 }
+
+  /**
+   * The current sheet mode.
+   * @type {number}
+   */
+  _sheetMode = this.constructor.SHEET_MODES.PLAY
+
+  /**
+   * Is the sheet currently in 'Play' mode?
+   * @type {boolean}
+   */
+  get isPlayMode() {
+    return this._sheetMode === this.constructor.SHEET_MODES.PLAY
+  }
+
+  /**
+   * Is the sheet currently in 'Edit' mode?
+   * @type {boolean}
+   */
+  get isEditMode() {
+    return this._sheetMode === this.constructor.SHEET_MODES.EDIT
+  }
+
   /** @override */
   getData(options) {
     const context = super.getData(options)
@@ -20,8 +48,8 @@ export default class CoBaseActorSheet extends ActorSheet {
     context.features = this.actor.features
     context.actions = this.actor.actions
     context.inventory = this.actor.inventory
-    context.unlocked = this.actor.isUnlocked
-    context.locked = !this.actor.isUnlocked
+    context.unlocked = this.isEditMode
+    context.locked = this.isPlayMode
     // Select options
     context.choiceMoveUnit = SYSTEM.MOVEMENT_UNIT
 
@@ -59,10 +87,9 @@ export default class CoBaseActorSheet extends ActorSheet {
    */
   async _onSheetChangelock(event) {
     event.preventDefault()
-    let flagData = await this.actor.getFlag(game.system.id, "SheetUnlocked")
-    if (flagData) await this.actor.unsetFlag(game.system.id, "SheetUnlocked")
-    else await this.actor.setFlag(game.system.id, "SheetUnlocked", "SheetUnlocked")
-    this.actor.sheet.render(true)
+    const modes = this.constructor.SHEET_MODES
+    this._sheetMode = this.isEditMode ? modes.PLAY : modes.EDIT
+    this.render()
   }
 
   /**

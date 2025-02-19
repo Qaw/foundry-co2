@@ -26,6 +26,34 @@ export default class CoBaseItemSheet extends ItemSheet {
     return "systems/co/templates/items/item-sheet.hbs"
   }
 
+  /**
+   * Different sheet modes.
+   * @enum {number}
+   */
+  static SHEET_MODES = { EDIT: 0, PLAY: 1 }
+
+  /**
+   * The current sheet mode.
+   * @type {number}
+   */
+  _sheetMode = this.constructor.SHEET_MODES.PLAY
+
+  /**
+   * Is the sheet currently in 'Play' mode?
+   * @type {boolean}
+   */
+  get isPlayMode() {
+    return this._sheetMode === this.constructor.SHEET_MODES.PLAY
+  }
+
+  /**
+   * Is the sheet currently in 'Edit' mode?
+   * @type {boolean}
+   */
+  get isEditMode() {
+    return this._sheetMode === this.constructor.SHEET_MODES.EDIT
+  }
+
   /** @inheritdoc */
   async _onDrop(event) {
     const data = TextEditor.getDragEventData(event)
@@ -117,8 +145,8 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.modifiers = this.item.system.modifiers
     context.enrichedDescription = await TextEditor.enrichHTML(this.item.system.description, { async: true })
     context.tags = this.item.tags
-    context.unlocked = this.item.isUnlocked
-    context.locked = !this.item.isUnlocked
+    context.unlocked = this.isEditMode
+    context.locked = this.isPlayMode
 
     context.choiceActionTypes = SYSTEM.ACTION_TYPES
     context.choiceConditionObjects = SYSTEM.CONDITION_OBJECTS
@@ -399,9 +427,8 @@ export default class CoBaseItemSheet extends ItemSheet {
    */
   async _onSheetChangelock(event) {
     event.preventDefault()
-    let flagData = await this.item.getFlag(game.system.id, "SheetUnlocked")
-    if (flagData) await this.item.unsetFlag(game.system.id, "SheetUnlocked")
-    else await this.item.setFlag(game.system.id, "SheetUnlocked", "SheetUnlocked")
-    this.item.sheet.render(true)
+    const modes = this.constructor.SHEET_MODES
+    this._sheetMode = this.isEditMode ? modes.PLAY : modes.EDIT
+    this.render()
   }
 }
