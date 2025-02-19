@@ -1,6 +1,7 @@
 import { SYSTEM } from "../config/system.mjs"
 import { BaseValue } from "./schemas/base-value.mjs"
 import ActorData from "./actor.mjs"
+import Utils from "../utils.mjs"
 
 export default class EncounterData extends ActorData {
   static defineSchema() {
@@ -56,23 +57,60 @@ export default class EncounterData extends ActorData {
   prepareDerivedData() {
     super.prepareDerivedData()
 
+    this._prepareAbilities()
+
+    this._prepareHPMax()
+
     for (const [key, skill] of Object.entries(this.combat)) {
       console.debug(skill)
       // Somme du bonus de la feuille et du bonus des effets
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr)
 
-      if (key === SYSTEM.COMBAT.INIT) {
+      if (key === SYSTEM.COMBAT.init.id) {
         skill.value = skill.base + bonuses
       }
 
-      if (key === SYSTEM.COMBAT.DEF) {
+      if (key === SYSTEM.COMBAT.def.id) {
         skill.value = skill.base + bonuses
       }
 
-      if (key === SYSTEM.COMBAT.DR) {
+      if (key === SYSTEM.COMBAT.dr.id) {
         skill.value = skill.base + bonuses
       }
     }
+  }
+
+  /**
+   * Calcule la valeur et le mod des caractéristiques <br/>
+   *              Valeur = base + bonus + modificateurs <br/>
+   *              bonus est à la somme du bonus de la fiche et du champ dédié aux Active Effets <br/>
+   *              modificateurs est la somme de tous les modificateurs modifiant la caractéristique, quelle que soit la source
+   */
+  _prepareAbilities() {
+    for (const [key, ability] of Object.entries(this.abilities)) {
+      // Somme du bonus de la feuille et du bonus des actives effects
+      const bonuses = Object.values(ability.bonuses).reduce((prev, curr) => prev + curr)
+
+      // Prise en compte d'un modifier qui donne un dé bonus
+      if (this.bonusDiceModifiers) {
+        let bonusDice = this.bonusDiceModifiers.find((m) => m.target === key)
+        if (bonusDice) {
+          ability.superior = true
+        } else {
+          ability.superior = false
+        }
+      }
+
+      ability.value = ability.base + bonuses
+      ability.tooltipValue = Utils.getTooltip(Utils.getAbilityName(key), ability.base).concat(Utils.getTooltip("Bonus", bonuses))
+    }
+  }
+
+  _prepareHPMax() {
+    const hpMaxBonuses = Object.values(this.attributes.hp.bonuses).reduce((prev, curr) => prev + curr)
+
+    this.attributes.hp.max = this.attributes.hp.base + hpMaxBonuses
+    this.attributes.hp.tooltip = Utils.getTooltip("Base ", this.attributes.hp.base).concat(Utils.getTooltip("Bonus", hpMaxBonuses))
   }
 
   // #region accesseurs

@@ -427,6 +427,7 @@ export default class COActor extends Actor {
     }
   }
 
+  // FIXME N'a pas l'air d'être utilisée
   toggleSuperior(ability) {
     return (this.system.abilities[ability].superior = !this.system.abilities[ability].superior)
   }
