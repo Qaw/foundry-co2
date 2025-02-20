@@ -67,16 +67,18 @@ export class Resolver extends foundry.abstract.DataModel {
 
     const displayDifficulty = game.settings.get("co", "displayDifficulty")
     const showDifficulty = displayDifficulty === "all" || (displayDifficulty === "gm" && game.user.isGM)
+
     let difficulty = this.skill.difficulty
     // Si la difficulté dépend de la cible
     let targets = []
-    if (difficulty.includes("target.def")) {
+    if (difficulty.includes("@target")) {
       targets = this.acquireTargets(actor, "single", "all", action)
+      if (targets.length > 0) {
+        // Enlève le target. de la difficulté
+        difficulty = difficulty.replace(/@.*\./, "@")
+        difficulty = Roll.replaceFormulaData(difficulty, targets[0].actor.getRollData())
+      }
     }
-    if (targets.length > 0) {
-      difficulty = difficulty.replace("@target.def", targets[0].actor.system.combat.def.base)
-    }
-    // TODO Gérer les autres valeurs pour @target
 
     const critical = this.skill.crit === "" ? actor.system.combat.crit.value : this.skill.crit
 
