@@ -523,7 +523,6 @@ export default class COActor extends Actor {
     let itemData = profile.toObject()
     itemData = itemData instanceof Array ? itemData : [itemData]
     const newProfile = await this.createEmbeddedDocuments("Item", itemData)
-    // Console.info(Utils.log("Profile created", newProfile));
 
     if (newProfile[0].system.modifiers.length > 0) {
       // Update the source of all modifiers with the id of the new embedded profile created
@@ -595,13 +594,13 @@ export default class COActor extends Actor {
   /**
    * Add a capacity as an embedded item
    * @param {COItem} capacity
-   * @param {UUID} pathUuid uuid of the Path if the capacity is linked to a path
+   * @param {UUID} pathUuid Uuid of the Path if the capacity is linked to a path
    * @returns {Promise<string>} A promise that resolves to the UUID of the newly created capacity.
    */
   async addCapacity(capacity, pathUuid) {
     let capacityData = capacity.toObject()
     if (pathUuid !== null) capacityData.system.path = pathUuid
-    // Sinon le path n'est plus null mais vaut ""
+    // Sinon le path n'est plus null mais vaut "", il faut donc le mettre à null
     else capacityData.system.path = null
 
     // Learned the capacity if the capacity is not linked to a path
@@ -609,15 +608,20 @@ export default class COActor extends Actor {
 
     const newCapacity = await this.createEmbeddedDocuments("Item", [capacityData])
 
-    // Update the source of all actions
+    // Update the source of all actions and all modifiers of the actions
     if (newCapacity[0].actions.length > 0) {
       const actions = newCapacity[0].toObject().system.actions
       for (const action of actions) {
         action.source = newCapacity[0].uuid
+        // Update the source of all modifiers if there are some
+        if (action.modifiers.length > 0) {
+          for (const modifier of action.modifiers) {
+            modifier.source = newCapacity[0].uuid
+          }
+        }
       }
 
-      const updateActions = { _id: newCapacity[0].id, "system.actions": actions }
-      await this.updateEmbeddedDocuments("Item", [updateActions])
+      await newCapacity[0].update({ "system.actions": actions })
     }
 
     return newCapacity[0].uuid

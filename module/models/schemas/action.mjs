@@ -145,7 +145,7 @@ export class Action extends foundry.abstract.DataModel {
 
   /**
    * Update the source of the action and of all the modifiers
-   * @param {*} source
+   * @param {*} source UUID of the source
    */
   updateSource(source) {
     this.source = source
