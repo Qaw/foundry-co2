@@ -23,7 +23,30 @@
                 </div>
                 <div class="form-fields flex1">
                     <select name="system.actions.{{../idx}}.modifiers.{{id}}.target" data-type="String" style="width:100%">
-                        {{selectOptions @root.choiceModifierTargets selected=m.target localize=true}}
+                        {{#if (eq m.subtype 'ability')}}
+                            {{selectOptions @root.choiceModifierAbilityTargets selected=m.target localize=true}}
+                        {{/if}}
+                        {{#if (eq m.subtype 'combat')}}
+                            {{selectOptions @root.choiceModifierCombatTargets selected=m.target localize=true}}
+                        {{/if}}
+                        {{#if (eq m.subtype 'attribute')}}
+                            {{selectOptions @root.choiceModifierAttributeTargets selected=m.target localize=true}}
+                        {{/if}}                        
+                        {{#if (eq m.subtype 'resource')}}
+                            {{selectOptions @root.choiceModifierResourceTargets selected=m.target localize=true}}
+                        {{/if}}                        
+                        {{#if (eq m.subtype 'skill')}}
+                            {{selectOptions @root.choiceModifierSkillTargets selected=m.target localize=true}}
+                        {{/if}}
+                        {{#if (eq m.subtype 'state')}}
+                            {{selectOptions @root.choiceModifierStateTargets selected=m.target localize=true}}
+                        {{/if}}
+                        {{#if (eq m.subtype 'bonusDice')}}
+                            {{selectOptions @root.choiceModifierBonusDiceTargets selected=m.target localize=true}}
+                        {{/if}}
+                        {{#if (eq m.subtype 'malusDice')}}
+                            {{selectOptions @root.choiceModifierMalusDiceTargets selected=m.target localize=true}}
+                        {{/if}}        
                     </select>
                 </div>
                 <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.modifiers.{{id}}.value" type="text" value="{{m.value}}" data-dtype="String" /></div>

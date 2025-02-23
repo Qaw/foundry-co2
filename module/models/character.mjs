@@ -157,6 +157,15 @@ export default class CharacterData extends ActorData {
   }
 
   /**
+   * Retrieves the malusDice modifiers for the character.
+   *
+   * @returns {Array} An array of state modifiers.
+   */
+  get malusDiceModifiers() {
+    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.malusDice.id)
+  }
+
+  /**
    * Retrieves an array of modifiers from various sources associated with the character.
    * The sources include features, profiles, capacities, and equipment.
    * Each source is checked for enabled modifiers of the specified type and subtype.
