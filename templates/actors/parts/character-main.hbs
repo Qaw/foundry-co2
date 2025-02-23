@@ -74,7 +74,7 @@
         <ol class="actions-container items-container">
             <ol class="item-list">
                 {{#each visibleActivableActions as |action id|}}
-                {{!log (concat "Chroniques Oubliées | action " id) action}}
+                {{log (concat "Chroniques Oubliées | action " id) action}}
                         <li class="item flexrow action"  draggable="true" data-item-uuid="{{action.source}}" data-source="{{action.source}}" data-indice="{{action.indice}}"   {{#if action.properties.temporary}}{{#unless action.properties.enabled}}style="opacity: 60%"{{/unless}}{{/if}}>
                             <div class="item-name flexrow">
                                 <div class="item-image" style="background-image: url('{{{actionImg}}}')"></div>
@@ -83,7 +83,7 @@
                             <div class="item-controls-3">
                                 {{#if action.properties.activable}}
                                     {{#if action.properties.temporary}}
-                                        <a class="item-control item-activate" >
+                                        <a class="item-control" >
                                             {{#if action.properties.enabled}}
                                                 <i class="fas fa-dice-d20 green toggle-action" data-tooltip="{{localize 'CO.ui.deactivate'}}" data-action="unactivate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
                                             {{else}}

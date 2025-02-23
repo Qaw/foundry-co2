@@ -404,16 +404,9 @@ export default class COActor extends Actor {
 
     // Action avec une durée
     if (item.system.actions[indice].properties.temporary) {
-      let newActions = foundry.utils.deepClone(item.system.actions)
-      if (state) {
-        newActions[indice].properties.enabled = true
-      } else {
-        newActions[indice].properties.enabled = false
-      }
-
-      const updateData = { _id: item.id, "system.actions": newActions }
-
-      await this.updateEmbeddedDocuments("Item", [updateData])
+      const newActions = item.system.toObject().actions
+      newActions[indice].properties.enabled = state
+      await item.update({ "system.actions": newActions })
     }
     // Action instantanée
     else {
