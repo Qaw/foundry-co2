@@ -215,6 +215,7 @@ export default class COCharacterSheet extends CoBaseActorSheet {
 
   /** @inheritdoc */
   async _onDrop(event) {
+    // On récupère le type et l'uuid de l'item
     const data = TextEditor.getDragEventData(event)
     const actor = this.actor
 
@@ -242,6 +243,7 @@ export default class COCharacterSheet extends CoBaseActorSheet {
   async _onDropItem(event, data) {
     event.preventDefault()
     if (!this.actor.isOwner) return false
+    // On récupère l'item de type COItem
     const item = await Item.implementation.fromDropData(data)
 
     switch (item.type) {

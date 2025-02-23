@@ -37,6 +37,45 @@
     </div>
 </div>
 
+<!-- MODIFIERS -->
+<h3 class="form-header"><a class="section-toggle">{{localize "CO.label.long.modifiers"}}</a></h3>
+<div class="modifiers-container foldable">
+  {{#if modifiers}}
+    <div class="flexrow">
+      <div class="form-fields flex1 center">{{localize "CO.ui.type"}}</div>
+      <div class="form-fields flex1 center">{{localize "CO.ui.target"}}</div>
+      <div class="form-fields flex1 center">{{localize "CO.ui.value"}}</div>
+      <div class="form-fields flex0"></div>
+    </div>
+    {{#each modifiers as |m id|}}
+      <div class="modifier flexrow" data-item-id="{{id}}" data-item-type="modifier">
+        <input name="system.modifiers.{{id}}.type" type="hidden" value="{{m.type}}" data-dtype="String" />
+        <input name="system.modifiers.{{id}}.source" type="hidden" value="{{m.source}}" data-dtype="String" />
+        <div class="form-fields flex1">
+          <select name="system.modifiers.{{id}}.subtype" data-type="String" style="width:100%">
+            {{selectOptions @root.choiceModifierSubtypes selected=m.subtype localize=true}}
+          </select>
+        </div>
+        <div class="form-fields flex1">
+          <select name="system.modifiers.{{id}}.target" data-type="String" style="width:100%">
+            {{selectOptions @root.choiceModifierTargets selected=m.target localize=true}}
+          </select>
+        </div>
+        <div class="form-fields flex1 center"><input name="system.modifiers.{{id}}.value" type="text" value="{{m.value}}" data-dtype="String" /></div>
+        <div class="form-fields flex0"><span class="modifier-delete"><i class="fas fa-trash"></i></span></div>
+      </div>
+    {{/each}}
+  {{else}}
+    <div class="flexrow">
+      <span>Aucun modificateur.</span>
+    </div>
+  {{/if}}
+  <div class="flexrow">
+    <button class="modifier-add center" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></button>
+  </div>
+</div>
+
+<!-- MARTIAL TRAININGS -->
 <h3 class="form-header"><a class="section-toggle">{{localize "CO.label.long.martialTrainings"}}</a></h3>
 <div class="proficiencies-form foldable">
     {{#if unlocked}}        

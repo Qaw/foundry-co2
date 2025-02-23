@@ -517,7 +517,8 @@ export default class COActor extends Actor {
 
   /**
    * Create a profile, and the linked modifiers and paths if they exist
-   * @param {*} profile
+   * @param {COItem} profile
+   * @returns {Promise<string>} A promise that resolves to the UUID of the newly created profile.
    */
   async addProfile(profile) {
     let itemData = profile.toObject()
@@ -525,17 +526,14 @@ export default class COActor extends Actor {
     const newProfile = await this.createEmbeddedDocuments("Item", itemData)
 
     if (newProfile[0].system.modifiers.length > 0) {
-      // Update the source of all modifiers with the id of the new embedded profile created
-      let newModifiers = Object.values(foundry.utils.deepClone(newProfile[0].system.modifiers)).map(
-        (m) => new Modifier({ source: m.source, type: m.type, subtype: m.subtype, target: m.target, value: m.value }),
-      )
-      newModifiers.forEach((modifier) => {
-        modifier.updateSource(newProfile[0].id)
-      })
+      // Update the source of all modifiers with the uuid of the new embedded profile created
+      const newModifiers = newProfile[0].system.toObject().modifiers
 
-      const updateModifiers = { _id: newProfile[0].id, "system.modifiers": newModifiers }
+      for (const modifier of newModifiers) {
+        modifier.source = newProfile[0].uuid
+      }
 
-      await this.updateEmbeddedDocuments("Item", [updateModifiers])
+      await newProfile[0].update({ "system.modifiers": newModifiers })
     }
 
     // Create all Paths
@@ -552,8 +550,9 @@ export default class COActor extends Actor {
     }
 
     // Update the paths of the profile with ids of created paths
-    const updatePaths = { _id: newProfile[0].id, "system.paths": updatedPathsUuids }
-    await this.updateEmbeddedDocuments("Item", [updatePaths])
+    await newProfile[0].update({ "system.paths": updatedPathsUuids })
+
+    return newProfile[0].uuid
   }
 
   /**
@@ -585,8 +584,7 @@ export default class COActor extends Actor {
     }
 
     // Update the array of capacities of the path with ids of created path
-    const updateData = { _id: newPath[0].id, "system.capacities": updatedCapacitiesUuids }
-    await this.updateEmbeddedDocuments("Item", [updateData])
+    await newPath[0].update({ "system.capacities": updatedCapacitiesUuids })
 
     return newPath[0].uuid
   }
