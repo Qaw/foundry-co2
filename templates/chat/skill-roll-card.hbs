@@ -1,46 +1,45 @@
-{{log 'skill-roll-card' this}}
-<div class="chat-card" data-actor-id="{{actorId}}">    
+{{log "skill-roll-card" this}}
+<div class="co chat-card roll-card skill-card" data-actor-id="{{actor.id}}">
+  <header class="card-header flexcol">
+    <strong>{{flavor}}</strong>
     {{#if showDifficulty}}
-        {{#if isSuccess}}
-            {{#if isCritical}}
-                <h2 class="success critical"><i class="fas fa-check-double"></i>&nbsp;{{localize "CO.roll.critical"}}...</h2>
-            {{else}}
-                <h2 class="success"><i class="fas fa-check"></i>&nbsp;{{localize "CO.roll.success"}}...</h2>
-            {{/if}}
-        {{/if}}
+      <label class="display-difficulty">{{localize "CO.label.long.difficulty"}} : <strong class="display-difficulty">{{difficulty}}</strong></label>
+    {{/if}}
+  </header>
 
-        {{#if isFailure}}
-            {{#if isFumble}}
-                <h2 class="failure fumble"><i class="fas fa-skull-crossbones"></i>&nbsp;{{localize "CO.roll.fumble"}}...</h2>
-            {{else}}
-                <h2 class="failure"><i class="fas fa-times"></i>&nbsp;{{localize "CO.roll.failure"}}...</h2>
-            {{/if}}
-        {{/if}}
-        <strong>{{label}}</strong><br>
-        <label class="display-difficulty">{{localize "CO.label.long.difficulty"}} : </label><strong class="display-difficulty">{{difficulty}}</strong>
-    {{else}}
+  <div class="card-content">
+    <p>Formule : {{formula}}</p>
+    <h4 class="dice-total">Total : {{total}}</h4>
+    {{#if showDifficulty}}
+      {{#if isSuccess}}
         {{#if isCritical}}
-            <h2 class="standard critical"><i class="fas fa-check-double"></i>&nbsp;{{localize "CO.roll.critical"}}...</h2>
+          <span class="success critical"><i class="fas fa-check-double"></i>&nbsp;{{localize "CO.roll.critical"}}.</span>
         {{else}}
-            {{#if isFumble}}
-                <h2 class="failure fumble"><i class="fas fa-skull-crossbones"></i>&nbsp;{{localize "CO.roll.fumble"}}...</h2>
-            {{else}}
-                <h2 class="standard"><i class="fas fa-dice-d20"></i>&nbsp;{{localize "CO.roll.skillcheck"}}</h2>
-            {{/if}}
+          <span class="success"><i class="fas fa-check"></i>&nbsp;{{localize "CO.roll.success"}}</span>
         {{/if}}
-        <h3><strong>{{label}}</strong>
+      {{/if}}
+
+      {{#if isFailure}}
+        {{#if isFumble}}
+          <span class="failure fumble"><i class="fas fa-skull-crossbones"></i>&nbsp;{{localize "CO.roll.fumble"}}.</span>
+        {{else}}
+          <span class="failure"><i class="fas fa-times"></i>&nbsp;{{localize "CO.roll.failure"}}.</span>
+        {{/if}}
+      {{/if}}
+    {{else}}
+      {{#if isCritical}}
+        <span class="standard critical"><i class="fas fa-check-double"></i>&nbsp;{{localize "CO.roll.critical"}}.</span>
+      {{/if}}
+      {{#if isFumble}}
+        <span class="failure fumble"><i class="fas fa-skull-crossbones"></i>&nbsp;{{localize "CO.roll.fumble"}}.</span>
+      {{/if}}
     {{/if}}
-    <div>
-        <p>Formule : {{formula}}</p>        
+  </div>
+
+  <footer class="card-footer">
+    <div class="dice-result">
+        {{{tooltip}}}
     </div>
-        
-    <div class="tooltip">
-        <p>Résultat : {{total}}</p>
-        <span class="tooltiptext">{{{tooltip}}}</span>
-    </div>
-    {{#if hasDescription}}
-            <h4>
-                <pre class="rollDescr-line">{{{description}}}</pre>
-            </h4>
-    {{/if}}
+  </footer>
+
 </div>

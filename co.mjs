@@ -50,6 +50,7 @@ Hooks.once("init", async function () {
 
   CONFIG.Actor.documentClass = documents.COActor
   CONFIG.Item.documentClass = documents.COItem
+  CONFIG.ChatMessage.documentClass = documents.COChatMessage
 
   // Dice system configuration
   CONFIG.Dice.rolls.push(documents.CORoll, documents.COSkillRoll, documents.COAttackRoll)

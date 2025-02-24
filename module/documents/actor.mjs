@@ -761,7 +761,11 @@ export default class COActor extends Actor {
     let roll = await COSkillRoll.prompt(dialogContext, { withDialog: withDialog })
     if (!roll) return null
 
-    await roll.toMessage()
+    // Prépare le message de résultat
+    const speaker = ChatMessage.getSpeaker({ actor: this, scene: canvas.scene })
+    const messageData = { speaker }
+
+    await roll.toMessage(messageData)
   }
 
   // Jet d'attaque et jet de dégâts

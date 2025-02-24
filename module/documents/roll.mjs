@@ -104,10 +104,12 @@ export class COSkillRoll extends CORoll {
     rollContext.label = dialogContext.label
     if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll - rollContext`), rollContext)
 
-    const formula = Utils.evaluateFormulaCustomValues(
-      dialogContext.actor,
-      `${rollContext.dice}+${parseInt(rollContext.skillValue)}+${parseInt(rollContext.bonus)}+${parseInt(rollContext.malus)}+${parseInt(rollContext.totalSkillBonuses)}`,
-    )
+    let formula = `${rollContext.dice}+${parseInt(rollContext.skillValue)}`
+    if (parseInt(rollContext.bonus) !== 0) formula += `+${parseInt(rollContext.bonus)}`
+    if (parseInt(rollContext.malus) !== 0) formula += `+${parseInt(rollContext.malus)}`
+    if (parseInt(rollContext.totalSkillBonuses) !== 0) formula += `+${parseInt(rollContext.totalSkillBonuses)}`
+
+    formula = Utils.evaluateFormulaCustomValues(dialogContext.actor, formula)
 
     const roll = new this(formula, dialogContext.actor.getRollData())
     await roll.evaluate()
@@ -117,15 +119,15 @@ export class COSkillRoll extends CORoll {
     const isCritical = result >= rollContext.critrange || result === 20
     const isFumble = result === 1
     const showDifficulty = !!rollContext.difficulty
-    let isSuccess = false
+    let isSuccess
     if (rollContext.difficulty) {
       isSuccess = roll.total >= rollContext.difficulty
     }
-    const toolTip = new Handlebars.SafeString(await roll.getTooltip())
+    const toolTip = await roll.getTooltip()
 
     roll.options = {
       label: dialogContext.label,
-      actorId: dialogContext.actor.id,
+      actor: dialogContext.actor,
       isSuccess,
       isCritical,
       isFumble,
@@ -155,8 +157,9 @@ export class COSkillRoll extends CORoll {
 
   async _getChatCardData(flavor, isPrivate) {
     return {
-      actorId: this.options.actorId,
-      label: this.options.label,
+      actor: this.options.actor,
+      speaker: ChatMessage.getSpeaker({ actor: this.options.actor, scene: canvas.scene }),
+      flavor: this.options.label,
       formula: isPrivate ? "???" : this.formula,
       showDifficulty: this.options.showDifficulty,
       difficulty: this.options.difficulty,
@@ -167,7 +170,6 @@ export class COSkillRoll extends CORoll {
       total: isPrivate ? "?" : Math.round(this.total * 100) / 100,
       user: game.user.id,
       tooltip: isPrivate ? "" : await this.getTooltip(),
-      toolTip: this.options.toolTip,
     }
   }
 }
