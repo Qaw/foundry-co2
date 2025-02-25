@@ -33,7 +33,7 @@ export class COSkillRoll extends CORoll {
    * Affiche une boîte de dialogue pour lancer un jet de compétence et retourne le résultat du jet.
    *
    * @param {Object} dialogContext Le contexte de la boîte de dialogue, contenant des informations comme l'acteur et le label.
-   * @param {Object} [options={}] Options supplémentaires pour le jet de compétence.
+   * @param {Object} [options={}] Options supplémentaires pour le jet de compétence. Options.withDialog
    * @returns {Promise<Object|null>} Le résultat du jet de compétence ou null si la boîte de dialogue a été annulée.
    *
    * @example
@@ -47,82 +47,102 @@ export class COSkillRoll extends CORoll {
    * }
    */
   static async prompt(dialogContext, options = {}) {
-    const content = await renderTemplate(this.DIALOG_TEMPLATE, dialogContext)
+    const withDialog = options.withDialog ?? true
+    let formula
+    let rollContext
 
-    const rollContext = await foundry.applications.api.DialogV2.wait({
-      window: { title: dialogContext.label },
-      position: { width: "auto" },
-      classes: this.ROLL_CSS,
-      content,
-      rejectClose: false,
-      buttons: [
-        {
-          action: "cancel",
-          label: game.i18n.localize("CO.ui.cancel"),
-          icon: "fas fa-times",
-          callback: () => false,
-        },
-        {
-          action: "ok",
-          label: game.i18n.localize("CO.ui.submit"),
-          icon: "fas fa-check",
-          default: true,
-          callback: (event, button, dialog) => {
-            if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll prompt - Callback`), event, button, dialog)
-            const output = Array.from(button.form.elements).reduce((obj, input) => {
-              if (input.name) obj[input.name] = input.value
-              return obj
-            }, {})
-            if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll prompt - Output`), output)
-            /* 
-            {
-                "dice": "1d20",
-                "skillValue": "+4",
-                "critrange": "20",
-                "bonus": "+0",
-                "malus": "+0",
-                "difficulty": "10",
-                "totalSkillBonuses": "0",
-                "label": "Test de compétence  Constitution"
-            }
-            */
-            return output
+    if (withDialog) {
+      const content = await renderTemplate(this.DIALOG_TEMPLATE, dialogContext)
+
+      rollContext = await foundry.applications.api.DialogV2.wait({
+        window: { title: dialogContext.label },
+        position: { width: "auto" },
+        classes: this.ROLL_CSS,
+        content,
+        rejectClose: false,
+        buttons: [
+          {
+            action: "cancel",
+            label: game.i18n.localize("CO.ui.cancel"),
+            icon: "fas fa-times",
+            callback: () => false,
           },
+          {
+            action: "ok",
+            label: game.i18n.localize("CO.ui.submit"),
+            icon: "fas fa-check",
+            default: true,
+            callback: (event, button, dialog) => {
+              if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll prompt - Callback`), event, button, dialog)
+              const output = Array.from(button.form.elements).reduce((obj, input) => {
+                if (input.name) obj[input.name] = input.value
+                return obj
+              }, {})
+              if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll prompt - Output`), output)
+              /* 
+              {
+                  "dice": "1d20",
+                  "skillValue": "+4",
+                  "critrange": "20",
+                  "bonus": "+0",
+                  "malus": "+0",
+                  "difficulty": "10",
+                  "totalSkillBonuses": "0",
+                  "label": "Test de compétence  Constitution"
+              }
+              */
+              return output
+            },
+          },
+        ],
+        render: (event, dialog) => {
+          const inputs = dialog.querySelectorAll(".bonus-item")
+          if (inputs) {
+            inputs.forEach((input) => {
+              input.addEventListener("click", this._onToggleCheckSkillBonus.bind(this))
+            })
+          }
         },
-      ],
-      render: (event, dialog) => {
-        const inputs = dialog.querySelectorAll(".bonus-item")
-        if (inputs) {
-          inputs.forEach((input) => {
-            input.addEventListener("click", this._onToggleCheckSkillBonus.bind(this))
-          })
-        }
-      },
-    })
+      })
 
-    if (!rollContext) return
-    rollContext.label = dialogContext.label
-    if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll - rollContext`), rollContext)
+      if (!rollContext) return
+      rollContext.label = dialogContext.label
+      if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll - rollContext`), rollContext)
 
-    let formula = `${rollContext.dice}+${parseInt(rollContext.skillValue)}`
-    if (parseInt(rollContext.bonus) !== 0) formula += `+${parseInt(rollContext.bonus)}`
-    if (parseInt(rollContext.malus) !== 0) formula += `+${parseInt(rollContext.malus)}`
-    if (parseInt(rollContext.totalSkillBonuses) !== 0) formula += `+${parseInt(rollContext.totalSkillBonuses)}`
+      formula = `${rollContext.dice}+${parseInt(rollContext.skillValue)}`
+      if (parseInt(rollContext.bonus) !== 0) formula += `+${parseInt(rollContext.bonus)}`
+      if (parseInt(rollContext.malus) !== 0) formula += `+${parseInt(rollContext.malus)}`
+      if (parseInt(rollContext.totalSkillBonuses) !== 0) formula += `+${parseInt(rollContext.totalSkillBonuses)}`
+    }
+    // Pas de prompt
+    else {
+      let dice = dialogContext.dice
+      if (dice === "1d20" && dialogContext.superior) dice = "2d20kh"
+      formula = `${dice}+${parseInt(dialogContext.skillValue)}`
+      if (parseInt(dialogContext.bonus) !== 0) formula += `+${parseInt(dialogContext.bonus)}`
+      if (parseInt(dialogContext.malus) !== 0) formula += `+${parseInt(dialogContext.malus)}`
+      if (parseInt(dialogContext.totalSkillBonuses) !== 0) formula += `+${parseInt(dialogContext.totalSkillBonuses)}`
+    }
 
     formula = Utils.evaluateFormulaCustomValues(dialogContext.actor, formula)
 
     const roll = new this(formula, dialogContext.actor.getRollData())
     await roll.evaluate()
 
+    const critRange = withDialog ? rollContext.critrange : dialogContext.critrange
+    const showDifficulty = withDialog ? !!rollContext.difficulty : !!dialogContext.difficulty
     // Récupération du résultat du jet (pour gérer les jets avec avantages/désavantages)
     const result = roll.terms[0].results.find((r) => r.active).result
-    const isCritical = result >= rollContext.critrange || result === 20
+    const isCritical = result >= critRange || result === 20
     const isFumble = result === 1
-    const showDifficulty = !!rollContext.difficulty
     let isSuccess
-    if (rollContext.difficulty) {
+    if (withDialog && rollContext.difficulty) {
       isSuccess = roll.total >= rollContext.difficulty
     }
+    if (!withDialog && dialogContext.difficulty) {
+      isSuccess = roll.total >= dialogContext.difficulty
+    }
+
     const toolTip = await roll.getTooltip()
 
     roll.options = {
@@ -132,7 +152,7 @@ export class COSkillRoll extends CORoll {
       isCritical,
       isFumble,
       showDifficulty,
-      difficulty: rollContext.difficulty,
+      difficulty: withDialog ? rollContext.difficulty : dialogContext.difficulty,
       toolTip,
       ...options,
     }
@@ -253,16 +273,16 @@ export class COAttackRoll extends CORoll {
       const isCritical = result >= rollContext.critrange || result === 20
       const isFumble = result === 1
       const showDifficulty = !!rollContext.difficulty
-      let isSuccess = false
+      let isSuccess
       if (rollContext.difficulty) {
         isSuccess = roll.total >= rollContext.difficulty
       }
-      const toolTip = new Handlebars.SafeString(await roll.getTooltip())
+      const toolTip = await roll.getTooltip()
 
       roll.options = {
         type: dialogContext.type,
         label: dialogContext.label,
-        actorId: dialogContext.actor.id,
+        actor: dialogContext.actor,
         isSuccess,
         isCritical,
         isFumble,
@@ -281,11 +301,11 @@ export class COAttackRoll extends CORoll {
         const damageFormula = Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaDamage}`)
         const damageRoll = new this(damageFormula, dialogContext.actor.getRollData())
         await damageRoll.evaluate()
-        const damageRollToolTip = new Handlebars.SafeString(await damageRoll.getTooltip())
+        const damageRollToolTip = await damageRoll.getTooltip()
         damageRoll.options = {
           type: dialogContext.type,
           label: dialogContext.label,
-          actorId: dialogContext.actor.id,
+          actor: dialogContext.actor,
           damageRollToolTip,
           ...options,
         }
@@ -300,7 +320,7 @@ export class COAttackRoll extends CORoll {
       roll.options = {
         type: dialogContext.type,
         label: dialogContext.label,
-        actorId: dialogContext.actor.id,
+        actor: dialogContext.actor,
         toolTip,
         ...options,
       }
@@ -313,8 +333,9 @@ export class COAttackRoll extends CORoll {
 
   async _getChatCardData(flavor, isPrivate) {
     return {
-      actorId: this.options.actorId,
-      label: this.options.label,
+      actor: this.options.actor,
+      speaker: ChatMessage.getSpeaker({ actor: this.options.actor, scene: canvas.scene }),
+      flavor: this.options.label,
       formula: isPrivate ? "???" : this.formula,
       showDifficulty: this.options.showDifficulty,
       difficulty: this.options.difficulty,
