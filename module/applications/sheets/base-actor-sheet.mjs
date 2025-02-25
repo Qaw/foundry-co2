@@ -117,7 +117,7 @@ export default class CoBaseActorSheet extends ActorSheet {
       indice = dataset.indice
     }
 
-    let itemChatData = item.getChatData(chatType, indice)
+    let itemChatData = item.getChatData(item, this.actor, chatType, indice)
 
     await new CoChat(this.actor)
       .withTemplate("systems/co/templates/chat/item-card.hbs")

@@ -171,8 +171,8 @@ export class Action extends foundry.abstract.DataModel {
     }
   }
 
-  get chatData() {
-    if (this.properties.visible && this.properties.activable) {
+  getChatData(item, actor) {
+    if (this.isVisible(item, actor) && this.properties.activable) {
       if (this.properties.temporary) {
         if (this.properties.enabled) return [{ label: `Désactiver ${this.label}`, action: "unactivate", indice: this.indice }]
         else return [{ label: `Activer ${this.label}`, action: "activate", indice: this.indice }]

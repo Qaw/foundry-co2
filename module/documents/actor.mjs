@@ -738,9 +738,10 @@ export default class COActor extends Actor {
    */
   async rollSkill(
     skillId,
-    { dice = "1d20", bonus = 0, malus = 0, critical = 20, superior = false, weakened = false, difficulty = 10, showDifficulty = true, withDialog = true } = {},
+    { dice = "1d20", bonus = 0, malus = 0, critical = 20, superior = false, weakened = false, difficulty = undefined, showDifficulty = undefined, withDialog = true } = {},
   ) {
-    // TODO Gestion de showDifficulty selon le settings du système
+    if (showDifficulty === undefined) showDifficulty = game.settings.get("co", "displayDifficulty")
+
     const dialogContext = {
       dice: dice,
       actor: this,
@@ -750,7 +751,7 @@ export default class COActor extends Actor {
       malus: malus,
       skillValue: foundry.utils.getProperty(this, `system.abilities.${skillId}`).value,
       critical: critical,
-      superior: foundry.utils.getProperty(this, `system.abilities.${skillId}`).superior,
+      superior: superior ? superior : foundry.utils.getProperty(this, `system.abilities.${skillId}`).superior,
       weakened: weakened,
       difficulty: difficulty,
       showDifficulty: showDifficulty,
@@ -808,20 +809,24 @@ export default class COActor extends Actor {
     let rolls = await COAttackRoll.prompt(dialogContext, { withDialog: withDialog })
     if (!rolls) return null
 
+    // Prépare le message de résultat
+    const speaker = ChatMessage.getSpeaker({ actor: this, scene: canvas.scene })
+    const messageData = { speaker }
+
     // Jet d'attaque
     if (type === "attack") {
       // Affichage du get d'attaque
-      await rolls[0].toMessage()
+      await rolls[0].toMessage(messageData)
 
       // Affichage du jet de dégâts dans le cas d'un jet combiné
       if (game.settings.get("co", "useComboRolls")) {
-        await rolls[1].toMessage()
+        await rolls[1].toMessage(messageData)
       }
     }
 
     // Jet de dégâts
     else if (type === "damage") {
-      await rolls[0].toMessage()
+      await rolls[0].toMessage(messageData)
     }
   }
 

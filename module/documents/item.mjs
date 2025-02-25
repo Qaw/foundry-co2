@@ -101,26 +101,25 @@ export default class COItem extends Item {
   }
 
   /**
-   * Informations of the item to be displayed in the chat via sendToChat button
-   * @param {*} chatType
-   * item : Item and all actions
-   * loot : Item without actions
-   * action : Item and a specific action
-   * @param {string} indice of the action, null for others
+   * Retrieves chat data for the specified item and actor based on the chat type and optional index.
+   *
+   * @param {Object} item The item for which chat data is being retrieved.
+   * @param {Object} actor The actor associated with the item.
+   * @param {string} chatType The type of chat data to retrieve ("item" or "action").
+   * @param {number|null} [indice=null] The optional index of the action to retrieve chat data for.
+   * @returns {Object} An object containing the item's id, name, image, description, and actions.
    */
-  getChatData(chatType, indice = null) {
+  getChatData(item, actor, chatType, indice = null) {
     if (this.type === SYSTEM.ITEM_TYPE.capacity.id || this.type === SYSTEM.ITEM_TYPE.equipment.id || this.type === SYSTEM.ITEM_TYPE.attack.id) {
       let actions = []
       // All actions
       if (chatType === "item" && indice === null) {
         for (const action of this.actions) {
-          let act = Action.createFromExisting(action)
-          actions.push(...act.chatData)
+          actions.push(...action.getChatData(item, actor))
         }
       } else if (chatType === "action") {
         const action = this.actions.find((a) => a.indice === parseInt(indice))
-        let act = Action.createFromExisting(action)
-        actions.push(...act.chatData)
+        actions.push(...action.getChatData(item, actor))
       }
       return {
         id: this.id,
@@ -130,6 +129,7 @@ export default class COItem extends Item {
         actions: actions,
       }
     }
+    return null
   }
 
   get isUnlocked() {
