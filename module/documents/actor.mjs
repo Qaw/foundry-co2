@@ -1,8 +1,7 @@
 import { SYSTEM } from "../config/system.mjs"
-import { Action } from "../models/schemas/action.mjs"
-import { Resolver } from "../models/schemas/resolver.mjs"
 import { Modifier } from "../models/schemas/modifier.mjs"
 import { COSkillRoll, COAttackRoll } from "./roll.mjs"
+import PathData from "../models/path.mjs"
 
 import Utils from "../utils.mjs"
 
@@ -115,6 +114,7 @@ export default class COActor extends Actor {
       })
       const capacities = capacitesId.map((id) => this.items.find((i) => i._id === id))
 
+      path.rank = PathData.computeRank(capacities)
       pathGroups.push({
         path: path,
         items: capacities,
@@ -427,7 +427,7 @@ export default class COActor extends Actor {
 
   /**
    * Apprend/désapprend une capacité du personnage
-   * Change le champ learned de la capactié
+   * Change le champ learned de la capacit é
    * Met à jour le rank de la voie correspondante
    * @param {*} capacityId
    */
@@ -435,10 +435,11 @@ export default class COActor extends Actor {
     // Mise à jour de la capacité et de ses actions
     await this._toggleItemFieldAndActions(capacityId, "learned")
 
-    // Mise à jour du rang de la voie correspondante
+    /* Mise à jour du rang de la voie correspondante
     let path = await fromUuid(this.items.get(capacityId).system.path)
     if (!path) return
     await path.updateRank()
+    */
   }
 
   /**
@@ -472,6 +473,7 @@ export default class COActor extends Actor {
     itemData = itemData instanceof Array ? itemData : [itemData]
     const newFeature = await this.createEmbeddedDocuments("Item", itemData)
 
+    // TODO Vérifier s'il y a besoin de créer un Modifier
     // Update the source of all modifiers with the id of the new embedded feature created
     let newModifiers = foundry.utils
       .deepClone(newFeature[0].system.modifiers)
@@ -859,11 +861,30 @@ export default class COActor extends Actor {
   async _toggleItemFieldAndActions(itemId, fieldName) {
     let item = this.items.get(itemId)
     let fieldValue = item.system[fieldName]
-    // console.log(`fieldValue : ${fieldValue} fieldName : ${fieldName} itemId : ${itemId}`)
-    await this.updateEmbeddedDocuments("Item", [{ _id: itemId, [`system.${fieldName}`]: !fieldValue }])
-    if (item.actions.length > 0) {
-      item.toggleActions()
+    console.log(`_toggleItemFieldAndActions - fieldValue : ${fieldValue} fieldName : ${fieldName} itemId : ${itemId}`)
+    // await this.updateEmbeddedDocuments("Item", [{ _id: itemId, [`system.${fieldName}`]: !fieldValue }])
+    // await item.update({ [`system.${fieldName}`]: !fieldValue })
+    let updateData = { [`system.${fieldName}`]: !fieldValue }
+    const nbActions = item.actions.length
+    if (nbActions > 0) {
+      //item.toggleActions()
+      let actions = item.system.toObject().actions
+      for (let index = 0; index < nbActions; index++) {
+        const action = actions[index]
+        // Si c'est une action non activable, l'activer automatiquement
+        if (!action.properties.activable) {
+          action.properties.enabled = !action.properties.enabled
+        } else {
+          // Vérifier si les conditions sont remplies
+          if (!action.hasConditions) {
+            action.properties.visible = !action.properties.visible
+          }
+        }
+      }
+
+      foundry.utils.mergeObject(updateData, { "system.actions": actions })
     }
+    await item.update(updateData)
   }
 
   /**

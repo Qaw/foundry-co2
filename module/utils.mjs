@@ -113,7 +113,7 @@ export default class Utils {
     if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`Utils - _replaceRank - actor, formula, source, itemSource`), actor, content, source, itemSource)
     const pathUuid = itemSource.system.path
     const path = actor.getItemFromUuid(pathUuid)
-    const rank = path.system.rank
+    const rank = path?.system.rank ?? 0
 
     // Cas @rank
     let regexSimple = /@rank/

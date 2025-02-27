@@ -190,7 +190,7 @@ export default class CharacterData extends ActorData {
     return modifiersArray
   }
 
-  prepareDerivedData() {
+  async prepareDerivedData() {
     super.prepareDerivedData()
 
     this._prepareAbilities()
@@ -244,8 +244,7 @@ export default class CharacterData extends ActorData {
     }
 
     // XP dépensés dans les capacités des voies
-    this.attributes.xp.max = 2 * this.attributes.level
-    this.attributes.xp.value = this._computeXP()
+    this.attributes.xp.max = 3 + 2 * (this.attributes.level - 1)
     this._prepareVision()
   }
 
@@ -666,24 +665,45 @@ export default class CharacterData extends ActorData {
     }
   }
 
-  _computeXP() {
+  /**
+   * Calculates the total experience points (XP) spent by the character.
+   *
+   * This function iterates through the character's paths and their associated capacities,
+   * summing up the XP cost of each learned capacity. It also includes capacities that are
+   * not associated with any paths.
+   *
+   * @returns {Promise<number>} The total XP spent by the character.
+   */
+  async getSpentXP() {
     const paths = this.parent.paths
     let xp = 0
-    paths.forEach((path) => {
-      const rank = path.system.rank
-      if (rank > 0 && rank <= 2) xp += rank
-      else if (rank > 2) xp += rank * 2 - 2
 
-      // Const capacities = path.system.capacities;
-      // for (let index = 0; index < rank; index++) {
-      //   let capacity = this.parent.items.get(capacities[index]);
-      //   if (capacity.system.learned) {
-      //     if (index === 0 || index === 1) xp += 1;
-      //     else xp +=2;
-      //   }
-      // }
-    })
-    // Console.log('Compute XP : ', xp);
+    // Capacités des voies
+    for (const path of paths) {
+      const capacities = path.system.capacities
+      for (const [index, capacityUuid] of capacities.entries()) {
+        const capacity = await fromUuid(capacityUuid)
+        if (capacity.system.learned) xp += capacity.system.getCost(index + 1)
+      }
+    }
+
+    // Capacités hors voies
+    const capacities = this.parent.capacitiesOffPaths
+    for (const capacity of capacities) {
+      if (capacity.system.learned) xp += capacity.system.getCost(null)
+    }
+
+    console.log("getSpentXP : ", xp)
     return xp
+  }
+
+  /**
+   * Asynchronously calculates the available experience points (XP) for a character.
+   *
+   * @returns {Promise<number>} A promise that resolves to the available XP.
+   */
+  async getAvailableXP() {
+    const spentXP = await this.getSpentXP()
+    return this.attributes.xp.max - spentXP
   }
 }

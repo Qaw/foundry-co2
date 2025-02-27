@@ -16,4 +16,15 @@ export default class PathData extends ItemData {
       rank: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true }),
     })
   }
+
+  static computeRank(capacities) {
+    let max = 0
+    for (const [index, capacity] of capacities.entries()) {
+      if (capacity.system.learned) {
+        const rank = index + 1
+        if (rank > max) max = rank
+      }
+    }
+    return max
+  }
 }

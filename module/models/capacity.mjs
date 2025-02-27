@@ -16,7 +16,8 @@ export default class CapacityData extends ItemData {
         spell: new fields.BooleanField({}),
         chargeable: new fields.BooleanField({}),
       }),
-      path: new fields.StringField({ required: true, nullable: true, initial: null }),
+      path: new fields.DocumentUUIDField({ type: "Item" }),
+      cost: new fields.NumberField({ required: true, nullable: false, integer: true, initial: -1 }),
       actions: new fields.ArrayField(new fields.EmbeddedDataField(Action)),
     })
   }
@@ -32,5 +33,27 @@ export default class CapacityData extends ItemData {
 
   get hasActionType() {
     return this.actionType !== "none"
+  }
+
+  get isLearned() {
+    return this.learned
+  }
+
+  get hasCost() {
+    return this.cost !== -1
+  }
+
+  /**
+   * Calculates the cost based on the given rank.
+   *
+   * @param {number} rank The rank to determine the cost. Starts at 1.
+   * @returns {number} The calculated cost. If the cost is different than -1, it returns this cost.
+   *                   Otherwise, if the rank is 1 or 2, it returns 1. Otherwise, it returns 2.
+   */
+  getCost(rank) {
+    if (this.hasCost) return this.cost
+    if (rank === null) return 1 // Off path capacity
+    if (rank === 1 || rank === 2) return 1
+    return 2
   }
 }

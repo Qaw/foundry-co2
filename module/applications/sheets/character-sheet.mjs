@@ -20,7 +20,9 @@ export default class COCharacterSheet extends CoBaseActorSheet {
   async getData(options) {
     const context = super.getData(options)
     context.profiles = this.actor.profiles
-    context.xpleft = parseInt(this.actor.system.attributes.xp.max) - parseInt(this.actor.system.attributes.xp.value)
+    context.xpMax = this.actor.system.attributes.xp.max
+    context.xpSpent = await this.actor.system.getSpentXP()
+    context.xpLeft = await this.actor.system.getAvailableXP()
     context.choiceAbilities = SYSTEM.ABILITIES
     context.choiceSize = SYSTEM.SIZES
     context.visibleActions = await this.actor.getVisibleActions()
@@ -104,10 +106,11 @@ export default class COCharacterSheet extends CoBaseActorSheet {
    * @param {*} event
    * @private
    */
-  _onLearnedToggle(event) {
+  async _onLearnedToggle(event) {
     event.preventDefault()
     const capacityId = $(event.currentTarget).parents(".item").data("itemId")
-    this.actor.toggleCapacityLearned(capacityId)
+    await this.actor.toggleCapacityLearned(capacityId)
+    //this.render()
   }
 
   /**

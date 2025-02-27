@@ -50,7 +50,7 @@ export default function registerHooks() {
     }
 
     html.find(".toggle-action").click((event) => {
-      console.log(event)
+      console.log("Hook toggle-action", event)
       const dataset = event.currentTarget.dataset
 
       const actorId = dataset.actorId

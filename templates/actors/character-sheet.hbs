@@ -30,11 +30,11 @@
         <nav class="sheet-tabs tabs" data-group="primary">
             <a class="item" data-tab="main" data-tooltip="{{ localize 'CO.tabs.main' }}">{{ localize "CO.tabs.main" }}</a>
             <a class="item" data-tab="inventory" data-tooltip="{{ localize 'CO.tabs.inventory' }}">{{ localize "CO.tabs.inventory" }}</a>
-            {{#if (lt xpleft 0)}}
-                <a class="item red" data-tooltip="{{ localize 'CO.notif.TooMuchSpentXP' }}" data-tab="capacities">{{ localize "CO.tabs.capacities" }}({{xpleft}}) <i class="fa-solid fa-triangle-exclamation"></i></a>
+            {{#if (lt xpLeft 0)}}
+                <a class="item red" data-tooltip="{{ localize 'CO.notif.TooMuchSpentXP' }}" data-tab="capacities">{{ localize "CO.tabs.capacities" }} ({{xpLeft}}) <i class="fa-solid fa-triangle-exclamation"></i></a>
             {{else}}
-                {{#if (gt xpleft 0)}}
-                    <a class="item blue" data-tooltip="{{ localize 'CO.notif.XPLeftToSpend' }}" data-tab="capacities">{{ localize "CO.tabs.capacities" }}({{xpleft}}) <i class="fa-solid fa-triangle-exclamation"></i></a>
+                {{#if (gt xpLeft 0)}}
+                    <a class="item blue" data-tooltip="{{ localize 'CO.notif.XPLeftToSpend' }}" data-tab="capacities">{{ localize "CO.tabs.capacities" }} ({{xpLeft}}) <i class="fa-solid fa-triangle-exclamation"></i></a>
                 {{else}}
                     <a class="item" data-tab="capacities" data-tooltip="{{ localize 'CO.tabs.capacities' }}">{{ localize "CO.tabs.capacities" }}</a>
                 {{/if}}

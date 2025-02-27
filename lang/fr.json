@@ -37,8 +37,8 @@
       "resolvers.empty": "Aucun resolveur.",
       "profilAlreadyExist": "Vous avez déjà un profil.",
       "NotEnoughFreeHands": "Pas suffisament de mains libres pour équiper l'objet.",
-      "TooMuchSpentXP": "Le montant d'XP dépensé est supérieur au maximum autorisé.",
-      "XPLeftToSpend": "Il vous reste des points de capacités à dépenser.",
+      "TooMuchSpentXP": "Le montant d'XP dépensé ({xpSpent}) est supérieur au maximum autorisé ({xpMax}).",
+      "XPLeftToSpend": "Il vous reste {xpLeft} point(s) de capacités à dépenser.",
       "warningIncorrectTargets": "Vous ne pouvez désigner que {number} cible(s) pour l'action {action} !",
       "warningCannotTargetSelf": "Vous ne pouvez pas cibler vous-même !"
     },
@@ -286,7 +286,8 @@
       "activate": "Activer",
       "deactivate": "Désactiver",
       "use": "Utiliser",
-      "editStats": "Editez vos caractéristiques"
+      "editStats": "Editez vos caractéristiques",
+      "cost": "Coût"
     },
     "properties": {
       "attack": "Attaque",

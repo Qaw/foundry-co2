@@ -218,6 +218,7 @@ export default class COItem extends Item {
    * Update the rank for an embedded path item
    */
   async updateRank() {
+    console.log("item updateRank")
     if (this.type !== SYSTEM.ITEM_TYPE.path.id || !this.actor) return
     let max = 0
 
@@ -235,6 +236,7 @@ export default class COItem extends Item {
    * Update the actions for an embedded capacity or equipment item
    */
   toggleActions() {
+    console.log("item toggleActions")
     if ((this.type !== SYSTEM.ITEM_TYPE.capacity.id && this.type !== SYSTEM.ITEM_TYPE.equipment.id) || !this.actor) return
 
     const actions = this.toObject().system.actions
@@ -243,14 +245,14 @@ export default class COItem extends Item {
       // Si c'est une action non activable, l'activer automatiquement
       if (!action.properties.activable) {
         action.properties.enabled = !action.properties.enabled
-      } else {
+      } /*else {
         // Vérifier si les conditions sont remplies
         if (!action.hasConditions) {
           action.properties.visible = !action.properties.visible
         } else {
           action.properties.visible = action.isVisible(this)
         }
-      }
+      }*/
     }
     this.update({ "system.actions": actions })
   }
