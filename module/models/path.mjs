@@ -17,6 +17,20 @@ export default class PathData extends ItemData {
     })
   }
 
+  async prepareDerivedData() {
+    super.prepareDerivedData()
+
+    this.rank = PathData.computeRank(await this.getCapacities())
+  }
+
+  /**
+   * Computes the rank based on the given capacities.
+   * The rank is determined by the highest index (1-based) of the capacities
+   * where the system has been learned.
+   *
+   * @param {Array} capacities An array of capacity objects.
+   * @returns {number} The highest rank (1-based index) where the system has been learned.
+   */
   static computeRank(capacities) {
     let max = 0
     for (const [index, capacity] of capacities.entries()) {
@@ -26,5 +40,25 @@ export default class PathData extends ItemData {
       }
     }
     return max
+  }
+
+  /**
+   * Asynchronously retrieves and returns a list of capacities.
+   *
+   * This method iterates over the `capacities` property of the current instance,
+   * retrieves each capacity using the `fromUuid` function, and collects the
+   * results in an array.
+   *
+   * @returns {Promise<Array>} A promise that resolves to an array of capacities.
+   */
+  async getCapacities() {
+    let capacities = []
+    for (const capacityUuid of this.capacities) {
+      const item = await fromUuid(capacityUuid)
+      if (item) {
+        capacities.push(item)
+      }
+    }
+    return capacities
   }
 }

@@ -1,5 +1,4 @@
-{{!log "Chroniques Oubliées | path" this}}
-<!--<h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.details"}}</a></h3>-->
+{{log "Chroniques Oubliées | path" this}}
 <div class="details-form foldable">
     {{#if debugMode}}
         <div class="form-group">
@@ -26,7 +25,7 @@
     <div class="form-group">
         <label>{{localize "CO.label.long.rank"}}</label>
         <div class="form-fields">
-            <input class="field-value" name="system.rank" type="text" value="{{system.rank}}" placeholder="{{localize 'CO.label.long.rank'}}" data-dtype="Number">
+            <input class="field-value" readonly type="text" value="{{system.rank}}" placeholder="{{localize 'CO.label.long.rank'}}" data-dtype="Number">
         </div>
     </div>
 </div>
@@ -47,11 +46,11 @@
         <div class="cell center">
             <span class="field-label">{{add id 1}}</span>
         </div>
-        <div class="cell right">
-            <img class="inline-img" src="{{capacity.img}}" data-tooltip="{{capacity.name}}" />
+        <div class="cell center item" data-uuid="{{capacity.uuid}}" data-item-type="capacity">            
+            <a class="item-control item-edit" data-tooltip="{{localize 'CO.label.long.editCapacity'}}" data-tooltip-direction="UP"><img class="inline-img item-edit" src="{{capacity.img}}" /></a>
         </div>
-        <div class="cell left item" data-uuid="{{capacity.uuid}}" data-item-type="capacity">
-            <div class="field-label ellipse"><a class="item-control item-edit" data-tooltip="{{localize 'CO.label.long.editCapacity'}}" data-tooltip-direction="UP">{{capacity.name}}</a></div>
+        <div class="cell left">
+            <div class="field-label ellipse" data-tooltip="{{capacity.system.description}}" data-tooltip-direction="UP">{{capacity.name}} {{#if capacity.system.isSpell}} * {{/if}}{{#if capacity.system.hasActionType}} ({{capacity.system.actionTypeShort}}){{/if}}</div>
         </div>
         <div class="cell right item item-controls" data-uuid="{{capacity.uuid}}" data-item-type="capacity" draggable="true" data-rank="{{add id 1}}">
             <a class="item-control item-delete" data-tooltip="{{localize 'CO.label.long.deleteCapacity'}}" data-tooltip-direction="UP"><i class="fas fa-fw fa-trash"></i></a>

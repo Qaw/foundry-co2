@@ -77,7 +77,10 @@ export default class COItem extends Item {
   }
 
   /**
+   * Retrieves the list of actions that are visible to the specified actor.
    * An array of all the visible actions of the item or empty if no actions or if it's an item without actions
+   * @param {Object} actor The actor for whom visibility is being checked.
+   * @returns {Promise<Array>} A promise that resolves to an array of visible actions.
    */
   async getVisibleActions(actor) {
     if (foundry.utils.isEmpty(this.system.actions)) return []
