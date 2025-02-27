@@ -4,9 +4,6 @@ import ActorData from "./actor.mjs"
 import Utils from "../utils.mjs"
 import CoChat from "../chat.mjs"
 import DefaultConfiguration from "../config/configuration.mjs"
-
-import { CORoll, COAttackRoll, COSkillRoll } from "../documents/roll.mjs"
-
 export default class CharacterData extends ActorData {
   static defineSchema() {
     const fields = foundry.data.fields
@@ -63,6 +60,21 @@ export default class CharacterData extends ActorData {
       }),
       languages: new fields.ArrayField(new fields.StringField()),
     })
+
+    // Currencies
+    const currencyField = (label) => {
+      const schema = {
+        value: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true }),
+      }
+      return new fields.SchemaField(schema, { label })
+    }
+
+    schema.wealth = new fields.SchemaField(
+      Object.values(SYSTEM.CURRENCY).reduce((obj, currency) => {
+        obj[currency.id] = currencyField(currency.label)
+        return obj
+      }, {}),
+    )
 
     return foundry.utils.mergeObject(super.defineSchema(), schema)
   }
