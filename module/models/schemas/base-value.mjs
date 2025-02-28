@@ -47,7 +47,7 @@ export class BaseValue extends foundry.abstract.DataModel {
           integer: true,
         }),
       }),
-      value: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0 }),
+      value: new fields.NumberField({ integer: true }),
     }
   }
 }
