@@ -25,13 +25,16 @@ export default class COActor extends Actor {
     // Configure prototype token settings
     if (this.type === "character") {
       const prototypeToken = {}
+
       Object.assign(prototypeToken, {
         sight: { enabled: true, visionMode: "basic" },
         actorLink: true,
         disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
       })
+
       this.updateSource({ prototypeToken })
     }
+    await this.updateSize(this.system.details.size)
   }
 
   getRollData() {
@@ -457,6 +460,28 @@ export default class COActor extends Actor {
 
     // Mise à jour de l'item et de ses actions
     await this._toggleItemFieldAndActions(itemId, "equipped")
+  }
+
+  /**
+   * Update the size of Tokens for this Actor.
+   * @returns {Promise<void>}
+   */
+  async updateSize(currentsize) {
+    const sizemodifier = SYSTEM.TOKEN_SIZE[currentsize]
+    // Prototype token size
+    if (sizemodifier.size !== this.prototypeToken.width || sizemodifier.scale !== this.prototypeToken.texture.scaleX) {
+      await this.update({ prototypeToken: { width: sizemodifier.size, height: sizemodifier.size, "texture.scaleX": sizemodifier.scale, "texture.scaleY": sizemodifier.scale } })
+    }
+    // Active token sizes
+    if (canvas.scene) {
+      const tokens = this.getActiveTokens(true)
+      const updates = []
+      for (const token of tokens) {
+        if (token.width !== sizemodifier.size || sizemodifier.scale !== this.prototypeToken.texture.scaleX)
+          updates.push({ _id: token.id, width: sizemodifier.size, height: sizemodifier.size, "texture.scaleX": sizemodifier.scale, "texture.scaleY": sizemodifier.scale })
+      }
+      await canvas.scene.updateEmbeddedDocuments("Token", updates)
+    }
   }
 
   /**
