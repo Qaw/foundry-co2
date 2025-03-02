@@ -438,11 +438,11 @@ export default class COActor extends Actor {
     // Mise à jour de la capacité et de ses actions
     await this._toggleItemFieldAndActions(capacityId, "learned")
 
-    /* Mise à jour du rang de la voie correspondante
+    // Mise à jour du rang de la voie correspondante
     let path = await fromUuid(this.items.get(capacityId).system.path)
     if (!path) return
-    await path.updateRank()
-    */
+    const newRank = await path.system.computeRank()
+    await path.update({ "system.rank": newRank })
   }
 
   /**
@@ -900,7 +900,7 @@ export default class COActor extends Actor {
         if (!action.properties.activable) {
           action.properties.enabled = !action.properties.enabled
         } else {
-          // Vérifier si les conditions sont remplies
+          // Si c'est une action activable mais sans conditions, la rendre visible
           if (!action.hasConditions) {
             action.properties.visible = !action.properties.visible
           }

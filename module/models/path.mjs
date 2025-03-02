@@ -19,8 +19,7 @@ export default class PathData extends ItemData {
 
   async prepareDerivedData() {
     super.prepareDerivedData()
-
-    this.rank = PathData.computeRank(await this.getCapacities())
+    this.rank = await this.computeRank()
   }
 
   /**
@@ -60,5 +59,10 @@ export default class PathData extends ItemData {
       }
     }
     return capacities
+  }
+
+  async computeRank() {
+    const capacities = await this.getCapacities()
+    return PathData.computeRank(capacities)
   }
 }
