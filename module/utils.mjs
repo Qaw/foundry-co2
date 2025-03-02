@@ -115,17 +115,8 @@ export default class Utils {
     const path = actor.getItemFromUuid(pathUuid)
     const rank = path?.system.rank ?? 0
 
-    // Cas @rank
-    let regexSimple = /@rank/
-    if (regexSimple.test(content)) {
-      content = content.replace("@rank", rank)
-    }
-    regexSimple = /@rang/
-    if (regexSimple.test(content)) {
-      content = content.replace("@rang", rank)
-    }
-
     // Cas @rank[x,x,x,x,x]
+    // Géré en premier pour éviter un remplacement de @rank avant le remplacement de @rank[x,x,x,x,x]
     let regexBracket = /@rank\[(.*?)\]/
     if (regexBracket.test(content)) {
       // Utilisation de replace avec une fonction de rappel pour calculer la somme
@@ -159,6 +150,16 @@ export default class Utils {
         // Remplacer l'intégralité de la chaîne par la somme
         return sum.toString()
       })
+    }
+
+    // Cas @rank
+    let regexSimple = /@rank/
+    if (regexSimple.test(content)) {
+      content = content.replace("@rank", rank)
+    }
+    regexSimple = /@rang/
+    if (regexSimple.test(content)) {
+      content = content.replace("@rang", rank)
     }
 
     return content
