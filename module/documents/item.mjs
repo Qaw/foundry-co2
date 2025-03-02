@@ -125,6 +125,7 @@ export default class COItem extends Item {
       }
       return {
         id: this.id,
+        uuid: this.uuid,
         name: this.name,
         img: this.img,
         description: this.system.description,

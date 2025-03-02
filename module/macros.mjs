@@ -43,13 +43,13 @@ export async function createCOMacro(dropData, slot) {
 export default class Macros {
   /**
    * Send to Chat an Item or an action
-   * @param {string} itemId          Id of the item on the selected actor to trigger.
+   * @param {string} itemUuid        Uuid of the item on the selected actor to trigger.
    * @param {string} itemName        Name of the item on the selected actor to trigger.
-   * @param {int} indice               Indice of the action to display, null if it's the item
+   * @param {int} indice             Indice of the action to display, null if it's the item
    * @returns {Promise<ChatMessage|object>}  Roll result.
    */
-  static async sendToChat(itemId, itemName, indice) {
-    const { item, actor } = Macros.getMacroTarget(itemId, itemName, "Item")
+  static async sendToChat(itemUuid, itemName, indice) {
+    const { item, actor } = await Macros.getMacroTarget(itemUuid, itemName, "Item")
     if (item instanceof COItem) {
       if (indice === null) {
         let itemChatData = item.getChatData(null)
@@ -60,6 +60,7 @@ export default class Macros {
           .withData({
             actorId: actor.id,
             id: itemChatData.id,
+            uuid: itemChatData.uuid,
             name: itemChatData.name,
             img: itemChatData.img,
             description: itemChatData.description,
@@ -68,7 +69,7 @@ export default class Macros {
           .withWhisper(ChatMessage.getWhisperRecipients("GM").map((u) => u.id))
           .create()
       } else {
-        let itemChatData = item.getChatData(indice)
+        let itemChatData = item.getChatData(item, actor, "action", indice)
         if (item.type === SYSTEM.ITEM_TYPE.capacity.id && !item.system.learned) return ui.notifications.warn(game.i18n.format("CO.macro.capacityNotLearned", { name: itemName }))
         if (item.type === SYSTEM.ITEM_TYPE.equipment.id && !item.system.equipped) return ui.notifications.warn(game.i18n.format("CO.macro.itemNotEquipped", { name: itemName }))
         new CoChat(actor)
@@ -76,6 +77,7 @@ export default class Macros {
           .withData({
             actorId: actor.id,
             id: itemChatData.id,
+            uuid: itemChatData.uuid,
             name: itemChatData.name,
             img: itemChatData.img,
             description: itemChatData.description,
@@ -89,19 +91,19 @@ export default class Macros {
 
   /**
    * Find a document of the specified name and type on an assigned or selected actor.
-   * @param {int} id
+   * @param {UUID} itemUuid
    * @param {string} name          Document name to locate.
    * @param {string} documentType  Type of embedded document (e.g. "Item").
    * @returns {Document}           Document if found, otherwise nothing.
    */
-  static getMacroTarget(id, name, documentType) {
+  static async getMacroTarget(itemUuid, name, documentType) {
     let actor
     const speaker = ChatMessage.getSpeaker()
     if (speaker.token) actor = game.actors.tokens[speaker.token]
     actor ??= game.actors.get(speaker.actor)
     if (!actor) return ui.notifications.warn(game.i18n.localize("CO.macro.noActorSelected"))
 
-    const item = actor.items.get(id)
+    const item = await fromUuid(itemUuid)
     if (item) return { item, actor }
 
     const collection = documentType === "Item" ? actor.items : actor.effects

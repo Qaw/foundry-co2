@@ -125,6 +125,7 @@ export default class CoBaseActorSheet extends ActorSheet {
       .withData({
         actorId: this.actor.id,
         id: itemChatData.id,
+        uuid: itemChatData.uuid,
         name: itemChatData.name,
         img: itemChatData.img,
         description: itemChatData.description,
