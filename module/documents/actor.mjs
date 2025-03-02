@@ -1,8 +1,6 @@
 import { SYSTEM } from "../config/system.mjs"
 import { Modifier } from "../models/schemas/modifier.mjs"
 import { COSkillRoll, COAttackRoll } from "./roll.mjs"
-import PathData from "../models/path.mjs"
-
 import Utils from "../utils.mjs"
 
 /**
@@ -57,11 +55,8 @@ export default class COActor extends Actor {
     rollData.niv = this.system.attributes.level
 
     if (this.type === "character") {
-      rollData.mel = this.system.combat.melee.value
       rollData.atc = this.system.combat.melee.value
-      rollData.dis = this.system.combat.ranged.value
       rollData.atd = this.system.combat.ranged.value
-      rollData.mag = this.system.combat.magic.value
       rollData.atm = this.system.combat.magic.value
     }
 
@@ -428,11 +423,6 @@ export default class COActor extends Actor {
         let res = resolver.resolve(this, item, action, type)
       }
     }
-  }
-
-  // FIXME N'a pas l'air d'être utilisée
-  toggleSuperior(ability) {
-    return (this.system.abilities[ability].superior = !this.system.abilities[ability].superior)
   }
 
   /**
@@ -817,31 +807,41 @@ export default class COActor extends Actor {
       dice = "1d20",
       bonus = 0,
       malus = 0,
+      critical = 20,
+      superior = false,
+      weakened = false,
+      difficulty = 10,
+      showDifficulty = undefined,
+      withDialog = true,
       skillFormula = undefined,
       skillFormulaTooltip = "",
       damageFormula = undefined,
       damageFormulaTooltip = "",
-      critical = 20,
-      difficulty = 10,
-      showDifficulty = true,
-      withDialog = true,
     } = {},
   ) {
+    if (showDifficulty === undefined) showDifficulty = game.settings.get("co", "displayDifficulty")
+
+    // Gestion du dé bonus
+    if (this.system.hasBonusDiceForAttack(Utils.getAttackTypeFromFormula(skillFormulaTooltip))) superior = true
+
     const dialogContext = {
-      auto: auto,
-      type: type,
+      dice,
+      actor: this,
+      auto,
+      type,
       useComboRolls: game.settings.get("co", "useComboRolls"),
       actionName: actionName,
       label: `${item.name} - ${actionName}`,
-      dice: dice,
-      actor: this,
+      bonus,
+      malus,
+      critical,
+      superior,
+      difficulty,
+      showDifficulty,
       formulaAttack: skillFormula,
       formulaAttackTooltip: skillFormulaTooltip,
       formulaDamage: damageFormula,
       formulaDamageTooltip: damageFormulaTooltip,
-      critical: critical,
-      difficulty: difficulty,
-      showDifficulty: showDifficulty,
     }
 
     let rolls = await COAttackRoll.prompt(dialogContext, { withDialog: withDialog })

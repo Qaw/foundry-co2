@@ -198,4 +198,17 @@ export default class Utils {
     }
     return content
   }
+
+  /**
+   * Determines the attack type based on the provided formula string.
+   *
+   * @param {string} formula The formula string to evaluate.
+   * @returns {string|undefined} The ID of the attack type (melee, ranged, or magic) if found, otherwise undefined.
+   */
+  static getAttackTypeFromFormula(formula) {
+    if (formula.includes("@atc")) return SYSTEM.ACTION_TYPES.melee.id
+    if (formula.includes("@atd")) return SYSTEM.ACTION_TYPES.ranged.id
+    if (formula.includes("@atm")) return SYSTEM.ACTION_TYPES.magic.id
+    return undefined
+  }
 }
