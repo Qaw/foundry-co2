@@ -117,12 +117,14 @@ export default class COActor extends Actor {
   get pathGroups() {
     let pathGroups = []
     this.paths.forEach((path) => {
-      const capacitesId = path.system.capacities.map((uuid) => {
-        return foundry.utils.parseUuid(uuid).id
-      })
+      const capacitesId = path.system.capacities
+        .map((uuid) => {
+          return uuid ? foundry.utils.parseUuid(uuid).id : null
+        })
+        .filter((id) => id !== null)
+
       const capacities = capacitesId.map((id) => this.items.find((i) => i._id === id))
 
-      path.rank = PathData.computeRank(capacities)
       pathGroups.push({
         path: path,
         items: capacities,
@@ -587,6 +589,7 @@ export default class COActor extends Actor {
     // Update the paths of the profile with ids of created paths
     await newProfile[0].update({ "system.paths": updatedPathsUuids })
 
+    ui.notifications.warn(game.i18n.localize("CO.notif.warningProfileCreated"))
     return newProfile[0].uuid
   }
 

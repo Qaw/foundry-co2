@@ -40,7 +40,8 @@
       "TooMuchSpentXP": "Le montant d'XP dépensé ({xpSpent}) est supérieur au maximum autorisé ({xpMax}).",
       "XPLeftToSpend": "Il vous reste {xpLeft} point(s) de capacités à dépenser.",
       "warningIncorrectTargets": "Vous ne pouvez désigner que {number} cible(s) pour l'action {action} !",
-      "warningCannotTargetSelf": "Vous ne pouvez pas cibler vous-même !"
+      "warningCannotTargetSelf": "Vous ne pouvez pas cibler vous-même !",
+      "warningProfileCreated": "Le profil a été créé."
     },
     "tooltip": {
       "formulaAttack": "Formule d'attaque (sans le dé)",

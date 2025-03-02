@@ -16,11 +16,10 @@
 {{> "systems/co/templates/actors/parts/paths/character-capacities.hbs"}}
 
 {{#each pathGroups as |pg id|}}
-    {{!log 'pathGroup' pg id}}
     <ol class="paths items-container" data-tab="features">
         <li class="items-container-header flexrow">
             <h3 class="item-name flexrow">
-                <a class="section-toggle">{{pg.path.name}} ({{pg.path.rank}})</a>
+                <a class="section-toggle">{{pg.path.name}} ({{pg.path.system.rank}})</a>
             </h3>
             <div class="item-controls-3 item" data-item-uuid="{{pg.path.uuid}}" data-item-id="{{pg.path.id}}">
                 {{#if ../unlocked}}
