@@ -705,7 +705,6 @@ export default class CharacterData extends ActorData {
       if (capacity.system.learned) xp += capacity.system.getCost(null)
     }
 
-    console.log("getSpentXP : ", xp)
     return xp
   }
 

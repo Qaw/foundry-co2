@@ -34,7 +34,12 @@ export default class COActor extends Actor {
 
       this.updateSource({ prototypeToken })
     }
-    await this.updateSize(this.system.details.size)
+
+    const sizemodifier = SYSTEM.TOKEN_SIZE[this.system.details.size]
+    // Prototype token size
+    if (sizemodifier.size !== this.prototypeToken.width || sizemodifier.scale !== this.prototypeToken.texture.scaleX) {
+      this.updateSource({ prototypeToken: { width: sizemodifier.size, height: sizemodifier.size, "texture.scaleX": sizemodifier.scale, "texture.scaleY": sizemodifier.scale } })
+    }
   }
 
   getRollData() {
@@ -463,8 +468,10 @@ export default class COActor extends Actor {
   }
 
   /**
-   * Update the size of Tokens for this Actor.
-   * @returns {Promise<void>}
+   * Updates the size of the prototype token and active tokens based on the current size.
+   *
+   * @param {string} currentsize The current size identifier to update the token sizes.
+   * @returns {Promise<void>} A promise that resolves when the token sizes have been updated.
    */
   async updateSize(currentsize) {
     const sizemodifier = SYSTEM.TOKEN_SIZE[currentsize]
@@ -474,6 +481,7 @@ export default class COActor extends Actor {
     }
     // Active token sizes
     if (canvas.scene) {
+      // Only tokens that are linked to the actor
       const tokens = this.getActiveTokens(true)
       const updates = []
       for (const token of tokens) {
@@ -886,7 +894,7 @@ export default class COActor extends Actor {
   async _toggleItemFieldAndActions(itemId, fieldName) {
     let item = this.items.get(itemId)
     let fieldValue = item.system[fieldName]
-    console.log(`_toggleItemFieldAndActions - fieldValue : ${fieldValue} fieldName : ${fieldName} itemId : ${itemId}`)
+    // console.log(`_toggleItemFieldAndActions - fieldValue : ${fieldValue} fieldName : ${fieldName} itemId : ${itemId}`)
     // await this.updateEmbeddedDocuments("Item", [{ _id: itemId, [`system.${fieldName}`]: !fieldValue }])
     // await item.update({ [`system.${fieldName}`]: !fieldValue })
     let updateData = { [`system.${fieldName}`]: !fieldValue }

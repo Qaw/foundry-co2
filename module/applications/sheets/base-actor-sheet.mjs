@@ -63,6 +63,7 @@ export default class CoBaseActorSheet extends ActorSheet {
     html.find(".sheet-change-lock").click(this._onSheetChangelock.bind(this))
     html.find(".item-chat.chat").click(this._onSendToChat.bind(this))
     html.find(".item-create").click(this._onItemCreate.bind(this))
+    html.find(".size-select").change(this._onSizeChange.bind(this))
   }
 
   /** @inheritDoc */
@@ -196,5 +197,15 @@ export default class CoBaseActorSheet extends ActorSheet {
     // Return this.actor.dmgRoll(event, this.actor);
     // return this.actor.attackRoll(event, this.actor)
     // return this.actor.initRoll(event, this.actor)
+  }
+
+  /**
+   * Change la taille du prototypeToken en fonction du choix de la taille
+   *
+   * @param {Event} event The event object from the size change input.
+   * @returns {Promise<void>} A promise that resolves when the actor's size has been updated.
+   */
+  async _onSizeChange(event) {
+    await this.actor.updateSize(event.target.value)
   }
 }
