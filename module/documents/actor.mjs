@@ -133,6 +133,7 @@ export default class COActor extends Actor {
       armors: this.armors,
       shields: this.shields,
       weapons: this.weapons,
+      consumable: this.consumables,
       misc: this.misc,
     }
   }
@@ -176,6 +177,13 @@ export default class COActor extends Actor {
 
   get misc() {
     return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.misc.id)
+  }
+
+   /**
+   * Retourne les Items de type equipment et de sous-type consumable
+   */
+  get consumables() {
+    return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.consumable.id)
   }
 
   /**
@@ -422,7 +430,18 @@ export default class COActor extends Actor {
       for (const resolver of resolvers) {
         let res = resolver.resolve(this, item, action, type)
       }
-    }
+      if(item) {
+        if(item.type == SYSTEM.ITEM_TYPE.equipment.id && item.system.subtype == SYSTEM.EQUIPMENT_SUBTYPES.consumable.id) {
+          //Je décrément la quantité et si je suis a 0 et destructible je suis détruit
+          let quantity = item.system.quantity.current - 1
+          if(quantity == 0 && item.system.quantity.destroyIfEmpty) {
+            this.deleteEmbeddedDocuments("Item", [item.id])
+          } else {
+            await item.update({ "system.quantity.current": quantity })
+          }      
+        }
+      }
+    }    
   }
 
   /**
@@ -869,9 +888,17 @@ export default class COActor extends Actor {
   }
 
   // FIXME Finir la méthode
+  
   async rollHeal(item, { actionName = "", healFormula = undefined, targetType = SYSTEM.RESOLVER_TARGET.none.id, targets = [] } = {}) {
     let roll = new Roll(healFormula)
     await roll.roll()
+    //Qui est soigné ? Pour le moment soit même :)
+    if(targetType == SYSTEM.RESOLVER_TARGET.self.id) {
+      let hp = this.system.attributes.hp
+      hp.value += roll.total
+      if (hp.value > hp.max) hp.value = hp.max
+      this.update({ "system.attributes.hp": hp })
+    }
     await roll.toMessage()
   }
 

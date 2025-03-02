@@ -11,6 +11,10 @@ export const EQUIPMENT_SUBTYPES = {
     id: "weapon",
     label: "CO.equipment.subtypes.weapon",
   },
+  consumable: {
+    id: "consumable",
+    label: "CO.equipment.subtypes.consumable",
+  },
   misc: {
     id: "misc",
     label: "CO.equipment.subtypes.misc",

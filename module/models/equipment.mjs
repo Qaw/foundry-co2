@@ -74,6 +74,10 @@ export default class EquipmentData extends ItemData {
     return this.subtype === SYSTEM.EQUIPMENT_SUBTYPES.misc.id
   }
 
+  get isConsumable() {
+    return this.subtype === SYSTEM.EQUIPMENT_SUBTYPES.consumable.id
+  }
+
   get defense() {
     if (!this.isArmor) return 0
     // TODO Chercher le bonus de Combat/Défense dans les modifiers des actions

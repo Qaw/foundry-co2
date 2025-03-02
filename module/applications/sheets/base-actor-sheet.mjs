@@ -164,6 +164,9 @@ export default class CoBaseActorSheet extends ActorSheet {
           case "weapons":
             subtype = SYSTEM.EQUIPMENT_SUBTYPES.weapon.id
             break
+          case "consumable":
+            subtype = SYSTEM.EQUIPMENT_SUBTYPES.consumable.id
+            break
           case "misc":
             subtype = SYSTEM.EQUIPMENT_SUBTYPES.misc.id
             break

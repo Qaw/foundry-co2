@@ -215,6 +215,7 @@
       "price": "Prix",
       "value": "Valeur",
       "currency": "Monnaie",
+      "consumable":"Consommables",
       "rarity": "Rareté",
       "usage": "Usage",
       "1h": "Une main",
@@ -420,7 +421,8 @@
         "protection": "Protection",
         "heal": "Soin",
         "buff": "Amélioration",
-        "debuff": "Affaiblissement"
+        "debuff": "Affaiblissement",
+        "consumable":"Consommable"
       },
       "equip": "Équiper",
       "unequip": "Déséquiper",
@@ -537,6 +539,7 @@
         "armor": "Armure",
         "shield": "Bouclier",
         "weapon": "Arme",
+        "consumable":"Consommable",
         "misc": "Divers"
       },
       "martialCategories": {
