@@ -141,27 +141,31 @@ export const CONDITION_TARGETS = Object.freeze({
 export const RESOLVER_TYPE = Object.freeze({
   melee: {
     id: "melee",
-    label: "CO.action.types.melee",
+    label: "CO.resolver.types.melee",
   },
   ranged: {
     id: "ranged",
-    label: "CO.action.types.ranged",
+    label: "CO.resolver.types.ranged",
   },
   magical: {
     id: "magical",
-    label: "CO.action.types.magical",
+    label: "CO.resolver.types.magical",
   },
   heal: {
     id: "heal",
-    label: "CO.action.types.heal",
+    label: "CO.resolver.types.heal",
   },
   buff: {
     id: "buff",
-    label: "CO.action.types.buff",
+    label: "CO.resolver.types.buff",
   },
   debuff: {
     id: "debuff",
-    label: "CO.action.types.debuff",
+    label: "CO.resolver.types.debuff",
+  },
+  auto: {
+    id: "auto",
+    label: "CO.resolver.types.auto",
   },
   consumable: {
     id: "consumable",

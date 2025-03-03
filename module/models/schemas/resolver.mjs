@@ -31,9 +31,10 @@ export class Resolver extends foundry.abstract.DataModel {
     return {
       melee: function () {},
       ranged: function () {},
+      magical: function () {},
       heal: function () {},
-      modifier: function () {},
       auto: function () {},
+      consume: function () {},
     }
   }
 
@@ -119,7 +120,7 @@ export class Resolver extends foundry.abstract.DataModel {
     if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver auto`), actor, item, action)
 
     let damageFormula = this.dmg.formula
-    damageFormula = Utils.evaluateFormulaCustomValues(actor, damageFormula)
+    damageFormula = Utils.evaluateFormulaCustomValues(actor, damageFormula, item.uuid)
     let damageFormulaEvaluated = Roll.replaceFormulaData(damageFormula, actor.getRollData())
     const damageFormulaTooltip = this.dmg.formula
 

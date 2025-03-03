@@ -924,7 +924,7 @@ export default class COActor extends Actor {
   async rollHeal(item, { actionName = "", healFormula = undefined, targetType = SYSTEM.RESOLVER_TARGET.none.id, targets = [] } = {}) {
     let roll = new Roll(healFormula)
     await roll.roll()
-    //Qui est soigné ? Pour le moment soit même :)
+    // TODO Qui est soigné ? Pour le moment soit même :)
     if (targetType == SYSTEM.RESOLVER_TARGET.self.id) {
       let hp = this.system.attributes.hp
       hp.value += roll.total
@@ -942,7 +942,7 @@ export default class COActor extends Actor {
    * Calcul la somme d'un tableau de valeurs positives ou négatives
    *
    * @param {*} array Un tableau de valeurs
-   * Retourne {int} 0 ou la somme des valeurs
+   * @returns {int} 0 ou la somme des valeurs
    */
   _addAllValues(array) {
     return array.length > 0 ? array.reduce((acc, curr) => acc + curr, 0) : 0

@@ -498,10 +498,13 @@
     },
     "resolver": {
       "types": {
-        "melee": "Contact",
-        "ranged": "À distance",
-        "magic": "Magique",
-        "heal": "Soin"
+        "melee": "Attaque de contact",
+        "ranged": "Attaque à distance",
+        "magical": "Attaque magique",
+        "heal": "Soin",
+        "buff": "Amélioration",
+        "debuff": "Affaiblissement",
+        "auto": "Attaque automatique"
       },
       "target": {
         "none": "Aucune",

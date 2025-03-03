@@ -208,7 +208,7 @@ export default class Utils {
   static getAttackTypeFromFormula(formula) {
     if (formula.includes("@atc")) return SYSTEM.ACTION_TYPES.melee.id
     if (formula.includes("@atd")) return SYSTEM.ACTION_TYPES.ranged.id
-    if (formula.includes("@atm")) return SYSTEM.ACTION_TYPES.magic.id
+    if (formula.includes("@atm")) return SYSTEM.ACTION_TYPES.magical.id
     return undefined
   }
 }

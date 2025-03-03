@@ -9,7 +9,7 @@
             
         </div>
         {{#each action.resolvers as |r id|}}
-            {{!log 'action.resolver' r}}
+            {{log 'action.resolver' r}}
             <div class="flexrow resolver" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="resolver">
                 <div class="form-fields flex2">
                     <div class="form-group">
@@ -21,7 +21,7 @@
                     </div>             
                 </div>    
             </div>            
-            {{#if (or (eq r.type @root.choiceResolverTypes.melee.id) (eq r.type @root.choiceResolverTypes.ranged.id) (eq r.type @root.choiceResolverTypes.magical.id)) }}
+            {{#if (or (eq r.type @root.choiceResolverTypes.melee.id) (eq r.type @root.choiceResolverTypes.ranged.id) (eq r.type @root.choiceResolverTypes.magical.id))}}
                 <div class="flexrow strong">
                     <div class="form-fields flex1 center" data-tooltip="{{localize 'CO.ui.formulaTooltip'}}" data-tooltip-direction="UP">{{localize "CO.ui.skillformula"}}</div>
                     <div class="form-fields flex1 center" data-tooltip="{{localize 'CO.ui.critTooltip'}}" data-tooltip-direction="UP">{{localize "CO.ui.crit"}}</div>
@@ -35,6 +35,16 @@
                     <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.resolvers.{{id}}.dmg.formula" type="text" value="{{r.dmg.formula}}" data-dtype="String" /></div>
                 </div>
             {{/if}}
+            {{#if (eq r.type @root.choiceResolverTypes.auto.id)}}
+                <div class="flexrow strong">
+                    <div class="form-fields flex1 center" data-tooltip="{{localize 'CO.ui.formulaTooltip'}}" data-tooltip-direction="UP">{{localize "CO.ui.difficulty"}}</div>
+                    <div class="form-fields flex1 center" >{{localize "CO.ui.dmg"}}</div>
+                </div>      
+                <div class="flexrow"> 
+                    <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.resolvers.{{id}}.skill.difficulty" type="text" value="{{r.skill.difficulty}}" data-dtype="String"  /></div>
+                    <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.resolvers.{{id}}.dmg.formula" type="text" value="{{r.dmg.formula}}" data-dtype="String" /></div>
+                </div>
+            {{/if}}            
             {{#if (eq r.type @root.choiceResolverTypes.heal.id)}}
                 <div class="flexrow strong">
                     <div class="form-fields flex1 center" data-tooltip="{{localize "CO.ui.formulaTooltip"}}">{{localize "CO.ui.healformula"}}</div>
