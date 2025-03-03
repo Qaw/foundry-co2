@@ -153,13 +153,12 @@ export class Resolver extends foundry.abstract.DataModel {
    */
   async consume(actor, item, action) {
     let quantity = item.system.quantity.current - 1
-        if(quantity == 0 && item.system.quantity.destroyIfEmpty) {
-          actor.deleteEmbeddedDocuments("Item", [item.id])
-        } else {
-          console.log("je met à jour la quantité")
-          await item.update({ "system.quantity.current": quantity })
-        }  
-      return true    
+    if (quantity === 0 && item.system.quantity.destroyIfEmpty) {
+      await actor.deleteEmbeddedDocuments("Item", [item.id])
+    } else {
+      await item.update({ "system.quantity.current": quantity })
+    }
+    return true
   }
 
   /**

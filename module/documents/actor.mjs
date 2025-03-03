@@ -179,7 +179,7 @@ export default class COActor extends Actor {
     return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.misc.id)
   }
 
-   /**
+  /**
    * Retourne les Items de type equipment et de sous-type consumable
    */
   get consumables() {
@@ -430,18 +430,18 @@ export default class COActor extends Actor {
       for (const resolver of resolvers) {
         let res = resolver.resolve(this, item, action, type)
       }
-      if(item) {
-        if(item.type == SYSTEM.ITEM_TYPE.equipment.id && item.system.subtype == SYSTEM.EQUIPMENT_SUBTYPES.consumable.id) {
-          //Je décrément la quantité et si je suis a 0 et destructible je suis détruit
-          let quantity = item.system.quantity.current - 1
-          if(quantity == 0 && item.system.quantity.destroyIfEmpty) {
-            this.deleteEmbeddedDocuments("Item", [item.id])
-          } else {
-            await item.update({ "system.quantity.current": quantity })
-          }      
+
+      // Cas des items consommables
+      if (item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.consumable.id) {
+        // Diminution de la quantité et destruction si à 0 et destructible
+        let quantity = item.system.quantity.current - 1
+        if (quantity === 0 && item.system.quantity.destroyIfEmpty) {
+          await this.deleteEmbeddedDocuments("Item", [item.id])
+        } else {
+          await item.update({ "system.quantity.current": quantity })
         }
       }
-    }    
+    }
   }
 
   /**
@@ -680,6 +680,17 @@ export default class COActor extends Actor {
   async addEquipment(equipment) {
     let equipmentData = equipment.toObject()
 
+    // Cas des objets stackable : on augmente juste la quantité de la quantité de l'objet déposé
+    if (this.hasItemWithKey(equipmentData.system.slug)) {
+      let item = this.getItemWithKey(equipmentData.system.slug)
+      if (item.system.properties.stackable) {
+        let quantity = item.system.quantity.current + equipmentData.system.quantity.current
+        quantity = Math.min(quantity, item.system.quantity.max)
+        await item.update({ "system.quantity.current": quantity })
+        return item.uuid
+      }
+    }
+
     // Création de l'objet
     const newEquipment = await this.createEmbeddedDocuments("Item", [equipmentData])
 
@@ -888,12 +899,12 @@ export default class COActor extends Actor {
   }
 
   // FIXME Finir la méthode
-  
+
   async rollHeal(item, { actionName = "", healFormula = undefined, targetType = SYSTEM.RESOLVER_TARGET.none.id, targets = [] } = {}) {
     let roll = new Roll(healFormula)
     await roll.roll()
     //Qui est soigné ? Pour le moment soit même :)
-    if(targetType == SYSTEM.RESOLVER_TARGET.self.id) {
+    if (targetType == SYSTEM.RESOLVER_TARGET.self.id) {
       let hp = this.system.attributes.hp
       hp.value += roll.total
       if (hp.value > hp.max) hp.value = hp.max
@@ -1001,6 +1012,14 @@ export default class COActor extends Actor {
     const item = this.items.get(id)
     if (item) return item
     return null
+  }
+
+  hasItemWithKey(slug) {
+    return this.items.some((item) => item.system.slug === slug)
+  }
+
+  getItemWithKey(slug) {
+    return this.items.find((item) => item.system.slug === slug)
   }
   // #endregion
 }

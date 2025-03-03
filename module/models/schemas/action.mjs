@@ -1,3 +1,4 @@
+import { SYSTEM } from "../../config/system.mjs"
 import { Condition } from "./condition.mjs"
 import { Modifier } from "./modifier.mjs"
 import { Resolver } from "./resolver.mjs"
@@ -88,6 +89,10 @@ export class Action extends foundry.abstract.DataModel {
     return this.parent.parent.name
   }
 
+  get hasLabel() {
+    return (this.label !== undefined) & (this.label !== "")
+  }
+
   /**
    * Retrieves the image associated with the action.
    * If the current image is not the default "d20-highlight" icon, it returns the current image.
@@ -98,6 +103,15 @@ export class Action extends foundry.abstract.DataModel {
   get actionImg() {
     if (this.img !== "icons/svg/d20-highlight.svg") return this.img
     else return this.parent.parent.img
+  }
+
+  get hasQuantity() {
+    return this.parent.subtype === SYSTEM.EQUIPMENT_SUBTYPES.consumable.id && this.parent.quantity.current > 0
+  }
+
+  get quantity() {
+    if (this.hasQuantity) return this.parent.quantity.current
+    return undefined
   }
 
   /**
