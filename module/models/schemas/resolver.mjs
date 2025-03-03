@@ -50,6 +50,9 @@ export class Resolver extends foundry.abstract.DataModel {
       case "heal":
         this.heal(actor, item, action)
         return true
+      case "consumable":
+        this.consume(actor, item, action)
+        return true
       default:
         return false
     }
@@ -140,6 +143,23 @@ export class Resolver extends foundry.abstract.DataModel {
     if (CONFIG.debug.co?.resolvers) console.debug(Utils.log("Heal Targets", targets))
 
     await actor.rollHeal(item, { actionName: action.label, healFormula: healFormulaEvaluated, targetType: this.target.type, targets: targets })
+  }
+
+  /**
+   * Resolver pour les actions de type Consommer. Va simplement consommer un item
+   * @param {COActor} actor : l'acteur pour lequel s'applique l'action
+   * @param {COItem} item : la source de l'action
+   * @param {Action} action : l'action.
+   */
+  async consume(actor, item, action) {
+    let quantity = item.system.quantity.current - 1
+        if(quantity == 0 && item.system.quantity.destroyIfEmpty) {
+          actor.deleteEmbeddedDocuments("Item", [item.id])
+        } else {
+          console.log("je met à jour la quantité")
+          await item.update({ "system.quantity.current": quantity })
+        }  
+      return true    
   }
 
   /**

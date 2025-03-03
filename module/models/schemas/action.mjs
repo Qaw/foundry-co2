@@ -73,6 +73,8 @@ export class Action extends foundry.abstract.DataModel {
         return '<i class="fa-regular fa-fw fa-shield"></i>'
       case "heal":
         return '<i class="fas fa-fw fa-hand-holding-medical"></i>'
+      case "consumable":
+        return '<i class="fa-solid fa-bottle-droplet"></i>'
     }
     return ""
   }

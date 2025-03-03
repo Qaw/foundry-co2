@@ -30,6 +30,8 @@ export default class CoEquipmentSheet extends CoBaseItemSheet {
     context.isArmor = this.item.system.isArmor
     context.isShield = this.item.system.isShield
     context.isMisc = this.item.system.isMisc
+    context.isConsumable = this.item.system.isConsumable
+
 
     return context
   }

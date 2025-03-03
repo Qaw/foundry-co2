@@ -27,6 +27,10 @@ export const ACTION_TYPES = Object.freeze({
     id: "debuff",
     label: "CO.action.types.debuff",
   },
+  consumable: {
+    id: "consumable",
+    label: "CO.action.types.consumable",
+  },
 })
 
 export const CONDITION_OBJECTS = Object.freeze({
@@ -158,6 +162,10 @@ export const RESOLVER_TYPE = Object.freeze({
   debuff: {
     id: "debuff",
     label: "CO.action.types.debuff",
+  },
+  consumable: {
+    id: "consumable",
+    label: "CO.action.types.consumable",
   },
 })
 

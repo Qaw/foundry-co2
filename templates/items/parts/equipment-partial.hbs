@@ -63,9 +63,14 @@
     <div class="form-group">
         <label>{{localize "CO.label.long.properties"}}</label>
         <div class="form-fields">
-            <label class="checkbox"> <input type="checkbox" name="system.properties.equipable" {{checked system.properties.equipable}}> {{localize "CO.properties.equipable"}}</label>
+            {{#if (or isWeapon isArmor isShield)}}
+                <label class="checkbox"> <input type="checkbox" name="system.properties.equipable" {{checked system.properties.equipable}}> {{localize "CO.properties.equipable"}}</label>
+            {{/if}}
             {{#if isWeapon}}
                 <label class="checkbox"> <input type="checkbox" name="system.properties.reloadable" {{checked system.properties.reloadable}}> {{localize "CO.properties.reloadable"}}</label>
+                <label class="checkbox"> <input type="checkbox" name="system.properties.stackable" {{checked system.properties.stackable}}> {{localize "CO.properties.stackable"}}</label>
+            {{/if}}
+            {{#if isConsumable}}
                 <label class="checkbox"> <input type="checkbox" name="system.properties.stackable" {{checked system.properties.stackable}}> {{localize "CO.properties.stackable"}}</label>
             {{/if}}
         </div>
@@ -105,7 +110,7 @@
         <label>{{localize "CO.ui.quantity"}}</label>
         <div class="form-fields">
             <input class="field-value" name="system.quantity.current" type="text" value="{{system.quantity.current}}" placeholder="{{localize 'CO.ui.current'}}" data-dtype="Number">
-            {{#if system.properties.stackable}}
+            {{#if (or system.properties.stackable isConsumable)}}
                 /
                 <input class="field-value" name="system.quantity.max" type="text" value="{{system.quantity.max}}" placeholder="{{localize 'CO.ui.max'}}" data-dtype="Number">
         </div>
@@ -117,7 +122,7 @@
             {{/if}}
         </div>
     </div>
-    {{#if system.properties.reloadable}}
+    {{#if system.properties.reloadable }}
         <div class="form-group">
             <label>{{localize "CO.ui.charges"}}</label>
             <div class="form-fields">
