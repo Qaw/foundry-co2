@@ -683,7 +683,7 @@ export default class COActor extends Actor {
     // Cas des objets stackable : on augmente juste la quantité de la quantité de l'objet déposé
     if (this.hasItemWithKey(equipmentData.system.slug)) {
       let item = this.getItemWithKey(equipmentData.system.slug)
-      if (item.system.properties.stackable) {
+      if (item?.system?.properties?.stackable) {
         let quantity = item.system.quantity.current + equipmentData.system.quantity.current
         quantity = Math.min(quantity, item.system.quantity.max)
         await item.update({ "system.quantity.current": quantity })
@@ -838,6 +838,8 @@ export default class COActor extends Actor {
       bonus = 0,
       malus = 0,
       critical = 20,
+      bonusDice = undefined,
+      malusDice = undefined,
       superior = false,
       weakened = false,
       difficulty = 10,
@@ -852,7 +854,26 @@ export default class COActor extends Actor {
     if (showDifficulty === undefined) showDifficulty = game.settings.get("co", "displayDifficulty")
 
     // Gestion du dé bonus
-    if (this.system.hasBonusDiceForAttack(Utils.getAttackTypeFromFormula(skillFormulaTooltip))) superior = true
+    if (this.system.hasBonusDiceForAttack(Utils.getAttackTypeFromFormula(skillFormulaTooltip))) bonusDice = true
+
+    // Maitrise de l'arme : Si le personnage utilise une arme qu’il ne maîtrise pas, il subit un dé malus au test d’attaque.
+    if (item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.weapon.id) {
+      if (!this.isTrainedWithWeapon(item.id)) malusDice = true
+    }
+
+    // Type de dé
+    if (bonusDice && malusDice) {
+      superior = false
+      weakened = false
+    }
+    if (bonusDice && !malusDice) {
+      superior = true
+      weakened = false
+    }
+    if (!bonusDice && malusDice) {
+      superior = false
+      weakened = true
+    }
 
     const dialogContext = {
       dice,
@@ -866,6 +887,7 @@ export default class COActor extends Actor {
       malus,
       critical,
       superior,
+      weakened,
       difficulty,
       showDifficulty,
       formulaAttack: skillFormula,
@@ -899,7 +921,6 @@ export default class COActor extends Actor {
   }
 
   // FIXME Finir la méthode
-
   async rollHeal(item, { actionName = "", healFormula = undefined, targetType = SYSTEM.RESOLVER_TARGET.none.id, targets = [] } = {}) {
     let roll = new Roll(healFormula)
     await roll.roll()
@@ -935,13 +956,10 @@ export default class COActor extends Actor {
   async _toggleItemFieldAndActions(itemId, fieldName) {
     let item = this.items.get(itemId)
     let fieldValue = item.system[fieldName]
-    // console.log(`_toggleItemFieldAndActions - fieldValue : ${fieldValue} fieldName : ${fieldName} itemId : ${itemId}`)
-    // await this.updateEmbeddedDocuments("Item", [{ _id: itemId, [`system.${fieldName}`]: !fieldValue }])
-    // await item.update({ [`system.${fieldName}`]: !fieldValue })
+
     let updateData = { [`system.${fieldName}`]: !fieldValue }
     const nbActions = item.actions.length
     if (nbActions > 0) {
-      //item.toggleActions()
       let actions = item.system.toObject().actions
       for (let index = 0; index < nbActions; index++) {
         const action = actions[index]
@@ -1007,6 +1025,12 @@ export default class COActor extends Actor {
     return usedHands + neededHands <= 2
   }
 
+  /**
+   * Retrieves an item from the items of the actor using its UUID.
+   *
+   * @param {string} uuid - The UUID of the item to retrieve.
+   * @returns {Object|null} The item if found, otherwise null.
+   */
   getItemFromUuid(uuid) {
     let { id } = foundry.utils.parseUuid(uuid)
     const item = this.items.get(id)
@@ -1014,10 +1038,22 @@ export default class COActor extends Actor {
     return null
   }
 
+  /**
+   * Checks if there is an item with the specified key in the items array.
+   *
+   * @param {string} slug - The key to search for in the items array.
+   * @returns {boolean} - Returns true if an item with the specified key exists, otherwise false.
+   */
   hasItemWithKey(slug) {
     return this.items.some((item) => item.system.slug === slug)
   }
 
+  /**
+   * Retrieves an item from the items array that matches the given slug.
+   *
+   * @param {string} slug - The slug to match against the item's system slug.
+   * @returns {Object|undefined} The item with the matching slug, or undefined if no match is found.
+   */
   getItemWithKey(slug) {
     return this.items.find((item) => item.system.slug === slug)
   }
