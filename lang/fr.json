@@ -288,7 +288,8 @@
       "deactivate": "Désactiver",
       "use": "Utiliser",
       "editStats": "Editez vos caractéristiques",
-      "cost": "Coût",
+      "xpCost": "Coût en points de capacité",
+      "manaCost": "Coût en mana",
       "defense": "Défense",
       "magicalDefense": "Défense magique",
       "maxDefenseArmor": "Défense maximale de l'armure"

@@ -412,6 +412,8 @@ export default class COActor extends Actor {
 
     if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction`), state, source, indice, type, item)
 
+    let results = []
+    let allResolversTrue
     // Action avec une durée
     if (item.system.actions[indice].properties.temporary) {
       const newActions = item.system.toObject().actions
@@ -424,21 +426,38 @@ export default class COActor extends Actor {
       const action = foundry.utils.deepClone(item.system.actions[indice])
       // Recherche des resolvers de l'action
       let resolvers = Object.values(action.resolvers).map((r) => foundry.utils.deepClone(r))
-      for (const resolver of resolvers) {
-        let res = resolver.resolve(this, item, action, type)
-      }
 
-      // Cas des items consommables
-      if (item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.consumable.id) {
-        // Diminution de la quantité et destruction si à 0 et destructible
-        let quantity = item.system.quantity.current - 1
-        if (quantity === 0 && item.system.quantity.destroyIfEmpty) {
-          await this.deleteEmbeddedDocuments("Item", [item.id])
-        } else {
-          await item.update({ "system.quantity.current": quantity })
+      // Résolution de tous les resolvers avant de continuer
+      results = await Promise.all(resolvers.map((resolver) => resolver.resolve(this, item, action, type)))
+
+      // Si tous les resolvers ont réussi
+      allResolversTrue = results.length > 0 && results.every((result) => result === true)
+
+      if (results.length === 0 || allResolversTrue) {
+        // Cas des items consommables
+        if (item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.consumable.id) {
+          // Diminution de la quantité et destruction si à 0 et destructible
+          let quantity = item.system.quantity.current - 1
+          if (quantity === 0 && item.system.quantity.destroyIfEmpty) {
+            await this.deleteEmbeddedDocuments("Item", [item.id])
+          } else {
+            await item.update({ "system.quantity.current": quantity })
+          }
         }
       }
     }
+
+    if (results.length === 0 || allResolversTrue) {
+      // Si c'est un sort, il faut consommer les Points de Mana
+      if (item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.isSpell) {
+        if (item.system.manaCost > 0) {
+          const newMana = this.system.resources.mana.value - item.system.manaCost
+          await this.update({ "system.resources.mana.value": newMana })
+        }
+      }
+    }
+
+    return true
   }
 
   /**
@@ -448,14 +467,20 @@ export default class COActor extends Actor {
    * @param {*} capacityId
    */
   async toggleCapacityLearned(capacityId) {
+    let capacity = this.items.get(capacityId)
+    if (!capacity) return
+
     // Mise à jour de la capacité et de ses actions
-    await this._toggleItemFieldAndActions(capacityId, "learned")
+    await this._toggleItemFieldAndActions(capacity, "learned")
 
     // Mise à jour du rang de la voie correspondante
-    let path = await fromUuid(this.items.get(capacityId).system.path)
+    let path = await fromUuid(capacity.system.path)
     if (!path) return
     const newRank = await path.system.computeRank()
     await path.update({ "system.rank": newRank })
+
+    // Le rang est le coût en mana de la capacité
+    await capacity.update({ "system.manaCost": newRank })
   }
 
   /**
@@ -472,7 +497,7 @@ export default class COActor extends Actor {
     }
 
     // Mise à jour de l'item et de ses actions
-    await this._toggleItemFieldAndActions(itemId, "equipped")
+    await this._toggleItemFieldAndActions(item, "equipped")
   }
 
   /**
@@ -955,11 +980,10 @@ export default class COActor extends Actor {
 
   /**
    * Toggle the field of the items and the actions linked
-   * @param {*} itemId    identifiant unique de l'objet
+   * @param {*} item    obket à modifier
    * @param {*} fieldName exemple : equipped
    */
-  async _toggleItemFieldAndActions(itemId, fieldName) {
-    let item = this.items.get(itemId)
+  async _toggleItemFieldAndActions(item, fieldName) {
     let fieldValue = item.system[fieldName]
 
     let updateData = { [`system.${fieldName}`]: !fieldValue }

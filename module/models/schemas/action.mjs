@@ -193,10 +193,10 @@ export class Action extends foundry.abstract.DataModel {
         if (this.properties.enabled) return [{ label: `Désactiver ${this.label}`, action: "unactivate", indice: this.indice }]
         else return [{ label: `Activer ${this.label}`, action: "activate", indice: this.indice }]
       } else {
-        if (this.type === "melee" || this.type === "ranged") {
+        if (this.type === "melee" || this.type === "ranged" || this.type === "magical") {
           return [
-            { label: `${this.label} - Attaque`, action: "activate", type: "attack", indice: this.indice },
-            { label: `${this.label} - Dommages`, action: "activate", type: "damage", indice: this.indice },
+            { label: `${this.label} Attaque`, action: "activate", type: "attack", indice: this.indice },
+            { label: `${this.label} Dommages`, action: "activate", type: "damage", indice: this.indice },
           ]
         } else {
           return [{ label: this.label, action: "activate", indice: this.indice }]

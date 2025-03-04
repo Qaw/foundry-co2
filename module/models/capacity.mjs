@@ -18,6 +18,7 @@ export default class CapacityData extends ItemData {
       }),
       path: new fields.DocumentUUIDField({ type: "Item" }),
       cost: new fields.NumberField({ required: true, nullable: false, integer: true, initial: -1 }),
+      manaCost: new fields.NumberField({ required: true, nullable: false, integer: true, initial: -1 }),
       actions: new fields.ArrayField(new fields.EmbeddedDataField(Action)),
     })
   }
@@ -41,6 +42,10 @@ export default class CapacityData extends ItemData {
 
   get hasCost() {
     return this.cost !== -1
+  }
+
+  get hasManaCost() {
+    return this.manaCost !== -1
   }
 
   /**

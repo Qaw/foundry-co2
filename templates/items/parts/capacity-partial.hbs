@@ -1,4 +1,4 @@
-<!--<h3 class="form-header"><a class="details-toggle">{{localize "CO.ui.details"}}</a></h3>-->
+{{log "Chroniques Oubliées | capacity" this}}
 <div class="details-form">
   {{#if debugMode}}
     <div class="form-group">
@@ -27,11 +27,33 @@
     </div>
   </div>
   <div class="form-group">
-    <label>{{localize "CO.ui.cost"}}</label>
+    <label>{{localize "CO.ui.xpCost"}}</label>
     <div class="form-fields">
-      <label class="checkbox"> <input type="text" name="system.cost" value="{{system.cost}}" /></label>
+      <label class="field-value"> 
+        {{#if locked}}
+          {{#if system.hasCost}}
+            <input type="text" name="system.cost" value="{{system.cost}}" readonly />            
+          {{/if}}
+        {{else}}
+          <input type="text" name="system.cost" value="{{system.cost}}" />
+        {{/if}}
+      </label>
     </div>
   </div>  
+  <div class="form-group">
+    <label>{{localize "CO.ui.manaCost"}}</label>
+    <div class="form-fields">
+      <label class="field-value"> 
+        {{#if locked}}
+          {{#if system.hasManaCost}}
+            <input type="text" name="system.manaCost" value="{{system.manaCost}}" readonly />            
+          {{/if}}
+        {{else}}
+          <input type="text" name="system.manaCost" value="{{system.manaCost}}" />
+        {{/if}}
+      </label>
+    </div>
+  </div>    
   <div class="form-group">
     <label>{{localize "CO.label.long.actionType"}}</label>
     <div class="form-fields">

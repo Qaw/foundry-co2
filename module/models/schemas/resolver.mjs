@@ -38,22 +38,18 @@ export class Resolver extends foundry.abstract.DataModel {
     }
   }
 
-  resolve(actor, item, action, type) {
+  async resolve(actor, item, action, type) {
     switch (this.type) {
       case "melee":
       case "ranged":
       case "magical":
-        this.attack(actor, item, action, type)
-        return true
+        return await this.attack(actor, item, action, type)
       case "auto":
-        this.auto(actor, item, action)
-        return true
+        return await this.auto(actor, item, action)
       case "heal":
-        this.heal(actor, item, action)
-        return true
+        return await this.heal(actor, item, action)
       case "consumable":
-        this.consume(actor, item, action)
-        return true
+        return await this.consume(actor, item, action)
       default:
         return false
     }
@@ -96,7 +92,7 @@ export class Resolver extends foundry.abstract.DataModel {
     let damageFormulaEvaluated = Roll.replaceFormulaData(damageFormula, actor.getRollData())
     const damageFormulaTooltip = this.dmg.formula
 
-    await actor.rollAttack(item, {
+    const result = await actor.rollAttack(item, {
       auto: false,
       type,
       actionName: action.label,
@@ -108,6 +104,9 @@ export class Resolver extends foundry.abstract.DataModel {
       difficulty,
       showDifficulty,
     })
+
+    if (result === null) return false
+    return true
   }
 
   /**
@@ -124,7 +123,9 @@ export class Resolver extends foundry.abstract.DataModel {
     let damageFormulaEvaluated = Roll.replaceFormulaData(damageFormula, actor.getRollData())
     const damageFormulaTooltip = this.dmg.formula
 
-    await actor.rollAttack(item, { auto: true, type: "damage", actionName: action.label, damageFormula: damageFormulaEvaluated, damageFormulaTooltip })
+    const result = await actor.rollAttack(item, { auto: true, type: "damage", actionName: action.label, damageFormula: damageFormulaEvaluated, damageFormulaTooltip })
+    if (result === null) return false
+    return true
   }
 
   /**
@@ -144,6 +145,7 @@ export class Resolver extends foundry.abstract.DataModel {
     if (CONFIG.debug.co?.resolvers) console.debug(Utils.log("Heal Targets", targets))
 
     await actor.rollHeal(item, { actionName: action.label, healFormula: healFormulaEvaluated, targetType: this.target.type, targets: targets })
+    return true
   }
 
   /**

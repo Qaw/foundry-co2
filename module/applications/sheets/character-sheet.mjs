@@ -68,10 +68,11 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     const source = dataset.source
     const indice = dataset.indice
 
+    let activation = false
     if (action === "activate") {
-      this.actor.activateAction(true, source, indice, type)
+      activation = this.actor.activateAction(true, source, indice, type)
     } else if (action === "unactivate") {
-      this.actor.activateAction(false, source, indice, type)
+      activation = this.actor.activateAction(false, source, indice, type)
     }
   }
 
@@ -116,7 +117,6 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     event.preventDefault()
     const capacityId = $(event.currentTarget).parents(".item").data("itemId")
     await this.actor.toggleCapacityLearned(capacityId)
-    //this.render()
   }
 
   /**
