@@ -15,7 +15,7 @@
             </div>
         </div>
     {{/if}}
-        <div class="form-group">
+    <div class="form-group">
         <label>{{localize "CO.label.long.family"}}</label>
         <div class="form-fields">
             <select name="system.family" data-type="String" style="width:100%">
@@ -35,6 +35,12 @@
             <input value="{{system.recoveryDice}}" class="center" disabled />
         </div>
     </div>
+    <div class="form-group">
+        <label>{{localize "CO.ui.maxDefenseArmor"}}</label>
+        <div class="form-fields">
+            <input class="field-value" type="text" name="system.maxDefenseArmor" value="{{system.maxDefenseArmor}}" data-dtype="Number">
+        </div>
+    </div>    
 </div>
 
 <!-- MODIFIERS -->
@@ -136,11 +142,11 @@
 <div class="path-list list-3col foldable">
     {{#each paths as |path id|}}
         {{!log 'path' path id}}
-        <div class="cell center">
-            <img class="inline-img" src="{{path.img}}" data-tooltip="{{path.name}}" />
+        <div class="cell center item" data-uuid="{{path.uuid}}" data-item-type="path">
+            <a class="item-control item-edit"><img class="inline-img" src="{{path.img}}" data-tooltip="{{path.name}}" /></a>
         </div>
-        <div class="cell left item" data-uuid="{{path.uuid}}" data-item-type="path">
-            <div class="field-label ellipse"><a class="item-control item-edit" data-tooltip="Edit Item">{{path.name}}</a></div>
+        <div class="cell left">
+            <div class="field-label ellipse">{{path.name}}</div>
         </div>
         <div class="cell right item item-controls" data-uuid="{{path.uuid}}" data-item-type="path">
             <a class="item-control item-delete" data-tooltip="{{localize 'CO.label.long.deleteItem'}}"><i class="fas fa-trash"></i></a>

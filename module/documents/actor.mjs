@@ -407,7 +407,6 @@ export default class COActor extends Actor {
      @param {string("attack","damage")} type  define if it's an attack or just a damage
    */
   async activateAction(state, source, indice, type) {
-    
     const item = await fromUuid(source)
     if (!item) return
 
@@ -420,7 +419,7 @@ export default class COActor extends Actor {
       await item.update({ "system.actions": newActions })
     }
     // Action instantanée
-    else {      
+    else {
       if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction - Action instantanée`), state, source, indice, type, item)
       const action = foundry.utils.deepClone(item.system.actions[indice])
       // Recherche des resolvers de l'action
@@ -588,7 +587,7 @@ export default class COActor extends Actor {
       // Item is null if the item has been deleted in the compendium or in the world
       // TODO Add a warning message and think about a global rollback
       if (originalPath !== null) {
-        const newPathUuid = await this.addPath(originalPath)
+        const newPathUuid = await this.addPath(originalPath, newProfile[0])
         updatedPathsUuids.push(newPathUuid)
       }
     }
@@ -602,14 +601,20 @@ export default class COActor extends Actor {
 
   /**
    * Adds a new path and its associated capacities to the system.
-   * It also create the capacities linked to the path
-   * @param {COItem} path The path object to be added.
-   * @returns {Promise<string>} A promise that resolves to the UUID of the newly created path.
    *
-   * @throws {Error} Throws an error if the path creation or update fails.
+   * @param {Object} path The path object to be added.
+   * @param {Object|null} [profile=null] The profile object related to the path creation, if any.
+   * @returns {Promise<string>} The UUID of the newly created path.
+   *
    */
-  async addPath(path) {
+  async addPath(path, profile = null) {
     let itemData = path.toObject()
+
+    // If path creation is related to a profile creation
+    // Update maxDefenseArmor
+    if (profile !== null) {
+      itemData.system.maxDefenseArmor = profile.system.maxDefenseArmor
+    }
 
     // Create the path
     const newPath = await this.createEmbeddedDocuments("Item", [itemData])

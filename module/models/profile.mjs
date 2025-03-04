@@ -13,6 +13,7 @@ export default class ProfileData extends ItemData {
       martialTrainingsWeapons: new fields.ObjectField(),
       martialTrainingsArmors: new fields.ObjectField(),
       martialTrainingsShields: new fields.ObjectField(),
+      maxDefenseArmor: new fields.NumberField({ integer: true, min: 0, initial: 0 }),
     })
   }
 

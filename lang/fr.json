@@ -290,7 +290,8 @@
       "editStats": "Editez vos caractéristiques",
       "cost": "Coût",
       "defense": "Défense",
-      "magicalDefense": "Défense magique"
+      "magicalDefense": "Défense magique",
+      "maxDefenseArmor": "Défense maximale de l'armure"
     },
     "properties": {
       "attack": "Attaque",

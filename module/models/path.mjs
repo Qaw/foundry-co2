@@ -14,6 +14,7 @@ export default class PathData extends ItemData {
       subtype: new fields.StringField({ required: true, choices: SYSTEM.PATH_TYPES, initial: "profile" }),
       capacities: new fields.ArrayField(new fields.DocumentUUIDField({ type: "Item" })),
       rank: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true }),
+      maxDefenseArmor: new fields.NumberField({ integer: true, min: 0, initial: 0 }),
     })
   }
 
@@ -61,6 +62,11 @@ export default class PathData extends ItemData {
     return capacities
   }
 
+  /**
+   * Computes the rank based on the capacities.
+   *
+   * @returns {Promise<number>} The computed rank.
+   */
   async computeRank() {
     const capacities = await this.getCapacities()
     return PathData.computeRank(capacities)

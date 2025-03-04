@@ -25,7 +25,13 @@
     <div class="form-group">
         <label>{{localize "CO.label.long.rank"}}</label>
         <div class="form-fields">
-            <input class="field-value" readonly type="text" value="{{system.rank}}" placeholder="{{localize 'CO.label.long.rank'}}" data-dtype="Number">
+            <input class="field-value" readonly type="text" value="{{system.rank}}" data-dtype="Number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label>{{localize "CO.ui.maxDefenseArmor"}}</label>
+        <div class="form-fields">
+            <input class="field-value" type="text" name="system.maxDefenseArmor" value="{{system.maxDefenseArmor}}" data-dtype="Number">
         </div>
     </div>
 </div>
