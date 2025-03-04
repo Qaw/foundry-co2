@@ -30,13 +30,15 @@ export default class EncounterData extends ActorData {
       }),
       description: new fields.SchemaField({
         private: new fields.HTMLField(),
-        public: new fields.HTMLField(),
+        public: new fields.HTMLField(),        
       }),
       notes: new fields.SchemaField({
         private: new fields.HTMLField(),
         public: new fields.HTMLField(),
       }),
       languages: new fields.ArrayField(new fields.StringField()),
+      //pour indiquer les immunité, propriétés spéciales
+      properties: new fields.HTMLField(),
     })
 
     return foundry.utils.mergeObject(super.defineSchema(), schema)
@@ -137,6 +139,18 @@ export default class EncounterData extends ActorData {
   }
 
   // #endregion
+
+  /**
+   * Checks if there are any bonus dice modifiers for a given attack type.
+   *
+   * @param {string} attackType The type of attack to check for bonus dice modifiers.
+   * @returns {boolean} - Returns true if there are bonus dice modifiers for the given attack type, otherwise false.
+   */
+  hasBonusDiceForAttack(attackType) {
+    if (!attackType) return false
+    const modifiers = this.bonusDiceModifiers.filter((m) => m.target === attackType)
+    return modifiers.length > 0
+  }
 
   /**
    * Add an attack as an embedded item
