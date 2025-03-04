@@ -211,4 +211,14 @@ export default class Utils {
     if (formula.includes("@atm")) return SYSTEM.ACTION_TYPES.magical.id
     return undefined
   }
+
+  /**
+   * Calcul la somme d'un tableau de valeurs positives ou négatives
+   *
+   * @param {*} array Un tableau de valeurs
+   * @returns {int} 0 ou la somme des valeurs
+   */
+  static addAllValuesFromArray(array) {
+    return array.length > 0 ? array.reduce((acc, curr) => acc + curr, 0) : 0
+  }
 }

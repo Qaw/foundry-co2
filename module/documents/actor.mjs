@@ -290,56 +290,53 @@ export default class COActor extends Actor {
   }
 
   /**
-   * Retourne  le malus à l'initiative lié à l'armure et à l'incompétence armes/armures
-   *
-   * Retourne {int} retourne le malus (négatif) ou 0
-   */
-  getMalusToInitiative() {
-    return 0
-    // Return this.getOverloadMalusToInitiative() + this.getIncompetentMalusToInitiative();
-  }
-
-  /**
-   * Retourne  le malus à l'initiative lié à l'armure
-   *
-   * Retourne {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
-   */
-  getOverloadMalusToInitiative() {
-    return 0
-  }
-
-  /**
-   * Retourne  le malus à l'initiative lié à l'incompétence armes/armures
-   *
-   * Retourne {int} retourne le malus (négatif) ou 0 ; par défaut, retourne 0
-   */
-  getIncompetentMalusToInitiative() {
-    return 0
-  }
-
-  /**
    * Calcule la défense de l'armure et du bouclier équipés
    * Retourne  {Int} la somme des DEF
    */
-  getDefenceFromArmorAndShield() {
-    return this.getDefenceFromArmor() + this.getDefenceFromShield()
+  get defenseFromArmorAndShield() {
+    return this.defenseFromArmor + this.defenseFromShield
   }
 
   /**
-   * Calcule la défense de l'armure équipée
-   * Retourne  {Int} la valeur de défense
+   * Calcule la valeur totale de défense des armures équipées.
+   *
+   * @returns {number} La valeur totale de défense de la première armure équipée, ou 0 si aucune armure n'est équipée.
    */
-  getDefenceFromArmor() {
-    let protections = this.equippedArmors.map((i) => i.system.def)
-    return this._addAllValues(protections)
+  get defenseFromArmor() {
+    const armors = this.equippedArmors
+    if (armors.length > 0) {
+      const armor = armors[0]
+      return armor.system.totalDefense
+    }
+    return 0
   }
 
   /**
-   * Retourne  {Int} la valeur de défense
+   * Récupère la valeur totale de défense du premier bouclier équipé.
+   *
+   * @returns {number} La valeur totale de défense du premier bouclier équipé, ou 0 si aucun bouclier n'est équipé.
    */
-  getDefenceFromShield() {
-    let protections = this.equippedShields.map((i) => i.system.def)
-    return this._addAllValues(protections)
+  get defenseFromShield() {
+    const armors = this.equippedShields
+    if (armors.length > 0) {
+      const armor = armors[0]
+      return armor.system.totalDefense
+    }
+    return 0
+  }
+
+  /**
+   * Retrieves the overload malus from the first equipped armor.
+   *
+   * @returns {number} The overload malus value from the first equipped armor, or 0 if no armors are equipped.
+   */
+  get malusFromArmor() {
+    const armors = this.equippedArmors
+    if (armors.length > 0) {
+      const armor = armors[0]
+      return -1 * armor.system.overloadMalus
+    }
+    return 0
   }
 
   /**
@@ -687,7 +684,7 @@ export default class COActor extends Actor {
         let quantity = item.system.quantity.current + equipmentData.system.quantity.current
         if (item.system.quantity.max) {
           quantity = Math.min(quantity, item.system.quantity.max)
-        }        
+        }
         await item.update({ "system.quantity.current": quantity })
         return item.uuid
       }
@@ -696,17 +693,22 @@ export default class COActor extends Actor {
     // Création de l'objet
     const newEquipment = await this.createEmbeddedDocuments("Item", [equipmentData])
 
-    // Update the source of all actions
+    // Update the source of all actions and all modifiers of the actions
     if (newEquipment[0].actions.length > 0) {
       const actions = newEquipment[0].toObject().system.actions
       for (const action of actions) {
         action.source = newEquipment[0].uuid
-      }
+        // Update the source of all modifiers if there are some
+        if (action.modifiers.length > 0) {
+          for (const modifier of action.modifiers) {
+            modifier.source = newEquipment[0].uuid
+          }
+        }
 
-      const updateActions = { _id: newEquipment[0].id, "system.actions": actions }
-      await this.updateEmbeddedDocuments("Item", [updateActions])
+        await newEquipment[0].update({ "system.actions": actions })
+      }
+      return newEquipment[0].uuid
     }
-    return newEquipment[0].uuid
   }
 
   /**
@@ -801,6 +803,11 @@ export default class COActor extends Actor {
     { dice = "1d20", bonus = 0, malus = 0, critical = 20, superior = false, weakened = false, difficulty = undefined, showDifficulty = undefined, withDialog = true } = {},
   ) {
     if (showDifficulty === undefined) showDifficulty = game.settings.get("co", "displayDifficulty")
+
+    // Encombrement de l'armure pour les jets d'agilité
+    if (skillId === "agi") {
+      malus = this.malusFromArmor
+    }
 
     const dialogContext = {
       dice: dice,
@@ -939,16 +946,6 @@ export default class COActor extends Actor {
   // #endregion
 
   // #region méthodes privées
-
-  /**
-   * Calcul la somme d'un tableau de valeurs positives ou négatives
-   *
-   * @param {*} array Un tableau de valeurs
-   * @returns {int} 0 ou la somme des valeurs
-   */
-  _addAllValues(array) {
-    return array.length > 0 ? array.reduce((acc, curr) => acc + curr, 0) : 0
-  }
 
   /**
    * Toggle the field of the items and the actions linked

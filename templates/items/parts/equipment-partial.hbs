@@ -22,16 +22,6 @@
             </select>
         </div>
     </div>
-    {{#if isWeapon}}
-        <div class="form-group">
-            <label>{{localize "CO.label.long.damagetype"}}</label>
-            <div class="form-fields">
-                <select name="system.damagetype" data-type="String" style="width:100%">
-                    {{selectOptions @root.choiceDamageType selected=system.damagetype localize=true}}
-                </select>
-            </div>
-        </div>
-    {{/if}}
     {{#if (or isWeapon isArmor isShield)}}
         <div class="form-group">
             <label>{{localize "CO.label.long.martialCategory"}}</label>
@@ -51,19 +41,35 @@
                 {{/if}}                
             </div>
         </div>
-    {{/if}}
-    {{#if system.properties.equipable}}
+    {{/if}}    
+    {{#if isWeapon}}
         <div class="form-group">
-            <label>{{localize "CO.ui.equipped"}}</label>
+            <label>{{localize "CO.label.long.damagetype"}}</label>
             <div class="form-fields">
-                <label class="checkbox"> <input type="checkbox" name="system.equipped" {{checked system.equipped}}></label>
+                <select name="system.damagetype" data-type="String" style="width:100%">
+                    {{selectOptions @root.choiceDamageType selected=system.damagetype localize=true}}
+                </select>
             </div>
         </div>
+    {{/if}}
+    {{#if (or isArmor isShield)}}
+        <div class="form-group">
+            <label>{{localize "CO.ui.defense"}}</label>
+            <div class="form-fields">
+                <input class="field-value" name="system.defense" type="text" value="{{system.defense}}" data-dtype="Number">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>{{localize "CO.ui.magicalDefense"}}</label>
+            <div class="form-fields">
+                <input class="field-value" name="system.magicalDefense" type="text" value="{{system.magicalDefense}}" data-dtype="Number">
+            </div>
+        </div>        
     {{/if}}
     <div class="form-group">
         <label>{{localize "CO.label.long.properties"}}</label>
         <div class="form-fields">
-            {{#if (or isWeapon isArmor isShield)}}
+            {{#if (or isWeapon isArmor isShield isMisc)}}
                 <label class="checkbox"> <input type="checkbox" name="system.properties.equipable" {{checked system.properties.equipable}}> {{localize "CO.properties.equipable"}}</label>
             {{/if}}
             {{#if isWeapon}}
@@ -74,7 +80,7 @@
                 <label class="checkbox"> <input type="checkbox" name="system.properties.stackable" {{checked system.properties.stackable}}> {{localize "CO.properties.stackable"}}</label>
             {{/if}}
         </div>
-    </div>
+    </div>   
     {{#if isWeapon}}
         <div class="form-group">
             <label>{{localize "CO.ui.usage"}}</label>
@@ -84,6 +90,14 @@
             </div>
         </div>
     {{/if}}
+    {{#if system.properties.equipable}}
+        <div class="form-group">
+            <label>{{localize "CO.ui.equipped"}}</label>
+            <div class="form-fields">
+                <label class="checkbox"> <input type="checkbox" name="system.equipped" {{checked system.equipped}}></label>
+            </div>
+        </div>
+    {{/if}}     
     <div class="form-group">
         <label>{{localize "CO.ui.weight"}}</label>
         <div class="form-fields">

@@ -25,6 +25,8 @@ export default class EquipmentData extends ItemData {
       subtype: new fields.StringField({ required: true }),
       martialCategory: new fields.StringField({ required: true }),
       damagetype: new fields.StringField({ required: true }),
+      defense: new fields.NumberField({ integer: true, positive: true }),
+      magicalDefense: new fields.NumberField({ integer: true }),
       quantity: new fields.SchemaField({
         current: new fields.NumberField({ required: true, nullable: false, initial: 1, integer: true }),
         max: new fields.NumberField({ required: false, nullable: true, integer: true }),
@@ -78,9 +80,38 @@ export default class EquipmentData extends ItemData {
     return this.subtype === SYSTEM.EQUIPMENT_SUBTYPES.consumable.id
   }
 
-  get defense() {
-    if (!this.isArmor) return 0
-    // TODO Chercher le bonus de Combat/Défense dans les modifiers des actions
-    return this.parent.getTotalModifiersByTypeSubtypeAndTarget(SYSTEM.MODIFIERS_TYPE.equipment.id, SYSTEM.MODIFIERS_SUBTYPE.combat.id, SYSTEM.MODIFIERS_TARGET.def.id)
+  /**
+   * Calcule la valeur de défense totale de l'équipement.
+   *
+   * @returns {number} La valeur de défense totale, qui est la somme de la défense physique et magique.
+   *                   Retourne 0 si l'équipement n'est ni une armure ni un bouclier.
+   */
+  get totalDefense() {
+    if (!this.isArmor && !this.isShield) return 0
+    return (this.defense || 0) + (this.magicalDefense ? this.magicalDefense : 0)
+  }
+
+  /**
+   * Calcule le malus de surcharge pour l'équipement.
+   *
+   * @returns {number} Le malus de surcharge, qui est la défense physique moins la défense magique.
+   *                   Retourne 0 si l'équipement n'est ni une armure ni un bouclier.
+   */
+  get overloadMalus() {
+    if (!this.isArmor && !this.isShield) return 0
+    let malus = this.defense || 0
+    if (this.magicalDefense) malus -= this.magicalDefense
+    return Math.max(0, malus)
+  }
+
+  /**
+   * Calcule le malus magique pour l'équipement: nombre de PM supplémentaires nécessaires pour lancer un sort.
+   *
+   * @returns {number} Le malus magique, qui est la défense physique.
+   *                   Retourne 0 si l'équipement n'est ni une armure ni un bouclier.
+   */
+  get magicalMalus() {
+    if (!this.isArmor && !this.isShield) return 0
+    return this.defense || 0
   }
 }

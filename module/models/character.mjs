@@ -292,14 +292,16 @@ export default class CharacterData extends ActorData {
     let maxAgility = 8
     let armors = this.parent.equippedArmors
     if (armors) {
+      // Défense de la première armure équipée
       const armor = armors[0]
-      // La défense est un modificateur de type Combat/Défense
       if (armor) {
         const defense = armor.system.defense
         maxAgility = 8 - defense
       }
-      this.abilities.agi.value = Math.min(this.abilities.agi.value, maxAgility)
-      if (maxAgility < 8) this.abilities.agi.tooltipValue = this.abilities.agi.tooltipValue.concat(Utils.getTooltip("Max armure", maxAgility))
+      if (this.abilities.agi.value > maxAgility) {
+        this.abilities.agi.value = Math.min(this.abilities.agi.value, maxAgility)
+        this.abilities.agi.tooltipValue = this.abilities.agi.tooltipValue.concat(Utils.getTooltip("Max armure", maxAgility))
+      }
     }
   }
 
@@ -339,7 +341,7 @@ export default class CharacterData extends ActorData {
   }
 
   /**
-   * On va regarder si on a un modifier qui modifie la vision
+   * On regarde si un modifier modifie la vision
    */
   _prepareVision() {
     const modifiers = this.stateModifiers
@@ -363,9 +365,9 @@ export default class CharacterData extends ActorData {
       }
     }
 
-    //inversement si on a pas de darkvision
+    // Inversement si on a pas de darkvision
     if (!modifiersVision && this.parent.prototypeToken.sight?.visionMode === "darkvision") {
-      //on le retire
+      // On le retire
       const prototypeToken = {}
       Object.assign(prototypeToken, {
         sight: { enabled: true, visionMode: "basic", range: 0, saturation: 0 },
@@ -401,7 +403,6 @@ export default class CharacterData extends ActorData {
    */
   _prepareInit(skill, abilityBonus, bonuses) {
     const initModifiers = this.computeTotalModifiersByTarget(this.combatModifiers, SYSTEM.COMBAT.init.id)
-    const malus = this.parent.getMalusToInitiative()
 
     skill.base = DefaultConfiguration.baseInitiative()
     skill.tooltipBase = Utils.getTooltip("Base", skill.base)
@@ -409,12 +410,8 @@ export default class CharacterData extends ActorData {
     skill.base += abilityBonus
     skill.tooltipBase = skill.tooltipBase.concat(Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus))
 
-    skill.value = skill.base + bonuses + initModifiers.total + malus
+    skill.value = skill.base + bonuses + initModifiers.total
     skill.tooltipValue = skill.tooltipBase.concat(initModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
-
-    if (malus < 0) {
-      skill.tooltipValue = skill.tooltipValue.concat(Utils.getTooltip("Malus", malus))
-    }
   }
 
   /**
@@ -433,7 +430,23 @@ export default class CharacterData extends ActorData {
     skill.base += abilityBonus
     skill.tooltipBase = skill.tooltipBase.concat(Utils.getTooltip(Utils.getAbilityName(skill.ability), abilityBonus))
 
-    skill.value = skill.base + bonuses + defModifiers.total
+    skill.value = skill.base
+
+    // Ajout du bonus de l'armure
+    const armorDef = this.parent.defenseFromArmor
+    if (armorDef > 0) {
+      skill.value += armorDef
+      skill.tooltipBase = skill.tooltipBase.concat(Utils.getTooltip("Armure", armorDef))
+    }
+
+    // Ajout du bonus du bouclier
+    const shieldDef = this.parent.defenseFromShield
+    if (shieldDef > 0) {
+      skill.value += shieldDef
+      skill.tooltipBase = skill.tooltipBase.concat(Utils.getTooltip("Bouclier", shieldDef))
+    }
+
+    skill.value += bonuses + defModifiers.total
     skill.tooltipValue = skill.tooltipBase.concat(defModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
   }
 

@@ -288,7 +288,9 @@
       "deactivate": "Désactiver",
       "use": "Utiliser",
       "editStats": "Editez vos caractéristiques",
-      "cost": "Coût"
+      "cost": "Coût",
+      "defense": "Défense",
+      "magicalDefense": "Défense magique"
     },
     "properties": {
       "attack": "Attaque",
