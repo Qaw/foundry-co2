@@ -105,7 +105,7 @@
                                         {{/if}}
                                     </a>
                                 {{else}}
-                                    {{#if (or (eq action.type 'melee') (eq action.type 'ranged'))}}
+                                    {{#if (or (eq action.type 'melee') (eq action.type 'ranged') (eq action.type 'magical'))}}
                                         <a class="item-control">
                                             <i class="fas fa-dice-d20 green toggle-action" style="font-size:16px" data-tooltip="Attaque" data-action="activate" data-type="attack" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
                                         </a>

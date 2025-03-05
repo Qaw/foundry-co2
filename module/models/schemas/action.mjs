@@ -71,12 +71,36 @@ export class Action extends foundry.abstract.DataModel {
         return '<i class="fas fa-fw fa-bow-arrow"></i>'
       case "magical":
         return '<i class="fa-solid fa-bolt"></i>'
-      case "protection":
-        return '<i class="fa-regular fa-fw fa-shield"></i>'
       case "heal":
         return '<i class="fas fa-fw fa-hand-holding-medical"></i>'
+      case "buff":
+        return '<i class="fa-solid fa-thumbs-up"></i>'
+      case "debuff":
+        return '<i class="fa-solid fa-thumbs-down"></i>'
       case "consumable":
         return '<i class="fa-solid fa-bottle-droplet"></i>'
+    }
+    return ""
+  }
+
+  get iconFA() {
+    switch (this.type) {
+      case "spell":
+        return "fas fa-fw fa-hand-sparkles"
+      case "melee":
+        return "fas fa-fw fa-sword"
+      case "ranged":
+        return "fas fa-fw fa-bow-arrow"
+      case "magical":
+        return "fa-solid fa-bolt"
+      case "heal":
+        return "fas fa-fw fa-hand-holding-medical"
+      case "buff":
+        return "fa-solid fa-thumbs-up"
+      case "debuff":
+        return "fa-solid fa-thumbs-down"
+      case "consumable":
+        return "fa-solid fa-bottle-droplet"
     }
     return ""
   }
