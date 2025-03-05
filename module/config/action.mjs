@@ -85,6 +85,10 @@ export const CONDITION_PREDICATES = Object.freeze({
     id: "isOwned",
     label: "CO.condition.predicates.isOwned",
   },
+  isLinkedActionActivated: {
+    id: "isLinkedActionActivated",
+    label: "CO.condition.predicates.isLinkedActionActivated",
+  },
   isTagged: {
     id: "isTagged",
     label: "CO.condition.predicates.isTagged",

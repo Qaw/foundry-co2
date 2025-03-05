@@ -6,13 +6,16 @@
 <div class="conditions-container foldable">
     {{#if action.conditions}}
         {{#each action.conditions as |c id|}}
+            {{!log 'condition' c id}}
             <div class="flexrow condition" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="condition">
                 <div class="form-fields flex1">
                     <select name="system.actions.{{../idx}}.conditions.{{id}}.predicate" data-type="String" style="width:100%">
                         {{selectOptions @root.choiceConditionPredicates selected=c.predicate localize=true}}
                     </select>
-
                 </div>
+                {{#if (eq c.predicate "isLinkedActionActivated")}}
+                    <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.conditions.{{id}}.object" type="text" value="{{c.object}}" data-dtype="String"  /></div>                
+                {{/if}}
                 <div class="form-fields flex0"><a class="condition-delete"><i class="fas fa-trash"></i></a></div>
             </div>
         {{/each}}

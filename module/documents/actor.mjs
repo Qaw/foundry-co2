@@ -412,6 +412,42 @@ export default class COActor extends Actor {
 
     if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction`), state, source, indice, type, item)
 
+    // Si l'action coûte du mana
+
+    // TODO Incantation
+    // Magie profane (amille des mages) : En revanche, il n’est pas possible d’utiliser un bouclier et une arme ou une arme dans chaque main tout en lançant des sorts de magie profane.
+    // Magie divine (famille des mystiques) : respecter les armes autorisées
+
+    // TODO Gestion de la maitrise de l'armure qui peut empêcher le lancement des capacités et sorts
+
+    // TODO Gestion du lancement de sort avec une armure non autorisée
+    // Le nombre de PM supplémentaires nécessaires pour lancer un sort est égal à la DEF de l'armure équipée - maxDefenseArmor de la voie
+
+    // TODO Gestion de la concentration accrue pour les sorts qui nécessitent une action d'attaque
+    // Concentration
+
+    // Gestion de la brûlure de mana pour les sorts
+    let manaBurned = false
+    let manaBurnedCost = 0
+    // Si l'action consomme du mana, que la capacité un sort et qu'on l'active, on vérifie que le nombre de PM restants est suffisant
+    if (!item.system.actions[indice].properties.noManaCost && state && item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.isSpell) {
+      if (item.system.manaCost > 0) {
+        if (this.system.resources.mana.value < item.system.manaCost) {
+          const needed = item.system.manaCost - this.system.resources.mana.value
+          const content = `Vous n'avez pas assez de mana : il vous manque ${needed} points de mana. Voulez-vous tout de même lancer le sort en sacrifiant votre énergie vitale ?`
+          const proceed = await foundry.applications.api.DialogV2.confirm({
+            window: { title: "Brûlure de mana" },
+            content: content,
+            rejectClose: false,
+            modal: true,
+          })
+          if (!proceed) return
+          manaBurned = true
+          manaBurnedCost = needed
+        }
+      }
+    }
+
     let results = []
     let allResolversTrue
     // Action avec une durée
@@ -447,12 +483,25 @@ export default class COActor extends Actor {
       }
     }
 
+    // Pas de resolvers ou tous les resolvers ont été résolus avec succès
     if (results.length === 0 || allResolversTrue) {
-      // Si c'est un sort, il faut consommer les Points de Mana
-      if (item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.isSpell) {
+      // Si c'est un sort et qu'on l'active, il faut consommer les Points de Mana
+      if (!item.system.actions[indice].properties.noManaCost && state && item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.isSpell) {
         if (item.system.manaCost > 0) {
-          const newMana = this.system.resources.mana.value - item.system.manaCost
+          const newMana = Math.max(this.system.resources.mana.value - item.system.manaCost, 0)
           await this.update({ "system.resources.mana.value": newMana })
+
+          // Brülure de mana
+          if (manaBurned) {
+            const recoveryDice = this.system.hd
+            if (recoveryDice) {
+              const burnRoll = new Roll(`${manaBurnedCost}${recoveryDice}`)
+              await burnRoll.roll()
+              // TODO : Notifier la perte de PV
+              burnRoll.toMessage()
+              await this.update({ "system.attributes.hp.value": this.system.attributes.hp.value - burnRoll.total })
+            }
+          }
         }
       }
     }

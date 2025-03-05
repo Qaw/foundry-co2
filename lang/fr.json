@@ -41,7 +41,8 @@
       "XPLeftToSpend": "Il vous reste {xpLeft} point(s) de capacités à dépenser.",
       "warningIncorrectTargets": "Vous ne pouvez désigner que {number} cible(s) pour l'action {action} !",
       "warningCannotTargetSelf": "Vous ne pouvez pas cibler vous-même !",
-      "warningProfileCreated": "Le profil a été créé."
+      "warningProfileCreated": "Le profil a été créé.",
+      "warningNotEnoughMana": "Pas assez de mana pour lancer le sort."
     },
     "tooltip": {
       "formulaAttack": "Formule d'attaque (sans le dé)",
@@ -310,7 +311,8 @@
       "enabled": "Activé(e)",
       "visible": "Visible",
       "activable": "Activable",
-      "temporary": "Temporaire"
+      "temporary": "Temporaire",
+      "noManaCost": "Sans coût en mana"
     },
     "abilities": {
       "long": {
@@ -448,6 +450,7 @@
         "isEquipped": "est équipé",
         "isLearned": "est appris",
         "isOwned": "est possédé",
+        "isLinkedActionActivated": "l'action liée est activée",
         "isTagged": "a le tag"
       },
       "targets": {
