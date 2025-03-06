@@ -1151,7 +1151,7 @@ export default class COActor extends Actor {
 
       // Affichage du jet de dégâts dans le cas d'un jet combiné
       if (game.settings.get("co", "useComboRolls")) {
-        await rolls[1].toMessage(messageData)
+        if (rolls[1]) await rolls[1].toMessage(messageData)
       }
     }
 

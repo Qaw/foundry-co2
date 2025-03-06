@@ -299,17 +299,19 @@ export class COAttackRoll extends CORoll {
       // Ajouter && isSuccess ?
       if (dialogContext.useComboRolls) {
         const damageFormula = Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaDamage}`)
-        const damageRoll = new this(damageFormula, dialogContext.actor.getRollData())
-        await damageRoll.evaluate()
-        const damageRollToolTip = await damageRoll.getTooltip()
-        damageRoll.options = {
-          type: dialogContext.type,
-          label: dialogContext.label,
-          actor: dialogContext.actor,
-          damageRollToolTip,
-          ...options,
+        if (damageFormula !== "0" && damageFormula !== "") {
+          const damageRoll = new this(damageFormula, dialogContext.actor.getRollData())
+          await damageRoll.evaluate()
+          const damageRollToolTip = await damageRoll.getTooltip()
+          damageRoll.options = {
+            type: dialogContext.type,
+            label: dialogContext.label,
+            actor: dialogContext.actor,
+            damageRollToolTip,
+            ...options,
+          }
+          rolls.push(damageRoll)
         }
-        rolls.push(damageRoll)
       }
     } else if (dialogContext.type === "damage") {
       const formula = `${rollContext.formulaDamage}`
