@@ -412,8 +412,6 @@ export default class COActor extends Actor {
 
     if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction`), state, source, indice, type, item)
 
-    // Si l'action coûte du mana
-
     // TODO Incantation
     // Magie profane (amille des mages) : En revanche, il n’est pas possible d’utiliser un bouclier et une arme ou une arme dans chaque main tout en lançant des sorts de magie profane.
     // Magie divine (famille des mystiques) : respecter les armes autorisées

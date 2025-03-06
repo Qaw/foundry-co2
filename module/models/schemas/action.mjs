@@ -106,6 +106,18 @@ export class Action extends foundry.abstract.DataModel {
   }
 
   /**
+   * Gets the action name.
+   * If the object has a label, it returns the label.
+   * Otherwise, it returns the item name.
+   *
+   * @returns {string} The action name.
+   */
+  get actionName() {
+    if (this.hasLabel) return this.label
+    return this.itemName
+  }
+
+  /**
    * Gets the name of the item from the parent object's parent.
    * this.parent is item's system
    * @returns {string} The name of the item.
@@ -114,8 +126,13 @@ export class Action extends foundry.abstract.DataModel {
     return this.parent.parent.name
   }
 
+  /**
+   * Checks if the label property is defined and not an empty string.
+   *
+   * @returns {boolean} True if the label is defined and not empty, otherwise false.
+   */
   get hasLabel() {
-    return (this.label !== undefined) & (this.label !== "")
+    return this.label !== undefined && this.label !== ""
   }
 
   /**

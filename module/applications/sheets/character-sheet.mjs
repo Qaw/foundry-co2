@@ -80,19 +80,21 @@ export default class COCharacterSheet extends CoBaseActorSheet {
   _onDragStart(event) {
     const target = event.currentTarget
     let dragData
+
+    // Si c'est une action : dataset contient source et indice
     if (target.classList.contains("action")) {
-      // Dataset contient itemUuid, source et indice //TODO source et itemUuid sont identiques
       const { id } = foundry.utils.parseUuid(target.dataset.source)
       const indice = target.dataset.indice
       const item = this.actor.items.get(id)
-      const action = Action.createFromExisting(item.actions[indice])
-      // Get source (itemId) and indice
-      dragData = action.toDragData()
+      // Get source (item uuid) and indice
+      dragData = item.actions[indice].toDragData()
       dragData.name = item.name
       dragData.img = item.img
-      dragData.actionName = action.label
+      dragData.actionName = item.actions[indice].actionName
       event.dataTransfer.setData("text/plain", JSON.stringify(dragData))
-    } else super._onDragStart(event)
+    }
+    // Sinon dataset contient itemUuid, itemId, itemType
+    else super._onDragStart(event)
   }
 
   /**
