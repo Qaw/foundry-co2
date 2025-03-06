@@ -10,7 +10,6 @@ import Utils from "../utils.mjs"
  *
  * @function
  */
-
 export default class COActor extends Actor {
   async _preCreate(data, options, user) {
     await super._preCreate(data, options, user)
@@ -62,7 +61,8 @@ export default class COActor extends Actor {
 
     return rollData
   }
-  // #region accesseurs
+
+  // #region Accesseurs
 
   /**
    * Retourne  les Items de type equipment
@@ -146,14 +146,6 @@ export default class COActor extends Actor {
     return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.path === null)
   }
 
-  get equippedEquipments() {
-    return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.equipped)
-  }
-
-  get equippedWeapons() {
-    return this.weapons.filter((item) => item.system.equipped)
-  }
-
   /**
    * Retourne les Items de type equipment et de sous-type armor
    */
@@ -186,6 +178,14 @@ export default class COActor extends Actor {
     return this.equipments.filter((item) => item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.consumable.id)
   }
 
+  get equippedEquipments() {
+    return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.equipped)
+  }
+
+  get equippedWeapons() {
+    return this.weapons.filter((item) => item.system.equipped)
+  }
+
   /**
    * Retourne les Items équipés de type equipment et de sous-type armor
    */
@@ -209,84 +209,6 @@ export default class COActor extends Actor {
       if (item.actions.length > 0) allActions.push(...item.actions)
     })
     return allActions
-  }
-
-  /**
-   * Retourne Toutes les actions visibles des capacités et des équipements
-   */
-  async getVisibleActions() {
-    let allActions = []
-    for (const item of this.items) {
-      if ([SYSTEM.ITEM_TYPE.equipment.id, SYSTEM.ITEM_TYPE.capacity.id].includes(item.type)) {
-        const itemActions = await item.getVisibleActions(this)
-        allActions.push(...itemActions)
-      }
-    }
-    return allActions
-  }
-
-  /**
-   * Retourne Toutes les actions visibles et activables des capacités et des équipements
-   */
-  async getVisibleActivableActions() {
-    const actions = await this.getVisibleActions(this)
-    return actions.filter((a) => a.properties.activable)
-  }
-
-  /**
-   * Retourne Toutes les actions visibles, activables et temporaires des capacités et des équipements
-   */
-  async getVisibleActivableTemporaireActions() {
-    const actions = await this.getVisibleActions(this)
-    return actions.filter((a) => a.properties.activable && a.properties.temporary)
-  }
-
-  /**
-   * Retourne Toutes les actions visibles et non activables des capacités et des équipements
-   */
-  async getVisibleNonActivableActions() {
-    const actions = await this.getVisibleActions(this)
-    return actions.filter((a) => !a.properties.activable)
-  }
-
-  /**
-   * Retourne Toutes les actions visibles, non activables et non temporaires des capacités et des équipements
-   */
-  async getVisibleNonActivableNonTemporaireActions() {
-    const actions = await this.getVisibleActions(this)
-    return actions.filter((a) => !a.properties.activable && !a.properties.temporary)
-  }
-
-  get isUnlocked() {
-    if (this.getFlag(game.system.id, "SheetUnlocked")) return true
-    return false
-  }
-
-  // #endregion
-
-  // #region méthodes publiques
-
-  /**
-   * Return all skill modifiers
-   * @param {string} ability str, dex ...
-   * Retourne {Object} Name, value, description
-   */
-  getSkillBonuses(ability) {
-    const modifiersByTarget = this.system.skillModifiers.filter((m) => m.target === ability)
-    let bonuses = []
-    for (const modifier of modifiersByTarget) {
-      const sourceInfos = modifier.getSourceInfos(this)
-      bonuses.push({ name: sourceInfos.name, value: modifier.evaluate(this), description: sourceInfos.description })
-    }
-    return bonuses
-  }
-
-  /**
-   * Retourne  l'objet correspondant à la clé
-   * @param {*} key
-   */
-  getEmbeddedItemByKey(key) {
-    return this.items.find((item) => item.system.key === key)
   }
 
   /**
@@ -339,19 +261,111 @@ export default class COActor extends Actor {
     return 0
   }
 
-  /**
-   * Supprime un item de type Capacity ou Feature
-   * @param {*} itemId
-   */
-  deleteItem(itemId) {
-    const item = this.items.find((item) => item.id === itemId)
-    switch (item.type) {
-      case SYSTEM.ITEM_TYPE.capacity.id:
-      case SYSTEM.ITEM_TYPE.feature.id:
-        return this.deleteEmbeddedDocuments("Item", [itemId])
-      default:
-        break
+  get isUnlocked() {
+    if (this.getFlag(game.system.id, "SheetUnlocked")) return true
+    return false
+  }
+
+  // Gestion de la maitrise de l'armure qui peut empêcher le lancement des capacités et sorts
+  get canCastSpell() {
+    const armor = this.equippedArmors[0]
+
+    if (armor) {
+      if (!this.isTrainedWithArmor(armor.id)) return false
     }
+
+    return true
+  }
+
+  // Le nombre de PM supplémentaires à dépenser pour lancer le sort est égal au bonus de DEF de l’armure portée (ne pas tenir compte d’un éventuel bonus magique de l’armure).
+  get manaCostFromArmor() {
+    const armor = this.equippedArmors[0]
+    const profile = this.profiles[0]
+    if (profile && armor) {
+      const maxDefenseArmor = profile.system.maxDefenseArmor
+      const totalDefense = armor.system.defense
+      return Math.max(totalDefense - maxDefenseArmor, 0)
+    }
+    return 0
+  }
+
+  // Gestion de la maitrise de l'armure qui peut empêcher le lancement des capacités
+  get canUseCapacities() {
+    const armor = this.equippedArmors[0]
+    return this.isTrainedWithArmor(armor.id)
+  }
+
+  // #endregion
+
+  // #region Méthodes publiques
+
+  /**
+   * Retourne Toutes les actions visibles des capacités et des équipements
+   */
+  async getVisibleActions() {
+    let allActions = []
+    for (const item of this.items) {
+      if ([SYSTEM.ITEM_TYPE.equipment.id, SYSTEM.ITEM_TYPE.capacity.id].includes(item.type)) {
+        const itemActions = await item.getVisibleActions(this)
+        allActions.push(...itemActions)
+      }
+    }
+    return allActions
+  }
+
+  /**
+   * Retourne Toutes les actions visibles et activables des capacités et des équipements
+   */
+  async getVisibleActivableActions() {
+    const actions = await this.getVisibleActions(this)
+    return actions.filter((a) => a.properties.activable)
+  }
+
+  /**
+   * Retourne Toutes les actions visibles, activables et temporaires des capacités et des équipements
+   */
+  async getVisibleActivableTemporaireActions() {
+    const actions = await this.getVisibleActions(this)
+    return actions.filter((a) => a.properties.activable && a.properties.temporary)
+  }
+
+  /**
+   * Retourne Toutes les actions visibles et non activables des capacités et des équipements
+   */
+  async getVisibleNonActivableActions() {
+    const actions = await this.getVisibleActions(this)
+    return actions.filter((a) => !a.properties.activable)
+  }
+
+  /**
+   * Retourne Toutes les actions visibles, non activables et non temporaires des capacités et des équipements
+   */
+  async getVisibleNonActivableNonTemporaireActions() {
+    const actions = await this.getVisibleActions(this)
+    return actions.filter((a) => !a.properties.activable && !a.properties.temporary)
+  }
+
+  /**
+   * Return all skill modifiers
+   * @param {string} ability str, dex ...
+   * Retourne {Object} Name, value, description
+   */
+  getSkillBonuses(ability) {
+    const modifiersByTarget = this.system.skillModifiers.filter((m) => m.target === ability)
+    let bonuses = []
+    for (const modifier of modifiersByTarget) {
+      const sourceInfos = modifier.getSourceInfos(this)
+      bonuses.push({ name: sourceInfos.name, value: modifier.evaluate(this), description: sourceInfos.description })
+    }
+    return bonuses
+  }
+
+  /**
+   * Retourne  l'objet correspondant à la clé
+   * @param {*} key
+   */
+  getEmbeddedItemByKey(key) {
+    return this.items.find((item) => item.system.key === key)
   }
 
   /**
@@ -413,13 +427,13 @@ export default class COActor extends Actor {
     if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction`), state, source, indice, type, item)
 
     // TODO Incantation
-    // Magie profane (amille des mages) : En revanche, il n’est pas possible d’utiliser un bouclier et une arme ou une arme dans chaque main tout en lançant des sorts de magie profane.
+    // Magie profane (famille des mages) : En revanche, il n’est pas possible d’utiliser un bouclier et une arme ou une arme dans chaque main tout en lançant des sorts de magie profane.
     // Magie divine (famille des mystiques) : respecter les armes autorisées
 
     // TODO Gestion de la maitrise de l'armure qui peut empêcher le lancement des capacités et sorts
 
-    // TODO Gestion du lancement de sort avec une armure non autorisée
-    // Le nombre de PM supplémentaires nécessaires pour lancer un sort est égal à la DEF de l'armure équipée - maxDefenseArmor de la voie
+    // Gestion du lancement de sort avec une armure non autorisée
+    const manaCostFromArmor = this.manaCostFromArmor
 
     // TODO Gestion de la concentration accrue pour les sorts qui nécessitent une action d'attaque
     // Concentration
@@ -429,9 +443,10 @@ export default class COActor extends Actor {
     let manaBurnedCost = 0
     // Si l'action consomme du mana, que la capacité un sort et qu'on l'active, on vérifie que le nombre de PM restants est suffisant
     if (!item.system.actions[indice].properties.noManaCost && state && item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.isSpell) {
+      const spellManaCost = item.system.manaCost + manaCostFromArmor
       if (item.system.manaCost > 0) {
-        if (this.system.resources.mana.value < item.system.manaCost) {
-          const needed = item.system.manaCost - this.system.resources.mana.value
+        if (this.system.resources.mana.value < spellManaCost) {
+          const needed = spellManaCost - this.system.resources.mana.value
           const content = `Vous n'avez pas assez de mana : il vous manque ${needed} points de mana. Voulez-vous tout de même lancer le sort en sacrifiant votre énergie vitale ?`
           const proceed = await foundry.applications.api.DialogV2.confirm({
             window: { title: "Brûlure de mana" },
@@ -571,6 +586,122 @@ export default class COActor extends Actor {
       await canvas.scene.updateEmbeddedDocuments("Token", updates)
     }
   }
+
+  // #endregion
+
+  // #region méthodes privées
+
+  /**
+   * Toggle the field of the items and the actions linked
+   * @param {*} item    obket à modifier
+   * @param {*} fieldName exemple : equipped
+   */
+  async _toggleItemFieldAndActions(item, fieldName) {
+    let fieldValue = item.system[fieldName]
+
+    let updateData = { [`system.${fieldName}`]: !fieldValue }
+    const nbActions = item.actions.length
+    if (nbActions > 0) {
+      let actions = item.system.toObject().actions
+      for (let index = 0; index < nbActions; index++) {
+        const action = actions[index]
+        // Si c'est une action non activable, l'activer automatiquement
+        if (!action.properties.activable) {
+          action.properties.enabled = !action.properties.enabled
+        } else {
+          // Si c'est une action activable mais sans conditions, la rendre visible
+          if (!action.hasConditions) {
+            action.properties.visible = !action.properties.visible
+          }
+        }
+      }
+
+      foundry.utils.mergeObject(updateData, { "system.actions": actions })
+    }
+    await item.update(updateData)
+  }
+
+  /**
+   * Determines if the actor can equip the given item.
+   * Check if an item can be equiped, if one Hand or two Hands property is true
+   *
+   * @param {Object} item The item to be equipped.
+   * @param {boolean} bypassChecks Whether to bypass the usual checks.
+   * @returns {boolean} Returns true if the item can be equipped, otherwise false.
+   */
+  canEquipItem(item, bypassChecks) {
+    if (!this._hasEnoughFreeHands(item, bypassChecks)) {
+      ui.notifications.warn(game.i18n.localize("CO.notif.NotEnoughFreeHands"))
+      return false
+    }
+    return true
+  }
+
+  /**
+   * Checks if the actor has enough free hands to equip an item.
+   *
+   * @param {Object} item The item to be equipped.
+   * @param {boolean} bypassChecks Whether to bypass the free hands check.
+   * @returns {boolean} Returns true if the actor has enough free hands to equip the item, otherwise false.
+   */
+  _hasEnoughFreeHands(item, bypassChecks) {
+    // Si le contrôle de mains libres n'est pas demandé, on renvoi Vrai
+    let checkFreehands = game.settings.get("co", "checkFreeHandsBeforeEquip")
+    if (!checkFreehands || checkFreehands === "none") return true
+
+    // Si le contrôle est ignoré ponctuellement avec la touche MAJ, on renvoi Vrai
+    if (bypassChecks && (checkFreehands === "all" || (checkFreehands === "gm" && game.user.isGM))) return true
+
+    // Si l'objet est équipé, on tente de le déséquiper donc on ne fait pas de contrôle et on renvoi Vrai
+    if (item.system.equipped) return true
+
+    // Nombre de mains nécessaire pour l'objet que l'on veux équipper
+    let neededHands = item.system.usage.twoHand ? 2 : 1
+
+    // Calcul du nombre de mains déjà utilisées : on récupère les armes ou les boucliers équipés
+    let itemsInHands = this.items.filter(
+      (item) => (item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.weapon.id || item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.shield.id) && item.system.equipped,
+    )
+    let usedHands = itemsInHands.reduce((total, item) => total + (item.system.usage.twoHand ? 2 : 1), 0)
+
+    return usedHands + neededHands <= 2
+  }
+
+  /**
+   * Retrieves an item from the items of the actor using its UUID.
+   *
+   * @param {string} uuid - The UUID of the item to retrieve.
+   * @returns {Object|null} The item if found, otherwise null.
+   */
+  getItemFromUuid(uuid) {
+    let { id } = foundry.utils.parseUuid(uuid)
+    const item = this.items.get(id)
+    if (item) return item
+    return null
+  }
+
+  /**
+   * Checks if there is an item with the specified key in the items array.
+   *
+   * @param {string} slug - The key to search for in the items array.
+   * @returns {boolean} - Returns true if an item with the specified key exists, otherwise false.
+   */
+  hasItemWithKey(slug) {
+    return this.items.some((item) => item.system.slug === slug)
+  }
+
+  /**
+   * Retrieves an item from the items array that matches the given slug.
+   *
+   * @param {string} slug - The slug to match against the item's system slug.
+   * @returns {Object|undefined} The item with the matching slug, or undefined if no match is found.
+   */
+  getItemWithKey(slug) {
+    return this.items.find((item) => item.system.slug === slug)
+  }
+  // #endregion
+
+  // #region Méthode d'ajout et suppression d'item
 
   /**
    * Create a feature, and the linked modifiers, paths and capacities if they exist
@@ -790,6 +921,21 @@ export default class COActor extends Actor {
   }
 
   /**
+   * Supprime un item de type Capacity ou Feature
+   * @param {*} itemId
+   */
+  deleteItem(itemId) {
+    const item = this.items.find((item) => item.id === itemId)
+    switch (item.type) {
+      case SYSTEM.ITEM_TYPE.capacity.id:
+      case SYSTEM.ITEM_TYPE.feature.id:
+        return this.deleteEmbeddedDocuments("Item", [itemId])
+      default:
+        break
+    }
+  }
+
+  /**
    * Deletes a feature and its linked paths and capacities.
    *
    * @param {string} featureUuId The UUID of the feature to delete.
@@ -859,6 +1005,9 @@ export default class COActor extends Actor {
       this.deleteEmbeddedDocuments("Item", [capacity.id])
     }
   }
+  // #endregion
+
+  // #region Rolls
 
   /**
    * Lance un test de compétence pour l'acteur.
@@ -1019,119 +1168,6 @@ export default class COActor extends Actor {
       this.update({ "system.attributes.hp": hp })
     }
     await roll.toMessage()
-  }
-
-  // #endregion
-
-  // #region méthodes privées
-
-  /**
-   * Toggle the field of the items and the actions linked
-   * @param {*} item    obket à modifier
-   * @param {*} fieldName exemple : equipped
-   */
-  async _toggleItemFieldAndActions(item, fieldName) {
-    let fieldValue = item.system[fieldName]
-
-    let updateData = { [`system.${fieldName}`]: !fieldValue }
-    const nbActions = item.actions.length
-    if (nbActions > 0) {
-      let actions = item.system.toObject().actions
-      for (let index = 0; index < nbActions; index++) {
-        const action = actions[index]
-        // Si c'est une action non activable, l'activer automatiquement
-        if (!action.properties.activable) {
-          action.properties.enabled = !action.properties.enabled
-        } else {
-          // Si c'est une action activable mais sans conditions, la rendre visible
-          if (!action.hasConditions) {
-            action.properties.visible = !action.properties.visible
-          }
-        }
-      }
-
-      foundry.utils.mergeObject(updateData, { "system.actions": actions })
-    }
-    await item.update(updateData)
-  }
-
-  /**
-   * Determines if the actor can equip the given item.
-   * Check if an item can be equiped, if one Hand or two Hands property is true
-   *
-   * @param {Object} item The item to be equipped.
-   * @param {boolean} bypassChecks Whether to bypass the usual checks.
-   * @returns {boolean} Returns true if the item can be equipped, otherwise false.
-   */
-  canEquipItem(item, bypassChecks) {
-    if (!this._hasEnoughFreeHands(item, bypassChecks)) {
-      ui.notifications.warn(game.i18n.localize("CO.notif.NotEnoughFreeHands"))
-      return false
-    }
-    return true
-  }
-
-  /**
-   * Checks if the actor has enough free hands to equip an item.
-   *
-   * @param {Object} item The item to be equipped.
-   * @param {boolean} bypassChecks Whether to bypass the free hands check.
-   * @returns {boolean} Returns true if the actor has enough free hands to equip the item, otherwise false.
-   */
-  _hasEnoughFreeHands(item, bypassChecks) {
-    // Si le contrôle de mains libres n'est pas demandé, on renvoi Vrai
-    let checkFreehands = game.settings.get("co", "checkFreeHandsBeforeEquip")
-    if (!checkFreehands || checkFreehands === "none") return true
-
-    // Si le contrôle est ignoré ponctuellement avec la touche MAJ, on renvoi Vrai
-    if (bypassChecks && (checkFreehands === "all" || (checkFreehands === "gm" && game.user.isGM))) return true
-
-    // Si l'objet est équipé, on tente de le déséquiper donc on ne fait pas de contrôle et on renvoi Vrai
-    if (item.system.equipped) return true
-
-    // Nombre de mains nécessaire pour l'objet que l'on veux équipper
-    let neededHands = item.system.usage.twoHand ? 2 : 1
-
-    // Calcul du nombre de mains déjà utilisées : on récupère les armes ou les boucliers équipés
-    let itemsInHands = this.items.filter(
-      (item) => (item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.weapon.id || item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.shield.id) && item.system.equipped,
-    )
-    let usedHands = itemsInHands.reduce((total, item) => total + (item.system.usage.twoHand ? 2 : 1), 0)
-
-    return usedHands + neededHands <= 2
-  }
-
-  /**
-   * Retrieves an item from the items of the actor using its UUID.
-   *
-   * @param {string} uuid - The UUID of the item to retrieve.
-   * @returns {Object|null} The item if found, otherwise null.
-   */
-  getItemFromUuid(uuid) {
-    let { id } = foundry.utils.parseUuid(uuid)
-    const item = this.items.get(id)
-    if (item) return item
-    return null
-  }
-
-  /**
-   * Checks if there is an item with the specified key in the items array.
-   *
-   * @param {string} slug - The key to search for in the items array.
-   * @returns {boolean} - Returns true if an item with the specified key exists, otherwise false.
-   */
-  hasItemWithKey(slug) {
-    return this.items.some((item) => item.system.slug === slug)
-  }
-
-  /**
-   * Retrieves an item from the items array that matches the given slug.
-   *
-   * @param {string} slug - The slug to match against the item's system slug.
-   * @returns {Object|undefined} The item with the matching slug, or undefined if no match is found.
-   */
-  getItemWithKey(slug) {
-    return this.items.find((item) => item.system.slug === slug)
   }
   // #endregion
 }
