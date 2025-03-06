@@ -828,7 +828,6 @@ strong,
 }
 .co .editor {
   margin: 0;
-  overflow: scroll;
   height: 100%;
   width: 100%;
   min-height: 200px;
@@ -2124,10 +2123,6 @@ strong,
   text-transform: uppercase;
   background-color: #002664;
 }
-.co.sheet.actor.character .window-content form.editable .main .character-sheet-header .traits-list-item.archetype-select,
-.co.sheet.actor.character .window-content form.locked .main .character-sheet-header .traits-list-item.archetype-select {
-  background-color: #323232;
-}
 .co.sheet.actor.character .window-content form.editable .main .character-sheet-header .traits-list-item.category-select,
 .co.sheet.actor.character .window-content form.locked .main .character-sheet-header .traits-list-item.category-select {
   background-color: #566193;
@@ -2135,10 +2130,6 @@ strong,
 .co.sheet.actor.character .window-content form.editable .main .character-sheet-header .traits-list-item.size-select,
 .co.sheet.actor.character .window-content form.locked .main .character-sheet-header .traits-list-item.size-select {
   background-color: #3a7a58;
-}
-.co.sheet.actor.character .window-content form.editable .main .character-sheet-header .traits-list-item.bossrank-select,
-.co.sheet.actor.character .window-content form.locked .main .character-sheet-header .traits-list-item.bossrank-select {
-  background-color: #98513d;
 }
 .co.sheet.actor.character .window-content form.editable .main .sheet-body,
 .co.sheet.actor.character .window-content form.locked .main .sheet-body {
@@ -3144,7 +3135,7 @@ strong,
   margin: 0;
   padding: 0;
   display: grid;
-  grid: 1fr/repeat(7, 1fr);
+  grid: 1fr / repeat(7, 1fr);
   justify-content: center;
   list-style: none;
   gap: 12px;
@@ -3232,7 +3223,7 @@ strong,
   display: flex;
   border-radius: 0;
   font-size: 0;
-  border: 1px solid #D3CCBC;
+  border: 1px solid #d3ccbc;
   background: rgba(211, 204, 188, 0.2);
   margin-top: 4px;
   height: 30px;
@@ -3957,10 +3948,6 @@ strong,
   text-transform: uppercase;
   background-color: #002664;
 }
-.co.sheet.actor.encounter .window-content form.editable .main .npc-sheet-header .traits-list-item.archetype-select,
-.co.sheet.actor.encounter .window-content form.locked .main .npc-sheet-header .traits-list-item.archetype-select {
-  background-color: #323232;
-}
 .co.sheet.actor.encounter .window-content form.editable .main .npc-sheet-header .traits-list-item.category-select,
 .co.sheet.actor.encounter .window-content form.locked .main .npc-sheet-header .traits-list-item.category-select {
   background-color: #566193;
@@ -3968,10 +3955,6 @@ strong,
 .co.sheet.actor.encounter .window-content form.editable .main .npc-sheet-header .traits-list-item.size-select,
 .co.sheet.actor.encounter .window-content form.locked .main .npc-sheet-header .traits-list-item.size-select {
   background-color: #3a7a58;
-}
-.co.sheet.actor.encounter .window-content form.editable .main .npc-sheet-header .traits-list-item.bossrank-select,
-.co.sheet.actor.encounter .window-content form.locked .main .npc-sheet-header .traits-list-item.bossrank-select {
-  background-color: #98513d;
 }
 .co.sheet.actor.encounter .window-content form.editable .main .sheet-body,
 .co.sheet.actor.encounter .window-content form.locked .main .sheet-body {
