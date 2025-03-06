@@ -156,6 +156,12 @@ export class Action extends foundry.abstract.DataModel {
     return undefined
   }
 
+  get manaCost() {
+    if (this.properties.noManaCost) return 0
+    if (this.parent.isSpell && this.parent.hasManaCost) return this.parent.manaCost
+    return 0
+  }
+
   /**
    * Crée un nouvel objet Action basé sur un objet Action existant.
    * @param {Action} existingAction L'objet Action existant à partir duquel créer le nouvel objet.
@@ -180,13 +186,6 @@ export class Action extends foundry.abstract.DataModel {
    */
   static apply(data) {
     Object.assign(this, data)
-  }
-
-  /**
-   * Creates an empty action.
-   */
-  static empty() {
-    return Action.apply({})
   }
 
   get hasConditions() {
@@ -229,6 +228,17 @@ export class Action extends foundry.abstract.DataModel {
     }
   }
 
+  /**
+   * Retrieves chat data based on the item and actor visibility and properties.
+   *
+   * @param {Object} item The item to check visibility and properties.
+   * @param {Object} actor The actor to check visibility and properties.
+   * @returns {Array<Object>} An array of chat data objects. Each object contains:
+   *   {string} label The label for the chat action.
+   *   {string} action The action to be performed.
+   *   {string} [type] The type of action (e.g., "attack", "damage") if applicable.
+   *   {number} indice The index or identifier for the action.
+   */
   getChatData(item, actor) {
     if (this.isVisible(item, actor) && this.properties.activable) {
       if (this.properties.temporary) {
