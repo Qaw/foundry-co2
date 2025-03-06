@@ -61,6 +61,8 @@ export default class COCharacterSheet extends CoBaseActorSheet {
    * @param {*} event
    */
   _onUseAction(event) {
+    event.preventDefault()
+    const shiftKey = !!event.shiftKey
     const dataset = event.currentTarget.dataset
     const action = dataset.action
     const type = dataset.type
@@ -69,9 +71,9 @@ export default class COCharacterSheet extends CoBaseActorSheet {
 
     let activation = false
     if (action === "activate") {
-      activation = this.actor.activateAction(true, source, indice, type)
+      activation = this.actor.activateAction({ state: true, source, indice, type, shiftKey })
     } else if (action === "unactivate") {
-      activation = this.actor.activateAction(false, source, indice, type)
+      activation = this.actor.activateAction({ state: false, source, indice, type })
     }
   }
 

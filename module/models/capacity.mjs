@@ -32,6 +32,11 @@ export default class CapacityData extends ItemData {
     return ""
   }
 
+  get isActionTypeAttack() {
+    if (this.hasActionType) return this.actionType === "a"
+    return false
+  }
+
   get hasActionType() {
     return this.actionType !== "none"
   }

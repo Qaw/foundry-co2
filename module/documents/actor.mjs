@@ -427,7 +427,7 @@ export default class COActor extends Actor {
    * @param {*} indice  indice of the action in the array of actions
      @param {string("attack","damage")} type  define if it's an attack or just a damage
    */
-  async activateAction(state, source, indice, type) {
+  async activateAction({ state, source, indice, type, shiftKey = null } = {}) {
     const item = await fromUuid(source)
     if (!item) return
 
@@ -440,15 +440,18 @@ export default class COActor extends Actor {
     // Gestion du lancement de sort avec une armure non autorisée
     const manaCostFromArmor = this.manaCostFromArmor
 
-    // TODO Gestion de la concentration accrue pour les sorts qui nécessitent une action d'attaque
-    // Concentration
+    // Concentration accrue pour les sorts qui nécessitent une action d'attaque
+    let manaConcentration = false
+    if (item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.isSpell && item.system.isActionTypeAttack && shiftKey) {
+      manaConcentration = true
+    }
 
     // Gestion de la brûlure de mana pour les sorts
     let manaBurned = false
     let manaBurnedCost = 0
     // Si l'action consomme du mana, que la capacité un sort et qu'on l'active, on vérifie que le nombre de PM restants est suffisant
     if (!item.system.actions[indice].properties.noManaCost && state && item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.isSpell) {
-      const spellManaCost = item.system.manaCost + manaCostFromArmor
+      const spellManaCost = item.system.manaCost + manaCostFromArmor - (manaConcentration ? 2 : 0)
       if (item.system.manaCost > 0) {
         if (this.system.resources.mana.value < spellManaCost) {
           const needed = spellManaCost - this.system.resources.mana.value
@@ -505,8 +508,10 @@ export default class COActor extends Actor {
     if (results.length === 0 || allResolversTrue) {
       // Si c'est un sort et qu'on l'active, il faut consommer les Points de Mana
       if (!item.system.actions[indice].properties.noManaCost && state && item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.isSpell) {
-        if (item.system.manaCost > 0) {
-          const newMana = Math.max(this.system.resources.mana.value - item.system.manaCost, 0)
+        const spellManaCost = item.system.manaCost + manaCostFromArmor - (manaConcentration ? 2 : 0)
+
+        if (spellManaCost > 0) {
+          const newMana = Math.max(this.system.resources.mana.value - spellManaCost, 0)
           await this.update({ "system.resources.mana.value": newMana })
 
           // Brülure de mana
