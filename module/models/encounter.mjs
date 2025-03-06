@@ -6,7 +6,41 @@ import Utils from "../utils.mjs"
 export default class EncounterData extends ActorData {
   static defineSchema() {
     const fields = foundry.data.fields
+    const requiredInteger = { required: true, nullable: false, integer: true }
     const schema = {}
+
+    schema.attributes = new fields.SchemaField({
+      movement: new fields.EmbeddedDataField(BaseValue, {
+        label: "CO.label.long.movement",
+        nullable: false,
+        initial: { base: 10, unit: "m", bonuses: { sheet: 0, effects: 0 } },
+      }),
+      nc: new fields.NumberField({ required: true, nullable: false, initial: 0, min: 0 }),
+      hp: new fields.SchemaField(
+        {
+          base: new fields.NumberField({ ...requiredInteger, initial: 0 }),
+          value: new fields.NumberField({ ...requiredInteger, initial: 0 }),
+          temp: new fields.NumberField({
+            required: true,
+            nullable: true,
+            initial: null,
+            integer: true,
+          }),
+          max: new fields.NumberField({ ...requiredInteger, initial: 0 }),
+          tempmax: new fields.NumberField({
+            required: true,
+            nullable: true,
+            initial: null,
+            integer: true,
+          }),
+          bonuses: new fields.SchemaField({
+            sheet: new fields.NumberField({ ...requiredInteger, initial: 0 }),
+            effects: new fields.NumberField({ ...requiredInteger, initial: 0 }),
+          }),
+        },
+        { label: "CO.label.long.hp", nullable: false },
+      ),
+    })
 
     schema.combat = new fields.SchemaField({
       init: new fields.EmbeddedDataField(BaseValue),
@@ -14,7 +48,10 @@ export default class EncounterData extends ActorData {
       dr: new fields.EmbeddedDataField(BaseValue),
     })
 
+    schema.magic = new fields.NumberField({ ...requiredInteger, initial: 0 })
+
     schema.pasteData = new fields.HTMLField()
+
     schema.details = new fields.SchemaField({
       category: new fields.StringField({
         required: false,
@@ -30,14 +67,14 @@ export default class EncounterData extends ActorData {
       }),
       description: new fields.SchemaField({
         private: new fields.HTMLField(),
-        public: new fields.HTMLField(),        
+        public: new fields.HTMLField(),
       }),
       notes: new fields.SchemaField({
         private: new fields.HTMLField(),
         public: new fields.HTMLField(),
       }),
       languages: new fields.ArrayField(new fields.StringField()),
-      //pour indiquer les immunité, propriétés spéciales
+      // Pour indiquer les immunités ou propriétés spéciales
       properties: new fields.HTMLField(),
     })
 
@@ -68,6 +105,8 @@ export default class EncounterData extends ActorData {
         skill.value = skill.base + bonuses
       }
     }
+
+    this.magic = this.abilities.vol.value + (this.attributes.nc === 0.5 ? 1 : this.attributes.nc)
   }
 
   /**

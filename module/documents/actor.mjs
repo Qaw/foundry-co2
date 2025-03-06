@@ -59,6 +59,11 @@ export default class COActor extends Actor {
       rollData.atm = this.system.combat.magic.value
     }
 
+    if (this.type === "encounter") {
+      rollData.nc = this.system.attributes.nc
+      rollData.atm = this.system.magic
+    }
+
     return rollData
   }
 
@@ -471,15 +476,16 @@ export default class COActor extends Actor {
 
     let results = []
     let allResolversTrue
-    // Action avec une durée
+    // Action avec une durée : changement de l'état de l'action
     if (item.system.actions[indice].properties.temporary) {
+      if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction - Action avec une durée`), state, source, indice, type, shiftKey, item)
       const newActions = item.system.toObject().actions
       newActions[indice].properties.enabled = state
       await item.update({ "system.actions": newActions })
     }
     // Action instantanée
     else {
-      if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction - Action instantanée`), state, source, indice, type, item)
+      if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction - Action instantanée`), state, source, indice, type, shiftKey, item)
       const action = foundry.utils.deepClone(item.system.actions[indice])
       // Recherche des resolvers de l'action
       let resolvers = Object.values(action.resolvers).map((r) => foundry.utils.deepClone(r))

@@ -69,7 +69,7 @@ export class Resolver extends foundry.abstract.DataModel {
     const showDifficulty = displayDifficulty === "all" || (displayDifficulty === "gm" && game.user.isGM)
 
     let difficulty = this.skill.difficulty
-    // Si la difficulté dépend de la cible
+    // Si la difficulté dépend de la cible unique
     let targets = []
     if (difficulty.includes("@target")) {
       targets = this.acquireTargets(actor, "single", "all", action)
@@ -183,7 +183,7 @@ export class Resolver extends foundry.abstract.DataModel {
    *
    * @param {Object} actor The actor performing the action.
    * @param {string} targetType The type of target to acquire. Can be "none", "self", "single", or "multiple".
-   * @param {string} targetScope The scope of the target acquisition.
+   * @param {string} targetScope The scope of the target acquisition : allies, enemies, all.
    * @param {Object} action The action to be performed on the targets.
    * @param {Object} [options={}] Additional options for target acquisition.
    * @returns {Array} An array of acquired targets.
