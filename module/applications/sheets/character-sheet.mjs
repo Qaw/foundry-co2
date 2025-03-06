@@ -125,11 +125,11 @@ export default class COCharacterSheet extends CoBaseActorSheet {
    * @param {*} event
    * @private
    */
-  _onEquippedToggle(event) {
+  async _onEquippedToggle(event) {
     event.preventDefault()
     const itemId = $(event.currentTarget).parents(".item").data("itemId")
     const bypassChecks = event.shiftKey
-    this.actor.toggleEquipmentEquipped(itemId, bypassChecks)
+    await this.actor.toggleEquipmentEquipped(itemId, bypassChecks)
   }
 
   /**

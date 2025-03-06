@@ -266,18 +266,26 @@ export default class COActor extends Actor {
     return false
   }
 
-  // Gestion de la maitrise de l'armure qui peut empêcher le lancement des capacités et sorts
-  get canCastSpell() {
+  /**
+   * Checks if the actor can use capacities based on their equipped armor and shields
+   *
+   * @returns {boolean} - Returns true if the actor is trained with the equipped armor and/or shield
+   */
+  get canUseCapacities() {
+    let armorTrained = true
     const armor = this.equippedArmors[0]
-
-    if (armor) {
-      if (!this.isTrainedWithArmor(armor.id)) return false
-    }
-
-    return true
+    if (armor) armorTrained = this.isTrainedWithArmor(armor.id)
+    let shieldTrained = true
+    const shield = this.equippedShields[0]
+    if (shield) shieldTrained = this.isTrainedWithShield(shield.id)
+    return armorTrained && shieldTrained
   }
 
-  // Le nombre de PM supplémentaires à dépenser pour lancer le sort est égal au bonus de DEF de l’armure portée (ne pas tenir compte d’un éventuel bonus magique de l’armure).
+  /**
+   * Calcule le coût en mana basé sur l'armure équipée.
+   * Le nombre de PM supplémentaires à dépenser pour lancer le sort est égal au bonus de DEF de l’armure portée (ne pas tenir compte d’un éventuel bonus magique de l’armure).
+   * @returns {number} Le coût en mana supplémentaire.
+   */
   get manaCostFromArmor() {
     const armor = this.equippedArmors[0]
     const profile = this.profiles[0]
@@ -287,12 +295,6 @@ export default class COActor extends Actor {
       return Math.max(totalDefense - maxDefenseArmor, 0)
     }
     return 0
-  }
-
-  // Gestion de la maitrise de l'armure qui peut empêcher le lancement des capacités
-  get canUseCapacities() {
-    const armor = this.equippedArmors[0]
-    return this.isTrainedWithArmor(armor.id)
   }
 
   // #endregion
@@ -305,7 +307,12 @@ export default class COActor extends Actor {
   async getVisibleActions() {
     let allActions = []
     for (const item of this.items) {
-      if ([SYSTEM.ITEM_TYPE.equipment.id, SYSTEM.ITEM_TYPE.capacity.id].includes(item.type)) {
+      if (SYSTEM.ITEM_TYPE.equipment.id === item.type) {
+        const itemActions = await item.getVisibleActions(this)
+        allActions.push(...itemActions)
+      }
+      // Pour les capacités, une armure non maîtrisée empêche son utilisation
+      if (SYSTEM.ITEM_TYPE.capacity.id === item.type && this.canUseCapacities) {
         const itemActions = await item.getVisibleActions(this)
         allActions.push(...itemActions)
       }
@@ -429,8 +436,6 @@ export default class COActor extends Actor {
     // TODO Incantation
     // Magie profane (famille des mages) : En revanche, il n’est pas possible d’utiliser un bouclier et une arme ou une arme dans chaque main tout en lançant des sorts de magie profane.
     // Magie divine (famille des mystiques) : respecter les armes autorisées
-
-    // TODO Gestion de la maitrise de l'armure qui peut empêcher le lancement des capacités et sorts
 
     // Gestion du lancement de sort avec une armure non autorisée
     const manaCostFromArmor = this.manaCostFromArmor
