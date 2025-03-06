@@ -62,7 +62,8 @@ export default class CoBaseActorSheet extends ActorSheet {
     html.find(".section-toggle").click(this._onSectionToggle.bind(this))
     html.find(".sheet-change-lock").click(this._onSheetChangelock.bind(this))
     html.find(".item-chat.chat").click(this._onSendToChat.bind(this))
-    html.find(".item-create").click(this._onItemCreate.bind(this))
+    html.find(".item-create").click(this._onCreateItem.bind(this))
+    html.find(".item-edit").click(this._onEditItem.bind(this))
     html.find(".size-select").change(this._onSizeChange.bind(this))
   }
 
@@ -139,7 +140,7 @@ export default class CoBaseActorSheet extends ActorSheet {
    * Create a new embedded item
    * @param {Event} event
    */
-  _onItemCreate(event) {
+  _onCreateItem(event) {
     event.preventDefault()
     const target = event.currentTarget
     const type = target.dataset.type
@@ -211,5 +212,19 @@ export default class CoBaseActorSheet extends ActorSheet {
    */
   async _onSizeChange(event) {
     await this.actor.updateSize(event.target.value)
+  }
+
+  /**
+   * Open the embededd item sheet
+   * @param {*} event
+   * @private
+   */
+  _onEditItem(event) {
+    event.preventDefault()
+    const li = event.currentTarget.closest(".item")
+    const uuid = li.dataset.itemUuid
+    const { id } = foundry.utils.parseUuid(uuid)
+    let document = this.actor.items.get(id)
+    return document.sheet.render(true)
   }
 }

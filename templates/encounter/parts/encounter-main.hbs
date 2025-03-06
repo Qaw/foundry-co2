@@ -36,7 +36,7 @@
                 <!--                    <label class="rollable"><a>{{!localize (concat "CO.abilities.short." id)}} {{!#if ability.superior}}*{{!/if}}</a></label>-->
                 <!--                    <input class="modifier" type="text" name="system.abilities.{{!id}}.mod" value="{{!numberFormat ability.mod decimals=0 sign=true}}" data-dtype="Number" placeholder="0">-->
                 <!--                </div>-->
-                <li class="item attack flexrow" data-item-type="attack" data-item-id="{{attack._id}}" draggable="false">
+                <li class="item attack flexrow" data-item-type="attack" data-item-uuid="{{attack.uuid}}" draggable="false">
                     <div class="attack-header">
                         <h4 class="attack-name tags">
                             {{#if (eq attack.system.subtype "melee")}}

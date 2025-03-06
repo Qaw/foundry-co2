@@ -44,7 +44,6 @@ export default class COCharacterSheet extends CoBaseActorSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html)
-    html.find(".item-edit").click(this._onEditItem.bind(this))
     html.find(".abilities-edit").click(this._onEditAbilities.bind(this))
     html.find(".item-delete").click(this._onDeleteItem.bind(this))
     html.find(".path-delete").click(this._onDeletePath.bind(this))
@@ -81,9 +80,9 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     const target = event.currentTarget
     let dragData
 
-    // Si c'est une action : dataset contient source et indice
+    // Si c'est une action : dataset contient itemUuid et indice
     if (target.classList.contains("action")) {
-      const { id } = foundry.utils.parseUuid(target.dataset.source)
+      const { id } = foundry.utils.parseUuid(target.dataset.itemUuid)
       const indice = target.dataset.indice
       const item = this.actor.items.get(id)
       // Get source (item uuid) and indice
@@ -131,21 +130,6 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     const itemId = $(event.currentTarget).parents(".item").data("itemId")
     const bypassChecks = event.shiftKey
     this.actor.toggleEquipmentEquipped(itemId, bypassChecks)
-  }
-
-  /**
-   * Open the item sheet
-   * For capacity, open the embededd item
-   * @param {*} event
-   * @private
-   */
-  _onEditItem(event) {
-    event.preventDefault()
-    const li = event.currentTarget.closest(".item")
-    const uuid = li.dataset.itemUuid
-    const { id } = foundry.utils.parseUuid(uuid)
-    let document = this.actor.items.get(id)
-    return document.sheet.render(true)
   }
 
   /**

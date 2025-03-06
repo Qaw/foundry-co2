@@ -30,7 +30,6 @@ export default class COEncounterSheet extends CoBaseActorSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html)
-    html.find(".item-edit").click(this._onEditItem.bind(this))
     html.find(".item-delete").click(this._onDeleteItem.bind(this))
     html.find(".path-delete").click(this._onDeletePath.bind(this))
     html.find(".rollable").click(this._onRoll.bind(this))
@@ -76,22 +75,6 @@ export default class COEncounterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * Open the item sheet
-   * For capacity, open the embededd item
-   * @param {*} event
-   * @private
-   */
-  _onEditItem(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).closest(".item")
-    const id = li.data("itemId")
-    if (!foundry.utils.isEmpty(id) && id !== "") {
-      let document = this.actor.items.get(id)
-      return document.sheet.render(true)
-    }
-  }
-
-  /**
    * Handle the deletion of an item from the actor's inventory.
    *
    * @param {Event} event The event that triggered the deletion.
@@ -100,7 +83,7 @@ export default class COEncounterSheet extends CoBaseActorSheet {
    * @private
    */
   async _onDeleteItem(event) {
-    event.preventDefault()    
+    event.preventDefault()
     const li = $(event.currentTarget).parents(".item")
     const itemId = li.data("itemId")
     const itemType = li.data("itemType")
@@ -142,9 +125,9 @@ export default class COEncounterSheet extends CoBaseActorSheet {
    * @private
    */
   async _onDeleteCapacity(event) {
-    event.preventDefault()    
-    const li = $(event.currentTarget).parents(".item")  
-    const itemUuid = li.data("itemUuid")    
+    event.preventDefault()
+    const li = $(event.currentTarget).parents(".item")
+    const itemUuid = li.data("itemUuid")
     await this.actor.deleteCapacity(itemUuid)
   }
 

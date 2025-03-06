@@ -1594,6 +1594,10 @@ strong,
 .co .attacks-list .action:not(:last-child) {
   border-bottom: 1px solid var(--color-border-light-tertiary);
 }
+.co .actions-list .action.deactivated,
+.co .attacks-list .action.deactivated {
+  opacity: 0.6;
+}
 .co .actions-list .action .action-header,
 .co .attacks-list .action .action-header {
   display: flex;
