@@ -42,7 +42,8 @@
       "warningIncorrectTargets": "Vous ne pouvez désigner que {number} cible(s) pour l'action {action} !",
       "warningCannotTargetSelf": "Vous ne pouvez pas cibler vous-même !",
       "warningProfileCreated": "Le profil a été créé.",
-      "warningNotEnoughMana": "Pas assez de mana pour lancer le sort."
+      "warningNotEnoughMana": "Pas assez de mana pour lancer le sort.",
+      "warningLevelTooLow": "Vous n'avez pas le niveau minimum pour apprendre cette capacité."
     },
     "tooltip": {
       "formulaAttack": "Formule d'attaque (sans le dé)",

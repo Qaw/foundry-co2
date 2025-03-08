@@ -540,7 +540,7 @@ export default class COActor extends Actor {
 
   /**
    * Apprend/désapprend une capacité du personnage
-   * Change le champ learned de la capacit é
+   * Change le champ learned de la capacit
    * Met à jour le rank de la voie correspondante
    * @param {*} capacityId
    */
@@ -548,14 +548,21 @@ export default class COActor extends Actor {
     let capacity = this.items.get(capacityId)
     if (!capacity) return
 
+    // Rang actuel de la voie
+    let path = await fromUuid(capacity.system.path)
+    if (!path) return
+    const currentRank = await path.system.computeRank()
+
+    // RULE : Pour obtenir une capacité, il faut avoir un niveau minimal
+    // Les capacités de rang 6 à 8 sont réservées aux voies de prestige
+    const newRank = currentRank + 1
+    if (this.system.attributes.level < SYSTEM.CAPACITY_MINIMUM_LEVEL[newRank]) return ui.notifications.warn(game.i18n.localize("CO.notif.warningLevelTooLow"))
+
     // Mise à jour de la capacité et de ses actions
     await this._toggleItemFieldAndActions(capacity, "learned")
 
     // Mise à jour du rang de la voie correspondante
-    let path = await fromUuid(capacity.system.path)
-    if (!path) return
-    const newRank = await path.system.computeRank()
-    await path.update({ "system.rank": newRank })
+    await path.update({ "system.rank": currentRank + 1 })
 
     // Le rang est le coût en mana de la capacité
     await capacity.update({ "system.manaCost": newRank })
