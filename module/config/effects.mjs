@@ -245,4 +245,9 @@ export const CUSTOM_STATUS_EFFECT = [
     name: "CO.customStatus.Invisible",
     img: "icons/svg/invisible.svg",
   },
+  {
+    id: "unconscious",
+    name: "Inconscient",
+    img: "icons/svg/unconscious.svg",
+  },
 ]

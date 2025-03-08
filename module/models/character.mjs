@@ -312,12 +312,24 @@ export default class CharacterData extends ActorData {
 
     // Cas des points de vie à 1 : statut affaibli
     if (this.attributes.hp.value === 1 && !this.parent.statuses.has("weakened")) {
-      await this.parent.toggleStatusEffect("weakened")
-      await this.parent.setFlag("co", "status.weakenedFromOneHP", true)
+      if (this.parent.statuses.has("unconscious") && this.parent.getFlag("co", "statuses.unconsciousFromZeroHP")) {
+        await this.parent.toggleStatusEffect("unconscious", { active: false })
+        await this.parent.unsetFlag("co", "statuses.unconsciousFromZeroHP")
+      }
+      await this.parent.toggleStatusEffect("weakened", { active: true })
+      await this.parent.setFlag("co", "statuses.weakenedFromOneHP", true)
     }
-    if (this.attributes.hp.value > 1 && this.parent.statuses.has("weakened") && this.parent.getFlag("co", "status.weakenedFromOneHP")) {
-      await this.parent.toggleStatusEffect("weakened")
-      await this.parent.unsetFlag("co", "status.weakenedFromOneHP")
+
+    // Cas des points de vie > 1 : statuts affaible et inconscient
+    if (this.attributes.hp.value > 1) {
+      if (this.parent.statuses.has("weakened") && this.parent.getFlag("co", "statuses.weakenedFromOneHP")) {
+        await this.parent.toggleStatusEffect("weakened", { active: false })
+        await this.parent.unsetFlag("co", "statuses.weakenedFromOneHP")
+      }
+      if (this.parent.statuses.has("unconscious") && this.parent.getFlag("co", "statuses.unconsciousFromZeroHP")) {
+        await this.parent.toggleStatusEffect("unconscious", { active: false })
+        await this.parent.unsetFlag("co", "statuses.unconsciousFromZeroHP")
+      }
     }
   }
 
@@ -713,6 +725,7 @@ export default class CharacterData extends ActorData {
 
   // #endregion
 
+  // TODO Vérifier si ça marche toujours
   useRecovery(withHpRecovery) {
     if (this.resources.recovery.value <= 0) return
     let hp = this.attributes.hp
@@ -806,5 +819,13 @@ export default class CharacterData extends ActorData {
     if (!attackType) return false
     const modifiers = this.bonusDiceModifiers.filter((m) => m.target === attackType)
     return modifiers.length > 0
+  }
+
+  async spendDR(nbDices, heal = false) {
+    const current = this.resources.recovery.value
+    if (current > 0) {
+      let newValue = Math.max(current - nbDices, 0)
+      await this.parent.update({ "system.resources.recovery.value": newValue })
+    }
   }
 }

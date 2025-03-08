@@ -76,4 +76,17 @@ export default function registerHooks() {
     }
     return false
   })
+
+  Hooks.on("updateActor", (document, changed, options, userId) => {
+    if (document.type === "character" && changed?.system?.attributes?.hp?.value === 0 && !document.statuses.has("unconscious")) {
+      // Si déjà affaibli le statut est supprimé
+      if (document.statuses.has("weakened")) {
+        document.toggleStatusEffect("weakened", { active: false })
+        document.unsetFlag("co", "statuses.weakenedFromOneHP")
+      }
+      document.toggleStatusEffect("unconscious", { active: true })
+      document.setFlag("co", "statuses.unconsciousFromZeroHP", true)
+      document.system.spendDR(1)
+    }
+  })
 }
