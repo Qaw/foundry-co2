@@ -80,6 +80,14 @@ export class Resolver extends foundry.abstract.DataModel {
       }
     }
 
+    // Si l'attaque demande un jet opposé contre la cible
+    if (difficulty.includes("@opposite")) {
+      targets = this.acquireTargets(actor, "single", "all", action)
+      if (targets.length === 0) {
+        difficulty = null
+      }
+    }
+
     const critical = this.skill.crit === "" ? actor.system.combat.crit.value : this.skill.crit
 
     let skillFormula = this.skill.formula

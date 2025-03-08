@@ -529,6 +529,16 @@ strong,
   -ms-user-select: text;
   user-select: text;
 }
+.chat-card .card-content .damage-buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.chat-card .card-content .damage-buttons .dr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .chat-card .card-buttons {
   margin: 5px 0;
 }

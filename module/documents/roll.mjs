@@ -272,10 +272,21 @@ export class COAttackRoll extends CORoll {
       const result = roll.terms[0].results.find((r) => r.active).result
       const isCritical = result >= rollContext.critrange || result === 20
       const isFumble = result === 1
+
       const showDifficulty = !!rollContext.difficulty
-      let isSuccess
+
+      // Gestion du succès ou de l'échec
+      // TODO : n'a de sens que si la difficulté est définie
+      let isSuccess = undefined
+      let oppositeRoll = false
       if (rollContext.difficulty) {
-        isSuccess = roll.total >= rollContext.difficulty
+        if (Number.isInteger(rollContext.difficulty)) {
+          isSuccess = roll.total >= rollContext.difficulty
+        }
+        if (rollContext.difficulty.includes("@opposite")) {
+          rollContext.difficulty = "Jet oppposé"
+          oppositeRoll = true
+        }
       }
       const toolTip = await roll.getTooltip()
 
@@ -288,6 +299,7 @@ export class COAttackRoll extends CORoll {
         isFumble,
         showDifficulty,
         difficulty: rollContext.difficulty,
+        oppositeRoll,
         toolTip,
         ...options,
       }
@@ -304,7 +316,7 @@ export class COAttackRoll extends CORoll {
           await damageRoll.evaluate()
           const damageRollToolTip = await damageRoll.getTooltip()
           damageRoll.options = {
-            type: dialogContext.type,
+            type: "damage",
             label: dialogContext.label,
             actor: dialogContext.actor,
             damageRollToolTip,
@@ -335,6 +347,7 @@ export class COAttackRoll extends CORoll {
 
   async _getChatCardData(flavor, isPrivate) {
     return {
+      type: this.options.type,
       actor: this.options.actor,
       speaker: ChatMessage.getSpeaker({ actor: this.options.actor, scene: canvas.scene }),
       flavor: this.options.label,
@@ -348,7 +361,6 @@ export class COAttackRoll extends CORoll {
       total: isPrivate ? "?" : Math.round(this.total * 100) / 100,
       user: game.user.id,
       tooltip: isPrivate ? "" : await this.getTooltip(),
-      toolTip: this.options.toolTip,
     }
   }
 }

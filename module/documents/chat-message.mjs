@@ -1,7 +1,6 @@
 export default class COChatMessage extends ChatMessage {
   /** @inheritDoc */
   async getHTML(options = {}) {
-    console.log("COChatMessage.getHTML", options)
     const html = await super.getHTML(options)
     const element = html instanceof HTMLElement ? html : html[0]
     this._enrichChatCard(element)

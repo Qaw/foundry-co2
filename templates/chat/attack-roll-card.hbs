@@ -1,4 +1,4 @@
-{{!log "attack-roll-card" this}}
+{{log "attack-roll-card" this}}
 <div class="co chat-card roll-card attack-card" data-actor-id="{{actor.id}}">
   <header class="card-header flexcol">
     <strong>{{flavor}}</strong>
@@ -33,6 +33,27 @@
       {{#if isFumble}}
         <span class="failure fumble"><i class="fas fa-skull-crossbones"></i>&nbsp;{{localize "CO.roll.fumble"}}.</span>
       {{/if}}
+    {{/if}}
+
+    {{#if (eq type 'damage')}}
+        <div class="damage-buttons">
+            <div class="dr">
+              <label for="dr" class="dr-checkbox">{{localize "CO.ui.dr"}}</label>
+              <input type="checkbox" id="dr" name="dr" class="dr-checkbox">
+            </div>            
+            <a class="btn apply-dmg" data-apply="full" data-total="{{total}}">
+                <i class="fas fa-user-minus" data-tooltip="{{localize 'CO.ui.applyDamage'}}" data-tooltip-direction="UP"></i>
+            </a>
+            <a class="btn apply-dmg" data-apply="half" data-total="{{total}}">
+                <i class="fas fa-user-shield" data-tooltip="{{localize 'CO.ui.applyHalfDamage'}}" data-tooltip-direction="UP"></i>
+            </a>
+            <a class="btn apply-dmg" data-apply="double" data-total="{{total}}">
+                <i class="fas fa-user-injured" data-tooltip="{{localize 'CO.ui.applyDoubleDamage'}}" data-tooltip-direction="UP"></i>
+            </a>
+            <a class="btn apply-dmg" data-apply="heal" data-total="{{total}}">
+                <i class="fas fa-user-plus" data-tooltip="{{localize 'CO.ui.applyHealing'}}" data-tooltip-direction="UP"></i>
+            </a>
+        </div>
     {{/if}}
   </div>
 
