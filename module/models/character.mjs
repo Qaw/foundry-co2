@@ -309,6 +309,16 @@ export default class CharacterData extends ActorData {
     // XP dépensés dans les capacités des voies
     this.attributes.xp.max = 3 + 2 * (this.attributes.level - 1)
     this._prepareVision()
+
+    // Cas des points de vie à 1 : statut affaibli
+    if (this.attributes.hp.value === 1 && !this.parent.statuses.has("weakened")) {
+      await this.parent.toggleStatusEffect("weakened")
+      await this.parent.setFlag("co", "status.weakenedFromOneHP", true)
+    }
+    if (this.attributes.hp.value > 1 && this.parent.statuses.has("weakened") && this.parent.getFlag("co", "status.weakenedFromOneHP")) {
+      await this.parent.toggleStatusEffect("weakened")
+      await this.parent.unsetFlag("co", "status.weakenedFromOneHP")
+    }
   }
 
   /**
