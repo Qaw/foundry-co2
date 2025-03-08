@@ -221,4 +221,30 @@ export default class Utils {
   static addAllValuesFromArray(array) {
     return array.length > 0 ? array.reduce((acc, curr) => acc + curr, 0) : 0
   }
+
+  /**
+   * Evaluates the given formula to find the opposite value.
+   *
+   * This function checks if the formula contains the "@opposite" keyword.
+   * If found, it extracts and returns the value following "@opposite.".
+   * If the keyword is not present, it returns undefined.
+   *
+   * @param {string} formula The formula string to evaluate.
+   * @param {object} actor
+   * @returns {string|undefined} The extracted opposite value or undefined if not found.
+   */
+  static evaluateOppositeFormula(formula, actor) {
+    if (!formula.includes("@opposite")) return undefined
+    const regex = /@opposite\.([^\s]+)/
+    const match = formula.match(regex)
+    let result = undefined
+    if (match) {
+      result = match[1]
+    }
+    const rollData = actor.getRollData()
+    if (foundry.utils.hasProperty(rollData, result)) {
+      return foundry.utils.getProperty(rollData, result)
+    }
+    return undefined
+  }
 }

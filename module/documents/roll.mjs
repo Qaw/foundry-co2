@@ -278,13 +278,14 @@ export class COAttackRoll extends CORoll {
       // Gestion du succès ou de l'échec
       // TODO : n'a de sens que si la difficulté est définie
       let isSuccess = undefined
+      let isFailure = undefined
       let oppositeRoll = false
       if (rollContext.difficulty) {
         if (Number.isInteger(rollContext.difficulty)) {
           isSuccess = roll.total >= rollContext.difficulty
         }
         if (rollContext.difficulty.includes("@opposite")) {
-          rollContext.difficulty = "Jet oppposé"
+          rollContext.difficulty = `Jet oppposé (${Utils.evaluateOppositeFormula(rollContext.difficulty, dialogContext.targets[0].actor)})`
           oppositeRoll = true
         }
       }
@@ -295,6 +296,7 @@ export class COAttackRoll extends CORoll {
         label: dialogContext.label,
         actor: dialogContext.actor,
         isSuccess,
+        isFailure,
         isCritical,
         isFumble,
         showDifficulty,
@@ -357,7 +359,7 @@ export class COAttackRoll extends CORoll {
       isCritical: this.options.isCritical,
       isFumble: this.options.isFumble,
       isSuccess: this.options.isSuccess,
-      isFailure: !this.options.isSuccess,
+      isFailure: this.options.isFailure,
       total: isPrivate ? "?" : Math.round(this.total * 100) / 100,
       user: game.user.id,
       tooltip: isPrivate ? "" : await this.getTooltip(),

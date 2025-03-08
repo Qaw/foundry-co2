@@ -111,6 +111,7 @@ export class Resolver extends foundry.abstract.DataModel {
       critical,
       difficulty,
       showDifficulty,
+      targets,
     })
 
     if (result === null) return false

@@ -51,9 +51,9 @@ export default class COActor extends Actor {
     rollData.vol = this.system.abilities.vol.value
     rollData.def = this.system.combat.def.value
     rollData.ini = this.system.combat.init.value
-    rollData.niv = this.system.attributes.level
 
     if (this.type === "character") {
+      rollData.niv = this.system.attributes.level
       rollData.atc = this.system.combat.melee.value
       rollData.atd = this.system.combat.ranged.value
       rollData.atm = this.system.combat.magic.value
@@ -274,7 +274,7 @@ export default class COActor extends Actor {
   /**
    * Checks if the actor can use capacities based on their equipped armor and shields
    *
-   * @returns {boolean} - Returns true if the actor is trained with the equipped armor and/or shield
+   * @returns {boolean} Returns true if the actor is trained with the equipped armor and/or shield
    */
   get canUseCapacities() {
     let armorTrained = true
@@ -693,7 +693,7 @@ export default class COActor extends Actor {
   /**
    * Retrieves an item from the items of the actor using its UUID.
    *
-   * @param {string} uuid - The UUID of the item to retrieve.
+   * @param {string} uuid The UUID of the item to retrieve.
    * @returns {Object|null} The item if found, otherwise null.
    */
   getItemFromUuid(uuid) {
@@ -706,8 +706,8 @@ export default class COActor extends Actor {
   /**
    * Checks if there is an item with the specified key in the items array.
    *
-   * @param {string} slug - The key to search for in the items array.
-   * @returns {boolean} - Returns true if an item with the specified key exists, otherwise false.
+   * @param {string} slug The key to search for in the items array.
+   * @returns {boolean} Returns true if an item with the specified key exists, otherwise false.
    */
   hasItemWithKey(slug) {
     return this.items.some((item) => item.system.slug === slug)
@@ -716,7 +716,7 @@ export default class COActor extends Actor {
   /**
    * Retrieves an item from the items array that matches the given slug.
    *
-   * @param {string} slug - The slug to match against the item's system slug.
+   * @param {string} slug The slug to match against the item's system slug.
    * @returns {Object|undefined} The item with the matching slug, or undefined if no match is found.
    */
   getItemWithKey(slug) {
@@ -1063,7 +1063,7 @@ export default class COActor extends Actor {
       dice: dice,
       actor: this,
       skillId: skillId,
-      label: `${game.i18n.localize("CO.dialogs.skillCheck")} - ${game.i18n.localize(`CO.abilities.long.${skillId}`)}`,
+      label: `${game.i18n.localize("CO.dialogs.skillCheck")} ${game.i18n.localize(`CO.abilities.long.${skillId}`)}`,
       bonus: bonus,
       malus: malus,
       skillValue: foundry.utils.getProperty(this, `system.abilities.${skillId}`).value,
@@ -1086,7 +1086,32 @@ export default class COActor extends Actor {
     await roll.toMessage(messageData)
   }
 
-  // Jet d'attaque et jet de dégâts
+  /**
+   * Lance une attaque et potentiellement un jet de dégâts pour un objet donné avec diverses options.
+   *
+   * @param {Object} item L'objet pour lequel lancer l'attaque.
+   * @param {Object} [options] Les options pour le jet d'attaque.
+   * @param {boolean} [options.auto=false] Si le jet est automatique.
+   * @param {string} [options.type="attack"] Le type de jet, soit "attack" soit "damage".
+   * @param {string} [options.actionName=""] Le nom de l'action.
+   * @param {string} [options.dice="1d20"] La formule de dés pour le jet.
+   * @param {number} [options.bonus=0] Le bonus au jet.
+   * @param {number} [options.malus=0] Le malus au jet.
+   * @param {number} [options.critical=20] Le seuil critique pour le jet.
+   * @param {boolean} [options.bonusDice=undefined] Si des dés bonus sont utilisés.
+   * @param {boolean} [options.malusDice=undefined] Si des dés malus sont utilisés.
+   * @param {boolean} [options.superior=false] Si le jet est supérieur.
+   * @param {boolean} [options.weakened=false] Si le jet est affaibli.
+   * @param {number} [options.difficulty=10] La difficulté du jet.
+   * @param {boolean} [options.showDifficulty=undefined] Si la difficulté doit être affichée.
+   * @param {boolean} [options.withDialog=true] Si une boîte de dialogue doit être affichée pour le jet.
+   * @param {string} [options.skillFormula=undefined] La formule pour le jet de compétence.
+   * @param {string} [options.skillFormulaTooltip=""] L'infobulle pour la formule de compétence.
+   * @param {string} [options.damageFormula=undefined] La formule pour le jet de dégâts.
+   * @param {string} [options.damageFormulaTooltip=""] L'infobulle pour la formule de dégâts.
+   * @param options.targets
+   * @returns {Promise<null|Array>} Le résultat du jet, ou null si le jet a été annulé.
+   */
   async rollAttack(
     item,
     {
@@ -1108,6 +1133,7 @@ export default class COActor extends Actor {
       skillFormulaTooltip = "",
       damageFormula = undefined,
       damageFormulaTooltip = "",
+      targets = [],
     } = {},
   ) {
     if (showDifficulty === undefined) showDifficulty = game.settings.get("co", "displayDifficulty")
@@ -1141,7 +1167,7 @@ export default class COActor extends Actor {
       type,
       useComboRolls: game.settings.get("co", "useComboRolls"),
       actionName: actionName,
-      label: `${item.name} - ${actionName}`,
+      label: `${item.name} ${actionName}`,
       bonus,
       malus,
       critical,
@@ -1153,6 +1179,7 @@ export default class COActor extends Actor {
       formulaAttackTooltip: skillFormulaTooltip,
       formulaDamage: damageFormula,
       formulaDamageTooltip: damageFormulaTooltip,
+      targets,
     }
 
     let rolls = await COAttackRoll.prompt(dialogContext, { withDialog: withDialog })
@@ -1183,7 +1210,7 @@ export default class COActor extends Actor {
   async rollHeal(item, { actionName = "", healFormula = undefined, targetType = SYSTEM.RESOLVER_TARGET.none.id, targets = [] } = {}) {
     let roll = new Roll(healFormula)
     await roll.roll()
-    // TODO Qui est soigné ? Pour le moment soit même :)
+    // TODO Qui est soigné ? Pour le moment soi même :)
     if (targetType == SYSTEM.RESOLVER_TARGET.self.id) {
       let hp = this.system.attributes.hp
       hp.value += roll.total
