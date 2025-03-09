@@ -274,7 +274,7 @@ export default class COActor extends Actor {
   /**
    * Accesseur permettant de d'obtenir un des effets actif sur l'acteur. Retourne true ou false
    */
-  hasEffect(effectid) {    
+  hasEffect(effectid) {
     return this.statuses.has(effectid)
   }
 
@@ -433,41 +433,43 @@ export default class COActor extends Actor {
   }
 
   /**
-   * Active ou désactive un effet de statut
-   * @param {*} state true to enable the effect, false to disable the effect
-   * @param {*} effectname  id
-   * @param {*} indice  indice of the action in the array of actions
-     @param {string("attack","damage")} type  define if it's an attack or just a damage
+   * Active ou désactive un effet de statut spécifique CO
+   * Assure que les effets de défense partielle et totale ne peuvent pas être actifs simultanément.
+   *
+   * @param {Object} [params={}] Les paramètres de la fonction.
+   * @param {boolean} params.state L'état à définir pour l'effet (true pour activer, false pour désactiver).
+   * @param {string} params.effectid L'ID de l'effet à basculer.
+   * @returns {Promise<void>} Une promesse qui se résout lorsque l'effet de statut a été basculé.
+   *
+   * @throws {Error} Si les effets de défense partielle et totale sont tentés d'être activés simultanément.
    */
   async activateCOStatusEffect({ state, effectid } = {}) {
-    
-    //On ne peux pas activer à la fois la defense partielle et la defense totale    
-    if(effectid == "partialDef" && state === true)
-    {      
-        if(this.hasEffect("fullDef"))
-        {
-          //TODO : envoyer un message au jour pour lui dire qu'il ne peux pas utilsier les deux en meme temps
-          return
-        }        
-    }
-    if(effectid == "fullDef" && state === true)
-      {        
-          if(this.hasEffect("partialDef"))
-          {
-            //TODO : envoyer un message au jour pour lui dire qu'il ne peux pas utilsier les deux en meme temps
-            return
-          }
+    // On ne peut pas activer à la fois la défense partielle et la défense totale
+    if (effectid === "partialDef" && state === true) {
+      if (this.hasEffect("fullDef")) {
+        // TODO : envoyer un message au joueur pour lui dire qu'il ne peut pas utiliser les deux en même temps
+        return
       }
-    this.toggleStatusEffect(effectid, state)
+    }
+    if (effectid === "fullDef" && state === true) {
+      if (this.hasEffect("partialDef")) {
+        // TODO : envoyer un message au joueur pour lui dire qu'il ne peut pas utiliser les deux en même temps
+        return
+      }
+    }
+    return await this.toggleStatusEffect(effectid, state)
   }
 
   /**
    * Active ou désactive une action
    * @param {*} state true to enable the action, false to disable the action
-   * @param {*} source  uuid of the embedded item which is the source of the action
-   * @param {*} indice  indice of the action in the array of actions
+   * @param {*} source uuid of the embedded item which is the source of the action
+   * @param {*} indice indice of the action in the array of actions
+   * @param {*} type define if it's an attack or just a damage
+   * @param {*} shiftKey true if the shift key is pressed
      @param {string("attack","damage")} type  define if it's an attack or just a damage
    */
+
   async activateAction({ state, source, indice, type, shiftKey = null } = {}) {
     const item = await fromUuid(source)
     if (!item) return

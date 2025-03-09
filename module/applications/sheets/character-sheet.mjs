@@ -37,7 +37,7 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     context.choiceAbilities = SYSTEM.ABILITIES
     context.choiceSize = SYSTEM.SIZES
 
-    //Activation desactivation des defenses    
+    //Activation desactivation des defenses
     context.partialDef = this.actor.hasEffect("partialDef") ? true : false
     context.partialfa = "fa-solid fa-shield-halved"
     context.fullDef = this.actor.hasEffect("fullDef") ? true : false
@@ -68,7 +68,7 @@ export default class COCharacterSheet extends CoBaseActorSheet {
    * Action d'utiliser : active ou désactive une action
    * @param {*} event
    */
-  _onUseAction(event) {
+  async _onUseAction(event) {
     event.preventDefault()
     const shiftKey = !!event.shiftKey
     const dataset = event.currentTarget.dataset
@@ -77,26 +77,31 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     const source = dataset.source
     const indice = dataset.indice
 
-    let activation = false
+    let activation
     if (action === "activate") {
-      activation = this.actor.activateAction({ state: true, source, indice, type, shiftKey })
+      activation = await this.actor.activateAction({ state: true, source, indice, type, shiftKey })
     } else if (action === "unactivate") {
-      activation = this.actor.activateAction({ state: false, source, indice, type })
+      activation = await this.actor.activateAction({ state: false, source, indice, type })
     }
   }
 
-  _onUseEffect(event) {
+  /**
+   * Handles the use effect event.
+   *
+   * @param {Event} event The event object triggered by the user interaction.
+   * @returns {Promise<void>} A promise that resolves when the effect activation is complete.
+   */
+  async _onUseEffect(event) {
     event.preventDefault()
     const dataset = event.currentTarget.dataset
     const effectid = dataset.effect
-    const action = dataset.action      
-    let activation = false
+    const action = dataset.action
+    let activation
     if (action === "activate") {
-      activation = this.actor.activateCOStatusEffect({ state: true, effectid })
+      activation = await this.actor.activateCOStatusEffect({ state: true, effectid })
     } else if (action === "unactivate") {
-      activation = this.actor.activateCOStatusEffect({ state: false, effectid })
+      activation = await this.actor.activateCOStatusEffect({ state: false, effectid })
     }
-
   }
 
   /** @inheritDoc */
