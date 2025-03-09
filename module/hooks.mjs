@@ -1,3 +1,4 @@
+import { COAttackRoll } from "./documents/roll.mjs"
 import { Hitpoints } from "./hitpoints.mjs"
 import { createCOMacro } from "./macros.mjs"
 import Utils from "./utils.mjs"
@@ -49,8 +50,9 @@ export default function registerHooks() {
       })
     }
 
-    html.find(".toggle-action").click((event) => {
+    html.find(".toggle-action").click(async (event) => {
       console.log("Hook toggle-action", event)
+      const shiftKey = !!event.shiftKey
       const dataset = event.currentTarget.dataset
 
       const actorId = dataset.actorId
@@ -61,11 +63,38 @@ export default function registerHooks() {
 
       const actor = game.actors.get(actorId)
 
+      let activation
       if (action === "activate") {
-        actor.activateAction(true, source, indice, type)
+        activation = await actor.activateAction({ state: true, source, indice, type, shiftKey })
       } else if (action === "unactivate") {
-        actor.activateAction(false, source, indice, type)
+        activation = await actor.activateAction({ state: false, source, indice, type })
       }
+    })
+
+    html.find(".opposite-roll").click(async (event) => {
+      const dataset = event.currentTarget.dataset
+      const oppositeValue = dataset.oppositeValue
+      const oppositeTarget = dataset.oppositeTarget
+      console.log("Jet opposé", oppositeValue, oppositeTarget)
+
+      const messageId = event.currentTarget.closest(".message").dataset.messageId
+      console.log("Message ID", messageId)
+
+      const actor = await fromUuid(oppositeTarget)
+      const value = Utils.evaluateOppositeFormula(oppositeValue, actor)
+
+      const formula = `1d20 + ${value}`
+      const roll = await new Roll(formula).roll()
+      const difficulty = roll.total
+
+      const message = game.messages.get(messageId)
+
+      let rolls = message.rolls
+      rolls[0].options.oppositeRoll = false
+      rolls[0].options.difficulty = difficulty
+
+      let newResult = COAttackRoll.analyseRollResult(rolls[0])
+      message.update({ rolls: rolls, "system.result": newResult })
     })
   })
 

@@ -374,7 +374,7 @@ export default class CoBaseItemSheet extends ItemSheet {
         type: "melee",
         skill: {
           formula: "@atc",
-          crit: "20",
+          crit: "",
           difficulty: "@target.def",
         },
         damage: {

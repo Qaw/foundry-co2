@@ -204,124 +204,118 @@ export class COAttackRoll extends CORoll {
   static ROLL_CSS = ["co", "attack-roll"]
 
   static async prompt(dialogContext, options = {}) {
+    const withDialog = options.withDialog ?? true
     // Le résultat est un jet d'attaque ou un jet d'attaque et un jet de dégâts
     let rolls = []
-    const content = await renderTemplate(this.DIALOG_TEMPLATE, dialogContext)
+    let rollContext
 
-    const rollContext = await foundry.applications.api.DialogV2.wait({
-      window: { title: dialogContext.label },
-      position: { width: "auto" },
-      classes: this.ROLL_CSS,
-      content,
-      rejectClose: false,
-      buttons: [
-        {
-          action: "cancel",
-          label: game.i18n.localize("CO.ui.cancel"),
-          icon: "fas fa-times",
-          callback: () => false,
-        },
-        {
-          action: "ok",
-          label: game.i18n.localize("CO.ui.submit"),
-          icon: "fas fa-check",
-          default: true,
-          callback: (event, button, dialog) => {
-            if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll prompt - Callback`), event, button, dialog)
-            const output = Array.from(button.form.elements).reduce((obj, input) => {
-              if (input.name) obj[input.name] = input.value
-              return obj
-            }, {})
-            if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll prompt - Output`), output)
-            /* 
-            {
-                "dice": "1d20",
-                "skillValue": "+4",
-                "critrange": "20",
-                "bonus": "+0",
-                "malus": "+0",
-                "difficulty": "10",
-                "totalSkillBonuses": "0",
-                "label": "Test de compétence  Constitution"
-            }
-            */
-            return output
+    if (withDialog) {
+      const content = await renderTemplate(this.DIALOG_TEMPLATE, dialogContext)
+
+      rollContext = await foundry.applications.api.DialogV2.wait({
+        window: { title: dialogContext.label },
+        position: { width: "auto" },
+        classes: this.ROLL_CSS,
+        content,
+        rejectClose: false,
+        buttons: [
+          {
+            action: "cancel",
+            label: game.i18n.localize("CO.ui.cancel"),
+            icon: "fas fa-times",
+            callback: () => false,
           },
+          {
+            action: "ok",
+            label: game.i18n.localize("CO.ui.submit"),
+            icon: "fas fa-check",
+            default: true,
+            callback: (event, button, dialog) => {
+              if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll prompt - Callback`), event, button, dialog)
+              const output = Array.from(button.form.elements).reduce((obj, input) => {
+                if (input.name) obj[input.name] = input.value
+                return obj
+              }, {})
+              if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll prompt - Output`), output)
+              /* 
+              {
+                  "dice": "1d20",
+                  "formulaAttack": "5",
+                  "critrange": "20",
+                  "skillBonus": "",
+                  "skillMalus": "",
+                  "difficulty": "",
+                  "formulaDamage": "1d8 + 4",
+                  "damageBonus": "",
+                  "damageMalus": "",
+                  "label": "Epée longue Attaque simple"
+              }
+              */
+              return output
+            },
+          },
+        ],
+        render: (event, dialog) => {
+          const inputs = dialog.querySelectorAll(".bonus-item")
+          if (inputs) {
+            inputs.forEach((input) => {
+              input.addEventListener("click", this._onToggleCheckSkillBonus.bind(this))
+            })
+          }
         },
-      ],
-      render: (event, dialog) => {
-        const inputs = dialog.querySelectorAll(".bonus-item")
-        if (inputs) {
-          inputs.forEach((input) => {
-            input.addEventListener("click", this._onToggleCheckSkillBonus.bind(this))
-          })
-        }
-      },
-    })
-
-    if (!rollContext) return
-    rollContext.label = dialogContext.label
-    if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll - rollContext`), rollContext)
+      })
+      if (!rollContext) return
+      rollContext.label = dialogContext.label
+      if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll - rollContext`), rollContext)
+    }
 
     if (dialogContext.type === "attack") {
-      const formula = Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.dice}+${rollContext.formulaAttack}`)
+      const formula = withDialog
+        ? Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.dice}+${rollContext.formulaAttack}+${rollContext.skillBonus}-${rollContext.skillMalus}`)
+        : Utils.evaluateFormulaCustomValues(dialogContext.actor, `${dialogContext.dice}+${dialogContext.formulaAttack}+${dialogContext.skillBonus}-${dialogContext.skillMalus}`)
       const roll = new this(formula, dialogContext.actor.getRollData())
       await roll.evaluate()
 
-      // Récupération du résultat du jet (pour gérer les jets avec avantages/désavantages)
-      const result = roll.terms[0].results.find((r) => r.active).result
-      const isCritical = result >= rollContext.critrange || result === 20
-      const isFumble = result === 1
-
-      const showDifficulty = !!rollContext.difficulty
-
-      // Gestion du succès ou de l'échec
-      // TODO : n'a de sens que si la difficulté est définie
-      let isSuccess = undefined
-      let isFailure = undefined
-      let oppositeRoll = false
-      if (rollContext.difficulty) {
-        if (Number.isInteger(rollContext.difficulty)) {
-          isSuccess = roll.total >= rollContext.difficulty
-        }
-        if (rollContext.difficulty.includes("@opposite")) {
-          rollContext.difficulty = `Jet oppposé (${Utils.evaluateOppositeFormula(rollContext.difficulty, dialogContext.targets[0].actor)})`
-          oppositeRoll = true
-        }
-      }
-      const toolTip = await roll.getTooltip()
+      const tooltip = await roll.getTooltip()
 
       roll.options = {
+        actorId: dialogContext.actor.id,
         type: dialogContext.type,
         label: dialogContext.label,
-        actor: dialogContext.actor,
-        isSuccess,
-        isFailure,
-        isCritical,
-        isFumble,
-        showDifficulty,
-        difficulty: rollContext.difficulty,
-        oppositeRoll,
-        toolTip,
+        dice: withDialog ? rollContext.dice : dialogContext.dice,
+        formulaAttack: withDialog ? rollContext.formulaAttack : dialogContext.formulaAttack,
+        skillBonus: withDialog ? rollContext.skillBonus : dialogContext.skillBonus,
+        skillMalus: withDialog ? rollContext.skillMalus : dialogContext.skillMalus,
+        formulaDamage: withDialog ? rollContext.formulaDamage : dialogContext.formulaDamage,
+        damageBonus: withDialog ? rollContext.damageBonus : dialogContext.damageBonus,
+        damageMalus: withDialog ? rollContext.damageMalus : dialogContext.damageMalus,
+        critical: withDialog ? rollContext.critrange : dialogContext.critrange,
+        oppositeRoll: withDialog ? rollContext.difficulty.includes("@opposite") : dialogContext.oppositeRoll.includes("@opposite"),
+        oppositeTarget: dialogContext.targets.length > 0 ? dialogContext.targets[0].uuid : null,
+        oppositeValue: withDialog ? rollContext.difficulty : dialogContext.difficulty,
+        useDifficulty: dialogContext.useDifficulty,
+        showDifficulty: dialogContext.showDifficulty,
+        difficulty: withDialog ? rollContext.difficulty : dialogContext.difficulty,
+        tooltip,
         ...options,
       }
 
       rolls.push(roll)
 
-      // Jet de dégâts si l'option Jet combiné est activée et que l'attaque est une réussite
-      // FIXME isSuccess n'a de sens que si l'option activée est celle d'utiliser la difficultés
-      // Ajouter && isSuccess ?
+      // Jet de dégâts si l'option Jet combiné est activée
       if (dialogContext.useComboRolls) {
-        const damageFormula = Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaDamage}`)
+        const damageFormula = withDialog
+          ? Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaDamage}`)
+          : Utils.evaluateFormulaCustomValues(dialogContext.actor, `${dialogContext.formulaDamage}`)
+
         if (damageFormula !== "0" && damageFormula !== "") {
           const damageRoll = new this(damageFormula, dialogContext.actor.getRollData())
           await damageRoll.evaluate()
-          const damageRollToolTip = await damageRoll.getTooltip()
+          const damageRollTooltip = await damageRoll.getTooltip()
           damageRoll.options = {
             type: "damage",
             label: dialogContext.label,
-            actor: dialogContext.actor,
-            damageRollToolTip,
+            tooltip: damageRollTooltip,
             ...options,
           }
           rolls.push(damageRoll)
@@ -332,12 +326,12 @@ export class COAttackRoll extends CORoll {
       const roll = new this(formula, dialogContext.actor.getRollData())
       await roll.evaluate()
 
-      const toolTip = new Handlebars.SafeString(await roll.getTooltip())
+      const tooltip = await roll.getTooltip()
       roll.options = {
         type: dialogContext.type,
         label: dialogContext.label,
         actor: dialogContext.actor,
-        toolTip,
+        tooltip,
         ...options,
       }
       rolls.push(roll)
@@ -347,22 +341,55 @@ export class COAttackRoll extends CORoll {
     return rolls
   }
 
+  static analyseRollResult(roll) {
+    let result = {}
+    if (roll.options.type === "attack") {
+      // On récupère le résultat du dé conservé
+      const diceResult = roll.terms[0].results.find((r) => r.active).result
+      const total = roll.total
+      const isCritical = diceResult >= roll.options.critical
+      const isFumble = diceResult === 1
+      let difficulty = roll.options.difficulty
+      let isSuccess
+      let isFailure
+      // Si on utilise une difficulté et qu'elle a été définie
+      // Si elle n'est pas saisie dans la fenêtre de dialogue, difficulty vaut ""
+      if (roll.options.useDifficulty && roll.options.difficulty !== "") {
+        if (!roll.options.oppositeRoll) {
+          if (typeof difficulty === "string") {
+            difficulty = parseInt(difficulty)
+          }
+          isSuccess = roll.total >= difficulty
+          isFailure = roll.total < difficulty
+        }
+      }
+      result = { diceResult, total, isCritical, isFumble, difficulty, isSuccess, isFailure }
+    }
+    return result
+  }
+
   async _getChatCardData(flavor, isPrivate) {
+    const rollResults = COAttackRoll.analyseRollResult(this)
+    console.log("_getChatCardData options", this.options)
     return {
       type: this.options.type,
       actor: this.options.actor,
       speaker: ChatMessage.getSpeaker({ actor: this.options.actor, scene: canvas.scene }),
       flavor: this.options.label,
       formula: isPrivate ? "???" : this.formula,
+      useDifficulty: this.options.useDifficulty,
       showDifficulty: this.options.showDifficulty,
-      difficulty: this.options.difficulty,
-      isCritical: this.options.isCritical,
-      isFumble: this.options.isFumble,
-      isSuccess: this.options.isSuccess,
-      isFailure: this.options.isFailure,
+      oppositeRoll: this.options.oppositeRoll,
+      oppositeTarget: this.options.oppositeTarget,
+      oppositeValue: this.options.difficulty,
+      difficulty: rollResults.difficulty,
+      isCritical: rollResults.isCritical,
+      isFumble: rollResults.isFumble,
+      isSuccess: rollResults.isSuccess,
+      isFailure: rollResults.isFailure,
       total: isPrivate ? "?" : Math.round(this.total * 100) / 100,
+      tooltip: isPrivate ? "" : this.options.tooltip,
       user: game.user.id,
-      tooltip: isPrivate ? "" : await this.getTooltip(),
     }
   }
 }

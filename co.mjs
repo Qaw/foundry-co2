@@ -33,11 +33,20 @@ Hooks.once("init", async function () {
     macros: Macros,
   }
 
-  // Hook up system data types
+  // Actor
+  CONFIG.Actor.documentClass = documents.COActor
+
   CONFIG.Actor.dataModels = {
     character: models.CharacterData,
     encounter: models.EncounterData,
   }
+
+  Actors.unregisterSheet("core", ActorSheet)
+  Actors.registerSheet(SYSTEM.ID, applications.CharacterSheet, { types: ["character"], makeDefault: true, label: "CO.sheet.character" })
+  Actors.registerSheet(SYSTEM.ID, applications.EncounterSheet, { types: ["encounter"], makeDefault: true, label: "CO.sheet.encounter" })
+
+  // Item
+  CONFIG.Item.documentClass = documents.COItem
 
   CONFIG.Item.dataModels = {
     capacity: models.CapacityData,
@@ -48,28 +57,29 @@ Hooks.once("init", async function () {
     attack: models.AttackData,
   }
 
-  CONFIG.Actor.documentClass = documents.COActor
-  CONFIG.Item.documentClass = documents.COItem
-  CONFIG.ChatMessage.documentClass = documents.COChatMessage
-  CONFIG.statusEffects = SYSTEM.STATUS_EFFECT
-
-  // Dice system configuration
-  CONFIG.Dice.rolls.push(documents.CORoll, documents.COSkillRoll, documents.COAttackRoll)
-
-  // Unregister legacy sheets
-  Actors.unregisterSheet("core", ActorSheet)
   Items.unregisterSheet("core", ItemSheet)
-
-  // Register application sheets
-  Actors.registerSheet(SYSTEM.ID, applications.CharacterSheet, { types: ["character"], makeDefault: true, label: "CO.sheet.character" })
-  Actors.registerSheet(SYSTEM.ID, applications.EncounterSheet, { types: ["encounter"], makeDefault: true, label: "CO.sheet.encounter" })
-
   Items.registerSheet(SYSTEM.ID, applications.AttackSheet, { types: ["attack"], makeDefault: true, label: "CO.sheet.attack" })
   Items.registerSheet(SYSTEM.ID, applications.CapacitySheet, { types: ["capacity"], makeDefault: true, label: "CO.sheet.capacity" })
   Items.registerSheet(SYSTEM.ID, applications.EquipmentSheet, { types: ["equipment"], makeDefault: true, label: "CO.sheet.equipment" })
   Items.registerSheet(SYSTEM.ID, applications.FeatureSheet, { types: ["feature"], makeDefault: true, label: "CO.sheet.feature" })
   Items.registerSheet(SYSTEM.ID, applications.PathSheet, { types: ["path"], makeDefault: true, label: "CO.sheet.path" })
   Items.registerSheet(SYSTEM.ID, applications.ProfileSheet, { types: ["profile"], makeDefault: true, label: "CO.sheet.profile" })
+
+  // Chat
+  CONFIG.ChatMessage.documentClass = documents.COChatMessage
+
+  CONFIG.ChatMessage.dataModels = {
+    base: models.BaseMessageData,
+    action: models.ActionMessageData,
+    item: models.ItemMessageData,
+    skill: models.SkillMessageData,
+  }
+
+  // Status Effects
+  CONFIG.statusEffects = SYSTEM.STATUS_EFFECT
+
+  // Dice system configuration
+  CONFIG.Dice.rolls.push(documents.CORoll, documents.COSkillRoll, documents.COAttackRoll)
 
   // Activate socket handler
   game.socket.on(`system.${SYSTEM.id}`, handleSocketEvent)

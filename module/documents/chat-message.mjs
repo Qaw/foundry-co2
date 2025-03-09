@@ -49,6 +49,6 @@ export default class COChatMessage extends ChatMessage {
 
     const sender = html.querySelector(".message-sender")
     sender?.replaceChildren(avatar, name)
-    html.querySelector(".whisper-to")?.remove()
+    //html.querySelector(".whisper-to")?.remove()
   }
 }

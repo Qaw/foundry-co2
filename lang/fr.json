@@ -127,7 +127,11 @@
         "meters": "Mètres",
         "feet": "Pieds",
         "carac": "Caractéristique",
-        "damagetype": "Type de dégât"
+        "damagetype": "Type de dégât",
+        "skillBonus": "Bonus de compétence",
+        "skillMalus": "Malus de compétence",
+        "damageBonus": "Bonus de dégât",
+        "damageMalus": "Malus de dégât"
       },
       "short": {
         "label": "Label",
@@ -237,8 +241,9 @@
       "remove": "Supprimer",
       "diceType": "Type de dé",
       "data": "Données",
-      "kh": "Garder le plus haut",
-      "kl": "Garder le plus bas",
+      "dice20": "1d20",
+      "dice20kh": "2d20 Garder le plus haut",
+      "dice20kl": "2d20 Garder le plus bas",
       "description": "Description",
       "duration": "Durée",
       "action": "Action",

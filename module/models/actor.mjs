@@ -1,6 +1,4 @@
-import { BaseValue } from "./schemas/base-value.mjs"
 import { AbilityValue } from "./schemas/ability-value.mjs"
-import Utils from "../utils.mjs"
 
 export default class ActorData extends foundry.abstract.TypeDataModel {
   static defineSchema() {

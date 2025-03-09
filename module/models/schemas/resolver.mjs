@@ -65,31 +65,6 @@ export class Resolver extends foundry.abstract.DataModel {
   async attack(actor, item, action, type) {
     if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver attack`), actor, item, action, type)
 
-    const displayDifficulty = game.settings.get("co", "displayDifficulty")
-    const showDifficulty = displayDifficulty === "all" || (displayDifficulty === "gm" && game.user.isGM)
-
-    let difficulty = this.skill.difficulty
-    // Si la difficulté dépend de la cible unique
-    let targets = []
-    if (difficulty.includes("@target")) {
-      targets = this.acquireTargets(actor, "single", "all", action)
-      if (targets.length > 0) {
-        // Enlève le target. de la difficulté
-        difficulty = difficulty.replace(/@.*\./, "@")
-        difficulty = Roll.replaceFormulaData(difficulty, targets[0].actor.getRollData())
-      }
-    }
-
-    // Si l'attaque demande un jet opposé contre la cible
-    if (difficulty.includes("@opposite")) {
-      targets = this.acquireTargets(actor, "single", "all", action)
-      if (targets.length === 0) {
-        difficulty = null
-      }
-    }
-
-    const critical = this.skill.crit === "" ? actor.system.combat.crit.value : this.skill.crit
-
     let skillFormula = this.skill.formula
     skillFormula = Utils.evaluateFormulaCustomValues(actor, skillFormula, item.uuid)
     let skillFormulaEvaluated = Roll.replaceFormulaData(skillFormula, actor.getRollData())
@@ -108,10 +83,8 @@ export class Resolver extends foundry.abstract.DataModel {
       damageFormula: damageFormulaEvaluated,
       skillFormulaTooltip,
       damageFormulaTooltip,
-      critical,
-      difficulty,
-      showDifficulty,
-      targets,
+      critical: this.skill.crit,
+      difficulty: this.skill.difficulty,
     })
 
     if (result === null) return false
@@ -171,89 +144,5 @@ export class Resolver extends foundry.abstract.DataModel {
       await item.update({ "system.quantity.current": quantity })
     }
     return true
-  }
-
-  /**
-   * Extracts target information from a given token.
-   *
-   * @param {Object} token The token object containing actor and name information.
-   * @param {Object} token.actor The actor associated with the token.
-   * @param {string} token.actor.uuid The unique identifier of the actor.
-   * @param {string} token.name The name of the token.
-   * @returns {Object} An object containing the token, actor, actor's UUID, and token's name.
-   * @private
-   */
-  static #getTargetFromToken(token) {
-    return { token, actor: token.actor, uuid: token.actor.uuid, name: token.name }
-  }
-
-  /**
-   * Acquire targets based on the specified target type and scope.
-   *
-   * @param {Object} actor The actor performing the action.
-   * @param {string} targetType The type of target to acquire. Can be "none", "self", "single", or "multiple".
-   * @param {string} targetScope The scope of the target acquisition : allies, enemies, all.
-   * @param {Object} action The action to be performed on the targets.
-   * @param {Object} [options={}] Additional options for target acquisition.
-   * @returns {Array} An array of acquired targets.
-   * @throws {Error} Throws an error if any target has an error.
-   */
-  acquireTargets(actor, targetType, targetScope, action, options = {}) {
-    if (!canvas.ready) return []
-    let targets
-
-    switch (targetType) {
-      case "none":
-        return []
-      case "self":
-        targets = actor.getActiveTokens(true).map(Resolver.#getTargetFromToken)
-        break
-      case "single":
-        targets = this.#getTargets(action, targetScope, true)
-        break
-      case "multiple":
-        targets = this.#getTargets(action, targetScope, false)
-        break
-    }
-
-    // Throw an error if any target had an error
-    for (const target of targets) {
-      if (target.error) throw new Error(target.error)
-    }
-    return targets
-  }
-
-  #getTargets(action, scope, single) {
-    const tokens = game.user.targets
-    let errorAll
-
-    // Too few targets
-    if (tokens.size < 1) {
-      return []
-    }
-
-    // Too many targets
-    if ((single && tokens.size > 1) || (!single && tokens.size > this.target.number)) {
-      errorAll = game.i18n.format("CO.notif.warningIncorrectTargets", {
-        number: single ? 1 : this.target.number,
-        action: action.label,
-      })
-    }
-
-    // Test each target
-    const targets = []
-    for (const token of tokens) {
-      const t = Resolver.#getTargetFromToken(token)
-      if (errorAll) t.error = errorAll
-      if (scope === "allies" && t.token.document.disposition === CONST.TOKEN_DISPOSITIONS.FRIENDLY) targets.push(t)
-      else if (scope === "enemies" && t.token.document.disposition === CONST.TOKEN_DISPOSITIONS.HOSTILE) targets.push(t)
-      else if (scope === "all") targets.push(t)
-      if (!this.token) continue
-      if (token === this.token) {
-        t.error = game.i18n.localize("CO.notif.warningCannotTargetSelf")
-        continue
-      }
-    }
-    return targets
   }
 }
