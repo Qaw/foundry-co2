@@ -81,6 +81,49 @@ export default class EncounterData extends ActorData {
     return foundry.utils.mergeObject(super.defineSchema(), schema)
   }
 
+  /**
+   * Retrieves an array of combat modifiers from various sources associated with the character.
+   *
+   * @returns {Array} An array of combat modifiers.
+   */
+  get combatModifiers() {
+    const lstCapacities = this.parent.capacities
+    if (!lstCapacities) return []
+    let allModifiers = lstCapacities.reduce((mods, item) => mods.concat(item.enabledModifiers), []).filter((m) => m.subtype === SYSTEM.MODIFIERS_SUBTYPE.combat.id)
+    return allModifiers
+  }
+
+  /**
+   * Retrieves the attribute modifiers for the character.
+   *
+   * @returns {Array} An array of attribute modifiers.
+   */
+  get attributeModifiers() {
+    const lstCapacities = this.parent.capacities
+    if (!lstCapacities) return []
+    let allModifiers = lstCapacities.reduce((mods, item) => mods.concat(item.enabledModifiers), []).filter((m) => m.subtype === SYSTEM.MODIFIERS_SUBTYPE.attribute.id)
+    return allModifiers
+  }
+
+  /**
+   * Retrieves the skill modifiers for the character.
+   *
+   * @returns {Array} An array of skill modifiers.
+   */
+  get skillModifiers() {
+    const lstCapacities = this.parent.capacities
+    if (!lstCapacities) return []
+    let allModifiers = lstCapacities.reduce((mods, item) => mods.concat(item.enabledModifiers), []).filter((m) => m.subtype === SYSTEM.MODIFIERS_SUBTYPE.skill.id)
+    return allModifiers
+  }
+
+  get bonusDiceModifiers() {
+    const lstCapacities = this.parent.capacities
+    if (!lstCapacities) return []
+    let allModifiers = lstCapacities.reduce((mods, item) => mods.concat(item.enabledModifiers), []).filter((m) => m.subtype === SYSTEM.MODIFIERS_SUBTYPE.bonusDice.id)
+    return allModifiers
+  }
+
   prepareDerivedData() {
     super.prepareDerivedData()
 
@@ -89,20 +132,19 @@ export default class EncounterData extends ActorData {
     this._prepareHPMax()
 
     for (const [key, skill] of Object.entries(this.combat)) {
-      console.debug(skill)
       // Somme du bonus de la feuille et du bonus des effets
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr)
-
+      const combatModifiersBonus = this.computeTotalModifiersByTarget(this.combatModifiers, key)
       if (key === SYSTEM.COMBAT.init.id) {
-        skill.value = skill.base + bonuses
+        skill.value = skill.base + bonuses + combatModifiersBonus.total
       }
 
       if (key === SYSTEM.COMBAT.def.id) {
-        skill.value = skill.base + bonuses
+        skill.value = skill.base + bonuses + combatModifiersBonus.total
       }
 
       if (key === SYSTEM.COMBAT.dr.id) {
-        skill.value = skill.base + bonuses
+        skill.value = skill.base + bonuses + combatModifiersBonus.total
       }
     }
 
@@ -137,8 +179,8 @@ export default class EncounterData extends ActorData {
 
   _prepareHPMax() {
     const hpMaxBonuses = Object.values(this.attributes.hp.bonuses).reduce((prev, curr) => prev + curr)
-
-    this.attributes.hp.max = this.attributes.hp.base + hpMaxBonuses
+    const hpMaxModifiers = this.computeTotalModifiersByTarget(this.attributeModifiers, "hp")
+    this.attributes.hp.max = this.attributes.hp.base + hpMaxBonuses + hpMaxModifiers.total
     this.attributes.hp.tooltip = Utils.getTooltip("Base ", this.attributes.hp.base).concat(Utils.getTooltip("Bonus", hpMaxBonuses))
   }
 
@@ -175,6 +217,27 @@ export default class EncounterData extends ActorData {
       }
     })
     return allActions
+  }
+
+  /**
+   * Return the total modifier and the tooltip for the given target and an array of modifiers.
+   * @param {Array} modifiers An array of modifier objects.
+   * @param {SYSTEM.MODIFIERS.MODIFIER_TARGET} target The target for which the modifiers are filtered.
+   **/
+  computeTotalModifiersByTarget(modifiers, target) {
+    if (!modifiers) return { total: 0, tooltip: "" }
+
+    let modifiersByTarget = modifiers.filter((m) => m.target === target)
+
+    let total = modifiersByTarget.map((m) => m.evaluate(this.parent)).reduce((acc, curr) => acc + curr, 0)
+
+    let tooltip = ""
+    for (const modifier of modifiersByTarget) {
+      let partialTooltip = modifier.getTooltip(this.parent)
+      if (partialTooltip !== null) tooltip += partialTooltip
+    }
+
+    return { total: total, tooltip: tooltip }
   }
 
   // #endregion

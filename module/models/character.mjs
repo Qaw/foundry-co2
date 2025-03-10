@@ -164,39 +164,12 @@ export default class CharacterData extends ActorData {
   }
 
   /**
-   * Retrieves an array of combat modifiers from various sources associated with the character.
-   *
-   * @returns {Array} An array of combat modifiers.
-   */
-  get combatModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.combat.id)
-  }
-
-  /**
-   * Retrieves the attribute modifiers for the character.
-   *
-   * @returns {Array} An array of attribute modifiers.
-   */
-  get attributeModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.attribute.id)
-  }
-
-  /**
    * Gets the resource modifiers for the character.
    *
    * @returns {Array} An array of resource modifiers.
    */
   get resourceModifiers() {
     return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.resource.id)
-  }
-
-  /**
-   * Retrieves the skill modifiers for the character.
-   *
-   * @returns {Array} An array of skill modifiers.
-   */
-  get skillModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.skill.id)
   }
 
   /**
@@ -227,6 +200,33 @@ export default class CharacterData extends ActorData {
   }
 
   /**
+   * Retrieves an array of combat modifiers from various sources associated with the character.
+   *
+   * @returns {Array} An array of combat modifiers.
+   */
+  get combatModifiers() {
+    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.combat.id)
+  }
+
+  /**
+   * Retrieves the attribute modifiers for the character.
+   *
+   * @returns {Array} An array of attribute modifiers.
+   */
+  get attributeModifiers() {
+    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.attribute.id)
+  }
+
+  /**
+   * Retrieves the skill modifiers for the character.
+   *
+   * @returns {Array} An array of skill modifiers.
+   */
+  get skillModifiers() {
+    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.skill.id)
+  }
+
+  /**
    * Retrieves an array of modifiers from various sources associated with the character.
    * The sources include features, profiles, capacities, and equipment.
    * Each source is checked for enabled modifiers of the specified type and subtype.
@@ -241,7 +241,7 @@ export default class CharacterData extends ActorData {
     let modifiersArray = []
 
     sources.forEach((source) => {
-      let items = this.parent[source]
+      let items = this.parent.source
       if (items) {
         let allModifiers = items.reduce((mods, item) => mods.concat(item.enabledModifiers), []).filter((m) => m.subtype === subtype)
         modifiersArray.push(...allModifiers)
@@ -249,6 +249,27 @@ export default class CharacterData extends ActorData {
     })
 
     return modifiersArray
+  }
+
+  /**
+   * Return the total modifier and the tooltip for the given target and an array of modifiers.
+   * @param {Array} modifiers An array of modifier objects.
+   * @param {SYSTEM.MODIFIERS.MODIFIER_TARGET} target The target for which the modifiers are filtered.
+   **/
+  computeTotalModifiersByTarget(modifiers, target) {
+    if (!modifiers) return { total: 0, tooltip: "" }
+
+    let modifiersByTarget = modifiers.filter((m) => m.target === target)
+
+    let total = modifiersByTarget.map((m) => m.evaluate(this.parent)).reduce((acc, curr) => acc + curr, 0)
+
+    let tooltip = ""
+    for (const modifier of modifiersByTarget) {
+      let partialTooltip = modifier.getTooltip(this.parent)
+      if (partialTooltip !== null) tooltip += partialTooltip
+    }
+
+    return { total: total, tooltip: tooltip }
   }
 
   async prepareDerivedData() {
@@ -394,27 +415,6 @@ export default class CharacterData extends ActorData {
 
   _prepareMovement() {
     this.attributes.movement.value = this.attributes.movement.base + this.attributes.movement.bonuses.sheet + this.attributes.movement.bonuses.effects
-  }
-
-  /**
-   * Return the total modifier and the tooltip for the given target and an array of modifiers.
-   * @param {Array} modifiers An array of modifier objects.
-   * @param {SYSTEM.MODIFIERS.MODIFIER_TARGET} target The target for which the modifiers are filtered.
-   **/
-  computeTotalModifiersByTarget(modifiers, target) {
-    if (!modifiers) return { total: 0, tooltip: "" }
-
-    let modifiersByTarget = modifiers.filter((m) => m.target === target)
-
-    let total = modifiersByTarget.map((m) => m.evaluate(this.parent)).reduce((acc, curr) => acc + curr, 0)
-
-    let tooltip = ""
-    for (const modifier of modifiersByTarget) {
-      let partialTooltip = modifier.getTooltip(this.parent)
-      if (partialTooltip !== null) tooltip += partialTooltip
-    }
-
-    return { total: total, tooltip: tooltip }
   }
 
   /**

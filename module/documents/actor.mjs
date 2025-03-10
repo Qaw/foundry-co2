@@ -469,7 +469,6 @@ export default class COActor extends Actor {
    * @param {*} shiftKey true if the shift key is pressed
      @param {string("attack","damage")} type  define if it's an attack or just a damage
    */
-
   async activateAction({ state, source, indice, type, shiftKey = null } = {}) {
     const item = await fromUuid(source)
     if (!item) return
@@ -517,6 +516,7 @@ export default class COActor extends Actor {
     // Action avec une durée : changement de l'état de l'action
     if (item.system.actions[indice].properties.temporary) {
       if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction - Action avec une durée`), state, source, indice, type, shiftKey, item)
+
       const newActions = item.system.toObject().actions
       newActions[indice].properties.enabled = state
       await item.update({ "system.actions": newActions })

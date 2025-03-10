@@ -15,7 +15,7 @@ export default class COEncounterSheet extends CoBaseActorSheet {
   }
 
   /** @override */
-  getData(options) {
+  async getData(options) {
     const context = super.getData(options)
     context.attacks = this.actor.system.attacks
     context.attacksActions = this.actor.attacksActions
@@ -23,11 +23,16 @@ export default class COEncounterSheet extends CoBaseActorSheet {
     context.choiceCategories = SYSTEM.ENCOUNTER_CATEGORIES
     context.choiceBossRanks = SYSTEM.ENCOUNTER_BOSS_RANKS
     context.choiceSizes = SYSTEM.SIZES
-     //Activation desactivation des defenses
-     context.partialDef = this.actor.hasEffect("partialDef") ? true : false
-     context.partialfa = "fa-solid fa-shield-halved"
-     context.fullDef = this.actor.hasEffect("fullDef") ? true : false
-     context.fullfa = "fa-solid fa-shield"
+    //Activation desactivation des defenses
+    context.partialDef = this.actor.hasEffect("partialDef") ? true : false
+    context.partialfa = "fa-solid fa-shield-halved"
+    context.fullDef = this.actor.hasEffect("fullDef") ? true : false
+    context.fullfa = "fa-solid fa-shield"
+    context.visibleActions = await this.actor.getVisibleActions()
+    context.visibleActivableActions = await this.actor.getVisibleActivableActions()
+    context.visibleNonActivableActions = await this.actor.getVisibleNonActivableActions()
+    context.visibleActivableTemporaireActions = await this.actor.getVisibleActivableTemporaireActions()
+    context.visibleNonActivableNonTemporaireActions = await this.actor.getVisibleNonActivableNonTemporaireActions()
     if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`COEncounterSheet - context`), context)
     return context
   }
@@ -50,11 +55,10 @@ export default class COEncounterSheet extends CoBaseActorSheet {
     const type = dataset.type
     const source = dataset.source
     const indice = dataset.indice
-
     if (action === "activate") {
-      this.actor.activateAction(true, source, indice, type)
+      this.actor.activateAction({ state: true, source, indice, type })
     } else if (action === "unactivate") {
-      this.actor.activateAction(false, source, indice, type)
+      this.actor.activateAction({ state: false, source, indice, type })
     }
   }
 
@@ -69,7 +73,6 @@ export default class COEncounterSheet extends CoBaseActorSheet {
     } else if (action === "unactivate") {
       activation = this.actor.activateCOStatusEffect({ state: false, effectid })
     }
-
   }
 
   /**
@@ -105,7 +108,9 @@ export default class COEncounterSheet extends CoBaseActorSheet {
   async _onDeleteItem(event) {
     event.preventDefault()
     const li = $(event.currentTarget).parents(".item")
+    console.log(li)
     const itemId = li.data("itemId")
+    const itemUUID = li.data("itemUuid")
     const itemType = li.data("itemType")
     if (itemType === "path") this._onDeletePath(event)
     else if (itemType === "capacity") this._onDeleteCapacity(event)
