@@ -2,4 +2,46 @@
   .dialog-content {
     gap: 1px;
   }
+
+  hr {
+    background-image: none;
+    background-color: black;
+  }
+
+  .targets-label {
+    text-align: center;
+    font-size: 1.2rem;
+    border: none;
+    margin-bottom: 5px;
+  }
+
+  .targets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1px;
+    .target {
+      background: rgba(0, 0, 0, 0.1);
+      border: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      width: 50px;
+      .actor-image {
+        border: none;
+      }
+      .target-name {
+        font: 400 var(--font-size-12) var(--sans-serif);
+        text-align: center;
+      }
+      &.selected {
+        background: rgba(0, 0, 0, 0.3);
+      }
+      &:hover {
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
 }
