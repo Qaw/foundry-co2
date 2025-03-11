@@ -265,8 +265,10 @@ export class COAttackRoll extends CORoll {
           }
         },
       })
+
       if (!rollContext) return
-      rollContext.label = dialogContext.label
+
+      rollContext.flavor = dialogContext.flavor
       if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll - rollContext`), rollContext)
     }
 
@@ -306,8 +308,8 @@ export class COAttackRoll extends CORoll {
       // Jet de dégâts si l'option Jet combiné est activée
       if (dialogContext.useComboRolls) {
         const damageFormula = withDialog
-          ? Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaDamage}`)
-          : Utils.evaluateFormulaCustomValues(dialogContext.actor, `${dialogContext.formulaDamage}`)
+          ? Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaDamage}+${rollContext.damageBonus}-${rollContext.damageMalus}`)
+          : Utils.evaluateFormulaCustomValues(dialogContext.actor, `${dialogContext.formulaDamage}+${dialogContext.damageBonus}-${dialogContext.damageMalus}`)
 
         if (damageFormula !== "0" && damageFormula !== "") {
           const damageRoll = new this(damageFormula, dialogContext.actor.getRollData())
@@ -317,6 +319,7 @@ export class COAttackRoll extends CORoll {
             type: "damage",
             flavor: dialogContext.flavor,
             tooltip: damageRollTooltip,
+            formulaDamage: damageFormula,
             ...options,
           }
           rolls.push(damageRoll)

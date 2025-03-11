@@ -11,6 +11,7 @@ export default class ActionMessageData extends BaseMessageData {
       }),
       result: new fields.ObjectField(),
       targets: new fields.ArrayField(new fields.DocumentUUIDField({ type: "Actor" })),
+      linkedRoll: new fields.ObjectField(),
     })
   }
 

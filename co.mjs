@@ -82,7 +82,7 @@ Hooks.once("init", async function () {
   CONFIG.Dice.rolls.push(documents.CORoll, documents.COSkillRoll, documents.COAttackRoll)
 
   // Activate socket handler
-  game.socket.on(`system.${SYSTEM.id}`, handleSocketEvent)
+  game.socket.on(`system.${SYSTEM.ID}`, handleSocketEvent)
 
   // Preload Handlebars Templates
   preloadHandlebarsTemplates()

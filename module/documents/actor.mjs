@@ -1300,11 +1300,18 @@ export default class COActor extends Actor {
 
     let targetsUuid = targets?.map((target) => target.uuid)
 
+    const linkedRoll = rolls.length > 1 ? rolls[1].toJSON() : null
+
     // Jet d'attaque
     if (type === "attack") {
       // Affichage du jet d'attaque
       await rolls[0].toMessage(
-        { style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "action", system: { subtype: "attack", targets: targetsUuid, result: results[0] }, speaker },
+        {
+          speaker,
+          style: CONST.CHAT_MESSAGE_STYLES.OTHER,
+          type: "action",
+          system: { subtype: "attack", targets: targetsUuid, result: results[0], linkedRoll },
+        },
         { rollMode: rolls[0].options.rollMode },
       )
 

@@ -1,3 +1,4 @@
+import { SYSTEM } from "./config/system.mjs"
 import { COAttackRoll } from "./documents/roll.mjs"
 import { Hitpoints } from "./hitpoints.mjs"
 import { createCOMacro } from "./macros.mjs"
@@ -94,7 +95,30 @@ export default function registerHooks() {
       rolls[0].options.difficulty = difficulty
 
       let newResult = COAttackRoll.analyseRollResult(rolls[0])
-      message.update({ rolls: rolls, "system.result": newResult })
+      if (newResult.isSuccess) {
+        const damageRoll = Roll.fromData(message.system.linkedRoll)
+        await damageRoll.toMessage(
+          { style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "action", system: { subtype: "damage" }, speaker: message.speaker },
+          { rollMode: rolls[0].options.rollMode },
+        )
+      }
+
+      // Le MJ peut mettre à jour le message de chat
+      if (game.user.isGM) {
+        await message.update({ rolls: rolls, "system.result": newResult })
+      }
+      // Sinon on emet un socket pour mettre à jour le message de chat
+      else {
+        game.socket.emit(`system.${SYSTEM.ID}`, {
+          action: "oppositeRoll",
+          data: {
+            userId: game.user.id,
+            messageId: message.id,
+            rolls: rolls,
+            result: newResult,
+          },
+        })
+      }
     })
   })
 
