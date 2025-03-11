@@ -635,6 +635,9 @@ strong,
 .application.dialog.co.skill-roll .dialog-content {
   gap: 0;
 }
+.application.dialog.co.attack-roll .dialog-content {
+  gap: 1px;
+}
 .co {
   /* Form Groups */
   /*

@@ -1,4 +1,12 @@
 {{log "Chroniques Oubliées | dialog attack-roll" this}}
+<div class="form-group">
+    <label for="rollMode">{{localize 'CHAT.RollDefault'}}</label>
+    <div class="form-fields">
+        <select name="rollMode" id="rollMode">
+            {{selectOptions rollModes selected=rollMode localize=true}}            
+        </select>
+    </div>
+</div>
 {{#if (eq type 'attack')}}
     <div class="form-group">
         <label for="dice">{{localize 'CO.ui.diceType'}}</label>
@@ -15,13 +23,7 @@
         <div class="form-fields">
             <input class="field-value" id="formulaAttack" name="formulaAttack" type="text" value="{{formulaAttack}}" data-dtype="String" data-tooltip="{{formulaAttackTooltip}}" {{#if auto}}readonly{{/if}} />
         </div>
-    </div>
-    <div class="form-group">
-        <label>{{localize 'CO.label.long.critrange'}}</label>
-        <div class="form-fields">
-            <input class="field-value" id="critrange" name="critrange" type="text" value="{{critical}}" data-dtype="String" {{#if auto}}readonly{{/if}}/>
-        </div>
-    </div>       
+    </div>     
     <div class="form-group">
         <label>{{localize 'CO.label.long.skillBonus'}}</label>
         <div class="form-fields">
@@ -33,7 +35,7 @@
         <div class="form-fields">
             <input class="field-value" id="skillMalus" name="skillMalus" type="text" value="{{skillMalus}}" data-dtype="String"/>
         </div>
-    </div>     
+    </div>
     {{#if showDifficulty}}
         <div class="form-group">
             <label>{{localize 'CO.label.long.difficulty'}}</label>
@@ -42,6 +44,12 @@
             </div>
         </div>
     {{/if}}
+    <div class="form-group">
+        <label>{{localize 'CO.label.long.critrange'}}</label>
+        <div class="form-fields">
+            <input class="field-value" id="critical" name="critical" type="text" value="{{critical}}" data-dtype="String" {{#if auto}}readonly{{/if}}/>
+        </div>
+    </div>      
     {{#if useComboRolls}}
         <div class="form-group">
             <label data-tooltip="{{localize 'CO.tooltip.formulaDamage'}}">{{localize 'CO.label.long.formulaDamage'}}</label>

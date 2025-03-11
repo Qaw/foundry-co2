@@ -128,10 +128,10 @@
         "feet": "Pieds",
         "carac": "Caractéristique",
         "damagetype": "Type de dégât",
-        "skillBonus": "Bonus de compétence",
-        "skillMalus": "Malus de compétence",
-        "damageBonus": "Bonus de dégât",
-        "damageMalus": "Malus de dégât"
+        "skillBonus": "Bonus à l'attaque",
+        "skillMalus": "Malus à l'attaque",
+        "damageBonus": "Bonus aux dommages",
+        "damageMalus": "Malus aux dommages"
       },
       "short": {
         "label": "Label",

@@ -79,6 +79,7 @@ export class Resolver extends foundry.abstract.DataModel {
       auto: false,
       type,
       actionName: action.label,
+      chatFlavor: action.chatFlavor,
       skillFormula: skillFormulaEvaluated,
       damageFormula: damageFormulaEvaluated,
       skillFormulaTooltip,

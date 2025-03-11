@@ -55,7 +55,7 @@ export class COSkillRoll extends CORoll {
       const content = await renderTemplate(this.DIALOG_TEMPLATE, dialogContext)
 
       rollContext = await foundry.applications.api.DialogV2.wait({
-        window: { title: dialogContext.label },
+        window: { title: dialogContext.title },
         position: { width: "auto" },
         classes: this.ROLL_CSS,
         content,
@@ -83,7 +83,7 @@ export class COSkillRoll extends CORoll {
               {
                   "dice": "1d20",
                   "skillValue": "+4",
-                  "critrange": "20",
+                  "critical": "20",
                   "bonus": "+0",
                   "malus": "+0",
                   "difficulty": "10",
@@ -129,11 +129,11 @@ export class COSkillRoll extends CORoll {
     const roll = new this(formula, dialogContext.actor.getRollData())
     await roll.evaluate()
 
-    const critRange = withDialog ? rollContext.critrange : dialogContext.critrange
+    const critical = withDialog ? rollContext.critical : dialogContext.critical
     const showDifficulty = withDialog ? !!rollContext.difficulty : !!dialogContext.difficulty
     // Récupération du résultat du jet (pour gérer les jets avec avantages/désavantages)
     const result = roll.terms[0].results.find((r) => r.active).result
-    const isCritical = result >= critRange || result === 20
+    const isCritical = result >= critical || result === 20
     const isFumble = result === 1
     let isSuccess
     if (withDialog && rollContext.difficulty) {
@@ -146,6 +146,7 @@ export class COSkillRoll extends CORoll {
     const toolTip = await roll.getTooltip()
 
     roll.options = {
+      rollMode: withDialog ? rollContext.rollMode : dialogContext.rollMode,
       label: dialogContext.label,
       actor: dialogContext.actor,
       isSuccess,
@@ -213,7 +214,7 @@ export class COAttackRoll extends CORoll {
       const content = await renderTemplate(this.DIALOG_TEMPLATE, dialogContext)
 
       rollContext = await foundry.applications.api.DialogV2.wait({
-        window: { title: dialogContext.label },
+        window: { title: dialogContext.title },
         position: { width: "auto" },
         classes: this.ROLL_CSS,
         content,
@@ -241,7 +242,7 @@ export class COAttackRoll extends CORoll {
               {
                   "dice": "1d20",
                   "formulaAttack": "5",
-                  "critrange": "20",
+                  "critical": "20",
                   "skillBonus": "",
                   "skillMalus": "",
                   "difficulty": "",
@@ -281,7 +282,7 @@ export class COAttackRoll extends CORoll {
       roll.options = {
         actorId: dialogContext.actor.id,
         type: dialogContext.type,
-        label: dialogContext.label,
+        flavor: dialogContext.flavor,
         dice: withDialog ? rollContext.dice : dialogContext.dice,
         formulaAttack: withDialog ? rollContext.formulaAttack : dialogContext.formulaAttack,
         skillBonus: withDialog ? rollContext.skillBonus : dialogContext.skillBonus,
@@ -289,7 +290,7 @@ export class COAttackRoll extends CORoll {
         formulaDamage: withDialog ? rollContext.formulaDamage : dialogContext.formulaDamage,
         damageBonus: withDialog ? rollContext.damageBonus : dialogContext.damageBonus,
         damageMalus: withDialog ? rollContext.damageMalus : dialogContext.damageMalus,
-        critical: withDialog ? rollContext.critrange : dialogContext.critrange,
+        critical: withDialog ? rollContext.critical : dialogContext.critical,
         oppositeRoll: withDialog ? rollContext.difficulty.includes("@opposite") : dialogContext.oppositeRoll.includes("@opposite"),
         oppositeTarget: dialogContext.targets.length > 0 ? dialogContext.targets[0].uuid : null,
         oppositeValue: withDialog ? rollContext.difficulty : dialogContext.difficulty,
@@ -314,7 +315,7 @@ export class COAttackRoll extends CORoll {
           const damageRollTooltip = await damageRoll.getTooltip()
           damageRoll.options = {
             type: "damage",
-            label: dialogContext.label,
+            flavor: dialogContext.flavor,
             tooltip: damageRollTooltip,
             ...options,
           }
@@ -329,7 +330,7 @@ export class COAttackRoll extends CORoll {
       const tooltip = await roll.getTooltip()
       roll.options = {
         type: dialogContext.type,
-        label: dialogContext.label,
+        flavor: dialogContext.flavor,
         actor: dialogContext.actor,
         tooltip,
         ...options,
@@ -375,7 +376,7 @@ export class COAttackRoll extends CORoll {
       type: this.options.type,
       actor: this.options.actor,
       speaker: ChatMessage.getSpeaker({ actor: this.options.actor, scene: canvas.scene }),
-      flavor: this.options.label,
+      flavor: `${this.options.flavor} - ${this.options.type === "attack" ? "Attaque" : "Dommages"}`,
       formula: isPrivate ? "???" : this.formula,
       useDifficulty: this.options.useDifficulty,
       showDifficulty: this.options.showDifficulty,
