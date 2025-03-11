@@ -58,13 +58,13 @@
                     <div class="attack-header">
                         <h4 class="attack-name tags">
                             {{#if (eq attack.system.subtype "melee")}}
-                                <span><strong>{{localize "CO.label.short.melee"}}</strong><span class="activity-icon"><i class="fas fa-fw fa-sword"></i></span>{{attack.name}}</span>
+                                <span><strong>{{localize "CO.label.short.melee"}}</strong><span class="activity-icon"><i class="fas fa-fw fa-sword"></i></span>{{attack.name}} {{attack.system.actions.0.label}}</span>
                             {{/if}}
                             {{#if (eq attack.system.subtype "ranged")}}
-                                <span><strong>{{localize "CO.label.short.ranged"}}</strong><span class="activity-icon"><i class="fas fa-fw fa-bow-arrow"></i></span>{{attack.name}}</span>
+                                <span><strong>{{localize "CO.label.short.ranged"}}</strong><span class="activity-icon"><i class="fas fa-fw fa-bow-arrow"></i></span>{{attack.name}} {{attack.system.actions.0.label}}</span>
                             {{/if}}
                             {{#if (eq attack.system.subtype "magical")}}
-                                <span><strong>{{localize "CO.label.short.magic"}}</strong><span class="activity-icon"><i class="fas fa-fw fa-wand-magic-sparkles"></i></span>{{attack.name}}</span>
+                                <span><strong>{{localize "CO.label.short.magic"}}</strong><span class="activity-icon"><i class="fas fa-fw fa-wand-magic-sparkles"></i></span>{{attack.name}} {{attack.system.actions.0.label}}</span>
                             {{/if}}
                         </h4>
                         <div class="attack-controls controls">
@@ -85,7 +85,7 @@
                             </div>
                         </div>
                         <div class="attack-detail sub-section expandable expanded">
-                            <div class="attack-description"></div>
+                            <div class="attack-description">{{{attack.system.description}}}</span></div>
                         </div>
                     </div>
                 </li>
