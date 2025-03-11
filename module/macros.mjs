@@ -16,7 +16,7 @@ export async function createCOMacro(dropData, slot) {
       foundry.utils.mergeObject(macroData, {
         name: itemData.name,
         img: itemData.img,
-        command: `game.system.api.macros.sendToChat("${itemData.id}","${itemData.name}", null)`,
+        command: `game.system.api.macros.sendToChat("${itemData.uuid}","${itemData.name}", null)`,
         flags: { "co.itemMacro": true },
       })
       break

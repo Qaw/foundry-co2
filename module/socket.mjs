@@ -13,6 +13,8 @@ export function handleSocketEvent({ action = null, data = {} } = {}) {
       return _buff(data)
     case "heal":
       return _heal(data.toUserId, data.healAmount, data.fromUserId, data.resolver)
+    case "oppositeRoll":
+      return _oppositeRoll(data)
   }
 }
 
@@ -59,5 +61,14 @@ export async function _heal({ toACtorId, healAmount, fromUserId, resolver }) {
         whisper: game.user,
       })
     }
+  }
+}
+
+export async function _oppositeRoll({ userId, messageId, rolls, result } = {}) {
+  console.log(`handleSocketEvent _oppositeRoll from ${userId} !`, messageId, rolls, result)
+  //const currentUser = game.user._id
+  if (game.user.isGM) {
+    const message = game.messages.get(messageId)
+    await message.update({ rolls: rolls, "system.result": result })
   }
 }

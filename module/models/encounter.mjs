@@ -46,6 +46,7 @@ export default class EncounterData extends ActorData {
       init: new fields.EmbeddedDataField(BaseValue),
       def: new fields.EmbeddedDataField(BaseValue),
       dr: new fields.EmbeddedDataField(BaseValue),
+      crit: new fields.EmbeddedDataField(BaseValue),
     })
 
     schema.magic = new fields.NumberField({ ...requiredInteger, initial: 0 })
@@ -145,6 +146,20 @@ export default class EncounterData extends ActorData {
 
       if (key === SYSTEM.COMBAT.dr.id) {
         skill.value = skill.base + bonuses + combatModifiersBonus.total
+      }
+
+      if (key === SYSTEM.COMBAT.crit.id) {
+        this.combat.crit.base = SYSTEM.BASE_CRITICAL
+
+        // Somme des bonus des modifiers
+        const critModifiers = this.computeTotalModifiersByTarget(this.combatModifiers, SYSTEM.COMBAT.crit.id)
+
+        if (critModifiers.total > 0) {
+          this.combat.crit.value = Math.max(16, SYSTEM.BASE_CRITICAL - critModifiers.total)
+          this.combat.crit.tooltipValue = Utils.getTooltip("Bonus", critModifiers.total)
+        } else {
+          this.combat.crit.value = this.combat.crit.base
+        }
       }
     }
 

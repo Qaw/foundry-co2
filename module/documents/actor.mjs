@@ -582,7 +582,7 @@ export default class COActor extends Actor {
    * Met à jour le rank de la voie correspondante
    * @param {*} capacityId
    */
-  async toggleCapacityLearned(capacityId) {
+  async toggleCapacityLearned(capacityId, state) {
     let capacity = this.items.get(capacityId)
     if (!capacity) return
 
@@ -591,19 +591,25 @@ export default class COActor extends Actor {
     if (!path) return
     const currentRank = await path.system.computeRank()
 
-    // RULE : Pour obtenir une capacité, il faut avoir un niveau minimal
-    // Les capacités de rang 6 à 8 sont réservées aux voies de prestige
-    const newRank = currentRank + 1
-    if (this.system.attributes.level < SYSTEM.CAPACITY_MINIMUM_LEVEL[newRank]) return ui.notifications.warn(game.i18n.localize("CO.notif.warningLevelTooLow"))
+    let newRank
+    // Apprentissage d'une capacité
+    if (state) {
+      // RULE : Pour obtenir une capacité, il faut avoir un niveau minimal
+      // Les capacités de rang 6 à 8 sont réservées aux voies de prestige
+      newRank = currentRank + 1
+      if (this.system.attributes.level < SYSTEM.CAPACITY_MINIMUM_LEVEL[newRank]) return ui.notifications.warn(game.i18n.localize("CO.notif.warningLevelTooLow"))
+    }
 
     // Mise à jour de la capacité et de ses actions
-    await this._toggleItemFieldAndActions(capacity, "learned")
+    await this._toggleItemFieldAndActions(capacity, "learned", state)
 
-    // Mise à jour du rang de la voie correspondante
-    await path.update({ "system.rank": currentRank + 1 })
+    if (state) {
+      // Mise à jour du rang de la voie correspondante
+      await path.update({ "system.rank": currentRank + 1 })
 
-    // Le rang est le coût en mana de la capacité
-    await capacity.update({ "system.manaCost": newRank })
+      // Le rang est le coût en mana de la capacité
+      await capacity.update({ "system.manaCost": newRank })
+    }
   }
 
   /**
@@ -657,10 +663,8 @@ export default class COActor extends Actor {
    * @param {*} item    obket à modifier
    * @param {*} fieldName exemple : equipped
    */
-  async _toggleItemFieldAndActions(item, fieldName) {
-    let fieldValue = item.system[fieldName]
-
-    let updateData = { [`system.${fieldName}`]: !fieldValue }
+  async _toggleItemFieldAndActions(item, fieldName, state) {
+    let updateData = { [`system.${fieldName}`]: state }
     const nbActions = item.actions.length
     if (nbActions > 0) {
       let actions = item.system.toObject().actions
@@ -1119,7 +1123,7 @@ export default class COActor extends Actor {
 
     // Prépare le message de résultat
     const speaker = ChatMessage.getSpeaker({ actor: this, scene: canvas.scene })
-    const messageData = { speaker }
+    const messageData = { style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "skill", speaker }
 
     await roll.toMessage(messageData)
   }
@@ -1129,90 +1133,156 @@ export default class COActor extends Actor {
    *
    * @param {Object} item L'objet pour lequel lancer l'attaque.
    * @param {Object} [options] Les options pour le jet d'attaque.
+   * @param {string} [options.rollMode="rollMode"] La visibilité du jet.
    * @param {boolean} [options.auto=false] Si le jet est automatique.
    * @param {string} [options.type="attack"] Le type de jet, soit "attack" soit "damage".
    * @param {string} [options.actionName=""] Le nom de l'action.
+   * @param {string} [options.chatFlavor=""] Le message de l'action dans le chat.
    * @param {string} [options.dice="1d20"] La formule de dés pour le jet.
-   * @param {number} [options.bonus=0] Le bonus au jet.
-   * @param {number} [options.malus=0] Le malus au jet.
-   * @param {number} [options.critical=20] Le seuil critique pour le jet.
+   * @param {boolean} [options.useComboRolls=game.settings.get("co", "useComboRolls")] Si les jets doivent être combinés.
+   * @param {number} [options.skillBonus=0] Le bonus de compétence pour le jet.
+   * @param {number} [options.skillMalus=0] Le malus de compétence pour le jet.
+   * @param {number} [options.damageBonus=0] Le bonus de dégâts pour le jet.
+   * @param {number} [options.damageMalus=0] Le malus de dégâts pour le jet.
+   * @param {number} [options.critical=undefined] Le seuil critique pour le jet.
    * @param {boolean} [options.bonusDice=undefined] Si des dés bonus sont utilisés.
    * @param {boolean} [options.malusDice=undefined] Si des dés malus sont utilisés.
-   * @param {boolean} [options.superior=false] Si le jet est supérieur.
-   * @param {boolean} [options.weakened=false] Si le jet est affaibli.
-   * @param {number} [options.difficulty=10] La difficulté du jet.
+   * @param {number} [options.difficulty=undefined] La difficulté du jet.
+   * @param {boolean} [options.useDifficulty=undefined] Si la difficulté doit être utilisée.
    * @param {boolean} [options.showDifficulty=undefined] Si la difficulté doit être affichée.
    * @param {boolean} [options.withDialog=true] Si une boîte de dialogue doit être affichée pour le jet.
    * @param {string} [options.skillFormula=undefined] La formule pour le jet de compétence.
    * @param {string} [options.skillFormulaTooltip=""] L'infobulle pour la formule de compétence.
    * @param {string} [options.damageFormula=undefined] La formule pour le jet de dégâts.
    * @param {string} [options.damageFormulaTooltip=""] L'infobulle pour la formule de dégâts.
-   * @param options.targets
+   * @param {UUID[]} [options.targets=undefined] Les cibles de l'attaque.
+   * @param options.chatFlavor
    * @returns {Promise<null|Array>} Le résultat du jet, ou null si le jet a été annulé.
    */
   async rollAttack(
     item,
     {
+      rollMode = undefined,
       auto = false,
       type = "attack",
-      actionName = "",
       dice = "1d20",
-      bonus = 0,
-      malus = 0,
-      critical = 20,
+      useComboRolls = game.settings.get("co", "useComboRolls"),
+      actionName = "",
+      chatFlavor = "",
+      skillBonus = 0,
+      skillMalus = 0,
+      damageBonus = 0,
+      damageMalus = 0,
+      critical = undefined,
       bonusDice = undefined,
       malusDice = undefined,
-      superior = false,
-      weakened = false,
-      difficulty = 10,
+      difficulty = undefined,
+      useDifficulty = undefined,
       showDifficulty = undefined,
       withDialog = true,
       skillFormula = undefined,
       skillFormulaTooltip = "",
       damageFormula = undefined,
       damageFormulaTooltip = "",
-      targets = [],
+      targets = undefined,
     } = {},
   ) {
-    if (showDifficulty === undefined) showDifficulty = game.settings.get("co", "displayDifficulty")
+    // Gestion de la visibilité du jet
+    if (rollMode === undefined) {
+      rollMode = game.settings.get("core", "rollMode")
+    }
+
+    // Gestion de la difficulté
+    const difficultyTooltip = difficulty
+    let oppositeRoll = false
+    if (!auto && useDifficulty === undefined) {
+      const displayDifficulty = game.settings.get("co", "displayDifficulty")
+      if (displayDifficulty === "none") {
+        useDifficulty = false
+      } else {
+        useDifficulty = true
+        if (showDifficulty === undefined) {
+          showDifficulty = displayDifficulty === "all" || (displayDifficulty === "gm" && game.user.isGM)
+        }
+      }
+    } else {
+      if (!auto && showDifficulty === undefined) {
+        showDifficulty = displayDifficulty === "all" || (displayDifficulty === "gm" && game.user.isGM)
+      }
+    }
+
+    // Si la difficulté dépend de la cible unique
+    if (!auto && useDifficulty && targets === undefined) {
+      if (difficulty.includes("@target")) {
+        targets = this.acquireTargets("single", "all", actionName)
+        if (targets.length === 0) {
+          difficulty = null
+        }
+        if (targets.length > 0) {
+          // Enlève le target. de la difficulté
+          difficulty = difficulty.replace(/@.*\./, "@")
+          difficulty = Roll.replaceFormulaData(difficulty, targets[0].actor.getRollData())
+        }
+      }
+
+      // Si l'attaque demande un jet opposé contre la cible
+      else if (difficulty.includes("@opposite")) {
+        oppositeRoll = true
+        targets = this.acquireTargets("single", "all", actionName)
+        if (targets.length === 0) {
+          difficulty = null
+        }
+      }
+    }
+
+    // Gestion du critique
+    if (critical === undefined || critical === "") {
+      critical = this.system.combat.crit.value
+    }
+
+    // Gestion des dés bonus et malus
+    let bonusDices = 0
+    let malusDices = 0
 
     // Gestion du dé bonus
-    if (this.system.hasBonusDiceForAttack(Utils.getAttackTypeFromFormula(skillFormulaTooltip))) bonusDice = true
+    if (this.system.hasBonusDiceForAttack(Utils.getAttackTypeFromFormula(skillFormulaTooltip))) bonusDices += 1
 
     // Maitrise de l'arme : Si le personnage utilise une arme qu’il ne maîtrise pas, il subit un dé malus au test d’attaque.
     if (item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.weapon.id) {
-      if (!this.isTrainedWithWeapon(item.id)) malusDice = true
+      if (!this.isTrainedWithWeapon(item.id)) malusDices += 1
     }
 
-    // Type de dé
-    if (bonusDice && malusDice) {
-      superior = false
-      weakened = false
-    }
-    if (bonusDice && !malusDice) {
-      superior = true
-      weakened = false
-    }
-    if (!bonusDice && malusDice) {
-      superior = false
-      weakened = true
-    }
+    if (bonusDice) bonusDices += bonusDice
+    if (malusDice) malusDices += malusDice
+
+    const totalDices = bonusDices - malusDices
+    if (dice === "1d20" && totalDices > 0) dice = "2d20kh"
+    else if (dice === "1d20" && totalDices < 0) dice = "2d20kl"
+
+    // Construction du message de chat
+    if (chatFlavor === "") chatFlavor = `${item.name} ${actionName}`
 
     const dialogContext = {
-      dice,
+      rollMode,
+      rollModes: CONFIG.Dice.rollModes,
       actor: this,
       auto,
       type,
-      useComboRolls: game.settings.get("co", "useComboRolls"),
+      dice,
+      useComboRolls,
       actionName: actionName,
-      label: `${item.name} ${actionName}`,
-      bonus,
-      malus,
+      title: `${item.name} ${actionName}`,
+      flavor: chatFlavor,
+      skillBonus,
+      skillMalus,
+      damageBonus,
+      damageMalus,
       critical,
-      superior,
-      weakened,
       difficulty,
+      difficultyTooltip,
+      useDifficulty,
       showDifficulty,
+      oppositeRoll,
       formulaAttack: skillFormula,
       formulaAttackTooltip: skillFormulaTooltip,
       formulaDamage: damageFormula,
@@ -1223,24 +1293,45 @@ export default class COActor extends Actor {
     let rolls = await COAttackRoll.prompt(dialogContext, { withDialog: withDialog })
     if (!rolls) return null
 
+    let results = rolls.map((roll) => COAttackRoll.analyseRollResult(roll))
+
     // Prépare le message de résultat
     const speaker = ChatMessage.getSpeaker({ actor: this, scene: canvas.scene })
-    const messageData = { speaker }
+
+    let targetsUuid = targets?.map((target) => target.uuid)
+
+    const linkedRoll = rolls.length > 1 ? rolls[1].toJSON() : null
 
     // Jet d'attaque
     if (type === "attack") {
-      // Affichage du get d'attaque
-      await rolls[0].toMessage(messageData)
+      // Affichage du jet d'attaque
+      await rolls[0].toMessage(
+        {
+          speaker,
+          style: CONST.CHAT_MESSAGE_STYLES.OTHER,
+          type: "action",
+          system: { subtype: "attack", targets: targetsUuid, result: results[0], linkedRoll },
+        },
+        { rollMode: rolls[0].options.rollMode },
+      )
 
-      // Affichage du jet de dégâts dans le cas d'un jet combiné
-      if (game.settings.get("co", "useComboRolls")) {
-        if (rolls[1]) await rolls[1].toMessage(messageData)
+      // TODO Afficher uniquement si c'est un succès
+      // Affichage du jet de dégâts dans le cas d'un jet combiné, si ce n'est pas un jet opposé et que l'attaque est un succès
+      if (game.settings.get("co", "useComboRolls") && !rolls[0].options.oppositeRoll && results[0].isSuccess) {
+        if (rolls[1])
+          await rolls[1].toMessage(
+            { style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "action", system: { subtype: "damage", targets: targetsUuid }, speaker },
+            { rollMode: rolls[1].options.rollMode },
+          )
       }
     }
 
     // Jet de dégâts
     else if (type === "damage") {
-      await rolls[0].toMessage(messageData)
+      await rolls[0].toMessage(
+        { style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "action", system: { subtype: "damage", targets: targetsUuid }, speaker },
+        { rollMode: rolls[0].options.rollMode },
+      )
     }
   }
 
@@ -1249,13 +1340,97 @@ export default class COActor extends Actor {
     let roll = new Roll(healFormula)
     await roll.roll()
     // TODO Qui est soigné ? Pour le moment soi même :)
-    if (targetType == SYSTEM.RESOLVER_TARGET.self.id) {
+    if (targetType === SYSTEM.RESOLVER_TARGET.self.id) {
       let hp = this.system.attributes.hp
       hp.value += roll.total
       if (hp.value > hp.max) hp.value = hp.max
       this.update({ "system.attributes.hp": hp })
     }
-    await roll.toMessage()
+    const messageData = { style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "action", speaker }
+    await roll.toMessage(messageData)
   }
   // #endregion
+
+  /**
+   * Acquire targets based on the specified target type and scope.
+   *
+   * @param {string} targetType The type of target to acquire. Can be "none", "self", "single", or "multiple".
+   * @param {string} targetScope The scope of the target acquisition : allies, enemies, all.
+   * @param {Object} actionName The name of the action to be performed on the targets.
+   * @param {Object} [options={}] Additional options for target acquisition.
+   * @returns {Array} An array of acquired targets.
+   * @throws {Error} Throws an error if any target has an error.
+   */
+  acquireTargets(targetType, targetScope, actionName, options = {}) {
+    if (!canvas.ready) return []
+    let targets
+
+    switch (targetType) {
+      case "none":
+        return []
+      case "self":
+        targets = this.getActiveTokens(true).map(this.#getTargetFromToken)
+        break
+      case "single":
+        targets = this.#getTargets(actionName, targetScope, true)
+        break
+      case "multiple":
+        targets = this.#getTargets(actionName, targetScope, false)
+        break
+    }
+
+    // Throw an error if any target had an error
+    for (const target of targets) {
+      if (target.error) throw new Error(target.error)
+    }
+    return targets
+  }
+
+  /**
+   * Extracts target information from a given token.
+   *
+   * @param {Object} token The token object containing actor and name information.
+   * @param {Object} token.actor The actor associated with the token.
+   * @param {string} token.actor.uuid The unique identifier of the actor.
+   * @param {string} token.name The name of the token.
+   * @returns {Object} An object containing the token, actor, actor's UUID, and token's name.
+   * @private
+   */
+  #getTargetFromToken(token) {
+    return { token, actor: token.actor, uuid: token.actor.uuid, name: token.name }
+  }
+
+  #getTargets(actionName, scope, single) {
+    const tokens = game.user.targets
+    let errorAll
+
+    // Too few targets
+    if (tokens.size < 1) {
+      return []
+    }
+
+    // Too many targets
+    if ((single && tokens.size > 1) || (!single && tokens.size > this.target.number)) {
+      errorAll = game.i18n.format("CO.notif.warningIncorrectTargets", {
+        number: single ? 1 : this.target.number,
+        action: actionName,
+      })
+    }
+
+    // Test each target
+    const targets = []
+    for (const token of tokens) {
+      const t = this.#getTargetFromToken(token)
+      if (errorAll) t.error = errorAll
+      if (scope === "allies" && t.token.document.disposition === CONST.TOKEN_DISPOSITIONS.FRIENDLY) targets.push(t)
+      else if (scope === "enemies" && t.token.document.disposition === CONST.TOKEN_DISPOSITIONS.HOSTILE) targets.push(t)
+      else if (scope === "all") targets.push(t)
+      if (!this.token) continue
+      if (token === this.token) {
+        t.error = game.i18n.localize("CO.notif.warningCannotTargetSelf")
+        continue
+      }
+    }
+    return targets
+  }
 }

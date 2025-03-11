@@ -586,9 +586,9 @@ strong,
 /* Header */
 .message-header {
   margin-bottom: 0.375rem;
-}
-.message-header .message-delete {
-  display: none;
+  /*.message-delete {
+    display: none;
+  }*/
 }
 .message-header .message-sender {
   display: flex;
@@ -634,6 +634,9 @@ strong,
 }
 .application.dialog.co.skill-roll .dialog-content {
   gap: 0;
+}
+.application.dialog.co.attack-roll .dialog-content {
+  gap: 1px;
 }
 .co {
   /* Form Groups */

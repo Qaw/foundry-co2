@@ -7,3 +7,8 @@ export { default as ProfileData } from "./profile.mjs"
 
 export { default as CharacterData } from "./character.mjs"
 export { default as EncounterData } from "./encounter.mjs"
+
+export { default as BaseMessageData } from "./base-message.mjs"
+export { default as ActionMessageData } from "./action-message.mjs"
+export { default as ItemMessageData } from "./item-message.mjs"
+export { default as SkillMessageData } from "./skill-message.mjs"

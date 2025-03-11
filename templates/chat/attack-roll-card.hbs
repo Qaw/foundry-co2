@@ -1,9 +1,10 @@
 {{log "attack-roll-card" this}}
-<div class="co chat-card roll-card attack-card" data-actor-id="{{actor.id}}">
+<div class="co chat-card roll-card attack-card" data-actor-id="{{speaker.actor}}">
   <header class="card-header flexcol">
     <strong>{{flavor}}</strong>
     {{#if showDifficulty}}
-      <label class="display-difficulty">{{localize "CO.label.long.difficulty"}} : <strong class="display-difficulty">{{difficulty}}</strong></label>
+      <label class="display-difficulty">{{#if oppositeRoll}}<button class="opposite-roll" data-opposite-value="{{difficulty}}" data-opposite-target="{{oppositeTarget}}">Jet opposé</button>{{else}}{{localize "CO.label.long.difficulty"}} : <strong class="display-difficulty"></strong>{{difficulty}}{{/if}}</strong>
+      </label>
     {{/if}}
   </header>
 

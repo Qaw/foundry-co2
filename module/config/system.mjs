@@ -10,6 +10,7 @@ import * as MODIFIERS from "./modifier.mjs"
 import * as PATH from "./path.mjs"
 import * as PROFILE from "./profile.mjs"
 import * as EFFECTS from "./effects.mjs"
+import * as CHAT from "./chat.mjs"
 
 export const ASCII = `
    ******    *******  
@@ -96,6 +97,7 @@ export const SYSTEM = {
   BASE_CRITICAL: CHARACTER.BASE_CRITICAL,
   CAPACITY_ACTION_TYPE: CAPACITY.CAPACITY_ACTION_TYPE,
   CAPACITY_MINIMUM_LEVEL: CAPACITY.CAPACITY_MINIMUM_LEVEL,
+  CHAT_MESSAGE_TYPES: CHAT.CHAT_MESSAGE_TYPES,
   COMBAT: CHARACTER.COMBAT,
   CONDITION_OBJECTS: ACTION.CONDITION_OBJECTS,
   CONDITION_PREDICATES: ACTION.CONDITION_PREDICATES,
