@@ -1095,8 +1095,26 @@ export default class COActor extends Actor {
    */
   async rollSkill(
     skillId,
-    { dice = "1d20", bonus = 0, malus = 0, critical = 20, superior = false, weakened = false, difficulty = undefined, showDifficulty = undefined, withDialog = true } = {},
+    {
+      rollMode = undefined,
+      dice = "1d20",
+      bonus = 0,
+      malus = 0,
+      critical = 20,
+      bonusDice = undefined,
+      malusDice = undefined,
+      difficulty = undefined,
+      useDifficulty = undefined,
+      showDifficulty = undefined,
+      withDialog = true,
+      targets = undefined,
+    } = {},
   ) {
+    // Gestion de la visibilité du jet
+    if (rollMode === undefined) {
+      rollMode = game.settings.get("core", "rollMode")
+    }
+
     if (showDifficulty === undefined) showDifficulty = game.settings.get("co", "displayDifficulty")
 
     // Encombrement de l'armure pour les jets d'agilité
@@ -1105,16 +1123,16 @@ export default class COActor extends Actor {
     }
 
     const dialogContext = {
+      rollMode,
+      rollModes: CONFIG.Dice.rollModes,
       dice: dice,
       actor: this,
       skillId: skillId,
-      label: `${game.i18n.localize("CO.dialogs.skillCheck")} ${game.i18n.localize(`CO.abilities.long.${skillId}`)}`,
+      title: `${game.i18n.localize("CO.dialogs.skillCheck")} ${game.i18n.localize(`CO.abilities.long.${skillId}`)}`,
       bonus: bonus,
       malus: malus,
       skillValue: foundry.utils.getProperty(this, `system.abilities.${skillId}`).value,
       critical: critical,
-      superior: superior ? superior : foundry.utils.getProperty(this, `system.abilities.${skillId}`).superior,
-      weakened: weakened,
       difficulty: difficulty,
       showDifficulty: showDifficulty,
       skillBonuses: this.getSkillBonuses(skillId), // Récupère un tableau d'objets avec {name, description, value}
