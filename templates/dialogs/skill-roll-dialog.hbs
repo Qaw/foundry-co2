@@ -1,4 +1,4 @@
-{{!log "Chroniques Oubliées | dialog skill-roll" this}}
+{{log "Chroniques Oubliées | dialog skill-roll" this}}
 <div class="form-group">
     <label for="dice">{{localize 'CO.ui.diceType'}}</label>
     <div class="form-fields">
@@ -50,7 +50,8 @@
                 {{!log 'skillBonuses' bonus id}}
                 <div class="bonus-item flexrow" data-value="{{bonus.value}}" data-tooltip='{{{bonus.description}}}' data-tooltip-direction="UP">
                     <span class="bonus-value flex0">{{numberFormat bonus.value decimals=0 sign=true}}</span> &nbsp;
-                    <span class="bonus-name flex1">{{bonus.name}}</span>
+                    <span class="bonus-name flex0">{{bonus.name}}</span>
+                    <span class="bonus-name flex2">{{bonus.additionalInfos}}</span>
                 </div>
             {{/each}}
         </div>

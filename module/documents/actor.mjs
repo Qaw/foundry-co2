@@ -371,10 +371,13 @@ export default class COActor extends Actor {
    */
   getSkillBonuses(ability) {
     const modifiersByTarget = this.system.skillModifiers.filter((m) => m.target === ability)
+    // Ajout des modifiers qui affecte toutes les cibles
+    modifiersByTarget.push(...this.system.skillModifiers.filter((m) => m.target === SYSTEM.MODIFIERS_TARGET.all.id))
+
     let bonuses = []
     for (const modifier of modifiersByTarget) {
       const sourceInfos = modifier.getSourceInfos(this)
-      bonuses.push({ name: sourceInfos.name, value: modifier.evaluate(this), description: sourceInfos.description })
+      bonuses.push({ name: sourceInfos.name, value: modifier.evaluate(this), additionalInfos: modifier.additionalInfos, description: sourceInfos.description })
     }
     return bonuses
   }

@@ -9,6 +9,7 @@
             <div class="form-fields flex1 center">{{localize "CO.ui.type"}}</div>
             <div class="form-fields flex1 center">{{localize "CO.ui.target"}}</div>
             <div class="form-fields flex1 center">{{localize "CO.ui.value"}}</div>
+            <div class="form-fields flex2 center">{{localize "CO.ui.additionalInfos"}}</div>
             <div class="form-fields flex0"></div>
         </div>
         {{#each action.modifiers as |m id|}}
@@ -50,6 +51,7 @@
                     </select>
                 </div>
                 <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.modifiers.{{id}}.value" type="text" value="{{m.value}}" data-dtype="String" /></div>
+                <div class="form-fields flex2 center"><input name="system.actions.{{../idx}}.modifiers.{{id}}.additionalInfos" type="text" value="{{m.additionalInfos}}" data-dtype="String" /></div>
                 <div class="form-fields flex0"><a class="action-modifier-delete"><i class="fas fa-trash"></i></a></div>
             </div>
         {{/each}}

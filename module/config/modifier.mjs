@@ -57,6 +57,11 @@ export const MODIFIERS_SUBTYPE = Object.freeze({
 })
 
 export const MODIFIERS_TARGET = Object.freeze({
+  all: {
+    id: "all",
+    label: "CO.abilities.long.all",
+    subtype: "ability",
+  },
   agi: {
     id: "agi",
     label: "CO.abilities.long.agi",

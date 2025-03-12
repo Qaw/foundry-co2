@@ -279,6 +279,7 @@
       "subject": "Sujet",
       "predicate": "Prédicat",
       "target": "Cible",
+      "additionalInfos": "Informations complémentaires",
       "object": "Objet",
       "modifiers": "Modificateurs",
       "resolvers": "Résolutions",
@@ -360,6 +361,7 @@
     },
     "abilities": {
       "long": {
+        "all": "Toutes les caractéristiques",
         "agi": "Agilité",
         "con": "Constitution",
         "for": "Force",

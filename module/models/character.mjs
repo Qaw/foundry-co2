@@ -261,6 +261,9 @@ export default class CharacterData extends ActorData {
 
     let modifiersByTarget = modifiers.filter((m) => m.target === target)
 
+    // Ajout des modifiers qui affecte toutes les cibles
+    modifiersByTarget.push(...modifiers.filter((m) => m.target === SYSTEM.MODIFIERS_TARGET.all.id))
+
     let total = modifiersByTarget.map((m) => m.evaluate(this.parent)).reduce((acc, curr) => acc + curr, 0)
 
     let tooltip = ""

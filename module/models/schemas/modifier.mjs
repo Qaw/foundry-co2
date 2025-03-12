@@ -20,6 +20,7 @@ export class Modifier extends foundry.abstract.DataModel {
       subtype: new fields.StringField({ required: true, choices: SYSTEM.MODIFIERS_SUBTYPE, initial: "ability" }),
       target: new fields.StringField({ required: true, choices: SYSTEM.MODIFIERS_TARGET, initial: "agi" }),
       value: new fields.StringField({ required: true, initial: "0" }),
+      additionalInfos: new fields.StringField({ required: true, blank: true }), // Initial value is an empty string
     }
   }
 
