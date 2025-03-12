@@ -241,7 +241,7 @@ export default class CharacterData extends ActorData {
     let modifiersArray = []
 
     sources.forEach((source) => {
-      let items = this.parent.source
+      let items = this.parent[source]
       if (items) {
         let allModifiers = items.reduce((mods, item) => mods.concat(item.enabledModifiers), []).filter((m) => m.subtype === subtype)
         modifiersArray.push(...allModifiers)
