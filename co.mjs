@@ -107,7 +107,7 @@ Hooks.once("init", async function () {
     game.system.CONST.martialTrainingsShields = []
   }
 
-  // Combat trakcker
+  // Combat tracker
   if (game.settings.get("co", "usevarInit")) {
     CONFIG.Combat.initiative = {
       formula: "1d6x + @combat.init.value",
@@ -120,7 +120,7 @@ Hooks.once("init", async function () {
     }
   }
   CONFIG.Combat.documentClass = models.CombatCO
-  //un round dure 6s
+  // Un round dure 6s
   CONFIG.time.roundTime = 6
   console.info(Utils.log("Initialized"))
 })
@@ -154,7 +154,7 @@ Hooks.once("i18nInit", function () {
  * @param {*} updateData : contient {round, turn}
  * @param {*} updateOptions contiens {direction: -1, worldTime: {delta: advanceTime}} -1 si on reviens en arriere et 1 si on avance
  */
-Hooks.once("combatRound", function (combat, updateData, updateOptions) {
+Hooks.on("combatRound", function (combat, updateData, updateOptions) {
   if (combat.combatants) {
     combat.combatants.forEach((combatant) => {
       if (combatant.actor) combatant.actor.combatNewRound(combat, updateData, updateOptions)
@@ -173,7 +173,7 @@ Hooks.once("combatRound", function (combat, updateData, updateOptions) {
  * @param {*} updateOptions contiens {direction: 1, worldTime: {delta: CONFIG.time.turnTime}} -1 si on reviens en arriere et 1 si on avance
  */
 
-Hooks.once("combatTurn", function (combat, updateData, updateOptions) {
+Hooks.on("combatTurn", function (combat, updateData, updateOptions) {
   if (combat.combatant) combat.combatant.actor.combatNewTurn(combat, updateData, updateOptions)
 })
 
