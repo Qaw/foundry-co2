@@ -18,6 +18,33 @@ export class CORoll extends Roll {
       total: isPrivate ? "?" : Math.round(this.total * 100) / 100,
     }
   }
+
+  static analyseRollResult(roll) {
+    let result = {}
+    if ((roll instanceof COAttackRoll && roll.options.type === "attack") || roll instanceof COSkillRoll) {
+      // On récupère le résultat du dé conservé
+      const diceResult = roll.terms[0].results.find((r) => r.active).result
+      const total = roll.total
+      const isCritical = diceResult >= roll.options.critical
+      const isFumble = diceResult === 1
+      let difficulty = roll.options.difficulty
+      let isSuccess
+      let isFailure
+      // Si on utilise une difficulté et qu'elle a été définie
+      // Si elle n'est pas saisie dans la fenêtre de dialogue, difficulty vaut ""
+      if (roll.options.useDifficulty && roll.options.difficulty !== "") {
+        if (!roll.options.oppositeRoll) {
+          if (typeof difficulty === "string") {
+            difficulty = parseInt(difficulty)
+          }
+          isSuccess = roll.total >= difficulty
+          isFailure = roll.total < difficulty
+        }
+      }
+      result = { diceResult, total, isCritical, isFumble, difficulty, isSuccess, isFailure }
+    }
+    return result
+  }
 }
 
 export class COSkillRoll extends CORoll {
@@ -129,30 +156,20 @@ export class COSkillRoll extends CORoll {
     const roll = new this(formula, dialogContext.actor.getRollData())
     await roll.evaluate()
 
-    const critical = withDialog ? rollContext.critical : dialogContext.critical
-    const showDifficulty = withDialog ? !!rollContext.difficulty : !!dialogContext.difficulty
-    // Récupération du résultat du jet (pour gérer les jets avec avantages/désavantages)
-    const result = roll.terms[0].results.find((r) => r.active).result
-    const isCritical = result >= critical || result === 20
-    const isFumble = result === 1
-    let isSuccess
-    if (withDialog && rollContext.difficulty) {
-      isSuccess = roll.total >= rollContext.difficulty
-    }
-    if (!withDialog && dialogContext.difficulty) {
-      isSuccess = roll.total >= dialogContext.difficulty
-    }
-
     const toolTip = await roll.getTooltip()
 
     roll.options = {
+      actorId: dialogContext.actor.id,
       rollMode: withDialog ? rollContext.rollMode : dialogContext.rollMode,
-      label: dialogContext.label,
-      actor: dialogContext.actor,
-      isSuccess,
-      isCritical,
-      isFumble,
-      showDifficulty,
+      flavor: dialogContext.flavor,
+      bonus: withDialog ? rollContext.bonus : dialogContext.bonus,
+      malus: withDialog ? rollContext.malus : dialogContext.malus,
+      critical: withDialog ? rollContext.critical : dialogContext.critical,
+      oppositeRoll: withDialog ? rollContext.difficulty.includes("@opposite") : dialogContext.oppositeRoll.includes("@opposite"),
+      oppositeTarget: dialogContext.targets?.length > 0 ? dialogContext.targets[0].uuid : null,
+      oppositeValue: withDialog ? rollContext.difficulty : dialogContext.difficulty,
+      useDifficulty: dialogContext.useDifficulty,
+      showDifficulty: dialogContext.showDifficulty,
       difficulty: withDialog ? rollContext.difficulty : dialogContext.difficulty,
       toolTip,
       ...options,
@@ -177,20 +194,23 @@ export class COSkillRoll extends CORoll {
   }
 
   async _getChatCardData(flavor, isPrivate) {
+    const rollResults = CORoll.analyseRollResult(this)
+    console.log("COSkillRoll _getChatCardData options", this.options)
     return {
       actor: this.options.actor,
       speaker: ChatMessage.getSpeaker({ actor: this.options.actor, scene: canvas.scene }),
-      flavor: this.options.label,
+      flavor: this.options.flavor,
       formula: isPrivate ? "???" : this.formula,
+      useDifficulty: this.options.useDifficulty,
       showDifficulty: this.options.showDifficulty,
-      difficulty: this.options.difficulty,
-      isCritical: this.options.isCritical,
-      isFumble: this.options.isFumble,
-      isSuccess: this.options.isSuccess,
-      isFailure: !this.options.isSuccess,
+      difficulty: rollResults.difficulty,
+      isCritical: rollResults.isCritical,
+      isFumble: rollResults.isFumble,
+      isSuccess: rollResults.isSuccess,
+      isFailure: rollResults.isFailure,
       total: isPrivate ? "?" : Math.round(this.total * 100) / 100,
-      user: game.user.id,
       tooltip: isPrivate ? "" : await this.getTooltip(),
+      user: game.user.id,
     }
   }
 }
@@ -276,6 +296,7 @@ export class COAttackRoll extends CORoll {
       const formula = withDialog
         ? Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.dice}+${rollContext.formulaAttack}+${rollContext.skillBonus}-${rollContext.skillMalus}`)
         : Utils.evaluateFormulaCustomValues(dialogContext.actor, `${dialogContext.dice}+${dialogContext.formulaAttack}+${dialogContext.skillBonus}-${dialogContext.skillMalus}`)
+
       const roll = new this(formula, dialogContext.actor.getRollData())
       await roll.evaluate()
 
@@ -345,36 +366,9 @@ export class COAttackRoll extends CORoll {
     return rolls
   }
 
-  static analyseRollResult(roll) {
-    let result = {}
-    if (roll.options.type === "attack") {
-      // On récupère le résultat du dé conservé
-      const diceResult = roll.terms[0].results.find((r) => r.active).result
-      const total = roll.total
-      const isCritical = diceResult >= roll.options.critical
-      const isFumble = diceResult === 1
-      let difficulty = roll.options.difficulty
-      let isSuccess
-      let isFailure
-      // Si on utilise une difficulté et qu'elle a été définie
-      // Si elle n'est pas saisie dans la fenêtre de dialogue, difficulty vaut ""
-      if (roll.options.useDifficulty && roll.options.difficulty !== "") {
-        if (!roll.options.oppositeRoll) {
-          if (typeof difficulty === "string") {
-            difficulty = parseInt(difficulty)
-          }
-          isSuccess = roll.total >= difficulty
-          isFailure = roll.total < difficulty
-        }
-      }
-      result = { diceResult, total, isCritical, isFumble, difficulty, isSuccess, isFailure }
-    }
-    return result
-  }
-
   async _getChatCardData(flavor, isPrivate) {
-    const rollResults = COAttackRoll.analyseRollResult(this)
-    console.log("_getChatCardData options", this.options)
+    const rollResults = CORoll.analyseRollResult(this)
+    console.log("COAttackRoll _getChatCardData options", this.options)
     return {
       type: this.options.type,
       actor: this.options.actor,

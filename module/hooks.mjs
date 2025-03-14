@@ -1,5 +1,5 @@
 import { SYSTEM } from "./config/system.mjs"
-import { COAttackRoll } from "./documents/roll.mjs"
+import { CORoll } from "./documents/roll.mjs"
 import { Hitpoints } from "./hitpoints.mjs"
 import { createCOMacro } from "./macros.mjs"
 import Utils from "./utils.mjs"
@@ -94,7 +94,7 @@ export default function registerHooks() {
       rolls[0].options.oppositeRoll = false
       rolls[0].options.difficulty = difficulty
 
-      let newResult = COAttackRoll.analyseRollResult(rolls[0])
+      let newResult = CORoll.analyseRollResult(rolls[0])
       if (newResult.isSuccess) {
         const damageRoll = Roll.fromData(message.system.linkedRoll)
         await damageRoll.toMessage(

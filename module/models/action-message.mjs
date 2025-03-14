@@ -10,7 +10,6 @@ export default class ActionMessageData extends BaseMessageData {
         initial: SYSTEM.CHAT_MESSAGE_TYPES.UNKNOWN,
       }),
       result: new fields.ObjectField(),
-      targets: new fields.ArrayField(new fields.DocumentUUIDField({ type: "Actor" })),
       linkedRoll: new fields.ObjectField(),
     })
   }

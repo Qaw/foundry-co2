@@ -1,6 +1,6 @@
 import { SYSTEM } from "../config/system.mjs"
 import { Modifier } from "../models/schemas/modifier.mjs"
-import { COSkillRoll, COAttackRoll } from "./roll.mjs"
+import { CORoll, COSkillRoll, COAttackRoll } from "./roll.mjs"
 import Utils from "../utils.mjs"
 
 /**
@@ -272,7 +272,10 @@ export default class COActor extends Actor {
   }
 
   /**
-   * Accesseur permettant de d'obtenir un des effets actif sur l'acteur. Retourne true ou false
+   * Checks if the actor has a specific effect.
+   *
+   * @param {string} effectid The ID of the effect to check.
+   * @returns {boolean} Returns true if the actor has the effect, otherwise false.
    */
   hasEffect(effectid) {
     return this.statuses.has(effectid)
@@ -580,10 +583,12 @@ export default class COActor extends Actor {
   }
 
   /**
-   * Apprend/désapprend une capacité du personnage
-   * Change le champ learned de la capacit
-   * Met à jour le rank de la voie correspondante
-   * @param {*} capacityId
+   * Bascule l'état appris d'une capacité pour un acteur.
+   * Si l'acteur apprend une capacité, le rang de la voie correspondante est augmenté.
+   *
+   * @param {string} capacityId L'ID de la capacité à basculer.
+   * @param {boolean} state L'état appris souhaité de la capacité.
+   * @returns {Promise<void>} Une promesse qui se résout lorsque l'opération est terminée.
    */
   async toggleCapacityLearned(capacityId, state) {
     let capacity = this.items.get(capacityId)
@@ -662,9 +667,14 @@ export default class COActor extends Actor {
   // #region méthodes privées
 
   /**
-   * Toggle the field of the items and the actions linked
-   * @param {*} item    obket à modifier
-   * @param {*} fieldName exemple : equipped
+   * Toggles the state of a specified field and updates the actions of an item.
+   *
+   * @param {Object} item The item to update.
+   * @param {string} fieldName The name of the field to toggle.
+   * @param {boolean} state The new state to set for the field.
+   * @returns {Promise<void>} A promise that resolves when the item has been updated.
+   *
+   * @private
    */
   async _toggleItemFieldAndActions(item, fieldName, state) {
     let updateData = { [`system.${fieldName}`]: state }
@@ -1082,15 +1092,20 @@ export default class COActor extends Actor {
    *
    * @param {string} skillId L'ID de la compétence à lancer.
    * @param {Object} [options] Options pour le test de compétence.
+   * @param {string} [options.rollMode] Le mode de lancer de dés à utiliser.
    * @param {string} [options.dice="1d20"] Le type de dé à lancer.
+   * @param {string} [options.chatFlavor] Le message de chat.
    * @param {number} [options.bonus=0] Le bonus à ajouter au test.
    * @param {number} [options.malus=0] Le malus à soustraire du test.
    * @param {number} [options.critical=20] Le seuil critique pour le test.
-   * @param {boolean} [options.superior=false] Si la compétence est supérieure.
-   * @param {boolean} [options.weakened=false] Si la compétence est affaiblie.
-   * @param {number} [options.difficulty=10] La difficulté du test.
-   * @param {boolean} [options.showDifficulty=true] Si la difficulté doit être affichée.
+   * @param {number} [options.bonusDice] Le nombre de dés bonus à ajouter au jet.
+   * @param {number} [options.malusDice] Le nombre de dés malus à soustraire du jet.
+   * @param {number} [options.difficulty] La difficulté du test.
+   * @param {boolean} [options.oppositeRoll=false] Si le test est un jet opposé.
+   * @param {boolean} [options.useDifficulty] Si la difficulté doit être utilisée.
+   * @param {boolean} [options.showDifficulty] Si la difficulté doit être affichée.
    * @param {boolean} [options.withDialog=true] Si une boîte de dialogue doit être affichée.
+   * @param {Array} [options.targets] Les cibles du test.
    * @returns {Promise} Le résultat du test de compétence.
    */
   async rollSkill(
@@ -1098,12 +1113,14 @@ export default class COActor extends Actor {
     {
       rollMode = undefined,
       dice = "1d20",
+      chatFlavor = undefined,
       bonus = 0,
       malus = 0,
       critical = 20,
       bonusDice = undefined,
       malusDice = undefined,
       difficulty = undefined,
+      oppositeRoll = false,
       useDifficulty = undefined,
       showDifficulty = undefined,
       withDialog = true,
@@ -1115,38 +1132,99 @@ export default class COActor extends Actor {
       rollMode = game.settings.get("core", "rollMode")
     }
 
-    if (showDifficulty === undefined) showDifficulty = game.settings.get("co", "displayDifficulty")
+    // Gestion de la difficulté
+    const difficultyTooltip = difficulty
+    if (useDifficulty === undefined) {
+      const displayDifficulty = game.settings.get("co", "displayDifficulty")
+      if (displayDifficulty === "none") {
+        useDifficulty = false
+      } else {
+        useDifficulty = true
+        if (showDifficulty === undefined) {
+          showDifficulty = displayDifficulty === "all" || (displayDifficulty === "gm" && game.user.isGM)
+        }
+      }
+    } else {
+      if (showDifficulty === undefined) {
+        showDifficulty = displayDifficulty === "all" || (displayDifficulty === "gm" && game.user.isGM)
+      }
+    }
+
+    // Si la difficulté dépend de la cible unique
+    if (oppositeRoll && useDifficulty && targets === undefined) {
+      if (difficulty && difficulty.includes("@target")) {
+        targets = this.acquireTargets("single", "all", actionName)
+        if (targets.length === 0) {
+          difficulty = null
+        }
+        if (targets.length > 0) {
+          // Enlève le target. de la difficulté
+          difficulty = difficulty.replace(/@.*\./, "@")
+          difficulty = CORoll.replaceFormulaData(difficulty, targets[0].actor.getRollData())
+        }
+      }
+
+      // Si l'attaque demande un jet opposé contre la cible
+      else if (difficulty && difficulty.includes("@opposite")) {
+        targets = this.acquireTargets("single", "all", actionName)
+        if (targets.length === 0) {
+          difficulty = null
+        }
+      }
+    }
 
     // Encombrement de l'armure pour les jets d'agilité
     if (skillId === "agi") {
       malus = this.malusFromArmor
     }
 
+    // Gestion des dés bonus et malus
+    let bonusDices = 0
+    let malusDices = 0
+
+    if (bonusDice) bonusDices += bonusDice
+    if (malusDice) malusDices += malusDice
+
+    const totalDices = bonusDices - malusDices
+    if (dice === "1d20" && totalDices > 0) dice = "2d20kh"
+    else if (dice === "1d20" && totalDices < 0) dice = "2d20kl"
+
+    // Construction du message de chat
+    if (!chatFlavor) chatFlavor = `${game.i18n.localize("CO.dialogs.skillCheck")} ${game.i18n.localize(`CO.abilities.long.${skillId}`)}`    
+
     const dialogContext = {
       rollMode,
       rollModes: CONFIG.Dice.rollModes,
-      dice: dice,
+      dice,
       actor: this,
-      skillId: skillId,
+      skillId,
       title: `${game.i18n.localize("CO.dialogs.skillCheck")} ${game.i18n.localize(`CO.abilities.long.${skillId}`)}`,
-      bonus: bonus,
-      malus: malus,
+      flavor: chatFlavor,
+      bonus,
+      malus,
       skillValue: foundry.utils.getProperty(this, `system.abilities.${skillId}`).value,
-      critical: critical,
-      difficulty: difficulty,
-      showDifficulty: showDifficulty,
+      critical,
+      difficulty,
+      difficultyTooltip,
+      useDifficulty,
+      showDifficulty,
       skillBonuses: this.getSkillBonuses(skillId), // Récupère un tableau d'objets avec {name, description, value}
       totalSkillBonuses: 0,
+      targets,
+      hasTargets: targets?.length > 0,
     }
 
     let roll = await COSkillRoll.prompt(dialogContext, { withDialog: withDialog })
     if (!roll) return null
 
+    let result = CORoll.analyseRollResult(roll)
+
     // Prépare le message de résultat
     const speaker = ChatMessage.getSpeaker({ actor: this, scene: canvas.scene })
-    const messageData = { style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "skill", speaker }
 
-    await roll.toMessage(messageData)
+    let targetsUuid = targets?.map((target) => target.uuid)
+
+    await roll.toMessage({ style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "skill", system: { targets: targetsUuid, result: result }, speaker }, { rollMode: roll.options.rollMode })
   }
 
   /**
@@ -1177,7 +1255,6 @@ export default class COActor extends Actor {
    * @param {string} [options.damageFormula=undefined] La formule pour le jet de dégâts.
    * @param {string} [options.damageFormulaTooltip=""] L'infobulle pour la formule de dégâts.
    * @param {UUID[]} [options.targets=undefined] Les cibles de l'attaque.
-   * @param options.chatFlavor
    * @returns {Promise<null|Array>} Le résultat du jet, ou null si le jet a été annulé.
    */
   async rollAttack(
@@ -1234,7 +1311,7 @@ export default class COActor extends Actor {
 
     // Si la difficulté dépend de la cible unique
     if (!auto && useDifficulty && targets === undefined) {
-      if (difficulty.includes("@target")) {
+      if (difficulty && difficulty?.includes("@target")) {
         targets = this.acquireTargets("single", "all", actionName)
         if (targets.length === 0) {
           difficulty = null
@@ -1242,12 +1319,12 @@ export default class COActor extends Actor {
         if (targets.length > 0) {
           // Enlève le target. de la difficulté
           difficulty = difficulty.replace(/@.*\./, "@")
-          difficulty = Roll.replaceFormulaData(difficulty, targets[0].actor.getRollData())
+          difficulty = CORoll.replaceFormulaData(difficulty, targets[0].actor.getRollData())
         }
       }
 
       // Si l'attaque demande un jet opposé contre la cible
-      else if (difficulty.includes("@opposite")) {
+      else if (difficulty && difficulty.includes("@opposite")) {
         oppositeRoll = true
         targets = this.acquireTargets("single", "all", actionName)
         if (targets.length === 0) {
@@ -1309,12 +1386,13 @@ export default class COActor extends Actor {
       formulaDamage: damageFormula,
       formulaDamageTooltip: damageFormulaTooltip,
       targets,
+      hasTargets: targets?.length > 0,
     }
 
     let rolls = await COAttackRoll.prompt(dialogContext, { withDialog: withDialog })
     if (!rolls) return null
 
-    let results = rolls.map((roll) => COAttackRoll.analyseRollResult(roll))
+    let results = rolls.map((roll) => CORoll.analyseRollResult(roll))
 
     // Prépare le message de résultat
     const speaker = ChatMessage.getSpeaker({ actor: this, scene: canvas.scene })
@@ -1456,30 +1534,26 @@ export default class COActor extends Actor {
   }
 
   /**
-   * On change de round donc on peux gérer des actions qui se terminent "à la fin du round"
+   * On change de round donc on peut gérer des actions qui se terminent "à la fin du round"
    * @param {CombatCO} combat L'instance du combat en cours
    * @param {*} updateData : contient {round, turn}
    * @param {*} updateOptions contiens {direction: -1, worldTime: {delta: advanceTime}} -1 si on reviens en arriere et 1 si on avance
    */
   combatNewRound(combat, updateData, updateOptions) {
-    //Ici on va gérer qu'on arrive dans un nouveau round il faut faire attention car le MJ peux revenir en arrière !
-    //on va notamment gérer la durée des effets en round ou secondes je suppose
-    /*console.log("combatRound", combat)
-    console.log("combatRound", updateData)
-    console.log("combatRound", updateOptions)*/
+    // Ici on va gérer qu'on arrive dans un nouveau round il faut faire attention car le MJ peux revenir en arrière !
+    // On va notamment gérer la durée des effets en round ou secondes je suppose
+    // console.log("combatRound", combat, updateData, updateOptions)
   }
 
   /**
-   * On change de tour donc on peux gérer des actions qui se terminent "à la fin du round"
+   * On change de tour donc on peut gérer des actions qui se terminent "à la fin du round"
    * @param {CombatCO} combat L'instance du combat en cours
    * @param {*} updateData : contient {round, turn}
    * @param {*} updateOptions contiens {direction: -1, worldTime: {delta: CONFIG.time.turnTime} -1 si on reviens en arriere et 1 si on avance
    */
   combatNewTurn(combat, updateData, updateOptions) {
-    //Ici on va gérer qu'on arrive dans un nouveau round il faut faire attention car le MJ peux revenir en arrière !
-    //on va notamment gérer la durée des effets en round ou secondes je suppose
-    /*console.log("combatTurn", combat)
-    console.log("combatTurn", updateData)
-    console.log("combatTurn", updateOptions)*/
+    // Ici on va gérer qu'on arrive dans un nouveau round il faut faire attention car le MJ peux revenir en arrière !
+    // on va notamment gérer la durée des effets en round ou secondes je suppose
+    console.log("combatTurn", combat, updateData, updateOptions)
   }
 }

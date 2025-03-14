@@ -635,6 +635,45 @@ strong,
 .application.dialog.co.skill-roll .dialog-content {
   gap: 0;
 }
+.application.dialog.co.skill-roll hr {
+  background-image: none;
+  background-color: black;
+}
+.application.dialog.co.skill-roll .targets-label {
+  text-align: center;
+  font-size: 1.2rem;
+  border: none;
+  margin-bottom: 5px;
+}
+.application.dialog.co.skill-roll .targets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+}
+.application.dialog.co.skill-roll .targets .target {
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+}
+.application.dialog.co.skill-roll .targets .target .actor-image {
+  border: none;
+}
+.application.dialog.co.skill-roll .targets .target .target-name {
+  font: 400 var(--font-size-12) var(--sans-serif);
+  text-align: center;
+}
+.application.dialog.co.skill-roll .targets .target.selected {
+  background: rgba(0, 0, 0, 0.3);
+}
+.application.dialog.co.skill-roll .targets .target:hover {
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.2);
+}
 .application.dialog.co.attack-roll .dialog-content {
   gap: 1px;
 }
