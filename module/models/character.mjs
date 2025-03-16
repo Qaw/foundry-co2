@@ -667,7 +667,7 @@ export default class CharacterData extends ActorData {
    * - The character's Constitution ability value
    * - The RP value from the character's family : 1 dé supplémentaire pour la famille des mystiques
    *
-   * @returns {number} The computed base RP value.
+   * @returns {number,string} The computed base RP value and tooltip
    */
   _computeBaseRP() {
     const baseRP = DefaultConfiguration.baseRecovery()
@@ -732,47 +732,72 @@ export default class CharacterData extends ActorData {
 
   // #endregion
 
-  // TODO Vérifier si ça marche toujours
-  useRecovery(withHpRecovery) {
-    if (this.resources.recovery.value <= 0) return
+  /**
+   * Fonction permettant de gérer le repos d'un joueur et ses effets
+   * @param {boolean} isFullRest Permet d'indiquer s'il s'agit d'une "récupération complète" (true) ou d'une récupération rapide (false)
+   * @param {boolean} useRecoveryPoint Permet d'indiquer si on consomme un dé de récupération (true) ou non (false)
+   */
+  async useRecovery(isFullRest, useRecoveryPoint) {
     let hp = this.attributes.hp
     let rp = this.resources.recovery
-    const level = this.attributes.level.max
-    const modCon = this.abilities.con.mod
-    if (!withHpRecovery) {
-      rp.value -= 1
-      this.update({ "system.resources.recovery": rp })
-    } else {
-      Dialog.confirm({
-        title: game.i18n.format("CO.dialogs.spendRecoveryPoint.title"),
-        content: game.i18n.localize("CO.dialogs.spendRecoveryPoint.content"),
-        yes: async () => {
-          const hd = this.hd
-          const bonus = level + modCon
-          const formula = `${hd} + ${bonus}`
-          const roll = await new Roll(formula, {}).roll({ async: true })
-          const toolTip = new Handlebars.SafeString(await roll.getTooltip())
-
-          await new CoChat(this)
-            .withTemplate("systems/co/templates/chat/healing-card.hbs")
-            .withData({
-              actorId: this.id,
-              title: game.i18n.localize("CO.dialogs.spendRecoveryPoint.rollTitle"),
-              formula: formula,
-              total: roll.total,
-              toolTip: toolTip,
-            })
-            .withRoll(roll)
-            .create()
-
-          hp.value += roll.total
-          if (hp.value > hp.max) hp.value = hp.max
-          rp.value -= 1
-          this.update({ "system.resources.recovery": rp, "system.attributes.hp": hp })
-        },
-        defaultYes: false,
+    let mp = this.resources.mana
+    // Si c'est un repos complet on recupere 1DR
+    if (isFullRest) {
+      if (rp.value < rp.max) {
+        rp.value += 1
+        this.parent.update({ "system.resources.recovery": rp })
+      }
+      //récupération du mana
+      const content = game.i18n.localize("CO.dialogs.restManaPoint")
+      const proceed = await foundry.applications.api.DialogV2.confirm({
+        window: { title: game.i18n.localize("CO.dialogs.restmpRecupTitle") },
+        content: content,
+        rejectClose: false,
+        modal: true,
       })
+      if (proceed) {
+        mp.value = mp.max
+        this.parent.update({ "system.resources.mana": mp })
+      }
     }
+    if (this.resources.recovery.value <= 0) return
+    //récupération des hp
+    const content2 = game.i18n.localize("CO.dialogs.spendRecoveryPoint.content")
+    const proceed2 = await foundry.applications.api.DialogV2.confirm({
+      window: { title: game.i18n.format("CO.dialogs.spendRecoveryPoint.title") },
+      content: content2,
+      rejectClose: false,
+      modal: true,
+    })
+    if (!proceed2) return
+
+    let totalHp = 0
+    const level = Math.round(this.attributes.level / 2) // +1/2 niveau
+    const hd = this.hd
+    let formula = `${hd} + ${level}`
+    if (isFullRest && hd && rp.value > 0) {
+      totalHp = parseInt(this.hd.replace("d", "")) + level
+      formula = `${this.hd.replace("d", "")}+${level}`
+    }
+    const roll = await new Roll(formula, {}).roll({ async: true })
+    totalHp = roll.total
+    const toolTip = new Handlebars.SafeString(await roll.getTooltip())
+    await new CoChat(this)
+      .withTemplate("systems/co/templates/chat/healing-card.hbs")
+      .withData({
+        actorId: this.id,
+        title: game.i18n.localize("CO.dialogs.spendRecoveryPoint.rollTitle"),
+        formula: formula,
+        total: totalHp,
+        toolTip: toolTip,
+      })
+      .withRoll(roll)
+      .create()
+
+    hp.value += totalHp
+    if (hp.value > hp.max) hp.value = hp.max
+    if (useRecoveryPoint) rp.value -= 1 // Si on fait shift + clic one ne consomme pas de point
+    this.parent.update({ "system.resources.recovery": rp, "system.attributes.hp": hp })
   }
 
   /**
