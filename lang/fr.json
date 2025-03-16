@@ -44,7 +44,8 @@
       "warningProfileCreated": "Le profil a été créé.",
       "warningNotEnoughMana": "Pas assez de mana pour lancer le sort.",
       "warningLevelTooLow": "Vous n'avez pas le niveau minimum pour apprendre cette capacité.",
-      "warningApplyDamageNoTarget": "Vous devez sélectionner au moins une cible pour appliquer les dommages"
+      "warningApplyDamageNoTarget": "Vous devez sélectionner au moins une cible pour appliquer les dommages",
+      "warningNoMoreRecoveryPoints": "Vous n'avez plus de dés de récupération."
     },
     "tooltip": {
       "formulaAttack": "Formule d'attaque (sans le dé)",
@@ -326,7 +327,7 @@
       "buy": "Apprendre",
       "unbuy": "Ne pas apprendre",
       "recovery": "Dé de récupération",
-      "rapidRest": "Récupération rapide",
+      "fastRest": "Récupération rapide",
       "fullRest": "Récupération complète",
       "pvLevel": "Points de vigueur par niveau",
       "noTarget": "Vous n'avez ciblé personne",
@@ -456,9 +457,17 @@
         "content": "<p>Souhaitez-vous dépenser 1 point de récupération ?",
         "rollTitle": "Point de récupération"
       },
-      "restManaPoint": "Récupérez-vous le maximum de point de mana ?",
-      "restmpRecupTitle": "Récupération de mana",
-      "restHpRecovered": "Vous avez récupéré {0} points de vigueur"
+      "fastRest": {
+        "title": "Récupération rapide",
+        "content": "Souhaitez-vous effectuer une récupération rapide ?"
+      },
+      "fullRest": {
+        "title": "Récupération complète",
+        "content": "Souhaitez-vous effectuer une récupération complète ?",
+        "manaContent": "Récupérez-vous le maximum de points de mana ?",
+        "manaTitle": "Récupération de mana"
+      },
+      "restHpRecovered": "Vous avez récupéré {hp} points de vigueur"
     },
     "roll": {
       "skillcheck": "Test de compétence",

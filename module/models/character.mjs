@@ -737,66 +737,101 @@ export default class CharacterData extends ActorData {
    * @param {boolean} isFullRest Permet d'indiquer s'il s'agit d'une "récupération complète" (true) ou d'une récupération rapide (false)
    * @param {boolean} useRecoveryPoint Permet d'indiquer si on consomme un dé de récupération (true) ou non (false)
    */
-  async useRecovery(isFullRest, useRecoveryPoint) {
+
+  /**
+   * Gère le processus de récupération pour un personnage, soit par un repos rapide, soit par un repos complet.
+   *
+   * @param {boolean} isFullRest Indique si la récupération est un repos complet (true) ou un repos rapide (false).
+   * @returns {Promise<void>} Une promesse qui se résout lorsque le processus de récupération est terminé.
+   */
+  async useRecovery(isFullRest) {
     let hp = this.attributes.hp
     let rp = this.resources.recovery
     let mp = this.resources.mana
-    // Si c'est un repos complet on recupere 1DR
-    if (isFullRest) {
+    const hd = this.hd
+
+    // Récupération rapide
+    if (!isFullRest) {
+      if (rp.value <= 0) return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoMoreRecoveryPoints"))
+      const proceedFastRest = await foundry.applications.api.DialogV2.confirm({
+        window: { title: game.i18n.localize("CO.dialogs.fastRest.title") },
+        content: game.i18n.localize("CO.dialogs.fastRest.content"),
+        rejectClose: false,
+        modal: true,
+      })
+      if (!proceedFastRest) return
+
+      // Dépense d'un DR et récupération de PV
+      const level = Math.round(this.attributes.level / 2) // +1/2 niveau
+      const formula = `${hd} + ${level}`
+
+      await this._applyRecovery(rp, hp, formula, game.i18n.localize("CO.dialogs.fastRest.title"))
+    }
+
+    // Récupération complète
+    else {
+      // Récupération du mana
+      if (mp.value < mp.max) {
+        const proceed = await foundry.applications.api.DialogV2.confirm({
+          window: { title: `${game.i18n.localize("CO.dialogs.fullRest.title")} - ${game.i18n.localize("CO.dialogs.fullRest.manaTitle")}` },
+          content: game.i18n.localize("CO.dialogs.fullRest.manaContent"),
+          rejectClose: false,
+          modal: true,
+        })
+        if (proceed) {
+          mp.value = mp.max
+          this.parent.update({ "system.resources.mana": mp })
+        }
+      }
+
+      // Récupération d'un DR
       if (rp.value < rp.max) {
         rp.value += 1
         this.parent.update({ "system.resources.recovery": rp })
       }
-      //récupération du mana
-      const content = game.i18n.localize("CO.dialogs.restManaPoint")
-      const proceed = await foundry.applications.api.DialogV2.confirm({
-        window: { title: game.i18n.localize("CO.dialogs.restmpRecupTitle") },
-        content: content,
+
+      const proceedFullRestRollDice = await foundry.applications.api.DialogV2.confirm({
+        window: { title: game.i18n.localize("CO.dialogs.spendRecoveryPoint.title") },
+        content: game.i18n.localize("CO.dialogs.spendRecoveryPoint.content"),
         rejectClose: false,
         modal: true,
       })
-      if (proceed) {
-        mp.value = mp.max
-        this.parent.update({ "system.resources.mana": mp })
+
+      if (proceedFullRestRollDice) {
+        // Cas particulier : plus de DR avant la récupération
+        const level = Math.round(this.attributes.level / 2) // +1/2 niveau
+        let formula
+        if (rp.value === 1) {
+          formula = `${hd} + ${level}`
+        } else {
+          formula = `${this.hd.replace("d", "")}+${level}`
+        }
+
+        await this._applyRecovery(rp, hp, formula, game.i18n.localize("CO.dialogs.fullRest.title"))
       }
     }
-    if (this.resources.recovery.value <= 0) return
-    //récupération des hp
-    const content2 = game.i18n.localize("CO.dialogs.spendRecoveryPoint.content")
-    const proceed2 = await foundry.applications.api.DialogV2.confirm({
-      window: { title: game.i18n.format("CO.dialogs.spendRecoveryPoint.title") },
-      content: content2,
-      rejectClose: false,
-      modal: true,
-    })
-    if (!proceed2) return
+  }
 
-    let totalHp = 0
-    const level = Math.round(this.attributes.level / 2) // +1/2 niveau
-    const hd = this.hd
-    let formula = `${hd} + ${level}`
-    if (isFullRest && hd && rp.value > 0) {
-      totalHp = parseInt(this.hd.replace("d", "")) + level
-      formula = `${this.hd.replace("d", "")}+${level}`
-    }
-    const roll = await new Roll(formula, {}).roll({ async: true })
-    totalHp = roll.total
+  async _applyRecovery(rp, hp, formula, title) {
+    const roll = await new Roll(formula).roll()
     const toolTip = new Handlebars.SafeString(await roll.getTooltip())
-    await new CoChat(this)
+
+    rp.value -= 1
+    hp.value += roll.total
+    hp.value = Math.min(hp.value, hp.max)
+
+    new CoChat(this)
       .withTemplate("systems/co/templates/chat/healing-card.hbs")
       .withData({
         actorId: this.id,
-        title: game.i18n.localize("CO.dialogs.spendRecoveryPoint.rollTitle"),
+        title: game.i18n.localize(title),
+        label: game.i18n.format("CO.dialogs.restHpRecovered", { hp: roll.total }),
         formula: formula,
-        total: totalHp,
+        total: roll.total,
         toolTip: toolTip,
       })
       .withRoll(roll)
       .create()
-
-    hp.value += totalHp
-    if (hp.value > hp.max) hp.value = hp.max
-    if (useRecoveryPoint) rp.value -= 1 // Si on fait shift + clic one ne consomme pas de point
     this.parent.update({ "system.resources.recovery": rp, "system.attributes.hp": hp })
   }
 

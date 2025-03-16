@@ -126,19 +126,17 @@ export default class COCharacterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * Va déclencher la gestion de la récupération rapide/récupération total
-   * avec possibilité de ne pas dépenser de point avec shift + clic
-   * @param {*} event
-   * @private
+   * Gère l'utilisation des points de récupération ou du repos complet pour l'acteur.
+   *
+   * @param {Event} event L'événement qui a déclenché ce gestionnaire.
+   * @returns {Promise} Une promesse qui se résout lorsque l'action de récupération est terminée.
    */
   _onUseRecovery(event) {
     event.preventDefault()
     const dataset = event.currentTarget.dataset
     let isFullRest = false
-    let useRecoveryPoint = true
     if (dataset.option && dataset.option === "fullRest") isFullRest = true
-    if (event.shiftKey) useRecoveryPoint = false
-    return this.actor.system.useRecovery(isFullRest, useRecoveryPoint)
+    return this.actor.system.useRecovery(isFullRest)
   }
 
   /**
