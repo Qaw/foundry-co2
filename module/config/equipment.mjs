@@ -73,3 +73,18 @@ export const EQUIPMENT_CURRENCIES = {
     label: "CO.currency.cp",
   },
 }
+
+export const EQUIPMENT_TAGS = {
+  dmtemporaires: {
+    id: "dmtemporaires",
+    label: "CO.equipment.tags.dmtemporaires",
+  },
+  dmtemporairespossibles: {
+    id: "dmtemporairespossibles",
+    label: "CO.equipment.tags.dmtemporairespossibles",
+  },
+  legere: {
+    id: "legere",
+    label: "CO.equipment.tags.legere",
+  },
+}

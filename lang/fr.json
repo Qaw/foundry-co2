@@ -129,7 +129,7 @@
         "meters": "Mètres",
         "feet": "Pieds",
         "carac": "Caractéristique",
-        "damagetype": "Type de dégât",
+        "damagetype": "Type de dommages",
         "skillBonus": "Bonus à l'attaque",
         "skillMalus": "Malus à l'attaque",
         "damageBonus": "Bonus aux dommages",
@@ -617,6 +617,11 @@
         "ranged": "Arme à distance",
         "thrown": "Arme de jet",
         "magical": "Arme magique"
+      },
+      "tags": {
+        "dmtemporaires": "Les DMs sont temporaires",
+        "dmtemporairespossibles": "DM temporaires possibles",
+        "legere": "Arme légère"
       }
     },
     "capacity": {
@@ -687,10 +692,10 @@
       "unique": "Unique"
     },
     "damage": {
-      "slashing": "Tranchant",
-      "piercing": "Perforant",
-      "bludgeoning": "Contondant",
-      "magic": "Magique"
+      "slashing": "Tranchants",
+      "piercing": "Perforants",
+      "bludgeoning": "Contondants",
+      "magic": "Magiques"
     },
     "size": {
       "tiny": "Minuscule",

@@ -148,6 +148,8 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.unlocked = this.isEditMode
     context.locked = this.isPlayMode
 
+    context.systemFields = this.document.system.schema.fields
+
     context.choiceActionTypes = SYSTEM.ACTION_TYPES
     context.choiceConditionObjects = SYSTEM.CONDITION_OBJECTS
     context.choiceConditionPredicates = SYSTEM.CONDITION_PREDICATES

@@ -23,6 +23,7 @@ export default class EquipmentData extends ItemData {
     const fields = foundry.data.fields
     return foundry.utils.mergeObject(super.defineSchema(), {
       subtype: new fields.StringField({ required: true }),
+      tags: new fields.SetField(new fields.StringField({ required: true, blank: false, choices: SYSTEM.EQUIPMENT_TAGS })),
       martialCategory: new fields.StringField({ required: true }),
       damagetype: new fields.StringField({ required: true }),
       defense: new fields.NumberField({ integer: true, positive: true }),

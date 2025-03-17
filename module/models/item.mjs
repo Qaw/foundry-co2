@@ -13,7 +13,6 @@ export default class ItemData extends foundry.abstract.TypeDataModel {
       source: new fields.StringField({ required: true }),
       origin: new fields.StringField({ required: true }),
       slug: new fields.StringField({ required: true }),
-      tags: new fields.SetField(new fields.StringField({ required: true, blank: false })),
     }
   }
 
