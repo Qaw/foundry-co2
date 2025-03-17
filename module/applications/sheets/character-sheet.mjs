@@ -57,8 +57,6 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     html.find(".toggle-effect").click(this._onUseEffect.bind(this))
     html.find(".attack").click(this._onUseAction.bind(this))
     html.find(".damage").click(this._onUseAction.bind(this))
-    html.find(".capacity-learn").click(this._onLearnCapacity.bind(this))
-    html.find(".capacity-unlearn").click(this._onUnlearnCapacity.bind(this))
     html.find(".inventory-equip").click(this._onEquippedToggle.bind(this))
     html.find(".use-recovery").click(this._onUseRecovery.bind(this))
     html.find(".active-rest").click(this._onUseRecovery.bind(this))
@@ -137,23 +135,6 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     let isFullRest = false
     if (dataset.option && dataset.option === "fullRest") isFullRest = true
     return this.actor.system.useRecovery(isFullRest)
-  }
-
-  /**
-   * Learned or unlearned the capacity in the path view
-   * @param {*} event
-   * @private
-   */
-  async _onLearnCapacity(event) {
-    event.preventDefault()
-    const capacityId = $(event.currentTarget).parents(".item").data("itemId")
-    await this.actor.toggleCapacityLearned(capacityId, true)
-  }
-
-  async _onUnlearnCapacity(event) {
-    event.preventDefault()
-    const capacityId = $(event.currentTarget).parents(".item").data("itemId")
-    await this.actor.toggleCapacityLearned(capacityId, false)
   }
 
   /**

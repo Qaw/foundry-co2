@@ -65,6 +65,8 @@ export default class CoBaseActorSheet extends ActorSheet {
     html.find(".item-create").click(this._onCreateItem.bind(this))
     html.find(".item-edit").click(this._onEditItem.bind(this))
     html.find(".size-select").change(this._onSizeChange.bind(this))
+    html.find(".capacity-learn").click(this._onLearnCapacity.bind(this))
+    html.find(".capacity-unlearn").click(this._onUnlearnCapacity.bind(this))
   }
 
   /** @inheritDoc */
@@ -226,5 +228,29 @@ export default class CoBaseActorSheet extends ActorSheet {
     const { id } = foundry.utils.parseUuid(uuid)
     let document = this.actor.items.get(id)
     return document.sheet.render(true)
+  }
+
+  /**
+   * Handles the event when a capacity is learned.
+   *
+   * @param {Event} event - The event object triggered by the user interaction.
+   * @returns {Promise<void>} - A promise that resolves when the capacity has been marked as learned.
+   */
+  async _onLearnCapacity(event) {
+    event.preventDefault()
+    const capacityId = $(event.currentTarget).parents(".item").data("itemId")
+    await this.actor.toggleCapacityLearned(capacityId, true)
+  }
+
+  /**
+   * Handles the event when a capacity is unlearned by the actor.
+   *
+   * @param {Event} event - The event that triggered the unlearn capacity action.
+   * @returns {Promise<void>} A promise that resolves when the capacity has been unlearned.
+   */
+  async _onUnlearnCapacity(event) {
+    event.preventDefault()
+    const capacityId = $(event.currentTarget).parents(".item").data("itemId")
+    await this.actor.toggleCapacityLearned(capacityId, false)
   }
 }
