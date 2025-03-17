@@ -24,7 +24,7 @@ export default class CoProfileSheet extends CoBaseItemSheet {
     }
     context.paths = infosPaths
 
-    context.choiceProfileFamily = SYSTEM.PROFILE_FAMILY
+    context.choiceProfileFamily = Object.fromEntries(Object.entries(SYSTEM.FAMILIES).map(([key, value]) => [key, value.label]))
 
     return context
   }

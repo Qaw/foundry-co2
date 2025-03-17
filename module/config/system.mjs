@@ -68,14 +68,6 @@ export const TOKEN_SIZE = {
 
 export const DICES = { d4: "d4", d6: "d6", d8: "d8", d10: "d10", d12: "d12", d20: "d20" }
 export const RECOVERY_DICES = { d6: "d6", d8: "d8", d10: "d10" }
-
-export const PROFILE_FAMILY = {
-  aventurier: "CO.profile.family.aventurier",
-  combattant: "CO.profile.family.combattant",
-  mage: "CO.profile.family.mage",
-  mystique: "CO.profile.family.mystique",
-}
-
 export const PV = { 3: "3", 4: "4", 5: "5" }
 
 /**
@@ -121,7 +113,6 @@ export const SYSTEM = {
   PATH_TYPES: PATH.PATH_TYPES,
   PV,
   RECOVERY_DICES,
-  PROFILE_FAMILY,
   MODIFIERS,
   MOVEMENT_UNIT,
   RESOLVER_TYPE: ACTION.RESOLVER_TYPE,
