@@ -46,7 +46,6 @@ export default class COEncounterSheet extends CoBaseActorSheet {
     html.find(".toggle-action").click(this._onUseAction.bind(this))
     html.find(".toggle-effect").click(this._onUseEffect.bind(this))
     html.find(".capacity-learn").click(this._onLearnedToggle.bind(this))
-    html.find(".inventory-equip").click(this._onEquippedToggle.bind(this))
   }
 
   _onUseAction(event) {
@@ -84,17 +83,6 @@ export default class COEncounterSheet extends CoBaseActorSheet {
     event.preventDefault()
     const capacityId = $(event.currentTarget).parents(".item").data("itemId")
     this.actor.toggleCapacityLearned(capacityId)
-  }
-
-  /**
-   * Select or unselect the capacity in the path view
-   * @param {*} event
-   * @private
-   */
-  _onEquippedToggle(event) {
-    event.preventDefault()
-    const itemId = $(event.currentTarget).parents(".item").data("itemId")
-    this.actor.toggleEquipmentEquipped(itemId)
   }
 
   /**

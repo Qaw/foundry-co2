@@ -634,7 +634,8 @@ export default class COActor extends Actor {
     }
 
     // Mise à jour de l'item et de ses actions
-    await this._toggleItemFieldAndActions(item, "equipped")
+    const currentState = item.system.equipped
+    await this._toggleItemFieldAndActions(item, "equipped", !currentState)
   }
 
   /**
