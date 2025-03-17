@@ -235,29 +235,5 @@ export default class COItem extends Item {
     this.update({ "system.rank": max })
   }
 
-  /**
-   * Update the actions for an embedded capacity or equipment item
-   */
-  toggleActions() {
-    console.log("item toggleActions")
-    if ((this.type !== SYSTEM.ITEM_TYPE.capacity.id && this.type !== SYSTEM.ITEM_TYPE.equipment.id) || !this.actor) return
-
-    const actions = this.toObject().system.actions
-
-    for (const action of actions) {
-      // Si c'est une action non activable, l'activer automatiquement
-      if (!action.properties.activable) {
-        action.properties.enabled = !action.properties.enabled
-      } /*else {
-        // Vérifier si les conditions sont remplies
-        if (!action.hasConditions) {
-          action.properties.visible = !action.properties.visible
-        } else {
-          action.properties.visible = action.isVisible(this)
-        }
-      }*/
-    }
-    this.update({ "system.actions": actions })
-  }
   // #endregion
 }
