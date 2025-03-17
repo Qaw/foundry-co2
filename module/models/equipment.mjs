@@ -1,6 +1,7 @@
 import ItemData from "./item.mjs"
-import { Action } from "./schemas/action.mjs"
 import { SYSTEM } from "../config/system.mjs"
+import { BaseValue } from "./schemas/base-value.mjs"
+import { Action } from "./schemas/action.mjs"
 
 /**
  * @class EquipmentData
@@ -44,7 +45,7 @@ export default class EquipmentData extends ItemData {
       }),
       price: new fields.SchemaField({
         value: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true }),
-        unit: new fields.StringField({ required: true }),
+        unit: new fields.StringField({ required: true, initial: "pa" }),
       }),
       rarity: new fields.StringField({ required: true }),
       equipped: new fields.BooleanField(),
@@ -56,6 +57,10 @@ export default class EquipmentData extends ItemData {
       usage: new fields.SchemaField({
         oneHand: new fields.BooleanField(),
         twoHand: new fields.BooleanField(),
+      }),
+      range: new fields.EmbeddedDataField(BaseValue, {
+        label: "CO.ui.range",
+        nullable: true,
       }),
       actions: new fields.ArrayField(new fields.EmbeddedDataField(Action)),
     })
