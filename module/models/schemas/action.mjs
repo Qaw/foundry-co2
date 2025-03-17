@@ -156,6 +156,15 @@ export class Action extends foundry.abstract.DataModel {
     return undefined
   }
 
+  get hasCharges() {
+    return this.parent.charges.current > 0
+  }
+
+  get charges() {
+    if (this.hasCharges) return this.parent.charges.current
+    return undefined
+  }
+
   get manaCost() {
     if (this.properties.noManaCost) return 0
     if (this.parent.isSpell && this.parent.hasManaCost) return this.parent.manaCost

@@ -481,6 +481,11 @@ export default class COActor extends Actor {
 
     if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction`), state, source, indice, type, item)
 
+    // Si l'arme a la propriété "reloadable", on vérifie si l'arme assez de munitions
+    if (item.system.properties.reloadable && item.system.charges.current <= 0) {
+      return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoAmmo"))
+    }
+
     // TODO Incantation
     // Magie profane (famille des mages) : En revanche, il n’est pas possible d’utiliser un bouclier et une arme ou une arme dans chaque main tout en lançant des sorts de magie profane.
     // Magie divine (famille des mystiques) : respecter les armes autorisées
@@ -1191,7 +1196,7 @@ export default class COActor extends Actor {
     else if (dice === "1d20" && totalDices < 0) dice = "2d20kl"
 
     // Construction du message de chat
-    if (!chatFlavor) chatFlavor = `${game.i18n.localize("CO.dialogs.skillCheck")} ${game.i18n.localize(`CO.abilities.long.${skillId}`)}`    
+    if (!chatFlavor) chatFlavor = `${game.i18n.localize("CO.dialogs.skillCheck")} ${game.i18n.localize(`CO.abilities.long.${skillId}`)}`
 
     const dialogContext = {
       rollMode,
@@ -1286,6 +1291,11 @@ export default class COActor extends Actor {
       targets = undefined,
     } = {},
   ) {
+    // Si l'arme a la propriété "reloadable", on vérifie si l'arme assez de munitions
+    if (item.system.properties.reloadable && item.system.charges.current <= 0) {
+      return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoAmmo"))
+    }
+
     // Gestion de la visibilité du jet
     if (rollMode === undefined) {
       rollMode = game.settings.get("core", "rollMode")
@@ -1433,6 +1443,11 @@ export default class COActor extends Actor {
         { rollMode: rolls[0].options.rollMode },
       )
     }
+
+    // Si l'attaque a lieu avec une arme qui a la propriété "reloadable", on consomme une munition
+    if (item.system.properties.reloadable) {
+      await this.consumeAmmunition(item)
+    }
   }
 
   // FIXME Finir la méthode
@@ -1556,5 +1571,13 @@ export default class COActor extends Actor {
     // Ici on va gérer qu'on arrive dans un nouveau round il faut faire attention car le MJ peux revenir en arrière !
     // on va notamment gérer la durée des effets en round ou secondes je suppose
     console.log("combatTurn", combat, updateData, updateOptions)
+  }
+
+  async consumeAmmunition(item) {
+    // Si l'arme a la propriété "reloadable", on consomme une munition
+    if (item.system.properties.reloadable) {
+      let newCharges = Math.max(0, item.system.charges.current - 1)
+      await item.update({ "system.charges.current": newCharges })
+    }
   }
 }
