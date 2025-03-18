@@ -1,73 +1,70 @@
 {{!log 'effects' this}}
 <div class="effects section-container">
-    <div class="section-header">
-        <h4>{{localize "CO.label.long.effects"}}</h4>
-        <div class="actions-controls controls"></div>
-    </div>
-    <!-- ACTIONS -->
-    <div class="section-body-no-flex">
-        <ol class="effects-container items-container">
-            <li class="items-container-header flexrow">
-                <h3 class="item-name flexrow">{{localize "CO.ui.enabled"}}</h3>
+  <div class="section-header">
+    <h4>{{localize "CO.label.long.effects"}}</h4>
+    <div class="actions-controls controls"></div>
+  </div>
+  <!-- ACTIONS -->
+  <div class="section-body-no-flex">
+    <ol class="effects-container items-container">
+      <li class="items-container-header flexrow">
+        <h3 class="item-name flexrow">{{localize "CO.ui.enabled"}}</h3>
+      </li>
+      <ol class="item-list">
+        <!-- Actions Visibles Activables temporaires et Activées -->
+        {{#each visibleActivableTemporaireActions as |action id|}}
+          {{!log (concat "Chroniques Oubliées | effets - action " id) action}}
+          {{#if action.properties.enabled}}
+            <li class="item flexrow" data-item-uuid="{{action.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
+              <div class="item-name flexrow">
+                <a class="item-image item-edit" style="background-image: url('{{{actionImg}}}')"></a>
+                <h4>{{action.itemName}}{{#if action.hasLabel}} - {{action.label}}{{/if}}&nbsp;{{{action.icon}}}</h4>
+              </div>
+              <div class="item-controls-2"></div>
             </li>
-            <ol class="item-list">
-                <!-- Actions Visibles Activables temporaires et Activées -->
-                {{#each visibleActivableTemporaireActions as |item id|}}                
-                    {{!log (concat "Chroniques Oubliées | action " id) item}}
-                    {{#if item.properties.enabled }}
-                        <li class="item flexrow" data-item-uuid="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
-                            <div class="item-name flexrow">
-                                <div class="item-image" style="background-image: url('{{item.img}}')"></div>
-                                <h4><a class="item-control item-edit" data-tooltip="{{item.type}}">{{item.label}}</a>&nbsp; {{{item.icon}}}
-                                </h4>
-                            </div>
-                            <div class="item-controls-2"></div>
-                        </li>
-                    {{/if}}
-                {{/each}}
-            </ol>
-        </ol>
-        <ol class="effects-container items-container">
-            <li class="items-container-header flexrow">
-                <h3 class="item-name flexrow">{{localize "CO.ui.disabled"}}</h3>
+          {{/if}}
+        {{/each}}
+      </ol>
+    </ol>
+    <ol class="effects-container items-container">
+      <li class="items-container-header flexrow">
+        <h3 class="item-name flexrow">{{localize "CO.ui.disabled"}}</h3>
+      </li>
+      <ol class="item-list">
+        <!-- Actions Visibles Activables temporaires et Désactivées -->
+        {{#each visibleActivableTemporaireActions as |action id|}}
+          {{!log (concat "Chroniques Oubliées | action " id) action}}
+          {{#unless action.properties.enabled}}
+            <li class="item flexrow" data-item-uuid="{{action.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
+              <div class="item-name flexrow">
+                <a class="item-image item-edit" style="background-image: url('{{{actionImg}}}')"></a>
+                <h4>{{action.itemName}}{{#if action.hasLabel}} - {{action.label}}{{/if}}&nbsp;{{{action.icon}}}</h4>
+              </div>
+              <div class="item-controls-2"></div>
             </li>
-            <ol class="item-list">
-                <!-- Actions Visibles Activables temporaires et Désactivées -->
-                {{#each visibleActivableTemporaireActions as |item id|}}
-                    {{!log (concat "Chroniques Oubliées | action " id) item}}
-                    {{#unless item.properties.enabled}}
-                        <li class="item flexrow" data-item-uuid="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
-                            <div class="item-name flexrow">
-                                <div class="item-image" style="background-image: url('{{item.img}}')"></div>
-                                <h4><a class="item-control item-edit" data-tooltip="{{item.type}}">{{item.label}}</a>&nbsp; {{{item.icon}}}
-                                </h4>
-                            </div>
-                            <div class="item-controls-2"></div>
-                        </li>
-                    {{/unless}}
-                {{/each}}
-            </ol>
-        </ol>
-        <ol class="effects-container items-container">
-            <li class="items-container-header flexrow">
-                <h3 class="item-name flexrow">{{localize "CO.ui.passive"}}</h3>
+          {{/unless}}
+        {{/each}}
+      </ol>
+    </ol>
+    <ol class="effects-container items-container">
+      <li class="items-container-header flexrow">
+        <h3 class="item-name flexrow">{{localize "CO.ui.passive"}}</h3>
+      </li>
+      <ol class="item-list">
+        <!-- Actions Visibles non Activables Non temporaires et activées -->
+        {{#each visibleNonActivableNonTemporaireActions as |action id|}}
+          {{!log (concat "Chroniques Oubliées | action " id) action}}
+          {{#if action.properties.enabled}}
+            <li class="item flexrow" data-item-uuid="{{action.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
+              <div class="item-name flexrow">
+               <a class="item-image item-edit" style="background-image: url('{{{actionImg}}}')"></a>
+                <h4>{{action.itemName}}{{#if action.hasLabel}} - {{action.label}}{{/if}}&nbsp;{{{action.icon}}}</h4>
+              </div>
+              <div class="item-controls-2"></div>
             </li>
-            <ol class="item-list">
-                <!-- Actions Visibles non Activables Non temporaires et activées -->
-                {{#each visibleNonActivableNonTemporaireActions as |item id|}}
-                    {{!log (concat "Chroniques Oubliées | action " id) item}}
-                     {{#if item.properties.enabled }}
-                        <li class="item flexrow" data-item-uuid="{{item.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
-                            <div class="item-name flexrow">
-                                <div class="item-image" style="background-image: url('{{item.img}}')"></div>
-                                <h4><a class="item-control item-edit" data-tooltip="{{item.type}}">{{item.label}}</a>&nbsp; {{{item.icon}}}
-                                </h4>
-                            </div>
-                            <div class="item-controls-2"></div>
-                        </li>
-                    {{/if}}
-                {{/each}}
-            </ol>
-        </ol>
-    </div>
+          {{/if}}
+        {{/each}}
+      </ol>
+    </ol>
+  </div>
 </div>
