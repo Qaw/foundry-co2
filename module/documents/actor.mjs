@@ -326,9 +326,29 @@ export default class COActor extends Actor {
         const itemActions = await item.getVisibleActions(this)
         allActions.push(...itemActions)
       }
-      // Pour les capacités, une armure non maîtrisée empêche son utilisation
-      if (SYSTEM.ITEM_TYPE.capacity.id === item.type && this.canUseCapacities) {
+      // Pour les capacités, une armure non maîtrisée empêche son utilisation et on met les capacité chargeable de coté
+      if (SYSTEM.ITEM_TYPE.capacity.id === item.type && this.canUseCapacities && item.getIsActivableAndChargeable() === false) {
         const itemActions = await item.getVisibleActions(this)
+        allActions.push(...itemActions)
+      }
+    }
+    return allActions
+  }
+
+  /**   *
+   * @returns Fourni la liste des actions de type chargeable et met à jour le statut enabled si il reste des charges
+   */
+  async getActivableChargeableActions() {
+    let allActions = []
+    for (const item of this.items) {
+      // Pour les capacités, une armure non maîtrisée empêche son utilisation
+      if (SYSTEM.ITEM_TYPE.capacity.id === item.type && this.canUseCapacities && item.getIsActivableAndChargeable()) {
+        let itemActions = await item.getVisibleActions(this)
+        if (itemActions) {
+          for (const action of itemActions) {
+            action.properties.enabled = item.hasCharge()
+          }
+        }
         allActions.push(...itemActions)
       }
     }
@@ -486,6 +506,10 @@ export default class COActor extends Actor {
       return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoAmmo"))
     }
 
+    // Si la capacité a des charges est ce qu'il lui en reste ?
+    if (item.type === SYSTEM.ITEM_TYPE.capacity.id && !item.hasCharge() && item.system.frequency !== SYSTEM.CAPACITY_FREQUENCY.none.id)
+      return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoCharge"))
+
     // TODO Incantation
     // Magie profane (famille des mages) : En revanche, il n’est pas possible d’utiliser un bouclier et une arme ou une arme dans chaque main tout en lançant des sorts de magie profane.
     // Magie divine (famille des mystiques) : respecter les armes autorisées
@@ -538,7 +562,6 @@ export default class COActor extends Actor {
       const action = foundry.utils.deepClone(item.system.actions[indice])
       // Recherche des resolvers de l'action
       let resolvers = Object.values(action.resolvers).map((r) => foundry.utils.deepClone(r))
-
       // Résolution de tous les resolvers avant de continuer
       results = await Promise.all(resolvers.map((resolver) => resolver.resolve(this, item, action, type)))
 
@@ -580,6 +603,16 @@ export default class COActor extends Actor {
               await this.update({ "system.attributes.hp.value": this.system.attributes.hp.value - burnRoll.total })
             }
           }
+        }
+      }
+      // Si c'est une capacité avec une charge il faut la consommer
+      if (item.type === SYSTEM.ITEM_TYPE.capacity.id && item.hasCharge() && item.system.frequency !== SYSTEM.CAPACITY_FREQUENCY.none.id) {
+        item.system.charges.current = Math.max(item.system.charges.current - 1, 0)
+        await item.update({ "system.charges.current": item.system.charges.current })
+        if (item.system.charges.current === 0) {
+          const newActions = item.system.toObject().actions
+          newActions[indice].properties.enabled = false
+          await item.update({ "system.actions": newActions })
         }
       }
     }
@@ -1348,7 +1381,6 @@ export default class COActor extends Actor {
     if (critical === undefined || critical === "") {
       critical = this.system.combat.crit.value
     }
-
     // Gestion des dés bonus et malus
     let bonusDices = 0
     let malusDices = 0
@@ -1570,7 +1602,6 @@ export default class COActor extends Actor {
   combatNewTurn(combat, updateData, updateOptions) {
     // Ici on va gérer qu'on arrive dans un nouveau round il faut faire attention car le MJ peux revenir en arrière !
     // on va notamment gérer la durée des effets en round ou secondes je suppose
-    console.log("combatTurn", combat, updateData, updateOptions)
   }
 
   async consumeAmmunition(item) {

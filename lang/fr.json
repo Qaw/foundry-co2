@@ -46,7 +46,8 @@
       "warningLevelTooLow": "Vous n'avez pas le niveau minimum pour apprendre cette capacité.",
       "warningApplyDamageNoTarget": "Vous devez sélectionner au moins une cible pour appliquer les dommages",
       "warningNoMoreRecoveryPoints": "Vous n'avez plus de dés de récupération.",
-      "warningNoAmmo": "Vous n'avez plus de munitions."
+      "warningNoAmmo": "Vous n'avez plus de munitions.",
+      "warningNoCharge": "Votre nombre d'utilisation restante est insuffisant"
     },
     "tooltip": {
       "formulaAttack": "Formule d'attaque (sans le dé)",
@@ -122,6 +123,8 @@
         "martialTraining": "Formation martiale",
         "martialTrainings": "Formations martiales",
         "current": "Actuel",
+        "usageFrequency": "Fréquence d'utilisation",
+        "usageNumber": "Nombre d'utilisation",
         "formulaAttack": "Attaque",
         "formulaDamage": "Dommages",
         "melee": "Attaque de contact",
@@ -134,7 +137,8 @@
         "skillBonus": "Bonus à l'attaque",
         "skillMalus": "Malus à l'attaque",
         "damageBonus": "Bonus aux dommages",
-        "damageMalus": "Malus aux dommages"
+        "damageMalus": "Malus aux dommages",
+        "needCharges": "Vous devez vous reposer pour récupérer des utilisations"
       },
       "short": {
         "label": "Label",
@@ -641,6 +645,11 @@
           "m": "M",
           "f": "G"
         }
+      },
+      "frequency": {
+        "none": "",
+        "combat": "Combat",
+        "daily": "Quotidien"
       }
     },
     "encounter": {
