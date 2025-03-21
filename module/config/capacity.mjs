@@ -21,9 +21,9 @@ export const CAPACITY_ACTION_TYPE = {
   },
 }
 /**
- * Fréquence indiquant tous les combien de temps on peux utiliser une capacité.
- * None : pas de limite
- * daily : 1 fois par jour, necessite une récupération complète pour être réutilisée
+ * Fréquence d'utilisation d'une capacité
+ * none : pas de limite
+ * daily : 1 fois par jour, nécessite une récupération complète pour être réutilisée
  * combat: une fois par combat, nécessite une récupération rapide pour être réutilisée
  **/
 
@@ -42,8 +42,7 @@ export const CAPACITY_FREQUENCY = {
   },
 }
 
-// Pour obtenir une capacité, il faut avoir un niveau minimal
-// Rang : Niveau minimal
+// Pour obtenir une capacité, en fonction de son rang, il faut avoir un niveau minimal
 export const CAPACITY_MINIMUM_LEVEL = {
   1: 1,
   2: 2,

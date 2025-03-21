@@ -326,29 +326,9 @@ export default class COActor extends Actor {
         const itemActions = await item.getVisibleActions(this)
         allActions.push(...itemActions)
       }
-      // Pour les capacités, une armure non maîtrisée empêche son utilisation et on met les capacité chargeable de coté
-      if (SYSTEM.ITEM_TYPE.capacity.id === item.type && this.canUseCapacities && item.getIsActivableAndChargeable() === false) {
-        const itemActions = await item.getVisibleActions(this)
-        allActions.push(...itemActions)
-      }
-    }
-    return allActions
-  }
-
-  /**   *
-   * @returns Fourni la liste des actions de type chargeable et met à jour le statut enabled si il reste des charges
-   */
-  async getActivableChargeableActions() {
-    let allActions = []
-    for (const item of this.items) {
       // Pour les capacités, une armure non maîtrisée empêche son utilisation
-      if (SYSTEM.ITEM_TYPE.capacity.id === item.type && this.canUseCapacities && item.getIsActivableAndChargeable()) {
-        let itemActions = await item.getVisibleActions(this)
-        if (itemActions) {
-          for (const action of itemActions) {
-            action.properties.enabled = item.hasCharge()
-          }
-        }
+      if (SYSTEM.ITEM_TYPE.capacity.id === item.type && this.canUseCapacities) {
+        const itemActions = await item.getVisibleActions(this)
         allActions.push(...itemActions)
       }
     }
@@ -592,7 +572,7 @@ export default class COActor extends Actor {
           const newMana = Math.max(this.system.resources.mana.value - spellManaCost, 0)
           await this.update({ "system.resources.mana.value": newMana })
 
-          // Brülure de mana
+          // Brûlure de mana
           if (manaBurned) {
             const recoveryDice = this.system.hd
             if (recoveryDice) {

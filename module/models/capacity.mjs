@@ -16,6 +16,7 @@ export default class CapacityData extends ItemData {
       subtype: new fields.StringField({ required: true, nullable: false, initial: "" }),
       actionType: new fields.StringField({ required: true, choices: SYSTEM.CAPACITY_ACTION_TYPE, initial: "none" }),
       learned: new fields.BooleanField({}),
+      frequency: new fields.StringField({ required: true, choices: SYSTEM.CAPACITY_FREQUENCY, initial: "none" }),
       charges: new fields.SchemaField({
         current: new fields.NumberField({ required: false, nullable: true, integer: true, initial: 1 }),
         max: new fields.NumberField({ required: false, nullable: true, integer: true, initial: 1 }),
@@ -27,7 +28,6 @@ export default class CapacityData extends ItemData {
       cost: new fields.NumberField({ required: true, nullable: false, integer: true, initial: -1 }),
       manaCost: new fields.NumberField({ required: true, nullable: false, integer: true, initial: -1 }),
       actions: new fields.ArrayField(new fields.EmbeddedDataField(Action)),
-      frequency: new fields.StringField({ required: true, choices: SYSTEM.CAPACITY_FREQUENCY, initial: "none" }),
     })
   }
 
@@ -62,7 +62,7 @@ export default class CapacityData extends ItemData {
   }
 
   get hasFrequency() {
-    return this.frequency !== "none"
+    return this.frequency !== SYSTEM.CAPACITY_FREQUENCY.none.id
   }
 
   /**

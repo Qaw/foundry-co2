@@ -25,8 +25,7 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     context.xpSpent = await this.actor.system.getSpentXP()
     context.xpLeft = await this.actor.system.getAvailableXP()
     context.visibleActions = await this.actor.getVisibleActions()
-    context.visibleActivableActions = (await this.actor.getVisibleActivableActions()) ?? []
-    context.ActivableChargeableActions = await this.actor.getActivableChargeableActions()
+    context.visibleActivableActions = await this.actor.getVisibleActivableActions()
     context.visibleNonActivableActions = await this.actor.getVisibleNonActivableActions()
     context.visibleActivableTemporaireActions = await this.actor.getVisibleActivableTemporaireActions()
     context.visibleNonActivableNonTemporaireActions = await this.actor.getVisibleNonActivableNonTemporaireActions()
@@ -37,11 +36,10 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     context.choiceAbilities = SYSTEM.ABILITIES
     context.choiceSize = SYSTEM.SIZES
 
-    //Activation desactivation des defenses
-    context.partialDef = this.actor.hasEffect("partialDef") ? true : false
-    context.partialfa = "fa-solid fa-shield-halved"
-    context.fullDef = this.actor.hasEffect("fullDef") ? true : false
-    context.fullfa = "fa-solid fa-shield"
+    // Gestion des défenses
+    context.partialDef = this.actor.hasEffect("partialDef")
+    context.fullDef = this.actor.hasEffect("fullDef")
+
     if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`COCharacterSheet - context`), context)
     return context
   }

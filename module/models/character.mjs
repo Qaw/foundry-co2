@@ -734,12 +734,6 @@ export default class CharacterData extends ActorData {
   // #endregion
 
   /**
-   * Fonction permettant de gérer le repos d'un joueur et ses effets
-   * @param {boolean} isFullRest Permet d'indiquer s'il s'agit d'une "récupération complète" (true) ou d'une récupération rapide (false)
-   * @param {boolean} useRecoveryPoint Permet d'indiquer si on consomme un dé de récupération (true) ou non (false)
-   */
-
-  /**
    * Gère le processus de récupération pour un personnage, soit par un repos rapide, soit par un repos complet.
    *
    * @param {boolean} isFullRest Indique si la récupération est un repos complet (true) ou un repos rapide (false).
@@ -750,7 +744,10 @@ export default class CharacterData extends ActorData {
     let rp = this.resources.recovery
     let mp = this.resources.mana
     const hd = this.hd
-    this.recoverCapacityCharges(isFullRest)
+
+    // Récupération des charges des capacités
+    await this.recoverCapacityCharges(isFullRest)
+
     // Récupération rapide
     if (!isFullRest) {
       if (rp.value <= 0) return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoMoreRecoveryPoints"))
@@ -814,23 +811,25 @@ export default class CharacterData extends ActorData {
   }
 
   /**
-   * Fonction qui va permetttre de recharger les charges d'utilisation de capacités lors des récupération
-   * @param {boolean} full indique si il s'agit d'une récupération rapide (false) ou longue (true)
+   * Recharge les charges d'utilisation des capacités lors des récupérations
+   * @param {boolean} fullRest Indique s'il s'agit d'une récupération rapide (false) ou longue (true)
    */
-  recoverCapacityCharges(full) {
+  async recoverCapacityCharges(fullRest) {
     const capacities = this.parent.capacities
     if (capacities.length !== 0) {
-      capacities.forEach((capacity) => {
-        if (capacity.system.frequency === SYSTEM.CAPACITY_FREQUENCY.daily.id && full) {
+      // TODO Optimiser pour faire un seul update à la fin
+      for (const capacity of capacities) {
+        // Une fréquence journalière a besoin d'une récupération complète pour recharger les charges
+        if (capacity.system.frequency === SYSTEM.CAPACITY_FREQUENCY.daily.id && fullRest) {
           capacity.system.charges.current = capacity.system.charges.max
-          capacity.update({ "system.charges.current": capacity.system.charges.current })
+          await capacity.update({ "system.charges.current": capacity.system.charges.current })
         }
+        // Une fréquence de combat est rechargée à chaque récupération
         if (capacity.system.frequency === SYSTEM.CAPACITY_FREQUENCY.combat.id) {
-          // Que ce soit une recup rapid ou complete ça reset
           capacity.system.charges.current = capacity.system.charges.max
-          capacity.update({ "system.charges.current": capacity.system.charges.current })
+          await capacity.update({ "system.charges.current": capacity.system.charges.current })
         }
-      })
+      }
     }
   }
 

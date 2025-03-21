@@ -47,7 +47,7 @@
       "warningApplyDamageNoTarget": "Vous devez sélectionner au moins une cible pour appliquer les dommages",
       "warningNoMoreRecoveryPoints": "Vous n'avez plus de dés de récupération.",
       "warningNoAmmo": "Vous n'avez plus de munitions.",
-      "warningNoCharge": "Votre nombre d'utilisation restante est insuffisant"
+      "warningNoCharge": "Votre nombre d'utilisations restantes est insuffisant"
     },
     "tooltip": {
       "formulaAttack": "Formule d'attaque (sans le dé)",
@@ -346,7 +346,8 @@
       "manaCost": "Coût en mana",
       "defense": "Défense",
       "magicalDefense": "Défense magique",
-      "maxDefenseArmor": "Défense maximale de l'armure"
+      "maxDefenseArmor": "Défense maximale de l'armure",
+      "remainingQuantity": "Quantité restante"
     },
     "properties": {
       "attack": "Attaque",

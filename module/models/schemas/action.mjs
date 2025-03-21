@@ -157,7 +157,7 @@ export class Action extends foundry.abstract.DataModel {
   }
 
   get hasCharges() {
-    return this.parent.charges.current > 0
+    return this.parent?.charges.current > 0
   }
 
   get charges() {
@@ -169,6 +169,10 @@ export class Action extends foundry.abstract.DataModel {
     if (this.properties.noManaCost) return 0
     if (this.parent.isSpell && this.parent.hasManaCost) return this.parent.manaCost
     return 0
+  }
+
+  get hasFrequency() {
+    return this.parent?.frequency !== SYSTEM.CAPACITY_FREQUENCY.none.id
   }
 
   /**

@@ -76,9 +76,7 @@ export class Resolver extends foundry.abstract.DataModel {
     damageFormula = Utils.evaluateFormulaCustomValues(actor, damageFormula, item.uuid)
     let damageFormulaEvaluated = Roll.replaceFormulaData(damageFormula, actor.getRollData())
     const damageFormulaTooltip = this.dmg.formula
-    console.log("ce resolver", this)
-    console.log("bonusDice", this.bonusDiceAdd)
-    console.log("malusDice", this.malusDiceAdd)
+
     const result = await actor.rollAttack(item, {
       auto: false,
       type,
@@ -90,8 +88,8 @@ export class Resolver extends foundry.abstract.DataModel {
       damageFormulaTooltip,
       critical: this.skill.crit,
       difficulty: this.skill.difficulty,
-      bonusDice: this.bonusDiceAdd === true ? 1 : 0,
-      malusDice: this.malusDiceAdd === true ? 1 : 0,
+      bonusDice: this.bonusDiceAdd ? 1 : 0,
+      malusDice: this.malusDiceAdd ? 1 : 0,
     })
 
     if (result === null) return false
