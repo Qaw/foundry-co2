@@ -1,89 +1,97 @@
 {{log "Chroniques Oubliées | dialog skill-roll" this}}
 <div class="form-group">
-    <label for="rollMode">{{localize 'CHAT.RollDefault'}}</label>
-    <div class="form-fields">
-        <select name="rollMode" id="rollMode">
-            {{selectOptions rollModes selected=rollMode localize=true}}            
-        </select>
-    </div>
+  <label for="rollMode">{{localize "CHAT.RollDefault"}}</label>
+  <div class="form-fields">
+    <select name="rollMode" id="rollMode">
+      {{selectOptions rollModes selected=rollMode localize=true}}
+    </select>
+  </div>
 </div>
 <div class="form-group">
-    <label for="dice">{{localize 'CO.ui.diceType'}}</label>
-    <div class="form-fields">
-        <select class="flex1" name="dice" id="dice" data-type="String">
-            <option value="1d20" {{#if (eq dice '1d20')}}selected{{/if}}>{{localize 'CO.ui.dice20'}}</option>
-            <option value="2d20kh" {{#if (eq dice '2d20kh')}}selected{{/if}}>{{localize 'CO.ui.dice20kh'}}</option>
-            <option value="2d20kl" {{#if (eq dice '2d20kl')}}selected{{/if}}>{{localize 'CO.ui.dice20kl'}}</option>
-        </select>
+  <label for="dice">{{localize "CO.ui.diceType"}}</label>
+  <div class="form-fields">
+    <div>
+        <input type="radio" name="dice" id="diceMalus" value="malus" {{#if (eq dice "malus")}}checked{{/if}} />
+        <label for="dice">{{localize 'CO.ui.rollMalus'}}</label>
     </div>
+    <div>
+        <input type="radio" name="dice" id="diceStandard" value="standard" {{#if (eq dice "standard")}}checked{{/if}}/>
+        <label for="dice">{{localize 'CO.ui.rollStandard'}}</label>
+    </div>
+    <div>
+        <input type="radio" name="dice" id="diceBonus" value="bonus" {{#if (eq dice "bonus")}}checked{{/if}}/>
+        <label for="dice">{{localize 'CO.ui.rollBonus'}}</label>
+    </div>
+  </div>
 </div>
 <div class="form-group">
-        <label>{{localize 'CO.label.long.carac'}}</label>
-    <div class="form-fields">
-        <input class="field-value readonly" id="skillValue" name="skillValue" type="text" readonly="true" value="{{numberFormat skillValue decimals=0 sign=true}}" data-dtype="Number"/>
-    </div>
-</div>
-
-<div class="form-group">
-    <label>{{localize 'CO.label.long.bonus'}}</label>
-    <div class="form-fields">
-        <input class="field-value" id="bonus" name="bonus" type="text" value="{{numberFormat bonus decimals=0 sign=true}}" data-dtype="Number"/>
-    </div>
-</div>
-<div class="form-group">
-    <label>{{localize 'CO.label.long.malus'}}</label>
-    <div class="form-fields">
-        <input class="field-value" id="malus" name="malus" type="text" value="{{numberFormat malus decimals=0 sign=true}}" data-dtype="Number"/>
-    </div>
+  <label>Formule</label>
+  <div class="form-fields">
+    <input class="field-value" id="formula" name="formula" type="text" value="{{formula}}" data-dtype="String" />
+  </div>
 </div>
 
 <div class="form-group">
-    <label>{{localize 'CO.ui.miscBonuses'}}</label>
-    <div class="form-fields skillBonuses">
-        <div class="flex1 skill-bonuses" id="skill-bonuses">
-            {{#each skillBonuses as |bonus id|}}
-                {{!log 'skillBonuses' bonus id}}
-                <div class="bonus-item flexrow" data-value="{{bonus.value}}" data-tooltip='{{{bonus.description}}}' data-tooltip-direction="UP">
-                    <span class="bonus-value flex0">{{numberFormat bonus.value decimals=0 sign=true}}</span> &nbsp;
-                    <span class="bonus-name flex0">{{bonus.name}}</span>
-                    <span class="bonus-name flex2">{{bonus.additionalInfos}}</span>
-                </div>
-            {{/each}}
+  <label>{{localize "CO.label.long.bonus"}}</label>
+  <div class="form-fields">
+    <input class="field-value" id="bonus" name="bonus" type="text" value="{{numberFormat bonus decimals=0 sign=true}}" data-dtype="Number" />
+  </div>
+</div>
+<div class="form-group">
+  <label>{{localize "CO.label.long.malus"}}</label>
+  <div class="form-fields">
+    <input class="field-value" id="malus" name="malus" type="text" value="{{numberFormat malus decimals=0 sign=true}}" data-dtype="Number" />
+  </div>
+</div>
+
+<div class="form-group">
+  <label>{{localize "CO.ui.miscBonuses"}}</label>
+  <div class="form-fields skillBonuses">
+    <div class="flex1 skill-bonuses" id="skill-bonuses">
+      {{#each skillBonuses as |bonus id|}}
+        {{!log 'skillBonuses' bonus id}}
+        <div class="bonus-item flexrow" data-value="{{bonus.value}}" data-tooltip="{{{bonus.description}}}" data-tooltip-direction="UP">
+          <span class="bonus-value flex0">{{numberFormat bonus.value decimals=0 sign=true}}</span>
+          &nbsp;
+          <span class="bonus-name flex0">{{bonus.name}}</span>
+          <span class="bonus-name flex2">{{bonus.additionalInfos}}</span>
         </div>
+      {{/each}}
     </div>
+  </div>
 </div>
 
 <div class="form-group">
-    <label>{{localize 'CO.ui.totalBonus'}}</label>
-    <div class="form-fields">
-        <input class="field-value" id="totalSkillBonuses" name="totalSkillBonuses" type="text" value="{{totalSkillBonuses}}" data-dtype="Number"/>
-    </div>
+  <label>{{localize "CO.ui.totalBonus"}}</label>
+  <div class="form-fields">
+    <input class="field-value" id="totalSkillBonuses" name="totalSkillBonuses" type="text" value="{{totalSkillBonuses}}" data-dtype="Number" />
+  </div>
 </div>
 
 {{#if showDifficulty}}
-    <div class="form-group">
-        <label>{{localize 'CO.label.long.difficulty'}}</label>
-        <div class="form-fields">
-            <input class="field-value" id="difficulty" name="difficulty" type="text" value="{{difficulty}}" data-dtype="Number"/>
-        </div>
+  <div class="form-group">
+    <label>{{localize "CO.label.long.difficulty"}}</label>
+    <div class="form-fields">
+      <input class="field-value" id="difficulty" name="difficulty" type="text" value="{{difficulty}}" data-dtype="Number" />
     </div>
+  </div>
 {{/if}}
 
 <div class="form-group">
-    <label>{{localize 'CO.label.long.critrange'}}</label>
-    <div class="form-fields">
-        <input class="field-value" id="critical" name="critical" type="text" value="{{critical}}" data-dtype="String"/>
-    </div>
+  <label>{{localize "CO.label.long.critrange"}}</label>
+  <div class="form-fields">
+    <input class="field-value" id="critical" name="critical" type="text" value="{{critical}}" data-dtype="String" />
+  </div>
 </div>
 
 {{#if hasTargets}}
-    <hr/>
-    <label class="targets-label">Les cibles du jet opposé</label>
-    <div class="targets">
-        {{#each targets as |target id|}}
-            <div class="target">
-                <img class="actor-image" src="{{token.document.texture.src}}" data-tooltip="{{target.name}}" height="50px" width="50px" data-id="{{actor.id}}" data-uuid="{{uuid}}"/>
-            </div> 
-        {{/each}}
-    </div>
+  <hr />
+  <label class="targets-label">Les cibles du jet opposé</label>
+  <div class="targets">
+    {{#each targets as |target id|}}
+      <div class="target">
+        <img class="actor-image" src="{{token.document.texture.src}}" data-tooltip="{{target.name}}" height="50px" width="50px" data-id="{{actor.id}}" data-uuid="{{uuid}}" />
+      </div>
+    {{/each}}
+  </div>
 {{/if}}

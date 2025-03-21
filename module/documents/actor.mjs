@@ -1112,7 +1112,6 @@ export default class COActor extends Actor {
    * @param {string} skillId L'ID de la compétence à lancer.
    * @param {Object} [options] Options pour le test de compétence.
    * @param {string} [options.rollMode] Le mode de lancer de dés à utiliser.
-   * @param {string} [options.dice="1d20"] Le type de dé à lancer.
    * @param {string} [options.chatFlavor] Le message de chat.
    * @param {number} [options.bonus=0] Le bonus à ajouter au test.
    * @param {number} [options.malus=0] Le malus à soustraire du test.
@@ -1131,7 +1130,6 @@ export default class COActor extends Actor {
     skillId,
     {
       rollMode = undefined,
-      dice = "1d20",
       chatFlavor = undefined,
       bonus = 0,
       malus = 0,
@@ -1204,9 +1202,31 @@ export default class COActor extends Actor {
     if (bonusDice) bonusDices += bonusDice
     if (malusDice) malusDices += malusDice
 
+    // Prise en compte d'un modifier qui donne un dé bonus
+    if (this.system.bonusDiceModifiers) {
+      let modifierBonusDice = this.system.bonusDiceModifiers.find((m) => m.target === skillId)
+      if (modifierBonusDice) bonusDices += 1
+    }
+    if (this.system.malusDiceModifiers) {
+      let modifierMalusDice = this.system.malusDiceModifiers.find((m) => m.target === skillId)
+      if (modifierMalusDice) malusDices += 1
+    }
+
     const totalDices = bonusDices - malusDices
-    if (dice === "1d20" && totalDices > 0) dice = "2d20kh"
-    else if (dice === "1d20" && totalDices < 0) dice = "2d20kl"
+
+    let formula = "1d20"
+    let dice = "standard"
+    if (totalDices > 0) {
+      formula = "2d20kh"
+      dice = "bonus"
+    } else if (totalDices < 0) {
+      formula = "2d20kl"
+      dice = "malus"
+    }
+
+    const skillValue = foundry.utils.getProperty(this, `system.abilities.${skillId}`).value
+    if (skillValue > 0) formula += `+${skillValue}`
+    if (skillValue < 0) formula += `-${skillValue}`
 
     // Construction du message de chat
     if (!chatFlavor) chatFlavor = `${game.i18n.localize("CO.dialogs.skillCheck")} ${game.i18n.localize(`CO.abilities.long.${skillId}`)}`
@@ -1215,13 +1235,15 @@ export default class COActor extends Actor {
       rollMode,
       rollModes: CONFIG.Dice.rollModes,
       dice,
+      formula,
+      initialFormula: formula,
+      skillValue,
       actor: this,
       skillId,
       title: `${game.i18n.localize("CO.dialogs.skillCheck")} ${game.i18n.localize(`CO.abilities.long.${skillId}`)}`,
       flavor: chatFlavor,
       bonus,
       malus,
-      skillValue: foundry.utils.getProperty(this, `system.abilities.${skillId}`).value,
       critical,
       difficulty,
       difficultyTooltip,

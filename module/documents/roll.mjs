@@ -107,16 +107,16 @@ export class COSkillRoll extends CORoll {
               }, {})
               if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll prompt - Output`), output)
               /* 
-              {
-                  "dice": "1d20",
-                  "skillValue": "+4",
-                  "critical": "20",
-                  "bonus": "+0",
-                  "malus": "+0",
-                  "difficulty": "10",
-                  "totalSkillBonuses": "0",
-                  "label": "Test de compétence  Constitution"
-              }
+                {
+                    "rollMode": "publicroll",
+                    "dice": "1d20",
+                    "formula": "2d20kl+3",
+                    "bonus": "+0",
+                    "malus": "+0",
+                    "totalSkillBonuses": "0",
+                    "difficulty": "",
+                    "critical": "20"
+                }
               */
               return output
             },
@@ -129,6 +129,27 @@ export class COSkillRoll extends CORoll {
               input.addEventListener("click", this._onToggleCheckSkillBonus.bind(this))
             })
           }
+          const radios = dialog.querySelectorAll('input[name="dice"]')
+          radios.forEach((radio) => {
+            radio.addEventListener("change", (event) => {
+              event.preventDefault()
+              event.stopPropagation()
+              console.log("event", event)
+              let newFormula
+              switch (event.target.value) {
+                case "standard":
+                  newFormula = `1d20+${dialogContext.skillValue}`
+                  break
+                case "bonus":
+                  newFormula = `2d20kh+${dialogContext.skillValue}`
+                  break
+                case "malus":
+                  newFormula = `2d20kl+${dialogContext.skillValue}`
+                  break
+              }
+              dialog.querySelector('input[name="formula"]').value = newFormula
+            })
+          })
         },
       })
 
@@ -136,9 +157,9 @@ export class COSkillRoll extends CORoll {
       rollContext.label = dialogContext.label
       if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll - rollContext`), rollContext)
 
-      formula = `${rollContext.dice}+${parseInt(rollContext.skillValue)}`
-      if (parseInt(rollContext.bonus) !== 0) formula += `+${parseInt(rollContext.bonus)}`
-      if (parseInt(rollContext.malus) !== 0) formula += `+${parseInt(rollContext.malus)}`
+      formula = `${rollContext.formula}`
+      if (parseInt(rollContext.bonus) > 0) formula += `+${parseInt(rollContext.bonus)}`
+      if (parseInt(rollContext.malus) > 0) formula += `-${parseInt(rollContext.malus)}`
       if (parseInt(rollContext.totalSkillBonuses) !== 0) formula += `+${parseInt(rollContext.totalSkillBonuses)}`
     }
     // Pas de prompt
