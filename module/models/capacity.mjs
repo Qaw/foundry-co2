@@ -65,6 +65,10 @@ export default class CapacityData extends ItemData {
     return this.frequency !== SYSTEM.CAPACITY_FREQUENCY.none.id
   }
 
+  get hasCharges() {
+    return this.charges.current > 0
+  }
+
   /**
    * Calculates the cost based on the given rank.
    *

@@ -114,19 +114,19 @@
                                     {{else}}
                                         {{#if (or (eq action.type 'melee') (eq action.type 'ranged') (eq action.type 'magical'))}}
                                             <a class="item-control">
-                                                <i class="{{action.iconFA}} {{#if action.hasFrequency}}{{#if action.hasCharges}}blue{{else}}gray{{/if}}{{else}}green{{/if}} toggle-action" data-tooltip="{{localize 'CO.label.long.attack'}}" data-tooltip-direction="UP" data-action="activate" data-type="attack" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                                <i class="{{action.iconFA}} {{action.iconColor}} toggle-action" data-tooltip="{{localize 'CO.label.long.attack'}}" data-tooltip-direction="UP" data-action="activate" data-type="attack" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
                                             </a> 
                                             <a class="item-control">
-                                                <i class="fa-regular fa-hand-back-fist {{#if action.hasFrequency}}{{#if action.hasCharges}}blue{{else}}gray{{/if}}{{else}}green{{/if}} toggle-action" data-tooltip="{{localize 'CO.label.long.damage'}}" data-tooltip-direction="UP" data-action="activate" data-type="damage" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                                <i class="fa-regular fa-hand-back-fist {{action.iconColor}} toggle-action" data-tooltip="{{localize 'CO.label.long.damage'}}" data-tooltip-direction="UP" data-action="activate" data-type="damage" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
                                             </a> 
                                         {{else}}
                                             {{#if (eq action.type 'heal') }}
                                             <a class="item-control">
-                                                <i class="fa-solid {{#if (and action.hasFrequency (gt action.charges 0))}}blue{{else}}gray{{/if}} fa-flask-round-potion toggle-action" data-tooltip="{{localize 'CO.ui.use'}}" data-tooltip-direction="UP" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                                <i class="fa-solid {{action.iconColor}} fa-flask-round-potion toggle-action" data-tooltip="{{localize 'CO.ui.use'}}" data-tooltip-direction="UP" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
                                             </a>  
                                             {{else}}
                                             <a class="item-control">
-                                                <i class="{{action.iconFA}} {{#if (and action.hasFrequency (gt action.charges 0))}}blue{{else}}gray{{/if}} toggle-action" data-tooltip="{{localize 'CO.ui.use'}}" data-tooltip-direction="UP" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                                <i class="{{action.iconFA}} {{action.iconColor}} toggle-action" data-tooltip="{{localize 'CO.ui.use'}}" data-tooltip-direction="UP" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
                                             </a>  
                                             {{/if}}                                            
                                         {{/if}}             

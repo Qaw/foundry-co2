@@ -745,9 +745,6 @@ export default class CharacterData extends ActorData {
     let mp = this.resources.mana
     const hd = this.hd
 
-    // Récupération des charges des capacités
-    await this.recoverCapacityCharges(isFullRest)
-
     // Récupération rapide
     if (!isFullRest) {
       if (rp.value <= 0) return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoMoreRecoveryPoints"))
@@ -764,6 +761,9 @@ export default class CharacterData extends ActorData {
       const formula = `${hd} + ${level}`
 
       await this._applyRecovery(rp, hp, formula, game.i18n.localize("CO.dialogs.fastRest.title"))
+
+      // Récupération des charges des capacités
+      await this.recoverCapacityCharges(isFullRest)
     }
 
     // Récupération complète
@@ -807,6 +807,9 @@ export default class CharacterData extends ActorData {
 
         await this._applyRecovery(rp, hp, formula, game.i18n.localize("CO.dialogs.fullRest.title"))
       }
+
+      // Récupération des charges des capacités
+      await this.recoverCapacityCharges(isFullRest)
     }
   }
 

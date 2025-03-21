@@ -487,7 +487,7 @@ export default class COActor extends Actor {
     }
 
     // Si la capacité a des charges est ce qu'il lui en reste ?
-    if (item.type === SYSTEM.ITEM_TYPE.capacity.id && !item.hasCharge() && item.system.frequency !== SYSTEM.CAPACITY_FREQUENCY.none.id)
+    if (item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.hasFrequency && !item.system.hasCharges)
       return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoCharge"))
 
     // TODO Incantation
@@ -586,7 +586,7 @@ export default class COActor extends Actor {
         }
       }
       // Si c'est une capacité avec une charge il faut la consommer
-      if (item.type === SYSTEM.ITEM_TYPE.capacity.id && item.hasCharge() && item.system.frequency !== SYSTEM.CAPACITY_FREQUENCY.none.id) {
+      if (item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.hasFrequency && item.system.hasCharges) {
         item.system.charges.current = Math.max(item.system.charges.current - 1, 0)
         await item.update({ "system.charges.current": item.system.charges.current })
         if (item.system.charges.current === 0) {

@@ -106,6 +106,38 @@ export class Action extends foundry.abstract.DataModel {
   }
 
   /**
+   * Determines the icon color based on the type and properties of the parent object.
+   *
+   * @returns {string} The color of the icon. Possible values are:
+   * - "blue": If the parent type is "capacity", has frequency, and has charges.
+   * - "gray": If the parent type is "capacity", has frequency, but does not have charges,
+   *   or if no specific conditions are met.
+   * - "green": If the parent type is "capacity" without frequency, or if the parent type is "equipment".
+   */
+  get iconColor() {
+    // Capacity
+    if (this.parent.parent.type === SYSTEM.ITEM_TYPE.capacity.id) {
+      if (this.hasFrequency) {
+        if (this.hasCharges) return "blue"
+        else return "gray"
+      } else {
+        return "green"
+      }
+    }
+
+    // Equipment
+    if (this.parent.parent.type === SYSTEM.ITEM_TYPE.equipment.id) {
+      if (this.isReloadable) {
+        if (this.hasCharges) return "blue"
+        return "gray"
+      }
+      return "green"
+    }
+
+    return "gray"
+  }
+
+  /**
    * Gets the action name.
    * If the object has a label, it returns the label.
    * Otherwise, it returns the item name.
@@ -173,6 +205,10 @@ export class Action extends foundry.abstract.DataModel {
 
   get hasFrequency() {
     return this.parent?.frequency !== SYSTEM.CAPACITY_FREQUENCY.none.id
+  }
+
+  get isReloadable() {
+    return this.parent.properties.reloadable
   }
 
   /**
