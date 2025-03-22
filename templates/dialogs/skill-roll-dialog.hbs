@@ -44,22 +44,24 @@
   </div>
 </div>
 
-<div class="form-group">
-  <label>{{localize "CO.ui.miscBonuses"}}</label>
-  <div class="form-fields skillBonuses">
-    <div class="flex1 skill-bonuses" id="skill-bonuses">
-      {{#each skillBonuses as |bonus id|}}
-        {{!log 'skillBonuses' bonus id}}
-        <div class="bonus-item flexrow" data-value="{{bonus.value}}" data-tooltip="{{{bonus.description}}}" data-tooltip-direction="UP">
-          <span class="bonus-value flex0">{{numberFormat bonus.value decimals=0 sign=true}}</span>
-          &nbsp;
-          <span class="bonus-name flex0">{{bonus.name}}</span>
-          <span class="bonus-name flex2">{{bonus.additionalInfos}}</span>
+{{#if hasSkillBonuses}}
+    <div class="form-group">
+    <label>{{localize "CO.ui.miscBonuses"}}</label>
+    <div class="form-fields skillBonuses">
+        <div class="flex1 skill-bonuses" id="skill-bonuses">
+        {{#each skillBonuses as |bonus id|}}
+            {{log 'skillBonuses' bonus id}}
+            <div class="bonus-item flexrow" data-value="{{bonus.value}}" data-tooltip="{{{bonus.description}}}" data-tooltip-direction="UP">
+            <span class="bonus-value flex0">{{numberFormat bonus.value decimals=0 sign=true}}</span>
+            &nbsp;
+            <span class="bonus-name flex0">{{bonus.name}}</span>
+            <span class="bonus-name flex2">{{bonus.additionalInfos}}</span>
+            </div>
+        {{/each}}
         </div>
-      {{/each}}
     </div>
-  </div>
-</div>
+    </div>
+{{/if}}
 
 <div class="form-group">
   <label>{{localize "CO.ui.totalBonus"}}</label>

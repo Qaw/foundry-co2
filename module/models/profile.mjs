@@ -6,14 +6,15 @@ export default class ProfileData extends ItemData {
   static defineSchema() {
     const fields = foundry.data.fields
     return foundry.utils.mergeObject(super.defineSchema(), {
-      modifiers: new fields.ArrayField(new fields.EmbeddedDataField(Modifier)),
       family: new fields.StringField({ required: false, nullable: true }),
-      proficiencies: new fields.ArrayField(new fields.StringField()),
-      paths: new fields.ArrayField(new fields.DocumentUUIDField({ type: "Item" })),
+      maxDefenseArmor: new fields.NumberField({ integer: true, min: 0, initial: 0 }),
+      modifiers: new fields.ArrayField(new fields.EmbeddedDataField(Modifier)),
       martialTrainingsWeapons: new fields.ObjectField(),
       martialTrainingsArmors: new fields.ObjectField(),
       martialTrainingsShields: new fields.ObjectField(),
-      maxDefenseArmor: new fields.NumberField({ integer: true, min: 0, initial: 0 }),
+      paths: new fields.ArrayField(new fields.DocumentUUIDField({ type: "Item" })),
+      proficiencies: new fields.ArrayField(new fields.StringField()),
+      mainProfile: new fields.BooleanField(),
     })
   }
 

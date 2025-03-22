@@ -128,15 +128,6 @@ export default class CharacterData extends ActorData {
     return foundry.utils.mergeObject(super.defineSchema(), schema)
   }
 
-  /** @override */
-  prepareBaseData() {
-    // Calcul de la base de PV sans le bonus de constitution
-    // Au niveau 1 : 2 * PV de la famille
-    // Pour chaque niveau supplémentaire : + PV de la famille
-    const pvFromFamily = this.profile ? SYSTEM.FAMILIES[this.profile.system.family].hp : 0
-    this.attributes.hp.base = 2 * pvFromFamily + (this.attributes.level - 1) * pvFromFamily
-  }
-
   get fpFromFamily() {
     return this.profile ? SYSTEM.FAMILIES[this.profile.system.family].fp : 0
   }
@@ -407,17 +398,13 @@ export default class CharacterData extends ActorData {
   }
 
   _prepareHPMax() {
-    const constitutionBonus = this.attributes.level * this.abilities.con.value
+    const tooltipBase = Utils.getTooltip("Base", this.attributes.hp.base)
+
     const hpMaxBonuses = Object.values(this.attributes.hp.bonuses).reduce((prev, curr) => prev + curr)
     const hpMaxModifiers = this.computeTotalModifiersByTarget(this.attributeModifiers, "hp")
 
-    this.attributes.hp.max = this.attributes.hp.base + constitutionBonus + hpMaxBonuses + hpMaxModifiers.total
-    this.attributes.hp.tooltip = Utils.getTooltip("Base ", this.attributes.hp.base).concat(
-      ` ${Utils.getAbilityName("con")} : `,
-      constitutionBonus,
-      hpMaxModifiers.tooltip,
-      Utils.getTooltip("Bonus", hpMaxBonuses),
-    )
+    this.attributes.hp.max = this.attributes.hp.base + hpMaxBonuses + hpMaxModifiers.total
+    this.attributes.hp.tooltip = tooltipBase.concat(hpMaxModifiers.tooltip,Utils.getTooltip("Bonus", hpMaxBonuses))
   }
 
   _prepareMovement() {

@@ -353,7 +353,8 @@
       "remainingQuantity": "Quantité restante",
       "melee": "Contact",
       "ranged": "Distance",
-      "magic": "Magique"
+      "magic": "Magique",
+      "mainProfile": "Profil principal"
     },
     "properties": {
       "attack": "Attaque",

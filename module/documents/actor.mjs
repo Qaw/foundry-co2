@@ -923,7 +923,14 @@ export default class COActor extends Actor {
    * @returns {Promise<string>} A promise that resolves to the UUID of the newly created profile.
    */
   async addProfile(profile) {
+    //
+    if (this.profiles.length > 0) {
+      return ui.notifications.warn(game.i18n.localize("CO.notif.profilAlreadyExist"))
+    }
+
     let itemData = profile.toObject()
+    // C'est le profil principal
+    itemData.system.mainProfile = true
     itemData = itemData instanceof Array ? itemData : [itemData]
     const newProfile = await this.createEmbeddedDocuments("Item", itemData)
 
@@ -1290,6 +1297,9 @@ export default class COActor extends Actor {
     // Construction du message de chat
     if (!chatFlavor) chatFlavor = `${game.i18n.localize("CO.dialogs.skillCheck")} ${game.i18n.localize(`CO.abilities.long.${skillId}`)}`
 
+    const skillBonuses = this.getSkillBonuses(skillId) // Récupère un tableau d'objets avec {name, description, value}
+    const hasSkillBonuses = skillBonuses.length > 0
+
     const dialogContext = {
       rollMode,
       rollModes: CONFIG.Dice.rollModes,
@@ -1308,7 +1318,8 @@ export default class COActor extends Actor {
       difficultyTooltip,
       useDifficulty,
       showDifficulty,
-      skillBonuses: this.getSkillBonuses(skillId), // Récupère un tableau d'objets avec {name, description, value}
+      skillBonuses,
+      hasSkillBonuses,
       totalSkillBonuses: 0,
       targets,
       hasTargets: targets?.length > 0,

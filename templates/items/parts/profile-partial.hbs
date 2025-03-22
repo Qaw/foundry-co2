@@ -40,7 +40,13 @@
         <div class="form-fields">
             <input class="field-value" type="text" name="system.maxDefenseArmor" value="{{system.maxDefenseArmor}}" data-dtype="Number">
         </div>
-    </div>    
+    </div>  
+    <div class="form-group">
+        <label>{{localize "CO.ui.mainProfile"}}</label>
+        <div class="form-fields">            
+            <label><input type="checkbox" name="system.mainProfile" data-dtype="Boolean" {{checked system.mainProfile}} /></label>
+        </div>
+    </div> 
 </div>
 
 <!-- MODIFIERS -->
@@ -73,7 +79,7 @@
     {{/each}}
   {{else}}
     <div class="flexrow">
-      <span>Aucun modificateur.</span>
+      <span>Aucun modificateur</span>
     </div>
   {{/if}}
   <div class="flexrow">
