@@ -350,7 +350,10 @@
       "defense": "Défense",
       "magicalDefense": "Défense magique",
       "maxDefenseArmor": "Défense maximale de l'armure",
-      "remainingQuantity": "Quantité restante"
+      "remainingQuantity": "Quantité restante",
+      "melee": "Contact",
+      "ranged": "Distance",
+      "magic": "Magique"
     },
     "properties": {
       "attack": "Attaque",

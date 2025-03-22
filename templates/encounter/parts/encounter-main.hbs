@@ -1,3 +1,5 @@
+{{log 'encounter-main' this}}
+
 <!-- ABILITIES -->
 <div class="ability-scores section-container">
     <div class="section-header">
@@ -48,24 +50,11 @@
     <div class="section-body">
         <ol class="attacks-list strikes-list item-list">
             {{#each attacks as |attack id|}}
-                {{!log attack}}
-                {{!log "Chroniques Oubliées | attack" attack id}}
-                <!--                <div class="labelled-field" data-attribute="str">-->
-                <!--                    <label class="rollable"><a>{{!localize (concat "CO.abilities.short." id)}} {{!#if ability.superior}}*{{!/if}}</a></label>-->
-                <!--                    <input class="modifier" type="text" name="system.abilities.{{!id}}.mod" value="{{!numberFormat ability.mod decimals=0 sign=true}}" data-dtype="Number" placeholder="0">-->
-                <!--                </div>-->
+                {{log "Chroniques Oubliées | attack" attack id}}
                 <li class="item attack flexrow" data-item-type="attack" data-item-uuid="{{attack.uuid}}" data-item-id="{{attack.id}}" draggable="false">
                     <div class="attack-header">
                         <h4 class="attack-name tags">
-                            {{#if (eq attack.system.subtype "melee")}}
-                                <span><strong>{{localize "CO.label.short.melee"}}</strong><span class="activity-icon"><i class="fas fa-fw fa-sword"></i></span>{{attack.name}} {{attack.system.actions.0.label}}</span>
-                            {{/if}}
-                            {{#if (eq attack.system.subtype "ranged")}}
-                                <span><strong>{{localize "CO.label.short.ranged"}}</strong><span class="activity-icon"><i class="fas fa-fw fa-bow-arrow"></i></span>{{attack.name}} {{attack.system.actions.0.label}}</span>
-                            {{/if}}
-                            {{#if (eq attack.system.subtype "magic")}}
-                                <span><strong>{{localize "CO.label.short.magic"}}</strong><span class="activity-icon"><i class="fas fa-fw fa-wand-magic-sparkles"></i></span>{{attack.name}} {{attack.system.actions.0.label}}</span>
-                            {{/if}}
+                            <i class="{{attack.system.subtypeIcon}}"></i><span><strong>{{attack.name}}</strong><span class="activity-icon"></span> {{attack.system.actions.0.label}}</span>{{#if attack.system.hasRange}} ({{attack.system.rangeLabel}}){{/if}} {{attack.system.displayValues.attack}}  <strong>DM</strong> {{attack.system.displayValues.damage}}
                         </h4>
                         <div class="attack-controls controls">
                             <a class="item-chat chat" data-tooltip="{{localize 'CO.label.long.sendToChat'}}" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>

@@ -22,6 +22,15 @@
             </select>
         </div>
     </div>
+    {{#if (or system.isRanged system.isMagic)}}
+        <div class="form-group">
+            <label>{{localize "CO.ui.range"}}</label>
+            <div class="form-fields">
+                <input class="field-value" name="system.range.value" type="text" value="{{system.range.value}}" data-dtype="Number">
+                <input class="field-value" name="system.range.unit" type="text" value="{{system.range.unit}}" data-dtype="String">                
+            </div>
+        </div>    
+    {{/if}}     
     {{#if system.properties.chargeable}}
         <div class="form-group">
             <label>{{localize "CO.ui.charges"}}</label>
