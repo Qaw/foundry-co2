@@ -79,6 +79,14 @@ export default class Utils {
     if (replacedFormula.includes("@allrank") || replacedFormula.includes("@toutrang")) {
       if (sourceUuid) replacedFormula = this._replaceAllRank(actor, replacedFormula, sourceUuid)
     }
+    // Cas du @arme qui remplace par les dommages de l'action principale de l'arme équipée
+    if (replacedFormula.includes("@arme.dmg")) {
+      const weapon = actor.equippedWeapons[0]
+      if (weapon) {
+        const dmg = weapon.system.damage
+        if (dmg) replacedFormula = replacedFormula.replace("@arme.dmg", dmg)
+      }
+    }
     return replacedFormula
   }
 
@@ -225,8 +233,8 @@ export default class Utils {
   /**
    * Evaluates the given formula to find the opposite value.
    *
-   * This function checks if the formula contains the "@opposite" keyword.
-   * If found, it extracts and returns the value following "@opposite.".
+   * This function checks if the formula contains the "@oppose" keyword.
+   * If found, it extracts and returns the value following "@oppose.".
    * If the keyword is not present, it returns undefined.
    *
    * @param {string} formula The formula string to evaluate.
@@ -234,8 +242,8 @@ export default class Utils {
    * @returns {string|undefined} The extracted opposite value or undefined if not found.
    */
   static evaluateOppositeFormula(formula, actor) {
-    if (!formula.includes("@opposite")) return undefined
-    const regex = /@opposite\.([^\s]+)/
+    if (!formula.includes("@oppose")) return undefined
+    const regex = /@oppose\.([^\s]+)/
     const match = formula.match(regex)
     let result = undefined
     if (match) {

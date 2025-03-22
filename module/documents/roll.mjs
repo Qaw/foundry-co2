@@ -89,12 +89,6 @@ export class COSkillRoll extends CORoll {
         rejectClose: false,
         buttons: [
           {
-            action: "cancel",
-            label: game.i18n.localize("CO.ui.cancel"),
-            icon: "fas fa-times",
-            callback: () => false,
-          },
-          {
             action: "ok",
             label: game.i18n.localize("CO.ui.submit"),
             icon: "fas fa-check",
@@ -120,6 +114,12 @@ export class COSkillRoll extends CORoll {
               */
               return output
             },
+          },
+          {
+            action: "cancel",
+            label: game.i18n.localize("CO.ui.cancel"),
+            icon: "fas fa-times",
+            callback: () => false,
           },
         ],
         render: (event, dialog) => {
@@ -186,7 +186,7 @@ export class COSkillRoll extends CORoll {
       bonus: withDialog ? rollContext.bonus : dialogContext.bonus,
       malus: withDialog ? rollContext.malus : dialogContext.malus,
       critical: withDialog ? rollContext.critical : dialogContext.critical,
-      oppositeRoll: withDialog ? rollContext.difficulty.includes("@opposite") : dialogContext.oppositeRoll.includes("@opposite"),
+      oppositeRoll: withDialog ? rollContext.difficulty.includes("@oppose") : dialogContext.oppositeRoll.includes("@oppose"),
       oppositeTarget: dialogContext.targets?.length > 0 ? dialogContext.targets[0].uuid : null,
       oppositeValue: withDialog ? rollContext.difficulty : dialogContext.difficulty,
       useDifficulty: dialogContext.useDifficulty,
@@ -262,12 +262,6 @@ export class COAttackRoll extends CORoll {
         rejectClose: false,
         buttons: [
           {
-            action: "cancel",
-            label: game.i18n.localize("CO.ui.cancel"),
-            icon: "fas fa-times",
-            callback: () => false,
-          },
-          {
             action: "ok",
             label: game.i18n.localize("CO.ui.submit"),
             icon: "fas fa-check",
@@ -295,6 +289,12 @@ export class COAttackRoll extends CORoll {
               */
               return output
             },
+          },
+          {
+            action: "cancel",
+            label: game.i18n.localize("CO.ui.cancel"),
+            icon: "fas fa-times",
+            callback: () => false,
           },
         ],
         render: (event, dialog) => {
@@ -356,7 +356,7 @@ export class COAttackRoll extends CORoll {
         damageBonus: withDialog ? rollContext.damageBonus : dialogContext.damageBonus,
         damageMalus: withDialog ? rollContext.damageMalus : dialogContext.damageMalus,
         critical: withDialog ? rollContext.critical : dialogContext.critical,
-        oppositeRoll: withDialog ? rollContext.difficulty.includes("@opposite") : dialogContext.oppositeRoll.includes("@opposite"),
+        oppositeRoll: withDialog ? rollContext.difficulty.includes("@oppose") : dialogContext.oppositeRoll.includes("@oppose"),
         oppositeTarget: dialogContext.targets.length > 0 ? dialogContext.targets[0].uuid : null,
         oppositeValue: withDialog ? rollContext.difficulty : dialogContext.difficulty,
         useDifficulty: dialogContext.useDifficulty,

@@ -143,6 +143,10 @@ export const CONDITION_TARGETS = Object.freeze({
 })
 
 export const RESOLVER_TYPE = Object.freeze({
+  auto: {
+    id: "auto",
+    label: "CO.resolver.types.auto",
+  },
   melee: {
     id: "melee",
     label: "CO.resolver.types.melee",
@@ -166,10 +170,6 @@ export const RESOLVER_TYPE = Object.freeze({
   debuff: {
     id: "debuff",
     label: "CO.resolver.types.debuff",
-  },
-  auto: {
-    id: "auto",
-    label: "CO.resolver.types.auto",
   },
   consumable: {
     id: "consumable",

@@ -187,6 +187,9 @@ export default class COActor extends Actor {
     return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.equipped)
   }
 
+  /**
+   * Retourne les Items équipés de type equipment et de sous-type weapon
+   */
   get equippedWeapons() {
     return this.weapons.filter((item) => item.system.equipped)
   }
@@ -681,6 +684,62 @@ export default class COActor extends Actor {
     }
   }
 
+  /**
+   * Consomme une unité de munitions pour l'objet donné s'il possède la propriété "reloadable".
+   * Met à jour les charges actuelles de l'objet pour refléter le changement.
+   *
+   * @async
+   * @param {Object} item L'objet représentant l'arme ou l'outil.
+   * @param {Object} item.system Les données système de l'objet.
+   * @param {Object} item.system.properties Les propriétés de l'objet.
+   * @param {boolean} item.system.properties.reloadable Indique si l'objet est rechargeable.
+   * @param {Object} item.system.charges Les données des charges de l'objet.
+   * @param {number} item.system.charges.current Le nombre actuel de charges disponibles.
+   * @returns {Promise<void>} Résout lorsque les charges de l'objet ont été mises à jour.
+   */
+  async consumeAmmunition(item) {
+    // Si l'arme a la propriété "reloadable", on consomme une munition
+    if (item.system.properties.reloadable) {
+      let newCharges = Math.max(0, item.system.charges.current - 1)
+      await item.update({ "system.charges.current": newCharges })
+    }
+  }
+
+  /**
+   * Acquire targets based on the specified target type and scope.
+   *
+   * @param {string} targetType The type of target to acquire. Can be "none", "self", "single", or "multiple".
+   * @param {string} targetScope The scope of the target acquisition : allies, enemies, all.
+   * @param {Object} actionName The name of the action to be performed on the targets.
+   * @param {Object} [options={}] Additional options for target acquisition.
+   * @returns {Array} An array of acquired targets.
+   * @throws {Error} Throws an error if any target has an error.
+   */
+  acquireTargets(targetType, targetScope, actionName, options = {}) {
+    if (!canvas.ready) return []
+    let targets
+
+    switch (targetType) {
+      case "none":
+        return []
+      case "self":
+        targets = this.getActiveTokens(true).map(this.#getTargetFromToken)
+        break
+      case "single":
+        targets = this.#getTargets(actionName, targetScope, true)
+        break
+      case "multiple":
+        targets = this.#getTargets(actionName, targetScope, false)
+        break
+    }
+
+    // Throw an error if any target had an error
+    for (const target of targets) {
+      if (target.error) throw new Error(target.error)
+    }
+    return targets
+  }
+
   // #endregion
 
   // #region méthodes privées
@@ -798,7 +857,7 @@ export default class COActor extends Actor {
   }
   // #endregion
 
-  // #region Méthode d'ajout et suppression d'item
+  // #region Méthode d'ajout et suppression des différents types d'item
 
   /**
    * Create a feature, and the linked modifiers, paths and capacities if they exist
@@ -1169,7 +1228,7 @@ export default class COActor extends Actor {
 
     // Si la difficulté dépend de la cible unique
     if (oppositeRoll && useDifficulty && targets === undefined) {
-      if (difficulty && difficulty.includes("@target")) {
+      if (difficulty && difficulty.includes("@cible")) {
         targets = this.acquireTargets("single", "all", actionName)
         if (targets.length === 0) {
           difficulty = null
@@ -1182,7 +1241,7 @@ export default class COActor extends Actor {
       }
 
       // Si l'attaque demande un jet opposé contre la cible
-      else if (difficulty && difficulty.includes("@opposite")) {
+      else if (difficulty && difficulty.includes("@oppose")) {
         targets = this.acquireTargets("single", "all", actionName)
         if (targets.length === 0) {
           difficulty = null
@@ -1355,7 +1414,7 @@ export default class COActor extends Actor {
 
     // Si la difficulté dépend de la cible unique
     if (!auto && useDifficulty && targets === undefined) {
-      if (difficulty && difficulty?.includes("@target")) {
+      if (difficulty && difficulty?.includes("@cible")) {
         targets = this.acquireTargets("single", "all", actionName)
         if (targets.length === 0) {
           difficulty = null
@@ -1368,7 +1427,7 @@ export default class COActor extends Actor {
       }
 
       // Si l'attaque demande un jet opposé contre la cible
-      else if (difficulty && difficulty.includes("@opposite")) {
+      else if (difficulty && difficulty.includes("@oppose")) {
         oppositeRoll = true
         targets = this.acquireTargets("single", "all", actionName)
         if (targets.length === 0) {
@@ -1507,41 +1566,7 @@ export default class COActor extends Actor {
   }
   // #endregion
 
-  /**
-   * Acquire targets based on the specified target type and scope.
-   *
-   * @param {string} targetType The type of target to acquire. Can be "none", "self", "single", or "multiple".
-   * @param {string} targetScope The scope of the target acquisition : allies, enemies, all.
-   * @param {Object} actionName The name of the action to be performed on the targets.
-   * @param {Object} [options={}] Additional options for target acquisition.
-   * @returns {Array} An array of acquired targets.
-   * @throws {Error} Throws an error if any target has an error.
-   */
-  acquireTargets(targetType, targetScope, actionName, options = {}) {
-    if (!canvas.ready) return []
-    let targets
-
-    switch (targetType) {
-      case "none":
-        return []
-      case "self":
-        targets = this.getActiveTokens(true).map(this.#getTargetFromToken)
-        break
-      case "single":
-        targets = this.#getTargets(actionName, targetScope, true)
-        break
-      case "multiple":
-        targets = this.#getTargets(actionName, targetScope, false)
-        break
-    }
-
-    // Throw an error if any target had an error
-    for (const target of targets) {
-      if (target.error) throw new Error(target.error)
-    }
-    return targets
-  }
-
+  // #region Méthodes internes
   /**
    * Extracts target information from a given token.
    *
@@ -1589,6 +1614,9 @@ export default class COActor extends Actor {
     }
     return targets
   }
+  // #endregion
+
+  // #region Méthodes pour le CombatTracker
 
   /**
    * On change de round donc on peut gérer des actions qui se terminent "à la fin du round"
@@ -1612,12 +1640,5 @@ export default class COActor extends Actor {
     // Ici on va gérer qu'on arrive dans un nouveau round il faut faire attention car le MJ peux revenir en arrière !
     // on va notamment gérer la durée des effets en round ou secondes je suppose
   }
-
-  async consumeAmmunition(item) {
-    // Si l'arme a la propriété "reloadable", on consomme une munition
-    if (item.system.properties.reloadable) {
-      let newCharges = Math.max(0, item.system.charges.current - 1)
-      await item.update({ "system.charges.current": newCharges })
-    }
-  }
+  // #endregion
 }

@@ -120,4 +120,17 @@ export default class EquipmentData extends ItemData {
     if (!this.isArmor && !this.isShield) return 0
     return this.defense || 0
   }
+
+  /**
+   * Remonter les dégâts de référence d'une arme
+   *
+   * @returns {string|undefined} La formule des dégâts si l'équipement est une arme et possède des actions avec des résolveurs de dégâts.
+   *                             Retourne undefined sinon.
+   */
+  get damage() {
+    if (this.isWeapon && this.actions.length > 0 && this.actions[0].resolvers.length > 0) {
+      return this.actions[0].resolvers[0].dmg.formula
+    }
+    return undefined
+  }
 }
