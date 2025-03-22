@@ -120,7 +120,7 @@
         <label>{{localize "CO.ui.weapons"}}</label>
         <div class="grid grid-4col">
             {{#each martialTrainingsWeapons as |training key|}}
-                <label><input type="checkbox" readonly {{checked (lookup ../system.martialTrainingsWeapons training.key)}} />{{getMartialTrainingLabel training}}</label>
+                <label><input type="checkbox" disabled {{checked (lookup ../system.martialTrainingsWeapons training.key)}} />{{getMartialTrainingLabel training}}</label>
             {{/each}}
         </div>
     </div>
@@ -128,7 +128,7 @@
         <label>{{localize "CO.ui.armors"}}</label>
         <div class="grid grid-4col">
             {{#each martialTrainingsArmors as |training key|}}
-                <label><input type="checkbox" name="system.martialTrainingsArmors.{{getKeyFromMartialTraining training}}" data-dtype="Boolean" {{checked (lookup ../system.martialTrainingsArmors training.key)}} />{{getMartialTrainingLabel training}}</label>
+                <label><input type="checkbox" disabled name="system.martialTrainingsArmors.{{getKeyFromMartialTraining training}}" data-dtype="Boolean" {{checked (lookup ../system.martialTrainingsArmors training.key)}} />{{getMartialTrainingLabel training}}</label>
             {{/each}}
         </div>
     </div>
@@ -136,7 +136,7 @@
         <label>{{localize "CO.ui.shields"}}</label>
         <div class="grid grid-4col">
             {{#each martialTrainingsShields as |training key|}}
-                <label><input type="checkbox" name="system.martialTrainingsShields.{{getKeyFromMartialTraining training}}" data-dtype="Boolean" {{checked (lookup ../system.martialTrainingsShields training.key)}} />{{getMartialTrainingLabel training}}</label>
+                <label><input type="checkbox" disabled name="system.martialTrainingsShields.{{getKeyFromMartialTraining training}}" data-dtype="Boolean" {{checked (lookup ../system.martialTrainingsShields training.key)}} />{{getMartialTrainingLabel training}}</label>
             {{/each}}
         </div>
     </div>    

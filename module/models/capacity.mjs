@@ -3,12 +3,25 @@ import { Action } from "./schemas/action.mjs"
 import { SYSTEM } from "../config/system.mjs"
 export default class CapacityData extends ItemData {
   /**
-   * Définie les éléments composant une capacité
-   * {string} subtype : capacity
-   * {string} actionType : none, l, a, m, f (Limité, Attaque, Mouvement)
-   * {boolean} learned : Indique si on a appris ou pas la capacité
-   * {object} charges : Compte le nombre d'utilisations restantes
+   * Defines the schema for the capacity model.
+   * This schema outlines the structure and validation rules for the model's fields.
    *
+   * @returns {Object} The merged schema object containing the defined fields.
+   *
+   * Fields:
+   * - `subtype` {StringField}: A required, non-nullable string field with an initial value of an empty string.
+   * - `actionType` {StringField}: none, l, a, m, f (Limité, Attaque, Mouvement)
+   * - `learned` {BooleanField}: A boolean field indicating whether the capacity is learned.
+   * - `frequency` {StringField}: A required string field with predefined choices from `SYSTEM.CAPACITY_FREQUENCY` and an initial value of "none".
+   * - `charges` {SchemaField}: Compte le nombre d'utilisations restantes A schema field containing:
+   *   - `current` {NumberField}: An optional, nullable integer field with an initial value of 1.
+   *   - `max` {NumberField}: An optional, nullable integer field with an initial value of 1.
+   * - `properties` {SchemaField}: A schema field containing:
+   *   - `spell` {BooleanField}: A boolean field indicating if the property is a spell.
+   * - `path` {DocumentUUIDField}: A field representing a document UUID of type "Item".
+   * - `cost` {NumberField}: A required, non-nullable integer field with an initial value of -1.
+   * - `manaCost` {NumberField}: A required, non-nullable integer field with an initial value of -1.
+   * - `actions` {ArrayField}: An array field containing embedded data fields of type `Action`.
    */
   static defineSchema() {
     const fields = foundry.data.fields
@@ -81,5 +94,27 @@ export default class CapacityData extends ItemData {
     if (rank === null) return 1 // Off path capacity
     if (rank === 1 || rank === 2) return 1
     return 2
+  }
+
+  /**
+   * Calcule le coût en mana basé sur l'armure et la voie de l'acteur.
+   * Si l'armure n'est pas définie, le coût est de 0.
+   * Pour une capacité hors voie, le coût est de 0.
+   *
+   * @param {Object} actor L'objet acteur contenant l'armure et les objets.
+   * @returns {number} Le coût en mana dérivé de la défense de l'armure dépassant la défense maximale autorisée par la voie.
+   */
+  getManaCostFromArmor(actor) {
+    const armor = actor.mainArmor
+    // Pas d'armure
+    if (!armor) return 0
+    // Capacité hors voie
+    if (!this.path) return 0
+    // Recherche la voie pour obtenir la défense maximale pour utiliser la capacité
+    const { id } = foundry.utils.parseUuid(this.path)
+    const path = actor.items.get(id)
+    if (!path) return 0
+    const maxDefenseArmor = path.system.maxDefenseArmor
+    return Math.max(armor.system.defense - maxDefenseArmor, 0)
   }
 }

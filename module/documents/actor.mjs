@@ -111,6 +111,11 @@ export default class COActor extends Actor {
     return this.itemTypes.profile
   }
 
+  get mainProfile() {
+    if (this.profiles.length > 0) return this.profiles[0]
+    return undefined
+  }
+
   /**
    * Retourne  un tableau d'objets comprenant les voies et les capacités associées
    */
@@ -201,11 +206,21 @@ export default class COActor extends Actor {
     return this.armors.filter((item) => item.system.equipped)
   }
 
+  get mainArmor() {
+    if (this.equippedArmors.length > 0) return this.equippedArmors[0]
+    return undefined
+  }
+
   /**
    * Retourne les Items équipés de type equipment et de sous-type shield
    */
   get equippedShields() {
     return this.shields.filter((item) => item.system.equipped)
+  }
+
+  get mainShield() {
+    if (this.equippedShields.length > 0) return this.equippedShields[0]
+    return undefined
   }
 
   /**
@@ -291,28 +306,12 @@ export default class COActor extends Actor {
    */
   get canUseCapacities() {
     let armorTrained = true
-    const armor = this.equippedArmors[0]
+    const armor = this.mainArmor
     if (armor) armorTrained = this.isTrainedWithArmor(armor.id)
     let shieldTrained = true
-    const shield = this.equippedShields[0]
+    const shield = this.mainShield
     if (shield) shieldTrained = this.isTrainedWithShield(shield.id)
     return armorTrained && shieldTrained
-  }
-
-  /**
-   * Calcule le coût en mana basé sur l'armure équipée.
-   * Le nombre de PM supplémentaires à dépenser pour lancer le sort est égal au bonus de DEF de l’armure portée (ne pas tenir compte d’un éventuel bonus magique de l’armure).
-   * @returns {number} Le coût en mana supplémentaire.
-   */
-  get manaCostFromArmor() {
-    const armor = this.equippedArmors[0]
-    const profile = this.profiles[0]
-    if (profile && armor) {
-      const maxDefenseArmor = profile.system.maxDefenseArmor
-      const totalDefense = armor.system.defense
-      return Math.max(totalDefense - maxDefenseArmor, 0)
-    }
-    return 0
   }
 
   // #endregion
@@ -321,6 +320,7 @@ export default class COActor extends Actor {
 
   /**
    * Retourne Toutes les actions visibles des capacités et des équipements
+   * Pour les capacités, ne retourne pas les actions des capacités dont l'armure est trop élevée
    */
   async getVisibleActions() {
     let allActions = []
@@ -497,8 +497,8 @@ export default class COActor extends Actor {
     // Magie profane (famille des mages) : En revanche, il n’est pas possible d’utiliser un bouclier et une arme ou une arme dans chaque main tout en lançant des sorts de magie profane.
     // Magie divine (famille des mystiques) : respecter les armes autorisées
 
-    // Gestion du lancement de sort avec une armure non autorisée
-    const manaCostFromArmor = this.manaCostFromArmor
+    // Profil hybride : gestion du lancement de sort avec une armure maitrisée mais trop lourde, ce qui implique un surcoût de mana
+    const manaCostFromArmor = item.type === SYSTEM.ITEM_TYPE.capacity.id ? item.system.getManaCostFromArmor(this) : 0
 
     // Concentration accrue pour les sorts qui nécessitent une action d'attaque
     let manaConcentration = false
@@ -509,13 +509,13 @@ export default class COActor extends Actor {
     // Gestion de la brûlure de mana pour les sorts
     let manaBurned = false
     let manaBurnedCost = 0
-    // Si l'action consomme du mana, que la capacité un sort et qu'on l'active, on vérifie que le nombre de PM restants est suffisant
+    // Si l'action consomme du mana, que la capacité est un sort et qu'on l'active, on vérifie que le nombre de PM restants est suffisant
     if (!item.system.actions[indice].properties.noManaCost && state && item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.isSpell) {
       const spellManaCost = item.system.manaCost + manaCostFromArmor - (manaConcentration ? 2 : 0)
       if (item.system.manaCost > 0) {
         if (this.system.resources.mana.value < spellManaCost) {
           const needed = spellManaCost - this.system.resources.mana.value
-          const content = `Vous n'avez pas assez de mana : il vous manque ${needed} points de mana. Voulez-vous tout de même lancer le sort en sacrifiant votre énergie vitale ?`
+          const content = `Vous n'avez pas assez de mana : il vous manque ${needed} point(s) de mana. Voulez-vous tout de même lancer le sort en sacrifiant votre énergie vitale ?`
           const proceed = await foundry.applications.api.DialogV2.confirm({
             window: { title: "Brûlure de mana" },
             content: content,
@@ -583,7 +583,8 @@ export default class COActor extends Actor {
               await burnRoll.roll()
               // TODO : Notifier la perte de PV
               burnRoll.toMessage()
-              await this.update({ "system.attributes.hp.value": this.system.attributes.hp.value - burnRoll.total })
+              const newHP = Math.max(this.system.attributes.hp.value - burnRoll.total, 0)
+              await this.update({ "system.attributes.hp.value": newHP })
             }
           }
         }

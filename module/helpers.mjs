@@ -50,4 +50,7 @@ export default function registerHandlebarsHelpers() {
     if (actor.isTrainedWithShield(itemId)) return '<i class="fa-solid fa-circle-check" data-tooltip="Maitrise" data-tooltip-direction="UP"></i>'
     return '<i class="fa-regular fa-circle-xmark" data-tooltip="Pas de maitrise" data-tooltip-direction="UP"></i>'
   })
+  Handlebars.registerHelper("manaCostFromArmor", function (capacity, actor) {
+    return capacity.system.getManaCostFromArmor(actor)
+  })
 }

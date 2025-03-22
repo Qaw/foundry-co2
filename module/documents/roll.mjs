@@ -357,7 +357,7 @@ export class COAttackRoll extends CORoll {
         damageMalus: withDialog ? rollContext.damageMalus : dialogContext.damageMalus,
         critical: withDialog ? rollContext.critical : dialogContext.critical,
         oppositeRoll: withDialog ? rollContext.difficulty.includes("@oppose") : dialogContext.oppositeRoll.includes("@oppose"),
-        oppositeTarget: dialogContext.targets.length > 0 ? dialogContext.targets[0].uuid : null,
+        oppositeTarget: dialogContext.targets?.length > 0 ? dialogContext.targets[0].uuid : null,
         oppositeValue: withDialog ? rollContext.difficulty : dialogContext.difficulty,
         useDifficulty: dialogContext.useDifficulty,
         showDifficulty: dialogContext.showDifficulty,
