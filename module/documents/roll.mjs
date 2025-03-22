@@ -138,13 +138,13 @@ export class COSkillRoll extends CORoll {
               let newFormula
               switch (event.target.value) {
                 case "standard":
-                  newFormula = `1d20+${dialogContext.skillValue}`
+                  newFormula = `1d20+${dialogContext.skillFormula}`
                   break
                 case "bonus":
-                  newFormula = `2d20kh+${dialogContext.skillValue}`
+                  newFormula = `2d20kh+${dialogContext.skillFormula}`
                   break
                 case "malus":
-                  newFormula = `2d20kl+${dialogContext.skillValue}`
+                  newFormula = `2d20kl+${dialogContext.skillFormula}`
                   break
               }
               dialog.querySelector('input[name="formula"]').value = newFormula
@@ -256,7 +256,7 @@ export class COAttackRoll extends CORoll {
 
       rollContext = await foundry.applications.api.DialogV2.wait({
         window: { title: dialogContext.title },
-        position: { width: "auto" },
+        position: { width: 600 },
         classes: this.ROLL_CSS,
         content,
         rejectClose: false,
@@ -304,6 +304,27 @@ export class COAttackRoll extends CORoll {
               input.addEventListener("click", this._onToggleCheckSkillBonus.bind(this))
             })
           }
+          const radios = dialog.querySelectorAll('input[name="dice"]')
+          radios.forEach((radio) => {
+            radio.addEventListener("change", (event) => {
+              event.preventDefault()
+              event.stopPropagation()
+              console.log("event", event)
+              let newFormula
+              switch (event.target.value) {
+                case "standard":
+                  newFormula = `1d20+${dialogContext.initialSkillFormula}`
+                  break
+                case "bonus":
+                  newFormula = `2d20kh+${dialogContext.initialSkillFormula}`
+                  break
+                case "malus":
+                  newFormula = `2d20kl+${dialogContext.initialSkillFormula}`
+                  break
+              }
+              dialog.querySelector('input[name="formulaAttack"]').value = newFormula
+            })
+          })
         },
       })
 
@@ -315,8 +336,8 @@ export class COAttackRoll extends CORoll {
 
     if (dialogContext.type === "attack") {
       const formula = withDialog
-        ? Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.dice}+${rollContext.formulaAttack}+${rollContext.skillBonus}-${rollContext.skillMalus}`)
-        : Utils.evaluateFormulaCustomValues(dialogContext.actor, `${dialogContext.dice}+${dialogContext.formulaAttack}+${dialogContext.skillBonus}-${dialogContext.skillMalus}`)
+        ? Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaAttack}+${rollContext.skillBonus}-${rollContext.skillMalus}`)
+        : Utils.evaluateFormulaCustomValues(dialogContext.actor, `${dialogContext.formulaAttack}+${dialogContext.skillBonus}-${dialogContext.skillMalus}`)
 
       const roll = new this(formula, dialogContext.actor.getRollData())
       await roll.evaluate()

@@ -1278,7 +1278,6 @@ export default class COActor extends Actor {
    * @param {string} [options.type="attack"] Le type de jet, soit "attack" soit "damage".
    * @param {string} [options.actionName=""] Le nom de l'action.
    * @param {string} [options.chatFlavor=""] Le message de l'action dans le chat.
-   * @param {string} [options.dice="1d20"] La formule de dés pour le jet.
    * @param {boolean} [options.useComboRolls=game.settings.get("co", "useComboRolls")] Si les jets doivent être combinés.
    * @param {number} [options.skillBonus=0] Le bonus de compétence pour le jet.
    * @param {number} [options.skillMalus=0] Le malus de compétence pour le jet.
@@ -1304,7 +1303,6 @@ export default class COActor extends Actor {
       rollMode = undefined,
       auto = false,
       type = "attack",
-      dice = "1d20",
       useComboRolls = game.settings.get("co", "useComboRolls"),
       actionName = "",
       chatFlavor = "",
@@ -1383,11 +1381,12 @@ export default class COActor extends Actor {
     if (critical === undefined || critical === "") {
       critical = this.system.combat.crit.value
     }
+
     // Gestion des dés bonus et malus
     let bonusDices = 0
     let malusDices = 0
 
-    // Gestion du dé bonus
+    // Gestion du dé bonus : en fonction de la formule, on déduit le type d'attaque et on cherche dans les modifiers
     if (this.system.hasBonusDiceForAttack(Utils.getAttackTypeFromFormula(skillFormulaTooltip))) bonusDices += 1
 
     // Maitrise de l'arme : Si le personnage utilise une arme qu’il ne maîtrise pas, il subit un dé malus au test d’attaque.
@@ -1399,8 +1398,15 @@ export default class COActor extends Actor {
     if (malusDice) malusDices += malusDice
 
     const totalDices = bonusDices - malusDices
-    if (dice === "1d20" && totalDices > 0) dice = "2d20kh"
-    else if (dice === "1d20" && totalDices < 0) dice = "2d20kl"
+    let formula = "1d20"
+    let dice = "standard"
+    if (totalDices > 0) {
+      formula = "2d20kh"
+      dice = "bonus"
+    } else if (totalDices < 0) {
+      formula = "2d20kl"
+      dice = "malus"
+    }
 
     // Construction du message de chat
     if (chatFlavor === "") chatFlavor = `${item.name} ${actionName}`
@@ -1426,7 +1432,8 @@ export default class COActor extends Actor {
       useDifficulty,
       showDifficulty,
       oppositeRoll,
-      formulaAttack: skillFormula,
+      initialSkillFormula: skillFormula,
+      formulaAttack: `${formula} + ${skillFormula}`,
       formulaAttackTooltip: skillFormulaTooltip,
       formulaDamage: damageFormula,
       formulaDamageTooltip: damageFormulaTooltip,

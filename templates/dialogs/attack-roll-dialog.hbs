@@ -11,11 +11,18 @@
     <div class="form-group">
         <label for="dice">{{localize 'CO.ui.diceType'}}</label>
         <div class="form-fields">
-            <select class="flex1" name="dice" id="dice" data-type="String" value="{{dice}}" {{#if auto}}disabled{{/if}}>
-                <option value="1d20" {{#if (eq dice '1d20')}}selected{{/if}}>{{localize 'CO.ui.dice20'}}</option>
-                <option value="2d20kh" {{#if (eq dice '2d20kh')}}selected{{/if}}>{{localize 'CO.ui.dice20kh'}}</option>
-                <option value="2d20kl" {{#if (eq dice '2d20kl')}}selected{{/if}}>{{localize 'CO.ui.dice20kl'}}</option>
-            </select>
+            <div>
+                <input type="radio" name="dice" id="diceMalus" value="malus" {{#if (eq dice "malus")}}checked{{/if}} />
+                <label for="dice">{{localize 'CO.ui.rollMalus'}}</label>
+            </div>
+            <div>
+                <input type="radio" name="dice" id="diceStandard" value="standard" {{#if (eq dice "standard")}}checked{{/if}}/>
+                <label for="dice">{{localize 'CO.ui.rollStandard'}}</label>
+            </div>
+            <div>
+                <input type="radio" name="dice" id="diceBonus" value="bonus" {{#if (eq dice "bonus")}}checked{{/if}}/>
+                <label for="dice">{{localize 'CO.ui.rollBonus'}}</label>
+            </div>
         </div>
     </div>
     <div class="form-group">
