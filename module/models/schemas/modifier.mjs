@@ -71,9 +71,20 @@ export class Modifier extends foundry.abstract.DataModel {
     const { id } = foundry.utils.parseUuid(this.parent.source)
     let item = actor.items.get(id)
     if (!item) return
+    const sourceType = item.type
     const name = item.name
     const description = item.system.description
-    return { name, description }
+    let pathType = ""
+    // Pour une capacité, remonte le type de voie
+    if (item.type === SYSTEM.ITEM_TYPE.capacity.id) {
+      const pathId = item.system.path
+      if (pathId) {
+        const { id } = foundry.utils.parseUuid(pathId)
+        const path = actor.items.get(id)
+        if (path) pathType = game.i18n.localize(SYSTEM.PATH_TYPES[path.system.subtype].label)
+      }
+    }
+    return { sourceType, name, description, pathType }
   }
 
   /**

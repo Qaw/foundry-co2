@@ -383,7 +383,14 @@ export default class COActor extends Actor {
     let bonuses = []
     for (const modifier of modifiersByTarget) {
       const sourceInfos = modifier.getSourceInfos(this)
-      bonuses.push({ name: sourceInfos.name, value: modifier.evaluate(this), additionalInfos: modifier.additionalInfos, description: sourceInfos.description })
+      bonuses.push({
+        sourceType: sourceInfos.sourceType,
+        name: sourceInfos.name,
+        description: sourceInfos.description,
+        pathType: sourceInfos.pathType,
+        value: modifier.evaluate(this),
+        additionalInfos: modifier.additionalInfos,
+      })
     }
     return bonuses
   }
