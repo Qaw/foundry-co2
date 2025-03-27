@@ -34,7 +34,7 @@
                 <a class="item red" data-tooltip="{{ localize 'CO.notif.TooMuchSpentXP' }}" data-tab="capacities">{{ localize "CO.tabs.capacities" }} ({{xpLeft}}) <i class="fa-solid fa-triangle-exclamation"></i></a>
             {{else}}
                 {{#if (gt xpLeft 0)}}
-                    <a class="item blue" data-tooltip="{{ localize 'CO.notif.XPLeftToSpend' }}" data-tab="capacities">{{ localize "CO.tabs.capacities" }} ({{xpLeft}}) <i class="fa-solid fa-triangle-exclamation"></i></a>
+                    <a class="item blue" data-tooltip="{{ localize 'CO.notif.XPLeftToSpend' xpLeft=xpLeft }}" data-tab="capacities">{{ localize "CO.tabs.capacities" }} ({{xpLeft}}) <i class="fa-solid fa-triangle-exclamation"></i></a>
                 {{else}}
                     <a class="item" data-tab="capacities" data-tooltip="{{ localize 'CO.tabs.capacities' }}">{{ localize "CO.tabs.capacities" }}</a>
                 {{/if}}
