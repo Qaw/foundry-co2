@@ -917,6 +917,9 @@ strong,
   color: #ababab;
   border-color: #ababab;
 }
+.co .sheet-tabs .item.sheet-change-lock {
+  flex: 0 1 32px;
+}
 .co .editor {
   margin: 0;
   height: 100%;
@@ -2144,6 +2147,9 @@ strong,
 .co .sheet-tabs .item.disabled {
   color: #ababab;
   border-color: #ababab;
+}
+.co .sheet-tabs .item.sheet-change-lock {
+  flex: 0 1 32px;
 }
 .co.sheet.actor.character {
   min-width: 630px;
