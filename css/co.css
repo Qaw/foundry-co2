@@ -2156,9 +2156,11 @@ strong,
 }
 .co.sheet.actor.character .window-content {
   padding: 0;
+  overflow: hidden;
 }
 .co.sheet.actor.character .window-content form.editable,
 .co.sheet.actor.character .window-content form.locked {
+  height: 100%;
   padding: 0;
   margin: 0;
 }
@@ -2237,6 +2239,8 @@ strong,
   flex: 1;
   padding: 5px;
   margin: 0;
+  overflow-y: auto;
+  height: calc(100% - 77px);
 }
 .co.sheet.actor.character .window-content form.editable .main .sheet-body h3.header,
 .co.sheet.actor.character .window-content form.locked .main .sheet-body h3.header {
