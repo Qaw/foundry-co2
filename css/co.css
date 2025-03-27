@@ -2204,6 +2204,7 @@ strong,
 .co.sheet.actor.character .window-content form.locked .main .character-sheet-header .name input.level {
   flex: 0 0 40px;
   text-align: center;
+  padding-top: 2px;
 }
 .co.sheet.actor.character .window-content form.editable .main .character-sheet-header .name span.level,
 .co.sheet.actor.character .window-content form.locked .main .character-sheet-header .name span.level {
