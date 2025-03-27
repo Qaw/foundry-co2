@@ -14,6 +14,7 @@
       padding: 0;
       form.editable,
       form.locked {
+        height: 100%;
         padding: 0;
         margin: 0;
         .main {
@@ -80,6 +81,8 @@
             flex: 1;
             padding: 5px;
             margin: 0;
+            overflow-y: auto;
+            height: calc(100% - 99px);
 
             .main,
             .effects {

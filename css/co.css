@@ -3993,6 +3993,7 @@ strong,
 }
 .co.sheet.actor.encounter .window-content form.editable,
 .co.sheet.actor.encounter .window-content form.locked {
+  height: 100%;
   padding: 0;
   margin: 0;
 }
@@ -4066,6 +4067,8 @@ strong,
   flex: 1;
   padding: 5px;
   margin: 0;
+  overflow-y: auto;
+  height: calc(100% - 99px);
 }
 .co.sheet.actor.encounter .window-content form.editable .main .sheet-body .main .actions-container,
 .co.sheet.actor.encounter .window-content form.locked .main .sheet-body .main .actions-container,
