@@ -1346,14 +1346,14 @@ strong,
   align-items: flex-start;
 }
 .co .sidebar {
+  display: flex;
+  flex-direction: column;
   padding: 3px 0 0 3px;
   margin: 0;
   flex: 190px 0 0;
   height: 100%;
   min-width: 190px;
-  overflow: hidden scroll;
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary) transparent;
+  overflow: hidden;
 }
 .co .sidebar .image-container {
   border: 1px solid var(--color-border-dark);
@@ -1371,6 +1371,11 @@ strong,
 }
 .co .sidebar .image-container:hover .hover-icon {
   visibility: visible;
+}
+.co .sidebar .scrollable {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
 }
 .co .sidebar .health-section .hit-points,
 .co .sidebar .resource-section .hit-points,

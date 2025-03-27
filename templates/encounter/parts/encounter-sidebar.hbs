@@ -3,237 +3,239 @@
     <img class="actor-image" src="{{actor.img}}" data-edit="img" data-tooltip="{{actor.name}}" height="auto" width="100%" style="margin: 0 auto" />
     <a class="hover-icon" data-action="show-image"><i class="fas fa-image fa-fw"></i></a>
   </div>
-  <!-- DEF -->
-  <div class="sidebar-section armor-section">
-    <div class="sidebar-section-header">
-      <div class="sidebar-label armor-label">
-        <i class="fas fa-fw fa-shield-alt"></i>
-        <h4>{{localize "CO.label.long.def"}}</h4>
+  <div class="scrollable">
+    <!-- DEF -->
+    <div class="sidebar-section armor-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label armor-label">
+          <i class="fas fa-fw fa-shield-alt"></i>
+          <h4>{{localize "CO.label.long.def"}}</h4>
+        </div>
+        <div class="armor-base labelled-field" data-tooltip="{{combat.def.tooltipValue}}">
+          {{combat.def.value}}
+        </div>
       </div>
-      <div class="armor-base labelled-field" data-tooltip="{{combat.def.tooltipValue}}">
-        {{combat.def.value}}
-      </div>
+      {{#if unlocked}}
+        <div class="sidebar-section-content">
+          <div class="labelled-field">
+            <label>{{localize "CO.label.long.base"}}</label>
+            <input
+              class="def-base"
+              type="number"
+              name="system.combat.def.base"
+              value="{{combat.def.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{combat.def.tooltipBase}}"
+            />
+          </div>
+        </div>
+        <div class="sidebar-section-content">
+          <div class="labelled-field">
+            <label>{{localize "CO.label.long.bonus"}}</label>
+            <input
+              class="def-bonus"
+              type="text"
+              name="system.combat.def.bonuses.sheet"
+              value="{{numberFormat combat.def.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+            />
+          </div>
+        </div>
+      {{/if}}
     </div>
-    {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="labelled-field">
-          <label>{{localize "CO.label.long.base"}}</label>
-          <input
-            class="def-base"
-            type="number"
-            name="system.combat.def.base"
-            value="{{combat.def.base}}"
-            data-dtype="Number"
-            placeholder="0"
-            data-tooltip="{{combat.def.tooltipBase}}"
-          />
+    <!-- HPs -->
+    <div class="health-section sidebar-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label">
+          <i class="fas fa-fw fa-heart"></i>
+          <h4 data-tooltip="{{localize 'CO.label.long.hp'}}">{{localize "CO.label.short.hp"}}</h4>
+          <div class="hit-points">
+            <input class="current" name="system.attributes.hp.value" value="{{attributes.hp.value}}" type="number" data-dtype="Number" placeholder="0" />
+            <span class="slash">/</span>
+            <span class="max" data-tooltip="{{attributes.hp.tooltip}}">{{attributes.hp.max}}</span>
+          </div>
         </div>
       </div>
-      <div class="sidebar-section-content">
-        <div class="labelled-field">
-          <label>{{localize "CO.label.long.bonus"}}</label>
-          <input
-            class="def-bonus"
-            type="text"
-            name="system.combat.def.bonuses.sheet"
-            value="{{numberFormat combat.def.bonuses.sheet decimals=0 sign=true}}"
-            data-dtype="Number"
-            placeholder="0"
-          />
+      {{#if unlocked}}
+        <div class="sidebar-section-content">
+          <div class="labelled-field">
+            <label>{{localize "CO.label.long.base"}}</label>
+            <input class="hp-base" type="number" name="system.attributes.hp.base" value="{{attributes.hp.base}}" data-dtype="Number" placeholder="0" />
+          </div>
         </div>
-      </div>
-    {{/if}}
-  </div>
-  <!-- HPs -->
-  <div class="health-section sidebar-section">
-    <div class="sidebar-section-header">
-      <div class="sidebar-label">
-        <i class="fas fa-fw fa-heart"></i>
-        <h4 data-tooltip="{{localize 'CO.label.long.hp'}}">{{localize "CO.label.short.hp"}}</h4>
-        <div class="hit-points">
-          <input class="current" name="system.attributes.hp.value" value="{{attributes.hp.value}}" type="number" data-dtype="Number" placeholder="0" />
-          <span class="slash">/</span>
-          <span class="max" data-tooltip="{{attributes.hp.tooltip}}">{{attributes.hp.max}}</span>
+        <div class="sidebar-section-content">
+          <div class="labelled-field">
+            <label>{{localize "CO.label.long.bonus"}}</label>
+            <input
+              class="hp-bonus"
+              type="text"
+              name="system.attributes.hp.bonuses.sheet"
+              value="{{numberFormat attributes.hp.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+            />
+          </div>
         </div>
-      </div>
+      {{/if}}
     </div>
-    {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="labelled-field">
-          <label>{{localize "CO.label.long.base"}}</label>
-          <input class="hp-base" type="number" name="system.attributes.hp.base" value="{{attributes.hp.base}}" data-dtype="Number" placeholder="0" />
+    <!-- INIT -->
+    <div class="init-section sidebar-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label init-label">
+          <i class="fa-solid fa-swords fa-fw"></i>
+          <h4>{{localize "CO.label.long.init"}}</h4>
+        </div>
+        <div class="init-value labelled-field" data-tooltip="{{combat.init.tooltipValue}}">
+          {{combat.init.value}}
         </div>
       </div>
-      <div class="sidebar-section-content">
-        <div class="labelled-field">
-          <label>{{localize "CO.label.long.bonus"}}</label>
-          <input
-            class="hp-bonus"
-            type="text"
-            name="system.attributes.hp.bonuses.sheet"
-            value="{{numberFormat attributes.hp.bonuses.sheet decimals=0 sign=true}}"
-            data-dtype="Number"
-            placeholder="0"
-          />
+      {{#if unlocked}}
+        <div class="sidebar-section-content">
+          <div class="labelled-field">
+            <label>{{localize "CO.label.long.base"}}</label>
+            <input class="init-base" type="number" name="system.combat.init.base" value="{{combat.init.base}}" data-dtype="Number" placeholder="0" />
+          </div>
         </div>
-      </div>
-    {{/if}}
-  </div>
-  <!-- INIT -->
-  <div class="init-section sidebar-section">
-    <div class="sidebar-section-header">
-      <div class="sidebar-label init-label">
-        <i class="fa-solid fa-swords fa-fw"></i>
-        <h4>{{localize "CO.label.long.init"}}</h4>
-      </div>
-      <div class="init-value labelled-field" data-tooltip="{{combat.init.tooltipValue}}">
-        {{combat.init.value}}
-      </div>
+        <div class="sidebar-section-content">
+          <div class="labelled-field">
+            <label>{{localize "CO.label.long.bonus"}}</label>
+            <input
+              class="init-bonus"
+              type="text"
+              name="system.combat.init.bonuses.sheet"
+              value="{{numberFormat combat.init.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+            />
+          </div>
+        </div>
+      {{/if}}
     </div>
-    {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="labelled-field">
-          <label>{{localize "CO.label.long.base"}}</label>
-          <input class="init-base" type="number" name="system.combat.init.base" value="{{combat.init.base}}" data-dtype="Number" placeholder="0" />
+    <!-- DR -->
+    <div class="sidebar-section dr-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label dr-label">
+          <i class="fas fa-fw fa-universal-access"></i>
+          <h4>{{localize "CO.ui.dr"}}</h4>
+        </div>
+        <div class="dr-base labelled-field" data-tooltip="{{combat.dr.tooltipValue}}">
+          {{combat.dr.value}}
         </div>
       </div>
-      <div class="sidebar-section-content">
-        <div class="labelled-field">
-          <label>{{localize "CO.label.long.bonus"}}</label>
-          <input
-            class="init-bonus"
-            type="text"
-            name="system.combat.init.bonuses.sheet"
-            value="{{numberFormat combat.init.bonuses.sheet decimals=0 sign=true}}"
-            data-dtype="Number"
-            placeholder="0"
-          />
+      {{#if unlocked}}
+        <div class="sidebar-section-content">
+          <div class="labelled-field">
+            <label>{{localize "CO.label.long.base"}}</label>
+            <input
+              class="dr-base"
+              type="number"
+              name="system.combat.dr.base"
+              value="{{combat.dr.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{combat.dr.tooltipBase}}"
+            />
+          </div>
         </div>
-      </div>
-    {{/if}}
-  </div>
-  <!-- DR -->
-  <div class="sidebar-section dr-section">
-    <div class="sidebar-section-header">
-      <div class="sidebar-label dr-label">
-        <i class="fas fa-fw fa-universal-access"></i>
-        <h4>{{localize "CO.ui.dr"}}</h4>
-      </div>
-      <div class="dr-base labelled-field" data-tooltip="{{combat.dr.tooltipValue}}">
-        {{combat.dr.value}}
-      </div>
+        <div class="sidebar-section-content">
+          <div class="labelled-field">
+            <label>{{localize "CO.label.long.bonus"}}</label>
+            <input
+              class="dr-bonus"
+              type="text"
+              name="system.combat.dr.bonuses.sheet"
+              value="{{numberFormat combat.dr.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+            />
+          </div>
+        </div>
+      {{/if}}
     </div>
-    {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="labelled-field">
-          <label>{{localize "CO.label.long.base"}}</label>
-          <input
-            class="dr-base"
-            type="number"
-            name="system.combat.dr.base"
-            value="{{combat.dr.base}}"
-            data-dtype="Number"
-            placeholder="0"
-            data-tooltip="{{combat.dr.tooltipBase}}"
-          />
-        </div>
-      </div>
-      <div class="sidebar-section-content">
-        <div class="labelled-field">
-          <label>{{localize "CO.label.long.bonus"}}</label>
-          <input
-            class="dr-bonus"
-            type="text"
-            name="system.combat.dr.bonuses.sheet"
-            value="{{numberFormat combat.dr.bonuses.sheet decimals=0 sign=true}}"
-            data-dtype="Number"
-            placeholder="0"
-          />
-        </div>
-      </div>
-    {{/if}}
-  </div>
-  <!-- IMMUNITES -->
-  <!--    <div class="immunities sidebar-section">-->
-  <!--        <div class="sidebar-section-header">-->
-  <!--            <div class="sidebar-label">-->
-  <!--                <i class="fas fa-fw fa-ankh"></i>-->
-  <!--                <h4>Immunities</h4>-->
-  <!--            </div>-->
-  <!--            <div class="immunities-controls controls">-->
-  <!--                <a data-action="edit-immunities" data-tooltip="Edit Immunities"><i class="fa-solid fa-edit"></i></a>-->
-  <!--            </div>-->
-  <!--        </div>-->
+    <!-- IMMUNITES -->
+    <!--    <div class="immunities sidebar-section">-->
+    <!--        <div class="sidebar-section-header">-->
+    <!--            <div class="sidebar-label">-->
+    <!--                <i class="fas fa-fw fa-ankh"></i>-->
+    <!--                <h4>Immunities</h4>-->
+    <!--            </div>-->
+    <!--            <div class="immunities-controls controls">-->
+    <!--                <a data-action="edit-immunities" data-tooltip="Edit Immunities"><i class="fa-solid fa-edit"></i></a>-->
+    <!--            </div>-->
+    <!--        </div>-->
 
-  <!--        <div class="sidebar-section-content">-->
-  <!--            <div class="tag-legacy immunity" data-immunity="fire">fire</div>-->
-  <!--        </div>-->
-  <!--    </div>-->
-  <!-- FAIBLESSES -->
-  <!--    <div class="weaknesses sidebar-section">-->
-  <!--        <div class="sidebar-section-header">-->
-  <!--            <div class="sidebar-label">-->
-  <!--                <i class="fas fa-fw fa-heart-broken"></i>-->
-  <!--                <h4>Weaknesses</h4>-->
-  <!--            </div>-->
-  <!--            <div class="weaknesses-controls controls">-->
-  <!--                <a data-action="edit-weaknesses" data-tooltip="Edit Weaknesses"><i class="fa-solid fa-edit"></i></a>-->
-  <!--            </div>-->
-  <!--        </div>-->
-  <!--        <div class="sidebar-section-content">-->
-  <!--            <div class="tag-legacy weakness" data-weakness="cold">cold 20</div>-->
-  <!--            <div class="tag-legacy weakness" data-weakness="cold-iron">cold iron 20</div>-->
-  <!--            <div class="tag-legacy weakness" data-weakness="good">good 20</div>-->
-  <!--        </div>-->
-  <!--    </div>-->
-  <!-- RESISTANCES -->
-  <!--    <div class="resistances sidebar-section">-->
-  <!--        <div class="sidebar-section-header disabled">-->
-  <!--            <div class="sidebar-label">-->
-  <!--                <i class="fas fa-fw fa-shield-virus"></i>-->
-  <!--                <h4>Resistances</h4>-->
-  <!--            </div>-->
-  <!--            <div class="resistances-controls controls">-->
-  <!--                <a data-action="edit-resistances" data-tooltip="Edit Resistances"><i class="fa-solid fa-edit"></i></a>-->
-  <!--            </div>-->
-  <!--        </div>-->
-  <!--        <div class="sidebar-section-content">-->
-  <!--        </div>-->
-  <!--    </div>-->
-  <!-- MOUVEMENT -->
-  <div class="speed-section sidebar-section">
-    <div class="sidebar-section-header">
-      <div class="sidebar-label mvt-label">
-        <i class="fas fa-fw fa-shoe-prints"></i>
-        <h4>{{localize "CO.label.long.movement"}}</h4>
-      </div>
-      <div class="mvt-base labelled-field">
-        {{attributes.movement.value}}&nbsp;{{attributes.movement.unit}}
-      </div>
-    </div>
-    {{#if unlocked}}
-      <div class="sidebar-section-content">
+    <!--        <div class="sidebar-section-content">-->
+    <!--            <div class="tag-legacy immunity" data-immunity="fire">fire</div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!-- FAIBLESSES -->
+    <!--    <div class="weaknesses sidebar-section">-->
+    <!--        <div class="sidebar-section-header">-->
+    <!--            <div class="sidebar-label">-->
+    <!--                <i class="fas fa-fw fa-heart-broken"></i>-->
+    <!--                <h4>Weaknesses</h4>-->
+    <!--            </div>-->
+    <!--            <div class="weaknesses-controls controls">-->
+    <!--                <a data-action="edit-weaknesses" data-tooltip="Edit Weaknesses"><i class="fa-solid fa-edit"></i></a>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--        <div class="sidebar-section-content">-->
+    <!--            <div class="tag-legacy weakness" data-weakness="cold">cold 20</div>-->
+    <!--            <div class="tag-legacy weakness" data-weakness="cold-iron">cold iron 20</div>-->
+    <!--            <div class="tag-legacy weakness" data-weakness="good">good 20</div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!-- RESISTANCES -->
+    <!--    <div class="resistances sidebar-section">-->
+    <!--        <div class="sidebar-section-header disabled">-->
+    <!--            <div class="sidebar-label">-->
+    <!--                <i class="fas fa-fw fa-shield-virus"></i>-->
+    <!--                <h4>Resistances</h4>-->
+    <!--            </div>-->
+    <!--            <div class="resistances-controls controls">-->
+    <!--                <a data-action="edit-resistances" data-tooltip="Edit Resistances"><i class="fa-solid fa-edit"></i></a>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--        <div class="sidebar-section-content">-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!-- MOUVEMENT -->
+    <div class="speed-section sidebar-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label mvt-label">
+          <i class="fas fa-fw fa-shoe-prints"></i>
+          <h4>{{localize "CO.label.long.movement"}}</h4>
+        </div>
         <div class="mvt-base labelled-field">
-          <label>{{localize "CO.label.long.base"}}</label>
-          <input class="mvt-base" type="number" name="system.attributes.movement.base" value="{{attributes.movement.base}}" data-dtype="Number" placeholder="0" />
-          <select name="system.attributes.movement.unit" data-type="String">
-            {{selectOptions choiceMoveUnit selected=system.attributes.movement.unit localize=true}}
-          </select>
+          {{attributes.movement.value}}&nbsp;{{attributes.movement.unit}}
         </div>
       </div>
-      <div class="sidebar-section-content">
-        <div class="labelled-field">
-          <label>{{localize "CO.label.long.bonus"}}</label>
-          <input
-            class="movment-bonus"
-            type="text"
-            name="system.attributes.movement.bonuses.sheet"
-            value="{{numberFormat attributes.movement.bonuses.sheet decimals=0 sign=true}}"
-            data-dtype="Number"
-            placeholder="0"
-          />
+      {{#if unlocked}}
+        <div class="sidebar-section-content">
+          <div class="mvt-base labelled-field">
+            <label>{{localize "CO.label.long.base"}}</label>
+            <input class="mvt-base" type="number" name="system.attributes.movement.base" value="{{attributes.movement.base}}" data-dtype="Number" placeholder="0" />
+            <select name="system.attributes.movement.unit" data-type="String">
+              {{selectOptions choiceMoveUnit selected=system.attributes.movement.unit localize=true}}
+            </select>
+          </div>
         </div>
-      </div>
-    {{/if}}
+        <div class="sidebar-section-content">
+          <div class="labelled-field">
+            <label>{{localize "CO.label.long.bonus"}}</label>
+            <input
+              class="movment-bonus"
+              type="text"
+              name="system.attributes.movement.bonuses.sheet"
+              value="{{numberFormat attributes.movement.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+            />
+          </div>
+        </div>
+      {{/if}}
+    </div>
   </div>
 </div>
