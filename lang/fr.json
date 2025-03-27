@@ -94,9 +94,9 @@
         "enslavement": "Immunisé à l'asservissement",
         "movementImpairment": "Immunisé aux altérations de mouvement",
         "sendToChat": "Envoyer sur le chat",
-        "edit": "Editer",
-        "editItem": "Editer l'objet",
-        "editCapacity": "Editer la capacité",
+        "edit": "Éditer",
+        "editItem": "Éditer l'objet",
+        "editCapacity": "Éditer la capacité",
         "delete": "Supprimer",
         "deleteItem": "Supprimer l'objet",
         "deleteCapacity": "Supprimer la capacité",
@@ -170,7 +170,7 @@
         "critrange": "Crit.",
         "rank": "rang",
         "add": "Aj.",
-        "edit": "Edit.",
+        "edit": "Édit.",
         "delete": "Suppr.",
         "difficulty": "Diff.",
         "effects": "FX",
@@ -207,7 +207,7 @@
       "weakenedDescription": "Dé malus à tous les tests",
       "outOfBreath": "Essoufflé",
       "outOfBreathDescription": "Le déplacement est limité à 5 m par action de mouvement",
-      "stun": "Etourdi",
+      "stun": "Étourdi",
       "stunDescription": "Aucune action possible et ‑5 en DEF",
       "immobilized": "Immobilisé",
       "immobilizedDescription": "Pas de déplacement et dé malus aux tests d’attaque.",
@@ -542,7 +542,7 @@
     },
     "modifier": {
       "type": {
-        "equipment": "Equipement",
+        "equipment": "Équipement",
         "feature": "Feature",
         "profile": "Profil",
         "capacity": "Capacité"
@@ -553,7 +553,7 @@
         "attribute": "Attribut",
         "resource": "Ressource",
         "skill": "Jet de compétence",
-        "state": "Etat",
+        "state": "État",
         "bonusDice": "Dé bonus",
         "malusDice": "Dé malus"
       },
