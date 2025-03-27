@@ -1,12 +1,12 @@
 .sidebar {
+  display: flex;
+  flex-direction: column;
   padding: 3px 0 0 3px;
   margin: 0;
   flex: 190px 0 0;
   height: 100%;
   min-width: 190px;
-  overflow: hidden scroll;
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary) transparent;
+  overflow: hidden;
 
   .image-container {
     border: 1px solid var(--color-border-dark);
@@ -28,10 +28,15 @@
       }
     }
   }
+  .scrollable {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) transparent;
+  }
   .health-section,
-  .resource-section{
+  .resource-section {
     .hit-points,
-    .resource-points{
+    .resource-points {
       display: flex;
       flex-direction: row;
       flex: 0;
@@ -43,7 +48,8 @@
         text-align: right;
         padding-right: 3px;
       }
-      .max.lt1000, .max.lt1000 {
+      .max.lt1000,
+      .max.lt1000 {
         width: 36px;
       }
       .max {

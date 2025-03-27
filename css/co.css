@@ -918,6 +918,9 @@ strong,
   color: #ababab;
   border-color: #ababab;
 }
+.co .sheet-tabs .item.sheet-change-lock {
+  flex: 0 1 32px;
+}
 .co .editor {
   margin: 0;
   height: 100%;
@@ -1344,14 +1347,14 @@ strong,
   align-items: flex-start;
 }
 .co .sidebar {
+  display: flex;
+  flex-direction: column;
   padding: 3px 0 0 3px;
   margin: 0;
   flex: 190px 0 0;
   height: 100%;
   min-width: 190px;
-  overflow: hidden scroll;
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary) transparent;
+  overflow: hidden;
 }
 .co .sidebar .image-container {
   border: 1px solid var(--color-border-dark);
@@ -1369,6 +1372,11 @@ strong,
 }
 .co .sidebar .image-container:hover .hover-icon {
   visibility: visible;
+}
+.co .sidebar .scrollable {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
 }
 .co .sidebar .health-section .hit-points,
 .co .sidebar .resource-section .hit-points,
@@ -2147,15 +2155,20 @@ strong,
   color: #ababab;
   border-color: #ababab;
 }
+.co .sheet-tabs .item.sheet-change-lock {
+  flex: 0 1 32px;
+}
 .co.sheet.actor.character {
   min-height: 480px;
   min-width: 760px;
 }
 .co.sheet.actor.character .window-content {
   padding: 0;
+  overflow: hidden;
 }
 .co.sheet.actor.character .window-content form.editable,
 .co.sheet.actor.character .window-content form.locked {
+  height: 100%;
   padding: 0;
   margin: 0;
 }
@@ -2199,6 +2212,7 @@ strong,
 .co.sheet.actor.character .window-content form.locked .main .character-sheet-header .name input.level {
   flex: 0 0 40px;
   text-align: center;
+  padding-top: 2px;
 }
 .co.sheet.actor.character .window-content form.editable .main .character-sheet-header .name span.level,
 .co.sheet.actor.character .window-content form.locked .main .character-sheet-header .name span.level {
@@ -2234,6 +2248,8 @@ strong,
   flex: 1;
   padding: 5px;
   margin: 0;
+  overflow-y: auto;
+  height: calc(100% - 77px);
 }
 .co.sheet.actor.character .window-content form.editable .main .sheet-body h3.header,
 .co.sheet.actor.character .window-content form.locked .main .sheet-body h3.header {
@@ -3987,6 +4003,7 @@ strong,
 }
 .co.sheet.actor.encounter .window-content form.editable,
 .co.sheet.actor.encounter .window-content form.locked {
+  height: 100%;
   padding: 0;
   margin: 0;
 }
@@ -4060,6 +4077,8 @@ strong,
   flex: 1;
   padding: 5px;
   margin: 0;
+  overflow-y: auto;
+  height: calc(100% - 99px);
 }
 .co.sheet.actor.encounter .window-content form.editable .main .sheet-body .main .actions-container,
 .co.sheet.actor.encounter .window-content form.locked .main .sheet-body .main .actions-container,
@@ -5409,14 +5428,13 @@ strong,
   min-width: 400px;
 }
 .co.sheet.item .window-content {
+  padding: 0;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: flex-start;
-  padding: 8px;
   color: var(--color-text-dark-primary);
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 .co.sheet.item .window-content form {
   display: flex;
@@ -5432,7 +5450,7 @@ strong,
   justify-content: flex-start;
   flex: 0 0 70px;
   align-items: start;
-  width: 100%;
+  padding-right: 5px;
   padding-bottom: 6px;
   border-bottom: 1px solid var(--secondary-background);
 }
@@ -5466,6 +5484,12 @@ strong,
   flex: 1;
   border: none;
   height: var(--font-size-34);
+}
+.co.sheet.item .window-content form .sheet-body {
+  padding: 5px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: calc(100% - 77px);
 }
 .co.sheet.item .window-content form .sheet-body .description {
   height: 100%;

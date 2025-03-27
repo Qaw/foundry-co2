@@ -6,14 +6,13 @@
     min-height: 400px;
     min-width: 400px;
     .window-content {
+      padding: 0;
       display: flex;
       flex-direction: column;
       flex-wrap: nowrap;
       justify-content: flex-start;
-      padding: 8px;
       color: var(--color-text-dark-primary);
-      overflow-y: auto;
-      overflow-x: hidden;
+      overflow: hidden;
 
       form {
         display: flex;
@@ -30,7 +29,8 @@
           //align-items: center;
           flex: 0 0 70px;
           align-items: start;
-          width: 100%;
+          //width: 100%;
+          padding-right: 5px;
           padding-bottom: 6px;
           border-bottom: 1px solid var(--secondary-background);
 
@@ -77,6 +77,11 @@
         }
 
         .sheet-body {
+          padding: 5px;
+          overflow-x: hidden;
+          overflow-y: auto;
+          height: calc(100% - 77px);
+
           .description {
             height: 100%;
             font-size: 1.2rem;
