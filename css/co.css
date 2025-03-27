@@ -5414,14 +5414,13 @@ strong,
   box-shadow: 3px 3px 5px gray;
 }
 .co.sheet.item .window-content {
+  padding: 0;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: flex-start;
-  padding: 8px;
   color: var(--color-text-dark-primary);
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 .co.sheet.item .window-content form {
   display: flex;
@@ -5437,7 +5436,7 @@ strong,
   justify-content: flex-start;
   flex: 0 0 70px;
   align-items: start;
-  width: 100%;
+  padding-right: 5px;
   padding-bottom: 6px;
   border-bottom: 1px solid var(--secondary-background);
 }
@@ -5471,6 +5470,12 @@ strong,
   flex: 1;
   border: none;
   height: var(--font-size-34);
+}
+.co.sheet.item .window-content form .sheet-body {
+  padding: 5px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: calc(100% - 77px);
 }
 .co.sheet.item .window-content form .sheet-body .description {
   height: 100%;
