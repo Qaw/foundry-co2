@@ -149,7 +149,7 @@
     {{#each paths as |path id|}}
         {{!log 'path' path id}}
         <div class="cell center item" data-uuid="{{path.uuid}}" data-item-type="path">
-            <a class="item-control item-edit"><img class="inline-img" src="{{path.img}}" data-tooltip="{{path.name}}" /></a>
+            <a class="item-control item-edit"><img class="inline-img" src="{{path.img}}" data-tooltip="{{localize 'CO.label.long.edit'}}" /></a>
         </div>
         <div class="cell left">
             <div class="field-label ellipse">{{path.name}}</div>
