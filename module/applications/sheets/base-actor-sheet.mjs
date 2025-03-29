@@ -233,8 +233,8 @@ export default class CoBaseActorSheet extends ActorSheet {
   /**
    * Handles the event when a capacity is learned.
    *
-   * @param {Event} event - The event object triggered by the user interaction.
-   * @returns {Promise<void>} - A promise that resolves when the capacity has been marked as learned.
+   * @param {Event} event The event object triggered by the user interaction.
+   * @returns {Promise<void>} A promise that resolves when the capacity has been marked as learned.
    */
   async _onLearnCapacity(event) {
     event.preventDefault()
@@ -245,7 +245,7 @@ export default class CoBaseActorSheet extends ActorSheet {
   /**
    * Handles the event when a capacity is unlearned by the actor.
    *
-   * @param {Event} event - The event that triggered the unlearn capacity action.
+   * @param {Event} event The event that triggered the unlearn capacity action.
    * @returns {Promise<void>} A promise that resolves when the capacity has been unlearned.
    */
   async _onUnlearnCapacity(event) {

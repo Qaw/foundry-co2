@@ -259,7 +259,8 @@ export const CUSTOM_STATUS_EFFECT = [
         key: "system.combat.def.bonuses.effects",
         mode: 2,
         value: 3,
-      }],
+      },
+    ],
     description: "CO.customStatus.partialDefDescription",
   },
   {
@@ -271,7 +272,8 @@ export const CUSTOM_STATUS_EFFECT = [
         key: "system.combat.def.bonuses.effects",
         mode: 2,
         value: 5,
-      }],
+      },
+    ],
     description: "CO.customStatus.fullDefDescription",
-  }
+  },
 ]

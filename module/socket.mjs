@@ -34,9 +34,9 @@ export function _buff({ userId } = {}) {
 
 /** * @description
  * //Fonction qui va proposer dans le chat d'appliquer des soins
- * @param {*} toACtorId : Liste d'id d'acteur cible
- * @param {int} Quantité de PV restaurés
- * @param {string} id de l'acteur à l'origine du soin
+ * @param {*} toACtorId Liste d'id d'acteur cible
+ * @param {int} healAmount Quantité de PV restaurés
+ * @param {string} fromUserId id de l'acteur à l'origine du soin
  * @param {Resolver} resolver Instance de la classe resolver définissant le soin
  */
 export async function _heal({ toACtorId, healAmount, fromUserId, resolver }) {
@@ -45,12 +45,12 @@ export async function _heal({ toACtorId, healAmount, fromUserId, resolver }) {
   const actor = game.actors.get(target)
   if (actor) {
     if (actor.testUserPermission(game.user, "OWNER", { exact: true })) {
-      //je suis bien sur l'utilisateur possédant l'acteur ciblé, j'applique les soins à mon personnage
+      // Je suis bien sur l'utilisateur possédant l'acteur ciblé, j'applique les soins à mon personnage
       actor.system.attributes.hp.value += healAmount
       if (actor.system.attributes.hp.value > actor.system.attributes.hp.max) actor.system.attributes.hp.value = actor.system.attributes.hp.max
       actor.update({ "system.attributes.hp.value": actor.system.attributes.hp.value })
-      //envoyer un petit message chat pour dire qu'il a été soigné par l'auteur
-      let content = "vous avez été soigné par "
+      // Envoyer un petit message chat pour dire qu'il a été soigné par l'auteur
+      let content = "Vous avez été soigné par "
       const autor = game.actors.get(fromUserId)
       if (autor) {
         content += " " + autor.name
@@ -66,7 +66,7 @@ export async function _heal({ toACtorId, healAmount, fromUserId, resolver }) {
 
 export async function _oppositeRoll({ userId, messageId, rolls, result } = {}) {
   console.log(`handleSocketEvent _oppositeRoll from ${userId} !`, messageId, rolls, result)
-  //const currentUser = game.user._id
+  // const currentUser = game.user._id
   if (game.user.isGM) {
     const message = game.messages.get(messageId)
     await message.update({ rolls: rolls, "system.result": result })

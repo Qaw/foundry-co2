@@ -19,20 +19,23 @@ export default class COEncounterSheet extends CoBaseActorSheet {
     const context = super.getData(options)
     context.attacks = this.actor.system.attacks
     context.attacksActions = this.actor.attacksActions
-    context.choiceArchetypes = SYSTEM.ENCOUNTER_ARCHETYPES
-    context.choiceCategories = SYSTEM.ENCOUNTER_CATEGORIES
-    context.choiceBossRanks = SYSTEM.ENCOUNTER_BOSS_RANKS
-    context.choiceSizes = SYSTEM.SIZES
-    //Activation desactivation des defenses
-    context.partialDef = this.actor.hasEffect("partialDef") ? true : false
-    context.partialfa = "fa-solid fa-shield-halved"
-    context.fullDef = this.actor.hasEffect("fullDef") ? true : false
-    context.fullfa = "fa-solid fa-shield"
+
     context.visibleActions = await this.actor.getVisibleActions()
     context.visibleActivableActions = await this.actor.getVisibleActivableActions()
     context.visibleNonActivableActions = await this.actor.getVisibleNonActivableActions()
     context.visibleActivableTemporaireActions = await this.actor.getVisibleActivableTemporaireActions()
     context.visibleNonActivableNonTemporaireActions = await this.actor.getVisibleNonActivableNonTemporaireActions()
+
+    // Choices
+    context.choiceArchetypes = SYSTEM.ENCOUNTER_ARCHETYPES
+    context.choiceCategories = SYSTEM.ENCOUNTER_CATEGORIES
+    context.choiceBossRanks = SYSTEM.ENCOUNTER_BOSS_RANKS
+    context.choiceSizes = SYSTEM.SIZES
+
+    // Gestion des défenses
+    context.partialDef = this.actor.hasEffect("partialDef")
+    context.fullDef = this.actor.hasEffect("fullDef")
+
     if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`COEncounterSheet - context`), context)
     return context
   }

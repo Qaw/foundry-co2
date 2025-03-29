@@ -32,7 +32,6 @@ export default class CoEquipmentSheet extends CoBaseItemSheet {
     context.isMisc = this.item.system.isMisc
     context.isConsumable = this.item.system.isConsumable
 
-
     return context
   }
 }
