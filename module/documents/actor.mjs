@@ -1225,8 +1225,8 @@ export default class COActor extends Actor {
 
     // Gestion de la difficulté
     const difficultyTooltip = difficulty
+    const displayDifficulty = game.settings.get("co", "displayDifficulty")
     if (useDifficulty === undefined) {
-      const displayDifficulty = game.settings.get("co", "displayDifficulty")
       if (displayDifficulty === "none") {
         useDifficulty = false
       } else {
@@ -1313,7 +1313,6 @@ export default class COActor extends Actor {
       rollModes: CONFIG.Dice.rollModes,
       dice,
       formula,
-      initialFormula: formula,
       skillValue,
       actor: this,
       skillId,

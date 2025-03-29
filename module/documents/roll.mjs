@@ -32,7 +32,7 @@ export class CORoll extends Roll {
       let isFailure
       // Si on utilise une difficulté et qu'elle a été définie
       // Si elle n'est pas saisie dans la fenêtre de dialogue, difficulty vaut ""
-      if (roll.options.useDifficulty && roll.options.difficulty !== "") {
+      if (roll.options.useDifficulty && difficulty && difficulty !== "") {
         if (!roll.options.oppositeRoll) {
           if (typeof difficulty === "string") {
             difficulty = parseInt(difficulty)
@@ -134,17 +134,16 @@ export class COSkillRoll extends CORoll {
             radio.addEventListener("change", (event) => {
               event.preventDefault()
               event.stopPropagation()
-              console.log("event", event)
               let newFormula
               switch (event.target.value) {
                 case "standard":
-                  newFormula = `1d20+${dialogContext.skillFormula}`
+                  newFormula = `1d20+${dialogContext.skillValue}`
                   break
                 case "bonus":
-                  newFormula = `2d20kh+${dialogContext.skillFormula}`
+                  newFormula = `2d20kh+${dialogContext.skillValue}`
                   break
                 case "malus":
-                  newFormula = `2d20kl+${dialogContext.skillFormula}`
+                  newFormula = `2d20kl+${dialogContext.skillValue}`
                   break
               }
               dialog.querySelector('input[name="formula"]').value = newFormula
@@ -186,7 +185,7 @@ export class COSkillRoll extends CORoll {
       bonus: withDialog ? rollContext.bonus : dialogContext.bonus,
       malus: withDialog ? rollContext.malus : dialogContext.malus,
       critical: withDialog ? rollContext.critical : dialogContext.critical,
-      oppositeRoll: withDialog ? rollContext.difficulty.includes("@oppose") : dialogContext.oppositeRoll.includes("@oppose"),
+      oppositeRoll: withDialog ? rollContext.difficulty?.includes("@oppose") : dialogContext.oppositeRoll.includes("@oppose"),
       oppositeTarget: dialogContext.targets?.length > 0 ? dialogContext.targets[0].uuid : null,
       oppositeValue: withDialog ? rollContext.difficulty : dialogContext.difficulty,
       useDifficulty: dialogContext.useDifficulty,
@@ -356,7 +355,7 @@ export class COAttackRoll extends CORoll {
         damageBonus: withDialog ? rollContext.damageBonus : dialogContext.damageBonus,
         damageMalus: withDialog ? rollContext.damageMalus : dialogContext.damageMalus,
         critical: withDialog ? rollContext.critical : dialogContext.critical,
-        oppositeRoll: withDialog ? rollContext.difficulty.includes("@oppose") : dialogContext.oppositeRoll.includes("@oppose"),
+        oppositeRoll: withDialog ? rollContext.difficulty?.includes("@oppose") : dialogContext.oppositeRoll.includes("@oppose"),
         oppositeTarget: dialogContext.targets?.length > 0 ? dialogContext.targets[0].uuid : null,
         oppositeValue: withDialog ? rollContext.difficulty : dialogContext.difficulty,
         useDifficulty: dialogContext.useDifficulty,
