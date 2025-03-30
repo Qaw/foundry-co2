@@ -17,9 +17,11 @@
 
 {{#each inventory as |items category|}}
   {{!log "Chroniques Oubliées | inventory group" this}}
-  <ol class="items-container foldable" data-tab="inventory" data-category="{{category}}">
+  <ol class="items-container" data-tab="inventory" data-category="{{category}}">
     <li class="items-container-header flexrow">
-      <h3 class="item-name flexrow">{{localize (concat "CO.ui." category)}}</h3>
+      <h3 class="item-name flexrow">
+        <a class="section-toggle">{{localize (concat "CO.ui." category)}}</a>
+      </h3>
       <div class="item-detail">{{localize "CO.ui.usage"}}</div>
       <div class="item-detail">{{localize "CO.label.short.quantity"}}</div>
       {{#if @root.editable}}
@@ -29,7 +31,7 @@
         </div>
       {{/if}}
     </li>
-    <ol class="item-list">
+    <ol class="item-list foldable">
       {{#each items as |item id|}}
         {{!log 'inventory item' item}}
         <li class="item flexrow" data-item-uuid="{{item.uuid}}" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="true">
