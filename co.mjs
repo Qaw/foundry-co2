@@ -117,7 +117,7 @@ Hooks.once("init", async function () {
       decimals: 0,
     }
   }
-  CONFIG.Combat.documentClass = models.CombatCO
+  CONFIG.Combat.documentClass = documents.CombatCO
   // Un round dure 6s
   CONFIG.time.roundTime = 6
   console.info(Utils.log("Initialized"))

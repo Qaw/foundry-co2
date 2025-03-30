@@ -1,6 +1,7 @@
-import CoChat from "../../chat.mjs"
 import { SYSTEM } from "../../config/system.mjs"
+import Utils from "../../utils.mjs"
 
+import CoChat from "../../chat.mjs"
 export default class CoBaseActorSheet extends ActorSheet {
   /**
    * Different sheet modes.
@@ -33,6 +34,7 @@ export default class CoBaseActorSheet extends ActorSheet {
   /** @override */
   getData(options) {
     const context = super.getData(options)
+
     context.debugMode = game.settings.get("co", "debugMode")
     context.system = this.actor.system
     context.abilities = this.actor.system.abilities
@@ -50,9 +52,11 @@ export default class CoBaseActorSheet extends ActorSheet {
     context.inventory = this.actor.inventory
     context.unlocked = this.isEditMode
     context.locked = this.isPlayMode
+
     // Select options
     context.choiceMoveUnit = SYSTEM.MOVEMENT_UNIT
 
+    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseActorSheet - context`), context)
     return context
   }
 

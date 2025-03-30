@@ -290,12 +290,14 @@
       "enabled": "Activé(s)",
       "disabled": "Désactivé(s)",
       "passive": "Passif(s)",
+      "customEffects": "Effets personnalisés",
       "visible": "Visible",
       "conditions": "Conditions",
       "subject": "Sujet",
       "predicate": "Prédicat",
       "target": "Cible",
       "additionalInfos": "Informations complémentaires",
+      "applyTo": "Appliquer à",
       "object": "Objet",
       "modifiers": "Modificateurs",
       "resolvers": "Résolutions",
@@ -606,6 +608,11 @@
         "rp": "Dés de récupération",
         "mp": "Points de mana",
         "fp": "Points de chance"
+      },
+      "apply": {
+        "self": "Soi-même",
+        "others": "Les autres",
+        "both": "Les deux"
       }
     },
     "resolver": {
@@ -636,13 +643,18 @@
         "active": "Effets supplémentaires",
         "applyOn": "s'applique sur :",
         "onSuccess": "Sur un succès",
-        "onFail": "Sur un echec",
-        "applyFormula": "dommages/soins périodique",
-        "applyFormulaTooltip": "Appliquer des dommages (+X)/soins(-X) sur la durée",
-        "type": "type d'energie",
+        "onFailure": "Sur un échec",
+        "always": "Toujours",
+        "applyFormula": "Formule",
+        "applyFormulaTooltip": "Appliquer des dommages ou des soins sur la durée",
+        "elementType": "Type d'énergie pour les dommages",
+        "formulaType": "Dommages/Soins périodiques",
         "statusAvailable": "Statuts disponibles",
-        "statuses": "Liste des status",
-        "applyBuff": "Applique buff/debuff ?"
+        "statuses": "Liste des statuts"
+      },
+      "formula": {
+        "damage": "Dommages",
+        "heal": "Soins"
       }
     },
     "itemTypes": {

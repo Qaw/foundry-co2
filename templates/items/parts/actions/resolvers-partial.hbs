@@ -92,29 +92,30 @@
             </div>
             {{#if r.additionalEffect.active}}
                 <div class="flexrow strong">
+                    <div class="form-fields flex1 center" >{{localize "CO.resolver.additionalEffect.formulaType"}}</div>
                     <div class="form-fields flex1 center" data-tooltip="{{localize 'CO.resolver.additionalEffect.applyFormulaTooltip'}}" data-tooltip-direction="UP">{{localize "CO.resolver.additionalEffect.applyFormula"}}</div>
-                    <div class="form-fields flex1 center" data-tooltip="{{localize 'CO.resolver.additionalEffect.type'}}" data-tooltip-direction="UP">{{localize "CO.resolver.additionalEffect.type"}}</div>
-                    <div class="form-fields flex1 center" data-tooltip="{{localize 'CO.resolver.additionalEffect.statusAvailable'}}" data-tooltip-direction="UP">{{localize "CO.resolver.additionalEffect.statusAvailable"}}</div>                    
+                    <div class="form-fields flex1 center" data-tooltip="{{localize 'CO.resolver.additionalEffect.elementType'}}" data-tooltip-direction="UP">{{localize "CO.resolver.additionalEffect.elementType"}}</div>                    
+                </div>
+                <div class="flexrow">   
+                    <select name="system.actions.{{../idx}}.resolvers.{{id}}.additionalEffect.formulaType" data-type="String" style="width:50%;margin-right:10px">
+                            {{selectOptions @root.choiceResolverEffectFormulaTypes selected=r.additionalEffect.formulaType localize=true}}
+                    </select>
+                    <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.resolvers.{{id}}.additionalEffect.formula" type="text" value="{{r.additionalEffect.formula}}" data-dtype="String"  /></div>                
+                    <select name="system.actions.{{../idx}}.resolvers.{{id}}.additionalEffect.elementType" data-type="String" style="width:50%;margin-right:10px">
+                            {{selectOptions @root.choiceResolverEffectElementTypes selected=r.additionalEffect.elementType localize=true blank=""}}
+                    </select>
                 </div>
                 <div class="flexrow">
-                    
-                    <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.resolvers.{{id}}.additionalEffect.formula" type="text" value="{{r.additionalEffect.formula}}" data-dtype="String"  /></div>                
-                     <select name="system.actions.{{../idx}}.resolvers.{{id}}.additionalEffect.elementType" data-type="String" style="width:50%;margin-right:10px">
-                            {{selectOptions @root.choiceEnergies selected=r.additionalEffect.elementType localize=true}}
-                        </select>
-                    <select name="root.selectedStatus" class="resolver-select-status" data-type="String" style="width:50%;margin-right:10px">
+                    <div class="form-fields flex1 center" data-tooltip="{{localize 'CO.resolver.additionalEffect.statusAvailable'}}" data-tooltip-direction="UP">{{localize "CO.resolver.additionalEffect.statusAvailable"}}</div>                    
+                    <select name="root.selectedStatus" class="resolver-status-select" data-type="String">
                             {{selectOptions @root.choiceConditionStates selected=root.selectedStatus localize=true}}
                     </select>
-                    <a class="resolver-statutadd flex0" data-tooltip="{{localize 'CO.ui.add'}}" data-item-id="{{id}}" data-action-id="{{../idx}}"><i class="fas fa-add"></i></a>
-                    
-                </div>
-                <div class="flexrow">
+                    <a class="resolver-status-add flex0" data-tooltip="{{localize 'CO.ui.add'}}" data-item-id="{{id}}" data-action-id="{{../idx}}"><i class="fas fa-add"></i></a>            
                     <div class="form-group">
                         <label>{{localize "CO.resolver.additionalEffect.statuses"}}</label>
                         <div class="form-fields">
                             <input class="field-value" name="system.actions.{{../idx}}.resolvers.{{id}}.additionalEffect.statuses"  type="text" value="{{r.additionalEffect.statuses}}" placeholder="{{localize 'CO.resolver.additionalEffect.statuses'}}" data-dtype="String" />
                         </div>
-                        <label class="checkbox"><input type="checkbox" name="system.actions.{{../idx}}.resolvers.{{id}}.additionalEffect.applyBuff" {{checked r.additionalEffect.applyBuff}}> {{localize "CO.resolver.additionalEffect.applyBuff"}}</label>
                     </div>
                 </div>
                 <div class="flexrow">
@@ -125,7 +126,7 @@
                         </div>
                         <label>{{localize "CO.ui.unit"}}</label>
                         <select name="system.actions.{{../idx}}.resolvers.{{id}}.additionalEffect.unit" data-type="String" style="width:50%;margin-right:10px">
-                            {{selectOptions @root.choiceDurationUnit selected=r.additionalEffect.unit localize=true}}
+                            {{selectOptions @root.choiceResolverEffectDurationUnit selected=r.additionalEffect.unit localize=true}}
                         </select>
                     </div>
                 </div>

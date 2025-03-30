@@ -1,10 +1,7 @@
 <div class="effects section-container">
-  <div class="section-header">
-    <h4>{{localize "CO.label.long.effects"}}</h4>
-    <div class="actions-controls controls"></div>
-  </div>
-  <!-- ACTIONS -->
+
   <div class="section-body-no-flex">
+    <!-- ACTIONS -->
     <ol class="effects-container items-container">
       <li class="items-container-header flexrow">
         <h3 class="item-name flexrow">{{localize "CO.ui.enabled"}}</h3>
@@ -65,15 +62,13 @@
         {{/each}}
       </ol>
     </ol>
-  </div>
-  <!-- CUSTOMEFFECT -->
-  <div class="section-body-no-flex">
+    <!-- CUSTOM EFFECTS -->
     <ol class="effects-container items-container">
       <li class="items-container-header flexrow">
-        <h3 class="item-name flexrow">{{localize "CO.itemTypes.customEffect"}}</h3>
+        <h3 class="item-name flexrow">{{localize "CO.ui.customEffects"}}</h3>
       </li>
       <ol class="item-list">
-        <!-- Liste des customEffect actuellement actif -->
+        <!-- Liste des customEffects actuellement actifs -->
         {{#each currentEffects as |effect id|}}
           {{log (concat "Chroniques Oubliées | customEffect " id) effect}}
           <li class="item flexrow" data-item-uuid="{{effect.source}}" data-item-indice="{{id}}" data-item-type="customEffectData" draggable="false">
@@ -91,4 +86,5 @@
       </ol>
     </ol>
   </div>
+ 
 </div>

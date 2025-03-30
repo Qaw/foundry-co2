@@ -198,3 +198,18 @@ export const MODIFIERS_TARGET = Object.freeze({
     subtype: "state",
   },
 })
+
+export const MODIFIERS_APPLY = Object.freeze({
+  self: {
+    id: "self",
+    label: "CO.modifier.apply.self",
+  },
+  others: {
+    id: "others",
+    label: "CO.modifier.apply.others",
+  },
+  both: {
+    id: "both",
+    label: "CO.modifier.apply.both",
+  },
+})

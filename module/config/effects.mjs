@@ -323,37 +323,37 @@ export const CUSTOM_EFFECT = {
 export const CUSTOM_EFFECT_ELEMENT = {
   fire: {
     id: "fire",
-    name: "CO.customEffect.fire",
+    label: "CO.customEffect.fire",
     description: "CO.customEffect.fireDescription",
   },
   ice: {
     id: "ice",
-    name: "CO.customEffect.ice",
+    label: "CO.customEffect.ice",
     description: "CO.customEffect.iceDescription",
   },
   lightning: {
     id: "lightning",
-    name: "CO.customEffect.lightning",
+    label: "CO.customEffect.lightning",
     description: "CO.customEffect.lightningDescription",
   },
   poison: {
     id: "poison",
-    name: "CO.customEffect.poison",
+    label: "CO.customEffect.poison",
     description: "CO.customEffect.poisonDescription",
   },
   sacred: {
     id: "sacred",
-    name: "CO.customEffect.sacred",
+    label: "CO.customEffect.sacred",
     description: "CO.customEffect.sacredDescription",
   },
   putrid: {
     id: "putrid",
-    name: "CO.customEffect.putrid",
+    label: "CO.customEffect.putrid",
     description: "CO.customEffect.putridDescription",
   },
   disease: {
     id: "disease",
-    name: "CO.customEffect.disease",
+    label: "CO.customEffect.disease",
     description: "CO.customEffect.diseaseDescription",
   },
 }

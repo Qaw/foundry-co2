@@ -29,7 +29,7 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     context.visibleNonActivableActions = await this.actor.getVisibleNonActivableActions()
     context.visibleActivableTemporaireActions = await this.actor.getVisibleActivableTemporaireActions()
     context.visibleNonActivableNonTemporaireActions = await this.actor.getVisibleNonActivableNonTemporaireActions()
-    context.currentEffects = await this.actor.getCustomEffects()
+    context.currentEffects = await this.actor.customEffects
 
     context.overloadMalus = this.actor.malusFromArmor
 

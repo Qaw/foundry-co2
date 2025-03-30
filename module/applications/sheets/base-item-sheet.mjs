@@ -1,10 +1,10 @@
 import { SYSTEM } from "../../config/system.mjs"
+import Utils from "../../utils.mjs"
 
 import { Action } from "../../models/schemas/action.mjs"
 import { Condition } from "../../models/schemas/condition.mjs"
 import { Resolver } from "../../models/schemas/resolver.mjs"
 import { Modifier } from "../../models/schemas/modifier.mjs"
-import Utils from "../../utils.mjs"
 
 export default class CoBaseItemSheet extends ItemSheet {
   /** @override */
@@ -155,6 +155,8 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.locked = this.isPlayMode
 
     context.systemFields = this.document.system.schema.fields
+
+    // Select options
     context.choiceActionTypes = SYSTEM.ACTION_TYPES
     context.choiceConditionObjects = SYSTEM.CONDITION_OBJECTS
     context.choiceConditionPredicates = SYSTEM.CONDITION_PREDICATES
@@ -163,15 +165,13 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.choiceResolverApplyOn = SYSTEM.RESOLVER_RESULT
     context.choiceResolverTargets = SYSTEM.RESOLVER_TARGET
     context.choiceResolverScopes = SYSTEM.RESOLVER_SCOPE
+    context.choiceResolverEffectDurationUnit = SYSTEM.COMBAT_UNITE
+    context.choiceResolverEffectElementTypes = SYSTEM.CUSTOM_EFFECT_ELEMENT
+    context.choiceResolverEffectFormulaTypes = SYSTEM.RESOLVER_FORMULA_TYPE
     context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
     context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
-    context.choiceDurationUnit = SYSTEM.COMBAT_UNITE
-    context.choiceEnergies = []
-    // Parcourir chaque élément et ajouter le nom au tableau
-    context.choiceEnergies.push("")
-    for (const key in SYSTEM.CUSTOM_EFFECT_ELEMENT) {
-      context.choiceEnergies.push(SYSTEM.CUSTOM_EFFECT_ELEMENT[key].name)
-    }
+    context.choiceModifierApplies = SYSTEM.MODIFIERS.MODIFIERS_APPLY
+
     context.choiceConditionStates = SYSTEM.STATUS_EFFECT.reduce((acc, effect) => {
       acc[effect.id] = effect.name
       return acc
@@ -213,8 +213,8 @@ export default class CoBaseItemSheet extends ItemSheet {
     html.find(".action-add").click(this._onAddAction.bind(this))
     html.find(".action-delete").click(this._onDeleteAction.bind(this))
     html.find(".sheet-change-lock").click(this._onSheetChangelock.bind(this))
-    html.find(".resolver-statutadd").click(this._onAddStatut.bind(this))
-    html.find(".resolver-select-status").change(this._onSelectStatus.bind(this))
+    html.find(".resolver-status-add").click(this._onAddStatus.bind(this))
+    html.find(".resolver-status-select").change(this._onSelectStatus.bind(this))
   }
 
   /**
@@ -311,7 +311,7 @@ export default class CoBaseItemSheet extends ItemSheet {
    * @param {*} event
    * @returns
    */
-  _onAddStatut(event) {
+  _onAddStatus(event) {
     event.preventDefault()
     const dataset = event.currentTarget.dataset
     const actions = this.item.toObject().system.actions

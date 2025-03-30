@@ -8,6 +8,7 @@
         <div class="flexrow strong">
             <div class="form-fields flex1 center">{{localize "CO.ui.type"}}</div>
             <div class="form-fields flex1 center">{{localize "CO.ui.target"}}</div>
+            <div class="form-fields flex1 center">{{localize "CO.ui.applyTo"}}</div>
             <div class="form-fields flex1 center">{{localize "CO.ui.value"}}</div>
             <div class="form-fields flex2 center">{{localize "CO.ui.additionalInfos"}}</div>
             <div class="form-fields flex0"></div>
@@ -48,6 +49,11 @@
                         {{#if (eq m.subtype 'malusDice')}}
                             {{selectOptions @root.choiceModifierMalusDiceTargets selected=m.target localize=true}}
                         {{/if}}        
+                    </select>
+                </div>
+                <div class="form-fields flex1">
+                    <select name="system.actions.{{../idx}}.modifiers.{{id}}.apply" data-type="String" style="width:100%">
+                        {{selectOptions @root.choiceModifierApplies selected=m.apply localize=true}}
                     </select>
                 </div>
                 <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.modifiers.{{id}}.value" type="text" value="{{m.value}}" data-dtype="String" /></div>

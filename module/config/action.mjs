@@ -213,7 +213,22 @@ export const RESOLVER_RESULT = Object.freeze({
     label: "CO.resolver.additionalEffect.onSuccess",
   },
   fail: {
-    id: "fail",
-    label: "CO.resolver.additionalEffect.onFail",
+    id: "failure",
+    label: "CO.resolver.additionalEffect.onFailure",
+  },
+  always: {
+    id: "always",
+    label: "CO.resolver.additionalEffect.always",
+  },
+})
+
+export const RESOLVER_FORMULA_TYPE = Object.freeze({
+  damage: {
+    id: "damage",
+    label: "CO.resolver.formula.damage",
+  },
+  heal: {
+    id: "heal",
+    label: "CO.resolver.formula.heal",
   },
 })

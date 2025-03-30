@@ -2,6 +2,7 @@ import { SYSTEM } from "../config/system.mjs"
 import { Modifier } from "../models/schemas/modifier.mjs"
 import { CustomEffectData } from "../models/schemas/custom-effect.mjs"
 import { CORoll, COSkillRoll, COAttackRoll } from "./roll.mjs"
+import CoChat from "../chat.mjs"
 import Utils from "../utils.mjs"
 
 /**
@@ -493,6 +494,9 @@ export default class COActor extends Actor {
    * @throws {Error} Si les effets de défense partielle et totale sont tentés d'être activés simultanément.
    */
   async activateCOStatusEffect({ state, effectid } = {}) {
+    // FIXME Trouver pourquoi ça vaut ""
+    if (effectid === "") return
+
     // On ne peut pas activer à la fois la défense partielle et la défense totale
     if (effectid === "partialDef" && state === true) {
       if (this.hasEffect("fullDef")) {
@@ -1624,7 +1628,7 @@ export default class COActor extends Actor {
   /**
    * Fonction assurant les jet de dé pour le soin
    * @param {COItem} item Item à l'origine du soin (ex : Restauration mineure de prêtre)
-   * @param {object} param1 Elements permettant le calcul du soin :
+   * @param {object} param1 Elements permettant le calcul du soin
    * @param {string} param1.actionName  action déclencheur
    * @param {string} param1.healFormula formule utilisée pour le soin
    * @param {string}  param1.targetType : indique si on se cible soit-même, ou d'autres personnes etc.
@@ -1633,17 +1637,21 @@ export default class COActor extends Actor {
   async rollHeal(item, { actionName = "", healFormula = undefined, targetType = SYSTEM.RESOLVER_TARGET.none.id, targets = [] } = {}) {
     let roll = new Roll(healFormula)
     await roll.roll()
-    if (targetType === SYSTEM.RESOLVER_TARGET.self.id) {
-      this.applyHealAndDamage(roll.total)
+    const healAmount = roll.total
+    if (targetType === SYSTEM.RESOLVER_TARGET.none.id || targetType === SYSTEM.RESOLVER_TARGET.self.id) {
+      this.applyHeal(healAmount)
     } else if (targetType === SYSTEM.RESOLVER_TARGET.single.id || targetType === SYSTEM.RESOLVER_TARGET.multiple.id) {
-      if (game.user.isGM) Hooks.callAll("applyHealing", targets, this.name, roll.total)
-      else {
+      if (game.user.isGM) {
+        for (const target of targets) {
+          target.actor.applyHeal(healAmount)
+        }
+      } else {
         const uuidList = targets.map((obj) => obj.uuid)
         game.socket.emit(`system.${SYSTEM.ID}`, {
           action: "heal",
           data: {
             targets: uuidList,
-            healAmount: roll.total,
+            healAmount,
             fromUserId: this.uuid,
           },
         })
@@ -1680,6 +1688,41 @@ export default class COActor extends Actor {
     }
 
     await ui.chat.processMessage(message, { actor: this._id, alias: this.name })
+  }
+
+  /**
+   * Applique des dégâts à l'acteur, réduisant ses points de vie (PV) en conséquence.
+   * Si les dégâts dépassent la résistance aux dégâts (DR) de l'acteur, les dégâts restants sont soustraits des PV.
+   * Met à jour les PV de l'acteur et envoie un message de notification dans le chat.
+   *
+   * @async
+   * @param {number} damage La quantité de dégâts à appliquer à l'acteur.
+   * @returns {Promise<void>} Résout lorsque la mise à jour des PV et la création du message de chat sont terminées.
+   */
+  async applyDamage(damage) {
+    let hp = this.system.attributes.hp
+    damage = Math.max(0, damage - this.system.combat.dr.value)
+    hp.value = Math.max(0, hp.value - damage)
+    await this.update({ "system.attributes.hp": hp })
+    const message = game.i18n.format("CO.notif.damaged", { actorName: this.name, amount: damage })
+    await new CoChat(this).withContent(message).create()
+  }
+
+  /**
+   * Applique un effet de soin à l'acteur en augmentant ses points de vie (PV) actuels.
+   * S'assure que la valeur des PV ne dépasse pas les PV maximum.
+   * Met à jour les PV de l'acteur et envoie un message de notification dans le chat.
+   *
+   * @async
+   * @param {number} heal La quantité de soin à appliquer aux PV de l'acteur.
+   * @returns {Promise<void>} Résout lorsque les PV de l'acteur ont été mis à jour.
+   */
+  async applyHeal(heal) {
+    let hp = this.system.attributes.hp
+    hp.value = Math.min(hp.max, hp.value + heal)
+    await this.update({ "system.attributes.hp": hp })
+    const message = game.i18n.format("CO.notif.healed", { actorName: this.name, amount: heal })
+    await new CoChat(this).withContent(message).create()
   }
   // #endregion
 
@@ -1766,114 +1809,66 @@ export default class COActor extends Actor {
 
   /**
    * On applique les effets supplémentaires
-   * @param {CustomEffectData} effect : custom effect appliqué sur l'acteur probablement à cause d'un skill
+   * @param {CustomEffectData} effect : Custom effect appliqué sur l'acteur
    */
   async applyCustomEffect(effect) {
-    // Si j'ai déjà ce debuff je peux pas le cumuler !
+    // TODO Si j'ai déjà ce debuff je peux pas le cumuler ? Est-ce qu'on augmente pas la durée ?
     const debuf = this.system.currentEffects.find((c) => c.slug === effect.slug)
     if (debuf) return
     // On doit maintenant déterminer le round de combat
-    await this.startApplyingCustomEffect(effect, game.combat.round)
+    await this.startApplyingCustomEffect(effect)
   }
 
   /**
-   * Commence à appliquer l'effet en l'initialisant et en activant les différents status
+   * Commence à appliquer l'effet en l'initialisant et en activant les différents statuts
    * @param {CustomEffectData} effect
-   * @param {integer} round
    */
-  async startApplyingCustomEffect(effect, round) {
-    const newEffect = effect.toObject()
-    newEffect.modifiers = effect.modifiers
-    // Console.log("newEffect : ", newEffect)
-    newEffect.startedAt = round
-    if (newEffect.unit === SYSTEM.COMBAT_UNITE.round) {
-      newEffect.lastRound = newEffect.startedAt + newEffect.duration
-    } else {
-      newEffect.lastRound = newEffect.startedAt + Math.round(newEffect.duration / CONFIG.time.roundTime)
-    }
-    console.log("lastRound:", newEffect.lastRound, "duration :", newEffect.duration, "startedAt", newEffect.startedAt)
+  async startApplyingCustomEffect(effect) {
     // Applique le statut
-    if (newEffect.statuses && newEffect.statuses.length > 0) {
-      for (const status of newEffect.statuses) {
+    if (effect.statuses) {
+      for (const status of effect.statuses) {
         let result = await this.activateCOStatusEffect({ state: true, effectid: status })
         if (result === false) return false // On applique pas l'effet s'il y a une immunité (cas d'un result === false)
       }
     }
 
     let currentEffects = foundry.utils.deepClone(this.system.currentEffects)
-    currentEffects.push(newEffect)
+    currentEffects.push(effect)
     await this.update({ "system.currentEffects": currentEffects })
 
-    // Si il y a des dommage on les applique dès le premier round
+    // FIXME On est sûr de ça ? S'il y a une formule définie, application dès le premier round
     if (effect.formula) {
-      await this.applyDamageOverTime()
+      await this.applyEffectOverTime()
     }
     return true
   }
 
-  /**
-   * Actions that occur at the beginning of an Actor's turn in Combat.
-   * This method is only called for one User who has ownership permission over the Actor.
-   */
-  async onStartTurn() {
-    // Re-prepare data and re-render the actor sheet
-    this.reset()
-    this._sheet?.render(false)
-    console.log(`C'est au tour de ${this.name} de jouer`)
-    // Apply damage-over-time before recovery
-    await this.applyDamageOverTime()
-  }
-
   /* -------------------------------------------- */
 
   /**
-   * L'actions est déclenché lorsqu'un acteur termine son tour de combat.
-   * Cette méthode est uniquement appelée sur l'utilisateur qui a des droits sur l'acteur.
+   * Applies effects over time to the current object based on its active effects.
+   * This method processes each effect in the `currentEffects` array, evaluating
+   * its formula and applying the corresponding action (damage or healing).
+   *
+   * - If the formula includes dice notation (e.g., "d20"), it rolls the dice and
+   *   uses the result.
+   * - The method supports two formula types: "damage" and "heal".
+   *
    */
-  onEndTurn() {
-    // Re-prepare data and re-render the actor sheet
-    this.reset()
-    this._sheet?.render(false)
-    console.log(`Le tour de ${this.name} est terminé`)
-    // Retire les custom Effect qui se terminent à la fin du tour
-    this.expireEffects(false)
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Actions déclenchée lorsqu'un acteur quitte le combat tracker.
-   */
-  onLeaveCombat() {
-    // Re-prepare data and re-render the actor sheet
-    this.reset()
-    this._sheet?.render(false)
-    for (let i = this.system.currentEffects.length - 1; i >= 0; i--) {
-      this.deleteCustomEffect(this.system.currentEffects[i])
-    }
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Applique les effets de degats/soins qui sont actuellement actif sur l'acteur.
-   * Positif les degats péridiques sont traités comme des dégats et devrait être réduit ou amplifié en fonction de résistance/vulnérabilité (voir plus tard).
-   * Negatif les degats péridiques sont traités comme des soins et ne devrait pas être affecté par des résistance ou vulnérabilité.
-   * @returns {Promise<void>}
-   */
-  async applyDamageOverTime() {
+  async applyEffectOverTime() {
+    console.log(`applyEffectOverTime pour ${this.name}`)
     for (const effect of this.system.currentEffects) {
-      // Ici on devrait tenir compte du type d'energie (feu/glace etc) et d'eventuelle resistance/vulnerabilite à voir plus tard
-      if (!effect.a || effect.formula.length === 0) continue
-      // Doit on jeter un dé ou c'est une valeur fixe ?
-      const diceInclude = effect.formula.match("d[0-9]{1,}")
-      let formulResult = effect.formula
+      // TODO Ici on devrait tenir compte du type d'energie (feu/glace etc) et d'eventuelle resistance/vulnerabilite à voir plus tard
+      // Dé ou valeur fixe
+      const diceInclude = effect.formula.match("d[0-9]{1,}") || effect.formula.match("D[0-9]{1,}")
+      let formulaResult = effect.formula
       if (diceInclude) {
-        const roll = new Roll(formulResult)
+        const roll = new Roll(effect.formula)
         await roll.evaluate()
-        formulResult = roll.total
+        formulaResult = roll.total
       }
-      await this.applyHealAndDamage(formulResult)
+      if (effect.formulaType === "damage") await this.applyDamage(formulaResult)
+      if (effect.formulaType === "heal") await this.applyHeal(formulaResult)
     }
   }
 

@@ -13,7 +13,7 @@
       flags: new fields.ObjectField(),
       _stats: new fields.DocumentStatsField()
 
-  PRpriétés de BaseCombatant
+  Propriétés de BaseCombatant
   _id: new fields.DocumentIdField(),
       type: new fields.DocumentTypeField(this, {initial: CONST.BASE_DOCUMENT_TYPE}),
       system: new fields.TypeDataField(this),
@@ -33,50 +33,22 @@
  */
 
 export default class CombatCO extends Combat {
-  /* -------------------------------------------- */
-  /*  Document Methods                            */
-  /* -------------------------------------------- */
-
-  /** @inheritDoc */
-  async previousRound() {
-    if (!game.user.isGM) {
-      ui.notifications.warn("COMBAT.WarningCannotChangeRound", { localize: true })
-      return this
-    }
-    return super.previousRound()
-  }
-
-  /* -------------------------------------------- */
-
-  /** @inheritDoc */
-  async nextRound() {
-    if (!game.user.isGM) {
-      ui.notifications.warn("COMBAT.WarningCannotChangeRound", { localize: true })
-      return this
-    }
-    return super.nextRound()
-  }
-
-  /* -------------------------------------------- */
-
-  /** @inheritDoc */
-  _onDelete(options, userId) {
-    super._onDelete(options, userId)
-    for (const c of this.combatants) {
-      if (c.actor) {
-        c.actor.reset()
-        c.actor._sheet?.render(false)
-      }
-    }
-  }
-
   /** @override */
   async _onStartTurn(combatant) {
+    console.log(`C'est au tour de ${combatant.actor?.name} de jouer !`)
     await super._onStartTurn(combatant)
-    return combatant.actor.onStartTurn(this.turn, this.round)
+    if (combatant.actor?.system.currentEffects) await combatant.actor.applyEffectOverTime()
   }
 
-  /** @override */
+  /** @inheritDoc */
+  async _onEndTurn(combatant) {
+    await super._onEndTurn(combatant)
+    // Retire les custom Effect qui se terminent à la fin du tour
+    if (combatant.actor?.system.currentEffects) this.combatant.actor.expireEffects(false)
+    console.log(`Le tour de ${combatant.actor?.name} est terminé !`)
+  }
+
+  /** @override 
   async _onStartRound() {
     await super._onStartRound()
     if (this.turns.length < 2) return
@@ -93,17 +65,7 @@ export default class CombatCO extends Combat {
         break
       }
     }
-  }
-
-  /* -------------------------------------------- */
-
-  /** @inheritDoc */
-  async _onEndTurn(combatant) {
-    await super._onEndTurn(combatant)
-    await combatant.actor.onEndTurn(this.turn, this.round)
-    combatant.updateResource()
-    this.debounceSetup()
-  }
+  }*/
 
   /**
    * Define how the array of Combatants is sorted in the displayed list of the tracker.
