@@ -229,6 +229,11 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     const data = TextEditor.getDragEventData(event)
     const actor = this.actor
 
+    // A partir de l'uuid, extraction de primaryId qui est l'id de l'acteur
+    let { primaryId } = foundry.utils.parseUuid(data.uuid)
+    // Pas de drop d'objet sur soi même
+    if (primaryId === actor.id) return
+
     /**
      * A hook event that fires when some useful data is dropped onto an CharacterSheet.
      * @function dropCharacterSheetData
