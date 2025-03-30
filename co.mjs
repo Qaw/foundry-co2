@@ -16,8 +16,6 @@ import Macros from "./module/macros.mjs"
 import Utils from "./module/utils.mjs"
 import { handleSocketEvent } from "./module/socket.mjs"
 
-const DEVELOPMENT_MODE = true
-
 Hooks.once("init", async function () {
   console.info(SYSTEM.ASCII)
   console.info(Utils.log("Initializing..."))
@@ -178,12 +176,8 @@ Hooks.on("combatTurn", function (combat, updateData, updateOptions) {
 })
 
 Hooks.once("ready", async function () {
-  if (DEVELOPMENT_MODE) {
-    game.settings.set("co", "debugMode", true)
-  }
-
   if (!CONFIG.debug.co) {
-    if (DEVELOPMENT_MODE) {
+    if (game.settings.set("co", "debugMode", true)) {
       CONFIG.debug.co = {
         hooks: true,
         resolvers: true,
