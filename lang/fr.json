@@ -47,7 +47,10 @@
       "warningApplyDamageNoTarget": "Vous devez sélectionner au moins une cible pour appliquer les dommages",
       "warningNoMoreRecoveryPoints": "Vous n'avez plus de dés de récupération.",
       "warningNoAmmo": "Vous n'avez plus de munitions.",
-      "warningNoCharge": "Votre nombre d'utilisations restantes est insuffisant"
+      "warningNoCharge": "Votre nombre d'utilisations restantes est insuffisant",
+      "cantUseAllDef": "Vous ne pouvez pas utiliser les deux types de défense simultanément",
+      "healed": "{actorName} a été soigné de {amount} point(s) de vigueur",
+      "damaged": "{actorName} perd {amount} point(s) de vigueur"
     },
     "tooltip": {
       "formulaAttack": "Formule d'attaque (sans le dé)",
@@ -203,6 +206,8 @@
     "customStatus": {
       "blind": "Aveuglé",
       "blindDescription": "‑5 en Init., attaque et DEF, ‑10 en attaque à distance. Les attaques magiques nécessitant de voir la cible sont impossibles",
+      "dance": "Danse irrésistible",
+      "danceDescription": "Vous ne pouvez pas vous retenir de danser",
       "weakened": "Affaibli",
       "weakenedDescription": "Dé malus à tous les tests",
       "outOfBreath": "Essoufflé",
@@ -235,7 +240,9 @@
       "fullDef": "Défense totale (L)",
       "fullDefDescription": "+5 en DEF et aux tests opposés pour résister à une attaque ou un effet pendant 1 round",
       "fullDefActivate": "Activer la défense totale (L)",
-      "fullDefDeactivate": "Désactiver la défense totale (L)"
+      "fullDefDeactivate": "Désactiver la défense totale (L)",
+      "heroSong": "Chant des héros",
+      "heroSongDescription": "Le chant des héros vous donne un bonus de +1 à tous les tests"
     },
     "ui": {
       "none": "--",
@@ -340,7 +347,7 @@
       "pvLevel": "Points de vigueur par niveau",
       "noTarget": "Vous n'avez ciblé personne",
       "critTooltip": "Laisser vide pour utiliser la valeur par défaut du personnage",
-      "formulaTooltip": "Vous pouvez utiliser : @agi, @con, @for, @per, @cha, @int, @vol, @atc, @atd, @atm, @def, @ini, @niv, d4°, @toutrang[x], @rang, @rang[x,x,x,x,x]",
+      "formulaTooltip": "Vous pouvez utiliser : @agi, @con, @for, @per, @cha, @int, @vol, @atc, @atd, @atm, @def, @ini, @niv, d4°, @toutrang[x], @rang, @rang[x,x,x,x,x], @cible.def, @opposite",
       "activate": "Activer",
       "deactivate": "Désactiver",
       "use": "Utiliser",
@@ -444,6 +451,30 @@
       "gp": "Pièces d'or",
       "sp": "Pièces d'argent",
       "cp": "Pièces de cuivre"
+    },
+    "customEffect": {
+      "damageOrHeal": "Dommages ou soins",
+      "damageOrHealDescription": "Fait des dégats/soins par unité de temps (round/secondes)",
+      "buff": "Amélioration",
+      "buffDescription": "Augmente des capacités pendant un laps de temps (round/secondes)",
+      "debuff": "Affaiblissement",
+      "debuffDescription": "Diminue des capacités pendant un laps de temps (round/secondes)",
+      "status": "Statut",
+      "statusDescription": "Applique un statut pendant un laps de temps (round/secondes)",
+      "fire": "Feu",
+      "fireDescription": "Applique des dégats de type feu",
+      "ice": "Glace",
+      "iceDescription": "Applique des dégats de type glace",
+      "lightning": "Électrique",
+      "lightningDescription": "Applique des dégats de type électrique",
+      "poison": "Poison",
+      "poisonDescription": "Applique des dégats de type poison",
+      "disease": "Maladie",
+      "diseaseDescription": "Applique des dégats de type maladie",
+      "putrid": "Putréfaction",
+      "putridDescription": "Applique des dégats de type putréfaction",
+      "sacred": "Sacré",
+      "sacredDescription": "Applique des dégats/soins de type sacré"
     },
     "tabs": {
       "main": "Principal",
@@ -582,8 +613,7 @@
         "ranged": "Attaque à distance",
         "magical": "Attaque magique",
         "heal": "Soin",
-        "buff": "Amélioration",
-        "debuff": "Affaiblissement",
+        "buffDebuff": "Buff/Debuff",
         "auto": "Attaque automatique"
       },
       "target": {
@@ -600,6 +630,18 @@
         "enemies": "Ennemis",
         "all": "Tout le monde",
         "title": "Catégorie"
+      },
+      "additionalEffect": {
+        "active": "Effets supplémentaires",
+        "applyOn": "s'applique sur :",
+        "onSuccess": "Sur un succès",
+        "onFail": "Sur un echec",
+        "applyFormula": "dommages/soins périodique",
+        "applyFormulaTooltip": "Appliquer des dommages (+X)/soins(-X) sur la durée",
+        "type": "type d'energie",
+        "statusAvailable": "Statuts disponibles",
+        "statuses": "Liste des status",
+        "applyBuff": "Applique buff/debuff ?"
       }
     },
     "itemTypes": {
@@ -615,7 +657,8 @@
       "action": "Action",
       "path": "Voie",
       "capacity": "Capacité",
-      "attack": "Attaque (Rencontre)"
+      "attack": "Attaque (Rencontre)",
+      "customEffect": "Effet personnalisé"
     },
     "equipment": {
       "subtypes": {

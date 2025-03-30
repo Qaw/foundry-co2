@@ -141,40 +141,6 @@ Hooks.once("i18nInit", function () {
   CONFIG.statusEffects = customeffects
 })
 
-/* -------------------------------------------- */
-/*  Hooks  combat event                         */
-/* -------------------------------------------- */
-
-/**
- * On change de round donc on peux gérer des actions qui se termine "à la fin du round"
- * @param {Promise} un evenement de combat
- * @param {Combat} L'instance du combat en cours
- * @param {*} updateData : contient {round, turn}
- * @param {*} updateOptions contiens {direction: -1, worldTime: {delta: advanceTime}} -1 si on reviens en arriere et 1 si on avance
- */
-Hooks.on("combatRound", function (combat, updateData, updateOptions) {
-  if (combat.combatants) {
-    combat.combatants.forEach((combatant) => {
-      if (combatant.actor) combatant.actor.combatNewRound(combat, updateData, updateOptions)
-    })
-  }
-})
-
-/**
- * On change de tour d'action d'un combattant
- * combat.combatant.actor nous donnera accès à la fiche de l'acteur en cours
- * on peux gérer les degat/rd pr exemple attention tenir compte qu'un mj peux revenir
- * et repartir d'un tour donc ne pas applique les degat plusieurs fois
- * @param {Promise} un evenement de combat
- * @param {Combat} L'instance du combat en cours
- * @param {*} updateData : contient {round, turn: next}
- * @param {*} updateOptions contiens {direction: 1, worldTime: {delta: CONFIG.time.turnTime}} -1 si on reviens en arriere et 1 si on avance
- */
-
-Hooks.on("combatTurn", function (combat, updateData, updateOptions) {
-  if (combat.combatant) combat.combatant.actor.combatNewTurn(combat, updateData, updateOptions)
-})
-
 Hooks.once("ready", async function () {
   if (!CONFIG.debug.co) {
     if (game.settings.set("co", "debugMode", true)) {

@@ -1,5 +1,6 @@
 import { SYSTEM } from "../config/system.mjs"
 import { Modifier } from "../models/schemas/modifier.mjs"
+import { CustomEffectData } from "../models/schemas/custom-effect.mjs"
 import { CORoll, COSkillRoll, COAttackRoll } from "./roll.mjs"
 import Utils from "../utils.mjs"
 
@@ -224,6 +225,15 @@ export default class COActor extends Actor {
   }
 
   /**
+   * Renvoi true si l'acteur est en incapacité de faire quelque chose
+   */
+  get isIncapacitated() {
+    if (this.system.attributes.hp.value === 0) return true
+    if (this.hasEffect("immobilized") || this.hasEffect("paralysis") || this.hasEffect("stun") || this.hasEffect("unconscious") || this.hasEffect("dead")) return true
+    return false
+  }
+
+  /**
    * Retourne Toutes les actions de tous les objets
    */
   get actions() {
@@ -379,18 +389,33 @@ export default class COActor extends Actor {
     const modifiersByTarget = this.system.skillModifiers.filter((m) => m.target === ability)
     // Ajout des modifiers qui affecte toutes les cibles
     modifiersByTarget.push(...this.system.skillModifiers.filter((m) => m.target === SYSTEM.MODIFIERS_TARGET.all.id))
-
+    // Si le modifier est d'origine d'un customEffectData il ne faut pas chercher sa source
     let bonuses = []
     for (const modifier of modifiersByTarget) {
-      const sourceInfos = modifier.getSourceInfos(this)
-      bonuses.push({
-        sourceType: sourceInfos.sourceType,
-        name: sourceInfos.name,
-        description: sourceInfos.description,
-        pathType: sourceInfos.pathType,
-        value: modifier.evaluate(this),
-        additionalInfos: modifier.additionalInfos,
-      })
+      console.log(modifier)
+      if (!modifier.parent) {
+        const customeffect = this.system.currentEffects.find((e) => e.source === modifier.source)
+        if (customeffect) {
+          bonuses.push({
+            sourceType: "CustomEffectData",
+            name: customeffect.nom,
+            description: customeffect.nom,
+            pathType: "",
+            value: modifier.evaluate(this),
+            additionalInfos: "",
+          })
+        }
+      } else {
+        const sourceInfos = modifier.getSourceInfos(this)
+        bonuses.push({
+          sourceType: sourceInfos.sourceType,
+          name: sourceInfos.name,
+          description: sourceInfos.description,
+          pathType: sourceInfos.pathType,
+          value: modifier.evaluate(this),
+          additionalInfos: modifier.additionalInfos,
+        })
+      }
     }
     return bonuses
   }
@@ -401,6 +426,14 @@ export default class COActor extends Actor {
    */
   getEmbeddedItemByKey(key) {
     return this.items.find((item) => item.system.key === key)
+  }
+
+  /**
+   * Renvoi la liste des effets personnalisé actuellement sur l'acteur
+   * @returns {Array<CustomEffectData>} Tableau de customEffectData
+   */
+  getCustomEffects() {
+    return this.system.currentEffects
   }
 
   /**
@@ -455,7 +488,7 @@ export default class COActor extends Actor {
    * @param {Object} [params={}] Les paramètres de la fonction.
    * @param {boolean} params.state L'état à définir pour l'effet (true pour activer, false pour désactiver).
    * @param {string} params.effectid L'ID de l'effet à basculer.
-   * @returns {Promise<void>} Une promesse qui se résout lorsque l'effet de statut a été basculé.
+   * @returns {Promise<boolean>} Renvoi true si ça a été appliqué et false sinon (immunisé ?)
    *
    * @throws {Error} Si les effets de défense partielle et totale sont tentés d'être activés simultanément.
    */
@@ -463,17 +496,41 @@ export default class COActor extends Actor {
     // On ne peut pas activer à la fois la défense partielle et la défense totale
     if (effectid === "partialDef" && state === true) {
       if (this.hasEffect("fullDef")) {
-        // TODO : envoyer un message au joueur pour lui dire qu'il ne peut pas utiliser les deux en même temps
-        return
+        return ui.notifications.warn(game.i18n.localize("CO.notif.cantUseAllDef"))
       }
     }
     if (effectid === "fullDef" && state === true) {
       if (this.hasEffect("partialDef")) {
-        // TODO : envoyer un message au joueur pour lui dire qu'il ne peut pas utiliser les deux en même temps
-        return
+        return ui.notifications.warn(game.i18n.localize("CO.notif.cantUseAllDef"))
       }
     }
-    return await this.toggleStatusEffect(effectid, state)
+    // Imunisé aux altération de mouvement ?
+    if ((effectid === "stun" || effectid === "immobilized" || effectid === "paralysis") && state === true) {
+      if (this.system.modifiers) {
+        const state = this.system.modifiers.filter((m) => m.target === SYSTEM.MODIFIERS_TARGET.movementImpairment.id)
+        if (state && state.length > 0) {
+          // Immunisé on ne l'applique pas
+          ui.notifications.info(`${this.name} ${game.i18n.localize("CO.label.long.movementImpairment")}`)
+          return false
+        }
+      }
+    }
+    // Imunisé aux poisons ?
+    if (effectid === "poison" && state === true) {
+      if (this.system.modifiers) {
+        const state = this.system.modifiers.filter((m) => m.target === SYSTEM.MODIFIERS_TARGET.poisonimmunity.id)
+        if (state && state.length > 0) {
+          // Immunisé on ne l'applique pas
+          ui.notifications.info(`${this.name} ${game.i18n.localize("CO.label.long.poisonimmunity")}`)
+          return false
+        }
+      }
+    }
+
+    let hasEffect = this.statuses.has(effectid)
+    if (hasEffect && state === false) return await this.toggleStatusEffect(effectid, state)
+    if (!hasEffect && state === true) return await this.toggleStatusEffect(effectid, state)
+    return true
   }
 
   /**
@@ -718,12 +775,13 @@ export default class COActor extends Actor {
    *
    * @param {string} targetType The type of target to acquire. Can be "none", "self", "single", or "multiple".
    * @param {string} targetScope The scope of the target acquisition : allies, enemies, all.
-   * @param {Object} actionName The name of the action to be performed on the targets.
+   * @param {string} actionName The name of the action to be performed on the targets.
+   * @param {integer} targetNumber The number maximum of targets.
    * @param {Object} [options={}] Additional options for target acquisition.
    * @returns {Array} An array of acquired targets.
    * @throws {Error} Throws an error if any target has an error.
    */
-  acquireTargets(targetType, targetScope, actionName, options = {}) {
+  acquireTargets(targetType, targetScope, targetNumber, actionName, options = {}) {
     if (!canvas.ready) return []
     let targets
 
@@ -734,16 +792,16 @@ export default class COActor extends Actor {
         targets = this.getActiveTokens(true).map(this.#getTargetFromToken)
         break
       case "single":
-        targets = this.#getTargets(actionName, targetScope, true)
+        targets = this.#getTargets(actionName, targetScope, targetNumber, true)
         break
       case "multiple":
-        targets = this.#getTargets(actionName, targetScope, false)
+        targets = this.#getTargets(actionName, targetScope, targetNumber, false)
         break
     }
 
     // Throw an error if any target had an error
     for (const target of targets) {
-      if (target.error) throw new Error(target.error)
+      if (target.error) ui.notifications.error(target.error)
     }
     return targets
   }
@@ -941,7 +999,6 @@ export default class COActor extends Actor {
     itemData.system.mainProfile = true
     itemData = itemData instanceof Array ? itemData : [itemData]
     const newProfile = await this.createEmbeddedDocuments("Item", itemData)
-
     if (newProfile[0].system.modifiers.length > 0) {
       // Update the source of all modifiers with the uuid of the new embedded profile created
       const newModifiers = newProfile[0].system.toObject().modifiers
@@ -983,7 +1040,6 @@ export default class COActor extends Actor {
    */
   async addPath(path, profile = null) {
     let itemData = path.toObject()
-
     // If path creation is related to a profile creation
     // Update maxDefenseArmor
     if (profile !== null) {
@@ -992,9 +1048,7 @@ export default class COActor extends Actor {
 
     // Create the path
     const newPath = await this.createEmbeddedDocuments("Item", [itemData])
-
     let updatedCapacitiesUuids = []
-
     // Create all capacities
     for (const capacity of path.system.capacities) {
       let capa = await fromUuid(capacity)
@@ -1006,7 +1060,6 @@ export default class COActor extends Actor {
         updatedCapacitiesUuids.push(newCapacityUuid)
       }
     }
-
     // Update the array of capacities of the path with ids of created path
     await newPath[0].update({ "system.capacities": updatedCapacitiesUuids })
 
@@ -1194,9 +1247,9 @@ export default class COActor extends Actor {
    * @param {number} [options.malusDice] Le nombre de dés malus à soustraire du jet.
    * @param {number} [options.difficulty] La difficulté du test.
    * @param {boolean} [options.oppositeRoll=false] Si le test est un jet opposé.
-   * @param {boolean} [options.useDifficulty] Si la difficulté doit être utilisée.
-   * @param {boolean} [options.showDifficulty] Si la difficulté doit être affichée.
-   * @param {boolean} [options.withDialog=true] Si une boîte de dialogue doit être affichée.
+   * @param {boolean} [options.useDifficulty] Si la difficulté doit être utilisée : dépend de l'option du système displayDifficulty
+   * @param {boolean} [options.showDifficulty] Si la difficulté doit être affichée : dépend de displayDifficulty et du user
+   * @param {boolean} [options.withDialog=true] Si une boîte de dialogue doit être affichée ou non.
    * @param {Array} [options.targets] Les cibles du test.
    * @returns {Promise} Le résultat du test de compétence.
    */
@@ -1244,7 +1297,7 @@ export default class COActor extends Actor {
     // Si la difficulté dépend de la cible unique
     if (oppositeRoll && useDifficulty && targets === undefined) {
       if (difficulty && difficulty.includes("@cible")) {
-        targets = this.acquireTargets("single", "all", actionName)
+        targets = this.acquireTargets("single", "all", 1, actionName)
         if (targets.length === 0) {
           difficulty = null
         }
@@ -1257,7 +1310,7 @@ export default class COActor extends Actor {
 
       // Si l'attaque demande un jet opposé contre la cible
       else if (difficulty && difficulty.includes("@oppose")) {
-        targets = this.acquireTargets("single", "all", actionName)
+        targets = this.acquireTargets("single", "all", 1, actionName)
         if (targets.length === 0) {
           difficulty = null
         }
@@ -1429,11 +1482,10 @@ export default class COActor extends Actor {
         showDifficulty = displayDifficulty === "all" || (displayDifficulty === "gm" && game.user.isGM)
       }
     }
-
     // Si la difficulté dépend de la cible unique
     if (!auto && useDifficulty && targets === undefined) {
       if (difficulty && difficulty?.includes("@cible")) {
-        targets = this.acquireTargets("single", "all", actionName)
+        targets = this.acquireTargets("single", "all", 1, actionName)
         if (targets.length === 0) {
           difficulty = null
         }
@@ -1447,7 +1499,7 @@ export default class COActor extends Actor {
       // Si l'attaque demande un jet opposé contre la cible
       else if (difficulty && difficulty.includes("@oppose")) {
         oppositeRoll = true
-        targets = this.acquireTargets("single", "all", actionName)
+        targets = this.acquireTargets("single", "all", 1, actionName)
         if (targets.length === 0) {
           difficulty = null
         }
@@ -1566,21 +1618,68 @@ export default class COActor extends Actor {
     if (item.system.properties.reloadable) {
       await this.consumeAmmunition(item)
     }
+    return results
   }
 
-  // FIXME Finir la méthode
+  /**
+   * Fonction assurant les jet de dé pour le soin
+   * @param {COItem} item Item à l'origine du soin (ex : Restauration mineure de prêtre)
+   * @param {object} param1 Elements permettant le calcul du soin :
+   * @param {string} param1.actionName  action déclencheur
+   * @param {string} param1.healFormula formule utilisée pour le soin
+   * @param {string}  param1.targetType : indique si on se cible soit-même, ou d'autres personnes etc.
+   * @param {Array<COActor>} param1.targets : une liste d'acteurs ciblés
+   */
   async rollHeal(item, { actionName = "", healFormula = undefined, targetType = SYSTEM.RESOLVER_TARGET.none.id, targets = [] } = {}) {
     let roll = new Roll(healFormula)
     await roll.roll()
-    // TODO Qui est soigné ? Pour le moment soi même :)
     if (targetType === SYSTEM.RESOLVER_TARGET.self.id) {
-      let hp = this.system.attributes.hp
-      hp.value += roll.total
-      if (hp.value > hp.max) hp.value = hp.max
-      this.update({ "system.attributes.hp": hp })
+      this.applyHealAndDamage(roll.total)
+    } else if (targetType === SYSTEM.RESOLVER_TARGET.single.id || targetType === SYSTEM.RESOLVER_TARGET.multiple.id) {
+      if (game.user.isGM) Hooks.callAll("applyHealing", targets, this.name, roll.total)
+      else {
+        const uuidList = targets.map((obj) => obj.uuid)
+        game.socket.emit(`system.${SYSTEM.ID}`, {
+          action: "heal",
+          data: {
+            targets: uuidList,
+            healAmount: roll.total,
+            fromUserId: this.uuid,
+          },
+        })
+      }
     }
-    const messageData = { style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "action", speaker }
-    await roll.toMessage(messageData)
+  }
+
+  /**
+   * Applique les soins sur soi meme
+   * Positif les degats péridiques sont traités comme des dégats et devrait être réduit ou amplifié en fonction de résistance/vulnérabilité (voir plus tard).
+   * Negatif les degats péridiques sont traités comme des soins et ne devrait pas être affecté par des résistance ou vulnérabilité.
+   * @param {integer} healValue heal or damageValue (heal < 0 and damage > 0)
+   */
+  async applyHealAndDamage(healValue) {
+    let hp = this.system.attributes.hp
+    if (healValue > 0) {
+      // Si ce sont des degat il faut déduire la Résistance
+      healValue -= this.system.combat.dr.value
+      if (healValue < 0) healValue = 0
+    }
+    hp.value -= healValue
+    if (hp.value > hp.max) hp.value = hp.max
+    if (hp.value < 0) {
+      hp.value = 0
+      if (this.type !== "character") this.toggleStatusEffect("dead", true)
+    }
+    this.update({ "system.attributes.hp": hp })
+
+    let message = ""
+    if (healValue > 0) {
+      message = game.i18n.localize("CO.notif.damaged").replace("{actorName}", this.name).replace("{amount}", healValue.toString())
+    } else {
+      message = game.i18n.localize("CO.notif.healed").replace("{actorName}", this.name).replace("{amount}", Math.abs(healValue).toString())
+    }
+
+    await ui.chat.processMessage(message, { actor: this._id, alias: this.name })
   }
   // #endregion
 
@@ -1599,7 +1698,7 @@ export default class COActor extends Actor {
     return { token, actor: token.actor, uuid: token.actor.uuid, name: token.name }
   }
 
-  #getTargets(actionName, scope, single) {
+  #getTargets(actionName, scope, number, single) {
     const tokens = game.user.targets
     let errorAll
 
@@ -1609,9 +1708,9 @@ export default class COActor extends Actor {
     }
 
     // Too many targets
-    if ((single && tokens.size > 1) || (!single && tokens.size > this.target.number)) {
+    if ((single && tokens.size > 1) || (!single && tokens.size > number)) {
       errorAll = game.i18n.format("CO.notif.warningIncorrectTargets", {
-        number: single ? 1 : this.target.number,
+        number: single ? 1 : number,
         action: actionName,
       })
     }
@@ -1634,29 +1733,163 @@ export default class COActor extends Actor {
   }
   // #endregion
 
-  // #region Méthodes pour le CombatTracker
+  /* -------------------------------------------- */
+  /*  Combat Encounters and Turn Order            */
+  /* -------------------------------------------- */
 
   /**
-   * On change de round donc on peut gérer des actions qui se terminent "à la fin du round"
-   * @param {CombatCO} combat L'instance du combat en cours
-   * @param {*} updateData : contient {round, turn}
-   * @param {*} updateOptions contiens {direction: -1, worldTime: {delta: advanceTime}} -1 si on reviens en arriere et 1 si on avance
+   * On va supprimer les customEffect restant surl'acteur
+   * @param {COCombat} combat
    */
-  combatNewRound(combat, updateData, updateOptions) {
-    // Ici on va gérer qu'on arrive dans un nouveau round il faut faire attention car le MJ peux revenir en arrière !
-    // On va notamment gérer la durée des effets en round ou secondes je suppose
-    // console.log("combatRound", combat, updateData, updateOptions)
+  combaEnding(combat) {
+    if (this.system.currentEffects) {
+      for (let i = this.system.currentEffects.length - 1; i >= 0; i--) {
+        this.deleteCustomEffect(this.system.currentEffects[i])
+      }
+    }
   }
 
   /**
-   * On change de tour donc on peut gérer des actions qui se terminent "à la fin du round"
-   * @param {CombatCO} combat L'instance du combat en cours
-   * @param {*} updateData : contient {round, turn}
-   * @param {*} updateOptions contiens {direction: -1, worldTime: {delta: CONFIG.time.turnTime} -1 si on reviens en arriere et 1 si on avance
+   * Supprime un customEffet de l'acteur
+   * @param {CustomEffectData} customEffect
    */
-  combatNewTurn(combat, updateData, updateOptions) {
-    // Ici on va gérer qu'on arrive dans un nouveau round il faut faire attention car le MJ peux revenir en arrière !
-    // on va notamment gérer la durée des effets en round ou secondes je suppose
+  async deleteCustomEffect(customEffect) {
+    // Supprime le statut
+    if (customEffect.statuses.length > 0) {
+      for (const status of customEffect.statuses) {
+        await this.activateCOStatusEffect({ state: false, effectid: status })
+      }
+    }
+    this.system.currentEffects.splice(this.system.currentEffects.indexOf(customEffect), 1)
+    this.update({ "system.currentEffects": this.system.currentEffects })
   }
+
+  /**
+   * On applique les effets supplémentaires
+   * @param {CustomEffectData} effect : custom effect appliqué sur l'acteur probablement à cause d'un skill
+   */
+  async applyCustomEffect(effect) {
+    // Si j'ai déjà ce debuff je peux pas le cumuler !
+    const debuf = this.system.currentEffects.find((c) => c.slug === effect.slug)
+    if (debuf) return
+    // On doit maintenant déterminer le round de combat
+    await this.startApplyingCustomEffect(effect, game.combat.round)
+  }
+
+  /**
+   * Commence à appliquer l'effet en l'initialisant et en activant les différents status
+   * @param {CustomEffectData} effect
+   * @param {integer} round
+   */
+  async startApplyingCustomEffect(effect, round) {
+    const newEffect = effect.toObject()
+    newEffect.modifiers = effect.modifiers
+    // Console.log("newEffect : ", newEffect)
+    newEffect.startedAt = round
+    if (newEffect.unit === SYSTEM.COMBAT_UNITE.round) {
+      newEffect.lastRound = newEffect.startedAt + newEffect.duration
+    } else {
+      newEffect.lastRound = newEffect.startedAt + Math.round(newEffect.duration / CONFIG.time.roundTime)
+    }
+    console.log("lastRound:", newEffect.lastRound, "duration :", newEffect.duration, "startedAt", newEffect.startedAt)
+    // Applique le statut
+    if (newEffect.statuses && newEffect.statuses.length > 0) {
+      for (const status of newEffect.statuses) {
+        let result = await this.activateCOStatusEffect({ state: true, effectid: status })
+        if (result === false) return false // On applique pas l'effet s'il y a une immunité (cas d'un result === false)
+      }
+    }
+
+    let currentEffects = foundry.utils.deepClone(this.system.currentEffects)
+    currentEffects.push(newEffect)
+    await this.update({ "system.currentEffects": currentEffects })
+
+    // Si il y a des dommage on les applique dès le premier round
+    if (effect.formula) {
+      await this.applyDamageOverTime()
+    }
+    return true
+  }
+
+  /**
+   * Actions that occur at the beginning of an Actor's turn in Combat.
+   * This method is only called for one User who has ownership permission over the Actor.
+   */
+  async onStartTurn() {
+    // Re-prepare data and re-render the actor sheet
+    this.reset()
+    this._sheet?.render(false)
+    console.log(`C'est au tour de ${this.name} de jouer`)
+    // Apply damage-over-time before recovery
+    await this.applyDamageOverTime()
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * L'actions est déclenché lorsqu'un acteur termine son tour de combat.
+   * Cette méthode est uniquement appelée sur l'utilisateur qui a des droits sur l'acteur.
+   */
+  onEndTurn() {
+    // Re-prepare data and re-render the actor sheet
+    this.reset()
+    this._sheet?.render(false)
+    console.log(`Le tour de ${this.name} est terminé`)
+    // Retire les custom Effect qui se terminent à la fin du tour
+    this.expireEffects(false)
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Actions déclenchée lorsqu'un acteur quitte le combat tracker.
+   */
+  onLeaveCombat() {
+    // Re-prepare data and re-render the actor sheet
+    this.reset()
+    this._sheet?.render(false)
+    for (let i = this.system.currentEffects.length - 1; i >= 0; i--) {
+      this.deleteCustomEffect(this.system.currentEffects[i])
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Applique les effets de degats/soins qui sont actuellement actif sur l'acteur.
+   * Positif les degats péridiques sont traités comme des dégats et devrait être réduit ou amplifié en fonction de résistance/vulnérabilité (voir plus tard).
+   * Negatif les degats péridiques sont traités comme des soins et ne devrait pas être affecté par des résistance ou vulnérabilité.
+   * @returns {Promise<void>}
+   */
+  async applyDamageOverTime() {
+    for (const effect of this.system.currentEffects) {
+      // Ici on devrait tenir compte du type d'energie (feu/glace etc) et d'eventuelle resistance/vulnerabilite à voir plus tard
+      if (!effect.a || effect.formula.length === 0) continue
+      // Doit on jeter un dé ou c'est une valeur fixe ?
+      const diceInclude = effect.formula.match("d[0-9]{1,}")
+      let formulResult = effect.formula
+      if (diceInclude) {
+        const roll = new Roll(formulResult)
+        await roll.evaluate()
+        formulResult = roll.total
+      }
+      await this.applyHealAndDamage(formulResult)
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Expire active effects whose durations have concluded at the end of the Actor's turn.
+   * @param {boolean} start       Is it the start of the turn (true) or the end of the turn (false)   *
+   */
+  expireEffects(start = true) {
+    for (let i = this.system.currentEffects.length - 1; i >= 0; i--) {
+      if (this.system.currentEffects[i].startedAt + this.system.currentEffects[i].duration <= game.combat.round) {
+        this.deleteCustomEffect(this.system.currentEffects[i])
+      }
+    }
+  }
+
   // #endregion
 }
