@@ -12,6 +12,7 @@
         {{#if system.actions}}
             <section class="action-body">
                 {{#each system.actions as |action idx|}}
+                    {{log 'action-partial action' this}}
                     <div class="tab action item" data-group="actions" data-tab="{{idx}}" data-item-id="{{idx }}" data-item-type="action">
                         <input type="hidden" name="system.actions.{{idx}}.source" value="{{action.source}}" data-dtype="String">
                         <input type="hidden" name="system.actions.{{idx}}.indice" value="{{idx}}" data-dtype="Number">
@@ -50,15 +51,13 @@
                         <div class="form-group">
                             <label>{{localize "CO.label.long.properties"}}</label>
                             <div class="form-fields">
-                                {{#each action.properties as |prop idy|}}
-                                    {{#if (eq idy 'visible')}}
-                                        {{#unless action.hasConditions}}
-                                            <label class="checkbox"> <input type="checkbox" name="system.actions.{{idx}}.properties.{{idy}}" {{checked prop}}> {{localize (concat "CO.properties." idy)}}</label>
-                                        {{/unless}}
-                                    {{else}}
-                                        <label class="checkbox"> <input type="checkbox" name="system.actions.{{idx}}.properties.{{idy}}" {{checked prop}}> {{localize (concat "CO.properties." idy)}}</label>
-                                    {{/if}}                                    
-                                {{/each}}
+                                {{#if @root.debugMode}}
+                                    <label class="checkbox"> <input type="checkbox" name="system.actions.{{idx}}.properties.visible" {{checked action.properties.visible}}> {{localize "CO.properties.visible"}}</label>
+                                    <label class="checkbox"> <input type="checkbox" name="system.actions.{{idx}}.properties.enabled" {{checked action.properties.enabled}}> {{localize "CO.properties.enabled"}}</label>
+                                {{/if}}
+                                <label class="checkbox"> <input type="checkbox" name="system.actions.{{idx}}.properties.activable" {{checked action.properties.activable}}> {{localize "CO.properties.activable"}}</label>
+                                <label class="checkbox"> <input type="checkbox" name="system.actions.{{idx}}.properties.temporary" {{checked action.properties.temporary}}> {{localize "CO.properties.temporary"}}</label>
+                                <label class="checkbox"> <input type="checkbox" name="system.actions.{{idx}}.properties.noManaCost" {{checked action.properties.noManaCost}}> {{localize "CO.properties.noManaCost"}}</label>
                             </div>
                         </div>
                         <br />
