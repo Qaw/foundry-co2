@@ -1,15 +1,12 @@
+{{log 'resolvers-partial' this}}
+
 <h4 class="form-header resolvers flexrow">
     <a class="resolvers-toggle section-toggle flex1">{{localize "CO.ui.resolvers"}}</a>
     <a class="resolver-add flex0" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
 </h4>
 <div class="resolvers-container foldable">
     {{#if action.resolvers}}
-        <div class="flexrow strong">
-            <!--<div class="form-fields flex2 center">{{localize "CO.ui.type"}}</div>-->
-            
-        </div>
         {{#each action.resolvers as |r id|}}
-            {{log 'action.resolver' r}}
             <div class="flexrow resolver" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="resolver">
                 <div class="form-fields flex2">
                     <div class="form-group">
@@ -107,15 +104,8 @@
                 </div>
                 <div class="flexrow">
                     <div class="form-fields flex1 center" data-tooltip="{{localize 'CO.resolver.additionalEffect.statusAvailable'}}" data-tooltip-direction="UP">{{localize "CO.resolver.additionalEffect.statusAvailable"}}</div>                    
-                    <select name="root.selectedStatus" class="resolver-status-select" data-type="String">
-                            {{selectOptions @root.choiceConditionStates selected=root.selectedStatus localize=true}}
-                    </select>
-                    <a class="resolver-status-add flex0" data-tooltip="{{localize 'CO.ui.add'}}" data-item-id="{{id}}" data-action-id="{{../idx}}"><i class="fas fa-add"></i></a>            
-                    <div class="form-group">
-                        <label>{{localize "CO.resolver.additionalEffect.statuses"}}</label>
-                        <div class="form-fields">
-                            <input class="field-value" name="system.actions.{{../idx}}.resolvers.{{id}}.additionalEffect.statuses"  type="text" value="{{r.additionalEffect.statuses}}" placeholder="{{localize 'CO.resolver.additionalEffect.statuses'}}" data-dtype="String" />
-                        </div>
+                     <div class="flexrow tags">
+		                {{formField @root.resolverSystemFields.additionalEffect.fields.statuses name=(concat "system.actions." ../idx ".resolvers." @index ".additionalEffect.statuses") value=r.additionalEffect.statuses localize=true }}  
                     </div>
                 </div>
                 <div class="flexrow">

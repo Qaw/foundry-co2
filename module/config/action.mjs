@@ -232,3 +232,71 @@ export const RESOLVER_FORMULA_TYPE = Object.freeze({
     label: "CO.resolver.formula.heal",
   },
 })
+
+export const RESOLVER_ADDITIONAL_EFFECT_STATUS = {
+  dead: {
+    id: "dead",
+    label: "CO.customStatus.dead",
+  },
+  immobilized: {
+    id: "immobilized",
+    label: "CO.customStatus.immobilized",
+  },
+  stun: {
+    id: "stun",
+    label: "CO.customStatus.stun",
+  },
+  paralysis: {
+    id: "paralysis",
+    label: "CO.customStatus.paralysis",
+  },
+  blind: {
+    id: "blind",
+    label: "CO.customStatus.blind",
+  },
+  silence: {
+    id: "silence",
+    label: "CO.customStatus.silence",
+    img: "icons/svg/silenced.svg",
+  },
+  outOfBreath: {
+    id: "outOfBreath",
+    label: "CO.customStatus.outOfBreath",
+  },
+  bleeding: {
+    id: "bleeding",
+    label: "CO.customStatus.bleeding",
+  },
+  invalid: {
+    id: "invalid",
+    label: "CO.customStatus.invalid",
+  },
+  poison: {
+    id: "poison",
+    label: "CO.customStatus.poison",
+  },
+  slowed: {
+    id: "slowed",
+    label: "CO.customStatus.slowed",
+  },
+  overturned: {
+    id: "overturned",
+    label: "CO.customStatus.overturned",
+  },
+  surprised: {
+    id: "surprised",
+    label: "CO.customStatus.surprised",
+  },
+  weakened: {
+    id: "weakened",
+    label: "CO.customStatus.weakened",
+  },
+  invisible: {
+    id: "invisible",
+    label: "CO.customStatus.invisible",
+  },
+  unconscious: {
+    id: "unconscious",
+    label: "CO.customStatus.unconscious",
+  },
+}

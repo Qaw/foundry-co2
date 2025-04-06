@@ -31,7 +31,7 @@ export class Resolver extends foundry.abstract.DataModel {
       additionalEffect: new fields.SchemaField({
         active: new fields.BooleanField({ initial: false }),
         applyOn: new fields.StringField({ required: true, choices: SYSTEM.RESOLVER_RESULT, initial: SYSTEM.RESOLVER_RESULT.success.id }),
-        statuses: new fields.StringField(),
+        statuses: new fields.SetField(new fields.StringField({ required: true, blank: true, choices: SYSTEM.RESOLVER_ADDITIONAL_EFFECT_STATUS })),
         duration: new fields.StringField({ required: true, nullable: false, initial: "0" }),
         unit: new fields.StringField({ required: true, choices: SYSTEM.COMBAT_UNITE, initial: "round" }),
         formula: new fields.StringField({ required: false }),

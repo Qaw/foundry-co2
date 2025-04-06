@@ -1799,14 +1799,15 @@ export default class COActor extends Actor {
    * @param {CustomEffectData} customEffect
    */
   async deleteCustomEffect(customEffect) {
-    // Supprime le statut
+    // Si l'y a des effets de statut, on les supprime
     if (customEffect.statuses.length > 0) {
+      // On les supprime un par un
       for (const status of customEffect.statuses) {
         await this.activateCOStatusEffect({ state: false, effectid: status })
       }
     }
-    this.system.currentEffects.splice(this.system.currentEffects.indexOf(customEffect), 1)
-    this.update({ "system.currentEffects": this.system.currentEffects })
+    await this.system.currentEffects.splice(this.system.currentEffects.indexOf(customEffect), 1)
+    await this.update({ "system.currentEffects": this.system.currentEffects })
   }
 
   /**
@@ -1815,7 +1816,8 @@ export default class COActor extends Actor {
    */
   async applyCustomEffect(effect) {
     // Appliquer les éventuels statuts
-    if (effect.statuses) {
+    //const effects = effect.statuses[0].split(",")
+    if (effect.statuses.length > 0) {
       for (const status of effect.statuses) {
         let result = await this.activateCOStatusEffect({ state: true, effectid: status })
         if (result === false) return false // On applique pas l'effet s'il y a une immunité (cas d'un result === false)
@@ -1864,14 +1866,16 @@ export default class COActor extends Actor {
   }
 
   /**
-   * Expire active effects whose durations have concluded at the end of the Actor's turn.
-   * @param {boolean} start       Is it the start of the turn (true) or the end of the turn (false)   *
+   * Asynchronously expires effects from the current system's effects list.
+   * Iterates through all current effects and deletes any custom effect
+   * whose `lastRound` matches the current combat round.
+   *
+   * @async
+   * @returns {Promise<void>} Resolves when all applicable effects have been processed.
    */
-  expireEffects(start = true) {
-    for (let i = this.system.currentEffects.length - 1; i >= 0; i--) {
-      if (this.system.currentEffects[i].startedAt + this.system.currentEffects[i].duration <= game.combat.round) {
-        this.deleteCustomEffect(this.system.currentEffects[i])
-      }
+  async expireEffects() {
+    for (const effect of this.system.currentEffects) {
+      if (effect.lastRound === game.combat.round) await this.deleteCustomEffect(effect)
     }
   }
 

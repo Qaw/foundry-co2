@@ -242,12 +242,12 @@ export const CUSTOM_STATUS_EFFECT = [
   },
   {
     id: "invisible",
-    name: "CO.customStatus.Invisible",
+    name: "CO.customStatus.invisible",
     img: "icons/svg/invisible.svg",
   },
   {
     id: "unconscious",
-    name: "Inconscient",
+    name: "CO.customStatus.unconscious",
     img: "icons/svg/unconscious.svg",
   },
   {

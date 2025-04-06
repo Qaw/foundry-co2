@@ -228,7 +228,7 @@
       "overturnedDescription": "‑5 en attaque et DEF, nécessite une action d’attaque pour se relever",
       "surprised": "Surpris",
       "surprisedDescription": "Pas d’action et ‑5 en DEF au premier round de combat.",
-      "Invisible": "Invisible",
+      "invisible": "Invisible",
       "poison": "Empoisonné",
       "bleeding": "Saignement",
       "silence": "Silence",

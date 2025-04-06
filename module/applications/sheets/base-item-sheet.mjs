@@ -147,6 +147,7 @@ export default class CoBaseItemSheet extends ItemSheet {
   async getData(options = {}) {
     const context = super.getData(options)
     context.debugMode = game.settings.get("co", "debugMode")
+    context.itemType = this.item.type
     context.system = this.item.system
     context.modifiers = this.item.system.modifiers
     context.enrichedDescription = await TextEditor.enrichHTML(this.item.system.description, { async: true })
@@ -155,6 +156,7 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.locked = this.isPlayMode
 
     context.systemFields = this.document.system.schema.fields
+    context.resolverSystemFields = this.document.system.schema.fields.actions.element.fields.resolvers.element.fields
 
     // Select options
     context.choiceActionTypes = SYSTEM.ACTION_TYPES
@@ -172,10 +174,30 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
     context.choiceModifierApplies = SYSTEM.MODIFIERS.MODIFIERS_APPLY
 
-    context.choiceConditionStates = SYSTEM.STATUS_EFFECT.reduce((acc, effect) => {
+    context.choiceConditionStates = SYSTEM.STATUS_EFFECT.filter((effect) =>
+      [
+        "dead",
+        "immobilized",
+        "stun",
+        "paralysis",
+        "blind",
+        "silence",
+        "outOfBreath",
+        "bleeding",
+        "invalid",
+        "poison",
+        "slowed",
+        "overturned",
+        "surprised",
+        "weakened",
+        "invisible",
+        "unconscious",
+      ].includes(effect.id),
+    ).reduce((acc, effect) => {
       acc[effect.id] = effect.name
       return acc
     }, {})
+
     context.choiceModifierAbilityTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "ability"))
     context.choiceModifierCombatTargets = Object.fromEntries(
       Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "combat" || value.subtype === "attack"),
@@ -213,7 +235,7 @@ export default class CoBaseItemSheet extends ItemSheet {
     html.find(".action-add").click(this._onAddAction.bind(this))
     html.find(".action-delete").click(this._onDeleteAction.bind(this))
     html.find(".sheet-change-lock").click(this._onSheetChangelock.bind(this))
-    html.find(".resolver-status-add").click(this._onAddStatus.bind(this))
+    //html.find(".resolver-status-add").click(this._onAddStatus.bind(this))
     html.find(".resolver-status-select").change(this._onSelectStatus.bind(this))
   }
 
@@ -310,7 +332,7 @@ export default class CoBaseItemSheet extends ItemSheet {
    * Lorsque l'on va cliquer le le bouton pour ajouter un conditionState à mettre dnas les effets supplémentaires d'une attaque
    * @param {*} event
    * @returns
-   */
+   
   _onAddStatus(event) {
     event.preventDefault()
     const dataset = event.currentTarget.dataset
@@ -321,7 +343,7 @@ export default class CoBaseItemSheet extends ItemSheet {
     if (actions[actionId].resolvers[itemid].additionalEffect.statuses) actions[actionId].resolvers[itemid].additionalEffect.statuses += `, ${this.selectedStatus}`
     else actions[actionId].resolvers[itemid].additionalEffect.statuses = this.selectedStatus
     return this.item.update({ "system.actions": actions })
-  }
+  }*/
 
   /**
    * Handles the deletion of an action from the item and updates the item with the new action list.
