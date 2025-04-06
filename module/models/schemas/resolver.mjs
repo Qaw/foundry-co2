@@ -237,6 +237,7 @@ export class Resolver extends foundry.abstract.DataModel {
     }
 
     // Evaluation de la formule à partir de l'acteur à l'origine de l'effet
+    // TODO Vérifier dans le cas où elle n'est pas définie
     let evaluatedFormula = Utils.evaluateFormulaCustomValues(actor, this.additionalEffect.formula)
     evaluatedFormula = Roll.replaceFormulaData(evaluatedFormula, actor.getRollData())
 

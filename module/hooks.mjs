@@ -51,6 +51,7 @@ export default function registerHooks() {
       })
     }
 
+    // Clic sur les boutons d'action
     html.find(".toggle-action").click(async (event) => {
       console.log("Hook toggle-action", event)
       const shiftKey = !!event.shiftKey
@@ -72,6 +73,7 @@ export default function registerHooks() {
       }
     })
 
+    // Clic sur le bouton de jet opposé
     html.find(".opposite-roll").click(async (event) => {
       const dataset = event.currentTarget.dataset
       const oppositeValue = dataset.oppositeValue
@@ -84,7 +86,7 @@ export default function registerHooks() {
       const actor = await fromUuid(oppositeTarget)
       const value = Utils.evaluateOppositeFormula(oppositeValue, actor)
 
-      const formula = `1d20 + ${value}`
+      const formula = value ? `1d20 + ${value}` : `1d20`
       const roll = await new Roll(formula).roll()
       const difficulty = roll.total
 
@@ -107,7 +109,7 @@ export default function registerHooks() {
       if (game.user.isGM) {
         await message.update({ rolls: rolls, "system.result": newResult })
       }
-      // Sinon on emet un socket pour mettre à jour le message de chat
+      // Sinon on émet un message pour mettre à jour le message de chat
       else {
         game.socket.emit(`system.${SYSTEM.ID}`, {
           action: "oppositeRoll",

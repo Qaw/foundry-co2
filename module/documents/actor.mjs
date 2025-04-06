@@ -508,6 +508,7 @@ export default class COActor extends Actor {
         return ui.notifications.warn(game.i18n.localize("CO.notif.cantUseAllDef"))
       }
     }
+
     // Imunisé aux altération de mouvement ?
     if ((effectid === "stun" || effectid === "immobilized" || effectid === "paralysis") && state === true) {
       if (this.system.modifiers) {
@@ -519,6 +520,7 @@ export default class COActor extends Actor {
         }
       }
     }
+
     // Imunisé aux poisons ?
     if (effectid === "poison" && state === true) {
       if (this.system.modifiers) {
@@ -1812,19 +1814,7 @@ export default class COActor extends Actor {
    * @param {CustomEffectData} effect : Custom effect appliqué sur l'acteur
    */
   async applyCustomEffect(effect) {
-    // TODO Si j'ai déjà ce debuff je peux pas le cumuler ? Est-ce qu'on augmente pas la durée ?
-    const debuf = this.system.currentEffects.find((c) => c.slug === effect.slug)
-    if (debuf) return
-    // On doit maintenant déterminer le round de combat
-    await this.startApplyingCustomEffect(effect)
-  }
-
-  /**
-   * Commence à appliquer l'effet en l'initialisant et en activant les différents statuts
-   * @param {CustomEffectData} effect
-   */
-  async startApplyingCustomEffect(effect) {
-    // Applique le statut
+    // Appliquer les éventuels statuts
     if (effect.statuses) {
       for (const status of effect.statuses) {
         let result = await this.activateCOStatusEffect({ state: true, effectid: status })
@@ -1832,18 +1822,19 @@ export default class COActor extends Actor {
       }
     }
 
-    let currentEffects = foundry.utils.deepClone(this.system.currentEffects)
-    currentEffects.push(effect)
-    await this.update({ "system.currentEffects": currentEffects })
+    let existingEffectIndex = this.system.currentEffects.findIndex((e) => e.slug === effect.slug)
+    const newCurrentEffects = this.system.toObject().currentEffects
 
-    // FIXME On est sûr de ça ? S'il y a une formule définie, application dès le premier round
-    if (effect.formula) {
-      await this.applyEffectOverTime()
-    }
+    // CustomEffect déjà présent : on modifie startedAt et lastRound
+    if (existingEffectIndex !== -1) {
+      newCurrentEffects[existingEffectIndex].startedAt = effect.startedAt
+      newCurrentEffects[existingEffectIndex].lastRound = effect.lastRound
+    } else newCurrentEffects.push(effect)
+
+    await this.update({ "system.currentEffects": newCurrentEffects })
+
     return true
   }
-
-  /* -------------------------------------------- */
 
   /**
    * Applies effects over time to the current object based on its active effects.
@@ -1871,8 +1862,6 @@ export default class COActor extends Actor {
       if (effect.formulaType === "heal") await this.applyHeal(formulaResult)
     }
   }
-
-  /* -------------------------------------------- */
 
   /**
    * Expire active effects whose durations have concluded at the end of the Actor's turn.
