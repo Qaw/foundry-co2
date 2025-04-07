@@ -12,7 +12,7 @@
         {{#if system.actions}}
             <section class="action-body">
                 {{#each system.actions as |action idx|}}
-                    {{log 'action-partial action' this}}
+                    {{!log 'action-partial action' this}}
                     <div class="tab action item" data-group="actions" data-tab="{{idx}}" data-item-id="{{idx }}" data-item-type="action">
                         <input type="hidden" name="system.actions.{{idx}}.source" value="{{action.source}}" data-dtype="String">
                         <input type="hidden" name="system.actions.{{idx}}.indice" value="{{idx}}" data-dtype="Number">
@@ -57,7 +57,9 @@
                                 {{/if}}
                                 <label class="checkbox"> <input type="checkbox" name="system.actions.{{idx}}.properties.activable" {{checked action.properties.activable}}> {{localize "CO.properties.activable"}}</label>
                                 <label class="checkbox"> <input type="checkbox" name="system.actions.{{idx}}.properties.temporary" {{checked action.properties.temporary}}> {{localize "CO.properties.temporary"}}</label>
-                                <label class="checkbox"> <input type="checkbox" name="system.actions.{{idx}}.properties.noManaCost" {{checked action.properties.noManaCost}}> {{localize "CO.properties.noManaCost"}}</label>
+                                {{#if (and (eq ../itemType 'capacity') ../system.isSpell) }}
+                                    <label class="checkbox"> <input type="checkbox" name="system.actions.{{idx}}.properties.noManaCost" {{checked action.properties.noManaCost}}> {{localize "CO.properties.noManaCost"}}</label>
+                                {{/if}}
                             </div>
                         </div>
                         <br />
