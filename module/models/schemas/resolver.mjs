@@ -31,6 +31,7 @@ export class Resolver extends foundry.abstract.DataModel {
       additionalEffect: new fields.SchemaField({
         active: new fields.BooleanField({ initial: false }),
         applyOn: new fields.StringField({ required: true, choices: SYSTEM.RESOLVER_RESULT, initial: SYSTEM.RESOLVER_RESULT.success.id }),
+        successThreshold: new fields.NumberField({ integer: true, positive: true }),
         statuses: new fields.SetField(new fields.StringField({ required: true, blank: true, choices: SYSTEM.RESOLVER_ADDITIONAL_EFFECT_STATUS })),
         duration: new fields.StringField({ required: true, nullable: false, initial: "0" }),
         unit: new fields.StringField({ required: true, choices: SYSTEM.COMBAT_UNITE, initial: "round" }),
@@ -110,11 +111,24 @@ export class Resolver extends foundry.abstract.DataModel {
 
     if (result === null) return false
 
-    // TODO : vérifier le cas des succès et des échecs critiques
-    // Gestion des effets supplémentaires en cas de succès
-    if (result[0].isSuccess && this.additionalEffect.active && this.additionalEffect.applyOn === SYSTEM.RESOLVER_RESULT.success.id) {
+    // Gestion des effets supplémentaires en cas de réussite critique
+    if (result[0].isCritical && this.additionalEffect.active && this.additionalEffect.applyOn === SYSTEM.RESOLVER_RESULT.critical.id) {
       await this._manageAdditionalEffect(actor, item, action)
     }
+    // Gestion des effets supplémentaires en cas de réussite
+    else if (result[0].isSuccess && this.additionalEffect.active && this.additionalEffect.applyOn === SYSTEM.RESOLVER_RESULT.success.id) {
+      await this._manageAdditionalEffect(actor, item, action)
+    }
+    // Gestion des effets supplémentaires en cas de réussite supérieure à un seuil
+    else if (
+      result[0].isSuccess &&
+      result[0].total >= this.additionalEffect.successThreshold &&
+      this.additionalEffect.active &&
+      this.additionalEffect.applyOn === SYSTEM.RESOLVER_RESULT.successTreshold.id
+    ) {
+      await this._manageAdditionalEffect(actor, item, action)
+    }
+
     // Gestion des effets supplémentaires en cas d'échec
     else if (result[0].isFailure && this.additionalEffect.active && this.additionalEffect.applyOn === SYSTEM.RESOLVER_RESULT.failure.id) {
       await this._manageAdditionalEffect(actor, item, action)
@@ -169,7 +183,6 @@ export class Resolver extends foundry.abstract.DataModel {
     let healFormula = this.skill.formula
     healFormula = Utils.evaluateFormulaCustomValues(actor, healFormula, item.uuid)
     let healFormulaEvaluated = Roll.replaceFormulaData(healFormula, actor.getRollData())
-    console.log("healFormulaEvaluated", healFormulaEvaluated)
 
     const targets = actor.acquireTargets(this.target.type, this.target.scope, this.target.number, action.name)
     if (CONFIG.debug.co?.resolvers) console.debug(Utils.log("Heal Targets", targets))
@@ -215,6 +228,33 @@ export class Resolver extends foundry.abstract.DataModel {
     return true
   }
 
+  /**
+   * Gère l'application d'un effet supplémentaire sur un acteur pendant un combat.
+   *
+   * @async
+   * @param {Actor} actor L'acteur sur lequel l'effet sera appliqué.
+   * @param {Item} item L'objet déclenchant l'effet supplémentaire.
+   * @param {Object} action L'action contenant les modificateurs et autres données pertinentes.
+   * @returns {Promise<void>} Résout lorsque l'effet a été appliqué avec succès.
+   *
+   *
+   * @description
+   * Cette méthode gère la création et l'application d'un effet personnalisé basé sur l'acteur,
+   * l'objet et l'action fournis. Elle évalue la durée et la formule de l'effet, détermine les
+   * cibles appropriées et applique l'effet en conséquence. Si aucun combat n'est actif ou démarré,
+   * la méthode s'arrête avec une notification d'avertissement.
+   *
+   * - Évalue la durée et la formule de l'effet en utilisant des valeurs personnalisées et les données de l'acteur.
+   * - Calcule le round où l'effet prendra fin en fonction de l'état du combat.
+   * - Filtre les modificateurs applicables à partir de l'action.
+   * - Crée un objet `CustomEffectData` pour représenter l'effet.
+   * - Applique l'effet à l'acteur ou à ses cibles, selon le type de cible.
+   * - Envoie un événement socket au MJ si l'utilisateur n'est pas MJ et que des cibles sont impliquées.
+   *
+   * @example
+   * // Exemple d'utilisation :
+   * await _manageAdditionalEffect(actor, item, action);
+   */
   async _manageAdditionalEffect(actor, item, action) {
     // Si pas de combat, pas d'effet sur la durée
     if (!game.combat || !game.combat.started) {
@@ -225,6 +265,7 @@ export class Resolver extends foundry.abstract.DataModel {
     // Evaluation de la durée si besoin
     let evaluatedDuration = Utils.evaluateFormulaCustomValues(actor, this.additionalEffect.duration)
     evaluatedDuration = Roll.replaceFormulaData(evaluatedDuration, actor.getRollData())
+    // TODO : vérifier si eval est nécessaire ici
     if (/[+\-*/%]/.test(evaluatedDuration)) evaluatedDuration = eval(evaluatedDuration)
     const duration = parseInt(evaluatedDuration)
 

@@ -393,7 +393,6 @@ export default class COActor extends Actor {
     // Si le modifier est d'origine d'un customEffectData il ne faut pas chercher sa source
     let bonuses = []
     for (const modifier of modifiersByTarget) {
-      console.log(modifier)
       if (!modifier.parent) {
         const customeffect = this.system.currentEffects.find((e) => e.source === modifier.source)
         if (customeffect) {

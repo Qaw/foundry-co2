@@ -208,17 +208,25 @@ export const RESOLVER_SCOPE = Object.freeze({
 })
 
 export const RESOLVER_RESULT = Object.freeze({
+  always: {
+    id: "always",
+    label: "CO.resolver.additionalEffect.always",
+  },
   success: {
     id: "success",
     label: "CO.resolver.additionalEffect.onSuccess",
   },
-  fail: {
+  successTreshold: {
+    id: "successTreshold",
+    label: "CO.resolver.additionalEffect.onSuccessTreshold",
+  },
+  critical: {
+    id: "critical",
+    label: "CO.resolver.additionalEffect.onSuccessCrit",
+  },
+  failure: {
     id: "failure",
     label: "CO.resolver.additionalEffect.onFailure",
-  },
-  always: {
-    id: "always",
-    label: "CO.resolver.additionalEffect.always",
   },
 })
 

@@ -313,7 +313,6 @@ export class COAttackRoll extends CORoll {
             radio.addEventListener("change", (event) => {
               event.preventDefault()
               event.stopPropagation()
-              console.log("event", event)
               let newFormula
               switch (event.target.value) {
                 case "standard":

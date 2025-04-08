@@ -643,13 +643,15 @@
         "active": "Effets supplémentaires",
         "applyOn": "s'applique sur :",
         "onSuccess": "Sur un succès",
+        "onCritical": "Sur un succès critique",
+        "onSuccessTreshold": "A partir d'un succès + ",
         "onFailure": "Sur un échec",
         "always": "Toujours",
         "applyFormula": "Formule",
         "applyFormulaTooltip": "Appliquer des dommages ou des soins sur la durée",
         "elementType": "Type d'énergie pour les dommages",
-        "formulaType": "Dommages/Soins périodiques",
-        "statusAvailable": "Statuts disponibles",
+        "formulaType": "Type",
+        "statusAvailable": "Inflige le(s) statut(s)",
         "statuses": "Liste des statuts"
       },
       "formula": {

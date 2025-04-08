@@ -81,9 +81,12 @@
                 <label class="checkbox"><input type="checkbox" name="system.actions.{{../idx}}.resolvers.{{id}}.additionalEffect.active" {{checked r.additionalEffect.active}}> {{localize "CO.resolver.additionalEffect.active"}}</label>
                 {{#if r.additionalEffect.active}}
                     <label>{{localize "CO.resolver.additionalEffect.applyOn"}}</label>
-                        <select name="system.actions.{{../idx}}.resolvers.{{id}}.additionalEffect.applyOn" data-type="String" style="width:50%;margin-right:10px">
-                            {{selectOptions @root.choiceResolverApplyOn selected=r.additionalEffect.applyOn localize=true}}
-                        </select>
+                    <select name="system.actions.{{../idx}}.resolvers.{{id}}.additionalEffect.applyOn" data-type="String" style="width:50%;margin-right:10px">
+                        {{selectOptions @root.choiceResolverApplyOn selected=r.additionalEffect.applyOn localize=true}}
+                    </select>
+                    {{#if (eq r.additionalEffect.applyOn 'successTreshold')}}
+                        <input class="field-value" name="system.actions.{{../idx}}.resolvers.{{id}}.additionalEffect.successThreshold"  type="text" value="{{r.additionalEffect.successThreshold}}" data-dtype="String" />
+                    {{/if}}
                 {{/if}}
                 </div>
             </div>

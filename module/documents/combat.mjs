@@ -35,7 +35,7 @@
 export default class CombatCO extends Combat {
   /** @override */
   async _onStartTurn(combatant) {
-    console.log(`C'est au tour de ${combatant.actor?.name} de jouer !`)
+    console.log(`Début du tour de ${combatant.actor?.name} !`)
     await super._onStartTurn(combatant)
     if (combatant.actor?.system.currentEffects.length > 0) await combatant.actor.applyEffectOverTime()
   }
@@ -45,7 +45,7 @@ export default class CombatCO extends Combat {
     await super._onEndTurn(combatant)
     // Retire les custom Effect qui se terminent à la fin du tour
     if (combatant.actor?.system.currentEffects.length > 0) await combatant.actor.expireEffects()
-    console.log(`Le tour de ${combatant.actor?.name} est terminé !`)
+    console.log(`Fin du tour de ${combatant.actor?.name} !`)
   }
 
   /** @override 
