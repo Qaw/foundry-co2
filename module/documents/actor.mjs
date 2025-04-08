@@ -511,10 +511,10 @@ export default class COActor extends Actor {
     // Imunisé aux altération de mouvement ?
     if ((effectid === "stun" || effectid === "immobilized" || effectid === "paralysis") && state === true) {
       if (this.system.modifiers) {
-        const state = this.system.modifiers.filter((m) => m.target === SYSTEM.MODIFIERS_TARGET.movementImpairment.id)
+        const state = this.system.modifiers.filter((m) => m.target === SYSTEM.MODIFIERS_TARGET.movemenAlterationImmunity.id)
         if (state && state.length > 0) {
           // Immunisé on ne l'applique pas
-          ui.notifications.info(`${this.name} ${game.i18n.localize("CO.label.long.movementImpairment")}`)
+          ui.notifications.info(`${this.name} ${game.i18n.localize("CO.label.long.movemenAlterationImmunity")}`)
           return false
         }
       }
@@ -523,10 +523,10 @@ export default class COActor extends Actor {
     // Imunisé aux poisons ?
     if (effectid === "poison" && state === true) {
       if (this.system.modifiers) {
-        const state = this.system.modifiers.filter((m) => m.target === SYSTEM.MODIFIERS_TARGET.poisonimmunity.id)
+        const state = this.system.modifiers.filter((m) => m.target === SYSTEM.MODIFIERS_TARGET.poisonImmunity.id)
         if (state && state.length > 0) {
           // Immunisé on ne l'applique pas
-          ui.notifications.info(`${this.name} ${game.i18n.localize("CO.label.long.poisonimmunity")}`)
+          ui.notifications.info(`${this.name} ${game.i18n.localize("CO.label.long.poisonImmunity")}`)
           return false
         }
       }
@@ -1815,7 +1815,6 @@ export default class COActor extends Actor {
    */
   async applyCustomEffect(effect) {
     // Appliquer les éventuels statuts
-    //const effects = effect.statuses[0].split(",")
     if (effect.statuses.length > 0) {
       for (const status of effect.statuses) {
         let result = await this.activateCOStatusEffect({ state: true, effectid: status })

@@ -167,9 +167,9 @@ export const MODIFIERS_TARGET = Object.freeze({
     label: "CO.label.long.darkvision",
     subtype: "state",
   },
-  fearimmunity: {
-    id: "fearimmunity",
-    label: "CO.label.long.fearimmunity",
+  fearImmunity: {
+    id: "fearImmunity",
+    label: "CO.label.long.fearImmunity",
     subtype: "state",
   },
   sleepimmunity: {
@@ -177,24 +177,24 @@ export const MODIFIERS_TARGET = Object.freeze({
     label: "CO.label.long.sleepimmunity",
     subtype: "state",
   },
-  poisonimmunity: {
-    id: "poisonimmunity",
-    label: "CO.label.long.poisonimmunity",
+  poisonImmunity: {
+    id: "poisonImmunity",
+    label: "CO.label.long.poisonImmunity",
     subtype: "state",
   },
-  diseaseimmunity: {
-    id: "diseaseimmunity",
-    label: "CO.label.long.diseaseimmunity",
+  diseaseImmunity: {
+    id: "diseaseImmunity",
+    label: "CO.label.long.diseaseImmunity",
     subtype: "state",
   },
-  enslavement: {
-    id: "enslavement",
-    label: "CO.label.long.enslavement",
+  enslavementImmunity: {
+    id: "enslavementImmunity",
+    label: "CO.label.long.enslavementImmunity",
     subtype: "state",
   },
-  movementImpairment: {
-    id: "movementImpairment",
-    label: "CO.label.long.movementImpairment",
+  movemenAlterationImmunity: {
+    id: "movemenAlterationImmunity",
+    label: "CO.label.long.movemenAlterationImmunity",
     subtype: "state",
   },
 })
