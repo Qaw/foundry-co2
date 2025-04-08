@@ -222,7 +222,7 @@ export const RESOLVER_RESULT = Object.freeze({
   },
   critical: {
     id: "critical",
-    label: "CO.resolver.additionalEffect.onSuccessCrit",
+    label: "CO.resolver.additionalEffect.onCritical",
   },
   failure: {
     id: "failure",

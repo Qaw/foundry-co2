@@ -90,46 +90,26 @@ export default class EncounterData extends ActorData {
   }
 
   /**
-   * Retrieves an array of combat modifiers from various sources associated with the character.
+   * Retrieves an array of modifiers from currentEffects for the encounter.
    *
-   * @returns {Array} An array of combat modifiers.
+   * @param {string} subtype The subtype of the modifier.
+   * @returns {Array} An array of modifiers.
    */
-  get combatModifiers() {
-    const lstCapacities = this.parent.capacities
-    if (!lstCapacities) return []
-    let allModifiers = lstCapacities.reduce((mods, item) => mods.concat(item.enabledModifiers), []).filter((m) => m.subtype === SYSTEM.MODIFIERS_SUBTYPE.combat.id)
-    return allModifiers
-  }
+  _getModifiers(subtype) {
+    let modifiersArray = []
 
-  /**
-   * Retrieves the attribute modifiers for the character.
-   *
-   * @returns {Array} An array of attribute modifiers.
-   */
-  get attributeModifiers() {
-    const lstCapacities = this.parent.capacities
-    if (!lstCapacities) return []
-    let allModifiers = lstCapacities.reduce((mods, item) => mods.concat(item.enabledModifiers), []).filter((m) => m.subtype === SYSTEM.MODIFIERS_SUBTYPE.attribute.id)
-    return allModifiers
-  }
+    // Prise en compte des customEffects en cours (applyOn others ou both)
+    if (this.currentEffects.length > 0) {
+      for (const effect of this.currentEffects) {
+        if (effect.modifiers.length > 0) {
+          modifiersArray.push(
+            ...effect.modifiers.filter((m) => m.subtype === subtype && (m.apply === SYSTEM.MODIFIERS_APPLY.others.id || m.apply === SYSTEM.MODIFIERS_APPLY.both.id)),
+          )
+        }
+      }
+    }
 
-  /**
-   * Retrieves the skill modifiers for the character.
-   *
-   * @returns {Array} An array of skill modifiers.
-   */
-  get skillModifiers() {
-    const lstCapacities = this.parent.capacities
-    if (!lstCapacities) return []
-    let allModifiers = lstCapacities.reduce((mods, item) => mods.concat(item.enabledModifiers), []).filter((m) => m.subtype === SYSTEM.MODIFIERS_SUBTYPE.skill.id)
-    return allModifiers
-  }
-
-  get bonusDiceModifiers() {
-    const lstCapacities = this.parent.capacities
-    if (!lstCapacities) return []
-    let allModifiers = lstCapacities.reduce((mods, item) => mods.concat(item.enabledModifiers), []).filter((m) => m.subtype === SYSTEM.MODIFIERS_SUBTYPE.bonusDice.id)
-    return allModifiers
+    return modifiersArray
   }
 
   prepareDerivedData() {

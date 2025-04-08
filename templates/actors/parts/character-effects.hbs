@@ -1,5 +1,5 @@
 <div class="effects section-container">
-
+  {{log "Chroniques Oubliées | character-sheet - effects" this}}
   <div class="section-body-no-flex">
     <!-- ACTIONS -->
     <ol class="effects-container items-container">
@@ -74,14 +74,13 @@
           <li class="item flexrow" data-item-uuid="{{effect.source}}" data-item-indice="{{id}}" data-item-type="customEffectData" draggable="false">
             <div class="item-name flexrow">
               <!-- <a class="item-image item-edit" style="background-image: url('{{{actionImg}}}')"></a> -->
-              <h4>{{effect.nom}}</h4>
+              <h4>{{effect.name}}</h4>
               {{#if ../unlocked}}
                 <a class="item-control customEffect-delete" data-tooltip={{localize "CO.ui.remove"}} data-ce-Name={{effect.slug}}><i class="fas fa-trash"></i></a>
               {{/if}}
             </div>
             <div class="item-controls-2"></div>
           </li>
-
         {{/each}}
       </ol>
     </ol>

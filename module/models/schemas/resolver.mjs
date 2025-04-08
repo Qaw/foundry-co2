@@ -205,7 +205,7 @@ export class Resolver extends foundry.abstract.DataModel {
    * @param {Action} action : l'action
    */
   async buffDebuff(actor, item, action) {
-    if (action.modifiers && action.modifiers.length > 0 && this.additionalEffect.active && this.additionalEffect.applyBuff === true) {
+    if (action.modifiers && action.modifiers.length > 0 && this.additionalEffect.active && this.additionalEffect.applyOn === SYSTEM.RESOLVER_RESULT.always.id) {
       return await this._manageAdditionalEffect(actor, item, action)
     } else {
       return false

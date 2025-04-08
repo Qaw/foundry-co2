@@ -69,8 +69,7 @@ export class Modifier extends foundry.abstract.DataModel {
    * @property {string} description - The description of the item.
    */
   getSourceInfos(actor) {
-    const { id } = foundry.utils.parseUuid(this.parent.source)
-    let item = actor.items.get(id)
+    let item = fromUuidSync(this.parent.source)
     if (!item) return
     const sourceType = item.type
     const name = item.name

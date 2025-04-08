@@ -398,8 +398,8 @@ export default class COActor extends Actor {
         if (customeffect) {
           bonuses.push({
             sourceType: "CustomEffectData",
-            name: customeffect.nom,
-            description: customeffect.nom,
+            name: customeffect.name,
+            description: customeffect.name,
             pathType: "",
             value: modifier.evaluate(this),
             additionalInfos: "",
@@ -432,7 +432,7 @@ export default class COActor extends Actor {
    * Renvoi la liste des effets personnalisé actuellement sur l'acteur
    * @returns {Array<CustomEffectData>} Tableau de customEffectData
    */
-  getCustomEffects() {
+  get customEffects() {
     return this.system.currentEffects
   }
 
@@ -497,12 +497,12 @@ export default class COActor extends Actor {
     if (effectid === "") return
 
     // On ne peut pas activer à la fois la défense partielle et la défense totale
-    if (effectid === "partialDef" && state === true) {
+    if (effectid === "partialDef" && state) {
       if (this.hasEffect("fullDef")) {
         return ui.notifications.warn(game.i18n.localize("CO.notif.cantUseAllDef"))
       }
     }
-    if (effectid === "fullDef" && state === true) {
+    if (effectid === "fullDef" && state) {
       if (this.hasEffect("partialDef")) {
         return ui.notifications.warn(game.i18n.localize("CO.notif.cantUseAllDef"))
       }
@@ -604,6 +604,17 @@ export default class COActor extends Actor {
     if (item.system.actions[indice].properties.temporary) {
       if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction - Action avec une durée`), state, source, indice, type, shiftKey, item)
 
+      // L'activation de l'action déclenche tous les resolvers
+      if (state) {
+        const action = foundry.utils.deepClone(item.system.actions[indice])
+        // Recherche des resolvers de l'action
+        let resolvers = Object.values(action.resolvers).map((r) => foundry.utils.deepClone(r))
+        // Résolution de tous les resolvers avant de continuer
+        results = await Promise.all(resolvers.map((resolver) => resolver.resolve(this, item, action, type)))
+
+        // Si tous les resolvers ont réussi
+        allResolversTrue = results.length > 0 && results.every((result) => result === true)
+      }
       const newActions = item.system.toObject().actions
       newActions[indice].properties.enabled = state
       await item.update({ "system.actions": newActions })

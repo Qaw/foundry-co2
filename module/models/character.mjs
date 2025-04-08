@@ -154,81 +154,10 @@ export default class CharacterData extends ActorData {
   }
 
   /**
-   * Retrieves an array of ability modifiers from various sources associated with the character.
-   *
-   * @returns {Array} An array of ability modifiers.
-   */
-  get abilityModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.ability.id)
-  }
-
-  /**
-   * Gets the resource modifiers for the character.
-   *
-   * @returns {Array} An array of resource modifiers.
-   */
-  get resourceModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.resource.id)
-  }
-
-  /**
-   * Retrieves the state modifiers for the character.
-   *
-   * @returns {Array} An array of state modifiers.
-   */
-  get stateModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.state.id)
-  }
-
-  /**
-   * Retrieves the bonusDice modifiers for the character.
-   *
-   * @returns {Array} An array of state modifiers.
-   */
-  get bonusDiceModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.bonusDice.id)
-  }
-
-  /**
-   * Retrieves the malusDice modifiers for the character.
-   *
-   * @returns {Array} An array of state modifiers.
-   */
-  get malusDiceModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.malusDice.id)
-  }
-
-  /**
-   * Retrieves an array of combat modifiers from various sources associated with the character.
-   *
-   * @returns {Array} An array of combat modifiers.
-   */
-  get combatModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.combat.id)
-  }
-
-  /**
-   * Retrieves the attribute modifiers for the character.
-   *
-   * @returns {Array} An array of attribute modifiers.
-   */
-  get attributeModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.attribute.id)
-  }
-
-  /**
-   * Retrieves the skill modifiers for the character.
-   *
-   * @returns {Array} An array of skill modifiers.
-   */
-  get skillModifiers() {
-    return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.skill.id)
-  }
-
-  /**
    * Retrieves an array of modifiers from various sources associated with the character.
    * The sources include features, profiles, capacities, and equipment.
    * Each source is checked for enabled modifiers of the specified type and subtype.
+   * Only modifiers of applyOn self or both should be considered.
    * For features and profiles, the modifiers are in the item
    * for capacities and equipment, the modifiers are in the actions
    *
@@ -242,17 +171,20 @@ export default class CharacterData extends ActorData {
     sources.forEach((source) => {
       let items = this.parent[source]
       if (items) {
-        let allModifiers = items.reduce((mods, item) => mods.concat(item.enabledModifiers), []).filter((m) => m.subtype === subtype)
+        let allModifiers = items
+          .reduce((mods, item) => mods.concat(item.enabledModifiers), [])
+          .filter((m) => m.subtype === subtype && (m.apply === SYSTEM.MODIFIERS_APPLY.self.id || m.apply === SYSTEM.MODIFIERS_APPLY.both.id))
         modifiersArray.push(...allModifiers)
       }
     })
-    // On prend en compte les customEffect en cours
-    if (this.currentEffects) {
+
+    // Prise en compte des customEffects en cours (applyOn others ou both)
+    if (this.currentEffects.length > 0) {
       for (const effect of this.currentEffects) {
-        for (let i = 0; i < effect.modifiers.length; i++) {
-          const copy = { ...effect.modifiers[i] }
-          const mod = new Modifier(copy)
-          modifiersArray.push(mod)
+        if (effect.modifiers.length > 0) {
+          modifiersArray.push(
+            ...effect.modifiers.filter((m) => m.subtype === subtype && (m.apply === SYSTEM.MODIFIERS_APPLY.others.id || m.apply === SYSTEM.MODIFIERS_APPLY.both.id)),
+          )
         }
       }
     }
