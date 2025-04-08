@@ -50,8 +50,7 @@ export class Modifier extends foundry.abstract.DataModel {
    * @returns {string|undefined} The generated tooltip string or undefined if the item is not found.
    */
   getTooltip(actor) {
-    const { id } = foundry.utils.parseUuid(this.source)
-    let item = actor.items.get(id)
+    let item = fromUuidSync(this.source)
     if (!item) return
     let name = item.name
     let value = this.evaluate(actor)
@@ -79,8 +78,7 @@ export class Modifier extends foundry.abstract.DataModel {
     if (item.type === SYSTEM.ITEM_TYPE.capacity.id) {
       const pathId = item.system.path
       if (pathId) {
-        const { id } = foundry.utils.parseUuid(pathId)
-        const path = actor.items.get(id)
+        const path = fromUuidSync(pathId)
         if (path) pathType = game.i18n.localize(SYSTEM.PATH_TYPES[path.system.subtype].label)
       }
     }

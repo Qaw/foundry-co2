@@ -115,12 +115,12 @@ export default class Utils {
    */
   static _replaceRank(actor, content, source) {
     // Pour connaitre le rang d'une voie il faut remonter à la source pour savoir de quelle voie il s'agit
-    const itemSource = actor.getItemFromUuid(source)
+    const itemSource = fromUuidSync(source)
     if (!itemSource || itemSource.type !== "capacity") return content
 
     if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`Utils - _replaceRank - actor, formula, source, itemSource`), actor, content, source, itemSource)
     const pathUuid = itemSource.system.path
-    const path = actor.getItemFromUuid(pathUuid)
+    const path = fromUuidSync(pathUuid)
     const rank = path?.system.rank ?? 0
 
     // Cas @rank[x,x,x,x,x]

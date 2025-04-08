@@ -906,19 +906,6 @@ export default class COActor extends Actor {
   }
 
   /**
-   * Retrieves an item from the items of the actor using its UUID.
-   *
-   * @param {string} uuid The UUID of the item to retrieve.
-   * @returns {Object|null} The item if found, otherwise null.
-   */
-  getItemFromUuid(uuid) {
-    let { id } = foundry.utils.parseUuid(uuid)
-    const item = this.items.get(id)
-    if (item) return item
-    return null
-  }
-
-  /**
    * Checks if there is an item with the specified key in the items array.
    *
    * @param {string} slug The key to search for in the items array.
