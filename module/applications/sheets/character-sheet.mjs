@@ -33,7 +33,7 @@ export default class COCharacterSheet extends CoBaseActorSheet {
 
     context.overloadMalus = this.actor.malusFromArmor
 
-    // Choices
+    // Select options
     context.choiceAbilities = SYSTEM.ABILITIES
     context.choiceSize = SYSTEM.SIZES
 

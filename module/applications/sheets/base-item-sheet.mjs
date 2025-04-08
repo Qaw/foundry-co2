@@ -156,7 +156,6 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.locked = this.isPlayMode
 
     context.systemFields = this.document.system.schema.fields
-    context.resolverSystemFields = this.document.system.schema.fields.actions.element.fields.resolvers.element.fields
 
     // Select options
     context.choiceActionTypes = SYSTEM.ACTION_TYPES
@@ -173,30 +172,6 @@ export default class CoBaseItemSheet extends ItemSheet {
     context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
     context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
     context.choiceModifierApplies = SYSTEM.MODIFIERS.MODIFIERS_APPLY
-
-    context.choiceConditionStates = SYSTEM.STATUS_EFFECT.filter((effect) =>
-      [
-        "dead",
-        "immobilized",
-        "stun",
-        "paralysis",
-        "blind",
-        "silence",
-        "outOfBreath",
-        "bleeding",
-        "invalid",
-        "poison",
-        "slowed",
-        "overturned",
-        "surprised",
-        "weakened",
-        "invisible",
-        "unconscious",
-      ].includes(effect.id),
-    ).reduce((acc, effect) => {
-      acc[effect.id] = effect.name
-      return acc
-    }, {})
 
     context.choiceModifierAbilityTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "ability"))
     context.choiceModifierCombatTargets = Object.fromEntries(

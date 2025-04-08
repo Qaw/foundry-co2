@@ -6,6 +6,10 @@ export default class CoCapacitySheet extends CoBaseItemSheet {
   /** @override */
   async getData(options = {}) {
     const context = await super.getData(options)
+
+    context.resolverSystemFields = this.document.system.schema.fields.actions.element.fields.resolvers.element.fields
+
+    // Select options
     context.choiceCapacityActionTypes = SYSTEM.CAPACITY_ACTION_TYPE
     context.choiceCapacityFrequency = SYSTEM.CAPACITY_FREQUENCY
 

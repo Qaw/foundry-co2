@@ -26,7 +26,7 @@ export default class COEncounterSheet extends CoBaseActorSheet {
     context.visibleActivableTemporaireActions = await this.actor.getVisibleActivableTemporaireActions()
     context.visibleNonActivableNonTemporaireActions = await this.actor.getVisibleNonActivableNonTemporaireActions()
 
-    // Choices
+    // Select options
     context.choiceArchetypes = SYSTEM.ENCOUNTER_ARCHETYPES
     context.choiceCategories = SYSTEM.ENCOUNTER_CATEGORIES
     context.choiceBossRanks = SYSTEM.ENCOUNTER_BOSS_RANKS

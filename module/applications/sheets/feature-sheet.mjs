@@ -26,6 +26,7 @@ export default class CoFeatureSheet extends CoBaseItemSheet {
     }
     context.paths = infosPaths
 
+    // Select options
     context.choiceFeatureSubtypes = SYSTEM.FEATURE_SUBTYPE
 
     return context

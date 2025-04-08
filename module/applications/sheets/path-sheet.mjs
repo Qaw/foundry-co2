@@ -8,6 +8,8 @@ export default class CoPathSheet extends CoBaseItemSheet {
     const context = await super.getData(options)
 
     context.capacities = await this.item.system.getCapacities()
+
+    // Select options
     context.choicePathSubtypes = SYSTEM.PATH_TYPES
 
     return context
