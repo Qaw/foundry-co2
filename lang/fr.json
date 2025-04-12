@@ -615,12 +615,11 @@
     },
     "resolver": {
       "types": {
-        "melee": "Attaque de contact",
-        "ranged": "Attaque à distance",
-        "magical": "Attaque magique",
+        "auto": "Attaque automatique",
+        "attack": "Attaque",
         "heal": "Soin",
         "buffDebuff": "Buff/Debuff",
-        "auto": "Attaque automatique"
+        "consumable": "Consommable"
       },
       "target": {
         "none": "Aucune",

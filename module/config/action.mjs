@@ -147,17 +147,9 @@ export const RESOLVER_TYPE = Object.freeze({
     id: "auto",
     label: "CO.resolver.types.auto",
   },
-  melee: {
-    id: "melee",
-    label: "CO.resolver.types.melee",
-  },
-  ranged: {
-    id: "ranged",
-    label: "CO.resolver.types.ranged",
-  },
-  magical: {
-    id: "magical",
-    label: "CO.resolver.types.magical",
+  attack: {
+    id: "attack",
+    label: "CO.resolver.types.attack",
   },
   heal: {
     id: "heal",

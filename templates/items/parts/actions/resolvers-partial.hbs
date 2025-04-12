@@ -20,7 +20,7 @@
                     </div>             
                 </div>    
             </div>            
-            {{#if (or (eq r.type @root.choiceResolverTypes.melee.id) (eq r.type @root.choiceResolverTypes.ranged.id) (eq r.type @root.choiceResolverTypes.magical.id))}}
+            {{#if (eq r.type @root.choiceResolverTypes.attack.id) }}
                 <div class="flexrow strong">
                     <div class="form-fields flex1 center" data-tooltip="{{localize 'CO.ui.formulaTooltip'}}" data-tooltip-direction="UP">{{localize "CO.ui.skillformula"}}</div>
                     <div class="form-fields flex1 center" data-tooltip="{{localize 'CO.ui.critTooltip'}}" data-tooltip-direction="UP">{{localize "CO.ui.crit"}}</div>
