@@ -277,23 +277,10 @@ export const CUSTOM_STATUS_EFFECT = [
     description: "CO.customStatus.fullDefDescription",
   },
   {
-    id: "dance",
-    name: "CO.customStatus.dance",
-    img: "systems/co/ui/effects/dance.webp",
-    changes: [
-      {
-        key: "system.combat.def.bonuses.effects",
-        mode: 2,
-        value: -5,
-      },
-    ],
-    description: "CO.customStatus.danceDescription",
-  },
-  {
-    id: "herosong",
-    name: "CO.customStatus.heroSong",
-    img: "systems/co/ui/effects/herosong.webp",
-    description: "CO.customStatus.heroSongDescription",
+    id: "customEffect",
+    name: "CO.customStatus.customEffect",
+    img: "icons/svg/aura.svg",
+    description: "CO.customStatus.customEffectDescription",
   },
 ]
 

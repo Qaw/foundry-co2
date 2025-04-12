@@ -1805,6 +1805,11 @@ export default class COActor extends Actor {
     }
     await this.system.currentEffects.splice(this.system.currentEffects.indexOf(customEffect), 1)
     await this.update({ "system.currentEffects": this.system.currentEffects })
+
+    // Si il n'y a plus d'effet custom, on enlève l'icône
+    if (this.system.currentEffects.length === 0) {
+      await this.activateCOStatusEffect({ state: false, effectid: "customEffect" })
+    }
   }
 
   /**
@@ -1828,6 +1833,9 @@ export default class COActor extends Actor {
       newCurrentEffects[existingEffectIndex].startedAt = effect.startedAt
       newCurrentEffects[existingEffectIndex].lastRound = effect.lastRound
     } else newCurrentEffects.push(effect)
+
+    // Affichage de l'icône
+    await this.activateCOStatusEffect({ state: true, effectid: "customEffect" })
 
     await this.update({ "system.currentEffects": newCurrentEffects })
 
