@@ -18,18 +18,12 @@ export default class COCharacterSheet extends CoBaseActorSheet {
 
   /** @override */
   async getData(options) {
-    const context = super.getData(options)
+    const context = await super.getData(options)
     context.profiles = this.actor.profiles
 
     context.xpMax = this.actor.system.attributes.xp.max
     context.xpSpent = await this.actor.system.getSpentXP()
     context.xpLeft = await this.actor.system.getAvailableXP()
-    context.visibleActions = await this.actor.getVisibleActions()
-    context.visibleActivableActions = await this.actor.getVisibleActivableActions()
-    context.visibleNonActivableActions = await this.actor.getVisibleNonActivableActions()
-    context.visibleActivableTemporaireActions = await this.actor.getVisibleActivableTemporaireActions()
-    context.visibleNonActivableNonTemporaireActions = await this.actor.getVisibleNonActivableNonTemporaireActions()
-    context.currentEffects = await this.actor.customEffects
 
     context.overloadMalus = this.actor.malusFromArmor
 

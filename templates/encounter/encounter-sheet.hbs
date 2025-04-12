@@ -21,11 +21,13 @@
                 </div>
             </div>
         </header>
+
         {{!-- Sheet Tab Navigation --}}
         <nav class="sheet-tabs tabs" data-group="primary">
             <a class="item" data-tab="main" data-tooltip="{{ localize 'CO.tabs.main' }}">{{ localize 'CO.tabs.main' }}</a>
             <a class="item" data-tab="loot" data-tooltip="{{ localize 'CO.tabs.loot' }}">{{ localize 'CO.tabs.loot' }}</a>
             <a class="item" data-tab="capacities" data-tooltip="{{ localize 'CO.tabs.capacities' }}">{{ localize "CO.tabs.capacities" }}</a>
+            <a class="item" data-tab="effects" data-tooltip="{{ localize 'CO.tabs.effects' }}">{{ localize "CO.tabs.effects" }}</a>
             <a class="item" data-tab="notes" data-tooltip="{{ localize 'CO.tabs.notes' }}">{{ localize 'CO.tabs.notes' }}</a>
             {{#if unlocked}}
                 <a class="item sheet-change-lock" data-tooltip="{{ localize 'CO.tabs.lock' }}"><i class="fas fa-lock-open"></i></a>
@@ -33,6 +35,7 @@
                 <a class="item sheet-change-lock" data-tooltip="{{ localize 'CO.tabs.unlock' }}"><i class="fas fa-lock"></i></a>
             {{/if}}
         </nav>
+
         <section class="sheet-body">
             <div class="tab main" data-group="primary" data-tab="main">
                 {{> "systems/co/templates/encounter/parts/encounter-main.hbs"}}
@@ -43,6 +46,9 @@
             <div class="tab capacities" data-group="primary" data-tab="capacities">
                 {{> "systems/co/templates/actors/parts/paths/character-paths.hbs"}}
             </div>
+            <div class="tab effects" data-group="primary" data-tab="effects">
+                {{> "systems/co/templates/actors/parts/character-effects.hbs"}}
+            </div>            
             <div class="tab notes" data-group="primary" data-tab="notes">
                 {{> "systems/co/templates/encounter/parts/encounter-notes.hbs"}}
             </div>

@@ -32,7 +32,7 @@ export default class CoBaseActorSheet extends ActorSheet {
   }
 
   /** @override */
-  getData(options) {
+  async getData(options) {
     const context = super.getData(options)
 
     context.debugMode = game.settings.get("co", "debugMode")
@@ -52,6 +52,13 @@ export default class CoBaseActorSheet extends ActorSheet {
     context.inventory = this.actor.inventory
     context.unlocked = this.isEditMode
     context.locked = this.isPlayMode
+
+    context.visibleActions = await this.actor.getVisibleActions()
+    context.visibleActivableActions = await this.actor.getVisibleActivableActions()
+    context.visibleNonActivableActions = await this.actor.getVisibleNonActivableActions()
+    context.visibleActivableTemporaireActions = await this.actor.getVisibleActivableTemporaireActions()
+    context.visibleNonActivableNonTemporaireActions = await this.actor.getVisibleNonActivableNonTemporaireActions()
+    context.currentEffects = await this.actor.customEffects
 
     // Select options
     context.choiceMoveUnit = SYSTEM.MOVEMENT_UNIT

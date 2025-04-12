@@ -44,9 +44,7 @@ export class Resolver extends foundry.abstract.DataModel {
 
   get resolvers() {
     return {
-      melee: function () {},
-      ranged: function () {},
-      magical: function () {},
+      attack: function () {},
       heal: function () {},
       auto: function () {},
       consume: function () {},
@@ -56,9 +54,7 @@ export class Resolver extends foundry.abstract.DataModel {
 
   async resolve(actor, item, action, type) {
     switch (this.type) {
-      case "melee":
-      case "ranged":
-      case "magical":
+      case "attack":
         return await this.attack(actor, item, action, type)
       case "auto":
         return await this.auto(actor, item, action)
@@ -68,7 +64,6 @@ export class Resolver extends foundry.abstract.DataModel {
         return await this.consume(actor, item, action)
       case "buffDebuff":
         return await this.buffDebuff(actor, item, action)
-
       default:
         return false
     }

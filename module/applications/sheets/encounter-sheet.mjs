@@ -16,15 +16,9 @@ export default class COEncounterSheet extends CoBaseActorSheet {
 
   /** @override */
   async getData(options) {
-    const context = super.getData(options)
+    const context = await super.getData(options)
     context.attacks = this.actor.system.attacks
     context.attacksActions = this.actor.attacksActions
-
-    context.visibleActions = await this.actor.getVisibleActions()
-    context.visibleActivableActions = await this.actor.getVisibleActivableActions()
-    context.visibleNonActivableActions = await this.actor.getVisibleNonActivableActions()
-    context.visibleActivableTemporaireActions = await this.actor.getVisibleActivableTemporaireActions()
-    context.visibleNonActivableNonTemporaireActions = await this.actor.getVisibleNonActivableNonTemporaireActions()
 
     // Select options
     context.choiceArchetypes = SYSTEM.ENCOUNTER_ARCHETYPES
