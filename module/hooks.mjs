@@ -2,6 +2,7 @@ import { SYSTEM } from "./config/system.mjs"
 import { CORoll } from "./documents/roll.mjs"
 import { Hitpoints } from "./hitpoints.mjs"
 import { createCOMacro } from "./macros.mjs"
+import { Resolver } from "./models/schemas/resolver.mjs"
 import Utils from "./utils.mjs"
 
 /**
@@ -83,8 +84,8 @@ export default function registerHooks() {
       const messageId = event.currentTarget.closest(".message").dataset.messageId
       console.log("Message ID", messageId)
 
-      const actor = await fromUuid(oppositeTarget)
-      const value = Utils.evaluateOppositeFormula(oppositeValue, actor)
+      const targetActor = await fromUuid(oppositeTarget)
+      const value = Utils.evaluateOppositeFormula(oppositeValue, targetActor)
 
       const formula = value ? `1d20 + ${value}` : `1d20`
       const roll = await new Roll(formula).roll()
@@ -103,6 +104,23 @@ export default function registerHooks() {
           { style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "action", system: { subtype: "damage" }, speaker: message.speaker },
           { rollMode: rolls[0].options.rollMode },
         )
+      }
+
+      // Gestion des custom effects
+      const customEffect = message.system.customEffect
+      const applyOn = message.system.applyOn
+      if (customEffect && applyOn && Resolver.shouldManageAdditionalEffect(newResult, applyOn)) {
+        if (game.user.isGM) await targetActor.applyCustomEffect(customEffect)
+        else {
+          game.socket.emit(`system.${SYSTEM.ID}`, {
+            action: "customEffect",
+            data: {
+              userId: game.user.id,
+              ce: customEffect,
+              targets: [targetActor.uuid],
+            },
+          })
+        }
       }
 
       // Le MJ peut mettre à jour le message de chat

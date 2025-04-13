@@ -1401,35 +1401,6 @@ export default class COActor extends Actor {
     await roll.toMessage({ style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "skill", system: { targets: targetsUuid, result: result }, speaker }, { rollMode: roll.options.rollMode })
   }
 
-  /**
-   * Lance une attaque et potentiellement un jet de dégâts pour un objet donné avec diverses options.
-   *
-   * @param {Object} item L'objet pour lequel lancer l'attaque.
-   * @param {Object} [options] Les options pour le jet d'attaque.
-   * @param {string} [options.rollMode="rollMode"] La visibilité du jet.
-   * @param {boolean} [options.auto=false] Si le jet est automatique.
-   * @param {string} [options.type="attack"] Le type de jet, soit "attack" soit "damage".
-   * @param {string} [options.actionName=""] Le nom de l'action.
-   * @param {string} [options.chatFlavor=""] Le message de l'action dans le chat.
-   * @param {boolean} [options.useComboRolls=game.settings.get("co", "useComboRolls")] Si les jets doivent être combinés.
-   * @param {number} [options.skillBonus=0] Le bonus de compétence pour le jet.
-   * @param {number} [options.skillMalus=0] Le malus de compétence pour le jet.
-   * @param {number} [options.damageBonus=0] Le bonus de dégâts pour le jet.
-   * @param {number} [options.damageMalus=0] Le malus de dégâts pour le jet.
-   * @param {number} [options.critical=undefined] Le seuil critique pour le jet.
-   * @param {boolean} [options.bonusDice=undefined] Si des dés bonus sont utilisés.
-   * @param {boolean} [options.malusDice=undefined] Si des dés malus sont utilisés.
-   * @param {number} [options.difficulty=undefined] La difficulté du jet.
-   * @param {boolean} [options.useDifficulty=undefined] Si la difficulté doit être utilisée.
-   * @param {boolean} [options.showDifficulty=undefined] Si la difficulté doit être affichée.
-   * @param {boolean} [options.withDialog=true] Si une boîte de dialogue doit être affichée pour le jet.
-   * @param {string} [options.skillFormula=undefined] La formule pour le jet de compétence.
-   * @param {string} [options.skillFormulaTooltip=""] L'infobulle pour la formule de compétence.
-   * @param {string} [options.damageFormula=undefined] La formule pour le jet de dégâts.
-   * @param {string} [options.damageFormulaTooltip=""] L'infobulle pour la formule de dégâts.
-   * @param {UUID[]} [options.targets=undefined] Les cibles de l'attaque.
-   * @returns {Promise<null|Array>} Le résultat du jet, ou null si le jet a été annulé.
-   */
   async rollAttack(
     item,
     {
@@ -1455,6 +1426,8 @@ export default class COActor extends Actor {
       damageFormula = undefined,
       damageFormulaTooltip = "",
       targets = undefined,
+      customEffect,
+      applyOn,
     } = {},
   ) {
     // Si l'arme a la propriété "reloadable", on vérifie si l'arme assez de munitions
@@ -1595,7 +1568,7 @@ export default class COActor extends Actor {
           speaker,
           style: CONST.CHAT_MESSAGE_STYLES.OTHER,
           type: "action",
-          system: { subtype: "attack", targets: targetsUuid, result: results[0], linkedRoll },
+          system: { subtype: "attack", targets: targetsUuid, result: results[0], linkedRoll, customEffect, applyOn },
         },
         { rollMode: rolls[0].options.rollMode },
       )

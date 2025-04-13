@@ -88,6 +88,12 @@ export class Resolver extends foundry.abstract.DataModel {
     let damageFormulaEvaluated = Roll.replaceFormulaData(damageFormula, actor.getRollData())
     const damageFormulaTooltip = this.dmg.formula
 
+    // Création de l'éventuel custom effect
+    let customEffect
+    if (this.additionalEffect.active) {
+      customEffect = await this._createCustomEffect(actor, item, action)
+    }
+
     const result = await actor.rollAttack(item, {
       auto: false,
       type,
@@ -101,36 +107,26 @@ export class Resolver extends foundry.abstract.DataModel {
       difficulty: this.skill.difficulty,
       bonusDice: this.bonusDiceAdd ? 1 : 0,
       malusDice: this.malusDiceAdd ? 1 : 0,
+      customEffect,
+      applyOn: this.additionalEffect.applyOn,
     })
 
     if (result === null) return false
 
-    // Gestion des effets supplémentaires en cas de réussite critique
-    if (result[0].isCritical && this.additionalEffect.active && this.additionalEffect.applyOn === SYSTEM.RESOLVER_RESULT.critical.id) {
-      await this._manageAdditionalEffect(actor, item, action)
-    }
-    // Gestion des effets supplémentaires en cas de réussite
-    else if (result[0].isSuccess && this.additionalEffect.active && this.additionalEffect.applyOn === SYSTEM.RESOLVER_RESULT.success.id) {
-      await this._manageAdditionalEffect(actor, item, action)
-    }
-    // Gestion des effets supplémentaires en cas de réussite supérieure à un seuil
-    else if (
-      result[0].isSuccess &&
-      result[0].total >= this.additionalEffect.successThreshold &&
-      this.additionalEffect.active &&
-      this.additionalEffect.applyOn === SYSTEM.RESOLVER_RESULT.successTreshold.id
-    ) {
-      await this._manageAdditionalEffect(actor, item, action)
-    }
-    // Gestion des effets supplémentaires en cas d'échec
-    else if (result[0].isFailure && this.additionalEffect.active && this.additionalEffect.applyOn === SYSTEM.RESOLVER_RESULT.failure.id) {
-      await this._manageAdditionalEffect(actor, item, action)
-    }
-    // Gestion des effets supplémentaires dans tous les cas
-    else if (this.additionalEffect.active && this.additionalEffect.applyOn === SYSTEM.RESOLVER_RESULT.always.id) {
+    // Gestion des effets supplémentaires
+    if (this.additionalEffect.active && Resolver.shouldManageAdditionalEffect(result[0], this.additionalEffect.applyOn)) {
       await this._manageAdditionalEffect(actor, item, action)
     }
     return true
+  }
+
+  static shouldManageAdditionalEffect(result, applyOn) {
+    if (applyOn === SYSTEM.RESOLVER_RESULT.always.id) return true
+    if (applyOn === SYSTEM.RESOLVER_RESULT.success.id && result.isSuccess) return true
+    if (applyOn === SYSTEM.RESOLVER_RESULT.successTreshold.id && result.isSuccess && results.total >= this.additionalEffect.successThreshold) return true
+    if (applyOn === SYSTEM.RESOLVER_RESULT.critical.id && results.isCritical) return true
+    if (applyOn === SYSTEM.RESOLVER_RESULT.failure.id && results.isFailure) return true
+    return false
   }
 
   /**
@@ -255,6 +251,31 @@ export class Resolver extends foundry.abstract.DataModel {
       ui.notifications.warn("Pas de combat en cours ou combat non démarré !")
       return
     }
+
+    const ce = await this._createCustomEffect(actor, item, action)
+
+    // Application de l'effet en fonction de la gestion des cibles
+    // Aucune cible ou soi-même : le MJ ou un joueur peut appliquer l'effet
+    if (this.target.type === SYSTEM.RESOLVER_TARGET.none.id || this.target.type === SYSTEM.RESOLVER_TARGET.self.id) await actor.applyCustomEffect(ce)
+    else {
+      const targets = actor.acquireTargets(this.target.type, this.target.scope, this.target.number, action.name)
+      const uuidList = targets.map((t) => t.uuid)
+      if (game.user.isGM) await Promise.all(targets.map((target) => target.actor.applyCustomEffect(ce)))
+      else {
+        game.socket.emit(`system.${SYSTEM.ID}`, {
+          action: "customEffect",
+          data: {
+            userId: game.user.id,
+            ce,
+            targets: uuidList,
+          },
+        })
+      }
+    }
+  }
+
+  async _createCustomEffect(actor, item, action) {
+    let ce
     // Evaluation de la durée si besoin
     let evaluatedDuration = Utils.evaluateFormulaCustomValues(actor, this.additionalEffect.duration)
     evaluatedDuration = Roll.replaceFormulaData(evaluatedDuration, actor.getRollData())
@@ -282,7 +303,7 @@ export class Resolver extends foundry.abstract.DataModel {
     }
 
     // Création de l'effet
-    let ce = new CustomEffectData({
+    ce = new CustomEffectData({
       name: item.name,
       source: item.uuid,
       statuses: this.additionalEffect.statuses,
@@ -297,23 +318,6 @@ export class Resolver extends foundry.abstract.DataModel {
       slug: item.name.slugify(),
     })
 
-    // Application de l'effet en fonction de la gestion des cibles
-    // Aucune cible ou soi-même : le MJ ou un joueur peut appliquer l'effet
-    if (this.target.type === SYSTEM.RESOLVER_TARGET.none.id || this.target.type === SYSTEM.RESOLVER_TARGET.self.id) await actor.applyCustomEffect(ce)
-    else {
-      const targets = actor.acquireTargets(this.target.type, this.target.scope, this.target.number, action.name)
-      const uuidList = targets.map((t) => t.uuid)
-      if (game.user.isGM) await Promise.all(targets.map((target) => target.actor.applyCustomEffect(ce)))
-      else {
-        game.socket.emit(`system.${SYSTEM.ID}`, {
-          action: "customEffect",
-          data: {
-            userId: game.user.id,
-            ce,
-            targets: uuidList,
-          },
-        })
-      }
-    }
+    return ce
   }
 }
