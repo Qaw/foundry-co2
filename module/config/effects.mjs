@@ -308,6 +308,16 @@ export const CUSTOM_EFFECT = {
 }
 
 export const CUSTOM_EFFECT_ELEMENT = {
+  acid: {
+    id: "acid",
+    label: "CO.customEffect.acid",
+    description: "CO.customEffect.acidDescription",
+  },
+  lightning: {
+    id: "lightning",
+    label: "CO.customEffect.lightning",
+    description: "CO.customEffect.lightningDescription",
+  },
   fire: {
     id: "fire",
     label: "CO.customEffect.fire",
@@ -318,29 +328,24 @@ export const CUSTOM_EFFECT_ELEMENT = {
     label: "CO.customEffect.ice",
     description: "CO.customEffect.iceDescription",
   },
-  lightning: {
-    id: "lightning",
-    label: "CO.customEffect.lightning",
-    description: "CO.customEffect.lightningDescription",
+  disease: {
+    id: "disease",
+    label: "CO.customEffect.disease",
+    description: "CO.customEffect.diseaseDescription",
   },
   poison: {
     id: "poison",
     label: "CO.customEffect.poison",
     description: "CO.customEffect.poisonDescription",
   },
-  sacred: {
-    id: "sacred",
-    label: "CO.customEffect.sacred",
-    description: "CO.customEffect.sacredDescription",
-  },
   putrid: {
     id: "putrid",
     label: "CO.customEffect.putrid",
     description: "CO.customEffect.putridDescription",
   },
-  disease: {
-    id: "disease",
-    label: "CO.customEffect.disease",
-    description: "CO.customEffect.diseaseDescription",
+  sacred: {
+    id: "sacred",
+    label: "CO.customEffect.sacred",
+    description: "CO.customEffect.sacredDescription",
   },
 }

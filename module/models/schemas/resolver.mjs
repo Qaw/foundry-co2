@@ -2,7 +2,6 @@ import { SYSTEM } from "../../config/system.mjs"
 import Utils from "../../utils.mjs"
 import COActor from "../../documents/actor.mjs"
 import { CustomEffectData } from "./custom-effect.mjs"
-import { handleSocketEvent } from "../../socket.mjs"
 
 /**
  * Resolver
@@ -123,7 +122,6 @@ export class Resolver extends foundry.abstract.DataModel {
     ) {
       await this._manageAdditionalEffect(actor, item, action)
     }
-
     // Gestion des effets supplémentaires en cas d'échec
     else if (result[0].isFailure && this.additionalEffect.active && this.additionalEffect.applyOn === SYSTEM.RESOLVER_RESULT.failure.id) {
       await this._manageAdditionalEffect(actor, item, action)

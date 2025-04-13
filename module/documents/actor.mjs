@@ -1573,6 +1573,7 @@ export default class COActor extends Actor {
       hasTargets: targets?.length > 0,
     }
 
+    // Rolls contient le jet d'attaque et éventuellement le jet de dégâts
     let rolls = await COAttackRoll.prompt(dialogContext, { withDialog: withDialog })
     if (!rolls) return null
 
@@ -1583,6 +1584,7 @@ export default class COActor extends Actor {
 
     let targetsUuid = targets?.map((target) => target.uuid)
 
+    // Jet de dommages
     const linkedRoll = rolls.length > 1 ? rolls[1].toJSON() : null
 
     // Jet d'attaque
