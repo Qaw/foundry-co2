@@ -988,18 +988,28 @@ export default class COActor extends Actor {
 
   /**
    * Create a profile, and the linked modifiers and paths if they exist
+   * Check the profile does not already exist
+   * Allow only two profiles : main and secondary
    * @param {COItem} profile
    * @returns {Promise<string>} A promise that resolves to the UUID of the newly created profile.
    */
   async addProfile(profile) {
-    //
     if (this.profiles.length > 0) {
-      return ui.notifications.warn(game.i18n.localize("CO.notif.profilAlreadyExist"))
+      // On ne peut pas avoir deux fois le même profil
+      const existingProfile = this.profiles.find((p) => p.system.slug === profile.system.slug)
+      if (existingProfile) {
+        return ui.notifications.warn(game.i18n.localize("CO.notif.profileAlreadyExist"))
+      }
+      if (this.profiles.length >= 2) {
+        return ui.notifications.warn(game.i18n.localize("CO.notif.profileAlreadyTwo"))
+      }
     }
 
     let itemData = profile.toObject()
     // C'est le profil principal
-    itemData.system.mainProfile = true
+    if (this.profiles.length === 0) {
+      itemData.system.mainProfile = true
+    }
     itemData = itemData instanceof Array ? itemData : [itemData]
     const newProfile = await this.createEmbeddedDocuments("Item", itemData)
     if (newProfile[0].system.modifiers.length > 0) {

@@ -145,12 +145,12 @@ export default class CharacterData extends ActorData {
   }
 
   /**
-   * Retrieves the profile item from the items array.
+   * Retrieves the main profile item from the items array.
    *
-   * @returns {Object|undefined} The profile item if found, otherwise undefined.
+   * @returns {Object|undefined} The main profile item if found, otherwise undefined.
    */
   get profile() {
-    return this.parent.items.find((item) => item.type === SYSTEM.ITEM_TYPE.profile.id)
+    return this.parent.items.find((item) => item.type === SYSTEM.ITEM_TYPE.profile.id && item.system.mainProfile)
   }
 
   /**
@@ -353,13 +353,35 @@ export default class CharacterData extends ActorData {
   }
 
   _prepareHPMax() {
-    const tooltipBase = Utils.getTooltip("Base", this.attributes.hp.base)
-
     const hpMaxBonuses = Object.values(this.attributes.hp.bonuses).reduce((prev, curr) => prev + curr)
     const hpMaxModifiers = this.computeTotalModifiersByTarget(this.attributeModifiers, "hp")
 
-    this.attributes.hp.max = this.attributes.hp.base + hpMaxBonuses + hpMaxModifiers.total
-    this.attributes.hp.tooltip = tooltipBase.concat(hpMaxModifiers.tooltip, Utils.getTooltip("Bonus", hpMaxBonuses))
+    const nbProfiles = this.parent.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.profile.id).length
+    // Profil unique
+    if (nbProfiles === 1) {
+      // Calcul de la base de PV sans le bonus de constitution
+      // Au niveau 1 : 2 * PV de la famille
+      // Pour chaque niveau supplémentaire : + PV de la famille
+      const pvFromFamily = this.profile ? SYSTEM.FAMILIES[this.profile.system.family].hp : 0
+      this.attributes.hp.base = 2 * pvFromFamily + (this.attributes.level - 1) * pvFromFamily
+
+      const constitutionBonus = this.attributes.level * this.abilities.con.value
+
+      this.attributes.hp.max = this.attributes.hp.base + constitutionBonus + hpMaxBonuses + hpMaxModifiers.total
+      this.attributes.hp.tooltip = Utils.getTooltip("Base ", this.attributes.hp.base).concat(
+        ` ${Utils.getAbilityName("con")} : `,
+        constitutionBonus,
+        hpMaxModifiers.tooltip,
+        Utils.getTooltip("Bonus", hpMaxBonuses),
+      )
+    }
+    // Profil hybride
+    else if (nbProfiles > 1) {
+      const tooltipBase = Utils.getTooltip("Base", this.attributes.hp.base)
+
+      this.attributes.hp.max = this.attributes.hp.base + hpMaxBonuses + hpMaxModifiers.total
+      this.attributes.hp.tooltip = tooltipBase.concat(hpMaxModifiers.tooltip, Utils.getTooltip("Bonus", hpMaxBonuses))
+    }
   }
 
   _prepareMovement() {
