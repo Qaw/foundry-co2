@@ -37,16 +37,20 @@ export async function _heal({ targets, healAmount, fromUserId }) {
 }
 
 /**
+ * Handles the "_oppositeRoll" socket event, updating the message with new roll data and result.
  *
- * @param root0
- * @param root0.userId
- * @param root0.messageId
- * @param root0.rolls
- * @param root0.result
+ * @async
+ * @function _oppositeRoll
+ * @param {Object} [params={}] The parameters for the function.
+ * @param {string} params.userId The ID of the user who triggered the event.
+ * @param {string} params.messageId The ID of the message to update.
+ * @param {Array} params.rolls The array of roll data to update the message with.
+ * @param {any} params.result The result to update in the message's system data.
+ * @returns {Promise<void>} Resolves when the message is successfully updated.
  */
 export async function _oppositeRoll({ userId, messageId, rolls, result } = {}) {
   console.log(`handleSocketEvent _oppositeRoll from ${userId} !`, messageId, rolls, result)
-  // const currentUser = game.user._id
+
   if (game.user.isGM) {
     const message = game.messages.get(messageId)
     await message.update({ rolls: rolls, "system.result": result })

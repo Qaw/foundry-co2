@@ -224,6 +224,18 @@ export default class EncounterData extends ActorData {
   }
 
   /**
+   * Retrieves the malusDice modifiers for the character.
+   *
+   * @returns {Array} An array of state modifiers.
+   */
+  get malusDiceModifiers() {
+    const lstCapacities = this.parent.capacities
+    if (!lstCapacities) return []
+    let allModifiers = lstCapacities.reduce((mods, item) => mods.concat(item.enabledModifiers), []).filter((m) => m.subtype === SYSTEM.MODIFIERS_SUBTYPE.malusDice.id)
+    return allModifiers
+  }
+
+  /**
    * Return the total modifier and the tooltip for the given target and an array of modifiers.
    * @param {Array} modifiers An array of modifier objects.
    * @param {SYSTEM.MODIFIERS.MODIFIER_TARGET} target The target for which the modifiers are filtered.
@@ -255,6 +267,18 @@ export default class EncounterData extends ActorData {
   hasBonusDiceForAttack(attackType) {
     if (!attackType) return false
     const modifiers = this.bonusDiceModifiers.filter((m) => m.target === attackType)
+    return modifiers.length > 0
+  }
+
+  /**
+   * Checks if there are any malus dice modifiers for a given attack type.
+   *
+   * @param {string} attackType The type of attack to check for malus dice modifiers.
+   * @returns {boolean} - Returns true if there are malus dice modifiers for the given attack type, otherwise false.
+   */
+  hasMalusDiceForAttack(attackType) {
+    if (!attackType) return false
+    const modifiers = this.malusDiceModifiers.filter((m) => m.target === attackType && m.subtype === SYSTEM.MODIFIERS_SUBTYPE.malusDice.id)
     return modifiers.length > 0
   }
 

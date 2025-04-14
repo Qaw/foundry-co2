@@ -267,19 +267,17 @@ export default class CoBaseActorSheet extends ActorSheet {
   }
 
   /**
-   * Permet la suppression d'un effet personnalisé à la main au cas où il ne se terminerais pas de lui même
-   * Où pour simuler un arrêt précoce à cause d'un sort de soin ?
+   * Permet la suppression d'un effet personnalisé à la main au cas où il ne se terminerait pas de lui-même
+   * Ou pour simuler un arrêt précoce à cause d'un sort de soin par exemple
    * @param {Event} event
    */
   async _onDeleteCustomEffect(event) {
     event.preventDefault()
     const dataset = event.currentTarget.dataset
-    console.log(dataset)
     let effectname = dataset.ceName
     const ce = this.actor.system.currentEffects.find((ce) => ce.slug === effectname)
     if (ce) {
-      console.log("je dois supprimer ", ce)
       await this.actor.deleteCustomEffect(ce)
-    } else console.log("pas trouvé : ", effectname)
+    }
   }
 }

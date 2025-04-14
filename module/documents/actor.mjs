@@ -1504,6 +1504,9 @@ export default class COActor extends Actor {
     // Gestion du dé bonus : en fonction de la formule, on déduit le type d'attaque et on cherche dans les modifiers
     if (this.system.hasBonusDiceForAttack(Utils.getAttackTypeFromFormula(skillFormulaTooltip))) bonusDices += 1
 
+    // Gestion du dé malus : en fonction de la formule, on déduit le type d'attaque et on cherche dans les modifiers
+    if (this.system.hasMalusDiceForAttack(Utils.getAttackTypeFromFormula(skillFormulaTooltip))) malusDices += 1
+
     // Maitrise de l'arme : Si le personnage utilise une arme qu’il ne maîtrise pas, il subit un dé malus au test d’attaque.
     if (item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.weapon.id) {
       if (!this.isTrainedWithWeapon(item.id)) malusDices += 1
