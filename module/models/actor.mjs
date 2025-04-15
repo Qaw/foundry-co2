@@ -93,4 +93,28 @@ export default class ActorData extends foundry.abstract.TypeDataModel {
   get skillModifiers() {
     return this._getModifiers(SYSTEM.MODIFIERS_SUBTYPE.skill.id)
   }
+
+  /**
+   * Checks if there are any bonus dice modifiers for a given attack type.
+   *
+   * @param {string} attackType The type of attack to check for bonus dice modifiers.
+   * @returns {boolean} - Returns true if there are bonus dice modifiers for the given attack type, otherwise false.
+   */
+  hasBonusDiceForAttack(attackType) {
+    if (!attackType) return false
+    const modifiers = this.bonusDiceModifiers.filter((m) => m.target === attackType)
+    return modifiers.length > 0
+  }
+
+  /**
+   * Checks if there are any malus dice modifiers for a given attack type.
+   *
+   * @param {string} attackType The type of attack to check for malus dice modifiers.
+   * @returns {boolean} - Returns true if there are malus dice modifiers for the given attack type, otherwise false.
+   */
+  hasMalusDiceForAttack(attackType) {
+    if (!attackType) return false
+    const modifiers = this.malusDiceModifiers.filter((m) => m.target === attackType)
+    return modifiers.length > 0
+  }
 }
