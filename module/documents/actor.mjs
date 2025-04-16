@@ -708,6 +708,14 @@ export default class COActor extends Actor {
       // Les capacités de rang 6 à 8 sont réservées aux voies de prestige
       newRank = currentRank + 1
       if (this.system.attributes.level < SYSTEM.CAPACITY_MINIMUM_LEVEL[newRank]) return ui.notifications.warn(game.i18n.localize("CO.notif.warningLevelTooLow"))
+      // Pour apprendre une capacité il faut avoir appris les précédantes !
+      let pos = await path.system.getCapacityRank(capacity.uuid)
+      console.log("cette capacité a pour rang :", pos)
+      for (let i = 0; i < pos; i++) {
+        let c = path.system.capacities[i]
+        const current = await fromUuid(c)
+        if (current.system.learned === false) return ui.notifications.warn(game.i18n.localize("CO.notif.warningNeedLearnedCapacities"))
+      }
     }
 
     // Mise à jour de la capacité et de ses actions
