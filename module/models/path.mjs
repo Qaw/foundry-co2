@@ -42,6 +42,15 @@ export default class PathData extends ItemData {
     return max
   }
 
+  /** Retourne la position d'une capacité dans la liste des capacités de la voie
+   * @param {string} capacityUuid L'UUID de la capacité recherchée
+   * @returns {number} La osition dans la liste ou 0 si la capacité n'est pas trouvée
+   */
+  async getCapacityRank(capacityUuid) {
+    const rankpos = this.capacities.indexOf(capacityUuid)
+    return rankpos !== -1 ? rankpos : 0
+  }
+
   /**
    * Asynchronously retrieves and returns a list of capacities.
    *
