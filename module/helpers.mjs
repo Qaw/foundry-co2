@@ -1,3 +1,4 @@
+import { SYSTEM } from "./config/system.mjs"
 /**
  * Register Handlebars helpers
  */
@@ -8,6 +9,9 @@ export default function registerHandlebarsHelpers() {
   /* Handlebars.registerHelper("concat", function (a, b) {
     return a + b
   })*/
+  Handlebars.registerHelper("isPrestige", function (value) {
+    return value === SYSTEM.PATH_TYPES.prestige.id
+  })
   Handlebars.registerHelper("isset", function (value) {
     return value !== undefined
   })

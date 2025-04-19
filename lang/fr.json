@@ -368,9 +368,13 @@
       "magic": "Magique",
       "mainProfile": "Profil principal",
       "checkForSuperiorAbility": "Cocher pour activer la carac. supérieure !",
+<<<<<<< Updated upstream
       "addCapacityMsg": "Glissez déposez une capacité ici",
       "linkedCapacity": "Capacité liée",
       "parentCapacity": "Capacité parente"
+=======
+      "pvByLevel": "Points de vie par niveau"
+>>>>>>> Stashed changes
     },
     "properties": {
       "attack": "Attaque",
