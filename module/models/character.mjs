@@ -364,7 +364,6 @@ export default class CharacterData extends ActorData {
       // Pour chaque niveau supplémentaire : + PV de la famille
       const pvFromFamily = this.profile ? SYSTEM.FAMILIES[this.profile.system.family].hp : 0
       this.attributes.hp.base = 2 * pvFromFamily + (this.attributes.level - 1) * pvFromFamily
-
       const constitutionBonus = this.attributes.level * this.abilities.con.value
 
       this.attributes.hp.max = this.attributes.hp.base + constitutionBonus + hpMaxBonuses + hpMaxModifiers.total
