@@ -42,21 +42,13 @@ export default class PathData extends ItemData {
     return max
   }
 
-  /** Renvoi la position de la capacité dans la voie
-   * @param {Uuid} capacityUuid de la capacité à chercher
-   * @returns {integer} Position dans la liste
+  /** Retourne la position d'une capacité dans la liste des capacités de la voie
+   * @param {string} capacityUuid L'UUID de la capacité recherchée
+   * @returns {number} La osition dans la liste ou 0 si la capacité n'est pas trouvée
    */
   async getCapacityRank(capacityUuid) {
-    console.log("je cherche ", capacityUuid)
-    let rankpos = 0
-    for (let i = 0; i < this.capacities.length; i++) {
-      console.log("je vois ", this.capacities[i])
-      if (this.capacities[i] === capacityUuid) {
-        rankpos = i
-        break
-      }
-    }
-    return rankpos
+    const rankpos = this.capacities.indexOf(capacityUuid)
+    return rankpos !== -1 ? rankpos : 0
   }
 
   /**

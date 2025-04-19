@@ -697,7 +697,7 @@ export default class COActor extends Actor {
     if (!capacity) return
 
     // Rang actuel de la voie
-    let path = await fromUuid(capacity.system.path)
+    let path = fromUuidSync(capacity.system.path)
     if (!path) return
     const currentRank = await path.system.computeRank()
 
@@ -708,13 +708,12 @@ export default class COActor extends Actor {
       // Les capacités de rang 6 à 8 sont réservées aux voies de prestige
       newRank = currentRank + 1
       if (this.system.attributes.level < SYSTEM.CAPACITY_MINIMUM_LEVEL[newRank]) return ui.notifications.warn(game.i18n.localize("CO.notif.warningLevelTooLow"))
-      // Pour apprendre une capacité il faut avoir appris les précédantes !
+      // RULE : Pour apprendre une capacité, il faut avoir appris les précédentes
       let pos = await path.system.getCapacityRank(capacity.uuid)
-      console.log("cette capacité a pour rang :", pos)
       for (let i = 0; i < pos; i++) {
         let c = path.system.capacities[i]
-        const current = await fromUuid(c)
-        if (current.system.learned === false) return ui.notifications.warn(game.i18n.localize("CO.notif.warningNeedLearnedCapacities"))
+        const current = fromUuidSync(c)
+        if (!current.system.learned) return ui.notifications.warn(game.i18n.localize("CO.notif.warningNeedLearnedCapacities"))
       }
     }
 
