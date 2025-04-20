@@ -76,9 +76,15 @@ export default class PathData extends ItemData {
   /** Retourne le nombre de capacité apprise
    * @returns {integer} Nombre de capacités apprise
    */
-  async numberLearnedCapacities() {
-    const capacities = await this.getCapacities()
-    let learned = capacities.find((c) => c.system.learned)
-    return learned ? learned.length : 0
+  numberLearnedCapacities() {
+    let capacities = []
+    for (const capacityUuid of this.capacities) {
+      const item = fromUuidSync(capacityUuid)
+      if (item) {
+        capacities.push(item)
+      }
+    }
+    let learned = capacities.filter((c) => c.system.learned)
+    return learned.length
   }
 }
