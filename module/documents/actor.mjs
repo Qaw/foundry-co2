@@ -1065,6 +1065,14 @@ export default class COActor extends Actor {
     if (profile !== null) {
       itemData.system.maxDefenseArmor = profile.system.maxDefenseArmor
     }
+    // S'il s'agit d'une voie de prestige on vérifie si on a pas déjà une voie de prestige, si oui on annule
+    if (itemData.system.subtype === SYSTEM.PATH_TYPES.prestige.id) {
+      let currentprestige = this.paths.find((item) => item.system.subtype === SYSTEM.PATH_TYPES.prestige.id)
+      if (currentprestige) {
+        ui.notifications.warn(game.i18n.localize("CO.notif.warningPrestigeAlreadyExist"))
+        return
+      }
+    }
 
     // Create the path
     const newPath = await this.createEmbeddedDocuments("Item", [itemData])

@@ -368,13 +368,11 @@
       "magic": "Magique",
       "mainProfile": "Profil principal",
       "checkForSuperiorAbility": "Cocher pour activer la carac. supérieure !",
-<<<<<<< Updated upstream
       "addCapacityMsg": "Glissez déposez une capacité ici",
       "linkedCapacity": "Capacité liée",
-      "parentCapacity": "Capacité parente"
-=======
-      "pvByLevel": "Points de vie par niveau"
->>>>>>> Stashed changes
+      "parentCapacity": "Capacité parente",
+      "pvByLevel": "Points de vie par niveau",
+      "warningPrestigeAlreadyExist": "Vous avez déjà une classe de prestige, vous devez la désapprendre pour pouvoir en apprendre une autre"
     },
     "properties": {
       "attack": "Attaque",

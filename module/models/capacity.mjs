@@ -12,6 +12,7 @@ export default class CapacityData extends ItemData {
    * - `subtype` {StringField}: A required, non-nullable string field with an initial value of an empty string.
    * - `actionType` {StringField}: none, l, a, m, f (Limité, Attaque, Mouvement)
    * - `learned` {BooleanField}: A boolean field indicating whether the capacity is learned.
+   * - `rank` {NumberField}:Rang de la capacité au sein d'une voie
    * - `frequency` {StringField}: A required string field with predefined choices from `SYSTEM.CAPACITY_FREQUENCY` and an initial value of "none".
    * - `charges` {SchemaField}: Compte le nombre d'utilisations restantes A schema field containing:
    *   - `current` {NumberField}: An optional, nullable integer field with an initial value of 1.
@@ -29,6 +30,7 @@ export default class CapacityData extends ItemData {
       subtype: new fields.StringField({ required: true, nullable: false, initial: "" }),
       actionType: new fields.StringField({ required: true, choices: SYSTEM.CAPACITY_ACTION_TYPE, initial: "none" }),
       learned: new fields.BooleanField({}),
+      rank: new fields.NumberField({ required: false, nullable: true, integer: true, initial: 0 }),
       frequency: new fields.StringField({ required: true, choices: SYSTEM.CAPACITY_FREQUENCY, initial: "none" }),
       charges: new fields.SchemaField({
         current: new fields.NumberField({ required: false, nullable: true, integer: true, initial: 1 }),

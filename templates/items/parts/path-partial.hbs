@@ -59,7 +59,7 @@
   {{#each capacities as |capacity id|}}
     {{!log 'capacity' capacity id}}
     <div class="cell center">
-      <span class="field-label">{{#if (isPrestige @root.system.subtype)}}{{add id 4}}{{else}}{{add id 1}}{{/if}}</span>
+      <span class="field-label">{{capacity.system.rank}}</span>
     </div>
     <div class="cell center item" data-uuid="{{capacity.uuid}}" data-item-type="capacity">
       <a class="item-control item-edit" data-tooltip="{{localize 'CO.label.long.editCapacity'}}" data-tooltip-direction="UP"><img

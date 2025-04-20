@@ -211,6 +211,10 @@ export default class COItem extends Item {
     if (this.type === SYSTEM.ITEM_TYPE.path.id || this.type === SYSTEM.ITEM_TYPE.feature.id) {
       let newCapacities = foundry.utils.duplicate(this.system.capacities)
       newCapacities.push(uuid)
+      const capacity = await fromUuid(uuid)
+      // On applique au rang l'index actuel des capacites
+      if (this.system.subtype === SYSTEM.PATH_TYPES.prestige.id) capacity.system.rank = this.system.capacities.length + 4
+      else capacity.system.rank = this.system.capacities.length + 1
       return this.update({ "system.capacities": newCapacities })
     }
     // For Capacity, it's only if the linkedCapacity is allowed, and the capacity is possessed by the actor, and has been learned

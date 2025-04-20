@@ -26,26 +26,6 @@ export default class PathData extends ItemData {
     this.rank = await this.computeRank()
   }
 
-  /**
-<<<<<<< Updated upstream
-   * Computes the rank based on the given capacities.
-   * The rank is determined by the highest index (1-based) of the capacities
-   * where the system has been learned.
-   *
-   * @param {Array} capacities An array of capacity objects.
-   * @returns {number} The highest rank (1-based index) where the system has been learned.
-   */
-  static computeRank(capacities) {
-    let max = 0
-    for (const [index, capacity] of capacities.entries()) {
-      if (capacity.system.learned) {
-        const rank = index + 1
-        if (rank > max) max = rank
-      }
-    }
-    return max
-  }
-
   /** Retourne la position d'une capacité dans la liste des capacités de la voie
    * @param {string} capacityUuid L'UUID de la capacité recherchée
    * @returns {number} La osition dans la liste ou 0 si la capacité n'est pas trouvée
@@ -56,8 +36,6 @@ export default class PathData extends ItemData {
   }
 
   /**
-=======
->>>>>>> Stashed changes
    * Asynchronously retrieves and returns a list of capacities.
    *
    * This method iterates over the `capacities` property of the current instance,
@@ -93,5 +71,14 @@ export default class PathData extends ItemData {
     }
     if (this.subtype === SYSTEM.PATH_TYPES.prestige.id) max += 3
     return max
+  }
+
+  /** Retourne le nombre de capacité apprise
+   * @returns {integer} Nombre de capacités apprise
+   */
+  async numberLearnedCapacities() {
+    const capacities = await this.getCapacities()
+    let learned = capacities.find((c) => c.system.learned)
+    return learned ? learned.length : 0
   }
 }
