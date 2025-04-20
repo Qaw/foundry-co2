@@ -127,9 +127,19 @@ export const MODIFIERS_TARGET = Object.freeze({
     label: "CO.combat.long.crit",
     subtype: "combat",
   },
-  dam: {
-    id: "dam",
-    label: "CO.label.long.damage",
+  damMelee: {
+    id: "damMelee",
+    label: "CO.label.long.damMelee",
+    subtype: "combat",
+  },
+  damRanged: {
+    id: "damRanged",
+    label: "CO.label.long.damRanged",
+    subtype: "combat",
+  },
+  damMagic: {
+    id: "damMagic",
+    label: "CO.label.long.damMagic",
     subtype: "combat",
   },
   dr: {

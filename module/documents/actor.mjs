@@ -1592,6 +1592,27 @@ export default class COActor extends Actor {
       dice = "malus"
     }
 
+    // Gestion des modificateurs de dommages selon le type d'attaque
+    let target
+    switch (actionType) {
+      case SYSTEM.ACTION_TYPES.melee.id:
+        target = SYSTEM.COMBAT.melee.id
+        break
+      case SYSTEM.ACTION_TYPES.ranged.id:
+        target = SYSTEM.COMBAT.ranged.id
+        break
+      case SYSTEM.ACTION_TYPES.spell.id:
+        target = SYSTEM.COMBAT.spell.id
+        break
+    }
+    if (target) {
+      const damModifiers = this.system.computeTotalModifiersByTarget(this.system.combatModifiers, target)
+      if (damModifiers) {
+        if (damModifiers.total !== 0) damageFormula = `${damageFormula} + ${damModifiers.total}`
+        if (damModifiers.total !== 0) damageFormulaTooltip = damageFormulaTooltip.concat(damModifiers.tooltip)
+      }
+    }
+
     // Construction du message de chat
     if (chatFlavor === "") chatFlavor = `${item.name} ${actionName}`
 
