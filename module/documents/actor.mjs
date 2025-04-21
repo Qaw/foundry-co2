@@ -1080,7 +1080,6 @@ export default class COActor extends Actor {
     // Create all capacities
     for (const capacity of path.system.capacities) {
       let capa = await fromUuid(capacity)
-
       // Item is null if the item has been deleted in the compendium or in the world
       // TODO Add a warning message and think about a global rollback
       if (capa !== null) {
@@ -1108,9 +1107,7 @@ export default class COActor extends Actor {
 
     // Learned the capacity if the capacity is not linked to a path
     if (pathUuid === null) capacityData.system.learned = true
-
     const newCapacity = await this.createEmbeddedDocuments("Item", [capacityData])
-
     // Update the source of all actions and all modifiers of the actions
     if (newCapacity[0].actions.length > 0) {
       const actions = newCapacity[0].toObject().system.actions
