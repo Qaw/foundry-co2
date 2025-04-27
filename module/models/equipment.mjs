@@ -133,4 +133,17 @@ export default class EquipmentData extends ItemData {
     }
     return undefined
   }
+
+  /**
+   * Remonter la formule d'attaque de référence d'une arme
+   *
+   * @returns {string|undefined} La formule d'attaque si l'équipement est une arme et possède des actions avec des résolveurs de dégâts.
+   *                             Retourne undefined sinon.
+   */
+  get skill() {
+    if (this.isWeapon && this.actions.length > 0 && this.actions[0].resolvers.length > 0) {
+      return this.actions[0].resolvers[0].skill.formula
+    }
+    return undefined
+  }
 }

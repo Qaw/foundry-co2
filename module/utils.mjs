@@ -68,9 +68,22 @@ export default class Utils {
    */
   static evaluateFormulaCustomValues(actor, formula, sourceUuid = null) {
     let replacedFormula = foundry.utils.duplicate(formula)
-    // Cas du dé évolutif
-    if (replacedFormula.includes("d4°")) {
-      replacedFormula = Utils._replaceEvolvingDice(actor, replacedFormula)
+    // Les @armes ont été remontées car elles peuvent elle même contenir des dés evolutif ou des notion de @rang !
+    // Cas du @arme qui remplace par les dommages de l'action principale de l'arme équipée
+    if (replacedFormula.includes("@arme.dmg")) {
+      const weapon = actor.equippedWeapons[0]
+      if (weapon) {
+        const dmg = weapon.system.damage
+        if (dmg) replacedFormula = replacedFormula.replace("@arme.dmg", dmg)
+      }
+    }
+    // Cas du @arme qui remplace par la formule d'attaque de l'arme équipée
+    if (replacedFormula.includes("@arme.skill")) {
+      const weapon = actor.equippedWeapons[0]
+      if (weapon) {
+        const skill = weapon.system.skill
+        if (skill) replacedFormula = replacedFormula.replace("@arme.skill", skill)
+      }
     }
     // Cas du rang
     if (replacedFormula.includes("@rank") || replacedFormula.includes("@rang")) {
@@ -79,13 +92,9 @@ export default class Utils {
     if (replacedFormula.includes("@allrank") || replacedFormula.includes("@toutrang")) {
       if (sourceUuid) replacedFormula = this._replaceAllRank(actor, replacedFormula, sourceUuid)
     }
-    // Cas du @arme qui remplace par les dommages de l'action principale de l'arme équipée
-    if (replacedFormula.includes("@arme.dmg")) {
-      const weapon = actor.equippedWeapons[0]
-      if (weapon) {
-        const dmg = weapon.system.damage
-        if (dmg) replacedFormula = replacedFormula.replace("@arme.dmg", dmg)
-      }
+    // Cas du dé évolutif (mis apres rang car il peux maintenant y avoir des dé evolutif dans les rang)
+    if (replacedFormula.includes("d4°")) {
+      replacedFormula = Utils._replaceEvolvingDice(actor, replacedFormula)
     }
     return replacedFormula
   }
@@ -138,7 +147,7 @@ export default class Utils {
     const rank = path?.system.rank ?? 0
 
     // Cas @rank[x,x,x,x,x]
-    // Géré en premier pour éviter un remplacement de @rank avant le remplacement de @rank[x,x,x,x,x]
+    // Géré en premier pour éviter un remplacement de @rank avant le remplacement de @rank[x,x,x,x,x,x,x,x]
     let regexBracket = /@rank\[(.*?)\]/
     if (regexBracket.test(content)) {
       // Utilisation de replace avec une fonction de rappel pour calculer la somme
@@ -146,7 +155,7 @@ export default class Utils {
         // Séparer la chaîne en tableau et convertir en nombres
         const numbers = numbersStr
           .split(",")
-          .map((n) => parseInt(n, 10))
+          .map((n) => n) // ParseInt retiré car maintenant on peux avoir 1d4....
           .slice(0, rank) // Prendre uniquement les rank premiers éléments
 
         // Calculer la somme
@@ -163,14 +172,16 @@ export default class Utils {
         // Séparer la chaîne en tableau et convertir en nombres
         const numbers = numbersStr
           .split(",")
-          .map((n) => parseInt(n, 10))
+          .map((n) => n) // ParseInt retiré car maintenant on peux avoir 1d4....
           .slice(0, rank) // Prendre uniquement les rank premiers éléments
 
         // Calculer la somme
-        const sum = numbers.reduce((acc, cur) => acc + cur, 0)
-
+        // const sum = numbers.reduce((acc, cur) => acc + cur, 0)
+        // Dorénavant on va prendre la valeur du rang actuel ! ex : @rang[1d6,1d8,1d10,1d12,2d6]  pour le rang 5 on aura 2d6 !
+        const sum = numbers[rank - 1]
+        console.log("au rang ", rank, " on aura ", sum)
         // Remplacer l'intégralité de la chaîne par la somme
-        return sum.toString()
+        return sum
       })
     }
 
