@@ -34,7 +34,7 @@
       <input class="field-value" type="text" name="system.maxDefenseArmor" value="{{system.maxDefenseArmor}}" data-dtype="Number" />
     </div>
   </div>
-  {{#if (isPrestige @root.system.subtype)}}
+  {{#if (isPathprestigious @root.system.subtype)}}
     <div class="form-group">
       <label>{{localize "CO.ui.pvByLevel"}}</label>
       <div class="form-fields">

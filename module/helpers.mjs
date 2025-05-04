@@ -6,11 +6,11 @@ export default function registerHandlebarsHelpers() {
   Handlebars.registerHelper("add", function (a, b) {
     return parseInt(a) + parseInt(b)
   })
-  /* Handlebars.registerHelper("concat", function (a, b) {
-    return a + b
-  })*/
-  Handlebars.registerHelper("isPrestige", function (value) {
+  Handlebars.registerHelper("isPathprestigious", function (value) {
     return value === SYSTEM.PATH_TYPES.prestige.id
+  })
+  Handlebars.registerHelper("isPathProfile", function (value) {
+    return value === SYSTEM.PATH_TYPES.profile.id
   })
   Handlebars.registerHelper("isset", function (value) {
     return value !== undefined

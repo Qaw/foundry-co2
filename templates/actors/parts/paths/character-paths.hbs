@@ -16,7 +16,8 @@
 {{> "systems/co/templates/actors/parts/paths/character-capacities.hbs"}}
 
 {{#each pathGroups as |pg id|}}
-    {{#if (or @root.unlocked (gt pg.path.system.rank 0))}}
+    {{!log 'pathGroup' this}}
+    {{#if (or @root.unlocked pg.path.system.displayPath)}}
         <ol class="paths items-container" data-tab="features">
             <li class="items-container-header flexrow">
                 <h3 class="item-name flexrow">
@@ -48,32 +49,32 @@
                             </div>                            
                         </li>
                         {{#if capacity.system.allowLinkedCapacity}}
-                                <div class="dropzone">
-                                    <ol class="item-list foldable" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity.id}}" data-item-type="capacity" draggable="false">
-                                        <li class="item flexrow" {{#if (isNotNull capacity.system.linkedCapacity)}} data-item-uuid="{{capacity.system.linkedCapacity}}" data-item-id="{{capacity.system.linkedCapacityItem.id}}" data-item-type="capacity" {{/if}}>
-                                            <div class="item-detail"></div>
-                                            <div class="item-detail"></div>
-                                            {{#if (and (isNotNull capacity.system.linkedCapacity) (isNotNull capacity.system.linkedCapacityItem))}}
-                                                <div class="item-name flexrow">                                            
-                                                        <a class="item-image item-edit" style="background-image: url('{{capacity.system.linkedCapacityImg}}')"></a>
-                                                        <h4>{{capacity.system.linkedCapacityName}}{{#if capacity.system.linkedCapacityItem.system.isSpell}} * {{/if}}{{#if capacity.system.linkedCapacityItem.system.hasActionType}} ({{capacity.system.linkedCapacityItem.system.actionTypeShort}}){{/if}}</h4>
-                                                </div>
-                                                <div class="item-controls-3">
-                                                    <a class="item-chat chat" data-tooltip="{{localize 'CO.label.long.sendToChat'}}" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
-                                                    {{#if @root.unlocked}}
-                                                        <a class="item-control item-delete" data-tooltip="{{localize 'CO.ui.remove'}}"><i class="fas fa-trash"></i></a>
-                                                    {{/if}}
-                                                </div>
-                                            {{else}}
-                                                <div class="item-name flexrow">                                            
-                                                        <a class="item-image item-edit" style="background-image: url('{{capacity.system.linkedCapacityImg}}')"></a>
-                                                        <h4>{{localize 'CO.ui.addCapacityMsg'}}</h4>
-                                                </div>
-                                            {{/if}}
-                                        </li>
-                                    </ol>
-                                </div>
-                            {{/if}}
+                            <div class="dropzone">
+                                <ol class="item-list foldable" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity.id}}" data-item-type="capacity" draggable="false">
+                                    <li class="item flexrow" {{#if (isNotNull capacity.system.linkedCapacity)}} data-item-uuid="{{capacity.system.linkedCapacity}}" data-item-id="{{capacity.system.linkedCapacityItem.id}}" data-item-type="capacity" {{/if}}>
+                                        <div class="item-detail"></div>
+                                        <div class="item-detail"></div>
+                                        {{#if (and (isNotNull capacity.system.linkedCapacity) (isNotNull capacity.system.linkedCapacityItem))}}
+                                            <div class="item-name flexrow">                                            
+                                                    <a class="item-image item-edit" style="background-image: url('{{capacity.system.linkedCapacityImg}}')"></a>
+                                                    <h4>{{capacity.system.linkedCapacityName}}{{#if capacity.system.linkedCapacityItem.system.isSpell}} * {{/if}}{{#if capacity.system.linkedCapacityItem.system.hasActionType}} ({{capacity.system.linkedCapacityItem.system.actionTypeShort}}){{/if}}</h4>
+                                            </div>
+                                            <div class="item-controls-3">
+                                                <a class="item-chat chat" data-tooltip="{{localize 'CO.label.long.sendToChat'}}" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
+                                                {{#if @root.unlocked}}
+                                                    <a class="item-control item-delete" data-tooltip="{{localize 'CO.ui.remove'}}"><i class="fas fa-trash"></i></a>
+                                                {{/if}}
+                                            </div>
+                                        {{else}}
+                                            <div class="item-name flexrow">                                            
+                                                    <a class="item-image item-edit" style="background-image: url('{{capacity.system.linkedCapacityImg}}')"></a>
+                                                    <h4>{{localize 'CO.ui.addCapacityMsg'}}</h4>
+                                            </div>
+                                        {{/if}}
+                                    </li>
+                                </ol>
+                            </div>
+                        {{/if}}
                     {{else}}
                         {{#if @root.unlocked}}
                             <li class="item flexrow" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity._id}}" data-item-type="capacity" draggable="false" style="opacity: 60%">

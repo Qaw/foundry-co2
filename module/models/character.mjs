@@ -373,6 +373,7 @@ export default class CharacterData extends ActorData {
         let nombreAppris = currentprestige.system.numberLearnedCapacities()
         currentprestigePV = currentprestige.system.pvByLevel * nombreAppris
       }
+
       this.attributes.hp.max = this.attributes.hp.base + constitutionBonus + hpMaxBonuses + hpMaxModifiers.total + currentprestigePV
       this.attributes.hp.tooltip = Utils.getTooltip("Base ", this.attributes.hp.base).concat(
         ` ${Utils.getAbilityName("con")} : `,

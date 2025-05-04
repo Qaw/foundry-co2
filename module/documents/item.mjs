@@ -249,7 +249,7 @@ export default class COItem extends Item {
     let max = 0
 
     for (const uuid of this.system.capacities) {
-      const capacity = await fromUuidSync(uuid)
+      const capacity = fromUuidSync(uuid)
       if (capacity && capacity.system.learned) {
         const rank = this.system.capacities.indexOf(uuid) + 1
         if (rank > max) max = rank

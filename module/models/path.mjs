@@ -76,7 +76,7 @@ export default class PathData extends ItemData {
   /** Retourne le nombre de capacité apprise
    * @returns {integer} Nombre de capacités apprise
    */
-  numberLearnedCapacities() {
+  get numberLearnedCapacities() {
     let capacities = []
     for (const capacityUuid of this.capacities) {
       const item = fromUuidSync(capacityUuid)
@@ -86,5 +86,23 @@ export default class PathData extends ItemData {
     }
     let learned = capacities.filter((c) => c.system.learned)
     return learned.length
+  }
+
+  /**
+   * Détermine si la voie doit être affichée en fonction de son sous-type et de son rang.
+   *
+   * @returns {boolean} - Retourne `true` si la voie remplit les conditions pour être affichée :
+   *                      - Le sous-type est `SYSTEM.PATH_TYPES.prestige.id` et le rang est supérieur à 3.
+   *                      - Le sous-type est `SYSTEM.PATH_TYPES.profile.id` et le rang est supérieur à 0.
+   *                      Sinon, retourne `false`.
+   */
+  get displayPath() {
+    if (this.subtype === SYSTEM.PATH_TYPES.prestige.id && this.rank > 3) {
+      return true
+    }
+    if (this.subtype === SYSTEM.PATH_TYPES.profile.id && this.rank > 0) {
+      return true
+    }
+    return false
   }
 }
