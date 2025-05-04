@@ -6,6 +6,8 @@ import { SYSTEM } from "../config/system.mjs"
  * subtype : the type of the path
  * capacities : an array of capacities' uuis
  * rank : the rank in the path, will be define when a capacity is learned and unlearned
+ * maxDefenseArmor : définie la protection maximale autorisé pour la voie
+ * pvByLevel : Pour les voies de prestige, indique le nombre de PV obtenu par niveau
  */
 export default class PathData extends ItemData {
   static defineSchema() {
@@ -15,31 +17,13 @@ export default class PathData extends ItemData {
       capacities: new fields.ArrayField(new fields.DocumentUUIDField({ type: "Item" })),
       rank: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true }),
       maxDefenseArmor: new fields.NumberField({ integer: true, min: 0, initial: 0 }),
+      pvByLevel: new fields.NumberField({ integer: true, min: 0, initial: 0 }),
     })
   }
 
   async prepareDerivedData() {
     super.prepareDerivedData()
     this.rank = await this.computeRank()
-  }
-
-  /**
-   * Computes the rank based on the given capacities.
-   * The rank is determined by the highest index (1-based) of the capacities
-   * where the system has been learned.
-   *
-   * @param {Array} capacities An array of capacity objects.
-   * @returns {number} The highest rank (1-based index) where the system has been learned.
-   */
-  static computeRank(capacities) {
-    let max = 0
-    for (const [index, capacity] of capacities.entries()) {
-      if (capacity.system.learned) {
-        const rank = index + 1
-        if (rank > max) max = rank
-      }
-    }
-    return max
   }
 
   /** Retourne la position d'une capacité dans la liste des capacités de la voie
@@ -78,6 +62,47 @@ export default class PathData extends ItemData {
    */
   async computeRank() {
     const capacities = await this.getCapacities()
-    return PathData.computeRank(capacities)
+    let max = 0
+    for (const [index, capacity] of capacities.entries()) {
+      if (capacity.system.learned) {
+        const rank = index + 1
+        if (rank > max) max = rank
+      }
+    }
+    if (this.subtype === SYSTEM.PATH_TYPES.prestige.id) max += 3
+    return max
+  }
+
+  /** Retourne le nombre de capacité apprise
+   * @returns {integer} Nombre de capacités apprise
+   */
+  get numberLearnedCapacities() {
+    let capacities = []
+    for (const capacityUuid of this.capacities) {
+      const item = fromUuidSync(capacityUuid)
+      if (item) {
+        capacities.push(item)
+      }
+    }
+    let learned = capacities.filter((c) => c.system.learned)
+    return learned.length
+  }
+
+  /**
+   * Détermine si la voie doit être affichée en fonction de son sous-type et de son rang.
+   *
+   * @returns {boolean} - Retourne `true` si la voie remplit les conditions pour être affichée :
+   *                      - Le sous-type est `SYSTEM.PATH_TYPES.prestige.id` et le rang est supérieur à 3.
+   *                      - Le sous-type est `SYSTEM.PATH_TYPES.profile.id` et le rang est supérieur à 0.
+   *                      Sinon, retourne `false`.
+   */
+  get displayPath() {
+    if (this.subtype === SYSTEM.PATH_TYPES.prestige.id && this.rank > 3) {
+      return true
+    }
+    if (this.subtype === SYSTEM.PATH_TYPES.profile.id && this.rank > 0) {
+      return true
+    }
+    return false
   }
 }

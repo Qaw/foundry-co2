@@ -366,7 +366,15 @@ export default class CharacterData extends ActorData {
       this.attributes.hp.base = 2 * pvFromFamily + (this.attributes.level - 1) * pvFromFamily
       const constitutionBonus = this.attributes.level * this.abilities.con.value
 
-      this.attributes.hp.max = this.attributes.hp.base + constitutionBonus + hpMaxBonuses + hpMaxModifiers.total
+      // Si une voie de prestige offre des PV/rang appris il faut les ajouter ici
+      let currentprestige = this.parent.paths.find((item) => item.system.subtype === SYSTEM.PATH_TYPES.prestige.id)
+      let currentprestigePV = 0
+      if (currentprestige && currentprestige.system.pvByLevel > 0) {
+        let nombreAppris = currentprestige.system.numberLearnedCapacities()
+        currentprestigePV = currentprestige.system.pvByLevel * nombreAppris
+      }
+
+      this.attributes.hp.max = this.attributes.hp.base + constitutionBonus + hpMaxBonuses + hpMaxModifiers.total + currentprestigePV
       this.attributes.hp.tooltip = Utils.getTooltip("Base ", this.attributes.hp.base).concat(
         ` ${Utils.getAbilityName("con")} : `,
         constitutionBonus,

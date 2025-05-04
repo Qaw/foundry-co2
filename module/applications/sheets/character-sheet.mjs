@@ -270,9 +270,9 @@ export default class COCharacterSheet extends CoBaseActorSheet {
         // On va pas les ajouter de la même manière selon le cas.
         if (this.isDropZone(event)) {
           // C'est une sous capacité on cherche la capacité parente
-          let parentitem = $(event.target).closest(".item-list")
-          let parentitemuuid = parentitem.data("itemUuid")
-          return await this.actor.addSubCapacity(item, parentitemuuid)
+          let parentitem = event.target.closest(".item-list")
+          let parentItemUuid = parentitem.data("itemUuid")
+          return await this.actor.addSubCapacity(item, parentItemUuid)
         } else {
           return await this.actor.addCapacity(item, null)
         }

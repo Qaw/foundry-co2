@@ -352,7 +352,7 @@
       "pvLevel": "Points de vigueur par niveau",
       "noTarget": "Vous n'avez ciblé personne",
       "critTooltip": "Laisser vide pour utiliser la valeur par défaut du personnage",
-      "formulaTooltip": "Vous pouvez utiliser : @agi, @con, @for, @per, @cha, @int, @vol, @atc, @atd, @atm, @def, @ini, @niv, d4°, @toutrang[x], @rang, @rang[x,x,x,x,x], @cible.def, @oppose",
+      "formulaTooltip": "Vous pouvez utiliser : @agi, @con, @for, @per, @cha, @int, @vol, @atc, @atd, @atm, @def, @ini, @niv, d4°, @toutrang[x], @rang, @rang[x,x,x,x,x], @cible, @oppose",
       "activate": "Activer",
       "deactivate": "Désactiver",
       "use": "Utiliser",
@@ -370,7 +370,9 @@
       "checkForSuperiorAbility": "Cocher pour activer la carac. supérieure !",
       "addCapacityMsg": "Glissez déposez une capacité ici",
       "linkedCapacity": "Capacité liée",
-      "parentCapacity": "Capacité parente"
+      "parentCapacity": "Capacité parente",
+      "pvByLevel": "Points de vigueur par niveau",
+      "warningPrestigeAlreadyExist": "Vous avez déjà une classe de prestige, vous devez la désapprendre pour pouvoir en apprendre une autre"
     },
     "properties": {
       "attack": "Attaque",

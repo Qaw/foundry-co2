@@ -61,6 +61,7 @@ export default class Utils {
 
   /**
    * Pour un acteur, évalue une formule  en remplaçant les valeurs custom pour le rang ou le dé évolutif
+   * Gère : @rank, @rang, @allrank, @toutrang, @arme.dmg, @arme.skill, d4° (dé évolutif)
    * @param {*} actor : l'acteur concerné
    * @param {*} formula : une formule de type texte qui peut potentiellement contenir des @rank/@rang ou du dé évolutif
    * @param {UUID} sourceUuid The item source's UUID : used for the #rank
@@ -68,24 +69,34 @@ export default class Utils {
    */
   static evaluateFormulaCustomValues(actor, formula, sourceUuid = null) {
     let replacedFormula = foundry.utils.duplicate(formula)
-    // Cas du dé évolutif
-    if (replacedFormula.includes("d4°")) {
-      replacedFormula = Utils._replaceEvolvingDice(actor, replacedFormula)
-    }
-    // Cas du rang
-    if (replacedFormula.includes("@rank") || replacedFormula.includes("@rang")) {
-      if (sourceUuid) replacedFormula = this._replaceRank(actor, replacedFormula, sourceUuid)
-    }
-    if (replacedFormula.includes("@allrank") || replacedFormula.includes("@toutrang")) {
-      if (sourceUuid) replacedFormula = this._replaceAllRank(actor, replacedFormula, sourceUuid)
-    }
-    // Cas du @arme qui remplace par les dommages de l'action principale de l'arme équipée
+    // @arme est traité en premier car elle peut elle même contenir des dés evolutifs ou des notion de @rang !
+    // Cas du @arme qui remplace par les dommages de l'action principale de la première arme équipée
     if (replacedFormula.includes("@arme.dmg")) {
       const weapon = actor.equippedWeapons[0]
       if (weapon) {
         const dmg = weapon.system.damage
         if (dmg) replacedFormula = replacedFormula.replace("@arme.dmg", dmg)
       }
+    }
+    // Cas du @arme qui remplace par la formule d'attaque de la première arme équipée
+    if (replacedFormula.includes("@arme.skill")) {
+      const weapon = actor.equippedWeapons[0]
+      if (weapon) {
+        const skill = weapon.system.skill
+        if (skill) replacedFormula = replacedFormula.replace("@arme.skill", skill)
+      }
+    }
+    // Cas du rang qui remplace par le rang dans la voie
+    if (replacedFormula.includes("@rank") || replacedFormula.includes("@rang")) {
+      if (sourceUuid) replacedFormula = this._replaceRank(actor, replacedFormula, sourceUuid)
+    }
+    // Cas qui remplacé @allrank[level] par le nombre de fois que le rang level est atteint dans une des voies du profil
+    if (replacedFormula.includes("@allrank") || replacedFormula.includes("@toutrang")) {
+      if (sourceUuid) replacedFormula = this._replaceAllRank(actor, replacedFormula, sourceUuid)
+    }
+    // Cas du dé évolutif qui remplace par le dé correspondant au niveau de l'acteur
+    if (replacedFormula.includes("d4°")) {
+      replacedFormula = Utils._replaceEvolvingDice(actor, replacedFormula)
     }
     return replacedFormula
   }
@@ -116,7 +127,9 @@ export default class Utils {
 
   /**
    * Retourne un texte dans lequel on a remplacé le rang dans une categorie par sa valeur
-   * La syntaxe peut être @rank ou @rang ou @rank[1,0,0,1,0] ou @rang[1,0,0,1,0] pour un bonus de 1 au rang 1 et au rang 4
+   * La syntaxe peut être @rank ou @rang ou @rank[1,1,1,2,0] ou @rang[1,1,1,2,0] pour un bonus de 1 au rang 1 et de 1 au rang 4
+   * C'est la valeur du rang qui est remplacée par le rang de la voie dans laquelle on se trouve
+   * Il est possible d'écrire un nomnbre ou un dé (d4)
    * @param {*} actor : acteur concerné
    * @param {*} content : le texte contenant une référence à un rang
    * @param {UUID} source The item source's UUID : used for the #rank
@@ -126,7 +139,7 @@ export default class Utils {
     let itemSource = fromUuidSync(source)
     if (!itemSource || itemSource.type !== "capacity") return content
 
-    // Si on est sur une capacité enfant on depend du rang du parent
+    // Si on est sur une capacité enfant, on dépend du rang du parent
     if (itemSource.system.parentCapacity) {
       console.log("ReplaceRank sur une capacité enfant, on remplace par le parent pour le calcul : ", itemSource.system.parentCapacity)
       itemSource = fromUuidSync(itemSource.system.parentCapacity)
@@ -137,44 +150,42 @@ export default class Utils {
     const path = fromUuidSync(pathUuid)
     const rank = path?.system.rank ?? 0
 
-    // Cas @rank[x,x,x,x,x]
-    // Géré en premier pour éviter un remplacement de @rank avant le remplacement de @rank[x,x,x,x,x]
+    // Cas @rank[x,x,x,x,x,x,x,x]
+    // ex : @rang[1d6,1d8,1d10,1d12,2d6], pour le rang 5 remplace par 2d6
+    // Géré en premier pour éviter un remplacement de @rank avant le remplacement de @rank[x,x,x,x,x,x,x,x]
     let regexBracket = /@rank\[(.*?)\]/
     if (regexBracket.test(content)) {
-      // Utilisation de replace avec une fonction de rappel pour calculer la somme
-      content = content.replace(regexBracket, (match, numbersStr) => {
-        // Séparer la chaîne en tableau et convertir en nombres
-        const numbers = numbersStr
+      // Utilisation de replace avec une fonction de rappel pour extraire la valeur
+      content = content.replace(regexBracket, (match, values) => {
+        // Séparer la chaîne en tableau
+        const arrayValues = values
           .split(",")
-          .map((n) => parseInt(n, 10))
+          .map((n) => n)
           .slice(0, rank) // Prendre uniquement les rank premiers éléments
 
         // Calculer la somme
         const sum = numbers.reduce((acc, cur) => acc + cur, 0)
 
-        // Remplacer l'intégralité de la chaîne par la somme
-        return sum.toString()
+        // Valeur du rang
+        return arrayValues[rank - 1]
       })
     }
     regexBracket = /@rang\[(.*?)\]/
     if (regexBracket.test(content)) {
-      // Utilisation de replace avec une fonction de rappel pour calculer la somme
-      content = content.replace(regexBracket, (match, numbersStr) => {
-        // Séparer la chaîne en tableau et convertir en nombres
-        const numbers = numbersStr
+      // Utilisation de replace avec une fonction de rappel pour extraire la valeur
+      content = content.replace(regexBracket, (match, values) => {
+        // Séparer la chaîne en tableau
+        const arrayValues = values
           .split(",")
-          .map((n) => parseInt(n, 10))
+          .map((n) => n)
           .slice(0, rank) // Prendre uniquement les rank premiers éléments
 
-        // Calculer la somme
-        const sum = numbers.reduce((acc, cur) => acc + cur, 0)
-
-        // Remplacer l'intégralité de la chaîne par la somme
-        return sum.toString()
+        // Valeur du rang
+        return arrayValues[rank - 1]
       })
     }
 
-    // Cas @rank
+    // Cas @rank : remplace par le rang dans la voie
     let regexSimple = /@rank/
     if (regexSimple.test(content)) {
       content = content.replace("@rank", rank)
