@@ -3,7 +3,6 @@ import RulesEngine from "../../rules-engine.mjs"
 
 /**
  * La classe Condition représente un contrôle de condition qui peut être évalué pour un élément donné.
- * predicate ce que l'on veut utiliser pour évaluer la condition
  */
 export class Condition extends foundry.abstract.DataModel {
   static defineSchema() {

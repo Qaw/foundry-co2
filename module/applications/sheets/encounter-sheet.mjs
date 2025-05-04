@@ -42,7 +42,6 @@ export default class COEncounterSheet extends CoBaseActorSheet {
     html.find(".rollable").click(this._onRoll.bind(this))
     html.find(".toggle-action").click(this._onUseAction.bind(this))
     html.find(".toggle-effect").click(this._onUseEffect.bind(this))
-    html.find(".capacity-learn").click(this._onLearnedToggle.bind(this))
   }
 
   _onUseAction(event) {
@@ -69,17 +68,6 @@ export default class COEncounterSheet extends CoBaseActorSheet {
     } else if (action === "unactivate") {
       activation = this.actor.activateCOStatusEffect({ state: false, effectid })
     }
-  }
-
-  /**
-   * Learned or unlearned the capacity in the path view
-   * @param {*} event
-   * @private
-   */
-  _onLearnedToggle(event) {
-    event.preventDefault()
-    const capacityId = $(event.currentTarget).parents(".item").data("itemId")
-    this.actor.toggleCapacityLearned(capacityId)
   }
 
   /**

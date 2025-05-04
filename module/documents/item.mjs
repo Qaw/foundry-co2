@@ -59,7 +59,7 @@ export default class COItem extends Item {
   get enabledModifiers() {
     // For Equipement or Capacity Item, the modifiers are in enabled actions
     if ([SYSTEM.ITEM_TYPE.equipment.id, SYSTEM.ITEM_TYPE.capacity.id].includes(this.type)) return this.getModifiersFromActions(true)
-    // For Feature or Profile, the modifiers are in the item
+    // For Feature or Profile, the modifiers are in the item and are all considered as enabled
     else return this.modifiers
   }
 
