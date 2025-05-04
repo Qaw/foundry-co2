@@ -1596,20 +1596,20 @@ export default class COActor extends Actor {
     let target
     switch (actionType) {
       case SYSTEM.ACTION_TYPES.melee.id:
-        target = SYSTEM.COMBAT.melee.id
+        target = SYSTEM.MODIFIERS_TARGET.damMelee.id
         break
       case SYSTEM.ACTION_TYPES.ranged.id:
-        target = SYSTEM.COMBAT.ranged.id
+        target = SYSTEM.COMBAT.ranged.id.damRanged.id
         break
       case SYSTEM.ACTION_TYPES.spell.id:
-        target = SYSTEM.COMBAT.spell.id
+        target = SYSTEM.COMBAT.spell.id.damMagic.id
         break
     }
     if (target) {
       const damModifiers = this.system.computeTotalModifiersByTarget(this.system.combatModifiers, target)
       if (damModifiers) {
         if (damModifiers.total !== 0) damageFormula = `${damageFormula} + ${damModifiers.total}`
-        if (damModifiers.total !== 0) damageFormulaTooltip = damageFormulaTooltip.concat(damModifiers.tooltip)
+        if (damModifiers.total !== 0) damageFormulaTooltip = damageFormulaTooltip.concat(" +", damModifiers.tooltip)
       }
     }
 
