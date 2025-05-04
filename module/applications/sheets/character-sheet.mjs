@@ -266,13 +266,14 @@ export default class COCharacterSheet extends CoBaseActorSheet {
       case SYSTEM.ITEM_TYPE.path.id:
         return await this.actor.addPath(item)
       case SYSTEM.ITEM_TYPE.capacity.id:
-        // Alors là soit on depose n'importe ou sur la feuille, soit on depose dans une zone prévue pour y ajouter des 'sous-capacités'
-        // On va pas les ajouter de la même manière selon le cas.
-        if (this.isDropZone(event)) {
+        // Soit on dépose n'importe où sur la feuille, soit on dépose dans une zone prévue pour y ajouter des 'sous-capacités' (dropZone)
+        const isDropZone = await this.isDropZone(event)
+        // Zone pour une sous capacité
+        if (isDropZone) {
           // C'est une sous capacité on cherche la capacité parente
-          let parentitem = event.target.closest(".item-list")
-          let parentItemUuid = parentitem.data("itemUuid")
-          return await this.actor.addSubCapacity(item, parentItemUuid)
+          let parentItem = event.target.closest(".item-list")
+          let parentItemUuid = parentItem.dataset.itemUuid
+          return await this.actor.addLinkedCapacity(item, parentItemUuid)
         } else {
           return await this.actor.addCapacity(item, null)
         }

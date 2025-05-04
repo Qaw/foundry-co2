@@ -154,6 +154,11 @@ export default class COActor extends Actor {
     return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.learned)
   }
 
+  /**
+   * Retourne les capacités qui ne sont pas associées à une voie.
+   *
+   * @returns {Array<Object>} Un tableau de capacités
+   */
   get capacitiesOffPaths() {
     return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.path === null)
   }
@@ -1128,18 +1133,17 @@ export default class COActor extends Actor {
   }
 
   /**
-   * Ajoute une capacité sous une autre capacité
+   * Ajoute une capacité obtenue à partir d'une capacité
    * @param {*} capacity la capacité à ajouter
    * @param {*} parentUuid Le uuid de la capacité parente
-   * @returns {string} renvoi l'uuid de la nouvelle capacité copiée
+   * @returns {string} renvoie l'uuid de la nouvelle capacité
    */
-  async addSubCapacity(capacity, parentUuid) {
+  async addLinkedCapacity(capacity, parentUuid) {
     let capacityData = capacity.toObject()
     capacityData.system.path = null
     capacityData.system.learned = true
-    capacityData.system.cost = 0 // A priorsi si on est là c'est que l'on passe par une capacité qui en donne une autre donc c'est gratuit
-    console.log("parentUuid", parentUuid)
-    capacityData.system.parentCapacity = parentUuid // On met une référence à la capacité parente
+    capacityData.system.cost = 0 // On passe par une capacité qui en donne une autre donc c'est gratuit
+    capacityData.system.parentCapacity = parentUuid // Référence à la capacité parente
     const newCapacity = await this.createEmbeddedDocuments("Item", [capacityData])
     // Update the source of all actions and all modifiers of the actions
     if (newCapacity[0].actions.length > 0) {
@@ -1158,7 +1162,6 @@ export default class COActor extends Actor {
     }
 
     const parent = await fromUuid(parentUuid)
-    console.log("la capacité parente :", parent)
     parent.system.linkedCapacity = newCapacity[0].uuid
     await parent.update({ "system.linkedCapacity": newCapacity[0].uuid })
 

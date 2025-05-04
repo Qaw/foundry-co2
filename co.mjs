@@ -143,7 +143,7 @@ Hooks.once("i18nInit", function () {
 
 Hooks.once("ready", async function () {
   if (!CONFIG.debug.co) {
-    if (game.settings.set("co", "debugMode", true)) {
+    if (game.settings.get("co", "debugMode")) {
       CONFIG.debug.co = {
         hooks: true,
         resolvers: true,

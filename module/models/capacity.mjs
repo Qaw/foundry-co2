@@ -23,6 +23,9 @@ export default class CapacityData extends ItemData {
    * - `cost` {NumberField}: A required, non-nullable integer field with an initial value of -1.
    * - `manaCost` {NumberField}: A required, non-nullable integer field with an initial value of -1.
    * - `actions` {ArrayField}: An array field containing embedded data fields of type `Action`.
+   * - `allowLinkedCapacity` {BooleanField}: A boolean field indicating if linked capacity is allowed.
+   * - `linkedCapacity` {DocumentUUIDField}: A field representing a document UUID of type "Item" for linked capacity.
+   * - `parentCapacity` {DocumentUUIDField}: A field representing a document UUID of type "Item" for the parent capacity which was used to learn this capacity.
    */
   static defineSchema() {
     const fields = foundry.data.fields
