@@ -17,6 +17,13 @@
     }
   },
   "CO": {
+    "Character": {
+        "FIELDS": {
+          "otherCapacitiesPointsSpent": {
+            "label": "Autres points de capacités dépensés"
+        }
+      }
+    },
     "sheet": {
       "character": "Fiche de personnage",
       "encounter": "Fiche de rencontre",

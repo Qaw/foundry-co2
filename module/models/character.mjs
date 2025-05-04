@@ -130,8 +130,14 @@ export default class CharacterData extends ActorData {
 
     schema.currentEffects = new fields.ArrayField(new fields.EmbeddedDataField(CustomEffectData))
 
+    // Points de capacités dépensés ailleurs que dans les capacités : pour apprendre une langue, ou éventuel point orphelin
+    schema.otherCapacitiesPointsSpent = new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true, min: 0 })
+
     return foundry.utils.mergeObject(super.defineSchema(), schema)
   }
+
+  /** @override */
+  static LOCALIZATION_PREFIXES = ["CO.Character"]
 
   get fpFromFamily() {
     return this.profile ? SYSTEM.FAMILIES[this.profile.system.family].fp : 0
@@ -841,6 +847,7 @@ export default class CharacterData extends ActorData {
    * This function iterates through the character's paths and their associated capacities,
    * summing up the XP cost of each learned capacity. It also includes capacities that are
    * not associated with any paths.
+   * It as the otherCapacitiesPointsSpent value
    *
    * @returns {Promise<number>} The total XP spent by the character.
    */
@@ -862,6 +869,9 @@ export default class CharacterData extends ActorData {
     for (const capacity of capacities) {
       if (capacity.system.learned) xp += capacity.system.getCost(null)
     }
+
+    // Ajout des points de capacités dépensés ailleurs que dans les capacités
+    xp += this.otherCapacitiesPointsSpent
 
     return xp
   }

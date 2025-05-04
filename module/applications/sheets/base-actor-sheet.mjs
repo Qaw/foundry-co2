@@ -63,6 +63,10 @@ export default class CoBaseActorSheet extends ActorSheet {
     // Select options
     context.choiceMoveUnit = SYSTEM.MOVEMENT_UNIT
 
+    // Application V2 style
+    context.fields = this.document.schema.fields
+    context.systemFields = this.document.system.schema.fields
+
     if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseActorSheet - context`), context)
     return context
   }

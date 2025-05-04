@@ -6,26 +6,27 @@ import { SYSTEM } from "./config/system.mjs"
  * @returns {Promise}
  */
 export default function preloadHandlebarsTemplates() {
-  // Define template paths to load
   const templatePaths = [
-    // ACTOR
-    `systems/${SYSTEM.ID}/templates/actors/character-sheet.hbs`,
-    `systems/${SYSTEM.ID}/templates/actors/parts/character-bio.hbs`,
-    `systems/${SYSTEM.ID}/templates/actors/parts/character-details.hbs`,
-    `systems/${SYSTEM.ID}/templates/actors/parts/character-effects.hbs`,
-    `systems/${SYSTEM.ID}/templates/actors/parts/character-main.hbs`,
-    `systems/${SYSTEM.ID}/templates/actors/parts/character-sidebar.hbs`,
-    `systems/${SYSTEM.ID}/templates/actors/parts/inventory/character-inventory.hbs`,
-    `systems/${SYSTEM.ID}/templates/actors/parts/paths/character-paths.hbs`,
-    `systems/${SYSTEM.ID}/templates/actors/parts/paths/character-capacities.hbs`,
+    // Common
+    `systems/${SYSTEM.ID}/templates/actors/parts/actor-paths.hbs`,
+    `systems/${SYSTEM.ID}/templates/actors/parts/actor-capacities.hbs`,
+    `systems/${SYSTEM.ID}/templates/actors/parts/actor-effects.hbs`,
 
-    // ENCOUNTER
-    `systems/${SYSTEM.ID}/templates/encounter/encounter-sheet.hbs`,
-    `systems/${SYSTEM.ID}/templates/encounter/parts/encounter-data.hbs`,
-    `systems/${SYSTEM.ID}/templates/encounter/parts/encounter-loot.hbs`,
-    `systems/${SYSTEM.ID}/templates/encounter/parts/encounter-main.hbs`,
-    `systems/${SYSTEM.ID}/templates/encounter/parts/encounter-notes.hbs`,
-    `systems/${SYSTEM.ID}/templates/encounter/parts/encounter-sidebar.hbs`,
+    // Character
+    `systems/${SYSTEM.ID}/templates/actors/character/character-sheet.hbs`,
+    `systems/${SYSTEM.ID}/templates/actors/character/parts/character-bio.hbs`,
+    `systems/${SYSTEM.ID}/templates/actors/character/parts/character-details.hbs`,
+    `systems/${SYSTEM.ID}/templates/actors/character/parts/character-inventory.hbs`,
+    `systems/${SYSTEM.ID}/templates/actors/character/parts/character-main.hbs`,
+    `systems/${SYSTEM.ID}/templates/actors/character/parts/character-sidebar.hbs`,
+
+    // Encounter
+    `systems/${SYSTEM.ID}/templates/actors/encounter/encounter-sheet.hbs`,
+    `systems/${SYSTEM.ID}/templates/actors/encounter/parts/encounter-data.hbs`,
+    `systems/${SYSTEM.ID}/templates/actors/encounter/parts/encounter-loot.hbs`,
+    `systems/${SYSTEM.ID}/templates/actors/encounter/parts/encounter-main.hbs`,
+    `systems/${SYSTEM.ID}/templates/actors/encounter/parts/encounter-notes.hbs`,
+    `systems/${SYSTEM.ID}/templates/actors/encounter/parts/encounter-sidebar.hbs`,
 
     // ITEM
     `systems/${SYSTEM.ID}/templates/items/item-sheet.hbs`,

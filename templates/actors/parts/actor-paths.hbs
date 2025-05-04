@@ -1,19 +1,23 @@
-{{!log "Chroniques Oubliées | character paths" this}}
+{{log "Chroniques Oubliées | character paths" this}}
 
-{{#if (lt xpLeft 0)}}
-    <div class="notification error permanent">
-        {{localize "CO.notif.TooMuchSpentXP" xpSpent=xpSpent xpMax=xpMax}}&nbsp;(<b>Total : </b>{{xpLeft}})
-    </div>
-{{else}}
-    {{#if (gt xpLeft 0)}}
-        <div class="notification info permanent">
-            {{localize "CO.notif.XPLeftToSpend" xpLeft=xpLeft}}
+{{#if (eq actor.type "character")}}
+    {{formField systemFields.otherCapacitiesPointsSpent value=system.otherCapacitiesPointsSpent disabled=locked}}
+
+    {{#if (lt xpLeft 0)}}
+        <div class="notification error permanent">
+            {{localize "CO.notif.TooMuchSpentXP" xpSpent=xpSpent xpMax=xpMax}}&nbsp;(<b>Total : </b>{{xpLeft}})
         </div>
+    {{else}}
+        {{#if (gt xpLeft 0)}}
+            <div class="notification info permanent">
+                {{localize "CO.notif.XPLeftToSpend" xpLeft=xpLeft}}
+            </div>
+        {{/if}}
     {{/if}}
 {{/if}}
 
 <!-- Capacités hors voies -->
-{{> "systems/co/templates/actors/parts/paths/character-capacities.hbs"}}
+{{> "systems/co/templates/actors/parts/actor-capacities.hbs"}}
 
 {{#each pathGroups as |pg id|}}
     {{!log 'pathGroup' this}}

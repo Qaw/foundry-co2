@@ -1,6 +1,6 @@
 <form class="{{cssClass}} flexrow no-wrap" autocomplete="off">
     {{!log "Chroniques Oubliées | encounter" this}}
-    {{> "systems/co/templates/encounter/parts/encounter-sidebar.hbs"}}
+    {{> "systems/co/templates/actors/encounter/parts/encounter-sidebar.hbs"}}
     <div class="main">
         <header class="npc-sheet-header">
             <div class="name flexrow bottom-separator">
@@ -38,19 +38,19 @@
 
         <section class="sheet-body">
             <div class="tab main" data-group="primary" data-tab="main">
-                {{> "systems/co/templates/encounter/parts/encounter-main.hbs"}}
+                {{> "systems/co/templates/actors/encounter/parts/encounter-main.hbs"}}
             </div>
             <div class="tab loot" data-group="primary" data-tab="loot">
-                {{> "systems/co/templates/encounter/parts/encounter-loot.hbs"}}
+                {{> "systems/co/templates/actors/encounter/parts/encounter-loot.hbs"}}
             </div>
             <div class="tab capacities" data-group="primary" data-tab="capacities">
-                {{> "systems/co/templates/actors/parts/paths/character-paths.hbs"}}
+                {{> "systems/co/templates/actors/parts/actor-paths.hbs"}}
             </div>
             <div class="tab effects" data-group="primary" data-tab="effects">
-                {{> "systems/co/templates/actors/parts/character-effects.hbs"}}
+                {{> "systems/co/templates/actors/parts/actor-effects.hbs"}}
             </div>            
             <div class="tab notes" data-group="primary" data-tab="notes">
-                {{> "systems/co/templates/encounter/parts/encounter-notes.hbs"}}
+                {{> "systems/co/templates/actors/encounter/parts/encounter-notes.hbs"}}
             </div>
         </section>
     </div>

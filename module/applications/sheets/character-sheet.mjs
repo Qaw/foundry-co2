@@ -10,7 +10,7 @@ export default class COCharacterSheet extends CoBaseActorSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       height: 640,
       width: 800,
-      template: "systems/co/templates/actors/character-sheet.hbs",
+      template: "systems/co/templates/actors/character/character-sheet.hbs",
       classes: ["co", "sheet", "actor", "character"],
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main" }],
     })
