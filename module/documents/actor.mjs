@@ -1599,10 +1599,10 @@ export default class COActor extends Actor {
         target = SYSTEM.MODIFIERS_TARGET.damMelee.id
         break
       case SYSTEM.ACTION_TYPES.ranged.id:
-        target = SYSTEM.COMBAT.ranged.id.damRanged.id
+        target = SYSTEM.MODIFIERS_TARGET.damRanged.id
         break
       case SYSTEM.ACTION_TYPES.spell.id:
-        target = SYSTEM.COMBAT.spell.id.damMagic.id
+        target = SYSTEM.MODIFIERS_TARGET.damMagic.id
         break
     }
     if (target) {
