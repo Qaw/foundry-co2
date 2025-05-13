@@ -8,7 +8,7 @@ export default class COCharacterSheet extends CoBaseActorSheet {
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      height: 600,
+      height: 640,
       width: 800,
       template: "systems/co/templates/actors/character-sheet.hbs",
       classes: ["co", "sheet", "actor", "character"],

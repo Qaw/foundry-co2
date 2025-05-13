@@ -76,9 +76,15 @@
                 <input class="field-value" id="damageMalus" name="damageMalus" type="text" value="{{damageMalus}}" data-dtype="String"/>
             </div>
         </div>         
-    {{/if}}     
+    {{/if}} 
+    <div class="form-group">
+            <label>{{localize 'CO.ui.tempDamage'}}</label>
+            <div class="form-fields">
+                <input class="temp-checkbox" type="checkbox" name="tempDamage" {{checked tempDamage}} data-canBeTempDamage="{{canBeTempDamage}}" />
+            </div>
+    </div>         
     <hr/>
-    <label class="targets-label">Les cibles de l'attaque</label>
+    <label class="targets-label">{{localize "CO.ui.attackTarget"}}</label>
     <div class="targets">
         {{#each targets as |target id|}}
             <div class="target">

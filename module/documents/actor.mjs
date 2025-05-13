@@ -803,8 +803,8 @@ export default class COActor extends Actor {
    *
    * @param {string} targetType The type of target to acquire. Can be "none", "self", "single", or "multiple".
    * @param {string} targetScope The scope of the target acquisition : allies, enemies, all.
-   * @param {string} actionName The name of the action to be performed on the targets.
    * @param {integer} targetNumber The number maximum of targets.
+   * @param {string} actionName The name of the action to be performed on the targets.
    * @param {Object} [options={}] Additional options for target acquisition.
    * @returns {Array} An array of acquired targets.
    * @throws {Error} Throws an error if any target has an error.
@@ -1505,6 +1505,22 @@ export default class COActor extends Actor {
       return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoAmmo"))
     }
 
+    // Dégats temporaire. Si l'arme a le tag DM temporaire
+    let tempDamage = false
+    let canBeTempDamage = false
+
+    console.log("item.tags", item.tags)
+    // C'est de base des dégats temporaire
+    if (item.tags.has(SYSTEM.EQUIPMENT_TAGS.dmtemporaires.id)) {
+      tempDamage = true
+      canBeTempDamage = true
+    }
+    // Exemple : arme contondante
+    if (item.tags.has(SYSTEM.EQUIPMENT_TAGS.dmtemporairespossibles.id)) {
+      canBeTempDamage = true
+    }
+    console.log("tempDamage", tempDamage, "canBeTempDamage", canBeTempDamage)
+
     // Gestion de la visibilité du jet
     if (rollMode === undefined) {
       rollMode = game.settings.get("core", "rollMode")
@@ -1644,6 +1660,8 @@ export default class COActor extends Actor {
       formulaDamageTooltip: damageFormulaTooltip,
       targets,
       hasTargets: targets?.length > 0,
+      tempDamage,
+      canBeTempDamage,
     }
 
     // Rolls contient le jet d'attaque et éventuellement le jet de dégâts

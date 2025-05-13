@@ -147,7 +147,8 @@
         "skillMalus": "Malus à l'attaque",
         "damageBonus": "Bonus aux dommages",
         "damageMalus": "Malus aux dommages",
-        "needCharges": "Vous devez vous reposer pour récupérer des utilisations"
+        "needCharges": "Vous devez vous reposer pour récupérer des utilisations",
+        "tempHP": "DM temporaire"
       },
       "short": {
         "label": "Label",
@@ -185,6 +186,7 @@
         "effects": "FX",
         "properties": "Props",
         "hp": "Vigueur",
+        "tempHp": "DM temporaire",
         "xp": "XP",
         "movement": "Dépl.",
         "def": "DEF",
@@ -311,6 +313,7 @@
       "resolvers": "Résolutions",
       "skill": "Compétence",
       "formula": "Formule",
+      "oppositeRoll": "Jet opposé",
       "skillformula": "Formule de compétence",
       "healformula": "Formule de soin",
       "part": "Composante",
@@ -339,6 +342,7 @@
       "shields": "Boucliers",
       "miscBonuses": "Bonus divers",
       "totalBonus": "Bonus total",
+      "total": "Total",
       "dr": "RD",
       "applyDamage": "Appliquer les dégâts",
       "applyHalfDamage": "Appliquer la moitié des dégâts",
@@ -377,7 +381,9 @@
       "linkedCapacity": "Capacité liée",
       "parentCapacity": "Capacité parente",
       "pvByLevel": "Points de vigueur par niveau",
-      "warningPrestigeAlreadyExist": "Vous avez déjà une classe de prestige, vous devez la désapprendre pour pouvoir en apprendre une autre"
+      "warningPrestigeAlreadyExist": "Vous avez déjà une classe de prestige, vous devez la désapprendre pour pouvoir en apprendre une autre",
+      "tempDamage": "Dégats temporaires",
+      "attackTarget": "Les cibles de l'attaque"
     },
     "properties": {
       "attack": "Attaque",

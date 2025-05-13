@@ -59,6 +59,8 @@ export default class CharacterData extends ActorData {
       recovery: new fields.SchemaField({
         dice: new fields.StringField({ required: true, blank: true }),
       }),
+      // Hp temporaire
+      tempHp: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
     })
 
     schema.combat = new fields.SchemaField(
@@ -783,6 +785,9 @@ export default class CharacterData extends ActorData {
       // Récupération des charges des capacités
       await this.recoverCapacityCharges(isFullRest)
     }
+
+    // Dans les deux cas je remet les points de vies temporaires à 0
+    await this.parent.update({ "system.attributes.tempHp": 0 })
   }
 
   /**

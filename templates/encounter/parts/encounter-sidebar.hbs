@@ -45,6 +45,18 @@
         </div>
       {{/if}}
     </div>
+    <div class="health-section sidebar-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label">
+          <i class="fas fa-fw fa-hand-rock"></i>
+          <h4 data-tooltip="{{localize 'CO.label.long.tempHp'}}">{{localize "CO.label.short.tempHp"}}</h4>
+
+          <div class="hit-points">
+            <input class="tempHp" name="system.attributes.tempHp" value="{{attributes.tempHp}}" type="number" data-dtype="Number" />
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- HPs -->
     <div class="health-section sidebar-section">
       <div class="sidebar-section-header">
