@@ -66,6 +66,7 @@ export default class COActor extends Actor {
     if (!hasHands) {
       const newHands = foundry.utils.deepClone(compendiumHands)
       let itemData = newHands.toObject()
+      itemData.system.equipped = true
       itemData = itemData instanceof Array ? itemData : [itemData]
       await this.createEmbeddedDocuments("Item", itemData)
     }

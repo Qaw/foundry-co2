@@ -76,6 +76,17 @@ export default class Utils {
       if (weapon) {
         const dmg = weapon.system.damage
         if (dmg) replacedFormula = replacedFormula.replace("@arme.dmg", dmg)
+      } else {
+        // Pas d'arme équipée donc Mains nues
+        let formuladmg = "0"
+        const compendiumHands = fromUuid(SYSTEM.FREE_HANDS_UUID).then((item) => {
+          if (item && item.system.actions && item.system.actions.length > 0) {
+            if (item.system.actions[0].resolvers && item.system.actions[0].resolvers.length > 0) {
+              formuladmg = item.system.actions[0].resolvers[0].formula
+            }
+          }
+        })
+        replacedFormula = replacedFormula.replace("@arme.dmg", formuladmg)
       }
     }
     // Cas du @arme qui remplace par la formule d'attaque de la première arme équipée
@@ -84,6 +95,9 @@ export default class Utils {
       if (weapon) {
         const skill = weapon.system.skill
         if (skill) replacedFormula = replacedFormula.replace("@arme.skill", skill)
+      } else {
+        // Pas d'arme équipée donc Mainsnues donc @atc
+        replacedFormula = replacedFormula.replace("@arme.skill", "@atc")
       }
     }
     // Cas du rang qui remplace par le rang dans la voie
