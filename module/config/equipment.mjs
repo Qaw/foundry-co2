@@ -97,3 +97,6 @@ export const EQUIPMENT_TAGS = {
     label: "CO.equipment.tags.legere",
   },
 }
+
+// Pour permettre de les remplacer dans un autre module éventuellement
+export const FREE_HANDS_UUID = "Compendium.cof-base.cof-2-base-items.Item.bwUmODTqsTqPbRr9"

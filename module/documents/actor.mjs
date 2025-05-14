@@ -41,6 +41,36 @@ export default class COActor extends Actor {
     }
   }
 
+  async _onCreate(data, options, user) {
+    await super._preCreate(data, options, user)
+    // Si c'est un joueur et qu'il n'a pa le "Mains nues"
+    if (this.type === "character") {
+      await this.ajouteMainsNues()
+    }
+  }
+
+  /**
+   *  Va créer un item "Mains nues" à partir de celui du compendium dans l'inventaire du joueur s'il n'en a pas encore
+   */
+  async ajouteMainsNues() {
+    const equipments = this.equipments
+    let hasHands = false
+    const compendiumHands = await fromUuid(SYSTEM.FREE_HANDS_UUID)
+    if (equipments && equipments.length > 0) {
+      const hands = equipments.find((item) => item.system.slug === compendiumHands.system.slug)
+      if (hands) {
+        hasHands = true
+      }
+    }
+
+    if (!hasHands) {
+      const newHands = foundry.utils.deepClone(compendiumHands)
+      let itemData = newHands.toObject()
+      itemData = itemData instanceof Array ? itemData : [itemData]
+      await this.createEmbeddedDocuments("Item", itemData)
+    }
+  }
+
   getRollData() {
     const rollData = { ...this.system }
 
