@@ -1,12 +1,12 @@
 .sidebar {
+  display: flex;
+  flex-direction: column;
   padding: 3px 0 0 3px;
   margin: 0;
   flex: 190px 0 0;
   height: 100%;
   min-width: 190px;
-  overflow: hidden scroll;
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary) transparent;
+  overflow: hidden;
 }
 .sidebar .image-container {
   border: 1px solid var(--color-border-dark);
@@ -25,6 +25,11 @@
 .sidebar .image-container:hover .hover-icon {
   visibility: visible;
 }
+.sidebar .scrollable {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
+}
 .sidebar .health-section .hit-points,
 .sidebar .resource-section .hit-points,
 .sidebar .health-section .resource-points,
@@ -40,6 +45,15 @@
 .sidebar .health-section .resource-points .current,
 .sidebar .resource-section .resource-points .current {
   width: 36px;
+  text-align: right;
+  padding-right: 3px;
+}
+.sidebar .health-section .hit-points .tempDm,
+.sidebar .resource-section .hit-points .tempDm,
+.sidebar .health-section .resource-points .tempDm,
+.sidebar .resource-section .resource-points .tempDm {
+  width: 36px;
+  color: red;
   text-align: right;
   padding-right: 3px;
 }

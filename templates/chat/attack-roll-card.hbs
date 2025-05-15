@@ -37,12 +37,11 @@
     {{/if}}
 
     {{#if (eq type 'damage')}}
-        <p>
-          <label>{{ localize "CO.ui.tempDamage" }} :
-            <input class="temp-checkbox" type="checkbox" name="tempDamage" {{checked tempDamage}} />
-          </label>
-        </p>
         <div class="damage-buttons">
+            <div class="tempDm">
+              <label for="tempDm" class="tempDm-checkbox">DM temp.</label>
+              <input type="checkbox" id="tempDm" name="tempDm" class="tempDm-checkbox" {{checked tempDamage}}>
+            </div> 
             <div class="dr">
               <label for="dr" class="dr-checkbox">{{localize "CO.ui.dr"}}</label>
               <input type="checkbox" id="dr" name="dr" class="dr-checkbox">

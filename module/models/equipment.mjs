@@ -122,9 +122,9 @@ export default class EquipmentData extends ItemData {
   }
 
   /**
-   * Remonte les dégâts de référence si c'est une arme, c'est-à-dire les dégâts de la formule du premier resolver de la première action.
+   * Remonte les dommages de référence si c'est une arme, c'est-à-dire les dommages de la formule du premier resolver de la première action.
    *
-   * @returns {string|undefined} La formule des dégâts si l'équipement est une arme et possède des actions avec des résolveurs de dégâts.
+   * @returns {string|undefined} La formule des dommages si l'équipement est une arme et possède des actions avec des résolveurs de dommages.
    *                             Retourne undefined sinon.
    */
   get damage() {
@@ -137,7 +137,7 @@ export default class EquipmentData extends ItemData {
   /**
    * Remonter la formule d'attaque de référence si c'est une arme, c'est-à-dire la formule du premier resolver de la première action.
    *
-   * @returns {string|undefined} La formule d'attaque si l'équipement est une arme et possède des actions avec des résolveurs de dégâts.
+   * @returns {string|undefined} La formule d'attaque si l'équipement est une arme et possède des actions avec des résolveurs de dommages.
    *                             Retourne undefined sinon.
    */
   get skill() {

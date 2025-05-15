@@ -1505,11 +1505,10 @@ export default class COActor extends Actor {
       return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoAmmo"))
     }
 
-    // Dégats temporaire. Si l'arme a le tag DM temporaire
+    // Dommages temporaires temporaire. Si l'arme a le tag DM temporaire
     let tempDamage = false
     let canBeTempDamage = false
 
-    console.log("item.tags", item.tags)
     // C'est de base des dégats temporaire
     if (item.tags.has(SYSTEM.EQUIPMENT_TAGS.dmtemporaires.id)) {
       tempDamage = true
@@ -1519,7 +1518,6 @@ export default class COActor extends Actor {
     if (item.tags.has(SYSTEM.EQUIPMENT_TAGS.dmtemporairespossibles.id)) {
       canBeTempDamage = true
     }
-    console.log("tempDamage", tempDamage, "canBeTempDamage", canBeTempDamage)
 
     // Gestion de la visibilité du jet
     if (rollMode === undefined) {
@@ -1664,7 +1662,7 @@ export default class COActor extends Actor {
       canBeTempDamage,
     }
 
-    // Rolls contient le jet d'attaque et éventuellement le jet de dégâts
+    // Rolls contient le jet d'attaque et éventuellement le jet de dommages
     let rolls = await COAttackRoll.prompt(dialogContext, { withDialog: withDialog })
     if (!rolls) return null
 
@@ -1692,7 +1690,7 @@ export default class COActor extends Actor {
       )
 
       // TODO Afficher uniquement si c'est un succès
-      // Affichage du jet de dégâts dans le cas d'un jet combiné, si ce n'est pas un jet opposé et que l'attaque est un succès
+      // Affichage du jet de dommages dans le cas d'un jet combiné, si ce n'est pas un jet opposé et que l'attaque est un succès
       if (game.settings.get("co", "useComboRolls") && !rolls[0].options.oppositeRoll && results[0].isSuccess) {
         if (rolls[1])
           await rolls[1].toMessage(

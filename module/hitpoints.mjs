@@ -1,5 +1,5 @@
 export class Hitpoints {
-  static applyToTargets(amount, drChecked, tempDamage) {
+  static async applyToTargets(amount, drChecked, tempDamage) {
     // On prend les cibles s'il y en a, sinon on prend les tokens actifs.
     // notation [...] transforme un Set en Array
     let targets = [...game.user.targets].length > 0 ? [...game.user.targets] : canvas.tokens.objects.children.filter((t) => t._controlled)
@@ -7,36 +7,50 @@ export class Hitpoints {
       ui.notifications.warn(game.i18n.localize("CO.notif.warningApplyDamageNoTarget"))
     } else {
       for (let target of targets) {
-        let currentHp = foundry.utils.duplicate(target.actor.system.attributes.hp.value)
-        let currentMaxHp = foundry.utils.duplicate(target.actor.system.attributes.hp.max)
-        let currentTempDamage = foundry.utils.duplicate(target.actor.system.attributes.tempHp)
+        const actor = target.actor
+        const currentHp = actor.system.attributes.hp.value
+        const currentMaxHp = actor.system.attributes.hp.max
+        const currentTempDamage = actor.system.attributes.tempDm
 
         let finalAmount = amount
         // Dommages
         if (amount < 0) {
           // Application de la RD si c'est cochée
-          if (drChecked) finalAmount += target.actor.system.combat.dr.value
+          if (drChecked) finalAmount += actor.system.combat.dr.value
+          // Dommages minimaux
           if (finalAmount > -1) finalAmount = -1
-        }
-        if (tempDamage) {
-          let newTempDamage = currentTempDamage + Math.abs(finalAmount)
-          if (newTempDamage > currentMaxHp) newTempDamage = currentMaxHp
-          target.actor.update({ "system.attributes.tempHp": newTempDamage })
-          // Si les dmg temporaire sont egaux au hp max on le met inconscient
-          if (newTempDamage === currentMaxHp) {
-            target.actor.toggleStatusEffect("unconscious", true)
-          }
-        } else {
-          let newHp = currentHp + finalAmount
-          if (newHp > target.actor.system.attributes.hp.max) newHp = target.actor.system.attributes.hp.max
-          if (newHp < 0) newHp = 0
-          // Si on a les DM temporaire + DM letaux > HP max on met les PV à 0
-          if (currentTempDamage + Math.abs(finalAmount) > currentMaxHp) {
-            newHp = 0
-            if (target.actor.type !== "character") target.actor.toggleStatusEffect("dead", true)
-          }
 
-          target.actor.update({ "system.attributes.hp.value": newHp })
+          // Dommages temporaires
+          if (tempDamage) {
+            const targetFor = actor.system.abilities.for.value
+            const amountTempDamage = Math.max(0, Math.abs(finalAmount) - targetFor)
+            let newTempDamage = Math.min(currentTempDamage + amountTempDamage, currentMaxHp)
+            await actor.update({ "system.attributes.tempDm": newTempDamage })
+
+            // DM temporaires supérieurs au nombre de PV restant : statut inconscient
+            if (actor.system.isTempDmSuperiorToCurrentHp) {
+              await actor.toggleStatusEffect("unconscious", true)
+            }
+          }
+          // Dommages normaux
+          else {
+            let newHp = Math.min(currentHp + finalAmount, actor.system.attributes.hp.max)
+            if (newHp < 0) newHp = 0
+
+            // DM temporaires supérieurs au nombre de PV restant
+            // PV mis à 0
+            // Si c'est un PNJ : mort
+            if (actor.system.isTempDmSuperiorToCurrentHp) {
+              newHp = 0
+              if (actor.type !== "character") await actor.toggleStatusEffect("dead", true)
+            }
+            await actor.update({ "system.attributes.hp.value": newHp })
+          }
+        }
+        // Soins
+        else {
+          let newHp = Math.max(currentHp + finalAmount, currentMaxHp)
+          await actor.update({ "system.attributes.hp.value": newHp })
         }
       }
     }
@@ -53,12 +67,9 @@ export class Hitpoints {
     const dataset = event.currentTarget.dataset
     const type = dataset.apply
     const dmg = parseInt(dataset.total)
-    const tempDamage = dataset.tempdamage === "true"
-    console.log("onClickChatMessageApplyButton. data : ", data)
-    console.log("onClickChatMessageApplyButton. type : ", type)
-    console.log("onClickChatMessageApplyButton. dmg : ", dmg)
-    console.log("onClickChatMessageApplyButton. dataset : ", dataset)
+    const tempDamage = html.find("#tempDm").is(":checked")
     const drChecked = html.find("#dr").is(":checked")
+
     switch (type) {
       case "full":
         Hitpoints.applyToTargets(-dmg, drChecked, tempDamage)

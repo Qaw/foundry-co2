@@ -250,7 +250,7 @@ export class COAttackRoll extends CORoll {
 
   static async prompt(dialogContext, options = {}) {
     const withDialog = options.withDialog ?? true
-    // Le résultat est un jet d'attaque ou un jet d'attaque et un jet de dégâts
+    // Le résultat est un jet d'attaque ou un jet d'attaque et un jet de dommages
     let rolls = []
     let rollContext
 
@@ -272,7 +272,11 @@ export class COAttackRoll extends CORoll {
             callback: (event, button, dialog) => {
               if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll prompt - Callback`), event, button, dialog)
               const output = Array.from(button.form.elements).reduce((obj, input) => {
-                if (input.name) obj[input.name] = input.value
+                if (input.name) {
+                  if (input.type === "checkbox") {
+                    obj[input.name] = input.checked
+                  } else obj[input.name] = input.value
+                }
                 return obj
               }, {})
               if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll prompt - Output`), output)
@@ -322,9 +326,10 @@ export class COAttackRoll extends CORoll {
               dialog.querySelector('input[name="formulaAttack"]').value = newFormula
             })
           })
-          // Dégats temporaires
+          // Dommages temporaires
           const tempDamageCb = dialog.querySelector('input[name="tempDamage"]')
-          if (tempDamageCb) {
+          const radioButtons = dialog.querySelectorAll('input[type="radio"]')
+          if (tempDamageCb && radioButtons.length > 0) {
             tempDamageCb.addEventListener("click", this._onCheckTempDamage.bind(this))
           }
         },
@@ -364,13 +369,13 @@ export class COAttackRoll extends CORoll {
         showDifficulty: dialogContext.showDifficulty,
         difficulty: withDialog ? rollContext.difficulty : dialogContext.difficulty,
         tooltip,
-        tempDamage: dialogContext.tempDamage,
+        tempDamage: withDialog ? rollContext.tempDamage : dialogContext.tempDamage,
         ...options,
       }
 
       rolls.push(roll)
 
-      // Jet de dégâts si l'option Jet combiné est activée
+      // Jet de dommages si l'option Jet combiné est activée
       if (dialogContext.useComboRolls) {
         const damageFormula = withDialog
           ? Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaDamage}+${rollContext.damageBonus}-${rollContext.damageMalus}`)
@@ -385,7 +390,7 @@ export class COAttackRoll extends CORoll {
             flavor: dialogContext.flavor,
             tooltip: damageRollTooltip,
             formulaDamage: damageFormula,
-            tempDamage: dialogContext.tempDamage,
+            tempDamage: rollContext.tempDamage,
             ...options,
           }
           rolls.push(damageRoll)
@@ -402,7 +407,7 @@ export class COAttackRoll extends CORoll {
         flavor: dialogContext.flavor,
         actor: dialogContext.actor,
         tooltip,
-        tempDamage: dialogContext.tempDamage,
+        tempDamage: rollContext.tempDamage,
         ...options,
       }
       rolls.push(roll)
@@ -439,7 +444,7 @@ export class COAttackRoll extends CORoll {
   }
 
   /**
-   * Evènement déclenché lorsque l'on coche/décoche la case à cocher Dégats temporaires
+   * Evènement déclenché lorsque l'on coche/décoche la case à cocher Dommages temporaires
    * Si on coche alors que l'arme ne propose pas l'option de dégat temporaire on met le Dé en dé malus
    * Par contre on ne peux pas faire l'inverse car si le dé était déjà un dé malus avant on lui donnerais un dé standard
    * à la place ce qui n'est pas souhaitable
@@ -448,7 +453,7 @@ export class COAttackRoll extends CORoll {
    */
   static _onCheckTempDamage(event, dialogContext) {
     let checked = event.target.checked
-    let canBeTempDamage = event.srcElement.dataset.canbetempdamage
+    let canBeTempDamage = event.target.dataset.canbetempdamage
     if (checked === true && canBeTempDamage === "false") {
       let radio = document.getElementById("diceMalus")
       radio.checked = true
