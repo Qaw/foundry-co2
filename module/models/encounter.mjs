@@ -41,6 +41,7 @@ export default class EncounterData extends ActorData {
         },
         { label: "CO.label.long.hp", nullable: false },
       ),
+      tempDm: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
     })
 
     schema.combat = new fields.SchemaField({

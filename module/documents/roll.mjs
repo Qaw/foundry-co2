@@ -182,7 +182,6 @@ export class COSkillRoll extends CORoll {
     await roll.evaluate()
 
     const toolTip = await roll.getTooltip()
-
     roll.options = {
       actorId: dialogContext.actor.id,
       rollMode: withDialog ? rollContext.rollMode : dialogContext.rollMode,
@@ -251,7 +250,7 @@ export class COAttackRoll extends CORoll {
 
   static async prompt(dialogContext, options = {}) {
     const withDialog = options.withDialog ?? true
-    // Le résultat est un jet d'attaque ou un jet d'attaque et un jet de dégâts
+    // Le résultat est un jet d'attaque ou un jet d'attaque et un jet de dommages
     let rolls = []
     let rollContext
 
@@ -273,7 +272,11 @@ export class COAttackRoll extends CORoll {
             callback: (event, button, dialog) => {
               if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll prompt - Callback`), event, button, dialog)
               const output = Array.from(button.form.elements).reduce((obj, input) => {
-                if (input.name) obj[input.name] = input.value
+                if (input.name) {
+                  if (input.type === "checkbox") {
+                    obj[input.name] = input.checked
+                  } else obj[input.name] = input.value
+                }
                 return obj
               }, {})
               if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll prompt - Output`), output)
@@ -308,6 +311,7 @@ export class COAttackRoll extends CORoll {
               event.preventDefault()
               event.stopPropagation()
               let newFormula
+              console.log("valeur radio button", event.target.value)
               switch (event.target.value) {
                 case "standard":
                   newFormula = `1d20+${dialogContext.initialSkillFormula}`
@@ -322,6 +326,12 @@ export class COAttackRoll extends CORoll {
               dialog.querySelector('input[name="formulaAttack"]').value = newFormula
             })
           })
+          // Dommages temporaires
+          const tempDamageCb = dialog.querySelector('input[name="tempDamage"]')
+          const radioButtons = dialog.querySelectorAll('input[type="radio"]')
+          if (tempDamageCb && radioButtons.length > 0) {
+            tempDamageCb.addEventListener("click", this._onCheckTempDamage.bind(this))
+          }
         },
       })
 
@@ -340,7 +350,6 @@ export class COAttackRoll extends CORoll {
       await roll.evaluate()
 
       const tooltip = await roll.getTooltip()
-
       roll.options = {
         actorId: dialogContext.actor.id,
         type: dialogContext.type,
@@ -360,12 +369,13 @@ export class COAttackRoll extends CORoll {
         showDifficulty: dialogContext.showDifficulty,
         difficulty: withDialog ? rollContext.difficulty : dialogContext.difficulty,
         tooltip,
+        tempDamage: withDialog ? rollContext.tempDamage : dialogContext.tempDamage,
         ...options,
       }
 
       rolls.push(roll)
 
-      // Jet de dégâts si l'option Jet combiné est activée
+      // Jet de dommages si l'option Jet combiné est activée
       if (dialogContext.useComboRolls) {
         const damageFormula = withDialog
           ? Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaDamage}+${rollContext.damageBonus}-${rollContext.damageMalus}`)
@@ -380,6 +390,7 @@ export class COAttackRoll extends CORoll {
             flavor: dialogContext.flavor,
             tooltip: damageRollTooltip,
             formulaDamage: damageFormula,
+            tempDamage: rollContext.tempDamage,
             ...options,
           }
           rolls.push(damageRoll)
@@ -396,6 +407,7 @@ export class COAttackRoll extends CORoll {
         flavor: dialogContext.flavor,
         actor: dialogContext.actor,
         tooltip,
+        tempDamage: rollContext.tempDamage,
         ...options,
       }
       rolls.push(roll)
@@ -427,6 +439,31 @@ export class COAttackRoll extends CORoll {
       total: isPrivate ? "?" : Math.round(this.total * 100) / 100,
       tooltip: isPrivate ? "" : this.options.tooltip,
       user: game.user.id,
+      tempDamage: this.options.tempDamage,
+    }
+  }
+
+  /**
+   * Evènement déclenché lorsque l'on coche/décoche la case à cocher Dommages temporaires
+   * Si on coche alors que l'arme ne propose pas l'option de dégat temporaire on met le Dé en dé malus
+   * Par contre on ne peux pas faire l'inverse car si le dé était déjà un dé malus avant on lui donnerais un dé standard
+   * à la place ce qui n'est pas souhaitable
+   * @param {*} event évènement déclenché par le click
+   * @param {*} dialogContext Context de la fenetre avec son ensemble d'éléments
+   */
+  static _onCheckTempDamage(event, dialogContext) {
+    let checked = event.target.checked
+    let canBeTempDamage = event.target.dataset.canbetempdamage
+    if (checked === true && canBeTempDamage === "false") {
+      let radio = document.getElementById("diceMalus")
+      radio.checked = true
+      // Créer et déclencher un événement change
+      const changeEvent = new Event("change", {
+        bubbles: true, // Permet à l'événement de remonter dans le DOM
+        cancelable: true,
+      })
+
+      radio.dispatchEvent(changeEvent)
     }
   }
 }

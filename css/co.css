@@ -539,6 +539,11 @@ strong,
   justify-content: center;
   align-items: center;
 }
+.chat-card .card-content .damage-buttons .tempDm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .chat-card .card-buttons {
   margin: 5px 0;
 }
@@ -1417,6 +1422,15 @@ strong,
 .co .sidebar .health-section .resource-points .current,
 .co .sidebar .resource-section .resource-points .current {
   width: 36px;
+  text-align: right;
+  padding-right: 3px;
+}
+.co .sidebar .health-section .hit-points .tempDm,
+.co .sidebar .resource-section .hit-points .tempDm,
+.co .sidebar .health-section .resource-points .tempDm,
+.co .sidebar .resource-section .resource-points .tempDm {
+  width: 36px;
+  color: red;
   text-align: right;
   padding-right: 3px;
 }

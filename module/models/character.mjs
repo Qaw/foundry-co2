@@ -59,6 +59,7 @@ export default class CharacterData extends ActorData {
       recovery: new fields.SchemaField({
         dice: new fields.StringField({ required: true, blank: true }),
       }),
+      tempDm: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
     })
 
     schema.combat = new fields.SchemaField(
@@ -527,7 +528,7 @@ export default class CharacterData extends ActorData {
   }
 
   /**
-   * Calcule la valeur de la résistance aux dégâts en ajoutant les bonus
+   * Calcule la valeur de la résistance aux dommages en ajoutant les bonus
    */
   _prepareDR() {
     this.combat.dr.base = 0
@@ -783,6 +784,9 @@ export default class CharacterData extends ActorData {
       // Récupération des charges des capacités
       await this.recoverCapacityCharges(isFullRest)
     }
+
+    // Dans les deux cas je remet les points de vies temporaires à 0
+    await this.parent.update({ "system.attributes.tempDm": 0 })
   }
 
   /**

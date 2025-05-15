@@ -117,4 +117,10 @@ export default class ActorData extends foundry.abstract.TypeDataModel {
     const modifiers = this.malusDiceModifiers.filter((m) => m.target === attackType)
     return modifiers.length > 0
   }
+
+  get isTempDmSuperiorToCurrentHp() {
+    const currentHp = this.attributes.hp.value
+    const currentTempDamage = this.attributes.tempDm
+    return currentTempDamage > currentHp
+  }
 }

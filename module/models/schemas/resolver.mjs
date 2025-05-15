@@ -10,7 +10,7 @@ import { CustomEffectData } from "./custom-effect.mjs"
  * @param {string} type Le type d'action.
  * @param {number} skill Le niveau de skill requis pour l'action ? ou la formule de skill a utiliser (attaque)
  *  skill.difficulty skill.formula (array)
- * @param {number} dmg La valeur de dégâts ou de soin de l'action.
+ * @param {number} dmg La valeur de dommages ou de soin de l'action.
  * @param {string} target Le type de cible de l'action : self, character, encounter
  */
 export class Resolver extends foundry.abstract.DataModel {

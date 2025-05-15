@@ -1,16 +1,16 @@
-{{!log "attack-roll-card" this}}
+{{log "attack-roll-card" this}}
 <div class="co chat-card roll-card attack-card" data-actor-id="{{speaker.actor}}">
   <header class="card-header flexcol">
     <strong>{{flavor}}</strong>
     {{#if showDifficulty}}
-      <label class="display-difficulty">{{#if oppositeRoll}}<button class="opposite-roll" data-opposite-value="{{difficulty}}" data-opposite-target="{{oppositeTarget}}">Jet opposé</button>{{else}}{{localize "CO.label.long.difficulty"}} : <strong class="display-difficulty"></strong>{{difficulty}}{{/if}}</strong>
+      <label class="display-difficulty">{{#if oppositeRoll}}<button class="opposite-roll" data-opposite-value="{{difficulty}}" data-opposite-target="{{oppositeTarget}}">{{localize "CO.ui.oppositeRoll"}}</button>{{else}}{{localize "CO.label.long.difficulty"}} : <strong class="display-difficulty"></strong>{{difficulty}}{{/if}}</strong>
       </label>
     {{/if}}
   </header>
 
   <div class="card-content">
-    <p>Formule : {{formula}}</p>
-    <h4 class="dice-total">Total : {{total}}</h4>
+    <p>{{ localize "CO.ui.formula"}} : {{formula}}</p>
+    <h4 class="dice-total">{{localize "CO.ui.total"}} : {{total}}</h4>
     {{#if showDifficulty}}
       {{#if isSuccess}}
         {{#if isCritical}}
@@ -38,17 +38,21 @@
 
     {{#if (eq type 'damage')}}
         <div class="damage-buttons">
+            <div class="tempDm">
+              <label for="tempDm" class="tempDm-checkbox">DM temp.</label>
+              <input type="checkbox" id="tempDm" name="tempDm" class="tempDm-checkbox" {{checked tempDamage}}>
+            </div> 
             <div class="dr">
               <label for="dr" class="dr-checkbox">{{localize "CO.ui.dr"}}</label>
               <input type="checkbox" id="dr" name="dr" class="dr-checkbox">
             </div>            
-            <a class="btn apply-dmg" data-apply="full" data-total="{{total}}">
+            <a class="btn apply-dmg" data-apply="full" data-total="{{total}}" data-tempdamage={{tempDamage}}>
                 <i class="fas fa-user-minus" data-tooltip="{{localize 'CO.ui.applyDamage'}}" data-tooltip-direction="UP"></i>
             </a>
-            <a class="btn apply-dmg" data-apply="half" data-total="{{total}}">
+            <a class="btn apply-dmg" data-apply="half" data-total="{{total}}" data-tempdamage={{tempDamage}}>
                 <i class="fas fa-user-shield" data-tooltip="{{localize 'CO.ui.applyHalfDamage'}}" data-tooltip-direction="UP"></i>
             </a>
-            <a class="btn apply-dmg" data-apply="double" data-total="{{total}}">
+            <a class="btn apply-dmg" data-apply="double" data-total="{{total}}" data-tempdamage={{tempDamage}}>
                 <i class="fas fa-user-injured" data-tooltip="{{localize 'CO.ui.applyDoubleDamage'}}" data-tooltip-direction="UP"></i>
             </a>
             <a class="btn apply-dmg" data-apply="heal" data-total="{{total}}">
