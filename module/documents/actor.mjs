@@ -42,20 +42,23 @@ export default class COActor extends Actor {
   }
 
   async _onCreate(data, options, user) {
-    await super._preCreate(data, options, user)
-    // Si c'est un joueur et qu'il n'a pa le "Mains nues"
+    await super._onCreate(data, options, user)
+    // Création de l'item mains nues pour un personnage
     if (this.type === "character") {
-      await this.ajouteMainsNues()
+      await this.addHandToHandItem()
     }
   }
 
   /**
-   *  Va créer un item "Mains nues" à partir de celui du compendium dans l'inventaire du joueur s'il n'en a pas encore
+   * Ajoute un objet "mains nues" à l'acteur s'il n'existe pas déjà.
+   *
+   * Cette méthode vérifie si l'acteur possède déjà un équipement correspondant au modèle "mains nues"
+   * (identifié par SYSTEM.HAND_TO_HAND_UUID). Si ce n'est pas le cas, elle l'ajoute et l'équipe automatiquement.
    */
-  async ajouteMainsNues() {
+  async addHandToHandItem() {
     const equipments = this.equipments
     let hasHands = false
-    const compendiumHands = await fromUuid(SYSTEM.FREE_HANDS_UUID)
+    const compendiumHands = await fromUuid(SYSTEM.HAND_TO_HAND_UUID)
     if (equipments && equipments.length > 0) {
       const hands = equipments.find((item) => item.system.slug === compendiumHands.system.slug)
       if (hands) {
@@ -64,11 +67,27 @@ export default class COActor extends Actor {
     }
 
     if (!hasHands) {
-      const newHands = foundry.utils.deepClone(compendiumHands)
-      let itemData = newHands.toObject()
+      let itemData = compendiumHands.toObject()
       itemData.system.equipped = true
-      itemData = itemData instanceof Array ? itemData : [itemData]
-      await this.createEmbeddedDocuments("Item", itemData)
+
+      // Création de l'objet
+      const newEquipment = await this.createEmbeddedDocuments("Item", [itemData])
+
+      // Mise à jour de la source de toutes les actions et modificateurs
+      if (newEquipment[0].actions.length > 0) {
+        const actions = newEquipment[0].toObject().system.actions
+        for (const action of actions) {
+          action.source = newEquipment[0].uuid
+          // Mise à jour de la source de tous les modificateurs s'il y en a
+          if (action.modifiers.length > 0) {
+            for (const modifier of action.modifiers) {
+              modifier.source = newEquipment[0].uuid
+            }
+          }
+        }
+        await newEquipment[0].update({ "system.actions": actions })
+        return newEquipment[0].uuid
+      }
     }
   }
 
