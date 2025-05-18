@@ -259,7 +259,7 @@ export class COAttackRoll extends CORoll {
 
       rollContext = await foundry.applications.api.DialogV2.wait({
         window: { title: dialogContext.title },
-        position: { width: 600 },
+        position: { width: 640 },
         classes: this.ROLL_CSS,
         content,
         rejectClose: false,
@@ -311,7 +311,6 @@ export class COAttackRoll extends CORoll {
               event.preventDefault()
               event.stopPropagation()
               let newFormula
-              console.log("valeur radio button", event.target.value)
               switch (event.target.value) {
                 case "standard":
                   newFormula = `1d20+${dialogContext.initialSkillFormula}`
@@ -326,12 +325,52 @@ export class COAttackRoll extends CORoll {
               dialog.querySelector('input[name="formulaAttack"]').value = newFormula
             })
           })
+          // Options tactiques
+          const radiosTactique = dialog.querySelectorAll('input[name="tactique"]')
+          console.log("je trouve les radios tactique : ", radiosTactique)
+          radiosTactique.forEach((radio) => {
+            radio.addEventListener("change", (event) => {
+              event.preventDefault()
+              event.stopPropagation()
+              let newBonus
+              let newDamage
+              let newMalus
+              switch (event.target.value) {
+                case "aucun":
+                  newBonus = `${dialogContext.skillBonus}`
+                  newDamage = `${dialogContext.formulaDamage}`
+                  newMalus = `${dialogContext.skillMalus}`
+                  break
+                case "assuree":
+                  newBonus = `${dialogContext.skillBonus + 5}`
+                  newDamage = `(${dialogContext.formulaDamage})/2`
+                  newMalus = `${dialogContext.skillMalus}`
+                  break
+                case "precise":
+                  newBonus = `${dialogContext.skillBonus}`
+                  newDamage = `(${dialogContext.formulaDamage})+1d4°`
+                  newMalus = `${dialogContext.skillMalus - 3}`
+                  break
+                case "violente":
+                  newBonus = `${dialogContext.skillBonus}`
+                  newDamage = `(${dialogContext.formulaDamage})+2d4°`
+                  newMalus = `${dialogContext.skillMalus - 7}`
+                  break
+              }
+              dialog.querySelector('input[name="skillBonus"]').value = newBonus
+              dialog.querySelector('input[name="formulaDamage"]').value = newDamage
+              dialog.querySelector('input[name="skillMalus"]').value = newMalus
+            })
+          })
           // Dommages temporaires
           const tempDamageCb = dialog.querySelector('input[name="tempDamage"]')
           const radioButtons = dialog.querySelectorAll('input[type="radio"]')
           if (tempDamageCb && radioButtons.length > 0) {
             tempDamageCb.addEventListener("click", this._onCheckTempDamage.bind(this))
           }
+          // Options tactiques
+          const attaqueAssuree = dialog.querySelector('input[name="attaqueAssuree"]')
+          const attaquePrecise = dialog.querySelector('input[name="attaquePrecise"]')
         },
       })
 

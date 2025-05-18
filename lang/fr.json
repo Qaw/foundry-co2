@@ -390,7 +390,12 @@
       "pvByLevel": "Points de vigueur par niveau",
       "warningPrestigeAlreadyExist": "Vous avez déjà une classe de prestige, vous devez la désapprendre pour pouvoir en apprendre une autre",
       "tempDamage": "Dommages temporaires",
-      "attackTarget": "Les cibles de l'attaque"
+      "attackTarget": "Les cibles de l'attaque",
+      "optionsTactiques": "Options tactiques",
+      "tactiqueAucune": "Aucune",
+      "tactiqueAssuree": "Attaque assurée",
+      "tactiqueViolente": "Attaque violente",
+      "tactiquePrecise": "Attaque précise"
     },
     "properties": {
       "attack": "Attaque",
