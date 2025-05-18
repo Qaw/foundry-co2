@@ -30,7 +30,7 @@
     </div>
         <div class="form-group">
             <div class="flexrow">   
-                <label data-tooltip="{{localize 'CO.tooltip.formulaAttack'}}">{{localize 'CO.label.long.formulaAttack'}}</label>            
+                <label data-tooltip="{{localize 'CO.tooltip.formulaAttack'}}">{{localize 'CO.ui.formula'}}</label>            
                 <div class="form-fields flex1">                    
                     <input class="field-value" id="formulaAttack" name="formulaAttack" type="text" value="{{formulaAttack}}" data-dtype="String" data-tooltip="{{formulaAttackTooltip}}" {{#if auto}}readonly{{/if}} />
                 </div>  
@@ -51,12 +51,12 @@
         </div>    
         <div class="form-group">
             <div class="flexrow">  
-                <label>{{localize 'CO.label.long.skillBonus'}}</label>              
+                <label>{{localize 'CO.label.long.bonus'}}</label>              
                 <div class="form-fields flex1">
                     
                     <input class="field-value" id="skillBonus" name="skillBonus" type="text" value="{{skillBonus}}" data-dtype="String"/>
                 </div>       
-                <label>{{localize 'CO.label.long.skillMalus'}}</label>                
+                <label>{{localize 'CO.label.long.malus'}}</label>                
                 <div class="form-fields">                    
                     <input class="field-value" id="skillMalus" name="skillMalus" type="text" value="{{skillMalus}}" data-dtype="String"/>
                 </div>
@@ -69,30 +69,23 @@
         <legend>{{ localize "CO.resolver.formula.damage"}}</legend>        
             <div class="form-group">
                 <div class="flexrow">
-                    <label data-tooltip="{{localize 'CO.tooltip.formulaDamage'}}">{{localize 'CO.label.long.formulaDamage'}}</label>          
+                    <label data-tooltip="{{localize 'CO.tooltip.formulaDamage'}}">{{localize 'CO.ui.formula'}}</label>          
                     <div class="form-fields flex1">
                         <input class="field-value" id="formulaDamage" name="formulaDamage" type="text" value="{{formulaDamage}}" data-dtype="String" data-tooltip="{{formulaDamageTooltip}}"/>
                     </div>
-                </div>
-            </div>    
-            <div class="form-group">
-                <div class="flexrow">
-                    <label>{{localize 'CO.label.long.damageBonus'}}</label>
+                    <label>{{localize 'CO.label.long.bonus'}}</label>
                     <div class="form-fields flex1">
                         <input class="field-value" id="damageBonus" name="damageBonus" type="text" value="{{damageBonus}}" data-dtype="String"/>
                     </div>
-                    <label>{{localize 'CO.label.long.damageMalus'}}</label>
+                    <label>{{localize 'CO.label.long.malus'}}</label>
                     <div class="form-fields flex1">
                         <input class="field-value" id="damageMalus" name="damageMalus" type="text" value="{{damageMalus}}" data-dtype="String"/>
                     </div>  
-                </div>                
-            </div>                     
-            <div class="form-group">                
-                    <label>{{localize 'CO.ui.tempDamage'}}</label>
+                     <label>{{localize 'CO.ui.tempDamage'}}</label>
                     <div class="form-fields">
                         <input class="temp-checkbox" type="checkbox" name="tempDamage" {{checked tempDamage}} data-canBeTempDamage="{{canBeTempDamage}}" />
                     </div>  
-                
+                </div>
             </div> 
         </fieldset>           
         {{/if}}     
