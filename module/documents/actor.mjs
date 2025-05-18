@@ -1547,7 +1547,7 @@ export default class COActor extends Actor {
       damageFormulaTooltip = "",
       targets = undefined,
       customEffect,
-      applyOn,
+      additionalEffect,
     } = {},
   ) {
     // Si l'arme a la propriété "reloadable", on vérifie si l'arme assez de munitions
@@ -1559,13 +1559,13 @@ export default class COActor extends Actor {
     let tempDamage = false
     let canBeTempDamage = false
 
-    // C'est de base des dégats temporaire
-    if (item.tags.has(SYSTEM.EQUIPMENT_TAGS.dmtemporaires.id)) {
+    // Si c'est une arme, on vérifie si elle a le tag DM temporaire
+    if (item.type === "equipment" && item.tags.has(SYSTEM.EQUIPMENT_TAGS.dmtemporaires.id)) {
       tempDamage = true
       canBeTempDamage = true
     }
-    // Exemple : arme contondante
-    if (item.tags.has(SYSTEM.EQUIPMENT_TAGS.dmtemporairespossibles.id)) {
+    // Si c'est une arme et qu'elle peut faire des dommages temporaires (Exemple : arme contondante)
+    if (item.type === "equipment" && item.tags.has(SYSTEM.EQUIPMENT_TAGS.dmtemporairespossibles.id)) {
       canBeTempDamage = true
     }
 
@@ -1734,7 +1734,7 @@ export default class COActor extends Actor {
           speaker,
           style: CONST.CHAT_MESSAGE_STYLES.OTHER,
           type: "action",
-          system: { subtype: "attack", targets: targetsUuid, result: results[0], linkedRoll, customEffect, applyOn },
+          system: { subtype: "attack", targets: targetsUuid, result: results[0], linkedRoll, customEffect, additionalEffect },
         },
         { rollMode: rolls[0].options.rollMode },
       )

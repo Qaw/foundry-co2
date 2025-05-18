@@ -108,8 +108,8 @@ export default function registerHooks() {
 
       // Gestion des custom effects
       const customEffect = message.system.customEffect
-      const applyOn = message.system.applyOn
-      if (customEffect && applyOn && Resolver.shouldManageAdditionalEffect(newResult, applyOn)) {
+      const additionalEffect = message.system.additionalEffect
+      if (customEffect && applyOn && Resolver.shouldManageAdditionalEffect(newResult, additionalEffect)) {
         if (game.user.isGM) await targetActor.applyCustomEffect(customEffect)
         else {
           game.socket.emit(`system.${SYSTEM.ID}`, {
