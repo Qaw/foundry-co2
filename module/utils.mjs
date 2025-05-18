@@ -115,19 +115,12 @@ export default class Utils {
    */
   static _replaceEvolvingDice(actor, content) {
     let result
-    if (actor.type === "character") {
-      if (actor.system.attributes.level < 6) result = content.replace("d4°", "d4")
-      else if (actor.system.attributes.level <= 8) result = content.replace("d4°", "d6")
-      else if (actor.system.attributes.level <= 11) result = content.replace("d4°", "d8")
-      else if (actor.system.attributes.level <= 14) result = content.replace("d4°", "d10")
-      else result = content.replace("d4°", "d12")
-    } else if (actor.type === "encounter") {
-      if (actor.system.attributes.nc < 6) result = content.replace("d4°", "d4")
-      else if (actor.system.attributes.nc <= 8) result = content.replace("d4°", "d6")
-      else if (actor.system.attributes.nc <= 11) result = content.replace("d4°", "d8")
-      else if (actor.system.attributes.nc <= 14) result = content.replace("d4°", "d10")
-      else result = content.replace("d4°", "d12")
-    }
+    const level = actor.type === "character" ? actor.system.attributes.level : actor.system.attributes.nc
+    if (level < 6) result = content.replace("d4°", "d4")
+    else if (level <= 8) result = content.replace("d4°", "d6")
+    else if (level <= 11) result = content.replace("d4°", "d8")
+    else if (level <= 14) result = content.replace("d4°", "d10")
+    else result = content.replace("d4°", "d12")
     return result
   }
 
