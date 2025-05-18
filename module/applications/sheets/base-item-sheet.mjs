@@ -415,7 +415,7 @@ export default class CoBaseItemSheet extends ItemSheet {
     const actions = this.item.toObject().system.actions
     actions[actionId].resolvers.push(
       new Resolver({
-        type: "melee",
+        type: SYSTEM.RESOLVER_TYPE.attack.id,
         skill: {
           formula: "@atc",
           crit: "",
