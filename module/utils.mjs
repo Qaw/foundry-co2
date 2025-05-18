@@ -43,7 +43,7 @@ export default class Utils {
    * @param {Object} source L'objet source pour les valeurs personnalisées.
    * @returns {number} Le résultat de la formule évaluée ou 0 si invalide.
    */
-  static evaluateModifier(actor, formula, source) {
+  static evaluateCoModifier(actor, formula, source) {
     if (formula === "" || formula.includes("d") || formula.includes("D")) return 0
 
     // Formule avec des raccourcis
