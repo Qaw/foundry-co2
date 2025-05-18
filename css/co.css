@@ -2339,7 +2339,7 @@ strong,
 .co.sheet.actor.character .window-content form.locked .main .sheet-body .effects .effects-container {
   list-style: none;
   margin: 0;
-  padding: 0 5px 25px 0;
+  padding: 0 5px 5px 0;
   overflow-y: auto;
   scrollbar-width: thin;
   color: #7a7971;
@@ -3406,7 +3406,7 @@ strong,
 .co.sheet.actor.character .window-content form.locked .main .sheet-body .inventory {
   list-style: none;
   margin: 0;
-  padding: 0 5px 25px 0;
+  padding: 0 5px 5px 0;
   overflow-y: auto;
   scrollbar-width: thin;
   color: #7a7971;
@@ -3721,7 +3721,7 @@ strong,
 .co.sheet.actor.character .window-content form.locked .main .sheet-body .capacities {
   list-style: none;
   margin: 0;
-  padding: 0 5px 25px 0;
+  padding: 0 5px 5px 0;
   overflow-y: auto;
   scrollbar-width: thin;
   color: #7a7971;
@@ -4129,7 +4129,7 @@ strong,
 .co.sheet.actor.encounter .window-content form.locked .main .sheet-body .effects .effects-container {
   list-style: none;
   margin: 0;
-  padding: 0 5px 25px 0;
+  padding: 0 5px 5px 0;
   overflow-y: auto;
   scrollbar-width: thin;
   color: #7a7971;
@@ -4982,7 +4982,7 @@ strong,
 .co.sheet.actor.encounter .window-content form.locked .main .sheet-body .loot {
   list-style: none;
   margin: 0;
-  padding: 0 5px 25px 0;
+  padding: 0 5px 5px 0;
   overflow-y: auto;
   scrollbar-width: thin;
   color: #7a7971;
@@ -5297,7 +5297,7 @@ strong,
 .co.sheet.actor.encounter .window-content form.locked .main .sheet-body .capacities {
   list-style: none;
   margin: 0;
-  padding: 0 5px 25px 0;
+  padding: 0 5px 5px 0;
   overflow-y: auto;
   scrollbar-width: thin;
   color: #7a7971;
