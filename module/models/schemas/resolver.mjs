@@ -174,7 +174,7 @@ export class Resolver extends foundry.abstract.DataModel {
     healFormula = Utils.evaluateFormulaCustomValues(actor, healFormula, item.uuid)
     let healFormulaEvaluated = Roll.replaceFormulaData(healFormula, actor.getRollData())
 
-    const targets = actor.acquireTargets(this.target.type, this.target.scope, this.target.number, action.name)
+    const targets = actor.acquireTargets(this.target.type, this.target.scope, this.target.number, action.actionName)
     if (CONFIG.debug.co?.resolvers) console.debug(Utils.log("Heal Targets", targets))
 
     await actor.rollHeal(item, { actionName: action.label, healFormula: healFormulaEvaluated, targetType: this.target.type, targets: targets })

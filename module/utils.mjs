@@ -204,33 +204,30 @@ export default class Utils {
    * @param {UUID} source The item source's UUID : used for the #rank
    */
   static _replaceAllRank(actor, content, source) {
-    const { id } = foundry.utils.parseUuid(source)
-    let itemSource = actor.items.get(id)
-    if (itemSource.type !== "capacity") return formula
+    if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`Utils - _replaceAllRank `), actor, content, source)
+    let itemSource = fromUuidSync(source)
+    if (itemSource.type !== "capacity") return content
 
     // Si on est sur une capacité enfant on depend du rang du parent
     if (itemSource.system.parentCapacity) {
-      console.log("ReplaceRank sur une capacité enfant, on remplace par le parent pour le calcul : ", itemSource.system.parentCapacity)
       itemSource = fromUuidSync(itemSource.system.parentCapacity)
     }
 
     let startRank = content.includes("@allrank") ? content.substring(content.indexOf("@allrank")) : content.substring(content.indexOf("@toutrang"))
-    let extract = startRank.substring(startRank.indexOf("[") + 1, startRank.indexOf("]"))
-    if (extract) {
-      const rank = parseInt(extract)
+    let targetRank = startRank.substring(startRank.indexOf("[") + 1, startRank.indexOf("]"))
+    if (targetRank) {
+      const rank = parseInt(targetRank)
       if (rank && rank > 0 && rank <= 8) {
-        if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`Utils - _replaceAllRank - itemSource`), itemSource)
-
+        // Limitation actuelle : marche uniquement pour les voies du profil principal
         const profile = actor.system.profile
         if (profile) {
           let compteur = 0
           // Toutes les voies du profil qui ont atteint le rang demandé
           profile.system.paths.forEach((p) => {
-            const { id } = foundry.utils.parseUuid(p)
-            const path = actor.items.get(id)
-            if (path.system.rank >= rank) compteur += 1
+            const path = fromUuidSync(p)
+            if (path && path.system.rank >= rank) compteur += 1
           })
-          content = content.includes("@allrank") ? content.replace(`@allrank[${extract}]`, compteur) : content.replace(`@toutrang[${extract}]`, compteur)
+          content = content.includes("@allrank") ? content.replace(`@allrank[${targetRank}]`, compteur) : content.replace(`@toutrang[${targetRank}]`, compteur)
         }
       }
     }

@@ -21,16 +21,11 @@ export default class PathData extends ItemData {
     })
   }
 
-  async prepareDerivedData() {
-    super.prepareDerivedData()
-    this.rank = await this.computeRank()
-  }
-
   /** Retourne la position d'une capacité dans la liste des capacités de la voie
    * @param {string} capacityUuid L'UUID de la capacité recherchée
-   * @returns {number} La osition dans la liste ou 0 si la capacité n'est pas trouvée
+   * @returns {number} La position dans la liste ou 0 si la capacité n'est pas trouvée
    */
-  async getCapacityRank(capacityUuid) {
+  getCapacityRank(capacityUuid) {
     const rankpos = this.capacities.indexOf(capacityUuid)
     return rankpos !== -1 ? rankpos : 0
   }
@@ -46,31 +41,28 @@ export default class PathData extends ItemData {
    */
   async getCapacities() {
     let capacities = []
-    for (const capacityUuid of this.capacities) {
-      const item = await fromUuid(capacityUuid)
-      if (item) {
-        capacities.push(item)
-      }
-    }
-    return capacities
-  }
 
-  /**
-   * Computes the rank based on the capacities.
-   *
-   * @returns {Promise<number>} The computed rank.
-   */
-  async computeRank() {
-    const capacities = await this.getCapacities()
-    let max = 0
-    for (const [index, capacity] of capacities.entries()) {
-      if (capacity.system.learned) {
-        const rank = index + 1
-        if (rank > max) max = rank
+    // Embedded path in an actor
+    if (this.parent.isEmbedded) {
+      for (const capacityUuid of this.capacities) {
+        const item = fromUuidSync(capacityUuid)
+        if (item) {
+          capacities.push(item)
+        }
       }
     }
-    if (this.subtype === SYSTEM.PATH_TYPES.prestige.id) max += 3
-    return max
+
+    // Not Embedded : could be in the world or in a compendium
+    else {
+      for (const capacityUuid of this.capacities) {
+        const item = await fromUuid(capacityUuid)
+        if (item) {
+          capacities.push(item)
+        }
+      }
+    }
+
+    return capacities
   }
 
   /** Retourne le nombre de capacité apprise

@@ -754,17 +754,17 @@ export default class COActor extends Actor {
     // Rang actuel de la voie
     let path = fromUuidSync(capacity.system.path)
     if (!path) return
-    const currentRank = await path.system.computeRank()
+    const currentRank = path.system.rank
 
-    let newRank
+    //let newRank
     // Apprentissage d'une capacité
     if (state) {
       // RULE : Pour obtenir une capacité, il faut avoir un niveau minimal
       // Les capacités de rang 6 à 8 sont réservées aux voies de prestige
-      newRank = currentRank + 1
+      const newRank = currentRank + 1
       if (this.system.attributes.level < SYSTEM.CAPACITY_MINIMUM_LEVEL[newRank]) return ui.notifications.warn(game.i18n.localize("CO.notif.warningLevelTooLow"))
       // RULE : Pour apprendre une capacité, il faut avoir appris les précédentes
-      let pos = await path.system.getCapacityRank(capacity.uuid)
+      let pos = path.system.getCapacityRank(capacity.uuid)
       for (let i = 0; i < pos; i++) {
         let c = path.system.capacities[i]
         const current = fromUuidSync(c)
@@ -780,7 +780,10 @@ export default class COActor extends Actor {
       await path.update({ "system.rank": currentRank + 1 })
 
       // Le rang est le coût en mana de la capacité
-      await capacity.update({ "system.manaCost": newRank })
+      //await capacity.update({ "system.manaCost": newRank })
+    } else {
+      // Mise à jour du rang de la voie correspondante
+      await path.update({ "system.rank": currentRank - 1 })
     }
   }
 
@@ -907,11 +910,11 @@ export default class COActor extends Actor {
         const action = actions[index]
         // Si c'est une action non activable, l'activer automatiquement
         if (!action.properties.activable) {
-          action.properties.enabled = !action.properties.enabled
+          action.properties.enabled = state
         } else {
           // Si c'est une action activable mais sans conditions, la rendre visible
           if (!action.hasConditions) {
-            action.properties.visible = !action.properties.visible
+            action.properties.visible = state
           }
         }
       }
@@ -1881,6 +1884,7 @@ export default class COActor extends Actor {
     return { token, actor: token.actor, uuid: token.actor.uuid, name: token.name }
   }
 
+  // FIXE ME revoir la gestion des erreurs
   #getTargets(actionName, scope, number, single) {
     const tokens = game.user.targets
     let errorAll
