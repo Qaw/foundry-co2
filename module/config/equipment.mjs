@@ -99,4 +99,8 @@ export const EQUIPMENT_TAGS = {
 }
 
 // Pour permettre de les remplacer dans un autre module éventuellement
-export const HAND_TO_HAND_UUID = "Compendium.cof-base.cof-2-base-items.Item.bwUmODTqsTqPbRr9"
+// Il s'agit des items de base à donner à la création d'un joueur/encounter
+export const BASE_ITEM_UUID = {
+  hands: "Compendium.cof-base.cof-2-base-items.Item.bwUmODTqsTqPbRr9",
+  support: "Compendium.cof-base.cof-2-base-items.Item.0PawJrcH7daQ8RoJ",
+}

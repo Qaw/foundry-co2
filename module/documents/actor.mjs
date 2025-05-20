@@ -45,20 +45,35 @@ export default class COActor extends Actor {
     await super._onCreate(data, options, user)
     // Création de l'item mains nues pour un personnage
     if (this.type === "character") {
-      await this.addHandToHandItem()
+      await this.addBaseItemItem(SYSTEM.BASE_ITEM_UUID.hands, SYSTEM.ITEM_TYPE.equipment.id)
+    }
+    if (this.type === "character" || this.type === "encounter") {
+      await this.addBaseItemItem(SYSTEM.BASE_ITEM_UUID.support, SYSTEM.ITEM_TYPE.capacity.id)
     }
   }
 
   /**
-   * Ajoute un objet "mains nues" à l'acteur s'il n'existe pas déjà.
+   * Ajoute un objet à l'acteur s'il n'existe pas déjà lors de la création de cet acteur.
    *
-   * Cette méthode vérifie si l'acteur possède déjà un équipement correspondant au modèle "mains nues"
-   * (identifié par SYSTEM.HAND_TO_HAND_UUID). Si ce n'est pas le cas, elle l'ajoute et l'équipe automatiquement.
+   * Cette méthode vérifie si l'acteur possède déjà un item correspondant au type d'item donné
+   * Si ce n'est pas le cas, elle l'ajoute et l'équipe automatiquement.
+   * @param {string} uuid Identifiant unique d'un document qui sert de base à la copie, provenant du compendium
+   * @param {string} type Type d'item ajouté
    */
-  async addHandToHandItem() {
-    const equipments = this.equipments
+  async addBaseItemItem(uuid, type) {
+    let equipments
+    switch (type) {
+      case SYSTEM.ITEM_TYPE.equipment.id:
+        equipments = this.equipments
+        break
+      case SYSTEM.ITEM_TYPE.capacity.id:
+        equipments = this.capacities
+        break
+      default:
+        return
+    }
     let hasHands = false
-    const compendiumHands = await fromUuid(SYSTEM.HAND_TO_HAND_UUID)
+    const compendiumHands = await fromUuid(uuid)
     if (equipments && equipments.length > 0) {
       const hands = equipments.find((item) => item.system.slug === compendiumHands.system.slug)
       if (hands) {
@@ -1551,6 +1566,7 @@ export default class COActor extends Actor {
       targets = undefined,
       customEffect,
       additionalEffect,
+      tactical = undefined, // Values : confident, precise, violent
     } = {},
   ) {
     // Si l'arme a la propriété "reloadable", on vérifie si l'arme assez de munitions
@@ -1558,7 +1574,7 @@ export default class COActor extends Actor {
       return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoAmmo"))
     }
 
-    // Dommages temporaires temporaire. Si l'arme a le tag DM temporaire
+    // Gestion des dommages temporaires
     let tempDamage = false
     let canBeTempDamage = false
 
@@ -1571,6 +1587,13 @@ export default class COActor extends Actor {
     if (item.type === "equipment" && item.tags.has(SYSTEM.EQUIPMENT_TAGS.dmtemporairespossibles.id)) {
       canBeTempDamage = true
     }
+
+    // Gestion de l'option tactique : contrôle des valeurs
+    if (tactical) {
+      if (tactical !== "confident" && tactical !== "precise" && tactical !== "violent") {
+        tactical = "none"
+      }
+    } else tactical = "none"
 
     // Gestion de la visibilité du jet
     if (rollMode === undefined) {
@@ -1713,6 +1736,7 @@ export default class COActor extends Actor {
       hasTargets: targets?.length > 0,
       tempDamage,
       canBeTempDamage,
+      tactical,
     }
 
     // Rolls contient le jet d'attaque et éventuellement le jet de dommages
@@ -1742,7 +1766,6 @@ export default class COActor extends Actor {
         { rollMode: rolls[0].options.rollMode },
       )
 
-      // TODO Afficher uniquement si c'est un succès
       // Affichage du jet de dommages dans le cas d'un jet combiné, si ce n'est pas un jet opposé et que l'attaque est un succès
       if (game.settings.get("co", "useComboRolls") && !rolls[0].options.oppositeRoll && results[0].isSuccess) {
         if (rolls[1])

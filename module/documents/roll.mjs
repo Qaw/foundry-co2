@@ -29,7 +29,7 @@ export class CORoll extends Roll {
     if ((roll instanceof COAttackRoll && roll.options.type === "attack") || roll instanceof COSkillRoll) {
       // On récupère le résultat du dé conservé
       const diceResult = roll.terms[0].results.find((r) => r.active).result
-      const total = roll.total
+      const total = Math.ceil(roll.total)
       const isCritical = diceResult >= roll.options.critical
       const isFumble = diceResult === 1
       let difficulty = roll.options.difficulty
@@ -259,7 +259,7 @@ export class COAttackRoll extends CORoll {
 
       rollContext = await foundry.applications.api.DialogV2.wait({
         window: { title: dialogContext.title },
-        position: { width: 600 },
+        position: { width: 700 },
         classes: this.ROLL_CSS,
         content,
         rejectClose: false,
@@ -275,24 +275,34 @@ export class COAttackRoll extends CORoll {
                 if (input.name) {
                   if (input.type === "checkbox") {
                     obj[input.name] = input.checked
-                  } else obj[input.name] = input.value
+                  } else if (input.type === "radio") {
+                    // Only store the value if this radio button is checked
+                    if (input.checked) {
+                      obj[input.name] = input.value
+                    }
+                  } else {
+                    obj[input.name] = input.value
+                  }
                 }
                 return obj
               }, {})
               if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll prompt - Output`), output)
-              /* 
-              {
-                  "dice": "1d20",
-                  "formulaAttack": "5",
-                  "critical": "20",
-                  "skillBonus": "",
-                  "skillMalus": "",
-                  "difficulty": "",
-                  "formulaDamage": "1d8 + 4",
-                  "damageBonus": "",
-                  "damageMalus": "",
-                  "label": "Epée longue Attaque simple"
-              }
+              /* Output exemple
+                {
+                    "rollMode": "publicroll",
+                    "dice": "bonus",
+                    "formulaAttack": "1d20 + 13",
+                    "difficulty": "17",
+                    "critical": "20",
+                    "skillBonus": "0",
+                    "skillMalus": "-3",
+                    "formulaDamage": "(1d3+1)+1d4°",
+                    "damageBonus": "0",
+                    "damageMalus": "0",
+                    "tempDamage": true,
+                    "tactical": "violent",
+                    "flavor": "Mains nues "
+                }
               */
               return output
             },
@@ -311,7 +321,6 @@ export class COAttackRoll extends CORoll {
               event.preventDefault()
               event.stopPropagation()
               let newFormula
-              console.log("valeur radio button", event.target.value)
               switch (event.target.value) {
                 case "standard":
                   newFormula = `1d20+${dialogContext.initialSkillFormula}`
@@ -324,6 +333,42 @@ export class COAttackRoll extends CORoll {
                   break
               }
               dialog.querySelector('input[name="formulaAttack"]').value = newFormula
+            })
+          })
+          // Options tactiques
+          const radiosTactical = dialog.querySelectorAll('input[name="tactical"]')
+          radiosTactical.forEach((radio) => {
+            radio.addEventListener("change", (event) => {
+              event.preventDefault()
+              event.stopPropagation()
+              let newBonus
+              let newDamage
+              let newMalus
+              switch (event.target.value) {
+                case "none":
+                  newBonus = `${dialogContext.skillBonus}`
+                  newDamage = `${dialogContext.formulaDamage}`
+                  newMalus = `${dialogContext.skillMalus}`
+                  break
+                case "confident":
+                  newBonus = `${dialogContext.skillBonus + 5}`
+                  newDamage = `(${dialogContext.formulaDamage})/2`
+                  newMalus = `${dialogContext.skillMalus}`
+                  break
+                case "precise":
+                  newBonus = `${dialogContext.skillBonus}`
+                  newDamage = `(${dialogContext.formulaDamage})+1d4°`
+                  newMalus = `${dialogContext.skillMalus - 3}`
+                  break
+                case "violent":
+                  newBonus = `${dialogContext.skillBonus}`
+                  newDamage = `(${dialogContext.formulaDamage})+2d4°`
+                  newMalus = `${dialogContext.skillMalus - 7}`
+                  break
+              }
+              dialog.querySelector('input[name="skillBonus"]').value = newBonus
+              dialog.querySelector('input[name="formulaDamage"]').value = newDamage
+              dialog.querySelector('input[name="skillMalus"]').value = newMalus
             })
           })
           // Dommages temporaires
@@ -370,6 +415,7 @@ export class COAttackRoll extends CORoll {
         difficulty: withDialog ? rollContext.difficulty : dialogContext.difficulty,
         tooltip,
         tempDamage: withDialog ? rollContext.tempDamage : dialogContext.tempDamage,
+        tactical: withDialog ? rollContext.tactical : dialogContext.tactical,
         ...options,
       }
 
@@ -419,12 +465,21 @@ export class COAttackRoll extends CORoll {
 
   async _getChatCardData(flavor, isPrivate) {
     const rollResults = CORoll.analyseRollResult(this)
-    console.log("COAttackRoll _getChatCardData options", this.options)
+    if (CONFIG.debug.co?.chat) console.debug(Utils.log(`COAttackRoll - _getChatCardData options`), this.options)
+
+    // Type de jet
+    const hasDice = this.options.dice === "bonus" || this.options.dice === "malus"
+
+    // Option tactique
+    const hasTactical = this.options.tactical !== "none"
+
     return {
       type: this.options.type,
       actor: this.options.actor,
       speaker: ChatMessage.getSpeaker({ actor: this.options.actor, scene: canvas.scene }),
       flavor: `${this.options.flavor} - ${this.options.type === "attack" ? "Attaque" : "Dommages"}`,
+      hasDice,
+      diceType: this.options.dice,
       formula: isPrivate ? "???" : this.formula,
       useDifficulty: this.options.useDifficulty,
       showDifficulty: this.options.showDifficulty,
@@ -436,10 +491,12 @@ export class COAttackRoll extends CORoll {
       isFumble: rollResults.isFumble,
       isSuccess: rollResults.isSuccess,
       isFailure: rollResults.isFailure,
-      total: isPrivate ? "?" : Math.round(this.total * 100) / 100,
+      total: isPrivate ? "?" : Math.ceil(this.total),
       tooltip: isPrivate ? "" : this.options.tooltip,
       user: game.user.id,
       tempDamage: this.options.tempDamage,
+      hasTactical,
+      tactical: this.options.tactical,
     }
   }
 

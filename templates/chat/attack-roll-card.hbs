@@ -3,6 +3,12 @@
 <div class="co chat-card roll-card attack-card" data-actor-id="{{speaker.actor}}">
   <header class="card-header flexcol">
     <strong>{{flavor}}</strong>
+    {{#if hasDice}}
+      <label class="display-dice-type">{{localize "CO.label.long.diceType"}} : <strong class="display-dice-type">{{diceType}}</strong></label>
+    {{/if}}
+    {{#if hasTactical}}
+      <label class="display-tactical">{{localize "CO.label.long.tactical"}} : <strong class="display-tactical">{{tactical}}</strong></label>
+    {{/if}}
     {{#if showDifficulty}}
       <label class="display-difficulty">{{#if oppositeRoll}}<button class="opposite-roll" data-opposite-value="{{difficulty}}" data-opposite-target="{{oppositeTarget}}">{{localize "CO.ui.oppositeRoll"}}</button>{{else}}{{localize "CO.label.long.difficulty"}} : <strong class="display-difficulty"></strong>{{difficulty}}{{/if}}</strong>
       </label>
