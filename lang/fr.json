@@ -18,9 +18,9 @@
   },
   "CO": {
     "Character": {
-        "FIELDS": {
-          "otherCapacitiesPointsSpent": {
-            "label": "Autres points de capacités dépensés"
+      "FIELDS": {
+        "otherCapacitiesPointsSpent": {
+          "label": "Autres points de capacités dépensés"
         }
       }
     },
@@ -155,7 +155,9 @@
         "damageBonus": "Bonus aux dommages",
         "damageMalus": "Malus aux dommages",
         "needCharges": "Vous devez vous reposer pour récupérer des utilisations",
-        "tempHP": "DM temporaires"
+        "tempHP": "DM temporaires",
+        "diceType": "Type de jet",
+        "tactical": "Option tactique"
       },
       "short": {
         "label": "Label",
@@ -270,8 +272,8 @@
       "remove": "Supprimer",
       "diceType": "Type de jet",
       "rollStandard": "Jet standard",
-      "rollBonus": "Jet avec dé bonus",
-      "rollMalus": "Jet avec dé malus",
+      "rollBonus": "Avec dé bonus",
+      "rollMalus": "Avec dé malus",
       "data": "Données",
       "dice20": "1d20",
       "dice20kh": "2d20 Garder le plus haut",
@@ -395,7 +397,14 @@
       "tactiqueAucune": "Aucune",
       "tactiqueAssuree": "Attaque assurée",
       "tactiqueViolente": "Attaque violente",
-      "tactiquePrecise": "Attaque précise"
+      "tactiquePrecise": "Attaque précise",
+      "tacticalNone": "Aucune",
+      "tacticalConfidentAttack": "Attaque assurée",
+      "tacticalConfidentAttackTooltip": "Attaque +5, DM/2",
+      "tacticalViolentAttack": "Attaque violente",
+      "tacticalViolentAttackTooltip": "Attaque -7, DM +2d4°",
+      "tacticalPreciseAttack": "Attaque précise",
+      "tacticalPreciseAttackTooltip": "Attaque -3, DM +1d4°"
     },
     "properties": {
       "attack": "Attaque",

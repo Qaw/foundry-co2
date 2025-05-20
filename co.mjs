@@ -150,6 +150,7 @@ Hooks.once("ready", async function () {
         rolls: true,
         sheets: true,
         actions: true,
+        chat: true,
       }
     } else
       CONFIG.debug.co = {
@@ -158,6 +159,7 @@ Hooks.once("ready", async function () {
         rolls: false,
         sheets: false,
         actions: false,
+        chat: false,
       }
   }
   console.info(Utils.log(game.i18n.localize("CO.notif.ready")))

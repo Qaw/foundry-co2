@@ -1566,6 +1566,7 @@ export default class COActor extends Actor {
       targets = undefined,
       customEffect,
       additionalEffect,
+      tactical = undefined, // Values : confident, precise, violent
     } = {},
   ) {
     // Si l'arme a la propriété "reloadable", on vérifie si l'arme assez de munitions
@@ -1573,7 +1574,7 @@ export default class COActor extends Actor {
       return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoAmmo"))
     }
 
-    // Dommages temporaires temporaire. Si l'arme a le tag DM temporaire
+    // Gestion des dommages temporaires
     let tempDamage = false
     let canBeTempDamage = false
 
@@ -1586,6 +1587,13 @@ export default class COActor extends Actor {
     if (item.type === "equipment" && item.tags.has(SYSTEM.EQUIPMENT_TAGS.dmtemporairespossibles.id)) {
       canBeTempDamage = true
     }
+
+    // Gestion de l'option tactique : contrôle des valeurs
+    if (tactical) {
+      if (tactical !== "confident" && tactical !== "precise" && tactical !== "violent") {
+        tactical = "none"
+      }
+    } else tactical = "none"
 
     // Gestion de la visibilité du jet
     if (rollMode === undefined) {
@@ -1698,10 +1706,6 @@ export default class COActor extends Actor {
     // Construction du message de chat
     if (chatFlavor === "") chatFlavor = `${item.name} ${actionName}`
 
-    // Options tactiques par défaut inactive
-    let attaqueAssuree = false
-    let attaquePrecise = false
-
     const dialogContext = {
       rollMode,
       rollModes: CONFIG.Dice.rollModes,
@@ -1732,8 +1736,7 @@ export default class COActor extends Actor {
       hasTargets: targets?.length > 0,
       tempDamage,
       canBeTempDamage,
-      attaqueAssuree,
-      attaquePrecise,
+      tactical,
     }
 
     // Rolls contient le jet d'attaque et éventuellement le jet de dommages
