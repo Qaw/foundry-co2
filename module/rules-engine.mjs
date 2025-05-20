@@ -1,9 +1,17 @@
+import { SYSTEM } from "./config/system.mjs"
 export default class RulesEngine {
   static rules = [
     {
       name: "isEquipped",
       parameters: ["item"],
-      expression: (object, item) => item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.equipped,
+      expression: (object, item) => {
+        const isEquipped = item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.equipped
+        // Check if consumable has quantity > 0
+        if (isEquipped && item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.consumable.id) {
+          return item.system.quantity.current > 0
+        }
+        return isEquipped
+      },
     },
     {
       name: "isLearned",
@@ -13,7 +21,17 @@ export default class RulesEngine {
     {
       name: "isOwned",
       parameters: ["item", "actor"],
-      expression: (object, item, actor) => actor.items.find((i) => i.id === item.id) !== undefined,
+      expression: (object, item, actor) => {
+        const ownedItem = actor.items.find((i) => i.id === item.id)
+        if (ownedItem !== undefined) {
+          // Check if consumable has quantity > 0
+          if (ownedItem.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.consumable.id) {
+            return ownedItem.system.quantity.current > 0
+          }
+          return true
+        }
+        return false
+      },
     },
     {
       name: "isLinkedActionActivated",

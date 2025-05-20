@@ -406,11 +406,12 @@ export default class COActor extends Actor {
   async getVisibleActions() {
     let allActions = []
     for (const item of this.items) {
+      // Actions des équipements
       if (SYSTEM.ITEM_TYPE.equipment.id === item.type) {
         const itemActions = await item.getVisibleActions(this)
         allActions.push(...itemActions)
       }
-      // Pour les capacités, une armure non maîtrisée empêche son utilisation
+      // Action des capacités : une armure non maîtrisée empêche leur utilisation
       if (SYSTEM.ITEM_TYPE.capacity.id === item.type && this.canUseCapacities) {
         const itemActions = await item.getVisibleActions(this)
         allActions.push(...itemActions)

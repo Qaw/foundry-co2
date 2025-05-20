@@ -30,21 +30,21 @@ export default class EquipmentData extends ItemData {
       defense: new fields.NumberField({ integer: true, positive: true }),
       magicalDefense: new fields.NumberField({ integer: true }),
       quantity: new fields.SchemaField({
-        current: new fields.NumberField({ required: true, nullable: false, initial: 1, integer: true }),
-        max: new fields.NumberField({ required: false, nullable: true, integer: true }),
+        current: new fields.NumberField({ required: true, nullable: false, initial: 1, integer: true, min: 0 }),
+        max: new fields.NumberField({ required: false, nullable: true, integer: true, min: 0 }),
         destroyIfEmpty: new fields.BooleanField(),
       }),
       charges: new fields.SchemaField({
-        current: new fields.NumberField({ integer: true }),
-        max: new fields.NumberField({ integer: true }),
+        current: new fields.NumberField({ integer: true, min: 0 }),
+        max: new fields.NumberField({ integer: true, min: 0 }),
         destroyIfEmpty: new fields.BooleanField(),
       }),
       weight: new fields.SchemaField({
-        value: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true }),
+        value: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true, min: 0 }),
         unit: new fields.StringField({ required: true, initial: "kg" }),
       }),
       price: new fields.SchemaField({
-        value: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true }),
+        value: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true, min: 0 }),
         unit: new fields.StringField({ required: true, initial: "pa" }),
       }),
       rarity: new fields.StringField({ required: true }),

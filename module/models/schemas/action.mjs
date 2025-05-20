@@ -263,8 +263,8 @@ export class Action extends foundry.abstract.DataModel {
   }
 
   /**
-   * Return true if visible = true there is no condition or all conditions are true
-   * Elsewhere returns true if all conditions are true
+   * Si l'action n'a pas de conditions : elle est visible si la propriété visible vaut true
+   * Si l'action a des conditions : elle est visible si toutes les conditions sont vraies
    * @param {Object} item L'élément à évaluer.
    * @param {Object} actor L'acteur effectuant l'évaluation.
    */
