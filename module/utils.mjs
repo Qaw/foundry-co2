@@ -44,8 +44,7 @@ export default class Utils {
    * @returns {number} Le résultat de la formule évaluée ou 0 si invalide.
    */
   static evaluateCoModifier(actor, formula, source) {
-    if (formula === "" || formula.includes("d") || formula.includes("D")) return 0
-
+    if (formula === "" || formula.match("\\d+[d|D]\\d+")) return 0
     // Formule avec des raccourcis
     if (formula.includes("@")) {
       let newFormula = Utils.evaluateFormulaCustomValues(actor, formula, source)
@@ -140,7 +139,6 @@ export default class Utils {
 
     // Si on est sur une capacité enfant, on dépend du rang du parent
     if (itemSource.system.parentCapacity) {
-      console.log("ReplaceRank sur une capacité enfant, on remplace par le parent pour le calcul : ", itemSource.system.parentCapacity)
       itemSource = fromUuidSync(itemSource.system.parentCapacity)
     }
 
