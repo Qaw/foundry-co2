@@ -33,18 +33,18 @@ export default class CapacityData extends ItemData {
       subtype: new fields.StringField({ required: true, nullable: false, initial: "" }),
       actionType: new fields.StringField({ required: true, choices: SYSTEM.CAPACITY_ACTION_TYPE, initial: "none" }),
       learned: new fields.BooleanField({}),
-      rank: new fields.NumberField({ required: false, nullable: true, integer: true, initial: 0 }),
+      rank: new fields.NumberField({ required: false, nullable: true, integer: true, initial: 0, min: 0 }),
       frequency: new fields.StringField({ required: true, choices: SYSTEM.CAPACITY_FREQUENCY, initial: "none" }),
       charges: new fields.SchemaField({
-        current: new fields.NumberField({ required: false, nullable: true, integer: true, initial: 0 }),
-        max: new fields.NumberField({ required: false, nullable: true, integer: true, initial: 0 }),
+        current: new fields.NumberField({ required: false, nullable: true, integer: true, initial: 0, min: 0 }),
+        max: new fields.NumberField({ required: false, nullable: true, integer: true, initial: 0, min: 0 }),
       }),
       properties: new fields.SchemaField({
         spell: new fields.BooleanField({}),
       }),
       path: new fields.DocumentUUIDField({ type: "Item" }),
-      cost: new fields.NumberField({ required: true, nullable: false, integer: true, initial: -1 }),
-      manaCost: new fields.NumberField({ required: true, nullable: false, integer: true, initial: -1 }),
+      cost: new fields.NumberField({ required: true, nullable: false, integer: true, initial: -1, min: -1 }),
+      manaCost: new fields.NumberField({ required: true, nullable: false, integer: true, initial: -1, min: -1 }),
       actions: new fields.ArrayField(new fields.EmbeddedDataField(Action)),
       allowLinkedCapacity: new fields.BooleanField({ initial: false }),
       linkedCapacity: new fields.DocumentUUIDField({ type: "Item" }),
@@ -119,17 +119,30 @@ export default class CapacityData extends ItemData {
   }
 
   /**
-   * Calculates the cost based on the given rank.
+   * Calculates the capacity points cost based on the rank.
    *
-   * @param {number} rank The rank to determine the cost. Starts at 1.
    * @returns {number} The calculated cost. If the cost is different than -1, it returns this cost.
    *                   Otherwise, if the rank is 1 or 2, it returns 1. Otherwise, it returns 2.
    */
-  getCost(rank) {
+  getXpCost() {
     if (this.hasCost) return this.cost
-    if (rank === null) return 1 // Off path capacity
-    if (rank === 1 || rank === 2) return 1
+    if (this.path === null) return 1 // Off path capacity
+    if (this.rank === 1 || this.rank === 2) return 1
     return 2
+  }
+
+  /**
+   * Calculates and returns the mana cost for the current instance.
+   *
+   * @returns {number} The mana cost, which is determined by the following:
+   *   - If `hasManaCost` is true, returns `manaCost`.
+   *   - If `path` is null, returns 0.
+   *   - Otherwise, returns `rank`.
+   */
+  getManaCost() {
+    if (this.hasManaCost) return this.manaCost
+    if (this.path === null) return 0 // Off path capacity
+    return this.rank
   }
 
   /**

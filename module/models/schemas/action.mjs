@@ -199,7 +199,7 @@ export class Action extends foundry.abstract.DataModel {
 
   get manaCost() {
     if (this.properties.noManaCost) return 0
-    if (this.parent.isSpell && this.parent.hasManaCost) return this.parent.manaCost
+    if (this.parent.isSpell) return this.parent.getManaCost()
     return 0
   }
 

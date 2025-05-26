@@ -860,14 +860,14 @@ export default class CharacterData extends ActorData {
       const capacities = path.system.capacities
       for (const [index, capacityUuid] of capacities.entries()) {
         const capacity = await fromUuid(capacityUuid)
-        if (capacity.system.learned) xp += capacity.system.getCost(index + 1)
+        if (capacity.system.learned) xp += capacity.system.getXpCost()
       }
     }
 
     // Capacités hors voies
     const capacities = this.parent.capacitiesOffPaths
     for (const capacity of capacities) {
-      if (capacity.system.learned) xp += capacity.system.getCost(null)
+      if (capacity.system.learned) xp += capacity.system.getXpCost()
     }
 
     // Ajout des points de capacités dépensés ailleurs que dans les capacités
