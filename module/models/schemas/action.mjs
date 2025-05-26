@@ -61,6 +61,11 @@ export class Action extends foundry.abstract.DataModel {
     } else return []
   }
 
+  /**
+   * Gets the Font Awesome icon class based on the action type.
+   * The icon is used on the actions list as the first icon
+   * @returns {string} The Font Awesome icon class.
+   */
   get icon() {
     switch (this.type) {
       case "spell":
@@ -83,6 +88,11 @@ export class Action extends foundry.abstract.DataModel {
     return ""
   }
 
+  /**
+   * Gets the Font Awesome icon class based on the action type.
+   * The icon is used on the actions list to display the action icon
+   * @returns {string} The Font Awesome icon class.
+   */
   get iconFA() {
     switch (this.type) {
       case "spell":
@@ -135,6 +145,10 @@ export class Action extends foundry.abstract.DataModel {
     }
 
     return "gray"
+  }
+
+  get autoAttack() {
+    return this.hasResolvers && this.resolvers[0].type === SYSTEM.RESOLVER_TYPE.auto.id
   }
 
   /**

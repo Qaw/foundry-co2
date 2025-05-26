@@ -113,9 +113,11 @@
                                         </a>
                                     {{else}}
                                         {{#if (or (eq action.type 'melee') (eq action.type 'ranged') (eq action.type 'magical') (eq action.type 'spell'))}}
-                                            <a class="item-control">
-                                                <i class="{{action.iconFA}} {{action.iconColor}} toggle-action" {{#if (eq action.iconColor 'gray')}}data-tooltip="{{localize 'CO.label.long.needCharges'}}"{{else}}data-tooltip="{{localize 'CO.label.long.attack'}}"{{/if}} data-tooltip-direction="UP" data-action="activate" data-type="attack" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
-                                            </a> 
+                                            {{#unless action.autoAttack}}
+                                                <a class="item-control">
+                                                    <i class="{{action.iconFA}} {{action.iconColor}} toggle-action" {{#if (eq action.iconColor 'gray')}}data-tooltip="{{localize 'CO.label.long.needCharges'}}"{{else}}data-tooltip="{{localize 'CO.label.long.attack'}}"{{/if}} data-tooltip-direction="UP" data-action="activate" data-type="attack" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                                </a> 
+                                            {{/unless}}
                                             <a class="item-control">
                                                 <i class="fa-regular fa-hand-back-fist {{action.iconColor}} toggle-action" data-tooltip="{{localize 'CO.label.long.damage'}}" data-tooltip-direction="UP" data-action="activate" data-type="damage" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
                                             </a> 
