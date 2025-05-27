@@ -720,7 +720,7 @@ export default class COActor extends Actor {
     if (results.length === 0 || allResolversTrue) {
       // Si c'est un sort et qu'on l'active, il faut consommer les Points de Mana
       if (!item.system.actions[indice].properties.noManaCost && state && item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.isSpell) {
-        const spellManaCost = item.system.manaCost + manaCostFromArmor - (manaConcentration ? 2 : 0)
+        const spellManaCost = item.system.getManaCost() + manaCostFromArmor - (manaConcentration ? 2 : 0)
 
         if (spellManaCost > 0) {
           const newMana = Math.max(this.system.resources.mana.value - spellManaCost, 0)
@@ -772,7 +772,6 @@ export default class COActor extends Actor {
     if (!path) return
     const currentRank = path.system.rank
 
-    //let newRank
     // Apprentissage d'une capacité
     if (state) {
       // RULE : Pour obtenir une capacité, il faut avoir un niveau minimal
@@ -791,12 +790,9 @@ export default class COActor extends Actor {
     // Mise à jour de la capacité et de ses actions
     await this._toggleItemFieldAndActions(capacity, "learned", state)
 
+    // Mise à jour du rang de la voie correspondante
     if (state) {
-      // Mise à jour du rang de la voie correspondante
       await path.update({ "system.rank": currentRank + 1 })
-
-      // Le rang est le coût en mana de la capacité
-      //await capacity.update({ "system.manaCost": newRank })
     } else {
       // Mise à jour du rang de la voie correspondante
       await path.update({ "system.rank": currentRank - 1 })
