@@ -331,4 +331,97 @@ export class Action extends foundry.abstract.DataModel {
     dragData.indice = this.indice
     return dragData
   }
+
+  /**
+   * Génère les icônes d'action en fonction du type et des propriétés de l'action
+   * Cette méthode remplace la logique conditionnelle dans le template Handlebars
+   *
+   * @returns {Array} Un tableau d'objets représentant les icônes à afficher
+   * Chaque objet contient :
+   * - icon: l'icône à utiliser (classe FA)
+   * - iconClass: classe CSS additionnelle pour l'icône
+   * - action: l'action à effectuer (activate/unactivate)
+   * - tooltip: clé de localisation pour l'infobulle
+   * - type: type d'action (attack/damage) si applicable
+   */
+  getActionIcons() {
+    const icons = []
+
+    if (!this.properties.activable) return icons
+
+    // Pour les actions temporaires (activables/désactivables)
+    if (this.properties.temporary) {
+      if (this.properties.enabled) {
+        // Action temporaire activée -> bouton pour désactiver
+        icons.push({
+          icon: this.iconFA,
+          iconClass: "green toggle-action",
+          tooltip: "CO.ui.deactivate",
+          action: "unactivate",
+        })
+      } else {
+        // Action temporaire désactivée -> bouton pour activer
+        icons.push({
+          icon: this.iconFA,
+          iconClass: "gray toggle-action",
+          tooltip: "CO.ui.activate",
+          action: "activate",
+        })
+      }
+    }
+    // Pour les actions non temporaires
+    else {
+      // Actions d'attaque et sorts
+      if (["melee", "ranged", "magical", "spell"].includes(this.type)) {
+        // S'il y a des résolvers
+        if (this.hasResolvers) {
+          // Bouton d'attaque, sauf si c'est une attaque automatique
+          if (!this.autoAttack) {
+            icons.push({
+              icon: this.iconFA,
+              iconClass: `${this.iconColor} toggle-action`,
+              tooltip: this.iconColor === "gray" ? "CO.label.long.needCharges" : "CO.label.long.attack",
+              action: "activate",
+              type: "attack",
+            })
+          }
+          // Bouton de dégâts
+          icons.push({
+            icon: "fa-regular fa-hand-back-fist",
+            iconClass: `${this.iconColor} toggle-action`,
+            tooltip: "CO.label.long.damage",
+            action: "activate",
+            type: "damage",
+          })
+        } else {
+          icons.push({
+            icon: this.iconFA,
+            iconClass: `${this.iconColor} toggle-action`,
+            tooltip: "CO.ui.use",
+            action: "activate",
+          })
+        }
+      }
+      // Action de soin
+      else if (this.type === "heal") {
+        icons.push({
+          icon: `fa-solid fa-flask-round-potion`,
+          iconClass: `${this.iconColor} toggle-action`,
+          tooltip: "CO.ui.use",
+          action: "activate",
+        })
+      }
+      // Autres types d'action
+      else {
+        icons.push({
+          icon: this.iconFA,
+          iconClass: `${this.iconColor} toggle-action`,
+          tooltip: "CO.ui.use",
+          action: "activate",
+        })
+      }
+    }
+
+    return icons
+  }
 }

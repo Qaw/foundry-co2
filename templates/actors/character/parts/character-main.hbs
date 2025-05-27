@@ -100,40 +100,17 @@
                             <div class="item-name flexrow">
                                 <a class="item-image item-edit" style="background-image: url('{{{actionImg}}}')"></a>
                                 <h4>{{action.itemName}}{{#if action.hasLabel}} - {{action.label}}{{/if}}&nbsp;{{{action.icon}}} {{#if action.hasQuantity}}<span data-tooltip="{{localize "CO.ui.remainingQuantity"}}" data-tooltip-direction="UP">({{action.quantity}})</span>{{/if}} {{#if action.hasCharges}}<span data-tooltip="{{localize "CO.ui.remainingQuantity"}}" data-tooltip-direction="UP">({{action.charges}})</span>{{/if}} {{#if action.parent.hasActionType}} ({{action.parent.actionTypeShort}}){{/if}}{{#if action.parent.isSpell}} * (Mana : {{action.manaCost}}{{#if (gt (manaCostFromArmor action.parent.parent @root.actor) 0)}} Malus armure : {{manaCostFromArmor action.parent.parent @root.actor}} {{/if}}){{/if}}</h4>
-                            </div>
-                            <div class="item-controls-3">
-                                {{#if action.properties.activable}}
-                                    {{#if action.properties.temporary}}
-                                        <a class="item-control" >
-                                            {{#if action.properties.enabled}}
-                                                <i class="{{action.iconFA}} green toggle-action" data-tooltip="{{localize 'CO.ui.deactivate'}}" data-action="unactivate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
-                                            {{else}}
-                                                <i class="{{action.iconFA}} gray toggle-action" data-tooltip="{{localize 'CO.ui.activate'}}" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
-                                            {{/if}}
-                                        </a>
-                                    {{else}}
-                                        {{#if (or (eq action.type 'melee') (eq action.type 'ranged') (eq action.type 'magical') (eq action.type 'spell'))}}
-                                            {{#unless action.autoAttack}}
-                                                <a class="item-control">
-                                                    <i class="{{action.iconFA}} {{action.iconColor}} toggle-action" {{#if (eq action.iconColor 'gray')}}data-tooltip="{{localize 'CO.label.long.needCharges'}}"{{else}}data-tooltip="{{localize 'CO.label.long.attack'}}"{{/if}} data-tooltip-direction="UP" data-action="activate" data-type="attack" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
-                                                </a> 
-                                            {{/unless}}
-                                            <a class="item-control">
-                                                <i class="fa-regular fa-hand-back-fist {{action.iconColor}} toggle-action" data-tooltip="{{localize 'CO.label.long.damage'}}" data-tooltip-direction="UP" data-action="activate" data-type="damage" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
-                                            </a> 
-                                        {{else}}
-                                            {{#if (eq action.type 'heal') }}
-                                            <a class="item-control">
-                                                <i class="fa-solid {{action.iconColor}} fa-flask-round-potion toggle-action" data-tooltip="{{localize 'CO.ui.use'}}" data-tooltip-direction="UP" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
-                                            </a>  
-                                            {{else}}
-                                            <a class="item-control">
-                                                <i class="{{action.iconFA}} {{action.iconColor}} toggle-action" data-tooltip="{{localize 'CO.ui.use'}}" data-tooltip-direction="UP" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
-                                            </a>  
-                                            {{/if}}                                            
-                                        {{/if}}             
-                                    {{/if}}
-                                {{/if}}
+                            </div>                            <div class="item-controls-3">
+                                {{#each action.getActionIcons as |icon|}}
+                                    <a class="item-control">
+                                        <i class="{{icon.icon}} {{icon.iconClass}}" 
+                                           data-tooltip="{{localize icon.tooltip}}" 
+                                           data-tooltip-direction="UP"
+                                           data-action="{{icon.action}}" 
+                                           {{#if icon.type}}data-type="{{icon.type}}"{{/if}} 
+                                           data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                    </a>
+                                {{/each}}
                                 <a class="item-chat chat" data-tooltip="{{localize 'CO.label.long.sendToChat'}}"  data-chat-type="action" data-indice="{{action.indice}}" data-source="{{action.source}}"><i class="fas fa-fw fa-comment-alt"></i></a>
                             </div>
                         </li>
