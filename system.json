@@ -2,10 +2,10 @@
   "id": "co",
   "title": "Chroniques Oubliées V2",
   "description": "Le système Chroniques Oubliées pour FoundryVTT.",
-  "version": "12.331.0",
+  "version": "13.344.0",
   "compatibility": {
-    "minimum": "12",
-    "verified": "12"
+    "minimum": "13",
+    "verified": "13"
   },
   "authors": [
     {
@@ -20,7 +20,7 @@
   ],
   "esmodules": ["co.mjs"],
   "scripts": [],
-  "styles": ["css/co.css"],
+  "styles": ["co.css"],
   "packs": [],
   "languages": [
     {

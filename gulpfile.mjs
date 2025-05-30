@@ -1,25 +1,34 @@
 import gulp from "gulp"
 import less from "gulp-less"
 
-const LESS_DEST = "./css"
+/* ----------------------------------------- */
+/*  Compile LESS
+/* ----------------------------------------- */
 const LESS_SRC = "./styles/co.less"
-export const LESS_WATCH = ["./styles/**/*.less"]
+const CSS_DEST = "."
+const LESS_WATCH = ["./styles/**/*.less"]
 
-/**
- * Compile the LESS sources into a single CSS file.
- */
 function compileLESS() {
-  return gulp.src(LESS_SRC).pipe(less()).pipe(gulp.dest(LESS_DEST))
+  console.log("Compiling LESS files from:", LESS_SRC, "to:", CSS_DEST);
+  return gulp.src(LESS_SRC)
+    .pipe(less().on('error', function(err) {
+      console.error('LESS Error:', err.message);
+      this.emit('end');
+    }))
+    .pipe(gulp.dest(CSS_DEST))
 }
+const css = gulp.series(compileLESS)
 
-export const css = gulp.series(compileLESS)
-
-/**
- * Update the CSS if any of the LESS sources are modified.
- */
-export function watchUpdates() {
+/* ----------------------------------------- */
+/*  Watch Updates
+/* ----------------------------------------- */
+function watchUpdates() {
   gulp.watch(LESS_WATCH, css)
 }
 
-// Default export - build CSS and watch for updates
-export default gulp.series(compileLESS, watchUpdates)
+/* ----------------------------------------- */
+/*  Export Tasks
+/* ----------------------------------------- */
+
+export { css }
+export default gulp.series(gulp.parallel(css), watchUpdates)
