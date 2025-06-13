@@ -1,0 +1,18 @@
+<header class="sheet-header">
+  <img src="{{item.img}}" data-action="editImage" data-edit="img" data-tooltip="{{item.name}}">
+  <div class="details">
+    <div class="name flex1">
+      <input class="flex1" name="name" type="text" value="{{item.name}}" placeholder="{{localize 'CO.ui.itemName'}}" spellcheck="false" data-dtype="String" />
+    </div>
+    <div class="flexrow">
+      <div class="adjustment-select flexrow">
+        <span class="adjustment elite trait">{{localize (concat "CO.itemTypes." item.type)}}</span>
+      </div>
+    </div>
+    {{#if (eq document.type "equipment")}}
+      <div class="flexrow tags">
+        {{formGroup systemFields.tags value=system.tags localize=true}}
+      </div>
+    {{/if}}
+  </div>
+</header

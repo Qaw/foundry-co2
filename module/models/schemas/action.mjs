@@ -48,6 +48,9 @@ export class Action extends foundry.abstract.DataModel {
     }
   }
 
+  /** @override */
+  static LOCALIZATION_PREFIXES = ["CO.Action"]
+
   /**
    * Gets the enabled modifiers.
    * If the property enabled is true, it returns the modifiers.

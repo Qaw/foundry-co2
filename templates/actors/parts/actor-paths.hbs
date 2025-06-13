@@ -1,7 +1,7 @@
 {{log "Chroniques Oubliées | hbs | actor-paths" this}}
 
 {{#if (eq actor.type "character")}}
-    {{formField systemFields.otherCapacitiesPointsSpent value=system.otherCapacitiesPointsSpent disabled=locked}}
+    {{formGroup systemFields.otherCapacitiesPointsSpent value=system.otherCapacitiesPointsSpent disabled=locked}}
 
     {{#if (lt xpLeft 0)}}
         <div class="notification error permanent">

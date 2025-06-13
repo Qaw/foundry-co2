@@ -1,8 +1,8 @@
 {{!log 'resolvers-partial' this}}
 
 <h4 class="form-header resolvers flexrow">
-    <a class="resolvers-toggle section-toggle flex1">{{localize "CO.ui.resolvers"}}</a>
-    <a class="resolver-add flex0" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
+    <a class="flex1 section-toggle">{{localize "CO.ui.resolvers"}}</a>
+    <a class="flex0" data-action="addResolver" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
 </h4>
 <div class="resolvers-container foldable">
     {{#if action.resolvers}}
@@ -16,7 +16,7 @@
                         </select>   
                         <label class="checkbox"><input type="checkbox" name="system.actions.{{../idx}}.resolvers.{{id}}.bonusDiceAdd" {{checked r.bonusDiceAdd}}> {{localize "CO.modifier.subtype.bonusDice"}}</label>
                         <label class="checkbox"><input type="checkbox" name="system.actions.{{../idx}}.resolvers.{{id}}.malusDiceAdd" {{checked r.malusDiceAdd}}> {{localize "CO.modifier.subtype.malusDice"}}</label>
-                        <div class="form-fields flex0"><a class="resolver-delete"><i class="fas fa-trash"></i></a></div>    
+                        <div class="form-fields flex0"><a data-action="deleteResolver"><i class="fas fa-trash"></i></a></div>    
                     </div>             
                 </div>    
             </div>            
@@ -127,7 +127,7 @@
         {{/each}}
     {{else}}
         <div class="flexrow">
-            <span class="empty" style="padding:3px;">{{localize "CO.notif.resolvers.empty"}}</span>
+            <span class="empty">{{localize "CO.notif.resolvers.empty"}}</span>
         </div>
     {{/if}}
 </div>

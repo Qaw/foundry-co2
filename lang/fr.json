@@ -24,6 +24,221 @@
         }
       }
     },
+    "Equipment": {
+      "FIELDS": {
+        "description": {
+          "label": "Description"
+        },
+        "origin": {
+          "label": "Origine"
+        },
+        "slug": {
+          "label": "Clé"
+        },
+        "subtype": {
+          "label": "Sous-type"
+        },
+        "damagetype": {
+          "label": "Type de dommages"
+        },
+        "defense": {
+          "label": "Défense"
+        },
+        "magicalDefense": {
+          "label": "Défense magique"
+        },
+        "properties": {
+          "equipable": {
+            "label": "Équipable"
+          },
+          "reloadable": {
+            "label": "Rechargeable"
+          },
+          "stackable": {
+            "label": "Empilable"
+          }
+        },
+        "usage": {
+          "oneHand": {
+            "label": "Une main"
+          },
+          "twoHand": {
+            "label": "Deux mains"
+          }
+        },
+        "range": {
+          "value": {
+            "label": "Portée"
+          },
+          "unit": {
+            "label": "Unité"
+          }
+        },
+        "equipped": {
+          "label": "Équipé"
+        },
+        "source": {
+          "label": "Source"
+        },
+        "weight": {
+          "value": {
+            "label": "Poids"
+          },
+          "unit": {
+            "label": "Unité"
+          }
+        },
+        "price": {
+          "value": {
+            "label": "Prix"
+          },
+          "unit": {
+            "label": "Unité"
+          }
+        },
+        "rarity": {
+          "label": "Rareté"
+        },
+        "quantity": {
+          "current": {
+            "label": "Quantité actuelle"
+          },
+          "max": {
+            "label": "Quantité maximale"
+          },
+          "destroyIfEmpty": {
+            "label": "Détruire si vide"
+          }
+        },
+        "charges": {
+          "current": {
+            "label": "Charges/Munitions actuelles"
+          },
+          "max": {
+            "label": "Charges/Munitions maximales"
+          },
+          "destroyIfEmpty": {
+            "label": "Détruire si vide"
+          }
+        },
+        "tags": {
+          "label": "Tags"
+        }
+      }
+    },
+    "Path": {
+      "FIELDS": {
+        "description": {
+          "label": "Description"
+        },
+        "origin": {
+          "label": "Origine"
+        },
+        "slug": {
+          "label": "Clé"
+        },
+        "subtype": {
+          "label": "Sous-type"
+        },
+        "rank": {
+          "label": "Rang"
+        },
+        "maxDefenseArmor": {
+          "label": "Défense maximale de l'armure"
+        },
+        "pvByLevel": {
+          "label": "Points de vigueur par niveau"
+        }
+      }
+    },
+    "Profile": {
+      "FIELDS": {
+        "description": {
+          "label": "Description"
+        },
+        "origin": {
+          "label": "Origine"
+        },
+        "slug": {
+          "label": "Clé"
+        }
+      }
+    },
+    "Capacity": {
+      "FIELDS": {
+        "description": {
+          "label": "Description"
+        },
+        "origin": {
+          "label": "Origine"
+        },
+        "slug": {
+          "label": "Clé"
+        },
+        "rank": {
+          "label": "Rang"
+        },
+        "learned": {
+          "label": "Appris"
+        },
+        "allowLinkedCapacity": {
+          "label": "Autorise une capacité liée"
+        },
+        "cost": {
+          "label": "Coût en points de capacité"
+        },
+        "manaCost": {
+          "label": "Coût en points de mana"
+        },
+        "actionType": {
+          "label": "Type d'action"
+        },
+        "frequency": {
+          "label": "Fréquence d'utilisation"
+        },
+        "properties": {
+          "spell": {
+            "label": "Sortilège"
+          }
+        },
+        "linkedCapacity": {
+          "label": "Capacité liée"
+        },
+        "parentCapacity": {
+          "label": "Capacité parente"
+        }
+      }
+    },
+    "Action": {
+      "FIELDS": {
+        "label": {
+          "label": "Label"
+        },
+        "chatFlavor": {
+          "label": "Message chat"
+        },
+        "type": {
+          "label": "Type"
+        },
+        "properties": {
+          "visible": {
+            "label": "Visible"
+          },
+          "enabled": {
+            "label": "Activée"
+          },
+          "activable": {
+            "label": "Activable"
+          },
+          "temporary": {
+            "label": "Temporaire"
+          },
+          "noManaCost": {
+            "label": "Sans coût en mana"
+          }
+        }
+      }
+    },
     "sheet": {
       "character": "Fiche de personnage",
       "encounter": "Fiche de rencontre",
@@ -32,7 +247,13 @@
       "profile": "Fiche de profil",
       "feature": "Fiche de feature",
       "path": "Fiche de voie",
-      "equipement": "Fiche d'équipement"
+      "equipement": "Fiche d'équipement",
+      "tabs": {
+        "equipment": { "description": "Description", "details": "Détails", "actions": "Actions/Effets" },
+        "capacity": { "description": "Description", "details": "Détails", "actions": "Actions/Effets" },
+        "path": { "description": "Description", "details": "Détails" },
+        "profile": { "description": "Description", "details": "Détails" }
+      }
     },
     "notif": {
       "ready": "Système prêt.",
@@ -271,11 +492,13 @@
       "add": "Ajouter",
       "newItem": "Nouvel objet {item}",
       "remove": "Supprimer",
+      "removeAction": "Supprimer l'action",
       "diceType": "Type de jet",
       "rollStandard": "Jet standard",
       "rollBonus": "Avec dé bonus",
       "rollMalus": "Avec dé malus",
       "data": "Données",
+      "debug": "Debug",
       "dice20": "1d20",
       "dice20kh": "2d20 Garder le plus haut",
       "dice20kl": "2d20 Garder le plus bas",

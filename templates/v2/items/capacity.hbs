@@ -1,0 +1,35 @@
+{{log "Chroniques Oubliées | capacity" this}}
+<section class="tab standard-form capacity{{#if tabs.details.active}} active{{/if}}" data-group="primary" data-tab="details">
+
+    {{#if debugMode}}
+        <fieldset class="debug">
+            <legend>{{localize "CO.ui.debug"}}</legend>
+            {{formGroup fields._id value=item.id disabled=true localize=true label="CO.ui.id"}}
+            {{formGroup systemFields.slug value=system.slug disabled=true localize=true}}
+            {{formGroup systemFields.path value=system.path disabled=true localize=true}}
+        </fieldset>
+    {{/if}}
+
+    {{formGroup systemFields.rank value=systemSource.rank localize=true}}
+    {{formGroup systemFields.cost value=systemSource.cost localize=true}}
+
+    {{formGroup systemFields.actionType value=systemSource.actionType localize=true}}
+    {{formGroup systemFields.frequency value=systemSource.frequency localize=true}}
+
+    {{formGroup systemFields.properties.fields.spell value=systemSource.properties.spell}}
+    {{#if system.isSpell}}
+        {{formGroup systemFields.manaCost value=systemSource.manaCost localize=true}}
+    {{/if}}
+
+    {{formGroup systemFields.learned value=systemSource.learned localize=true}}
+    {{formGroup systemFields.allowLinkedCapacity value=systemSource.allowLinkedCapacity localize=true}}
+
+    {{#if system.allowLinkedCapacity}}
+        {{formGroup systemFields.linkedCapacity value=system.linkedCapacity localize=true disabled=locked}}
+    {{/if}}
+
+    {{#if system.parentCapacity}}
+        {{formGroup systemFields.parentCapacity value=system.parentCapacity localize=true disabled=locked}}
+    {{/if}}
+
+</section>

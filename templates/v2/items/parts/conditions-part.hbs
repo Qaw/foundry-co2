@@ -1,6 +1,6 @@
 <h4 class="form-header conditions flexrow">
-    <a class="conditions-toggle section-toggle flex1">{{localize "CO.ui.conditions"}}</a>
-    <a class="condition-add flex0" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
+    <a class="flex1" data-action="toggleSection">{{localize "CO.ui.conditions"}}</a>
+    <a class="flex0" data-action="addCondition" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
 </h4>
 <div class="conditions-container foldable">
     {{#if action.conditions}}
@@ -8,19 +8,21 @@
             {{!log 'condition' c id}}
             <div class="flexrow condition" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="condition">
                 <div class="form-fields flex1">
-                    <select name="system.actions.{{../idx}}.conditions.{{id}}.predicate" data-type="String" style="width:100%">
+                    <select name="system.actions.{{../idx}}.conditions.{{id}}.predicate" data-type="String">
                         {{selectOptions @root.choiceConditionPredicates selected=c.predicate localize=true}}
                     </select>
                 </div>
                 {{#if (eq c.predicate "isLinkedActionActivated")}}
                     <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.conditions.{{id}}.object" type="text" value="{{c.object}}" data-dtype="String"  /></div>                
                 {{/if}}
-                <div class="form-fields flex0"><a class="condition-delete"><i class="fas fa-trash"></i></a></div>
-            </div>
+                <div class="form-fields flex0">
+                    <button type="button" data-action="deleteCondition"><i class="fas fa-trash"></i></button>
+                </div>
         {{/each}}
     {{else}}
         <div class="flexrow">
-            <span class="empty" style="padding:3px;">{{localize "CO.notif.conditions.empty"}}</span>
+            <span class="empty">{{localize "CO.notif.conditions.empty"}}</span>
         </div>
     {{/if}}
 </div>
+

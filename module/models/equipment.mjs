@@ -24,7 +24,7 @@ export default class EquipmentData extends ItemData {
     const fields = foundry.data.fields
     return foundry.utils.mergeObject(super.defineSchema(), {
       subtype: new fields.StringField({ required: true }),
-      tags: new fields.SetField(new fields.StringField({ required: true, blank: false, choices: SYSTEM.EQUIPMENT_TAGS })),
+      tags: new fields.SetField(new fields.StringField({ required: false, blank: true, choices: SYSTEM.EQUIPMENT_TAGS })),
       martialCategory: new fields.StringField({ required: true }),
       damagetype: new fields.StringField({ required: true }),
       defense: new fields.NumberField({ integer: true, positive: true }),
@@ -47,7 +47,7 @@ export default class EquipmentData extends ItemData {
         value: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true, min: 0 }),
         unit: new fields.StringField({ required: true, initial: "pa" }),
       }),
-      rarity: new fields.StringField({ required: true }),
+      rarity: new fields.StringField({ required: true, initial: "common", choices: SYSTEM.EQUIPMENT_RARITY }),
       equipped: new fields.BooleanField(),
       properties: new fields.SchemaField({
         equipable: new fields.BooleanField(),
@@ -65,6 +65,9 @@ export default class EquipmentData extends ItemData {
       actions: new fields.ArrayField(new fields.EmbeddedDataField(Action)),
     })
   }
+
+  /** @override */
+  static LOCALIZATION_PREFIXES = ["CO.Equipment"]
 
   get isWeapon() {
     return this.subtype === SYSTEM.EQUIPMENT_SUBTYPES.weapon.id

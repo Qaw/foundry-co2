@@ -1,0 +1,105 @@
+{{log "Chroniques Oubliées | equipment" this}}
+<section class="tab standard-form equipment{{#if tabs.details.active}} active{{/if}}" data-group="primary" data-tab="details">
+
+    {{#if debugMode}}
+        <fieldset class="debug">
+            <legend>{{localize "CO.ui.debug"}}</legend>
+            {{formGroup fields._id value=item.id disabled=true localize=true label="CO.ui.id"}}
+            {{formGroup systemFields.slug value=system.slug disabled=true localize=true}}
+        </fieldset>
+    {{/if}}
+
+    <div class="form-group">
+        <label>{{localize "CO.label.long.subtype"}}</label>
+        <div class="form-fields">
+            <select name="system.subtype" data-type="String">
+                {{selectOptions @root.choiceEquipmentSubTypes selected=system.subtype localize=true}}
+            </select>
+        </div>
+    </div>
+
+    {{#if (or isWeapon isArmor isShield)}}
+        <div class="form-group">
+            <label>{{localize "CO.label.long.martialCategory"}}</label>
+            <div class="form-fields">
+                {{#if isWeapon}}
+                    <select name="system.martialCategory" data-type="String">
+                        {{selectOptions martialTrainingsWeaponsList selected=systemSource.martialCategory localize=true}}
+                    </select>
+                {{else if isArmor}}
+                    <select name="system.martialCategory" data-type="String">
+                        {{selectOptions martialTrainingsArmorsList selected=systemSource.martialCategory localize=true}}
+                    </select>
+                {{else if isShield}}
+                    <select name="system.martialCategory" data-type="String">
+                        {{selectOptions martialTrainingsShieldsList selected=systemSource.martialCategory localize=true}}
+                    </select>
+                {{/if}}                
+            </div>
+        </div>
+    {{/if}}    
+
+    {{#if isWeapon}}
+        <div class="form-group">
+            <label>{{localize "CO.label.long.damagetype"}}</label>
+            <div class="form-fields">
+                <select name="system.damagetype" data-type="String">
+                    {{selectOptions choiceDamageType selected=systemSource.damagetype localize=true}}
+                </select>
+            </div>
+        </div>
+    {{/if}}
+
+    {{#if (or isArmor isShield)}}
+        {{formGroup systemFields.defense value=systemSource.defense localize=true}}
+        {{formGroup systemFields.magicalDefense value=systemSource.magicalDefense localize=true}}       
+    {{/if}}
+
+    <fieldSet>
+        <legend>{{localize "CO.label.long.properties"}}</legend>
+        {{#if (or isWeapon isArmor isShield isMisc)}}
+            {{formGroup systemFields.properties.fields.equipable value=systemSource.properties.equipable localize=true}}
+        {{/if}}
+        {{#if isWeapon}}
+            {{formGroup systemFields.properties.fields.reloadable value=systemSource.properties.reloadable localize=true}}
+            {{formGroup systemFields.properties.fields.stackable value=systemSource.properties.stackable localize=true}}
+        {{/if}}
+        {{#if isConsumable}}
+            {{formGroup systemFields.properties.fields.stackable value=systemSource.properties.stackable localize=true}}
+        {{/if}}
+    </fieldSet>
+
+    {{#if isWeapon}}
+        <fieldSet>
+            <legend>{{localize "CO.ui.usage"}}</legend>
+            {{formGroup systemFields.usage.fields.oneHand value=systemSource.usage.oneHand localize=true }}
+            {{formGroup systemFields.usage.fields.twoHand value=systemSource.usage.twoHand localize=true }}
+        </fieldSet>
+
+        {{formGroup systemFields.range.fields.value value=systemSource.range.value localize=true}}
+        {{formInput systemFields.range.fields.unit value=systemSource.range.unit localize=true}}
+    {{/if}}
+
+    {{#if system.properties.equipable}}
+        {{formGroup systemFields.equipped value=systemSource.equipped localize=true}}
+    {{/if}}     
+
+    {{formGroup systemFields.weight.fields.value value=systemSource.weight.value localize=true}}
+    {{formInput systemFields.weight.fields.unit value=systemSource.weight.unit localize=true}}
+
+    {{formGroup systemFields.price.fields.value value=systemSource.price.value localize=true}}
+    {{formInput systemFields.price.fields.unit value=systemSource.price.unit localize=true}}
+    {{formGroup systemFields.rarity value=systemSource.rarity localize=true}}
+
+    {{#if system.properties.stackable }}
+        {{formGroup systemFields.quantity.fields.current value=systemSource.quantity.current localize=true}}
+        {{formGroup systemFields.quantity.fields.max value=systemSource.quantity.max localize=true}}
+        {{formGroup systemFields.quantity.fields.destroyIfEmpty value=systemSource.quantity.destroyIfEmpty localize=true}}
+    {{/if}}
+
+    {{#if system.properties.reloadable }}
+        {{formGroup systemFields.charges.fields.current value=systemSource.charges.current localize=true}}
+        {{formGroup systemFields.charges.fields.max value=systemSource.charges.max localize=true}}
+        {{formGroup systemFields.charges.fields.destroyIfEmpty value=systemSource.charges.destroyIfEmpty localize=true}}
+    {{/if}}
+</section>

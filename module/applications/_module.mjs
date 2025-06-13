@@ -6,3 +6,10 @@ export { default as PathSheet } from "./sheets/path-sheet.mjs"
 export { default as ProfileSheet } from "./sheets/profile-sheet.mjs"
 export { default as CharacterSheet } from "./sheets/character-sheet.mjs"
 export { default as EncounterSheet } from "./sheets/encounter-sheet.mjs"
+
+export { default as EquipmentSheetv2 } from "./sheets/equipment-sheet-v2.mjs"
+export { default as PathSheetV2 } from "./sheets/path-sheet-v2.mjs"
+export { default as FeatureSheetV2 } from "./sheets/feature-sheet-v2.mjs"
+export { default as CapacitySheetv2 } from "./sheets/capacity-sheet-v2.mjs"
+export { default as ProfileSheetV2 } from "./sheets/profile-sheet-v2.mjs"
+

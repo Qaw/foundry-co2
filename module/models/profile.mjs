@@ -19,6 +19,9 @@ export default class ProfileData extends ItemData {
   }
 
   /** @override */
+  static LOCALIZATION_PREFIXES = ["CO.Profile"]
+
+  /** @override */
   prepareBaseData() {
     super.prepareBaseData()
     if (this.family) {

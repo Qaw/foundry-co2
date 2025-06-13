@@ -1,0 +1,68 @@
+<section class="tab standard-form actions{{#if tabs.actions.active}} active{{/if}}" data-group="primary" data-tab="actions">
+    {{log "Chroniques Oubliées | actions" this}}
+    <button type="button" class="fas fa-add action-button" data-action="addAction" data-tooltip="{{localize 'CO.ui.add'}}">{{localize "CO.ui.add"}}</button>
+    <div class="actions">
+
+        <nav class="sheet-tabs tabs action-tabs">
+            {{#each system.actions as |action idx|}}
+                <a data-action="tab" data-group="actions"data-tab="action-{{idx}}" data-tooltip="{{action.label}}"><img class="action-icon-small" src="{{action.img}}" data-tooltip="{{action.label}}" /></a>
+            {{/each}}
+        </nav>
+        
+        {{#if system.actions}}
+            <div class="action-body">
+                {{#each system.actions as |action idx|}}
+                    {{log 'action-partial action' idx action}}
+                    <div class="tab action item{{#if (isActionSubtabActive @root.subtabs idx)}} active{{/if}}" data-group="actions" data-tab="action-{{idx}}" data-item-id="{{idx}}" data-item-type="action">
+                        <input type="hidden" name="system.actions.{{idx}}.source" value="{{action.source}}" data-dtype="String">
+                        <input type="hidden" name="system.actions.{{idx}}.indice" value="{{idx}}" data-dtype="Number">
+                        <div class="form-group" >
+                            <div class="form-fields">
+                                {{formGroup action.schema.fields.label value=action.label name=(concat "system.actions." idx ".label")}}
+                                <button type="button" class="icon fa-solid fa-trash" data-action="deleteAction" data-tooltip="CO.ui.removeAction"></button>
+                            </div>
+                        </div>
+                        {{formGroup action.schema.fields.chatFlavor value=action.chatFlavor name=(concat "system.actions." idx ".chatFlavor")}}
+                        <div class="form-group">
+                            <label>{{localize "CO.ui.type"}}</label>
+                            <div class="form-fields">
+                                <select name="system.actions.{{idx}}.type" data-type="String" style="width:100%">  
+                                    {{selectOptions @root.choiceActionTypes selected=action.type localize=true}}                               
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>{{localize "CO.ui.img"}}</label>
+                            <div class="form-fields">
+                                <input class="field-value" data-edit="img" name="system.actions.{{idx}}.img" type="text" value="{{action.img}}" placeholder="{{localize 'CO.ui.img'}}" data-dtype="String">
+                                <button type="button" class="action-button file-picker" data-type="imagevideo" data-target="system.actions.{{idx}}.img" data-tooltip="Parcourir les fichiers" tabindex="-1">
+                                    <i class="fas fa-file-import fa-fw"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <fieldSet>
+                            <legend>{{localize "CO.label.long.properties"}}</legend>
+                                {{#if @root.debugMode}}
+                                    <fieldSet>
+                                        <legend>{{localize "CO.ui.debug"}}</legend>
+                                        {{formGroup action.schema.fields.properties.fields.visible value=action.properties.visible name=(concat "system.actions." idx ".properties.visible") localize=true}}
+                                        {{formGroup action.schema.fields.properties.fields.enabled value=action.properties.enabled name=(concat "system.actions." idx ".properties.enabled") localize=true}}
+                                    </fieldSet>
+                                {{/if}}
+                                {{formGroup action.schema.fields.properties.fields.activable value=action.properties.activable name=(concat "system.actions." idx ".properties.activable") localize=true}}
+                                {{formGroup action.schema.fields.properties.fields.temporary value=action.properties.temporary name=(concat "system.actions." idx ".properties.temporary") localize=true}}
+                                {{#if (and (eq ../itemType 'capacity') ../system.isSpell) }}
+                                    {{formGroup action.schema.fields.properties.fields.noManaCost value=action.properties.noManaCost name=(concat "system.actions." idx ".properties.noManaCost") localize=true}}
+                                {{/if}}
+                        </fieldSet>
+
+                        {{> "systems/co/templates/v2/items/parts/conditions-part.hbs" action=action idx=idx}}
+                        {{> "systems/co/templates/v2/items/parts/modifiers-part.hbs" action=action idx=idx choiceModifierSubtypes=@root.choiceModifierSubtypes choiceModifierTargets=@root.choiceModifierTargets}}
+                        {{> "systems/co/templates/v2/items/parts/resolvers-part.hbs" action=action idx=idx}}
+                    </div>
+                {{/each}}
+            </div>
+        {{/if}}
+    </div>
+</section>
