@@ -252,7 +252,8 @@
         "equipment": { "description": "Description", "details": "Détails", "actions": "Actions/Effets" },
         "capacity": { "description": "Description", "details": "Détails", "actions": "Actions/Effets" },
         "path": { "description": "Description", "details": "Détails" },
-        "profile": { "description": "Description", "details": "Détails" }
+        "profile": { "description": "Description", "details": "Détails" },
+        "feature": { "description": "Description", "details": "Détails" }
       }
     },
     "notif": {

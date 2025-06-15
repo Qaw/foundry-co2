@@ -377,36 +377,37 @@ export default class CoBaseItemSheetV2 extends HandlebarsApplicationMixin(foundr
   /**
    * Adds a new Modifier to the item and updates the item with the new modifier list.
    * Only for the item of type Feature or Profile
-   * @param {Event} event The event object triggered by the user action.
-   * @param {CoBaseItemSheetV2} sheet The sheet instance
-   * @returns {Promise} A promise that resolves when the item is successfully updated.
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @returns {Promise} - A promise that resolves when the item is updated.
    */
-  static #onAddModifier(event, sheet) {
+  static #onAddModifier(event, target) {
     event.preventDefault()
-    const currentModifiers = sheet.item.modifiers
-    currentModifiers.push(new Modifier({ source: sheet.item.uuid, type: sheet.item.type }))
+    const currentModifiers = this.item.modifiers
+    currentModifiers.push(new Modifier({ source: this.item.uuid, type: this.item.type }))
 
-    return sheet.item.update({ "system.modifiers": currentModifiers })
+    return this.item.update({ "system.modifiers": currentModifiers })
   }
 
+  // eslint-disable-next-line jsdoc/require-returns-check
   /**
    * Handles the deletion of a modifier from the item.
-   *
-   * @param {Event} event The event that triggered the deletion.
-   * @param {CoBaseItemSheetV2} sheet The sheet instance
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @returns {Promise} - A promise that resolves when the item is updated.
    */
-  static #onDeleteModifier(event, sheet) {
+  static #onDeleteModifier(event, target) {
     event.preventDefault()
 
-    const li = $(event.currentTarget).closest(".modifier")
-    const rowId = li.data("itemId")
+    const li = target.closest(".modifier")
+    const rowId = li.dataset.itemId
 
-    const currentModifiers = sheet.item.modifiers
+    const currentModifiers = this.item.modifiers
     if (currentModifiers.length === 0) return
 
     currentModifiers.splice(rowId, 1)
 
-    return sheet.item.update({ "system.modifiers": currentModifiers })
+    return this.item.update({ "system.modifiers": currentModifiers })
   }
 
   /**

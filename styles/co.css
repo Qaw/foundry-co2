@@ -186,15 +186,24 @@
   align-items: center;
   gap: 10px;
 }
+.co.equipment section[data-tab="details"] {
+  overflow-y: auto;
+}
 .co.equipment section[data-tab="details"] .form-group {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+.co.equipment section[data-tab="actions"] {
+  overflow-y: auto;
+}
 .co.capacity fieldset.debug .form-group {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+.co.capacity section[data-tab="details"] {
+  overflow-y: auto;
 }
 .co.capacity section[data-tab="details"] .form-group {
   display: flex;

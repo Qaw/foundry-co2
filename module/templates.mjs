@@ -1,5 +1,6 @@
 import { SYSTEM } from "./config/system.mjs"
 
+//FIXME Supprimer en ApplicationV2
 /**
  * Define a set of template paths to pre-load
  * Pre-loaded templates are compiled and cached for fast access when rendering
@@ -29,7 +30,7 @@ export default function preloadHandlebarsTemplates() {
     `systems/${SYSTEM.ID}/templates/actors/encounter/parts/encounter-sidebar.hbs`,
 
     // ITEM
-    `systems/${SYSTEM.ID}/templates/items/item-sheet.hbs`,
+    /*`systems/${SYSTEM.ID}/templates/items/item-sheet.hbs`,
     `systems/${SYSTEM.ID}/templates/items/parts/attack-partial.hbs`,
     `systems/${SYSTEM.ID}/templates/items/parts/capacity-partial.hbs`,
     `systems/${SYSTEM.ID}/templates/items/parts/equipment-partial.hbs`,
@@ -39,7 +40,7 @@ export default function preloadHandlebarsTemplates() {
     `systems/${SYSTEM.ID}/templates/items/parts/actions/action-partial.hbs`,
     `systems/${SYSTEM.ID}/templates/items/parts/actions/conditions-partial.hbs`,
     `systems/${SYSTEM.ID}/templates/items/parts/actions/resolvers-partial.hbs`,
-    `systems/${SYSTEM.ID}/templates/items/parts/actions/modifiers-partial.hbs`,
+    `systems/${SYSTEM.ID}/templates/items/parts/actions/modifiers-partial.hbs`,*/
   ]
 
   // Load the template parts
