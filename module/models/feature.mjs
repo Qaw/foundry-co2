@@ -11,4 +11,7 @@ export default class FeatureData extends ItemData {
       capacities: new fields.ArrayField(new fields.DocumentUUIDField({ type: "Item" })),
     })
   }
+
+  /** @override */
+  static LOCALIZATION_PREFIXES = ["CO.Feature"]
 }

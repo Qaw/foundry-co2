@@ -161,6 +161,15 @@
         },
         "slug": {
           "label": "Clé"
+        },
+        "family": {
+          "label": "Famille"
+        },
+        "maxDefenseArmor": {
+          "label": "Défense maximale de l'armure"
+        },
+        "mainProfile": {
+          "label": "Profil principal"
         }
       }
     },
@@ -206,6 +215,22 @@
         },
         "parentCapacity": {
           "label": "Capacité parente"
+        }
+      }
+    },
+    "Feature": {
+      "FIELDS": {
+        "description": {
+          "label": "Description"
+        },
+        "origin": {
+          "label": "Origine"
+        },
+        "slug": {
+          "label": "Clé"
+        },
+        "subtype": {
+          "label": "Sous-type"
         }
       }
     },
