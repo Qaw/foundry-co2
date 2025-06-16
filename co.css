@@ -233,6 +233,19 @@
   align-items: center;
   gap: 10px;
 }
+.co.profile fieldset.debug .form-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.co.profile section[data-tab="details"] {
+  overflow-y: auto;
+}
+.co.profile section[data-tab="details"] .form-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .co .action-icon {
   width: 48px;
   height: 48px;

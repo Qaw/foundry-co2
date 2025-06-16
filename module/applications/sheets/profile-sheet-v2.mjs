@@ -14,7 +14,7 @@ export default class CoProfileSheetV2 extends CoBaseItemSheetV2 {
     header: { template: "systems/co/templates/v2/items/shared/header.hbs" },
     tabs: { template: "templates/generic/tab-navigation.hbs" },
     description: { template: "systems/co/templates/v2/items/shared/description.hbs" },
-    details: { template: "systems/co/templates/v2/items/profile.hbs" },
+    details: { template: "systems/co/templates/v2/items/profile.hbs", scrollable: [""] },
   }
 
   static TABS = {
