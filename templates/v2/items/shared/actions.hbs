@@ -16,9 +16,10 @@
                     <div class="tab action item{{#if (isActionSubtabActive @root.subtabs idx)}} active{{/if}}" data-group="actions" data-tab="action-{{idx}}" data-item-id="{{idx}}" data-item-type="action">
                         <input type="hidden" name="system.actions.{{idx}}.source" value="{{action.source}}" data-dtype="String">
                         <input type="hidden" name="system.actions.{{idx}}.indice" value="{{idx}}" data-dtype="Number">
-                        <div class="form-group" >
+                        <div class="form-group">
+                            <label>{{localize action.schema.fields.label.label}}</label>
                             <div class="form-fields">
-                                {{formGroup action.schema.fields.label value=action.label name=(concat "system.actions." idx ".label")}}
+                                <input class="field-value" name="system.actions.{{idx}}.label" type="text" value="{{action.label}}" placeholder="{{localize 'CO.ui.actionName'}}" data-dtype="String" />
                                 <button type="button" class="icon fa-solid fa-trash" data-action="deleteAction" data-tooltip="CO.ui.removeAction"></button>
                             </div>
                         </div>
@@ -50,11 +51,22 @@
                                         {{formGroup action.schema.fields.properties.fields.enabled value=action.properties.enabled name=(concat "system.actions." idx ".properties.enabled") localize=true}}
                                     </fieldSet>
                                 {{/if}}
-                                {{formGroup action.schema.fields.properties.fields.activable value=action.properties.activable name=(concat "system.actions." idx ".properties.activable") localize=true}}
-                                {{formGroup action.schema.fields.properties.fields.temporary value=action.properties.temporary name=(concat "system.actions." idx ".properties.temporary") localize=true}}
-                                {{#if (and (eq ../itemType 'capacity') ../system.isSpell) }}
-                                    {{formGroup action.schema.fields.properties.fields.noManaCost value=action.properties.noManaCost name=(concat "system.actions." idx ".properties.noManaCost") localize=true}}
-                                {{/if}}
+                                <div class="flexrow">
+                                    <label>
+                                        <input type="checkbox" name="{{concat 'system.actions.' idx '.properties.activable'}}" {{checked action.properties.activable}} />
+                                        {{action.schema.fields.properties.fields.activable.label}}
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="{{concat 'system.actions.' idx '.properties.temporary'}}" {{checked action.properties.temporary}} />
+                                        {{action.schema.fields.properties.fields.temporary.label}}
+                                    </label>
+                                    {{#if (and (eq ../itemType 'capacity') ../system.isSpell) }}
+                                        <label>
+                                            <input type="checkbox" name="{{concat 'system.actions.' idx '.properties.noManaCost'}}" {{checked action.properties.noManaCost}} />
+                                            {{action.schema.fields.properties.fields.noManaCost.label}}
+                                        </label>
+                                    {{/if}}
+                                </div>
                         </fieldSet>
 
                         {{> "systems/co/templates/v2/items/parts/conditions-part.hbs" action=action idx=idx}}

@@ -26,7 +26,9 @@
         {{formGroup systemFields.pvByLevel value=systemSource.pvByLevel localize=true}}
     {{/if}}
 
-    <h3 class="form-header"><a data-action="toggleSection">{{localize "CO.label.long.capacities"}}</a></h3>
+    <h4 class="form-header">
+        <a data-action="toggleSection">{{localize "CO.label.long.capacities"}}</a>
+    </h4>
     <div class="capacity-list list-4col foldable">
         <div class="cell center">
             <span class="field-label header">{{localize "CO.label.long.rank"}}</span>
@@ -52,7 +54,7 @@
                 {{#if capacity.system.isSpell}} * {{/if}}{{#if capacity.system.hasActionType}} ({{capacity.system.actionTypeShort}}){{/if}}</div>
             </div>
             <div class="cell right item item-controls" data-uuid="{{capacity.uuid}}" data-item-type="capacity" draggable="true" data-rank="{{#if (isPathprestigious @root.system.subtype)}}{{add id 4}}{{else}}{{add id 1}}{{/if}}">
-                <a class="item-control" data-action="deleteItem"  data-tooltip="{{localize 'CO.label.long.deleteCapacity'}}" data-tooltip-direction="UP"><i class="fas fa-fw fa-trash"></i></a>
+                <button class="item-control" data-action="deleteItem"  data-tooltip="{{localize 'CO.label.long.deleteCapacity'}}" data-tooltip-direction="UP"><i class="fas fa-fw fa-trash"></i></button>
             </div>
         {{/each}}
     </div>

@@ -4,24 +4,24 @@
 </h4>
 <div class="conditions-container foldable">
     {{#if action.conditions}}
-        {{#each action.conditions as |c id|}}
-            {{!log 'condition' c id}}
-            <div class="flexrow condition" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="condition">
-                <div class="form-fields flex1">
+        <div class="form-group-stacked">
+            <label></label>
+            {{#each action.conditions as |c id|}}
+                {{!log 'condition' c id}}
+                <div class="form-fields condition" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="condition">
                     <select name="system.actions.{{../idx}}.conditions.{{id}}.predicate" data-type="String">
                         {{selectOptions @root.choiceConditionPredicates selected=c.predicate localize=true}}
                     </select>
-                </div>
                 {{#if (eq c.predicate "isLinkedActionActivated")}}
-                    <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.conditions.{{id}}.object" type="text" value="{{c.object}}" data-dtype="String"  /></div>                
+                    <input name="system.actions.{{../idx}}.conditions.{{id}}.object" type="text" value="{{c.object}}" data-dtype="String"  />
                 {{/if}}
-                <div class="form-fields flex0">
                     <button type="button" data-action="deleteCondition"><i class="fas fa-trash"></i></button>
                 </div>
-        {{/each}}
+            {{/each}}
+        </div>
     {{else}}
-        <div class="flexrow">
-            <span class="empty">{{localize "CO.notif.conditions.empty"}}</span>
+        <div class="empty">
+            {{localize "CO.notif.conditions.empty"}}
         </div>
     {{/if}}
 </div>

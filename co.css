@@ -1,262 +1,489 @@
-/* ----------------------------------------- */
-/*  Premade colors                           */
-/* ----------------------------------------- */
-.light {
-  color: lightgray;
+.empty {
+  color: var(--sub);
+  font-style: italic;
 }
-.bg-light {
-  background: lightgray;
+i:not(.fas),
+em,
+.emphasis,
+.italic {
+  font-style: italic;
 }
-.darkgray {
-  color: #23221d;
+b,
+strong,
+.strong {
+  font-weight: 700;
 }
-.bg-darkgray {
-  background: #23221d;
-  color: #fff;
-}
-.bg-dark {
-  background: #464331c4;
-  color: #fff;
-}
-.darkslate {
-  color: darkslategray;
-}
-.bg-darkslate {
-  background: darkslategray;
-  color: #fff;
-}
-.darkgreen {
-  color: #003c1e;
-}
-.bg-darkgreen {
-  background: #003c1e;
-  color: #fff;
-}
-.darkblue {
-  color: midnightblue;
-}
-.bg-darkblue {
-  background: midnightblue;
-  color: #fff;
-}
-.blue {
-  color: #009ee0;
-}
-.bg-blue {
-  background: #009ee0;
-  color: #fff;
-}
-.green {
-  color: #44a12b;
-}
-.bg-green {
-  background: #44a12b;
-  color: #fff;
-}
-.black {
-  color: #000;
-}
-.bg-black {
-  background: #000;
-  color: #fff;
-}
-.red {
-  color: #cd071e;
-}
-.bg-red {
-  background: #cd071e;
-  color: #fff;
-}
-.purple {
-  color: purple;
-}
-.bg-purple {
-  background: purple;
-  color: #fff;
-}
-/* Functional Colors*/
-.bg-default {
-  background: #003c1e;
-  color: #fff;
-}
-.color-default {
-  color: #003c1e;
-}
-.bg-header {
-  background: #003c1e;
-  color: #fff;
-}
-.color-header {
-  color: #003c1e;
-}
-.bg-health {
-  background: #44a12b;
-  color: #fff;
-}
-.color-health {
-  color: #44a12b;
-}
-.bg-stats {
-  background: #003c1e;
-  color: #fff;
-}
-.color-stats {
-  color: #003c1e;
-}
-.bg-resource {
-  background: darkslategray;
-  color: #fff;
-}
-.color-resource {
-  color: darkslategray;
-}
-.bg-recovery {
-  background: #44a12b;
-  color: #fff;
-}
-.color-recovery {
-  color: #44a12b;
-}
-.co.item .sheet-header {
-  display: flex;
-}
-.co.item .sheet-header img {
+fieldset {
+  border: 0;
+  border-top: 2px solid var(--color-primary);
+  border-radius: 0;
   margin: 0;
+  overflow: hidden;
   padding: 0;
-  border: none;
-  width: 100px;
-  max-width: 100px;
-  min-width: 100px;
-  height: 100px;
-  max-height: 100px;
-  min-height: 100px;
 }
-.co.item .inline-img {
-  height: 27px;
-  width: 27px;
-  border: none;
-  outline: 1px solid white;
+fieldset legend {
+  font-size: 120%;
 }
-.co.item .list-3col {
+.form-header {
+  margin: 8px 0 4px 0;
+}
+.form-group .form-fields,
+.form-group-stacked .form-fields {
+  gap: 0;
+  justify-content: stretch;
+}
+.theme-light .form-group .form-fields,
+.theme-light .form-group-stacked .form-fields {
+  --input-background-color: rgba(0, 0, 0, 0.1);
+  --input-border-color: var(--color-dark-6);
+  --input-box-shadow: inset 0 0 6px var(--input-background-color);
+  --input-focus-outline-color: var(--color-warm-2);
+}
+.theme-dark .form-group .form-fields,
+.theme-dark .form-group-stacked .form-fields {
+  --input-background-color: var(--color-cool-4);
+  --input-border-color: transparent;
+  --input-box-shadow: none;
+  --input-focus-outline-color: var(--color-cool-3);
+}
+.form-group .form-fields :has(>:only-child) input[disabled],
+.form-group-stacked .form-fields :has(>:only-child) input[disabled],
+.form-group .form-fields :has(>:only-child) select[disabled],
+.form-group-stacked .form-fields :has(>:only-child) select[disabled] {
+  height: var(--input-height);
+}
+.form-group .form-fields:not(:has(>:only-child)),
+.form-group-stacked .form-fields:not(:has(>:only-child)) {
+  background: var(--input-background-color);
+  border: 1px solid var(--input-border-color);
+  border-radius: 4px;
+  box-shadow: var(--input-box-shadow);
+  color: var(--input-text-color);
+  outline: 1px solid transparent;
+  transition: outline-color 0.5s;
+}
+.form-group .form-fields:not(:has(>:only-child)):focus,
+.form-group-stacked .form-fields:not(:has(>:only-child)):focus,
+.form-group .form-fields:not(:has(>:only-child)):focus-visible,
+.form-group-stacked .form-fields:not(:has(>:only-child)):focus-visible,
+.form-group .form-fields:not(:has(>:only-child)):focus-within,
+.form-group-stacked .form-fields:not(:has(>:only-child)):focus-within {
+  outline-color: var(--input-focus-outline-color);
+}
+.form-group .form-fields:not(:has(>:only-child)) input,
+.form-group-stacked .form-fields:not(:has(>:only-child)) input,
+.form-group .form-fields:not(:has(>:only-child)) select,
+.form-group-stacked .form-fields:not(:has(>:only-child)) select,
+.form-group .form-fields:not(:has(>:only-child)) input:disabled,
+.form-group-stacked .form-fields:not(:has(>:only-child)) input:disabled,
+.form-group .form-fields:not(:has(>:only-child)) select:disabled,
+.form-group-stacked .form-fields:not(:has(>:only-child)) select:disabled {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  height: var(--input-height);
+}
+.form-group .form-fields:not(:has(>:only-child)) > :not(:last-child),
+.form-group-stacked .form-fields:not(:has(>:only-child)) > :not(:last-child) {
+  border: 0;
+  border-right: 1px solid var(--input-border-color);
+  border-radius: 0;
+}
+.form-group .form-fields:not(:has(>:only-child)) label,
+.form-group-stacked .form-fields:not(:has(>:only-child)) label,
+.form-group .form-fields:not(:has(>:only-child)) span,
+.form-group-stacked .form-fields:not(:has(>:only-child)) span,
+.form-group .form-fields:not(:has(>:only-child)) > *:has(+ a),
+.form-group-stacked .form-fields:not(:has(>:only-child)) > *:has(+ a),
+.form-group .form-fields:not(:has(>:only-child)) > *:has(+ button),
+.form-group-stacked .form-fields:not(:has(>:only-child)) > *:has(+ button),
+.form-group .form-fields:not(:has(>:only-child)) > *:has(+ label),
+.form-group-stacked .form-fields:not(:has(>:only-child)) > *:has(+ label) {
+  border: 0 !important;
+}
+.form-group .form-fields label,
+.form-group-stacked .form-fields label {
+  height: var(--input-height);
+  padding-right: 4px;
+}
+.form-group .form-fields label:has(>input[type="checkbox"]),
+.form-group-stacked .form-fields label:has(>input[type="checkbox"]),
+.form-group .form-fields label:has(>input[type="radio"]),
+.form-group-stacked .form-fields label:has(>input[type="radio"]) {
+  align-items: baseline;
+  display: flex;
+  flex-flow: row nowrap;
+  padding-top: 4px;
+}
+.form-group .form-fields input[type="checkbox"],
+.form-group-stacked .form-fields input[type="checkbox"],
+.form-group .form-fields input[type="radio"],
+.form-group-stacked .form-fields input[type="radio"] {
+  height: var(--input-height);
+}
+.form-group .form-fields button,
+.form-group-stacked .form-fields button {
+  height: calc(var(--button-size) - 4px);
+  margin: 1px;
+  min-height: calc(var(--button-size) - 4px);
+}
+.form-group.like-grid label,
+.form-group-stacked.like-grid label {
+  overflow: hidden;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.form-group.like-grid label,
+.form-group-stacked.like-grid label,
+.form-group.like-grid .form-fields,
+.form-group-stacked.like-grid .form-fields {
   display: grid;
-  grid-template-columns: 1fr 8fr 2fr;
-  grid-gap: 1px;
-  grid-auto-columns: minmax(15px, auto);
+  grid-auto-flow: column ;
+  grid-template-columns: repeat(auto-fit, 1fr);
 }
-.co.item .list-3col .cell.center {
-  justify-self: center;
-  align-self: center;
+.form-group-stacked {
+  display: flex;
+  flex-flow: column nowrap;
 }
-.co.item .list-3col .cell.left {
-  justify-self: start;
-  align-self: center;
+input.center {
+  text-align: center;
 }
-.co.item .list-3col .cell.right {
-  justify-self: end;
-  align-self: center;
+select {
+  width: 100;
 }
-.co.item .list-3col .cell .header {
-  color: #4b4a44;
+input[disabled],
+select[disabled] {
+  background: var(--input-background-color);
+  height: var(--input-height);
+}
+multi-select {
+  margin-bottom: 4px;
+  min-height: var(--input-height);
+  position: relative;
+}
+multi-select .tags.input-element-tags {
+  align-items: flex-start;
+  flex-flow: row wrap;
+  gap: 1px 2px;
+  justify-content: flex-start;
+  margin: 2px;
+  padding: 0;
+  padding-right: 22px;
+  pointer-events: none;
+}
+multi-select .tags.input-element-tags::after {
+  content: "";
+  clear: both;
+}
+multi-select .tags.input-element-tags .tag {
+  border: 1px solid var(--color-cool-3);
+  padding: 2px 4px;
+}
+.theme-dark multi-select .tags.input-element-tags .tag {
+  background-color: var(--color-dark-3);
+}
+.theme-light multi-select .tags.input-element-tags .tag {
+  background-color: var(--color-light-3);
+}
+multi-select .tags.input-element-tags .tag a {
+  pointer-events: auto;
+}
+multi-select > select {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+prose-mirror,
+.prosemirror {
+  flex: 1;
+  max-width: 100%;
+}
+prose-mirror > button,
+.prosemirror > button {
+  display: none;
+}
+prose-mirror .editor-content,
+.prosemirror .editor-content {
+  overflow: hidden;
+  position: relative;
+  white-space: wrap;
+}
+prose-mirror:hover:not([open]) > button,
+.prosemirror:hover:not([open]) > button {
+  display: flex;
+}
+.co.application .sheet-tabs {
+  align-items: stretch;
+  border-top: 0;
+  border-bottom-color: var(--color-primary);
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 0 8px;
+}
+.co.application .sheet-tabs [data-tab] {
+  align-items: baseline;
+  border: 1px solid transparent;
+  display: flex;
+  flex: 1;
+  flex-flow: row nowrap;
+  gap: 4px;
+  justify-content: center;
+  padding: 0 8px;
+}
+.co.application .sheet-tabs [data-tab].active {
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+.co.application .sheet-tabs [data-tab]:hover {
+  border: 1px dotted var(--color-primary);
+  border-bottom: 0;
+}
+.co.application .tab[data-tab] {
+  padding: 10px 0 10px 10px;
+  overflow: hidden auto;
+  scrollbar-color: var(--color-primary) var(--color-scrollbar-track);
+  scrollbar-gutter: stable;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  mask: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, #000000 12px, #000000 calc(100% - 12px), rgba(0, 0, 0, 0) 100%);
+}
+.co.application .tab[data-tab].active {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.co.application .tab[data-tab] > * {
+  flex: none;
+}
+.co.application h4.form-header {
+  display: flex;
+  flex-flow: row nowrap;
+  line-height: 1;
+}
+.co.application h4.form-header .section-toggle {
+  flex: 10;
+}
+.co.application h4.form-header a:not(:first-of-type):last-of-type {
+  flex: 0;
+}
+.co.application .resolvers-container .resolver {
+  display: flex;
+  flex-flow: row wrap;
+}
+.co.application .resolvers-container .resolver:not(:first-child) {
+  padding-top: 8px;
+}
+.co.application .resolvers-container .resolver:not(:last-child) {
+  border-bottom: 1px solid #999;
+  padding-bottom: 8px;
+}
+.co.application .resolvers-container .resolver > .form-group,
+.co.application .resolvers-container .resolver > .form-group-stacked {
+  flex: 2 0 100%;
+}
+.co.application .resolvers-container .resolver .form-fields {
+  flex-flow: row nowrap;
+}
+.co.application .resolvers-container .resolver .form-fields .action {
+  flex: none;
+  margin-left: 4px;
+  padding: 4px 8px;
+}
+.co.application .resolvers-container .resolver .form-fields .checkbox {
+  flex: 0 0 auto;
+}
+.co.application .resolvers-container .resolver .form-group-stacked.difficulty,
+.co.application .resolvers-container .resolver .form-group-stacked.damages {
+  flex: 0 1 50%;
+}
+.co.application .resolvers-container .resolver .form-group-stacked.difficulty {
+  margin-right: -1px;
+}
+.co.application .resolvers-container .resolver .form-group-stacked.difficulty input[type] {
+  border-radius: 3px 0 0 3px;
+}
+.co.application .resolvers-container .resolver .form-group-stacked.damages input[type] {
+  border-radius: 0 3px 3px 0;
+}
+.co.application .resolvers-container .resolver .form-group.effects .form-fields span {
+  border-right: 0;
+  flex: none;
+  margin-left: 4px;
+}
+.co.application.sheet {
+  --color-primary: var(--color-text-selection-bg);
+}
+.co.application.sheet .list-3col,
+.co.application.sheet .list-4col {
+  display: grid;
+  gap: 2px 0;
+  align-items: center;
+}
+.co.application.sheet .list-3col {
+  grid-template-columns: 42px 1fr 28px;
+}
+.co.application.sheet .list-3col > :nth-child(3n + 1) {
+  margin-right: 8px;
+}
+.co.application.sheet .list-4col {
+  grid-template-columns: 32px 42px 1fr 28px;
+}
+.co.application.sheet .list-4col > :nth-child(4n + 1):not(:first-child) {
+  font-size: 150%;
   font-weight: bold;
 }
-.co.item .list-4col {
+.co.application.sheet .list-4col > :nth-child(4n + 2) {
+  margin-right: 8px;
+}
+.co.application.sheet.item {
+  gap: 0;
+}
+.co.application.sheet.item:not(.minimized) {
+  min-height: 480px;
+  min-width: 540px;
+}
+.co.application.sheet.item .window-content {
+  padding: 0;
+  margin-top: -36px;
+  padding-top: 36px;
+}
+.co.application.sheet.item .window-content .sheet-header {
   display: grid;
-  grid-template-columns: 1fr 1fr 8fr 2fr;
-  grid-gap: 1px;
-  grid-auto-columns: minmax(15px, auto);
+  grid-template-columns: 132px 1fr;
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas: "img name" "img adjustment" "img tags";
 }
-.co.item .list-4col .cell.center {
-  justify-self: center;
-  align-self: center;
+.co.application.sheet.item .window-content .sheet-header img {
+  grid-area: img;
+  margin-bottom: 4px;
 }
-.co.item .list-4col .cell.left {
-  justify-self: start;
-  align-self: center;
+.co.application.sheet.item .window-content .sheet-header > .name,
+.co.application.sheet.item .window-content .sheet-header > .adjustment-select,
+.co.application.sheet.item .window-content .sheet-header > .tags {
+  margin: 0 8px;
 }
-.co.item .list-4col .cell.right {
-  justify-self: end;
-  align-self: center;
+.co.application.sheet.item .window-content .sheet-header .name {
+  font-size: 2.5rem;
+  grid-area: name;
 }
-.co.item .list-4col .cell .header {
-  color: #4b4a44;
-  font-weight: bold;
+.co.application.sheet.item .window-content .sheet-header .name input[type="text"] {
+  font-size: inherit;
+  height: 52px;
+  padding: 0 8px;
 }
-.co.equipment fieldset.debug .form-group {
+.co.application.sheet.item .window-content .sheet-header .adjustment-select {
+  align-items: flex-start;
   display: flex;
-  align-items: center;
-  gap: 10px;
+  gap: 8px;
+  grid-area: adjustment;
+  justify-content: flex-start;
 }
-.co.equipment section[data-tab="details"] {
-  overflow-y: auto;
+.co.application.sheet.item .window-content .sheet-header > .tags {
+  grid-area: tags;
 }
-.co.equipment section[data-tab="details"] .form-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.co.application.sheet.item .window-content .sheet-header .trait {
+  border: 1px solid var(--color-cool-3);
+  margin: 8px 0;
+  padding: 4px 8px;
 }
-.co.equipment section[data-tab="actions"] {
-  overflow-y: auto;
+.theme-dark .co.application.sheet.item .window-content .sheet-header .trait {
+  background-color: var(--color-dark-3);
 }
-.co.capacity fieldset.debug .form-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.theme-light .co.application.sheet.item .window-content .sheet-header .trait {
+  background-color: var(--color-light-3);
 }
-.co.capacity section[data-tab="details"] {
-  overflow-y: auto;
+.co.application.sheet.item .window-content > .sheet-tabs {
+  padding-left: calc(132px + 8px);
+  margin-top: -40px;
 }
-.co.capacity section[data-tab="details"] .form-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.co.application.sheet.item .window-content .tab[data-tab].actions {
+  margin-left: -10px;
+  padding-top: 4px;
+  padding-bottom: 0;
+  position: relative;
+  overflow: hidden;
+  scrollbar-gutter: unset;
+  mask: none;
 }
-.co.capacity section[data-tab="actions"] {
-  overflow-y: auto;
-}
-.co.path fieldset.debug .form-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.co.path section[data-tab="details"] .form-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.co.feature fieldset.debug .form-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.co.feature section[data-tab="details"] .form-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.co.profile fieldset.debug .form-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.co.profile section[data-tab="details"] {
-  overflow-y: auto;
-}
-.co.profile section[data-tab="details"] .form-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.co .action-icon {
-  width: 48px;
-  height: 48px;
-  border: none;
-  outline: 2px solid white;
-  box-shadow: 3px 3px 5px gray;
-}
-.co .action-icon-small {
-  width: 32px;
+.co.application.sheet.item .window-content .tab[data-tab].actions .action-button {
   height: 32px;
-  border: none;
-  outline: 2px solid white;
-  box-shadow: 3px 3px 5px gray;
+  position: absolute;
+  right: 0;
+  top: 10px;
+  width: 80px;
+}
+.co.application.sheet.item .window-content .tab[data-tab].actions .actions {
+  max-height: 100%;
+}
+.co.application.sheet.item .window-content .tab[data-tab].actions .actions .sheet-tabs {
+  height: 42px;
+  justify-content: center;
+  padding-right: 80px;
+}
+.co.application.sheet.item .window-content .tab[data-tab].actions .actions .sheet-tabs [data-tab] {
+  border: 0;
+  flex: 0 1 auto;
+}
+.co.application.sheet.item .window-content .tab[data-tab].actions .actions .sheet-tabs [data-tab].active {
+  background: linear-gradient(transparent, var(--color-primary));
+  border: 0;
+}
+.co.application.sheet.item .window-content .tab[data-tab].actions .actions .sheet-tabs img {
+  height: 40px;
+}
+.co.application.sheet.item .window-content .tab[data-tab].actions .actions .action-body {
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1;
+  max-height: calc(100% - 42px);
+}
+.co.application.sheet.item.capacity .modifiers-container .modifier {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 32px;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px 8px;
+  margin-bottom: 8px;
+}
+.co.application.sheet.item.capacity .modifiers-container .modifier :nth-child(5) {
+  grid-column: auto / span 2;
+}
+.co.application.sheet.item.capacity .modifiers-container .modifier :nth-child(5) label {
+  flex: 2;
+}
+.co.application.sheet.item.capacity .modifiers-container .modifier :nth-child(5) input[type="text"] {
+  flex: 11;
+}
+.co.application.sheet.item.capacity .modifiers-container .modifier button {
+  grid-column: 4;
+  grid-row: 1;
+}
+.co.application.sheet.item.capacity .resolvers-container .resolver .form-group.effects .form-fields span {
+  margin-left: 8px;
+}
+.co.application.sheet.item.capacity .resolvers-container .resolver .form-group-stacked.like-grid.effects label,
+.co.application.sheet.item.capacity .resolvers-container .resolver .form-group-stacked.like-grid.effects .form-fields {
+  grid-template-columns: repeat(2, 10fr) 15fr;
+}
+.co.application.sheet.item.equipment .sheet-tabs {
+  margin-top: 0;
+  padding-left: 8px;
+}
+.co.application.sheet.item.feature .modifiers-container .form-group-stacked.like-grid label,
+.co.application.sheet.item.feature .modifiers-container .form-fields.like-grid label,
+.co.application.sheet.item.feature .modifiers-container .form-group-stacked.like-grid .form-fields,
+.co.application.sheet.item.feature .modifiers-container .form-fields.like-grid .form-fields {
+  grid-template-columns: 2fr 2fr 1fr 30px;
+}
+.co.application.sheet.item.profile .modifiers-container .form-group-stacked.like-grid label,
+.co.application.sheet.item.profile .modifiers-container .form-fields.like-grid label,
+.co.application.sheet.item.profile .modifiers-container .form-group-stacked.like-grid .form-fields,
+.co.application.sheet.item.profile .modifiers-container .form-fields.like-grid .form-fields {
+  grid-template-columns: repeat(3, 10fr) 30px;
+}
+.co.application.sheet.actor {
+  gap: 0;
+}
+.co.application.sheet.actor:not(.minimized) {
+  min-height: 480px;
+  min-width: 540px;
 }

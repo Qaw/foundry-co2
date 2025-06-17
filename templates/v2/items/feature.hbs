@@ -19,25 +19,26 @@
     </div>
 
     <!-- MODIFIERS -->
-    <h3 class="form-header"><a class="section-toggle">{{localize "CO.label.long.modifiers"}}</a></h3>
+    <h4 class="form-header">
+        <a class="section-toggle" data-action="toggleSection">{{localize "CO.label.long.modifiers"}}</a>
+        <a data-action="addModifier" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
+    </h4>
     <div class="modifiers-container foldable">
         {{#if modifiers}}
-            <div class="flexrow">
-            <div class="form-fields flex1 center">{{localize "CO.ui.type"}}</div>
-            <div class="form-fields flex1 center">{{localize "CO.ui.target"}}</div>
-            <div class="form-fields flex1 center">{{localize "CO.ui.value"}}</div>
-            <div class="form-fields flex0"></div>
-            </div>
+            <div class="form-group-stacked like-grid">
+                <label>
+                    <span>{{localize "CO.ui.type"}}</span>
+                    <span>{{localize "CO.ui.target"}}</span>
+                    <span>{{localize "CO.ui.value"}}</span>
+                    <span></span>
+                </label>
             {{#each modifiers as |m id|}}
-                <div class="modifier flexrow" data-item-id="{{id}}" data-item-type="modifier">
-                    <input name="system.modifiers.{{id}}.type" type="hidden" value="{{m.type}}" data-dtype="String" />
-                    <input name="system.modifiers.{{id}}.source" type="hidden" value="{{m.source}}" data-dtype="String" />
-                    <div class="form-fields flex1">
+                <input name="system.modifiers.{{id}}.type" type="hidden" value="{{m.type}}" data-dtype="String" />
+                <input name="system.modifiers.{{id}}.source" type="hidden" value="{{m.source}}" data-dtype="String" />
+                <div class="form-fields modifier flexrow" data-item-id="{{id}}" data-item-type="modifier">
                     <select name="system.modifiers.{{id}}.subtype" data-type="String">
                         {{selectOptions @root.choiceModifierSubtypes selected=m.subtype localize=true}}
                     </select>
-                    </div>
-                    <div class="form-fields flex1">
                     <select name="system.modifiers.{{id}}.target" data-type="String">
                         {{#if (eq m.subtype 'ability')}}
                             {{selectOptions @root.choiceModifierAbilityTargets selected=m.target localize=true}}
@@ -64,23 +65,22 @@
                             {{selectOptions @root.choiceModifierMalusDiceTargets selected=m.target localize=true}}
                         {{/if}}   
                     </select>
-                    </div>
-                    <div class="form-fields flex1 center"><input name="system.modifiers.{{id}}.value" type="text" value="{{m.value}}" data-dtype="String" /></div>
-                    <div class="form-fields flex0"><button data-action="deleteModifier"><i class="fas fa-trash"></i></button></div>
+                    <input name="system.modifiers.{{id}}.value" type="text" value="{{m.value}}" data-dtype="String" />
+                    <button data-action="deleteModifier"><i class="fas fa-trash"></i></button>
                 </div>
             {{/each}}
+            </div>            
         {{else}}
-            <div class="flexrow">
+            <div class="empty">
                 <span>Aucun modificateur.</span>
             </div>
         {{/if}}
-        <div class="flexrow">
-            <button class="center" data-action="addModifier" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></button>
-        </div>
     </div>
 
     <!-- PATHS -->
-    <h3 class="form-header"><a class="section-toggle">{{localize "CO.label.long.paths"}}</a></h3>
+    <h4 class="form-header">
+        <a class="section-toggle">{{localize "CO.label.long.paths"}}</a>
+    </h4>
     <div class="path-list list-3col foldable">
         {{#each paths as |item id|}}
             {{!log 'path' item id}}
@@ -97,7 +97,9 @@
     </div>
 
     <!-- CAPACITIES -->
-    <h3 class="form-header"><a class="section-toggle">{{localize "CO.label.long.capacities"}}</a></h3>
+    <h4 class="form-header">
+        <a class="section-toggle" data-action="toggleSection">{{localize "CO.label.long.capacities"}}</a>
+    </h4>
     <div class="capacity-list list-3col foldable">
         {{#each capacities as |item id|}}
             {{!log 'capacity' item id}}

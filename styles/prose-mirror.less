@@ -1,0 +1,21 @@
+prose-mirror,
+.prosemirror {
+  flex: 1;
+  max-width: 100%;
+
+  >button {
+    display: none;
+  }
+
+  .editor-content {
+    overflow: hidden;
+    position: relative;
+    white-space: wrap;
+  }
+
+  &:hover:not([open]) {
+    >button {
+      display: flex;
+    }
+  }
+}

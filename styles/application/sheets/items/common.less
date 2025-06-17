@@ -1,0 +1,126 @@
+&:not(.minimized) {
+  min-height: 480px;
+  min-width: 540px;
+}
+
+.window-content {
+  padding: 0;
+
+  // 
+  margin-top: -36px;
+  padding-top: 36px;
+
+  .sheet-header {
+    display: grid;
+    grid-template-columns: 132px 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+      "img name"
+      "img adjustment"
+      "img tags";
+
+    img {
+      grid-area: img;
+      margin-bottom: 4px;
+    }
+
+    >.name,
+    >.adjustment-select,
+    >.tags {
+      margin: 0 8px;
+    }
+
+    .name {
+      font-size: 2.5rem;
+      grid-area: name;
+
+      input[type="text"] {
+        font-size: inherit;
+        height: 52px;
+        padding: 0 8px;
+      }
+    }
+
+    .adjustment-select {
+      align-items: flex-start;
+      display: flex;
+      gap: 8px;
+      grid-area: adjustment;
+      justify-content: flex-start;
+    }
+
+    >.tags {
+      grid-area: tags;
+    }
+
+    .trait {
+      .theme-dark & {
+        background-color: var(--color-dark-3);
+      }
+
+      .theme-light & {
+        background-color: var(--color-light-3);
+      }
+
+      border: 1px solid var(--color-cool-3);
+
+      margin: 8px 0;
+      padding: 4px 8px;
+    }
+  }
+
+  >.sheet-tabs {
+    padding-left: calc(132px + 8px); // img width + tabs original padding left
+    margin-top: -40px;
+  }
+
+  .tab[data-tab].actions {
+    margin-left: -10px;
+    padding-top: 4px;
+    padding-bottom: 0;
+    position: relative;
+    overflow: hidden;
+    scrollbar-gutter: unset;
+
+    mask: none;
+
+    .action-button {
+      height: 32px;
+      position: absolute;
+      right: 0;
+      top: 10px;
+      width: 80px;
+    }
+
+    .actions {
+      max-height: 100%;
+
+      .sheet-tabs {
+        height: 42px;
+        justify-content: center;
+        padding-right: 80px;
+
+        [data-tab] {
+          border: 0;
+          flex: 0 1 auto;
+
+          &.active {
+            background: linear-gradient(transparent, var(--color-primary));
+            border: 0;
+          }
+        }
+
+        img {
+          height: 40px;
+        }
+      }
+
+      .action-body {
+        display: flex;
+        flex-flow: column nowrap;
+        flex: 1;
+        max-height: calc(100% - 42px);
+      }
+    }
+  }
+}

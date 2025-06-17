@@ -551,6 +551,8 @@
       "1h": "Une main",
       "2h": "Deux mains",
       "type": "Type",
+      "subtype": "Sous-type",
+      "notes": "Notes",
       "label": "Label",
       "img": "Image",
       "richness": "Richesse",
@@ -933,12 +935,12 @@
       },
       "additionalEffect": {
         "active": "Effets supplémentaires",
-        "applyOn": "s'applique sur :",
-        "onSuccess": "Sur un succès",
-        "onCritical": "Sur un succès critique",
-        "onSuccessTreshold": "A partir d'un succès + ",
-        "onFailure": "Sur un échec",
-        "always": "Toujours",
+        "applyOn": "s'applique",
+        "onSuccess": "sur un succès",
+        "onCritical": "sur un succès critique",
+        "onSuccessTreshold": "à partir d'un succès + ",
+        "onFailure": "sur un échec",
+        "always": "toujours",
         "applyFormula": "Formule",
         "applyFormulaTooltip": "Appliquer des dommages ou des soins sur la durée",
         "elementType": "Type d'énergie pour les dommages",
@@ -1116,5 +1118,6 @@
         "gm": "Vérification (ignorable uniquement par le MJ)"
       }
     }
-  }
+  },
+  "Toto": "Tata"
 }
