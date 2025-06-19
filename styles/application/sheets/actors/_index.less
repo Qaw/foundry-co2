@@ -1,4 +1,21 @@
 &.actor {
   gap: 0; // remove top space
   @import "./common.less";
+
+  &.character {
+    min-width: 765px;
+    @import "./character.less";
+
+    & .character-content {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      grid-template-rows: 50px 30px 1fr;
+      grid-template-areas:
+        "sidebar header"
+        "sidebar nav"
+        "sidebar section";
+      @import "./character-content.less";
+      @import "./sidebar.less";
+    }
+  }
 }

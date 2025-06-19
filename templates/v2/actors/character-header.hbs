@@ -1,0 +1,25 @@
+{{! Character Header Template }}
+<header class="character-sheet-header">
+  <div class="name flexrow bottom-separator">
+    <input class="name-value" name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'CO.label.long.name'}}" spellcheck="false" />
+    <label class="level-label">{{localize "CO.label.short.level"}}</label>
+    {{#if unlocked}}
+      <input class="level adjustable" type="text" name="system.attributes.level" value="{{attributes.level}}" data-dtype="Number" />
+    {{else}}
+      <span class="level adjustable">{{attributes.level}}</span>
+    {{/if}}
+  </div>
+  <div class="flexrow" style="margin-top:0.25em;">
+    <div class="adjustment-select flexrow">
+      {{#each actions as |a aid|}}
+        {{#if a.properties.enabled}}
+          {{#each a.modifiers as |m mid|}}
+            {{#if m.isState}}
+              <span class="adjustment elite trait">{{localize (concat "CO.label.long." m.target)}}</span>
+            {{/if}}
+          {{/each}}
+        {{/if}}
+      {{/each}}
+    </div>
+  </div>
+</header>

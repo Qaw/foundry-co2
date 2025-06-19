@@ -6,7 +6,7 @@ export class CORoll extends Roll {
   async render({ flavor, template = this.constructor.CHAT_TEMPLATE, isPrivate = false } = {}) {
     if (!this._evaluated) await this.evaluate({ allowInteractive: !isPrivate })
     const chatData = await this._getChatCardData(flavor, isPrivate)
-    return renderTemplate(template, chatData)
+    return foundry.applications.handlebars.renderTemplate(template, chatData)
   }
 
   async _getChatCardData(flavor, isPrivate) {
@@ -84,7 +84,7 @@ export class COSkillRoll extends CORoll {
     let rollContext
 
     if (withDialog) {
-      const content = await renderTemplate(this.DIALOG_TEMPLATE, dialogContext)
+      const content = await foundry.applications.handlebars.renderTemplate(this.DIALOG_TEMPLATE, dialogContext)
 
       rollContext = await foundry.applications.api.DialogV2.wait({
         window: { title: dialogContext.title },
@@ -256,7 +256,7 @@ export class COAttackRoll extends CORoll {
     let rollContext
 
     if (withDialog) {
-      const content = await renderTemplate(this.DIALOG_TEMPLATE, dialogContext)
+      const content = await foundry.applications.handlebars.renderTemplate(this.DIALOG_TEMPLATE, dialogContext)
 
       rollContext = await foundry.applications.api.DialogV2.wait({
         window: { title: dialogContext.title },
