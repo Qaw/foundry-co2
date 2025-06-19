@@ -1,69 +1,16 @@
 {{!log 'modifiers-partial' this}}
-<h4 class="form-header modifiers flexrow">
-    <a class="section-toggle flex1">{{localize "CO.ui.modifiers"}}</a>
-    <a class="flex0" data-action="addActionModifier" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
+<h4 class="form-header modifiers">
+    <a class="section-toggle" data-action="toggleSection">{{localize "CO.ui.modifiers"}}</a>
+    <a data-action="addActionModifier" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
 </h4>
 <div class="modifiers-container foldable">
     {{#if action.modifiers}}
-        <div class="flexrow strong">
-            <div class="form-fields flex1 center">{{localize "CO.ui.type"}}</div>
-            <div class="form-fields flex1 center">{{localize "CO.ui.target"}}</div>
-            <div class="form-fields flex1 center">{{localize "CO.ui.applyTo"}}</div>
-            <div class="form-fields flex1 center">{{localize "CO.ui.value"}}</div>
-            <div class="form-fields flex2 center">{{localize "CO.ui.additionalInfos"}}</div>
-            <div class="form-fields flex0"></div>
-        </div>
         {{#each action.modifiers as |m id|}}
-            {{!log 'modifier' m id}}
-            <div class="modifier flexrow" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="modifier">
-                <input name="system.actions.{{../idx}}.modifiers.{{id}}.type" type="hidden" value="{{m.type}}" data-dtype="String" />
-                <input name="system.actions.{{../idx}}.modifiers.{{id}}.source" type="hidden" value="{{m.source}}" data-dtype="String" />
-                <div class="form-fields flex1">
-                    <select name="system.actions.{{../idx}}.modifiers.{{id}}.subtype" data-type="String">
-                        {{selectOptions @root.choiceModifierSubtypes selected=m.subtype localize=true}}
-                    </select>
-                </div>
-                <div class="form-fields flex1">
-                    <select name="system.actions.{{../idx}}.modifiers.{{id}}.target" data-type="String">
-                        {{#if (eq m.subtype 'ability')}}
-                            {{selectOptions @root.choiceModifierAbilityTargets selected=m.target localize=true}}
-                        {{/if}}
-                        {{#if (eq m.subtype 'combat')}}
-                            {{selectOptions @root.choiceModifierCombatTargets selected=m.target localize=true}}
-                        {{/if}}
-                        {{#if (eq m.subtype 'attribute')}}
-                            {{selectOptions @root.choiceModifierAttributeTargets selected=m.target localize=true}}
-                        {{/if}}                        
-                        {{#if (eq m.subtype 'resource')}}
-                            {{selectOptions @root.choiceModifierResourceTargets selected=m.target localize=true}}
-                        {{/if}}                        
-                        {{#if (eq m.subtype 'skill')}}
-                            {{selectOptions @root.choiceModifierSkillTargets selected=m.target localize=true}}
-                        {{/if}}
-                        {{#if (eq m.subtype 'state')}}
-                            {{selectOptions @root.choiceModifierStateTargets selected=m.target localize=true}}
-                        {{/if}}
-                        {{#if (eq m.subtype 'bonusDice')}}
-                            {{selectOptions @root.choiceModifierBonusDiceTargets selected=m.target localize=true}}
-                        {{/if}}
-                        {{#if (eq m.subtype 'malusDice')}}
-                            {{selectOptions @root.choiceModifierMalusDiceTargets selected=m.target localize=true}}
-                        {{/if}}        
-                    </select>
-                </div>
-                <div class="form-fields flex1">
-                    <select name="system.actions.{{../idx}}.modifiers.{{id}}.apply" data-type="String">
-                        {{selectOptions @root.choiceModifierApplies selected=m.apply localize=true}}
-                    </select>
-                </div>
-                <div class="form-fields flex1 center"><input name="system.actions.{{../idx}}.modifiers.{{id}}.value" type="text" value="{{m.value}}" data-dtype="String" /></div>
-                <div class="form-fields flex2 center"><input name="system.actions.{{../idx}}.modifiers.{{id}}.additionalInfos" type="text" value="{{m.additionalInfos}}" data-dtype="String" /></div>
-                <div class="form-fields flex0"><button type="button" data-action="deleteActionModifier"><i class="fas fa-trash"></i></button></div>
-            </div>
+            {{> "systems/co/templates/v2/items/parts/modifier.hbs" m=m id=id idx=../idx}}
         {{/each}}
     {{else}}
-        <div class="flexrow">
-            <span class="empty">{{localize "CO.notif.modifiers.empty"}}</span>
+        <div class="empty">
+            {{localize "CO.notif.modifiers.empty"}}
         </div>
     {{/if}}
 </div>

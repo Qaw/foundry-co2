@@ -18,10 +18,10 @@ export default class CoBaseItemSheetV2 extends HandlebarsApplicationMixin(foundr
 
   /** @override */
   static DEFAULT_OPTIONS = {
-    classes: ["co", "item"],
+    classes: ["standard-form", "co", "item"],
     position: {
       width: 600,
-      height: 720,
+      height: "auto",
     },
     form: {
       submitOnChange: true,
@@ -157,8 +157,8 @@ export default class CoBaseItemSheetV2 extends HandlebarsApplicationMixin(foundr
    */
   static #onSectionToggle(event, target) {
     event.preventDefault()
-    const li = $(event.currentTarget).parent().next(".foldable")
-    li.slideToggle("fast")
+    const foldableElement = $(target).parent().next(".foldable")
+    foldableElement.slideToggle("fast")
     return true
   }
 
@@ -466,7 +466,7 @@ export default class CoBaseItemSheetV2 extends HandlebarsApplicationMixin(foundr
    * @param {DragEvent} event       The originating DragEvent
    * @protected
    */
-  _onDragOver(event) {}
+  _onDragOver(event) { }
 
   /**
    * Callback actions which occur when a dragged element is dropped on a target.

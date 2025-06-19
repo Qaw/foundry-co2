@@ -21,9 +21,11 @@ export default class CoCapacitySheetV2 extends CoBaseItemSheetV2 {
       templates: [
         "systems/co/templates/v2/items/parts/conditions-part.hbs",
         "systems/co/templates/v2/items/parts/modifiers-part.hbs",
+        "systems/co/templates/v2/items/parts/modifier.hbs",
         "systems/co/templates/v2/items/parts/resolvers-part.hbs",
+        "systems/co/templates/v2/items/parts/resolver-part.hbs",
       ],
-      scrollable: [""],
+      scrollable: [".tab", ".action-body"],
     },
   }
 
