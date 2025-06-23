@@ -2,6 +2,8 @@
 import { SYSTEM } from "./module/config/system.mjs"
 globalThis.SYSTEM = SYSTEM
 
+export * as elements from "./module/elements/_module.mjs"
+
 // Import modules
 import * as models from "./module/models/_module.mjs"
 import * as documents from "./module/documents/_module.mjs"

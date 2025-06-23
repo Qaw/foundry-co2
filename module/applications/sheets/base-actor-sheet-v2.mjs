@@ -28,7 +28,7 @@ export default class CoBaseActorSheetV2 extends HandlebarsApplicationMixin(found
     },
     actions: {
       toggleSection: CoBaseActorSheetV2.#onSectionToggle,
-      changeSheetLock: CoBaseActorSheetV2.#onSheetChangelock,
+      changeSheetLock: CoBaseActorSheetV2.#onSheetChangeLock,
       sendToChat: CoBaseActorSheetV2.#onSendToChat,
       createItem: CoBaseActorSheetV2.#onCreateItem,
       editItem: CoBaseActorSheetV2.#onEditItem,
@@ -60,6 +60,9 @@ export default class CoBaseActorSheetV2 extends HandlebarsApplicationMixin(found
         drop: this._onDrop.bind(this),
       },
     }).bind(this.element)
+
+    // Set toggle state and add status class to frame
+    this._renderModeToggle(this.element)
   }
 
   /**
@@ -131,8 +134,8 @@ export default class CoBaseActorSheetV2 extends HandlebarsApplicationMixin(found
    */
   static #onSectionToggle(event, target) {
     event.preventDefault()
-    const li = $(event.currentTarget).parent().next(".foldable")
-    li.slideToggle("fast")
+    const foldableElement = $(target).parent().next(".foldable")
+    foldableElement.slideToggle("fast")
     return true
   }
 
@@ -142,7 +145,7 @@ export default class CoBaseActorSheetV2 extends HandlebarsApplicationMixin(found
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
    * @param {CoBaseActorSheetV2} sheet The sheet instance
    */
-  static async #onSheetChangelock(event, target) {
+  static async #onSheetChangeLock(event, target) {
     event.preventDefault()
     const modes = sheet.constructor.SHEET_MODES
     this._sheetMode = this.isEditMode ? modes.PLAY : modes.EDIT
@@ -317,4 +320,42 @@ export default class CoBaseActorSheetV2 extends HandlebarsApplicationMixin(found
   }
 
   // #endregion
+
+  /**
+   * Manage the lock/unlock button on the sheet
+   * @param {Event} event
+   */
+  async _onSheetChangeLock(event) {
+    event.preventDefault()
+    const modes = this.constructor.SHEET_MODES
+    this._sheetMode = this.isEditMode ? modes.PLAY : modes.EDIT
+    await this.submit()
+    this.render()
+  }
+
+  /**
+   * Handle re-rendering the mode toggle on ownership changes.
+   * @param {HTMLElement} element 
+   * @protected
+   */
+  _renderModeToggle(element) {
+    const header = element.querySelector(".window-header");
+    const toggle = header.querySelector(".mode-slider");
+    if (this.isEditable && !toggle) {
+      const toggle = document.createElement("co-toggle-switch");
+      toggle.checked = this._sheetMode === this.constructor.SHEET_MODES.EDIT;
+      toggle.classList.add("mode-slider");
+      // TODO change tooltip with translation
+      toggle.dataset.tooltip = "CO.SheetModeEdit";
+      toggle.setAttribute("aria-label", game.i18n.localize("CO.SheetModeEdit"));
+      toggle.addEventListener("change", this._onSheetChangeLock.bind(this));
+      toggle.addEventListener("dblclick", event => event.stopPropagation());
+      toggle.addEventListener("pointerdown", event => event.stopPropagation());
+      header.prepend(toggle);
+    } else if (this.isEditable) {
+      toggle.checked = this._sheetMode === this.constructor.SHEET_MODES.EDIT;
+    } else if (!this.isEditable && toggle) {
+      toggle.remove();
+    }
+  }
 }

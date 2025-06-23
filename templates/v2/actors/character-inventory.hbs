@@ -5,7 +5,7 @@
 <!-- Currencies -->
 <ol class="items-container" data-tab="inventory">
   <li class="items-container-header flexrow">
-    <h3 class="item-name flexrow">{{localize "CO.ui.richness"}}</h3>
+    <h4 class="item-name flexrow">{{localize "CO.ui.richness"}}</h4>
   </li>
   <div class="flexrow">
     {{#each system.wealth as |currency id|}}
@@ -21,9 +21,9 @@
   {{!log "Chroniques Oubliées | inventory group" this}}
   <ol class="items-container" data-tab="inventory" data-category="{{category}}">
     <li class="items-container-header flexrow">
-      <h3 class="item-name flexrow">
-        <a class="section-toggle">{{localize (concat "CO.ui." category)}}</a>
-      </h3>
+      <h4 class="item-name flexrow">
+        <a data-action="toggleSection">{{localize (concat "CO.ui." category)}}</a>
+      </h4>
       <div class="item-detail">{{localize "CO.ui.usage"}}</div>
       <div class="item-detail">{{localize "CO.label.short.quantity"}}</div>
       {{#if @root.editable}}
@@ -38,7 +38,7 @@
         {{!log 'inventory item' item}}
         <li class="item flexrow" data-item-uuid="{{item.uuid}}" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="true">
           <div class="item-name flexrow">
-            <a class="item-image" data-action="editItem" style="background-image: url('{{item.img}}')"></a>
+            <a class="item-img" data-action="editItem" style="background-image: url('{{item.img}}')"></a>
             <h4>{{item.name}}
                 {{#if item.system.isWeapon}}{{{isTrainedWithWeapon @root.actor item._id}}}{{/if}}
                 {{#if item.system.isArmor}}{{{isTrainedWithArmor @root.actor item._id}}}{{/if}}

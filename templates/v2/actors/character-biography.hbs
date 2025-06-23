@@ -1,7 +1,48 @@
 {{!-- Character Biography Tab Template --}}
 {{log "Chroniques Oubliées | biography" this}}
 <section class="tab standard-form biography{{#if tabs.biography.active}} active{{/if}}" data-group="primary" data-tab="biography">
-    <h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.misc"}}</a></h3>
+
+    <div class="features section-container">
+        <div class="section-header">
+            <h4>{{localize "CO.label.long.profile"}} & {{localize "CO.ui.features"}}</h4>
+        </div>
+        <!-- PROFILS & FEATURES-->
+        <div class="section-body-no-flex">
+            <ol class="features-container items-container">
+                <ol class="item-list">
+                    {{#each profiles as |item id|}}
+                        <li class="item flexrow" data-item-uuid="{{item.uuid}}" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="false">
+                            <div class="item-name flexrow">
+                                <a class="item-img item-edit" style="background-image: url('{{item.img}}')"></a>
+                                <h4>{{item.name}}</h4>
+                            </div>
+                            <div class="item-controls-2">
+                            {{#if ../unlocked}}
+                                <a class="item-control item-delete" data-tooltip={{localize "CO.ui.remove"}}><i class="fas fa-trash"></i></a>
+                            {{/if}}
+                            </div>
+                        </li>
+                    {{/each}}
+                    {{#each features as |item id|}}
+                        <li class="item flexrow" data-item-uuid="{{item.uuid}}" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="false">
+                            <div class="item-name flexrow">
+                                <a class="item-img item-edit" style="background-image: url('{{item.img}}')"></a>
+                                <h4>{{item.name}}</h4>
+                            </div>
+                            <div class="item-controls-2">
+                            {{#if ../unlocked}}
+                                <a class="item-control item-delete" data-tooltip={{localize "CO.ui.remove"}}><i class="fas fa-trash"></i></a>
+                            {{/if}}
+                            </div>
+                        </li>
+                    {{/each}}
+                </ol>
+            </ol>
+        </div>
+    </div>
+
+
+    <h4 class="form-header"><a data-action="toggleSection" data-action="toggleSection">{{localize "CO.ui.misc"}}</a></h4>
     <div class="misc foldable">
         <div class="form-group">
             <label>{{localize "CO.ui.size"}}</label>
@@ -25,7 +66,7 @@
             </div>
         </div>
     </div>
-    <h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.biography"}}</a></h3>
+    <h4 class="form-header"><a data-action="toggleSection">{{localize "CO.ui.biography"}}</a></h4>
     <div class="bio notes foldable">
         <div class="notes-section">
             <label class="details-label">{{localize "CO.ui.public"}}</label>
@@ -41,7 +82,7 @@
         </div>
     </div>
 
-    <h3 class="form-header"><a class="section-toggle">{{localize "CO.ui.appearance"}}</a></h3>
+    <h4 class="form-header"><a data-action="toggleSection">{{localize "CO.ui.appearance"}}</a></h4>
     <div class="appearance notes foldable">
         <div class="notes-section">
             <label class="details-label">{{localize "CO.ui.public"}}</label>

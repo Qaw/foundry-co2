@@ -2,7 +2,7 @@
   color: var(--sub);
   font-style: italic;
 }
-i:not(.fas),
+i:not(.fas):not([class^="fa-"]),
 em,
 .emphasis,
 .italic {
@@ -139,7 +139,7 @@ fieldset legend {
 .form-group.like-grid .form-fields,
 .form-group-stacked.like-grid .form-fields {
   display: grid;
-  grid-auto-flow: column ;
+  grid-auto-flow: column;
   grid-template-columns: repeat(auto-fit, 1fr);
 }
 .form-group-stacked {
@@ -156,43 +156,6 @@ input[disabled],
 select[disabled] {
   background: var(--input-background-color);
   height: var(--input-height);
-}
-multi-select {
-  margin-bottom: 4px;
-  min-height: var(--input-height);
-  position: relative;
-}
-multi-select .tags.input-element-tags {
-  align-items: flex-start;
-  flex-flow: row wrap;
-  gap: 1px 2px;
-  justify-content: flex-start;
-  margin: 2px;
-  padding: 0;
-  padding-right: 22px;
-  pointer-events: none;
-}
-multi-select .tags.input-element-tags::after {
-  content: "";
-  clear: both;
-}
-multi-select .tags.input-element-tags .tag {
-  border: 1px solid var(--color-cool-3);
-  padding: 2px 4px;
-}
-.theme-dark multi-select .tags.input-element-tags .tag {
-  background-color: var(--color-dark-3);
-}
-.theme-light multi-select .tags.input-element-tags .tag {
-  background-color: var(--color-light-3);
-}
-multi-select .tags.input-element-tags .tag a {
-  pointer-events: auto;
-}
-multi-select > select {
-  position: absolute;
-  top: 0;
-  bottom: 0;
 }
 prose-mirror,
 .prosemirror {
@@ -213,6 +176,110 @@ prose-mirror:hover:not([open]) > button,
 .prosemirror:hover:not([open]) > button {
   display: flex;
 }
+multi-select {
+  margin-bottom: 4px;
+  min-height: var(--input-height);
+  position: relative;
+  overflow: hidden;
+}
+multi-select .tags.input-element-tags {
+  align-items: flex-start;
+  flex-flow: row wrap;
+  gap: 1px 2px;
+  justify-content: flex-start;
+  margin: 2px 3px;
+  padding: 0;
+  padding-right: 22px;
+  pointer-events: none;
+}
+multi-select .tags.input-element-tags::after {
+  content: "";
+  clear: both;
+}
+multi-select .tags.input-element-tags .tag {
+  border: 1px solid var(--color-cool-3);
+  height: calc(var(--input-height) - 5px);
+  max-width: 100px;
+  overflow: hidden;
+  padding: 2px 4px;
+  vertical-align: baseline;
+}
+multi-select .tags.input-element-tags .tag span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.theme-dark multi-select .tags.input-element-tags .tag {
+  background-color: var(--color-dark-3);
+}
+.theme-light multi-select .tags.input-element-tags .tag {
+  background-color: var(--color-light-3);
+}
+multi-select .tags.input-element-tags .tag a.remove {
+  pointer-events: all;
+  margin-top: -2px;
+}
+multi-select > select {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+co-toggle-switch {
+  --toggle-switch-height: 20px;
+  --toggle-switch-width: 36px;
+  --toggle-switch-padding: 3px;
+  --toggle-switch-track-color-unchecked: black;
+  --toggle-switch-track-color-checked: #3ba55d;
+  --toggle-switch-thumb-color: white;
+  --toggle-switch-thumb-width: calc(var(--toggle-switch-height) - var(--toggle-switch-padding) * 2);
+  --toggle-switch-thumb-height: var(--toggle-switch-thumb-width);
+  --toggle-switch-transition-time: 250ms;
+  cursor: var(--cursor-pointer) !important;
+  display: inline-block;
+  width: var(--toggle-switch-width);
+  height: var(--toggle-switch-height);
+}
+co-toggle-switch track {
+  background: var(--toggle-switch-track-color-unchecked);
+  border-radius: calc((var(--toggle-switch-height) * 2) / 3);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.45);
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  padding: var(--toggle-switch-padding);
+  width: 100%;
+}
+co-toggle-switch thumb {
+  background: var(--toggle-switch-thumb-color);
+  border-radius: 100%;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.45);
+  display: block;
+  height: var(--toggle-switch-thumb-height);
+  text-align: center;
+  transition: margin-left var(--toggle-switch-transition-time) ease;
+  width: var(--toggle-switch-thumb-width);
+}
+co-toggle-switch[checked] track {
+  background: var(--toggle-switch-track-color-checked);
+}
+co-toggle-switch[checked] thumb {
+  margin-left: calc(100% - var(--toggle-switch-thumb-width));
+}
+.co.application ul,
+.co.application ol,
+.co.application li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.co.application .item-img {
+  background-size: 28px;
+  cursor: pointer;
+  display: block;
+  flex: 0 0 28px;
+  height: 28px;
+}
 .co.application .sheet-tabs {
   align-items: stretch;
   border-top: 0;
@@ -229,7 +296,10 @@ prose-mirror:hover:not([open]) > button,
   flex-flow: row nowrap;
   gap: 4px;
   justify-content: center;
+  overflow: hidden;
   padding: 0 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .co.application .sheet-tabs [data-tab].active {
   background-color: var(--color-primary);
@@ -260,7 +330,8 @@ prose-mirror:hover:not([open]) > button,
   flex-flow: row nowrap;
   line-height: 1;
 }
-.co.application h4.form-header .section-toggle {
+.co.application h4.form-header .section-toggle,
+.co.application h4.form-header [data-action="toggleSection"] {
   flex: 10;
 }
 .co.application h4.form-header a:not(:first-of-type):last-of-type {
@@ -334,6 +405,257 @@ prose-mirror:hover:not([open]) > button,
 }
 .co.application.sheet .list-4col > :nth-child(4n + 2) {
   margin-right: 8px;
+}
+.co.application.sheet .section-container {
+  display: flex;
+  border: 1px solid var(--color-primary);
+  border-radius: 0 0 3px 3px;
+  flex-direction: column;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+}
+.co.application.sheet .section-container.no-header {
+  border-radius: 3px;
+}
+.co.application.sheet .section-container .section-header {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-primary);
+  color: #FFF;
+  flex-direction: row;
+}
+.co.application.sheet .section-container .section-header h4 {
+  flex: 1;
+  font-size: 18px;
+  line-height: 1.2;
+  margin: 0;
+  padding: 2px 8px;
+  text-transform: uppercase;
+}
+.co.application.sheet .section-container .section-header .controls {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin: 0 8px;
+}
+.co.application.sheet .items-container,
+.co.application.sheet .item-list {
+  border: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.co.application.sheet .items-container.foldable .items-container-header h4,
+.co.application.sheet .item-list.foldable .items-container-header h4 {
+  cursor: pointer;
+}
+.co.application.sheet .items-container.foldable .items-container-header h4:before,
+.co.application.sheet .item-list.foldable .items-container-header h4:before {
+  content: "▼\202F";
+}
+.co.application.sheet .items-container.folded .items-container-header h4:before,
+.co.application.sheet .item-list.folded .items-container-header h4:before {
+  content: "▶\202F";
+}
+.co.application.sheet .items-container .attack,
+.co.application.sheet .item-list .attack {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 8px 6px 0 6px;
+  border-bottom: 1px solid var(--color-border-light-tertiary);
+}
+.co.application.sheet .items-container .attack .attack-header,
+.co.application.sheet .item-list .attack .attack-header {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: row;
+  align-items: baseline;
+  width: 100%;
+}
+.co.application.sheet .items-container .attack .attack-name,
+.co.application.sheet .item-list .attack .attack-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  white-space: nowrap;
+  margin: 0 4px 0 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.co.application.sheet .items-container .attack .attack-name > span,
+.co.application.sheet .item-list .attack .attack-name > span {
+  gap: 3px;
+  margin-right: 4px;
+  display: flex;
+  align-items: baseline;
+  line-height: 1.125rem;
+}
+.co.application.sheet .items-container .attack .attack-body,
+.co.application.sheet .item-list .attack .attack-body {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 3px;
+}
+.co.application.sheet .items-container .attack .attack-body .sub-section,
+.co.application.sheet .item-list .attack .attack-body .sub-section {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex: auto;
+  justify-content: flex-start;
+}
+.co.application.sheet .items-container .attack .attack-body .flexrow,
+.co.application.sheet .item-list .attack .attack-body .flexrow,
+.co.application.sheet .items-container .attack .attack-body .sub-section,
+.co.application.sheet .item-list .attack .attack-body .sub-section {
+  gap: 2px;
+}
+.co.application.sheet .items-container .attack .attack-body button,
+.co.application.sheet .item-list .attack .attack-body button {
+  width: auto !important;
+  cursor: pointer;
+  margin: 0;
+  padding: 0 8px;
+  font-size: var(--font-size-11);
+  height: 18px;
+  line-height: 18px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3), inset 0 0 0 2px rgba(255, 255, 255, 0.2);
+  background: var(--color-primary);
+  color: #f5efe0;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 3px;
+  border: none;
+}
+.co.application.sheet .items-container .attack .attack-body button:first-child,
+.co.application.sheet .item-list .attack .attack-body button:first-child {
+  margin-left: 0px;
+}
+.co.application.sheet .items-container .attack .attack-body .attack-button,
+.co.application.sheet .item-list .attack .attack-body .attack-button {
+  background-color: var(--color-primary);
+}
+.co.application.sheet .items-container .attack .attack-body .damage-button,
+.co.application.sheet .item-list .attack .attack-body .damage-button,
+.co.application.sheet .items-container .attack .attack-body .critical-button,
+.co.application.sheet .item-list .attack .attack-body .critical-button {
+  background-color: var(--color-primary);
+}
+.co.application.sheet .items-container {
+  margin-bottom: 8px;
+}
+.co.application.sheet .items-container .items-container-header,
+.co.application.sheet .items-container .item {
+  display: flex;
+  align-items: stretch;
+  flex-direction: row;
+  height: 30px;
+  line-height: 30px;
+}
+.co.application.sheet .items-container .items-container-header {
+  background: var(--color-primary);
+  color: #FFF;
+  font-weight: bold;
+  padding: 0;
+  padding-left: 4px;
+}
+.co.application.sheet .items-container .items-container-header h4 {
+  border: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+  padding: 2px 8px;
+  text-transform: uppercase;
+}
+.co.application.sheet .items-container .items-container-header .item-name {
+  flex: 1;
+}
+.co.application.sheet .items-container .item:last-child {
+  border-bottom: none;
+}
+.co.application.sheet .items-container .item:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+.co.application.sheet .items-container .item .item-name {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+.co.application.sheet .items-container .item .item-name h4 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 0 4px;
+}
+.co.application.sheet .items-container .item-detail {
+  border-right: 1px solid var(--color-blue);
+  flex: 0 70px;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+  word-break: break-word;
+}
+.co.application.sheet .items-container .item-detail:last-child {
+  border-right: none;
+}
+.co.application.sheet .items-container .item-detail.item-action {
+  flex: 0 0 100px;
+}
+.co.application.sheet .items-container .item-controls,
+.co.application.sheet .items-container .item-controls-1,
+.co.application.sheet .items-container .item-controls-2,
+.co.application.sheet .items-container .item-controls-3 {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+}
+.co.application.sheet .items-container .item-controls a,
+.co.application.sheet .items-container .item-controls-1 a,
+.co.application.sheet .items-container .item-controls-2 a,
+.co.application.sheet .items-container .item-controls-3 a,
+.co.application.sheet .items-container .item-controls .item-control,
+.co.application.sheet .items-container .item-controls-1 .item-control,
+.co.application.sheet .items-container .item-controls-2 .item-control,
+.co.application.sheet .items-container .item-controls-3 .item-control {
+  display: inline-block;
+  font-size: 18px;
+  text-align: center;
+  width: 22px;
+}
+.co.application.sheet .items-container .item-controls-1 {
+  flex: 0 0 22px;
+  width: 22px;
+}
+.co.application.sheet .items-container .item-controls-2 {
+  flex: 0 0 44px;
+  width: 44px;
+}
+.co.application.sheet .items-container .item-controls-3 {
+  flex: 0 0 66px;
+  width: 66px;
+}
+.co.application.sheet .theme-dark .items-container {
+  color: #CCC;
+}
+.co.application.sheet .theme-dark .item:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+.co.application.sheet .controls {
+  font-size: 0.8rem;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  margin-left: auto;
+  gap: 1px;
+}
+.co.application.sheet .controls .chat {
+  margin-right: 3px;
+  font-size: 0.9em;
 }
 .co.application.sheet.item {
   gap: 0;
@@ -487,193 +809,327 @@ prose-mirror:hover:not([open]) > button,
   min-height: 480px;
   min-width: 540px;
 }
-.co.application.sheet.actor.character {
-  min-width: 765px;
-}
-.co.application.sheet.actor.character .character-content {
+.co.application.sheet.actor .window-content {
   display: grid;
   grid-template-columns: 250px 1fr;
-  grid-template-rows: 50px 30px 1fr;
-  grid-template-areas: "sidebar header" "sidebar nav" "sidebar section";
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas: "header header" "sidebar tabs" "sidebar content";
+  padding: 0;
 }
-.co.application.sheet.actor.character .character-content div.sidebar {
-  grid-area: sidebar;
-}
-.co.application.sheet.actor.character .character-content header {
+.co.application.sheet.actor .window-content .sheet-header {
   grid-area: header;
 }
-.co.application.sheet.actor.character .character-content nav {
-  grid-area: nav;
+.co.application.sheet.actor .window-content .sheet-sidebar {
+  grid-area: sidebar;
 }
-.co.application.sheet.actor.character .character-content section {
-  grid-area: section;
+.co.application.sheet.actor .window-content .sheet-tabs {
+  margin-top: 8px;
 }
-.co.application.sheet.actor.character .character-content .sidebar {
+.co.application.sheet.actor .window-content .tab.active {
+  grid-area: content;
+}
+.co.application.sheet.actor .window-content .sheet-header {
+  display: grid;
+  border: 4px solid var(--color-gold);
+  border-bottom: 0;
+  gap: 8px;
+  grid-template-columns: 140px auto 1fr minmax(64px, min-content);
+  grid-template-rows: auto auto auto;
+  grid-template-areas: "img name      name      level" "img species   profiles  profiles" "img abilities abilities abilities";
+  padding-right: 8px;
+}
+.co.application.sheet.actor .window-content .sheet-header .image-container {
+  grid-area: img;
+  position: relative;
+}
+.co.application.sheet.actor .window-content .sheet-header .image-container .hover-icon {
+  color: var(--color-light-3);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+.co.application.sheet.actor .window-content .sheet-header .name {
+  font-size: 42px;
+  grid-area: name;
+  height: 65px;
+}
+.co.application.sheet.actor .window-content .sheet-header .level {
+  grid-area: level;
+  white-space: nowrap;
+}
+.co.application.sheet.actor .window-content .sheet-header .level label {
+  font-size: 18px;
+}
+.co.application.sheet.actor .window-content .sheet-header .level input,
+.co.application.sheet.actor .window-content .sheet-header .level span {
+  font-size: 52px;
+  height: 65px;
+  text-align: center;
+}
+.co.application.sheet.actor .window-content .sheet-header .level input {
+  padding: 0;
+  width: 68px;
+}
+.co.application.sheet.actor .window-content .sheet-header .abilities {
+  grid-area: abilities;
+}
+.co.application.sheet.actor .window-content .sheet-header .species {
+  grid-area: species;
+}
+.co.application.sheet.actor .window-content .sheet-header .profiles {
+  grid-area: profiles;
+  margin-left: 16px;
+}
+.co.application.sheet.actor .window-content .sheet-header .species,
+.co.application.sheet.actor .window-content .sheet-header .profiles {
+  align-items: center;
   display: flex;
-  flex-direction: column;
-  padding: 3px 0 0 3px;
-  margin: 0;
-  flex: 190px 0 0;
-  height: 100%;
-  min-width: 190px;
+  font-size: 14px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.co.application.sheet.actor .window-content .sheet-header .species a,
+.co.application.sheet.actor .window-content .sheet-header .profiles a {
+  margin-right: 4px;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar {
   overflow: hidden;
 }
-.co.application.sheet.actor.character .character-content .sidebar .image-container {
-  border: 1px solid var(--color-border-dark);
-}
-.co.application.sheet.actor.character .character-content .sidebar .image-container img.actor-image {
-  border: none;
-  min-width: 152px;
-}
-.co.application.sheet.actor.character .character-content .sidebar .image-container .hover-icon {
-  visibility: hidden;
-  position: absolute;
-  top: 35px;
-  left: 3px;
-  font-size: var(--font-size-16);
-}
-.co.application.sheet.actor.character .character-content .sidebar .image-container:hover .hover-icon {
-  visibility: visible;
-}
-.co.application.sheet.actor.character .character-content .sidebar .scrollable {
-  overflow-y: auto;
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable {
+  color: #000;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(10, min-content);
+  height: 100%;
+  overflow: hidden scroll;
   scrollbar-width: thin;
-  scrollbar-color: var(--primary) transparent;
+  scrollbar-gutter: stable;
+  mask: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, #000000 12px, #000000 calc(100% - 12px), rgba(0, 0, 0, 0) 100%);
+  padding: 8px 4px;
 }
-.co.application.sheet.actor.character .character-content .sidebar .health-section .hit-points,
-.co.application.sheet.actor.character .character-content .sidebar .resource-section .hit-points,
-.co.application.sheet.actor.character .character-content .sidebar .health-section .resource-points,
-.co.application.sheet.actor.character .character-content .sidebar .resource-section .resource-points {
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .labelled-field {
+  background-color: #FFF;
+  border-radius: 12px 0 0 12px;
+  height: 32px;
+  padding: 4px;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .labelled-field i.fas,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .labelled-field i[class="fa-"] {
+  font-size: 18px;
+  line-height: 1.2;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section {
+  background-color: var(--color-primary);
+  grid-column: auto / span 2;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .sidebar-section-header {
   display: flex;
-  flex-direction: row;
-  flex: 0;
-  margin-left: auto;
-  font-size: var(--font-size-14);
-}
-.co.application.sheet.actor.character .character-content .sidebar .health-section .hit-points .current,
-.co.application.sheet.actor.character .character-content .sidebar .resource-section .hit-points .current,
-.co.application.sheet.actor.character .character-content .sidebar .health-section .resource-points .current,
-.co.application.sheet.actor.character .character-content .sidebar .resource-section .resource-points .current {
-  width: 36px;
-  text-align: right;
-  padding-right: 3px;
-}
-.co.application.sheet.actor.character .character-content .sidebar .health-section .hit-points .tempDm,
-.co.application.sheet.actor.character .character-content .sidebar .resource-section .hit-points .tempDm,
-.co.application.sheet.actor.character .character-content .sidebar .health-section .resource-points .tempDm,
-.co.application.sheet.actor.character .character-content .sidebar .resource-section .resource-points .tempDm {
-  width: 36px;
-  color: red;
-  text-align: right;
-  padding-right: 3px;
-}
-.co.application.sheet.actor.character .character-content .sidebar .health-section .hit-points .max.lt1000,
-.co.application.sheet.actor.character .character-content .sidebar .resource-section .hit-points .max.lt1000,
-.co.application.sheet.actor.character .character-content .sidebar .health-section .resource-points .max.lt1000,
-.co.application.sheet.actor.character .character-content .sidebar .resource-section .resource-points .max.lt1000,
-.co.application.sheet.actor.character .character-content .sidebar .health-section .hit-points .max.lt1000,
-.co.application.sheet.actor.character .character-content .sidebar .resource-section .hit-points .max.lt1000,
-.co.application.sheet.actor.character .character-content .sidebar .health-section .resource-points .max.lt1000,
-.co.application.sheet.actor.character .character-content .sidebar .resource-section .resource-points .max.lt1000 {
-  width: 36px;
-}
-.co.application.sheet.actor.character .character-content .sidebar .health-section .hit-points .max,
-.co.application.sheet.actor.character .character-content .sidebar .resource-section .hit-points .max,
-.co.application.sheet.actor.character .character-content .sidebar .health-section .resource-points .max,
-.co.application.sheet.actor.character .character-content .sidebar .resource-section .resource-points .max {
-  font-weight: 700;
-  margin-right: 4px;
-  text-align: center;
-  align-items: center;
-  display: flex;
-}
-.co.application.sheet.actor.character .character-content .sidebar .health-section .hit-points .slash,
-.co.application.sheet.actor.character .character-content .sidebar .resource-section .hit-points .slash,
-.co.application.sheet.actor.character .character-content .sidebar .health-section .resource-points .slash,
-.co.application.sheet.actor.character .character-content .sidebar .resource-section .resource-points .slash {
-  align-items: center;
-  display: flex;
-}
-.co.application.sheet.actor.character .character-content .sidebar .armor-section .armor-value {
-  flex: 0;
-  text-align: right;
-  font-weight: 700;
-  padding-right: 4px;
-}
-.co.application.sheet.actor.character .character-content .sidebar .init-section a.roll-init {
-  display: flex;
-  flex-wrap: nowrap;
-  font-weight: 700;
-  margin-left: auto;
-  margin-bottom: 2px;
-  padding-right: 0.5em;
-}
-.co.application.sheet.actor.character .character-content .sidebar-section {
-  margin-bottom: 5px;
-  display: flex;
-  flex: auto;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  margin: 4px;
 }
-.co.application.sheet.actor.character .character-content .sidebar-section-header {
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .sidebar-section-header .sidebar-label {
   display: flex;
-  width: 100%;
-  font-size: 1rem;
-  border-bottom: 1px solid;
-  border-color: #7a7971;
-  margin-top: 10px;
-  margin-bottom: 0px;
+  align-items: center;
+  font-size: 18px;
+  gap: 4px;
+  line-height: 1;
+  margin: 4px;
+  padding: 0;
 }
-.co.application.sheet.actor.character .character-content .sidebar-section-header .sidebar-label {
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .sidebar-section-header .sidebar-label h4 {
+  font-size: inherit;
+  margin: 0;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field {
+  color: var(--color-primary);
   display: flex;
-  flex: auto;
-  flex-direction: row;
-  align-items: flex-start;
-  padding-bottom: 3px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 0;
+  overflow: hidden;
+  padding: 2px 4px;
 }
-.co.application.sheet.actor.character .character-content .sidebar-section-header .sidebar-label h4 {
-  font-size: 0.8rem;
-  margin-bottom: 0px;
-  padding-left: 2px;
-  font-weight: 600;
-}
-.co.application.sheet.actor.character .character-content .sidebar-section-header .labelled-field {
-  font-size: var(--font-size-14);
-}
-.co.application.sheet.actor.character .character-content .sidebar-section-content {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding-top: 2px;
-}
-.co.application.sheet.actor.character .character-content .sidebar-section-content .labelled-field {
-  display: flex;
-  font-size: var(--font-size-12);
-  align-self: center;
-}
-.co.application.sheet.actor.character .character-content .sidebar-section-content .labelled-field label {
-  font-weight: normal;
-  color: var(--color-text-dark-secondary);
-}
-.co.application.sheet.actor.character .character-content .sidebar-section-content .labelled-field .select-container {
-  display: flex;
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field select,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field select,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field input,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field input {
+  background-color: #FFF;
+  border: 0;
+  color: var(--color-primary);
   flex: 1;
-  align-self: end;
-  justify-self: end;
+  font-size: 18px;
+  padding: 0;
 }
-.co.application.sheet.actor.character .character-content .sidebar-section-content .labelled-field select {
-  background: none;
-  text-transform: unset;
-  font-size: var(--font-size-10);
-  font-weight: 500;
-  font-family: var(--sans-serif);
-  padding: 4px !important;
-  height: auto !important;
-  border: 1px solid var(--color-border-light-tertiary);
-  border-radius: 3px;
-  text-overflow: ellipsis;
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field select::placeholder,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field select::placeholder,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field input::placeholder,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field input::placeholder {
+  color: var(--color-primary);
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field input,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field input {
+  font-weight: bold;
+  line-height: 1.8;
+  text-align: center;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field select,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field select {
+  font-size: 12px;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field .slash,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field .slash,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field .max,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field .max {
+  font-size: 16px;
+  font-weight: normal;
+  margin-top: 6px;
+  transform: scaleX(80%);
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field {
+  background-color: #FFF;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field i {
+  justify-self: flex-start;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .sidebar-section-content {
+  padding: 4px;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .sidebar-section-content .field,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .sidebar-section-content .labelled-field {
+  font-weight: normal;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.melee-section,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.ranged-section,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.magic-section {
+  background-color: var(--color-primary);
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.melee-section .field i,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.ranged-section .field i,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.magic-section .field i,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.melee-section .labelled-field i,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.ranged-section .labelled-field i,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.magic-section .labelled-field i {
+  color: var(--color-primary);
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.init-section {
+  background-color: var(--color-primary);
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.init-section .field i,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.init-section .labelled-field i {
+  color: var(--color-primary);
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.armor-section,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.dr-section {
+  background-color: var(--color-primary);
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.armor-section .field i,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.dr-section .field i,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.armor-section .labelled-field i,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.dr-section .labelled-field i {
+  color: var(--color-primary);
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.health-section {
+  background-color: var(--color-primary);
+  grid-column: auto / span 3;
+  margin-top: 8px;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.health-section .field i,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.health-section .labelled-field i {
+  color: var(--color-primary);
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section {
+  margin-top: 8px;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section .field i,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section .labelled-field i {
+  color: var(--color-primary);
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section {
+  grid-column: auto / span 6;
+  margin-top: 8px;
+  height: auto;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header {
+  display: flex;
+  flex-direction: row;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .sidebar-label {
+  flex: 1;
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .field,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .labelled-field {
+  background-color: inherit;
+  color: inherit;
+  font-size: inherit;
+}
+.co.application.sheet.actor .window-content .abilities {
+  box-sizing: border-box;
+  border: 2px solid var(--color-primary);
+  display: grid;
+  font-size: 20px;
+  grid-template-columns: repeat(7, minmax(80px, 1fr));
+}
+.co.application.sheet.actor .window-content .abilities .ability {
+  text-align: center;
+}
+.co.application.sheet.actor .window-content .abilities .ability .ability-id {
+  background-color: var(--color-primary);
+  line-height: 1.8;
+}
+.co.application.sheet.actor .window-content .abilities .ability .ability-mod {
+  border: 2px solid var(--color-primary);
+  display: block;
+  line-height: 1.8;
+}
+.co.application.sheet.actor.character:not(.minimized) {
+  min-width: 890px;
+}
+#interface #ui-left {
+  padding: 0;
+}
+#interface #ui-left button.ui-control {
+  border-radius: 0;
+}
+#interface #ui-left button.ui-control.active,
+#interface #ui-left button.ui-control:hover {
+  z-index: 2;
+}
+#interface #sidebar #sidebar-content {
+  margin-left: -8px;
+}
+#interface #sidebar .tabs {
+  margin-right: 8px;
+  padding: 0;
+}
+#interface #sidebar .tab {
+  border-radius: 0;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+#interface #sidebar .tab#chat {
+  padding: 0;
+}
+#interface #sidebar .chat-message {
+  margin-right: 0;
+}
+#interface #sidebar .chat-form {
+  gap: 2px;
+  padding-right: 0;
+}
+#interface #sidebar .chat-form .chat-controls .control-buttons {
+  gap: 2px;
+}
+#interface #chat-message {
+  border-width: 1px;
+}
+#interface #ui-right-column-1 {
+  padding-bottom: 0;
+}
+#interface #hotbar {
+  margin-bottom: 0;
 }

@@ -20,7 +20,7 @@
 
     <!-- MODIFIERS -->
     <h4 class="form-header">
-        <a class="section-toggle" data-action="toggleSection">{{localize "CO.label.long.modifiers"}}</a>
+        <a data-action="toggleSection">{{localize "CO.label.long.modifiers"}}</a>
         <a data-action="addModifier" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
     </h4>
     <div class="modifiers-container foldable">
@@ -79,7 +79,7 @@
 
     <!-- PATHS -->
     <h4 class="form-header">
-        <a class="section-toggle">{{localize "CO.label.long.paths"}}</a>
+        <a data-action="toggleSection">{{localize "CO.label.long.paths"}}</a>
     </h4>
     <div class="path-list list-3col foldable">
         {{#each paths as |item id|}}
@@ -98,7 +98,7 @@
 
     <!-- CAPACITIES -->
     <h4 class="form-header">
-        <a class="section-toggle" data-action="toggleSection">{{localize "CO.label.long.capacities"}}</a>
+        <a data-action="toggleSection">{{localize "CO.label.long.capacities"}}</a>
     </h4>
     <div class="capacity-list list-3col foldable">
         {{#each capacities as |item id|}}

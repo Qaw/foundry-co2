@@ -31,8 +31,8 @@ export default class COCharacterSheetV2 extends CoBaseActorSheetV2 {
 
   /** @override */
   static PARTS = {
-    sidebar: { template: "systems/co/templates/v2/actors/character-sidebar.hbs" },
     header: { template: "systems/co/templates/v2/actors/character-header.hbs" },
+    sidebar: { template: "systems/co/templates/v2/actors/character-sidebar.hbs" },
     tabs: { template: "templates/generic/tab-navigation.hbs" },
     main: { template: "systems/co/templates/v2/actors/character-main.hbs" },
     inventory: { template: "systems/co/templates/v2/actors/character-inventory.hbs" },
@@ -79,6 +79,7 @@ export default class COCharacterSheetV2 extends CoBaseActorSheetV2 {
   async _onRender(context, options) {
     await super._onRender(context, options)
     // Additional character-specific render logic can go here
+    
   }
 
   /**
