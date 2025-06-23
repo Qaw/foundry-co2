@@ -1,0 +1,161 @@
+{{!-- Encounter Main Tab Template --}}
+{{log "Chroniques Oubliées | Encounter main" this}}
+<section class="tab standard-form main{{#if tabs.main.active}} active{{/if}}" data-group="primary" data-tab="main">
+<!-- ABILITIES -->
+<div class="abilities-scores section-container">
+    <div class="section-header">
+        <h4>{{localize "CO.label.long.abilities"}}</h4>
+    </div>
+    <!-- ABILITY MODIFIERS -->
+    <div class="section-body">
+        <ol class="ability-scores">
+            {{#each abilities as |ability id|}}
+                <li class="ability key" data-ability="{{id}}">
+                    <label class="details-label ability-name">
+                        {{localize (concat 'CO.abilities.long.' id)}}
+                    </label>
+                    <h2 class="ability-id">
+                        {{localize (concat "CO.abilities.short." id)}}
+                        {{#if ../unlocked}}
+                        <input type="checkbox" name="system.abilities.{{id}}.superior" {{checked ability.superior}} data-tooltip="{{localize 'CO.ui.checkForSuperiorAbility'}}" >
+                        {{else}}
+                        {{#if ability.superior}}<i class="fas fa-asterisk"></i>{{/if}}
+                        {{/if}}
+                    </h2>
+                    {{#if ../unlocked}}
+                    <h3 class="ability-mod">
+                        <input class="modifier" type="text" name="system.abilities.{{id}}.base" value="{{numberFormat ability.base sign=true}}" data-dtype="Number" placeholder="0">
+                    </h3>
+                    {{else}}
+                    <h3 class="ability-mod" data-action="roll" data-roll-type="skillcheck" data-roll-target="{{id}}" data-tooltip="{{ability.tooltipValue}}">
+                        {{numberFormat ability.value decimals=0 sign=true}}
+                    </h3>
+                    {{/if}}
+                </li>
+            {{/each}}
+        </ol>
+    </div>
+</div>
+<!-- ATTACKS -->
+<div class="attacks section-container">
+    <div class="section-header">
+        <h4>{{localize "CO.label.long.attacks"}}</h4>
+        <div class="actions-controls controls" style="margin-right:5px">
+            <a class="item-control">
+                {{#if partialDef}}
+                    <i class="fa-solid fa-shield-halved green toggle-effect" data-action="toggleEffect" data-action="unactivate" data-effect="partialDef" data-tooltip="{{localize 'CO.customStatus.partialDefDeactivate'}}"></i>
+                {{else}}
+                    <i class="fa-solid fa-shield-halved gray toggle-effect" data-action="activate" data-effect="partialDef" data-tooltip="{{localize 'CO.customStatus.partialDefActivate'}}"></i>
+                {{/if}}
+            </a>
+            <a class="item-control">
+                {{#if fullDef}}
+                    <i class="fa-solid fa-shield green toggle-effect" data-action="unactivate" data-effect="fullDef" data-tooltip="{{localize 'CO.customStatus.fullDefDeactivate'}}"></i>
+                {{else}}
+                    <i class="fa-solid fa-shield gray toggle-effect" data-action="activate" data-effect="fullDef" data-tooltip="{{localize 'CO.customStatus.fullDefActivate'}}"></i>
+                {{/if}}
+            </a>
+        </div>
+        <div class="attacks-controls controls">
+            <a class="item-control item-create" data-type="attack" data-tooltip="{{localize 'CO.label.long.add'}}"><i class="fas fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="section-body">
+        <ol class="attacks-list strikes-list item-list">
+            {{#each attacks as |attack id|}}
+                {{!log "Chroniques Oubliées | attack" attack id}}
+                <li class="item attack flexrow" data-item-type="attack" data-item-uuid="{{attack.uuid}}" data-item-id="{{attack.id}}" draggable="false">
+                    <div class="attack-header">
+                        <h4 class="attack-name tags">
+                            <i class="{{attack.system.subtypeIcon}}"></i><span><strong>{{attack.name}}</strong><span class="activity-icon"></span> {{attack.system.actions.0.label}}</span>{{#if attack.system.hasRange}} ({{attack.system.rangeLabel}}){{/if}} {{attack.system.displayValues.attack}}  <strong>DM</strong> {{attack.system.displayValues.damage}}
+                        </h4>
+                        <div class="attack-controls controls">
+                            <a class="item-chat chat" data-tooltip="{{localize 'CO.label.long.sendToChat'}}" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
+                            {{#if ../unlocked}}
+                                <a class="item-edit edit" data-tooltip="{{localize 'CO.label.long.edit'}}"><i class="fas fa-fw fa-edit"></i></a>
+                                <a class="item-delete delete" data-tooltip="{{localize CO.label.long.delete}}"><i class="fas fa-fw fa-trash"></i></a>
+                            {{/if}}
+                        </div>
+                    </div>
+                    <div class="attack-body">
+                        <div class="flexrow">
+                            <div class="attacks sub-section">                               
+                                <button type="button" class="btn attack-button toggle-action" data-tooltip="" data-action="activate" data-type="attack" data-source="{{attack.uuid}}" data-indice="0">{{localize "CO.label.long.attack"}} {{attack.system.displayValues.attack}}</button>
+                            </div>
+                            <div class="damage sub-section">
+                                <button type="button" class="damage-button tooltipstered toggle-action" data-action="activate" data-type="damage" data-source="{{attack.uuid}}" data-indice="0">{{localize "CO.label.long.damage"}} {{attack.system.displayValues.damage}}</button>
+                            </div>
+                        </div>
+                        <div class="attack-detail sub-section expandable expanded">
+                            <div class="attack-description">{{{attack.system.description}}}</span></div>
+                        </div>
+                    </div>
+                </li>
+            {{/each}}
+        </ol>
+    </div>
+</div>
+<!-- ACTIONS -->
+<div class="actions section-container">
+    <div class="section-header">
+        <h4>{{localize "CO.ui.actions"}}</h4>
+        <div class="actions-controls controls">
+            <!--            <a class="action-add item-create" data-tooltip="Add Action" data-type="action" data-action-type="action"><i class="fas fa-plus"></i></a>-->
+        </div>
+    </div>
+    <!-- ACTIONS -->
+    <div class="section-body-no-flex">
+        <ol class="actions-container items-container">
+            <ol class="item-list">
+                {{#each visibleActivableActions as |action id|}}
+                    {{!log (concat "Chroniques Oubliées | action " id) action}}
+                    <li class="item flexrow {{#if action.properties.temporary}}{{#unless action.properties.enabled}}deactivated{{/unless}}{{/if}}" draggable="true" data-item-uuid="{{action.source}}" data-indice="{{action.indice}}">
+                        <div class="item-name flexrow">
+                            <div class="item-image" style="background-image: url('{{{actionImg}}}')"></div>
+                            <h4><a class="item-control item-edit">{{action.itemName}} : {{action.label}}</a>&nbsp;{{{action.icon}}}</h4>
+                        </div>
+                        <div class="item-controls-3">
+                            {{#if action.properties.activable}}
+                                {{#if action.properties.temporary}}
+                                    <a class="item-control item-activate">
+                                        {{#if action.properties.enabled}}
+                                            <i class="fas fa-power-off green toggle-action" style="font-size:16px" data-tooltip="{{localize 'CO.ui.deactivate'}}" data-action="unactivate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                        {{else}}
+                                            <i class="fas fa-power-off gray toggle-action" style="font-size:16px" data-tooltip="{{localize 'CO.ui.activate'}}" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                        {{/if}}
+                                    </a>
+                                {{else}}
+                                    {{#if (or (eq action.type 'melee') (eq action.type 'ranged') (eq action.type 'magical'))}}
+                                        <a class="item-control">
+                                            <i class="{{action.iconFA}} green toggle-action" style="font-size:16px" data-tooltip="{{localize 'CO.label.long.attack'}}" data-action="activate" data-type="attack" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                        </a>
+                                        <a class="item-control">
+                                            <i class="fas fa-hand-back-fist green toggle-action" style="font-size:16px" data-tooltip="{{localize 'CO.label.long.damage'}}" data-action="activate" data-type="damage" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                        </a>
+                                    {{else}}
+                                        <a class="item-control">
+                                            <i class="fa-solid fa-hand-pointer green toggle-action" style="font-size:16px" data-tooltip="{{localize 'CO.ui.use'}}" data-action="activate" data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                        </a>
+                                    {{/if}}
+                                {{/if}}
+                            {{/if}}
+                            <a class="item-chat chat" data-tooltip="{{localize 'CO.label.long.sendToChat'}}" data-chat-type="action" data-indice="{{action.indice}}" data-source="{{action.source}}"><i class="fas fa-fw fa-comment-alt"></i></a>
+                        </div>
+                    </li>
+                {{/each}}
+            </ol>
+        </ol>
+    </div>
+</div>
+<!-- PROPERTIES -->
+<div class="attacks section-container">
+    <div class="section-header">
+        <h4>{{localize "CO.label.long.properties"}}</h4>
+    </div>
+    <div class="notes foldable">
+        <div class="notes-text">
+            {{editor system.details.properties target="system.details.properties" button=true owner=owner editable=editable}}
+        </div>
+    </div>
+</div>
+</section>

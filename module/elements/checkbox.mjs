@@ -1,19 +1,16 @@
-import { AdoptedStylesheetMixin } from "./_module.mjs";
+import { AdoptedStylesheetMixin } from "./_module.mjs"
 
-export default class CheckboxElement extends AdoptedStylesheetMixin(
-    foundry.applications.elements.AbstractFormInputElement,
-) {
+export default class CheckboxElement extends AdoptedStylesheetMixin(foundry.applications.elements.AbstractFormInputElement) {
+  /** @override */
+  static tagName = "co-checkbox"
 
-    /** @override */
-    static tagName = "co-checkbox"
+  /**
+   * Should a show root be created for this element?
+   */
+  static useShadowRoot = true
 
-    /**
-     * Should a show root be created for this element?
-     */
-    static useShadowRoot = true
-
-    /** @override */
-    static CSS = `
+  /** @override */
+  static CSS = `
     :host {
         cursor: var(--cursor-pointer);
         display: inline-block;
@@ -54,108 +51,108 @@ export default class CheckboxElement extends AdoptedStylesheetMixin(
     :host(:disabled) .disabled { display: flex; }
     :host(:disabled) .checked { display: none; }
     :host(:disabled) .indeterminate { display: none; }
-    `;
+    `
 
-    constructor(...args) {
-        super(...args)
-        this._internals.role = "checkbox"
-        this._value = this.getAttribute("value")
-        this.#defaultValue = this._value
-        if (this.constructor.useShadowRoot) this.#shadowRoot = this.attachShadow({ mode: "closed" })
-    }
+  constructor(...args) {
+    super(...args)
+    this._internals.role = "checkbox"
+    this._value = this.getAttribute("value")
+    this.#defaultValue = this._value
+    if (this.constructor.useShadowRoot) this.#shadowRoot = this.attachShadow({ mode: "closed" })
+  }
 
-    /**
-     * Controller for removing listeners automatically.
-     * @type {AbortController}
-     */
-    _controller
+  /**
+   * Controller for removing listeners automatically.
+   * @type {AbortController}
+   */
+  _controller
 
-    /**
-     * The shadow root that contains the checkbox elements.
-     * @type {ShadowRoot}
-     */
-    #shadowRoot
+  /**
+   * The shadow root that contains the checkbox elements.
+   * @type {ShadowRoot}
+   */
+  #shadowRoot
 
-    /**
-     * The default value as originally specified in the HTML that created this object.
-     * @type {string}
-     */
-    get defaultValue() {
-        return this.#defaultValue
-    }
+  /**
+   * The default value as originally specified in the HTML that created this object.
+   * @type {string}
+   */
+  get defaultValue() {
+    return this.#defaultValue
+  }
 
-    #defaultValue
+  #defaultValue
 
-    /**
-     * The indeterminate state of the checkbox.
-     * @type {boolean}
-     */
-    get indeterminate() {
-        return this.hasAttribute("indeterminate")
-    }
+  /**
+   * The indeterminate state of the checkbox.
+   * @type {boolean}
+   */
+  get indeterminate() {
+    return this.hasAttribute("indeterminate")
+  }
 
-    set indeterminate(indeterminate) {
-        this.toggleAttribute("indeterminate", indeterminate)
-    }
+  set indeterminate(indeterminate) {
+    this.toggleAttribute("indeterminate", indeterminate)
+  }
 
-    /**
-     * The checked state of the checkbox.
-     * @type {boolean}
-     */
-    get checked() {
-        return this.hasAttribute("checked")
-    }
+  /**
+   * The checked state of the checkbox.
+   * @type {boolean}
+   */
+  get checked() {
+    return this.hasAttribute("checked")
+  }
 
-    set checked(checked) {
-        this.toggleAttribute("checked", checked)
-        this._refresh()
-    }
+  set checked(checked) {
+    this.toggleAttribute("checked", checked)
+    this._refresh()
+  }
 
-    /** @override */
-    get value() {
-        return super.value
-    }
+  /** @override */
+  get value() {
+    return super.value
+  }
 
-    /**
-     * Override AbstractFormInputElement#value setter because we want to emit input/change events when the checked state
-     * changes, and not when the value changes.
-     * @override
-     */
-    set value(value) {
-        this._setValue(value)
-    }
+  /**
+   * Override AbstractFormInputElement#value setter because we want to emit input/change events when the checked state
+   * changes, and not when the value changes.
+   * @override
+   */
+  set value(value) {
+    this._setValue(value)
+  }
 
-    /** @override */
-    _getValue() {
-        // Workaround for FormElementExtended only checking the value property and not the checked property.
-        if (typeof this._value === "string") return this._value
-        return this.checked
-    }
+  /** @override */
+  _getValue() {
+    // Workaround for FormElementExtended only checking the value property and not the checked property.
+    if (typeof this._value === "string") return this._value
+    return this.checked
+  }
 
-    /** @override */
-    connectedCallback() {
-        this._adoptStylesheet(this._getStylesheet())
-        const elements = this._buildElements()
-        this.#shadowRoot.replaceChildren(...elements)
-        this._refresh()
-        this._activateListeners()
-        if (!this.hasAttribute("tabindex")) this.tabIndex = 0
-    }
+  /** @override */
+  connectedCallback() {
+    this._adoptStylesheet(this._getStylesheet())
+    const elements = this._buildElements()
+    this.#shadowRoot.replaceChildren(...elements)
+    this._refresh()
+    this._activateListeners()
+    if (!this.hasAttribute("tabindex")) this.tabIndex = 0
+  }
 
-    /** @override */
-    disconnectedCallback() {
-        this._controller.abort()
-    }
+  /** @override */
+  disconnectedCallback() {
+    this._controller.abort()
+  }
 
-    /** @override */
-    _adoptStylesheet(sheet) {
-        this.#shadowRoot.adoptedStylesheets = [sheet]
-    }
+  /** @override */
+  _adoptStylesheet(sheet) {
+    this.#shadowRoot.adoptedStylesheets = [sheet]
+  }
 
-    /** @override */
-    _buildElements() {
-        const container = document.createElement("div")
-        container.innerHTML = `
+  /** @override */
+  _buildElements() {
+    const container = document.createElement("div")
+    container.innerHTML = `
         <div class="checked">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
                 style="fill: var(--checkbox-icon-color, #000); width: var(--checkbox-icon-size, 68%);">
@@ -178,27 +175,27 @@ export default class CheckboxElement extends AdoptedStylesheetMixin(
             </svg>
         </div>
         `
-        return [container]
-    }
+    return [container]
+  }
 
-    /** @override */
-    _activateListeners() {
-        const { signal } = this._controller = new AbortController()
-        this.addEventListener("click", this._onClick.bind(this), { signal })
-        this.addEventListener("keydown", event => event.key === " " ? this._onClick(event) : null, { signal })
-    }
+  /** @override */
+  _activateListeners() {
+    const { signal } = (this._controller = new AbortController())
+    this.addEventListener("click", this._onClick.bind(this), { signal })
+    this.addEventListener("keydown", (event) => (event.key === " " ? this._onClick(event) : null), { signal })
+  }
 
-    /** @override */
-    _refresh() {
-        super._refresh();
-        this._internals.ariaChecked = `${this.hasAttribute("checked")}`
-    }
+  /** @override */
+  _refresh() {
+    super._refresh()
+    this._internals.ariaChecked = `${this.hasAttribute("checked")}`
+  }
 
-    /** @override */
-    _onClick(event) {
-        event.preventDefault();
-        this.checked = !this.checked
-        this.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }))
-        this.dispatchEvent(new Event("change", { bubbles: true, cancelable: true }))
-    }
+  /** @override */
+  _onClick(event) {
+    event.preventDefault()
+    this.checked = !this.checked
+    this.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }))
+    this.dispatchEvent(new Event("change", { bubbles: true, cancelable: true }))
+  }
 }

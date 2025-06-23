@@ -337,27 +337,27 @@ export default class CoBaseActorSheetV2 extends HandlebarsApplicationMixin(found
 
   /**
    * Handle re-rendering the mode toggle on ownership changes.
-   * @param {HTMLElement} element 
+   * @param {HTMLElement} element
    * @protected
    */
   _renderModeToggle(element) {
-    const header = element.querySelector(".window-header");
-    const toggle = header.querySelector(".mode-slider");
+    const header = element.querySelector(".window-header")
+    const toggle = header.querySelector(".mode-slider")
     if (this.isEditable && !toggle) {
-      const toggle = document.createElement("co-toggle-switch");
-      toggle.checked = this._sheetMode === this.constructor.SHEET_MODES.EDIT;
-      toggle.classList.add("mode-slider");
+      const toggle = document.createElement("co-toggle-switch")
+      toggle.checked = this._sheetMode === this.constructor.SHEET_MODES.EDIT
+      toggle.classList.add("mode-slider")
       // TODO change tooltip with translation
-      toggle.dataset.tooltip = "CO.SheetModeEdit";
-      toggle.setAttribute("aria-label", game.i18n.localize("CO.SheetModeEdit"));
-      toggle.addEventListener("change", this._onSheetChangeLock.bind(this));
-      toggle.addEventListener("dblclick", event => event.stopPropagation());
-      toggle.addEventListener("pointerdown", event => event.stopPropagation());
-      header.prepend(toggle);
+      toggle.dataset.tooltip = "CO.SheetModeEdit"
+      toggle.setAttribute("aria-label", game.i18n.localize("CO.SheetModeEdit"))
+      toggle.addEventListener("change", this._onSheetChangeLock.bind(this))
+      toggle.addEventListener("dblclick", (event) => event.stopPropagation())
+      toggle.addEventListener("pointerdown", (event) => event.stopPropagation())
+      header.prepend(toggle)
     } else if (this.isEditable) {
-      toggle.checked = this._sheetMode === this.constructor.SHEET_MODES.EDIT;
+      toggle.checked = this._sheetMode === this.constructor.SHEET_MODES.EDIT
     } else if (!this.isEditable && toggle) {
-      toggle.remove();
+      toggle.remove()
     }
   }
 }

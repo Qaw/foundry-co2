@@ -1,0 +1,20 @@
+{{!-- Encounter Notes Tab Template --}}
+{{log "Chroniques Oubliées | Encounter notes" this}}
+<section class="tab standard-form notes{{#if tabs.main.active}} active{{/if}}" data-group="primary" data-tab="notes">
+    <div class="notes foldable">
+    <div class="notes-section public-notes">
+        <label class="details-label">{{localize "CO.ui.public"}}</label>
+        <div class="notes-text">
+        {{editor system.details.notes.public target="system.details.notes.public" button=true owner=owner editable=editable}}
+        </div>
+    </div>
+    </div>
+    <div class="notes foldable">
+    <div class="notes-section private-notes">
+        <label class="details-label">{{localize "CO.ui.private"}}</label>
+        <div class="notes-text">
+        {{editor system.details.notes.private target="system.details.notes.private" button=true owner=owner editable=editable}}
+        </div>
+    </div>
+    </div>
+</section>

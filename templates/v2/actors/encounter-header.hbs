@@ -1,0 +1,19 @@
+<header class="npc-sheet-header">
+    <div class="name flexrow bottom-separator">
+        <input class="name-value" name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'CO.label.long.name' }}" spellcheck="false">
+        <label class="level-label">{{ localize 'CO.label.short.nc' }}</label>
+        <input class="level adjustable" type="text" name="system.attributes.nc" value="{{attributes.nc}}" data-dtype="Number" {{#if locked}}readonly{{/if}}>
+    </div>
+    <div class="flexrow" style="justify-content: space-between; width: 100%;">
+        <div class="flexrow" style="flex: auto;">
+            
+            <select class="category-select traits-list-item" name="system.details.category" data-type="String" style="width:100%">
+                {{selectOptions choiceCategories selected=system.details.category localize=true}}
+            </select>
+            <select class="size-select traits-list-item" name="system.details.size" data-type="String" style="width:100%">
+                {{selectOptions choiceSizes selected=system.details.size localize=true }}
+            </select>
+            
+        </div>
+    </div>
+</header>

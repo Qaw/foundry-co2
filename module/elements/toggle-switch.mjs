@@ -5,40 +5,39 @@ import { CheckboxElement } from "./_module.mjs"
  * @fires change
  */
 export default class ToggleSwitchElement extends CheckboxElement {
+  /** @override */
+  static tagName = "co-toggle-switch"
 
-    /** @override */
-    static tagName = "co-toggle-switch"
+  /** @override */
+  static useShadowRoot = false
 
-    /** @override */
-    static useShadowRoot = false
+  /** @inheritDoc */
+  constructor() {
+    super()
+    this._internals.role = "switch"
+  }
 
-    /** @inheritDoc */
-    constructor() {
-        super()
-        this._internals.role = "switch"
-    }
+  /**
+   * Activate the element when it is attached to the DOM.
+   * @inheritDoc
+   */
+  connectedCallback() {
+    this.replaceChildren(...this._buildElements())
+    this._refresh()
+    this._activateListeners()
+  }
 
-    /**
-     * Activate the element when it is attached to the DOM.
-     * @inheritDoc
-     */
-    connectedCallback() {
-        this.replaceChildren(...this._buildElements())
-        this._refresh()
-        this._activateListeners()
-    }
-
-    /**
-     * Create the constituent components of this element.
-     * @returns {HTMLElement[]}
-     * @protected
-     */
-    _buildElements() {
-        const track = document.createElement("track")
-        //track.classList.add("track")
-        const thumb = document.createElement("thumb")
-        //thumb.classList.add("thumb")
-        track.append(thumb)
-        return [track]
-    }
+  /**
+   * Create the constituent components of this element.
+   * @returns {HTMLElement[]}
+   * @protected
+   */
+  _buildElements() {
+    const track = document.createElement("track")
+    //track.classList.add("track")
+    const thumb = document.createElement("thumb")
+    //thumb.classList.add("thumb")
+    track.append(thumb)
+    return [track]
+  }
 }

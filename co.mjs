@@ -42,9 +42,8 @@ Hooks.once("init", async function () {
   }
 
   foundry.documents.collections.Actors.unregisterSheet("core", ActorSheet)
-  //foundry.documents.collections.Actors.registerSheet(SYSTEM.ID, applications.CharacterSheet, { types: ["character"], makeDefault: true, label: "CO.sheet.character" })
   foundry.documents.collections.Actors.registerSheet(SYSTEM.ID, applications.CharacterSheetV2, { types: ["character"], makeDefault: true, label: "CO.sheet.character" })
-  foundry.documents.collections.Actors.registerSheet(SYSTEM.ID, applications.EncounterSheet, { types: ["encounter"], makeDefault: true, label: "CO.sheet.encounter" })
+  foundry.documents.collections.Actors.registerSheet(SYSTEM.ID, applications.EncounterSheetV2, { types: ["encounter"], makeDefault: true, label: "CO.sheet.encounter" })
 
   // Item
   CONFIG.Item.documentClass = documents.COItem

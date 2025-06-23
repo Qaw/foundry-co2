@@ -197,9 +197,8 @@ export default class COCharacterSheetV2 extends CoBaseActorSheetV2 {
    */
   static async #onDeleteProfile(event, target) {
     event.preventDefault()
-    const li = $(target).parents(".item")
-    const profileId = li.data("itemId")
-
+    const li = target.closest(".item")
+    const profileId = li.dataset.itemId
     this.document.deleteProfile(profileId)
   }
 
@@ -210,10 +209,9 @@ export default class COCharacterSheetV2 extends CoBaseActorSheetV2 {
    */
   static async #onDeletePath(event, target) {
     event.preventDefault()
-    const li = $(target).closest(".item")
-    const pathUuid = li.data("itemUuid")
-
-    this.document.deletePath(pathUuid)
+    const li = target.closest(".item")
+    const uuid = li.dataset.itemUuid
+    this.document.deletePath(uuid)
   }
 
   /**
@@ -224,8 +222,11 @@ export default class COCharacterSheetV2 extends CoBaseActorSheetV2 {
    * @param {string} itemUuid The unique identifier of the item to be deleted.
    * @returns {Promise<void>} A promise that resolves when the capacity item has been deleted.
    */
-  static async #onDeleteCapacity(event, target, itemUuid) {
-    await this.document.deleteCapacity(itemUuid)
+  static async #onDeleteCapacity(event, target) {
+    event.preventDefault()
+    const li = target.closest(".item")
+    const uuid = li.dataset.itemUuid
+    await this.document.deleteCapacity(uuid)
   }
 
   /**
