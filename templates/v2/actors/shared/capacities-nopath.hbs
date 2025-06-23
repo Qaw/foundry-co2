@@ -1,9 +1,9 @@
 {{!log "Chroniques Oubliées | character capacities no paths" this}}
 <ol class="features items-container" data-tab="features">
     <li class="items-container-header flexrow">
-        <h3 class="item-name flexrow">
-            <a class="section-toggle">{{localize "CO.ui.capacitiesOffPaths"}}</a>
-        </h3>
+        <h4 class="item-name flexrow">
+            <a data-action="toggleSection">{{localize "CO.ui.capacitiesOffPaths"}}</a>
+        </h4>
         <div class="item-controls-2">
             <a class="item-control" data-action="createItem" data-type="capacity" data-tooltip="{{localize 'CO.label.long.add'}}"><i class="fas fa-plus"></i></a>
         </div>
@@ -15,7 +15,7 @@
             {{#if (isNull capacity.system.parentCapacity)}}
                 <li class="item flexrow" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity._id}}" data-item-type="capacity" draggable="true">
                     <div class="item-name flexrow">
-                        <a class="item-image item-edit" style="background-image: url('{{capacity.img}}')"></a>
+                        <a class="item-img item-edit" style="background-image: url('{{capacity.img}}')"></a>
                         <h4>{{capacity.name}}{{#if capacity.system.isSpell}} * {{/if}}{{#if capacity.system.hasActionType}} ({{capacity.system.actionTypeShort}}){{/if}}</h4>
                     </div>
                     <div class="item-controls-3">

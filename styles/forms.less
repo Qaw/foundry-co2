@@ -122,7 +122,7 @@ fieldset {
     label,
     .form-fields {
       display: grid;
-      grid-auto-flow: column ;
+      grid-auto-flow: column;
       grid-template-columns: repeat(auto-fit, 1fr);
     }
   }
@@ -145,49 +145,4 @@ input[disabled],
 select[disabled] {
   background: var(--input-background-color);
   height: var(--input-height);
-}
-
-multi-select {
-  margin-bottom: 4px;
-  min-height: var(--input-height);
-  position: relative;
-
-  .tags.input-element-tags {
-    align-items: flex-start;
-    flex-flow: row wrap;
-    gap: 1px 2px;
-    justify-content: flex-start;
-    margin: 2px;
-    padding: 0;
-    padding-right: 22px;
-    pointer-events: none;
-
-    &::after {
-      content: "";
-      clear: both;
-    }
-
-    .tag {
-      border: 1px solid var(--color-cool-3);
-      padding: 2px 4px;
-
-      .theme-dark & {
-        background-color: var(--color-dark-3);
-      }
-
-      .theme-light & {
-        background-color: var(--color-light-3);
-      }
-
-      a {
-        pointer-events: auto;
-      }
-    }
-  }
-
-  >select {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-  }
 }

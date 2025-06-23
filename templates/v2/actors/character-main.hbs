@@ -1,73 +1,7 @@
 {{!-- Character Main Tab Template --}}
 {{log "Chroniques Oubliées | main" this}}
 <section class="tab standard-form main{{#if tabs.main.active}} active{{/if}}" data-group="primary" data-tab="main">
-    <div class="abilities-scores section-container">
-        <div class="section-header">
-            <h4>{{localize "CO.label.long.abilities"}}</h4>
-            <div class="attacks-controls controls">
-            {{#if unlocked}}
-            <a class="abilities-edit" data-tooltip="{{localize 'CO.ui.editStats'}}" data-action="edit-ability-scores"><i class="fas fa-fw fa-edit"></i></a>
-            {{/if}}
-            </div>
-        </div>
-        <!-- ABILITIES -->
-        <div class="section-body">
-            <ol class="ability-scores">
-                {{#each abilities as |ability id|}}
-                {{!log (concat "Chroniques Oubliées | " id) ability}}
-                    <li class="ability key" data-ability="{{id}}">
-                        <label class="details-label ability-name">{{localize (concat 'CO.abilities.long.' id)}}</label>
-                        <h2 class="ability-id">
-                            {{localize (concat "CO.abilities.short." id)}}
-                            {{#if ability.superior}}<i class="fas fa-asterisk"></i>{{/if}}
-                        </h2>
-                        <h3 class="ability-mod rollable" data-tooltip="{{ability.tooltipValue}}" data-roll-type="skillcheck" data-roll-target="{{id}}">{{numberFormat ability.value decimals=0 sign=true}}</h3>
-                    </li>
-                {{/each}}
-            </ol>
-        </div>
-    </div>
-
-    <div class="features section-container">
-        <div class="section-header">
-            <h4>{{localize "CO.label.long.profile"}} & {{localize "CO.ui.features"}}</h4>
-        </div>
-        <!-- PROFILS & FEATURES-->
-        <div class="section-body-no-flex">
-            <ol class="features-container items-container">
-                <ol class="item-list">
-                    {{#each profiles as |item id|}}
-                        <li class="item flexrow" data-item-uuid="{{item.uuid}}" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="false">
-                            <div class="item-name flexrow">
-                                <a class="item-image item-edit" style="background-image: url('{{item.img}}')"></a>
-                                <h4>{{item.name}}</h4>
-                            </div>
-                            <div class="item-controls-2">
-                            {{#if ../unlocked}}
-                                <a class="item-control item-delete" data-tooltip={{localize "CO.ui.remove"}}><i class="fas fa-trash"></i></a>
-                            {{/if}}
-                            </div>
-                        </li>
-                    {{/each}}
-                    {{#each features as |item id|}}
-                        <li class="item flexrow" data-item-uuid="{{item.uuid}}" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="false">
-                            <div class="item-name flexrow">
-                                <a class="item-image item-edit" style="background-image: url('{{item.img}}')"></a>
-                                <h4>{{item.name}}</h4>
-                            </div>
-                            <div class="item-controls-2">
-                            {{#if ../unlocked}}
-                                <a class="item-control item-delete" data-tooltip={{localize "CO.ui.remove"}}><i class="fas fa-trash"></i></a>
-                            {{/if}}
-                            </div>
-                        </li>
-                    {{/each}}
-                </ol>
-            </ol>
-        </div>
-    </div>
-
-    <div class="actions section-container">
+    <div class="section-container actions">
         <div class="section-header">
             <h4>{{localize "CO.ui.actions"}}</h4>
             <div class="actions-controls controls">
@@ -101,7 +35,7 @@
                         {{!log (concat "Chroniques Oubliées | action " id) action}}
                             <li class="item flexrow action {{#if action.properties.temporary}}{{#unless action.properties.enabled}}deactivated{{/unless}}{{/if}}" draggable="true" data-item-uuid="{{action.source}}" data-indice="{{action.indice}}">
                                 <div class="item-name flexrow">
-                                    <a class="item-image item-edit" style="background-image: url('{{{actionImg}}}')"></a>
+                                    <a class="item-img item-edit" style="background-image: url('{{{actionImg}}}')"></a>
                                     <h4>{{action.itemName}}{{#if action.hasLabel}} - {{action.label}}{{/if}}&nbsp;{{{action.icon}}} {{#if action.hasQuantity}}<span data-tooltip="{{localize "CO.ui.remainingQuantity"}}" data-tooltip-direction="UP">({{action.quantity}})</span>{{/if}} {{#if action.hasCharges}}<span data-tooltip="{{localize "CO.ui.remainingQuantity"}}" data-tooltip-direction="UP">({{action.charges}})</span>{{/if}} {{#if action.parent.hasActionType}} ({{action.parent.actionTypeShort}}){{/if}}{{#if action.parent.isSpell}} * (Mana : {{action.manaCost}}{{#if (gt (manaCostFromArmor action.parent.parent @root.actor) 0)}} Malus armure : {{manaCostFromArmor action.parent.parent @root.actor}} {{/if}}){{/if}}</h4>
                                 </div>                            <div class="item-controls-3">
                                     {{#each action.getActionIcons as |icon|}}
