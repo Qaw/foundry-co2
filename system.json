@@ -12,14 +12,16 @@
       "name": "Kristov"
     },
     {
-      "name": "Zigmund"
+      "name": "Caloup"
     },
     {
-      "name": "Caloup"
+      "name": "LionelL2"
+    },
+    {
+      "name": "Zigmund"
     }
   ],
   "esmodules": ["co.mjs"],
-  "scripts": [],
   "styles": ["co.css"],
   "packs": [],
   "languages": [
@@ -53,7 +55,6 @@
       "path": { "htmlFields": ["description"] }
     }
   },
-  "gridDistance": 1.5,
   "grid": {
     "distance": 1.5,
     "units": "m"
