@@ -1,63 +1,74 @@
-export class CoEditAbilitiesDialog extends Application {
-  constructor(actor) {
+export class CoEditAbilitiesDialog extends foundry.applications.api.DialogV2 {
+  /** override */
+  static DEFAULT_OPTIONS = {
+    classes: ["co", "edit-abilities-dialog"],
+    position: {
+      width: 1000,
+      height: 420,
+    },
+    actions: {
+      reset: CoEditAbilitiesDialog.#onReset,
+      toggleSuperior: CoEditAbilitiesDialog.#onToggleSuperior,
+    }
+  }
+
+  constructor({ actor }) {
     super()
     this.actor = actor
   }
 
-  static get defaultOptions() {
-    return {
-      ...super.defaultOptions,
-      classes: ["co", "dialog", "edit-abilities-dialog"],
-      title: game.i18n.localize("CO.ui.editYourAbilities"),
-      template: "systems/co/templates/dialogs/edit-abilities-dialog.hbs",
-      width: "auto",
-      height: "fit-content",
-    }
+  /** override */
+  _initializeApplicationOptions(options) {
+    options.buttons = [
+      {
+        label: game.i18n.localize("CO.ui.close"),
+        icon: "fas fa-solid fa-xmark",
+        action: () => this.close(),
+      },
+    ]
+    options = super._initializeApplicationOptions(options)
+    options.window.title = game.i18n.localize("CO.ui.editYourAbilities")
+    return options
   }
 
-  get id() {
-    return `edit-abilities-${this.actor.id}`
+  /** override */
+  _renderHTML(context, options) {
+    return foundry.applications.handlebars.renderTemplate("systems/co/templates/dialogs/edit-abilities-dialog.hbs", this.actor)
   }
 
-  async getData(options = {}) {
-    const { actor } = this
-    return {
-      ...(await super.getData(options)),
-      actor,
-    }
+  /** @override */
+  _replaceHTML(result, content, _options) {
+    content.innerHTML = result
+    $(this.element).find("input.ability-base").change(this._onChangeAbilityBase.bind(this))
+    $(this.element).find("input.ability-bonus").change(this._onChangeAbilityBonus.bind(this))
   }
 
-  activateListeners(html) {
-    super.activateListeners(html)
-    html.find("button[data-action=superior]").click(this._onToggleSuperiorAbility.bind(this))
-    html.find("button[name=reset-ability-scores]").click(this._onResetAbilityScores.bind(this))
-    html.find("input.ability-base").change(this._onChangeAbilityBase.bind(this))
-    html.find("input.ability-bonus").change(this._onChangeAbilityBonus.bind(this))
-  }
-
-  _onChangeAbilityBase(event) {
+  async _onChangeAbilityBase(event) {
     const ability = $(event.currentTarget).attr("data-ability")
     const value = $(event.currentTarget).val()
     const { actor } = this
-    return actor.update({ [`system.abilities.${ability}.base`]: value }).then(() => this.render(true, { focus: true }))
+    const updates = await actor.update({ [`system.abilities.${ability}.base`]: value })
+    this.render(true, { focus: true })
   }
 
-  _onChangeAbilityBonus(event) {
+  async _onChangeAbilityBonus(event) {
     const ability = $(event.currentTarget).attr("data-ability")
     const value = $(event.currentTarget).val()
     const { actor } = this
-    return actor.update({ [`system.abilities.${ability}.bonuses.sheet`]: value }).then(() => this.render(true, { focus: true }))
+    const updates = await actor.update({ [`system.abilities.${ability}.bonuses.sheet`]: value })
+    this.render(true, { focus: true })
   }
 
-  async _onToggleSuperiorAbility(event) {
-    const ability = $(event.currentTarget).attr("data-ability")
+  static async #onToggleSuperior(event, target) {
+    const ability = $(target).attr("data-ability")
     const { actor } = this
     const value = !actor.system.abilities[ability].superior
-    return actor.update({ [`system.abilities.${ability}.superior`]: value }).then(() => this.render(true))
+    const updates = await actor.update({ [`system.abilities.${ability}.superior`]: value })
+    this.render(true)
   }
 
   // TODO Garder ou refaire ?
-  async _onResetAbilityScores(event) {
+  static async #onReset() {
     const { actor } = this
     // Construct the Roll instance
     let r = new Roll("{1d4,1d4,1d4,1d4,1d4,1d4}")
