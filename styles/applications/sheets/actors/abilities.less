@@ -1,0 +1,29 @@
+.abilities {
+  box-sizing: border-box;
+  border: 2px solid var(--color-primary);
+  display: grid;
+  font-size: 20px;
+  grid-template-columns: repeat(7, minmax(80px, 1fr)) auto;
+
+  .ability {
+    text-align: center;
+
+    .ability-id {
+      background-color: var(--color-primary);
+      //height: 50%;
+      line-height: 1.8;
+    }
+
+    .ability-mod {
+      border: 2px solid var(--color-primary);
+      display: block;
+      //height: 50%;
+      line-height: 1.8;
+    }
+  }
+
+  .abilities-controls {
+    background-color: var(--color-primary);
+     line-height: 2.8;
+  }
+}

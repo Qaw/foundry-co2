@@ -18,7 +18,7 @@
                         {{localize (concat "CO.abilities.short." id)}}
                         {{#if ability.superior}}<i class="fas fa-asterisk"></i>{{/if}}
                     </h2>
-                    <h3 class="ability-mod rollable" data-tooltip="{{ability.tooltipValue}}" data-roll-type="skillcheck" data-roll-target="{{id}}">{{numberFormat ability.value decimals=0 sign=true}}</h3>
+                    <h3 class="ability-mod" data-action="roll"data-roll-type="skillcheck" data-roll-target="{{id}}" data-tooltip="{{ability.tooltipValue}}">{{numberFormat ability.value decimals=0 sign=true}}</h3>
                 </li>
             {{/each}}
         </ol>

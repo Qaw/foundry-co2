@@ -1,0 +1,63 @@
+{{!-- Character Main Tab Template --}}
+{{log "Chroniques Oubliées | main" this}}
+<section class="tab standard-form main{{#if tabs.main.active}} active{{/if}}" data-group="primary" data-tab="main">
+    <div class="section-container actions">
+        <div class="section-header">
+            <h4>{{localize "CO.ui.actions"}}</h4>
+            <div class="actions-controls controls">
+                <a class="item-control">                
+                    <i class="fa-solid fa-mug-saucer" data-action="useRecovery" data-option="fastRest" data-tooltip="{{localize 'CO.ui.fastRest'}}" data-tooltip-direction="UP"></i>
+                </a>
+                <a class="item-control">
+                    <i class="fa-solid fa-bed" data-action="useRecovery" data-option="fullRest" data-tooltip="{{localize 'CO.ui.fullRest'}}" data-tooltip-direction="UP"></i>
+                </a>
+                <a class="item-control">
+                    {{#if partialDef}}
+                        <i class="fa-solid fa-shield-halved green" data-action="toggleEffect" data-action-type="unactivate" data-effect="partialDef" data-tooltip="{{localize 'CO.customStatus.partialDefDeactivate'}}" data-tooltip-direction="UP"></i>
+                    {{else}}
+                        <i class="fa-solid fa-shield-halved gray" data-action="toggleEffect" data-action-type="activate" data-effect="partialDef" data-tooltip="{{localize 'CO.customStatus.partialDefActivate'}}" data-tooltip-direction="UP"></i>
+                    {{/if}}
+                </a>
+                <a class="item-control">
+                    {{#if fullDef}}
+                        <i class="fa-solid fa-shield green" data-action="toggleEffect" data-action-type="unactivate" data-effect="fullDef" data-tooltip="{{localize 'CO.customStatus.fullDefDeactivate'}}" data-tooltip-direction="UP"></i>
+                    {{else}}
+                        <i class="fa-solid fa-shield gray" data-action="toggleEffect" data-action-type="activate" data-effect="fullDef" data-tooltip="{{localize 'CO.customStatus.fullDefActivate'}}" data-tooltip-direction="UP"></i>
+                    {{/if}}
+                </a>
+            </div>
+        </div>
+        <!-- ACTIONS -->
+        <div class="section-body-no-flex">
+            <ol class="actions-container items-container">
+                <ol class="item-list">
+                    {{#each visibleActivableActions as |action id|}}
+                        {{!log (concat "Chroniques Oubliées | action " id) action}}
+                            <li class="item flexrow action {{#if action.properties.temporary}}{{#unless action.properties.enabled}}deactivated{{/unless}}{{/if}}" draggable="true" data-item-uuid="{{action.source}}" data-indice="{{action.indice}}">
+                                <div class="item-name flexrow">
+                                    <a class="item-img" data-action="editItem" style="background-image: url('{{{actionImg}}}')"></a>
+                                    <h4>{{action.itemName}}{{#if action.hasLabel}} - {{action.label}}{{/if}}&nbsp;{{{action.icon}}} {{#if action.hasQuantity}}<span data-tooltip="{{localize "CO.ui.remainingQuantity"}}" data-tooltip-direction="UP">({{action.quantity}})</span>{{/if}} {{#if action.hasCharges}}<span data-tooltip="{{localize "CO.ui.remainingQuantity"}}" data-tooltip-direction="UP">({{action.charges}})</span>{{/if}} {{#if action.parent.hasActionType}} ({{action.parent.actionTypeShort}}){{/if}}{{#if action.parent.isSpell}} * (Mana : {{action.manaCost}}{{#if (gt (manaCostFromArmor action.parent.parent @root.actor) 0)}} Malus armure : {{manaCostFromArmor action.parent.parent @root.actor}} {{/if}}){{/if}}</h4>
+                                </div>                            
+                                <div class="item-controls-3">
+                                    {{#each action.getActionIcons as |icon|}}
+                                        <a class="item-control">
+                                            <i class="{{icon.icon}} {{icon.iconClass}}"    
+                                            data-action="toggleAction"                                         
+                                            data-action-type="{{icon.actionType}}" 
+                                            {{#if icon.type}}data-type="{{icon.type}}"{{/if}} 
+                                            data-source="{{action.source}}"
+                                            data-indice="{{action.indice}}"
+                                            data-tooltip="{{localize icon.tooltip}}" 
+                                            data-tooltip-direction="UP">
+                                            </i>
+                                        </a>
+                                    {{/each}}
+                                    <a class="chat" data-action="sendToChat" data-chat-type="action" data-indice="{{action.indice}}" data-source="{{action.source}}" data-tooltip="{{localize 'CO.label.long.sendToChat'}}"><i class="fas fa-fw fa-comment-alt"></i></a>
+                                </div>
+                            </li>
+                    {{/each}}
+                </ol>
+            </ol>
+        </div>
+    </div>
+</section>

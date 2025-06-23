@@ -21,6 +21,38 @@
       "FIELDS": {
         "otherCapacitiesPointsSpent": {
           "label": "Autres points de capacités dépensés"
+        },
+        "details": {
+          "biography": {
+            "private": {
+              "label": "Privée"
+            },
+            "public": {
+              "label": "Publique"
+            }
+          },
+          "appearance": {
+            "private": {
+              "label": "Privée"
+            },
+            "public": {
+              "label": "Publique"
+            }
+          },
+          "notes": {
+            "private": {
+              "label": "Privée"
+            },
+            "public": {
+              "label": "Publique"
+            }
+          },
+          "size": {
+            "label": "Taille"
+          },
+          "languages": {
+            "label": "Langages"
+          }
         }
       }
     },
@@ -278,7 +310,8 @@
         "capacity": { "description": "Description", "details": "Détails", "actions": "Actions/Effets" },
         "path": { "description": "Description", "details": "Détails" },
         "profile": { "description": "Description", "details": "Détails" },
-        "feature": { "description": "Description", "details": "Détails" }
+        "feature": { "description": "Description", "details": "Détails" },
+        "character": { "main": "Principal", "inventory": "Inventaire", "paths": "Voies & Capacités", "effects": "Effets", "biography": "Biographie" }
       }
     },
     "notif": {
@@ -383,6 +416,7 @@
         "family": "Famille",
         "source": "Source",
         "spellcasting": "Modificateur pour Attaque Magique",
+        "tempDm": "DM temporaires",
         "martialCategory": "Catégorie martiale",
         "martialTraining": "Formation martiale",
         "martialTrainings": "Formations martiales",
@@ -1117,7 +1151,7 @@
         "all": "Vérification (ignorable par tous)",
         "gm": "Vérification (ignorable uniquement par le MJ)"
       }
-    }
-  },
-  "Toto": "Tata"
+    },
+    "SheetModeEdit": "Basculer entre le mode édition et le mode visualisation"
+  }
 }

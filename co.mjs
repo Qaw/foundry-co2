@@ -2,6 +2,8 @@
 import { SYSTEM } from "./module/config/system.mjs"
 globalThis.SYSTEM = SYSTEM
 
+export * as elements from "./module/elements/_module.mjs"
+
 // Import modules
 import * as models from "./module/models/_module.mjs"
 import * as documents from "./module/documents/_module.mjs"
@@ -40,7 +42,8 @@ Hooks.once("init", async function () {
   }
 
   foundry.documents.collections.Actors.unregisterSheet("core", ActorSheet)
-  foundry.documents.collections.Actors.registerSheet(SYSTEM.ID, applications.CharacterSheet, { types: ["character"], makeDefault: true, label: "CO.sheet.character" })
+  //foundry.documents.collections.Actors.registerSheet(SYSTEM.ID, applications.CharacterSheet, { types: ["character"], makeDefault: true, label: "CO.sheet.character" })
+  foundry.documents.collections.Actors.registerSheet(SYSTEM.ID, applications.CharacterSheetV2, { types: ["character"], makeDefault: true, label: "CO.sheet.character" })
   foundry.documents.collections.Actors.registerSheet(SYSTEM.ID, applications.EncounterSheet, { types: ["encounter"], makeDefault: true, label: "CO.sheet.encounter" })
 
   // Item
@@ -57,15 +60,10 @@ Hooks.once("init", async function () {
 
   foundry.documents.collections.Items.unregisterSheet("core", ItemSheet)
   foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.AttackSheet, { types: ["attack"], makeDefault: true, label: "CO.sheet.attack" })
-  //foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.CapacitySheet, { types: ["capacity"], makeDefault: true, label: "CO.sheet.capacity" })
   foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.CapacitySheetv2, { types: ["capacity"], makeDefault: true, label: "CO.sheet.capacity" })
-  //foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.EquipmentSheet, { types: ["equipment"], makeDefault: true, label: "CO.sheet.equipment" })
   foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.EquipmentSheetv2, { types: ["equipment"], makeDefault: true, label: "CO.sheet.equipment" })
-  //foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.FeatureSheet, { types: ["feature"], makeDefault: true, label: "CO.sheet.feature" })
   foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.FeatureSheetV2, { types: ["feature"], makeDefault: true, label: "CO.sheet.feature" })
-  //foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.PathSheet, { types: ["path"], makeDefault: true, label: "CO.sheet.path" })
   foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.PathSheetV2, { types: ["path"], makeDefault: true, label: "CO.sheet.path" })
-  //foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.ProfileSheet, { types: ["profile"], makeDefault: true, label: "CO.sheet.profile" })
   foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.ProfileSheetV2, { types: ["profile"], makeDefault: true, label: "CO.sheet.profile" })
 
   // Chat
