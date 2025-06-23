@@ -1,110 +1,51 @@
 <form autocomplete="off" onsubmit="event.preventDefault();">
-    <div class="ability-rows">
-        <header class="row">
-            <div class="row-heading">
-                <h3>{{localize "CO.ui.editYourAbilities"}}</h3>
-            </div>
-            <div class="abilities">
-            {{#each actor.system.abilities as |ability id|}}
-                <div class="row-column">
-                    <h3>{{localize (concat "CO.abilities.short." id)}}</h3>
-                </div>
-            {{/each}}
-            </div>
-        </header>
-        <section class="row" data-section="superior">
-            <div class="row-heading">
-                <div class="label">
-                    <div class="title">{{localize "CO.label.long.superior"}}</div>
-                </div>
-            </div>
-            <div class="abilities">
-                {{#each actor.system.abilities as |ability id|}}
-                    <div class="row-column" data-ability="{{id}}">
-                        <button type="button" data-action="superior" data-ability="{{id}}" data-value="{{not ability.superior}}" class="tooltip superior-button superior {{#if ability.superior}}selected{{/if}}">{{localize "CO.label.long.superior"}}</button>
-                    </div>
-                {{/each}}
-            </div>
-        </section>
-        <hr>
-        <section class="row" data-section="base">
-            <div class="row-heading">
-                <div class="label">
-                    <div class="title">{{localize "CO.label.long.base"}}</div>
-                </div>
-            </div>
-            <div class="abilities">
-                {{#each actor.system.abilities as |ability id|}}
-                    <div class="row-column" data-ability="{{id}}">
-                        {{!ability.base}}
-                        <input class="ability-base" type="number" data-ability="{{id}}" data-value="base" name="actor.system.abilities.{{id}}.base" value="{{ability.base}}" data-dtype="Number" placeholder="0">
-
-                    </div>
-                {{/each}}
-            </div>
-        </section>
-        <hr>
-        <section class="row" data-section="traits">
-            <div class="row-heading">
-                <div class="label">
-                    <div class="title">{{localize "CO.label.long.traits"}}&nbsp;&amp;&nbsp;{{localize "CO.label.long.effects"}}</div>
-                </div>
-            </div>
-            <div class="abilities">
-                {{#each actor.system.abilities as |ability id|}}
-                    <div class="row-column" data-ability="{{id}}">
-                        {{numberFormat ability.modifiers decimals=0 sign=true}}
-                    </div>
-                {{/each}}
-            </div>
-        </section>
-        <hr>
-        <section class="row" data-section="bonus">
-            <div class="row-heading">
-                <div class="label">
-                    <div class="title">{{localize "CO.label.long.bonus"}}</div>
-                </div>
-            </div>
-            <div class="abilities">
-                {{#each actor.system.abilities as |ability id|}}
-                    <div class="row-column" data-ability="{{id}}">
-                        <input class="ability-bonus" type="number" data-ability="{{id}}" data-value="bonus.sheet" name="actor.system.abilities.{{id}}.bonuses.sheet" value="{{ability.bonuses.sheet}}" data-dtype="Number" placeholder="0">
-                    </div>
-                {{/each}}
-            </div>
-        </section>
-        <hr>
-        <section class="row summary-row">
-            <div class="row-heading">
-                <aside class="hint-container">
-                    <h3>Réinitialisation</h3>
-                    <p>Cela recalculera vos scores de base.</p>
-                    <label>
-                        <button type="button" name="reset-ability-scores"/>
-                        Relancer
-                    </label>
-                </aside>
-            </div>
-            <div class="abilities">
-                {{#each actor.system.abilities as |ability id|}}
-                    <div class="row-column">
-                        <div class="value" data-tooltip="{{ability.tooltipValue}}">{{ability.value}}</div>
-                        <h4>{{localize (concat "CO.abilities.long." id)}}</h4>
-                    </div>
-                {{/each}}
-            </div>
-        </section>
+    <h3>{{localize "CO.ui.editYourAbilities"}}</h3>
+    <label>
+        <span class="title">{{localize "CO.label.long.superior"}}</span>
+    </label>
+    <label>
+        <span class="title">{{localize "CO.label.long.base"}}</span>
+    </label>
+    <label>
+        <span class="title">
+            {{localize "CO.label.long.traits"}}&nbsp;&amp;&nbsp;{{localize "CO.label.long.effects"}}
+        </span>
+    </label>
+    <label>
+        <span class="title">{{localize "CO.label.long.bonus"}}</span>
+    </label>
+    <div class="extra cell"></div>
+    <div class="extra cell"></div>
+    {{#each actor.system.abilities as |ability id|}}
+    <h3>{{localize (concat "CO.abilities.short." id)}}</h3>
+    <div class="cell" data-ability="{{id}}">
+        <button type="button" data-action="superior" data-ability="{{id}}" data-value="{{not ability.superior}}"
+            class="tooltip superior-button superior {{#if ability.superior}}selected{{/if}}">
+            {{localize "CO.label.long.superior"}}
+        </button>
     </div>
-    <div class="row background-stripes">
-        <div class="row-heading">
-        </div>
-        <div class="abilities">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
+    <div class="cell" data-ability="{{id}}">
+        <input class="ability-base" type="number" data-ability="{{id}}" data-value="base"
+            name="actor.system.abilities.{{id}}.base" value="{{ability.base}}" data-dtype="Number" placeholder="0">
     </div>
+    <div class="cell" data-ability="{{id}}">
+        {{numberFormat ability.modifiers decimals=0 sign=true}}
+    </div>
+    <div class="cell" data-ability="{{id}}">
+        <input class="ability-bonus" type="number" data-ability="{{id}}" data-value="bonus.sheet"
+            name="actor.system.abilities.{{id}}.bonuses.sheet" value="{{ability.bonuses.sheet}}" data-dtype="Number"
+            placeholder="0">
+    </div>
+    <div class="cell" data-ability="{{id}}">
+        <div class="value" data-tooltip="{{ability.tooltipValue}}">{{ability.value}}</div>
+    </div>
+    <h4>{{localize (concat "CO.abilities.long." id)}}</h4>
+    {{/each}}
+    <aside class="hint-container">
+        <h3>Réinitialisation</h3>
+        <p>Cela recalculera vos scores de base.</p>
+        <button type="button" name="reset-ability-scores">
+            Relancer
+        </button>
+    </aside>
 </form>
