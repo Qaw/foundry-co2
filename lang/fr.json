@@ -416,6 +416,7 @@
         "family": "Famille",
         "source": "Source",
         "spellcasting": "Modificateur pour Attaque Magique",
+        "tempDm": "DM temporaires",
         "martialCategory": "Catégorie martiale",
         "martialTraining": "Formation martiale",
         "martialTrainings": "Formations martiales",
@@ -1150,7 +1151,7 @@
         "all": "Vérification (ignorable par tous)",
         "gm": "Vérification (ignorable uniquement par le MJ)"
       }
-    }
-  },
-  "Toto": "Tata"
+    },
+    "SheetModeEdit": "Basculer entre le mode édition et le mode visualisation"
+  }
 }
