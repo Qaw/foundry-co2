@@ -44,7 +44,8 @@ export default class CoBaseItemSheetV2 extends HandlebarsApplicationMixin(foundr
       addCondition: CoBaseItemSheetV2.#onAddCondition,
       deleteCondition: CoBaseItemSheetV2.#onDeleteCondition,
       addAction: CoBaseItemSheetV2.#onAddAction,
-      deleteAction: CoBaseItemSheetV2.#onDeleteAction,
+      deleteAction: CoBaseItemSheetV2._onDeleteAction,
+      selectActionIcon: CoBaseItemSheetV2.#onSelectActionIcon,
     },
   }
 
@@ -228,7 +229,7 @@ export default class CoBaseItemSheetV2 extends HandlebarsApplicationMixin(foundr
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    * @returns {Promise} - A promise that resolves once the item has been updated.
    */
-  static #onAddAction(event, target) {
+  static async #onAddAction(event, target) {
     event.preventDefault()
     let newActions = foundry.utils.deepClone(this.document.actions)
     let action = new Action({
@@ -239,7 +240,7 @@ export default class CoBaseItemSheetV2 extends HandlebarsApplicationMixin(foundr
       label: `${game.i18n.localize("CO.ui.newAction")}`,
     })
     newActions.push(action)
-    return this.document.update({ "system.actions": newActions })
+    return await this.document.update({ "system.actions": newActions })
   }
 
   /**
@@ -248,12 +249,12 @@ export default class CoBaseItemSheetV2 extends HandlebarsApplicationMixin(foundr
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    * @returns {Promise} - A promise that resolves once the item has been updated.
    */
-  static async #onDeleteAction(event, target) {
+  static async _onDeleteAction(event, target) {
     event.preventDefault()
-    const li = target.closest(".action")
-    const rowId = li.dataset.actionId
+    const actionRootElement = target.closest(".action")
+    const actionIndex = actionRootElement.dataset.itemId
     let newActions = foundry.utils.deepClone(this.item.actions)
-    newActions.splice(rowId, 1)
+    newActions.splice(actionIndex, 1)
     return await this.item.update({ "system.actions": newActions })
   }
 
@@ -548,4 +549,15 @@ export default class CoBaseItemSheetV2 extends HandlebarsApplicationMixin(foundr
   }
 
   // #endregion
+
+  static #onSelectActionIcon(event, target) {
+    const input = target.nextElementSibling
+    const path = input.value
+    const options = {
+      type: "image",
+      current: path,
+      field: input,
+    }
+    return new foundry.applications.apps.FilePicker(options).browse()
+  }
 }
