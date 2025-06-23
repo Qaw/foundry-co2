@@ -266,8 +266,10 @@ export default class CoBaseActorSheetV2 extends HandlebarsApplicationMixin(found
   static #onEditItem(event, target) {
     event.preventDefault()
     const uuid = target.closest(".item").dataset.itemUuid
-    let document = fromUuidSync(uuid)
-    if (document) return document.sheet.render(true)
+    if (uuid) {
+      const document = fromUuidSync(uuid)
+      if (document) return document.sheet.render(true)
+    }
   }
 
   /**

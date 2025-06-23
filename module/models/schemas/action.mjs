@@ -360,7 +360,7 @@ export class Action extends foundry.abstract.DataModel {
           icon: this.iconFA,
           iconClass: "green toggle-action",
           tooltip: "CO.ui.deactivate",
-          action: "unactivate",
+          actionType: "unactivate",
         })
       } else {
         // Action temporaire désactivée -> bouton pour activer
@@ -368,7 +368,7 @@ export class Action extends foundry.abstract.DataModel {
           icon: this.iconFA,
           iconClass: "gray toggle-action",
           tooltip: "CO.ui.activate",
-          action: "activate",
+          actionType: "activate",
         })
       }
     }
@@ -384,7 +384,7 @@ export class Action extends foundry.abstract.DataModel {
               icon: this.iconFA,
               iconClass: `${this.iconColor} toggle-action`,
               tooltip: this.iconColor === "gray" ? "CO.label.long.needCharges" : "CO.label.long.attack",
-              action: "activate",
+              actionType: "activate",
               type: "attack",
             })
           }
@@ -393,7 +393,7 @@ export class Action extends foundry.abstract.DataModel {
             icon: "fa-regular fa-hand-back-fist",
             iconClass: `${this.iconColor} toggle-action`,
             tooltip: "CO.label.long.damage",
-            action: "activate",
+            actionType: "activate",
             type: "damage",
           })
         } else {
@@ -401,7 +401,7 @@ export class Action extends foundry.abstract.DataModel {
             icon: this.iconFA,
             iconClass: `${this.iconColor} toggle-action`,
             tooltip: "CO.ui.use",
-            action: "activate",
+            actionType: "activate",
           })
         }
       }
@@ -411,7 +411,7 @@ export class Action extends foundry.abstract.DataModel {
           icon: `fa-solid fa-flask-round-potion`,
           iconClass: `${this.iconColor} toggle-action`,
           tooltip: "CO.ui.use",
-          action: "activate",
+          actionType: "activate",
         })
       }
       // Autres types d'action
@@ -420,7 +420,7 @@ export class Action extends foundry.abstract.DataModel {
           icon: this.iconFA,
           iconClass: `${this.iconColor} toggle-action`,
           tooltip: "CO.ui.use",
-          action: "activate",
+          actionType: "activate",
         })
       }
     }

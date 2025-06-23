@@ -26,7 +26,7 @@
                         <input class="modifier" type="text" name="system.abilities.{{id}}.base" value="{{numberFormat ability.base sign=true}}" data-dtype="Number" placeholder="0">
                     </h3>
                     {{else}}
-                    <h3 class="ability-mod rollable" data-tooltip="{{ability.tooltipValue}}" data-roll-type="skillcheck" data-roll-target="{{id}}">
+                    <h3 class="ability-mod" data-action="roll" data-roll-type="skillcheck" data-roll-target="{{id}}" data-tooltip="{{ability.tooltipValue}}">
                         {{numberFormat ability.value decimals=0 sign=true}}
                     </h3>
                     {{/if}}
@@ -42,16 +42,16 @@
         <div class="actions-controls controls" style="margin-right:5px">
             <a class="item-control">
                 {{#if partialDef}}
-                    <i class="fa-solid fa-shield-halved green toggle-effect" data-tooltip="{{localize 'CO.customStatus.partialDefDeactivate'}}" data-action="unactivate" data-effect="partialDef"></i>
+                    <i class="fa-solid fa-shield-halved green toggle-effect" data-action="toggleEffect" data-action="unactivate" data-effect="partialDef" data-tooltip="{{localize 'CO.customStatus.partialDefDeactivate'}}"></i>
                 {{else}}
-                    <i class="fa-solid fa-shield-halved gray toggle-effect" data-tooltip="{{localize 'CO.customStatus.partialDefActivate'}}" data-action="activate" data-effect="partialDef"></i>
+                    <i class="fa-solid fa-shield-halved gray toggle-effect" data-action="activate" data-effect="partialDef" data-tooltip="{{localize 'CO.customStatus.partialDefActivate'}}"></i>
                 {{/if}}
             </a>
             <a class="item-control">
                 {{#if fullDef}}
-                    <i class="fa-solid fa-shield green toggle-effect" data-tooltip="{{localize 'CO.customStatus.fullDefDeactivate'}}" data-action="unactivate" data-effect="fullDef"></i>
+                    <i class="fa-solid fa-shield green toggle-effect" data-action="unactivate" data-effect="fullDef" data-tooltip="{{localize 'CO.customStatus.fullDefDeactivate'}}"></i>
                 {{else}}
-                    <i class="fa-solid fa-shield gray toggle-effect" data-tooltip="{{localize 'CO.customStatus.fullDefActivate'}}" data-action="activate" data-effect="fullDef"></i>
+                    <i class="fa-solid fa-shield gray toggle-effect" data-action="activate" data-effect="fullDef" data-tooltip="{{localize 'CO.customStatus.fullDefActivate'}}"></i>
                 {{/if}}
             </a>
         </div>

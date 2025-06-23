@@ -36,7 +36,7 @@ export default class COCharacterSheetV2 extends CoBaseActorSheetV2 {
     tabs: { template: "templates/generic/tab-navigation.hbs" },
     main: { template: "systems/co/templates/v2/actors/character-main.hbs" },
     inventory: { template: "systems/co/templates/v2/actors/character-inventory.hbs" },
-    paths: { template: "systems/co/templates/v2/actors/shared/paths.hbs", templates: ["systems/co/templates/v2/actors/shared/capacities-nopath.hbs"] },
+    paths: { template: "systems/co/templates/v2/actors/shared/paths.hbs", templates: ["systems/co/templates/v2/actors/shared/capacities-nopath.hbs"], scrollable: [""] },
     effects: { template: "systems/co/templates/v2/actors/shared/effects.hbs" },
     biography: { template: "systems/co/templates/v2/actors/character-biography.hbs" },
   }
@@ -79,7 +79,6 @@ export default class COCharacterSheetV2 extends CoBaseActorSheetV2 {
   async _onRender(context, options) {
     await super._onRender(context, options)
     // Additional character-specific render logic can go here
-    
   }
 
   /**
@@ -91,7 +90,7 @@ export default class COCharacterSheetV2 extends CoBaseActorSheetV2 {
     event.preventDefault()
     const shiftKey = !!event.shiftKey
     const dataset = target.dataset
-    const action = dataset.action
+    const action = dataset.actionType
     const type = dataset.type
     const source = dataset.source
     const indice = dataset.indice
@@ -115,7 +114,7 @@ export default class COCharacterSheetV2 extends CoBaseActorSheetV2 {
     event.preventDefault()
     const dataset = target.dataset
     const effectid = dataset.effect
-    const action = dataset.action
+    const action = dataset.actionType
     let activation
     if (action === "activate") {
       activation = await this.document.activateCOStatusEffect({ state: true, effectid })
@@ -157,10 +156,10 @@ export default class COCharacterSheetV2 extends CoBaseActorSheetV2 {
    */
   static async #onDeleteItem(event, target) {
     event.preventDefault()
-    const li = $(target).parents(".item")
-    const itemId = li.data("itemId")
-    const itemUuid = li.data("itemUuid")
-    const itemType = li.data("itemType")
+    const li = target.closest(".item")
+    const itemId = li.dataset.itemId
+    const itemUuid = li.dataset.itemUuid
+    const itemType = li.dataset.itemType
     switch (itemType) {
       case "path":
         await COCharacterSheetV2.#onDeletePath(event, target)
@@ -236,7 +235,7 @@ export default class COCharacterSheetV2 extends CoBaseActorSheetV2 {
    */
   static async #onEditAbilities(event, target) {
     event.preventDefault()
-    return new CoEditAbilitiesDialog({actor: this.document}).render(true)
+    return new CoEditAbilitiesDialog({ actor: this.document }).render(true)
   }
 
   /**

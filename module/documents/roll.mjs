@@ -128,13 +128,13 @@ export class COSkillRoll extends CORoll {
           },
         ],
         render: (event, dialog) => {
-          const inputs = dialog.querySelectorAll(".bonus-item")
+          const inputs = dialog.element.querySelectorAll(".bonus-item")
           if (inputs) {
             inputs.forEach((input) => {
               input.addEventListener("click", this._onToggleCheckSkillBonus.bind(this))
             })
           }
-          const radios = dialog.querySelectorAll('input[name="dice"]')
+          const radios = dialog.element.querySelectorAll('input[name="dice"]')
           radios.forEach((radio) => {
             radio.addEventListener("change", (event) => {
               event.preventDefault()
@@ -151,7 +151,7 @@ export class COSkillRoll extends CORoll {
                   newFormula = `2d20kl+${dialogContext.skillValue}`
                   break
               }
-              dialog.querySelector('input[name="formula"]').value = newFormula
+              dialog.element.querySelector('input[name="formula"]').value = newFormula
             })
           })
         },
@@ -316,7 +316,7 @@ export class COAttackRoll extends CORoll {
           },
         ],
         render: (event, dialog) => {
-          const radios = dialog.querySelectorAll('input[name="dice"]')
+          const radios = dialog.element.querySelectorAll('input[name="dice"]')
           radios.forEach((radio) => {
             radio.addEventListener("change", (event) => {
               event.preventDefault()
@@ -333,11 +333,11 @@ export class COAttackRoll extends CORoll {
                   newFormula = `2d20kl+${dialogContext.initialSkillFormula}`
                   break
               }
-              dialog.querySelector('input[name="formulaAttack"]').value = newFormula
+              dialog.element.querySelector('input[name="formulaAttack"]').value = newFormula
             })
           })
           // Options tactiques
-          const radiosTactical = dialog.querySelectorAll('input[name="tactical"]')
+          const radiosTactical = dialog.element.querySelectorAll('input[name="tactical"]')
           radiosTactical.forEach((radio) => {
             radio.addEventListener("change", (event) => {
               event.preventDefault()
@@ -367,14 +367,14 @@ export class COAttackRoll extends CORoll {
                   newMalus = `${dialogContext.skillMalus - 7}`
                   break
               }
-              dialog.querySelector('input[name="skillBonus"]').value = newBonus
-              dialog.querySelector('input[name="formulaDamage"]').value = newDamage
-              dialog.querySelector('input[name="skillMalus"]').value = newMalus
+              dialog.element.querySelector('input[name="skillBonus"]').value = newBonus
+              dialog.element.querySelector('input[name="formulaDamage"]').value = newDamage
+              dialog.element.querySelector('input[name="skillMalus"]').value = newMalus
             })
           })
           // Dommages temporaires
-          const tempDamageCb = dialog.querySelector('input[name="tempDamage"]')
-          const radioButtons = dialog.querySelectorAll('input[type="radio"]')
+          const tempDamageCb = dialog.element.querySelector('input[name="tempDamage"]')
+          const radioButtons = dialog.element.querySelectorAll('input[type="radio"]')
           if (tempDamageCb && radioButtons.length > 0) {
             tempDamageCb.addEventListener("click", this._onCheckTempDamage.bind(this))
           }
