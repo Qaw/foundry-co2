@@ -331,8 +331,6 @@ export default class CharacterData extends ActorData {
         let bonusDice = this.bonusDiceModifiers.find((m) => m.target === key)
         if (bonusDice) {
           ability.superior = true
-        } else {
-          ability.superior = false
         }
       }
 
