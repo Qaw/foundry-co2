@@ -85,6 +85,11 @@ export default class EquipmentData extends ItemData {
     return this.subtype === SYSTEM.EQUIPMENT_SUBTYPES.misc.id
   }
 
+  get useHands() {
+    if (this.usage.oneHand || this.usage.twoHand) return true
+    return false
+  }
+
   get isConsumable() {
     return this.subtype === SYSTEM.EQUIPMENT_SUBTYPES.consumable.id
   }

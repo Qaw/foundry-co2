@@ -84,28 +84,30 @@
         </div>
     </fieldSet>
 
-    {{#if isWeapon}}
-    <fieldSet>
-        <legend>{{localize "CO.ui.usage"}}</legend>
-        <div class="flexrow">
-            <label>
-                <input type="checkbox" name="system.usage.oneHand" {{checked systemSource.usage.oneHand}} />
-                {{systemFields.usage.fields.oneHand.label}}
-            </label>
-            <label>
-                <input type="checkbox" name="system.usage.twoHand" {{checked systemSource.usage.twoHand}} />
-                {{systemFields.usage.fields.twoHand.label}}
-            </label>
-        </div>
-    </fieldSet>
+    {{#if (or isWeapon isShield isMisc)}}
+        <fieldSet>
+            <legend>{{localize "CO.ui.usage"}}</legend>
+            <div class="flexrow">
+                <label>
+                    <input type="checkbox" name="system.usage.oneHand" {{checked systemSource.usage.oneHand}} />
+                    {{systemFields.usage.fields.oneHand.label}}
+                </label>
+                <label>
+                    <input type="checkbox" name="system.usage.twoHand" {{checked systemSource.usage.twoHand}} />
+                    {{systemFields.usage.fields.twoHand.label}}
+                </label>
+            </div>
+        </fieldSet>
+    {{/if}}
 
-    <div class="form-group">
-        <label>{{localize "CO.ui.range"}}</label>
-        <div class="form-fields">
-            {{formInput systemFields.range.fields.value value=systemSource.range.value localize=true}}
-            {{formInput systemFields.range.fields.unit value=systemSource.range.unit localize=true}}
+    {{#if isWeapon}}
+        <div class="form-group">
+            <label>{{localize "CO.ui.range"}}</label>
+            <div class="form-fields">
+                {{formInput systemFields.range.fields.value value=systemSource.range.value localize=true}}
+                {{formInput systemFields.range.fields.unit value=systemSource.range.unit localize=true}}
+            </div>
         </div>
-    </div>
     {{/if}}
 
     {{#if system.properties.equipable}}

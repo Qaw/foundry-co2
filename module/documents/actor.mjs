@@ -964,7 +964,7 @@ export default class COActor extends Actor {
    * @returns {boolean} Returns true if the actor has enough free hands to equip the item, otherwise false.
    */
   _hasEnoughFreeHands(item, bypassChecks) {
-    // Si le contrôle de mains libres n'est pas demandé, on renvoi Vrai
+    // Si le contrôle de mains libres n'est pas demandé, renvoi true
     let checkFreehands = game.settings.get("co", "checkFreeHandsBeforeEquip")
     if (!checkFreehands || checkFreehands === "none") return true
 
@@ -977,9 +977,14 @@ export default class COActor extends Actor {
     // Nombre de mains nécessaire pour l'objet que l'on veux équipper
     let neededHands = item.system.usage.twoHand ? 2 : 1
 
-    // Calcul du nombre de mains déjà utilisées : on récupère les armes ou les boucliers équipés
+    // Calcul du nombre de mains déjà utilisées : on récupère les armes, les boucliers et les objets divers qui utilisent des mains et sont équipés
     let itemsInHands = this.items.filter(
-      (item) => (item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.weapon.id || item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.shield.id) && item.system.equipped,
+      (item) =>
+        (item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.weapon.id ||
+          item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.shield.id ||
+          item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.misc.id) &&
+        item.system.useHands &&
+        item.system.equipped,
     )
     let usedHands = itemsInHands.reduce((total, item) => total + (item.system.usage.twoHand ? 2 : 1), 0)
 
