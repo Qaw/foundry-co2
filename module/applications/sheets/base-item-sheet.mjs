@@ -467,7 +467,7 @@ export default class CoBaseItemSheetV2 extends HandlebarsApplicationMixin(foundr
    * @param {DragEvent} event       The originating DragEvent
    * @protected
    */
-  _onDragOver(event) { }
+  _onDragOver(event) {}
 
   /**
    * Callback actions which occur when a dragged element is dropped on a target.

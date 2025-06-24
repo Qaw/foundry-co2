@@ -1283,12 +1283,12 @@ export default class COActor extends Actor {
    * Supprime un item de type Capacity ou Feature
    * @param {*} itemId
    */
-  deleteItem(itemId) {
+  async deleteItem(itemId) {
     const item = this.items.find((item) => item.id === itemId)
     switch (item.type) {
       case SYSTEM.ITEM_TYPE.capacity.id:
       case SYSTEM.ITEM_TYPE.feature.id:
-        return this.deleteEmbeddedDocuments("Item", [itemId])
+        return await this.deleteEmbeddedDocuments("Item", [itemId])
       default:
         break
     }
@@ -1313,21 +1313,23 @@ export default class COActor extends Actor {
     for (const capacityUuid of capacitiesUuids) {
       this.deleteCapacity(capacityUuid)
     }
-    this.deleteEmbeddedDocuments("Item", [feature.id])
+    await this.deleteEmbeddedDocuments("Item", [feature.id])
   }
 
   /**
    * Deletes a profile and its linked paths.
    *
-   * @param {string} profileId The ID of the profile to delete.
+   * @param {string} profileUuid The ID of the profile to delete.
    */
-  async deleteProfile(profileId) {
+  async deleteProfile(profileUuid) {
+    const profile = fromUuidSync(profileUuid)
     // Delete linked paths
-    const pathsUuids = this.items.get(profileId).system.paths
+    const pathsUuids = profile.system.paths
     for (const pathUuid of pathsUuids) {
-      this.deletePath(pathUuid)
+      await this.deletePath(pathUuid)
     }
-    this.deleteEmbeddedDocuments("Item", [profileId])
+    const { id } = foundry.utils.parseUuid(profileUuid)
+    await this.deleteEmbeddedDocuments("Item", [id])
   }
 
   /**
@@ -1341,12 +1343,12 @@ export default class COActor extends Actor {
     const path = await fromUuid(pathUuid)
     if (path) {
       const capacitiesUuId = path.system.capacities
-      const capacitiesId = capacitiesUuId.map((capacityUuid) => {
+      const toDeleteIds = capacitiesUuId.map((capacityUuid) => {
         const { id } = foundry.utils.parseUuid(capacityUuid)
         return id
       })
-      this.deleteEmbeddedDocuments("Item", capacitiesId)
-      this.deleteEmbeddedDocuments("Item", [path.id])
+      toDeleteIds.push(path.id)
+      await this.deleteEmbeddedDocuments("Item", toDeleteIds)
     }
   }
 
@@ -1360,14 +1362,15 @@ export default class COActor extends Actor {
   async deleteCapacity(capacityUuid) {
     const capacity = await fromUuid(capacityUuid)
     // Avant on va vérifier que cette capacité n'est pas liée à une autre
-    this.capacities.forEach((c) => {
+    for (const c of this.capacities) {
       if (c.system.linkedCapacity === capacityUuid) {
         c.system.linkedCapacity = null
-        c.update({ "system.linkedCapacity": null })
+        await c.update({ "system.linkedCapacity": null })
       }
-    })
+    }
+
     if (capacity) {
-      this.deleteEmbeddedDocuments("Item", [capacity.id])
+      await this.deleteEmbeddedDocuments("Item", [capacity.id])
     }
   }
   // #endregion

@@ -19,7 +19,6 @@ export default class COCharacterSheetV2 extends CoBaseActorSheetV2 {
       deactivate: COCharacterSheetV2.#onDeactivateDef,
       editAbilities: COCharacterSheetV2.#onEditAbilities,
       deleteItem: COCharacterSheetV2.#onDeleteItem,
-      deletePath: COCharacterSheetV2.#onDeletePath,
       roll: COCharacterSheetV2.#onRoll,
       toggleAction: COCharacterSheetV2.#onUseAction,
       toggleEffect: COCharacterSheetV2.#onUseEffect,
@@ -159,24 +158,25 @@ export default class COCharacterSheetV2 extends CoBaseActorSheetV2 {
   static async #onDeleteItem(event, target) {
     event.preventDefault()
     const li = target.closest(".item")
-    const itemId = li.dataset.itemId
-    const itemUuid = li.dataset.itemUuid
-    const itemType = li.dataset.itemType
-    switch (itemType) {
+    const id = li.dataset.itemId
+    const uuid = li.dataset.itemUuid
+    const type = li.dataset.itemType
+    if (!uuid) return
+    switch (type) {
       case "path":
-        await COCharacterSheetV2.#onDeletePath(event, target)
+        await this.document.deletePath(uuid)
         break
       case "capacity":
-        await COCharacterSheetV2.#onDeleteCapacity(event, target, itemUuid)
+        await this.document.deleteCapacity(uuid)
         break
       case "feature":
-        await COCharacterSheetV2.#onDeleteFeature(event, target, itemUuid)
+        await this.document.deleteFeature(uuid)
         break
       case "profile":
-        await COCharacterSheetV2.#onDeleteProfile(event, target)
+        await this.document.deleteProfile(uuid)
         break
       default:
-        this.document.deleteEmbeddedDocuments("Item", [itemId])
+        await this.document.deleteEmbeddedDocuments("Item", [id])
     }
   }
 
@@ -189,46 +189,8 @@ export default class COCharacterSheetV2 extends CoBaseActorSheetV2 {
    * @returns {Promise<void>} A promise that resolves when the feature is deleted.
    */
   static async #onDeleteFeature(event, target, itemUuid) {
+    event.preventDefault()
     await this.document.deleteFeature(itemUuid)
-  }
-
-  /**
-   * Delete the selected profile
-   * @param {PointerEvent} event The originating click event
-   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
-   */
-  static async #onDeleteProfile(event, target) {
-    event.preventDefault()
-    const li = target.closest(".item")
-    const profileId = li.dataset.itemId
-    this.document.deleteProfile(profileId)
-  }
-
-  /**
-   * Delete the selected path
-   * @param {PointerEvent} event The originating click event
-   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
-   */
-  static async #onDeletePath(event, target) {
-    event.preventDefault()
-    const li = target.closest(".item")
-    const uuid = li.dataset.itemUuid
-    this.document.deletePath(uuid)
-  }
-
-  /**
-   * Handles the deletion of a capacity item from the actor.
-   *
-   * @param {PointerEvent} event The originating click event
-   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
-   * @param {string} itemUuid The unique identifier of the item to be deleted.
-   * @returns {Promise<void>} A promise that resolves when the capacity item has been deleted.
-   */
-  static async #onDeleteCapacity(event, target) {
-    event.preventDefault()
-    const li = target.closest(".item")
-    const uuid = li.dataset.itemUuid
-    await this.document.deleteCapacity(uuid)
   }
 
   /**
