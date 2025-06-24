@@ -58,7 +58,7 @@ Hooks.once("init", async function () {
   }
 
   foundry.documents.collections.Items.unregisterSheet("core", ItemSheet)
-  foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.AttackSheet, { types: ["attack"], makeDefault: true, label: "CO.sheet.attack" })
+  foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.AttackSheetV2, { types: ["attack"], makeDefault: true, label: "CO.sheet.attack" })
   foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.CapacitySheetv2, { types: ["capacity"], makeDefault: true, label: "CO.sheet.capacity" })
   foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.EquipmentSheetv2, { types: ["equipment"], makeDefault: true, label: "CO.sheet.equipment" })
   foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.FeatureSheetV2, { types: ["feature"], makeDefault: true, label: "CO.sheet.feature" })

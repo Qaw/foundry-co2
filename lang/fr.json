@@ -266,6 +266,19 @@
         }
       }
     },
+    "Attack": {
+      "FIELDS": {
+        "description": {
+          "label": "Description"
+        },
+        "origin": {
+          "label": "Origine"
+        },
+        "slug": {
+          "label": "Clé"
+        }
+      }
+    },
     "Action": {
       "FIELDS": {
         "label": {
@@ -311,6 +324,7 @@
         "path": { "description": "Description", "details": "Détails" },
         "profile": { "description": "Description", "details": "Détails" },
         "feature": { "description": "Description", "details": "Détails" },
+        "attack": { "description": "Description", "details": "Détails", "actions": "Actions/Effets" },
         "character": { "main": "Principal", "inventory": "Inventaire", "paths": "Voies & Capacités", "effects": "Effets", "biography": "Biographie" },
         "encounter": { "main": "Principal", "loot": "Butin", "paths": "Voies & Capacités", "effects": "Effets", "notes": "Notes" }
       }

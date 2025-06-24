@@ -1,0 +1,41 @@
+{{log "Chroniques Oubliées | attack" this}}
+<section class="tab standard-form attack{{#if tabs.details.active}} active{{/if}}" data-group="primary" data-tab="details">
+
+    {{#if debugMode}}
+        <fieldset class="debug">
+            <legend>{{localize "CO.ui.debug"}}</legend>
+            {{formGroup fields._id value=item.id disabled=true localize=true label="CO.ui.id"}}
+            {{formGroup systemFields.slug value=system.slug disabled=true localize=true}}
+        </fieldset>
+    {{/if}}
+
+    <div class="form-group">
+        <label>{{localize "CO.label.long.subtype"}}</label>
+        <div class="form-fields">
+            <select name="system.subtype" data-type="String" style="width:100%">
+                {{selectOptions @root.choiceAttackType selected=system.subtype localize=true}}
+            </select>
+        </div>
+    </div>
+    {{#if (or system.isRanged system.isMagic)}}
+        <div class="form-group">
+            <label>{{localize "CO.ui.range"}}</label>
+            <div class="form-fields">
+                <input class="field-value" name="system.range.value" type="text" value="{{system.range.value}}" data-dtype="Number">
+                <input class="field-value" name="system.range.unit" type="text" value="{{system.range.unit}}" data-dtype="String">                
+            </div>
+        </div>    
+    {{/if}}     
+    {{#if system.properties.chargeable}}
+        <div class="form-group">
+            <label>{{localize "CO.ui.charges"}}</label>
+            <div class="form-fields">
+                <input class="field-value" name="system.charges.current" type="text" value="{{system.charges.current}}" placeholder="{{localize 'CO.ui.current'}}" data-dtype="Number">
+                /
+                <input class="field-value" name="system.charges.max" type="text" value="{{system.charges.max}}" placeholder="{{localize 'CO.ui.max'}}" data-dtype="Number">
+            </div>
+        </div>
+
+    {{/if}}
+
+</section>

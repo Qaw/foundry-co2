@@ -1,21 +1,20 @@
 import CoBaseItemSheetV2 from "./base-item-sheet-v2.mjs"
 
-export default class CoEquipmentSheetv2 extends CoBaseItemSheetV2 {
+export default class CoAttackSheetV2 extends CoBaseItemSheetV2 {
   /** @override */
   static DEFAULT_OPTIONS = {
-    classes: ["equipment"],
+    classes: ["attack"],
     position: {
       width: 600,
       height: 720,
     },
   }
 
-  /** @override */
   static PARTS = {
     header: { template: "systems/co/templates/v2/items/shared/header.hbs" },
     tabs: { template: "templates/generic/tab-navigation.hbs" },
     description: { template: "systems/co/templates/v2/items/shared/description.hbs" },
-    details: { template: "systems/co/templates/v2/items/equipment.hbs" },
+    details: { template: "systems/co/templates/v2/items/attack.hbs" },
     actions: {
       template: "systems/co/templates/v2/items/shared/actions.hbs",
       templates: [
@@ -25,20 +24,15 @@ export default class CoEquipmentSheetv2 extends CoBaseItemSheetV2 {
         "systems/co/templates/v2/items/parts/resolvers-part.hbs",
         "systems/co/templates/v2/items/parts/resolver-part.hbs",
       ],
-      scrollable: [""],
+      scrollable: [".tab", ".action-body"],
     },
   }
 
-  /** @override */
   static TABS = {
     primary: {
-      tabs: [
-        { id: "description", icon: "fa-solid fa-file-alt" },
-        { id: "details", icon: "fa-solid fa-image" },
-        { id: "actions", icon: "fa-solid fa-grid" },
-      ],
+      tabs: [{ id: "description" }, { id: "details" }, { id: "actions" }],
       initial: "details",
-      labelPrefix: "CO.sheet.tabs.equipment",
+      labelPrefix: "CO.sheet.tabs.attack",
     },
   }
 
@@ -49,50 +43,16 @@ export default class CoEquipmentSheetv2 extends CoBaseItemSheetV2 {
     const context = await super._prepareContext()
 
     context.resolverSystemFields = this.document.system.schema.fields.actions.element.fields.resolvers.element.fields
+    context.choiceAttackType = SYSTEM.ATTACK_TYPE
 
-    console.log(`CoEquipmentSheetv2 - context`, context)
+    console.log(`CoAttackSheetv2 - context`, context)
     return context
   }
 
-  /** @override */
+  /** @inheritDoc */
   async _preparePartContext(partId, context, options) {
-    await super._preparePartContext(partId, context, options)
-    const doc = this.document
+    context = await super._preparePartContext(partId, context, options)
     switch (partId) {
-      case "description":
-        context.enrichedDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.description, { async: true })
-        break
-
-      case "details":
-        // Select options
-        // Transformation du tableau d'objets en objet
-        context.martialTrainingsWeaponsList = game.system.CONST.martialTrainingsWeapons.reduce((acc, item) => {
-          acc[item.key] = item.label
-          return acc
-        }, {})
-
-        context.martialTrainingsArmorsList = game.system.CONST.martialTrainingsArmors.reduce((acc, item) => {
-          acc[item.key] = item.label
-          return acc
-        }, {})
-
-        context.martialTrainingsShieldsList = game.system.CONST.martialTrainingsShields.reduce((acc, item) => {
-          acc[item.key] = item.label
-          return acc
-        }, {})
-
-        // Select options
-        context.choiceEquipmentSubTypes = SYSTEM.EQUIPMENT_SUBTYPES
-        context.choiceEquipmentRarity = SYSTEM.EQUIPMENT_RARITY
-        context.choiceDamageType = SYSTEM.EQUIPMENT_DAMAGETYPE
-
-        context.isWeapon = doc.system.isWeapon
-        context.isArmor = doc.system.isArmor
-        context.isShield = doc.system.isShield
-        context.isMisc = doc.system.isMisc
-        context.isConsumable = doc.system.isConsumable
-        break
-
       case "actions":
         context.subtabs = this._prepareActionsTabs()
         break

@@ -45,6 +45,9 @@ export default class AttackData extends ItemData {
     })
   }
 
+    /** @override */
+  static LOCALIZATION_PREFIXES = ["CO.Attack"]
+
   get isContact() {
     return this.subtype === "melee"
   }
