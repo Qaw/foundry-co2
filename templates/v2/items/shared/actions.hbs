@@ -50,11 +50,17 @@
                 <fieldSet>
                     <legend>{{localize "CO.label.long.properties"}}</legend>
                     {{#if @root.debugMode}}
-                    <fieldSet>
-                        <legend>{{localize "CO.ui.debug"}}</legend>
-                        {{formGroup action.schema.fields.properties.fields.visible value=action.properties.visible name=(concat "system.actions." idx ".properties.visible") localize=true}}
-                        {{formGroup action.schema.fields.properties.fields.enabled value=action.properties.enabled name=(concat "system.actions." idx ".properties.enabled") localize=true}}
-                    </fieldSet>
+                    <div class="flexrow">
+                        <label>{{localize "CO.ui.debug"}}</label>
+                        <label>
+                            <input type="checkbox" name="{{concat 'system.actions.' idx '.properties.visible'}}" {{checked action.properties.visible}} />
+                            {{action.schema.fields.properties.fields.visible.label}}
+                        </label>
+                        <label>
+                            <input type="checkbox" name="{{concat 'system.actions.' idx '.properties.enabled'}}" {{checked action.properties.enabled}} />
+                            {{action.schema.fields.properties.fields.enabled.label}}
+                        </label>
+                    </div>
                     {{/if}}
                     <div class="flexrow">
                         <label>

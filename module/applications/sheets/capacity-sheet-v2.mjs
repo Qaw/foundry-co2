@@ -32,17 +32,23 @@ export default class CoCapacitySheetV2 extends CoBaseItemSheetV2 {
   /** @override */
   static TABS = {
     primary: {
-      tabs: [
-        { id: "description", icon: "fa-solid fa-file-alt" },
-        { id: "details", icon: "fa-solid fa-image" },
-        { id: "actions", icon: "fa-solid fa-grid" },
-      ],
+      tabs: [{ id: "description" }, { id: "details" }, { id: "actions" }],
       initial: "details",
       labelPrefix: "CO.sheet.tabs.capacity",
     },
   }
 
   #actionTabSelected = null
+
+  /** @override */
+  async _prepareContext() {
+    const context = await super._prepareContext()
+
+    context.resolverSystemFields = this.document.system.schema.fields.actions.element.fields.resolvers.element.fields
+
+    console.log(`CoCapacitySheetv2 - context`, context)
+    return context
+  }
 
   /** @inheritDoc */
   async _preparePartContext(partId, context, options) {
