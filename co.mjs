@@ -58,12 +58,12 @@ Hooks.once("init", async function () {
   }
 
   foundry.documents.collections.Items.unregisterSheet("core", ItemSheet)
-  foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.AttackSheetV2, { types: ["attack"], makeDefault: true, label: "CO.sheet.attack" })
-  foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.CapacitySheetv2, { types: ["capacity"], makeDefault: true, label: "CO.sheet.capacity" })
-  foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.EquipmentSheetv2, { types: ["equipment"], makeDefault: true, label: "CO.sheet.equipment" })
-  foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.FeatureSheetV2, { types: ["feature"], makeDefault: true, label: "CO.sheet.feature" })
-  foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.PathSheetV2, { types: ["path"], makeDefault: true, label: "CO.sheet.path" })
-  foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.ProfileSheetV2, { types: ["profile"], makeDefault: true, label: "CO.sheet.profile" })
+  foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.AttackSheet, { types: ["attack"], makeDefault: true, label: "CO.sheet.attack" })
+  foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.CapacitySheet, { types: ["capacity"], makeDefault: true, label: "CO.sheet.capacity" })
+  foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.EquipmentSheet, { types: ["equipment"], makeDefault: true, label: "CO.sheet.equipment" })
+  foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.FeatureSheet, { types: ["feature"], makeDefault: true, label: "CO.sheet.feature" })
+  foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.PathSheet, { types: ["path"], makeDefault: true, label: "CO.sheet.path" })
+  foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.ProfileSheet, { types: ["profile"], makeDefault: true, label: "CO.sheet.profile" })
 
   // Chat
   CONFIG.ChatMessage.documentClass = documents.COChatMessage

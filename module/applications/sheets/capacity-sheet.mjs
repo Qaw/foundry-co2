@@ -1,4 +1,4 @@
-import CoBaseItemSheetV2 from "./base-item-sheet-v2.mjs"
+import CoBaseItemSheetV2 from "./base-item-sheet.mjs"
 
 export default class CoCapacitySheetV2 extends CoBaseItemSheetV2 {
   /** @override */

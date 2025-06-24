@@ -1,4 +1,4 @@
-import CoBaseItemSheetV2 from "./base-item-sheet-v2.mjs"
+import CoBaseItemSheetV2 from "./base-item-sheet.mjs"
 
 export default class CoFeatureSheetV2 extends CoBaseItemSheetV2 {
   /** @override */
@@ -21,10 +21,7 @@ export default class CoFeatureSheetV2 extends CoBaseItemSheetV2 {
   /** @override */
   static TABS = {
     primary: {
-      tabs: [
-        { id: "description", icon: "fa-solid fa-file-alt" },
-        { id: "details", icon: "fa-solid fa-image" },
-      ],
+      tabs: [{ id: "description" }, { id: "details" }],
       initial: "details",
       labelPrefix: "CO.sheet.tabs.feature",
     },
