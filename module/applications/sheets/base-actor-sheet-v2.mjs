@@ -5,6 +5,7 @@ const { DragDrop } = foundry.applications.ux
 import { SYSTEM } from "../../config/system.mjs"
 import Utils from "../../utils.mjs"
 import CoChat from "../../chat.mjs"
+import slideToggle from "../../elements/slide-toggle.mjs"
 
 export default class CoBaseActorSheetV2 extends HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2) {
   /**
@@ -134,8 +135,14 @@ export default class CoBaseActorSheetV2 extends HandlebarsApplicationMixin(found
    */
   static #onSectionToggle(event, target) {
     event.preventDefault()
-    const foldableElement = $(target).parent().next(".foldable")
-    foldableElement.slideToggle("fast")
+    const li = target.closest("li.items-container-header")
+    let foldable = li.nextElementSibling
+    while (foldable && !foldable.classList.contains("foldable")) {
+      foldable = foldable.nextElementSibling
+    }
+    if (foldable) {
+      slideToggle(foldable)
+    }
     return true
   }
 
