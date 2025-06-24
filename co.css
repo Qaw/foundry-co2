@@ -127,6 +127,12 @@ fieldset legend {
   margin: 1px;
   min-height: calc(var(--button-size) - 4px);
 }
+.form-group .form-fields img.action-icon,
+.form-group-stacked .form-fields img.action-icon {
+  flex: 0 1 32px;
+  height: 32px;
+  max-width: 32px;
+}
 .form-group.like-grid label,
 .form-group-stacked.like-grid label {
   overflow: hidden;
@@ -265,6 +271,12 @@ co-toggle-switch[checked] track {
 }
 co-toggle-switch[checked] thumb {
   margin-left: calc(100% - var(--toggle-switch-thumb-width));
+}
+.co {
+  --color-green: #44a12b;
+}
+.co .enabled {
+  color: var(--color-green);
 }
 .co.application ul,
 .co.application ol,

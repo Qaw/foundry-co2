@@ -11,19 +11,19 @@
                 <a class="item-control">
                     <i class="fa-solid fa-bed" data-action="useRecovery" data-option="fullRest" data-tooltip="{{localize 'CO.ui.fullRest'}}" data-tooltip-direction="UP"></i>
                 </a>
-                <a class="item-control">
-                    {{#if partialDef}}
-                        <i class="fa-solid fa-shield-halved green" data-action="toggleEffect" data-action-type="unactivate" data-effect="partialDef" data-tooltip="{{localize 'CO.customStatus.partialDefDeactivate'}}" data-tooltip-direction="UP"></i>
-                    {{else}}
-                        <i class="fa-solid fa-shield-halved gray" data-action="toggleEffect" data-action-type="activate" data-effect="partialDef" data-tooltip="{{localize 'CO.customStatus.partialDefActivate'}}" data-tooltip-direction="UP"></i>
-                    {{/if}}
+                <a class="item-control"
+                    data-tooltip-direction="UP" 
+                    data-tooltip="{{#if partialDef}}{{localize 'CO.customStatus.partialDefDeactivate'}}{{else}}{{localize 'CO.customStatus.partialDefActivate'}}{{/if}}" 
+                    data-action="{{#if partialDef}}deactivate{{else}}activate{{/if}}" 
+                    data-effect="partialDef">
+                        <i class="fa-solid fa-shield-halved {{#if partialDef}}enabled{{else}}disabled{{/if}} toggle-effect"></i>
                 </a>
-                <a class="item-control">
-                    {{#if fullDef}}
-                        <i class="fa-solid fa-shield green" data-action="toggleEffect" data-action-type="unactivate" data-effect="fullDef" data-tooltip="{{localize 'CO.customStatus.fullDefDeactivate'}}" data-tooltip-direction="UP"></i>
-                    {{else}}
-                        <i class="fa-solid fa-shield gray" data-action="toggleEffect" data-action-type="activate" data-effect="fullDef" data-tooltip="{{localize 'CO.customStatus.fullDefActivate'}}" data-tooltip-direction="UP"></i>
-                    {{/if}}
+                <a class="item-control"
+                    data-tooltip-direction="UP" 
+                    data-tooltip="{{#if fullDef}}{{localize 'CO.customStatus.fullDefDeactivate'}}{{else}}{{localize 'CO.customStatus.fullDefActivate'}}{{/if}}" 
+                    data-action="{{#if fullDef}}deactivate{{else}}activate{{/if}}"
+                    data-effect="fullDef">
+                        <i class="fa-solid fa-shield {{#if fullDef}}enabled{{else}}disabled{{/if}} toggle-effect"></i>
                 </a>
             </div>
         </div>
