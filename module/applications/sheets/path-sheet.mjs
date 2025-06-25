@@ -1,6 +1,6 @@
-import CoBaseItemSheetV2 from "./base-item-sheet.mjs"
+import CoBaseItemSheet from "./base-item-sheet.mjs"
 
-export default class CoPathSheetV2 extends CoBaseItemSheetV2 {
+export default class CoPathSheet extends CoBaseItemSheet {
   /** @override */
   static DEFAULT_OPTIONS = {
     classes: ["path"],
@@ -34,7 +34,7 @@ export default class CoPathSheetV2 extends CoBaseItemSheetV2 {
     // Select options
     context.choicePathSubtypes = SYSTEM.PATH_TYPES
 
-    console.log(`CoPathSheetv2 - context`, context)
+    console.log(`CoPathSheet - context`, context)
     return context
   }
 }

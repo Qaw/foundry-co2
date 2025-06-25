@@ -71,7 +71,7 @@ export default class COCharacterSheet extends COBaseActorSheet {
     context.partialDef = this.document.hasEffect("partialDef")
     context.fullDef = this.document.hasEffect("fullDef")
 
-    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`COCharacterSheetV2 - context`), context)
+    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`COCharacterSheet - context`), context)
 
     return context
   }

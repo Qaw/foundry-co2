@@ -58,7 +58,7 @@ export default class COEncounterSheet extends COBaseActorSheet {
     context.partialDef = this.actor.hasEffect("partialDef")
     context.fullDef = this.actor.hasEffect("fullDef")
 
-    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`COEncounterSheetV2 - context`), context)
+    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`COEncounterSheet - context`), context)
     return context
   }
 

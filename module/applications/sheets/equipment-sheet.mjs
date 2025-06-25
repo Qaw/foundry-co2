@@ -1,6 +1,6 @@
-import CoBaseItemSheetV2 from "./base-item-sheet.mjs"
+import CoBaseItemSheet from "./base-item-sheet.mjs"
 
-export default class CoEquipmentSheetv2 extends CoBaseItemSheetV2 {
+export default class CoEquipmentSheet extends CoBaseItemSheet {
   /** @override */
   static DEFAULT_OPTIONS = {
     classes: ["equipment"],
@@ -46,7 +46,7 @@ export default class CoEquipmentSheetv2 extends CoBaseItemSheetV2 {
 
     context.resolverSystemFields = this.document.system.schema.fields.actions.element.fields.resolvers.element.fields
 
-    console.log(`CoEquipmentSheetv2 - context`, context)
+    console.log(`CoEquipmentSheet - context`, context)
     return context
   }
 

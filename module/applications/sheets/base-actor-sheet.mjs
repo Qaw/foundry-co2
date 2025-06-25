@@ -7,7 +7,7 @@ import Utils from "../../utils.mjs"
 import CoChat from "../../chat.mjs"
 import slideToggle from "../../elements/slide-toggle.mjs"
 
-export default class COBaseActorSheet extends HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2) {
+export default class COBaseActorSheet extends HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheet) {
   /**
    * Different sheet modes.
    * @enum {number}
@@ -120,7 +120,7 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(foundry
     // Select options
     context.choiceMoveUnit = SYSTEM.MOVEMENT_UNIT
 
-    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseActorSheetV2 - context`), context)
+    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseActorSheet - context`), context)
     return context
   }
 

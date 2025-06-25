@@ -1,6 +1,6 @@
-import CoBaseItemSheetV2 from "./base-item-sheet.mjs"
+import CoBaseItemSheet from "./base-item-sheet.mjs"
 
-export default class CoCapacitySheetV2 extends CoBaseItemSheetV2 {
+export default class CoCapacitySheet extends CoBaseItemSheet {
   /** @override */
   static DEFAULT_OPTIONS = {
     classes: ["capacity"],
@@ -46,7 +46,7 @@ export default class CoCapacitySheetV2 extends CoBaseItemSheetV2 {
 
     context.resolverSystemFields = this.document.system.schema.fields.actions.element.fields.resolvers.element.fields
 
-    console.log(`CoCapacitySheetv2 - context`, context)
+    console.log(`CoCapacitySheet - context`, context)
     return context
   }
 

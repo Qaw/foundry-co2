@@ -1,6 +1,6 @@
-import CoBaseItemSheetV2 from "./base-item-sheet.mjs"
+import CoBaseItemSheet from "./base-item-sheet.mjs"
 
-export default class CoFeatureSheetV2 extends CoBaseItemSheetV2 {
+export default class CoFeatureSheet extends CoBaseItemSheet {
   /** @override */
   static DEFAULT_OPTIONS = {
     classes: ["feature"],
@@ -51,7 +51,7 @@ export default class CoFeatureSheetV2 extends CoBaseItemSheetV2 {
     }
     context.paths = infosPaths
 
-    console.log(`CoFeatureSheetv2 - context`, context)
+    console.log(`CoFeatureSheet - context`, context)
     return context
   }
 

@@ -1,6 +1,6 @@
-import CoBaseItemSheetV2 from "./base-item-sheet.mjs"
+import CoBaseItemSheet from "./base-item-sheet.mjs"
 
-export default class CoProfileSheetV2 extends CoBaseItemSheetV2 {
+export default class CoProfileSheet extends CoBaseItemSheet {
   /** @override */
   static DEFAULT_OPTIONS = {
     classes: ["profile"],
@@ -50,7 +50,7 @@ export default class CoProfileSheetV2 extends CoBaseItemSheetV2 {
     // Select options
     context.choiceProfileFamily = Object.fromEntries(Object.entries(SYSTEM.FAMILIES).map(([key, value]) => [key, value.label]))
 
-    console.log(`CoProfileSheetv2 - context`, context)
+    console.log(`CoProfileSheet - context`, context)
     return context
   }
 }

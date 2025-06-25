@@ -9,7 +9,7 @@ import { Condition } from "../../models/schemas/condition.mjs"
 import { Modifier } from "../../models/schemas/modifier.mjs"
 import { Resolver } from "../../models/schemas/resolver.mjs"
 
-export default class COBaseItemSheet extends HandlebarsApplicationMixin(foundry.applications.sheets.ItemSheetV2) {
+export default class COBaseItemSheet extends HandlebarsApplicationMixin(foundry.applications.sheets.ItemSheet) {
   /**
    * Different sheet modes.
    * @enum {number}

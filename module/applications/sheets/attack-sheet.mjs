@@ -1,6 +1,6 @@
-import CoBaseItemSheetV2 from "./base-item-sheet.mjs"
+import CoBaseItemSheet from "./base-item-sheet.mjs"
 
-export default class CoAttackSheetV2 extends CoBaseItemSheetV2 {
+export default class CoAttackSheet extends CoBaseItemSheet {
   /** @override */
   static DEFAULT_OPTIONS = {
     classes: ["attack"],
@@ -45,7 +45,7 @@ export default class CoAttackSheetV2 extends CoBaseItemSheetV2 {
     context.resolverSystemFields = this.document.system.schema.fields.actions.element.fields.resolvers.element.fields
     context.choiceAttackType = SYSTEM.ATTACK_TYPE
 
-    console.log(`CoAttackSheetv2 - context`, context)
+    console.log(`CoAttackSheet - context`, context)
     return context
   }
 
