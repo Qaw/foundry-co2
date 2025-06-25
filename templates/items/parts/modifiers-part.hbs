@@ -6,7 +6,7 @@
 <div class="modifiers-container foldable">
     {{#if action.modifiers}}
         {{#each action.modifiers as |m id|}}
-            {{> "systems/co/templates/v2/items/parts/modifier.hbs" m=m id=id idx=../idx}}
+            {{> "systems/co/templates/items/parts/modifier.hbs" m=m id=id idx=../idx}}
         {{/each}}
     {{else}}
         <div class="empty">

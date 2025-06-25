@@ -12,18 +12,18 @@ export default class CoEquipmentSheetv2 extends CoBaseItemSheetV2 {
 
   /** @override */
   static PARTS = {
-    header: { template: "systems/co/templates/v2/items/shared/header.hbs" },
+    header: { template: "systems/co/templates/items/shared/header.hbs" },
     tabs: { template: "templates/generic/tab-navigation.hbs" },
-    description: { template: "systems/co/templates/v2/items/shared/description.hbs" },
-    details: { template: "systems/co/templates/v2/items/equipment.hbs" },
+    description: { template: "systems/co/templates/items/shared/description.hbs" },
+    details: { template: "systems/co/templates/items/equipment.hbs" },
     actions: {
-      template: "systems/co/templates/v2/items/shared/actions.hbs",
+      template: "systems/co/templates/items/shared/actions.hbs",
       templates: [
-        "systems/co/templates/v2/items/parts/conditions-part.hbs",
-        "systems/co/templates/v2/items/parts/modifiers-part.hbs",
-        "systems/co/templates/v2/items/parts/modifier.hbs",
-        "systems/co/templates/v2/items/parts/resolvers-part.hbs",
-        "systems/co/templates/v2/items/parts/resolver-part.hbs",
+        "systems/co/templates/items/parts/conditions-part.hbs",
+        "systems/co/templates/items/parts/modifiers-part.hbs",
+        "systems/co/templates/items/parts/modifier.hbs",
+        "systems/co/templates/items/parts/resolvers-part.hbs",
+        "systems/co/templates/items/parts/resolver-part.hbs",
       ],
       scrollable: [""],
     },

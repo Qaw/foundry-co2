@@ -80,9 +80,9 @@
                     </div>
                 </fieldSet>
 
-                {{> "systems/co/templates/v2/items/parts/conditions-part.hbs" action=action idx=idx}}
-                {{> "systems/co/templates/v2/items/parts/modifiers-part.hbs" action=action idx=idx choiceModifierSubtypes=@root.choiceModifierSubtypes choiceModifierTargets=@root.choiceModifierTargets}}
-                {{> "systems/co/templates/v2/items/parts/resolvers-part.hbs" action=action idx=idx}}
+                {{> "systems/co/templates/items/parts/conditions-part.hbs" action=action idx=idx}}
+                {{> "systems/co/templates/items/parts/modifiers-part.hbs" action=action idx=idx choiceModifierSubtypes=@root.choiceModifierSubtypes choiceModifierTargets=@root.choiceModifierTargets}}
+                {{> "systems/co/templates/items/parts/resolvers-part.hbs" action=action idx=idx}}
             </div>
             {{/each}}
         </div>

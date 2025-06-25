@@ -12,10 +12,10 @@ export default class CoFeatureSheetV2 extends CoBaseItemSheetV2 {
 
   /** @override */
   static PARTS = {
-    header: { template: "systems/co/templates/v2/items/shared/header.hbs" },
+    header: { template: "systems/co/templates/items/shared/header.hbs" },
     tabs: { template: "templates/generic/tab-navigation.hbs" },
-    description: { template: "systems/co/templates/v2/items/shared/description.hbs" },
-    details: { template: "systems/co/templates/v2/items/feature.hbs" },
+    description: { template: "systems/co/templates/items/shared/description.hbs" },
+    details: { template: "systems/co/templates/items/feature.hbs" },
   }
 
   /** @override */
