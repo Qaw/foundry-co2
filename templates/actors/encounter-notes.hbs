@@ -1,0 +1,36 @@
+{{!-- Encounter Notes Tab Template --}}
+{{log "Chroniques Oubliées | Encounter notes" this}}
+<section class="tab standard-form notes{{#if tabs.notes.active}} active{{/if}}" data-group="primary" data-tab="notes">
+    <div class="notes foldable">
+        <div class="notes-section public-notes">
+            <label class="details-label">{{localize "CO.ui.public"}}</label>
+            {{#if unlocked}}
+            <prose-mirror name="system.details.notes.public" value="{{system.details.notes.public}}"
+                document-uuid="{{actor.uuid}}" compact>
+            </prose-mirror>
+            {{else}}
+            <div class="editor">
+                <div class="editor-content">
+                    {{{system.details.notes.public}}}
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+    <div class="notes foldable">
+        <div class="notes-section private-notes">
+            <label class="details-label">{{localize "CO.ui.private"}}</label>
+            {{#if unlocked}}
+            <prose-mirror name="system.details.notes.private" value="{{system.details.notes.private}}"
+                document-uuid="{{actor.uuid}}" compact>
+            </prose-mirror>
+            {{else}}
+            <div class="editor">
+                <div class="editor-content">
+                    {{{system.details.notes.private}}}
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</section>

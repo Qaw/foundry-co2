@@ -52,6 +52,9 @@ export default class CapacityData extends ItemData {
     })
   }
 
+  /** @override */
+  static LOCALIZATION_PREFIXES = ["CO.Capacity"]
+
   get isSpell() {
     return this.properties.spell
   }

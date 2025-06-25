@@ -7,6 +7,9 @@ import { CustomEffectData } from "./schemas/custom-effect.mjs"
 import DefaultConfiguration from "../config/configuration.mjs"
 import { Modifier } from "./schemas/modifier.mjs"
 export default class CharacterData extends ActorData {
+  /** @override */
+  static LOCALIZATION_PREFIXES = ["CO.Character"]
+
   static defineSchema() {
     const fields = foundry.data.fields
     const requiredInteger = { required: true, nullable: false, integer: true }
@@ -135,9 +138,6 @@ export default class CharacterData extends ActorData {
 
     return foundry.utils.mergeObject(super.defineSchema(), schema)
   }
-
-  /** @override */
-  static LOCALIZATION_PREFIXES = ["CO.Character"]
 
   get fpFromFamily() {
     return this.profile ? SYSTEM.FAMILIES[this.profile.system.family].fp : 0
@@ -331,8 +331,6 @@ export default class CharacterData extends ActorData {
         let bonusDice = this.bonusDiceModifiers.find((m) => m.target === key)
         if (bonusDice) {
           ability.superior = true
-        } else {
-          ability.superior = false
         }
       }
 
@@ -377,7 +375,7 @@ export default class CharacterData extends ActorData {
       let currentprestige = this.parent.paths.find((item) => item.system.subtype === SYSTEM.PATH_TYPES.prestige.id)
       let currentprestigePV = 0
       if (currentprestige && currentprestige.system.pvByLevel > 0) {
-        let nombreAppris = currentprestige.system.numberLearnedCapacities()
+        let nombreAppris = currentprestige.system.numberLearnedCapacities
         currentprestigePV = currentprestige.system.pvByLevel * nombreAppris
       }
 

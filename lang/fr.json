@@ -21,6 +21,291 @@
       "FIELDS": {
         "otherCapacitiesPointsSpent": {
           "label": "Autres points de capacités dépensés"
+        },
+        "details": {
+          "biography": {
+            "private": {
+              "label": "Privée"
+            },
+            "public": {
+              "label": "Publique"
+            }
+          },
+          "appearance": {
+            "private": {
+              "label": "Privée"
+            },
+            "public": {
+              "label": "Publique"
+            }
+          },
+          "notes": {
+            "private": {
+              "label": "Privée"
+            },
+            "public": {
+              "label": "Publique"
+            }
+          },
+          "size": {
+            "label": "Taille"
+          },
+          "languages": {
+            "label": "Langages"
+          }
+        }
+      }
+    },
+    "Equipment": {
+      "FIELDS": {
+        "description": {
+          "label": "Description"
+        },
+        "origin": {
+          "label": "Origine"
+        },
+        "slug": {
+          "label": "Clé"
+        },
+        "subtype": {
+          "label": "Sous-type"
+        },
+        "damagetype": {
+          "label": "Type de dommages"
+        },
+        "defense": {
+          "label": "Défense"
+        },
+        "magicalDefense": {
+          "label": "Défense magique"
+        },
+        "properties": {
+          "equipable": {
+            "label": "Équipable"
+          },
+          "reloadable": {
+            "label": "Rechargeable"
+          },
+          "stackable": {
+            "label": "Empilable"
+          }
+        },
+        "usage": {
+          "oneHand": {
+            "label": "Une main"
+          },
+          "twoHand": {
+            "label": "Deux mains"
+          }
+        },
+        "range": {
+          "value": {
+            "label": "Portée"
+          },
+          "unit": {
+            "label": "Unité"
+          }
+        },
+        "equipped": {
+          "label": "Équipé"
+        },
+        "source": {
+          "label": "Source"
+        },
+        "weight": {
+          "value": {
+            "label": "Poids"
+          },
+          "unit": {
+            "label": "Unité"
+          }
+        },
+        "price": {
+          "value": {
+            "label": "Prix"
+          },
+          "unit": {
+            "label": "Unité"
+          }
+        },
+        "rarity": {
+          "label": "Rareté"
+        },
+        "quantity": {
+          "current": {
+            "label": "Quantité actuelle"
+          },
+          "max": {
+            "label": "Quantité maximale"
+          },
+          "destroyIfEmpty": {
+            "label": "Détruire si vide"
+          }
+        },
+        "charges": {
+          "current": {
+            "label": "Charges/Munitions actuelles"
+          },
+          "max": {
+            "label": "Charges/Munitions maximales"
+          },
+          "destroyIfEmpty": {
+            "label": "Détruire si vide"
+          }
+        },
+        "tags": {
+          "label": "Tags"
+        }
+      }
+    },
+    "Path": {
+      "FIELDS": {
+        "description": {
+          "label": "Description"
+        },
+        "origin": {
+          "label": "Origine"
+        },
+        "slug": {
+          "label": "Clé"
+        },
+        "subtype": {
+          "label": "Sous-type"
+        },
+        "rank": {
+          "label": "Rang"
+        },
+        "maxDefenseArmor": {
+          "label": "Défense maximale de l'armure"
+        },
+        "pvByLevel": {
+          "label": "Points de vigueur par niveau"
+        }
+      }
+    },
+    "Profile": {
+      "FIELDS": {
+        "description": {
+          "label": "Description"
+        },
+        "origin": {
+          "label": "Origine"
+        },
+        "slug": {
+          "label": "Clé"
+        },
+        "family": {
+          "label": "Famille"
+        },
+        "maxDefenseArmor": {
+          "label": "Défense maximale de l'armure"
+        },
+        "mainProfile": {
+          "label": "Profil principal"
+        }
+      }
+    },
+    "Capacity": {
+      "FIELDS": {
+        "description": {
+          "label": "Description"
+        },
+        "origin": {
+          "label": "Origine"
+        },
+        "slug": {
+          "label": "Clé"
+        },
+        "rank": {
+          "label": "Rang"
+        },
+        "learned": {
+          "label": "Appris"
+        },
+        "allowLinkedCapacity": {
+          "label": "Autorise une capacité liée"
+        },
+        "cost": {
+          "label": "Coût en points de capacité"
+        },
+        "manaCost": {
+          "label": "Coût en points de mana"
+        },
+        "actionType": {
+          "label": "Type d'action"
+        },
+        "frequency": {
+          "label": "Fréquence d'utilisation"
+        },
+        "properties": {
+          "spell": {
+            "label": "Sortilège"
+          }
+        },
+        "linkedCapacity": {
+          "label": "Capacité liée"
+        },
+        "parentCapacity": {
+          "label": "Capacité parente"
+        }
+      }
+    },
+    "Feature": {
+      "FIELDS": {
+        "description": {
+          "label": "Description"
+        },
+        "origin": {
+          "label": "Origine"
+        },
+        "slug": {
+          "label": "Clé"
+        },
+        "subtype": {
+          "label": "Sous-type"
+        }
+      }
+    },
+    "Attack": {
+      "FIELDS": {
+        "description": {
+          "label": "Description"
+        },
+        "origin": {
+          "label": "Origine"
+        },
+        "slug": {
+          "label": "Clé"
+        }
+      }
+    },
+    "Action": {
+      "FIELDS": {
+        "label": {
+          "label": "Label"
+        },
+        "chatFlavor": {
+          "label": "Message chat"
+        },
+        "type": {
+          "label": "Type"
+        },
+        "properties": {
+          "visible": {
+            "label": "Visible"
+          },
+          "enabled": {
+            "label": "Activée"
+          },
+          "activable": {
+            "label": "Activable"
+          },
+          "temporary": {
+            "label": "Temporaire"
+          },
+          "noManaCost": {
+            "label": "Sans coût en mana"
+          }
         }
       }
     },
@@ -32,7 +317,17 @@
       "profile": "Fiche de profil",
       "feature": "Fiche de feature",
       "path": "Fiche de voie",
-      "equipement": "Fiche d'équipement"
+      "equipement": "Fiche d'équipement",
+      "tabs": {
+        "equipment": { "description": "Description", "details": "Détails", "actions": "Actions/Effets" },
+        "capacity": { "description": "Description", "details": "Détails", "actions": "Actions/Effets" },
+        "path": { "description": "Description", "details": "Détails" },
+        "profile": { "description": "Description", "details": "Détails" },
+        "feature": { "description": "Description", "details": "Détails" },
+        "attack": { "description": "Description", "details": "Détails", "actions": "Actions/Effets" },
+        "character": { "main": "Principal", "inventory": "Inventaire", "paths": "Voies & Capacités", "effects": "Effets", "biography": "Biographie" },
+        "encounter": { "main": "Principal", "loot": "Butin", "paths": "Voies & Capacités", "effects": "Effets", "notes": "Notes" }
+      }
     },
     "notif": {
       "ready": "Système prêt.",
@@ -136,6 +431,7 @@
         "family": "Famille",
         "source": "Source",
         "spellcasting": "Modificateur pour Attaque Magique",
+        "tempDm": "DM temporaires",
         "martialCategory": "Catégorie martiale",
         "martialTraining": "Formation martiale",
         "martialTrainings": "Formations martiales",
@@ -271,11 +567,13 @@
       "add": "Ajouter",
       "newItem": "Nouvel objet {item}",
       "remove": "Supprimer",
+      "removeAction": "Supprimer l'action",
       "diceType": "Type de jet",
       "rollStandard": "Jet standard",
       "rollBonus": "Avec dé bonus",
       "rollMalus": "Avec dé malus",
       "data": "Données",
+      "debug": "Debug",
       "dice20": "1d20",
       "dice20kh": "2d20 Garder le plus haut",
       "dice20kl": "2d20 Garder le plus bas",
@@ -302,6 +600,8 @@
       "1h": "Une main",
       "2h": "Deux mains",
       "type": "Type",
+      "subtype": "Sous-type",
+      "notes": "Notes",
       "label": "Label",
       "img": "Image",
       "richness": "Richesse",
@@ -684,12 +984,12 @@
       },
       "additionalEffect": {
         "active": "Effets supplémentaires",
-        "applyOn": "s'applique sur :",
-        "onSuccess": "Sur un succès",
-        "onCritical": "Sur un succès critique",
-        "onSuccessTreshold": "A partir d'un succès + ",
-        "onFailure": "Sur un échec",
-        "always": "Toujours",
+        "applyOn": "s'applique",
+        "onSuccess": "sur un succès",
+        "onCritical": "sur un succès critique",
+        "onSuccessTreshold": "à partir d'un succès + ",
+        "onFailure": "sur un échec",
+        "always": "toujours",
         "applyFormula": "Formule",
         "applyFormulaTooltip": "Appliquer des dommages ou des soins sur la durée",
         "elementType": "Type d'énergie pour les dommages",
@@ -866,6 +1166,7 @@
         "all": "Vérification (ignorable par tous)",
         "gm": "Vérification (ignorable uniquement par le MJ)"
       }
-    }
+    },
+    "SheetModeEdit": "Basculer entre le mode édition et le mode visualisation"
   }
 }

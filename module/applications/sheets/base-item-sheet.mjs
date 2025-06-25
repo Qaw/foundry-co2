@@ -1,36 +1,53 @@
+const { ux } = foundry.applications
+const { HandlebarsApplicationMixin } = foundry.applications.api
+const { DragDrop } = foundry.applications.ux
+
 import { SYSTEM } from "../../config/system.mjs"
 import Utils from "../../utils.mjs"
-
 import { Action } from "../../models/schemas/action.mjs"
 import { Condition } from "../../models/schemas/condition.mjs"
-import { Resolver } from "../../models/schemas/resolver.mjs"
 import { Modifier } from "../../models/schemas/modifier.mjs"
+import { Resolver } from "../../models/schemas/resolver.mjs"
 
-export default class CoBaseItemSheet extends ItemSheet {
-  /** @override */
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      width: 600,
-      height: 720,
-      classes: ["co", "sheet", "item"],
-      tabs: [
-        { navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "details" },
-        { navSelector: ".action-tabs", contentSelector: ".action-body", initial: "0" },
-      ],
-      dragDrop: [{ dragSelector: ".item-list .item", dropSelector: null }],
-    })
-  }
-
-  /** @override */
-  get template() {
-    return "systems/co/templates/items/item-sheet.hbs"
-  }
-
+export default class COBaseItemSheet extends HandlebarsApplicationMixin(foundry.applications.sheets.ItemSheetV2) {
   /**
    * Different sheet modes.
    * @enum {number}
    */
   static SHEET_MODES = { EDIT: 0, PLAY: 1 }
+
+  /** @override */
+  static DEFAULT_OPTIONS = {
+    classes: ["standard-form", "co", "item"],
+    position: {
+      width: 600,
+      height: "auto",
+    },
+    form: {
+      submitOnChange: true,
+    },
+    window: {
+      resizable: true,
+    },
+    actions: {
+      toggleSection: COBaseItemSheet.#onSectionToggle,
+      changeSheetLock: COBaseItemSheet.#onSheetChangelock,
+      selectStatus: COBaseItemSheet.#onSelectStatus,
+      editItem: COBaseItemSheet.#onEditItem,
+      deleteItem: COBaseItemSheet.#onDeleteItem,
+      addActionModifier: COBaseItemSheet.#onAddActionModifier,
+      deleteActionModifier: COBaseItemSheet.#onDeleteActionModifier,
+      addModifier: COBaseItemSheet.#onAddModifier,
+      deleteModifier: COBaseItemSheet.#onDeleteModifier,
+      addResolver: COBaseItemSheet.#onAddResolver,
+      deleteResolver: COBaseItemSheet.#onDeleteResolver,
+      addCondition: COBaseItemSheet.#onAddCondition,
+      deleteCondition: COBaseItemSheet.#onDeleteCondition,
+      addAction: COBaseItemSheet.#onAddAction,
+      deleteAction: COBaseItemSheet._onDeleteAction,
+      selectActionIcon: COBaseItemSheet.#onSelectActionIcon,
+    },
+  }
 
   /**
    * The current sheet mode.
@@ -43,6 +60,23 @@ export default class CoBaseItemSheet extends ItemSheet {
    * @type {string}
    */
   selectedStatus = {}
+
+  /** @inheritDoc */
+  async _onRender(context, options) {
+    await super._onRender(context, options)
+    new DragDrop.implementation({
+      dragSelector: ".draggable",
+      permissions: {
+        dragstart: this._canDragStart.bind(this),
+        drop: this._canDragDrop.bind(this),
+      },
+      callbacks: {
+        dragstart: this._onDragStart.bind(this),
+        dragover: this._onDragOver.bind(this),
+        drop: this._onDrop.bind(this),
+      },
+    }).bind(this.element)
+  }
 
   /**
    * Is the sheet currently in 'Play' mode?
@@ -60,20 +94,458 @@ export default class CoBaseItemSheet extends ItemSheet {
     return this._sheetMode === this.constructor.SHEET_MODES.EDIT
   }
 
-  /** @inheritdoc */
-  async _onDrop(event) {
-    const data = TextEditor.getDragEventData(event)
-    const item = this.item
+  /** @override */
+  async _prepareContext() {
+    const context = await super._prepareContext()
+    context.debugMode = game.settings.get("co", "debugMode")
+    context.fields = this.document.schema.fields
+    context.systemFields = this.document.system.schema.fields
+    context.systemSource = this.document.system._source
+    context.item = this.document
+    context.system = this.document.system
+    context.source = this.document.toObject()
 
-    /**
-     * A hook event that fires when some useful data is dropped onto an ItemSheet.
-     * @function dropItemSheetData
-     * @memberof hookEvents
-     * @param {Item} item      The Item
-     * @param {ItemSheet} sheet The ItemSheet application
-     * @param {object} data      The data that has been dropped onto the sheet
-     */
-    if (Hooks.call("co.dropItemSheetData", item, this, data) === false) return
+    context.itemType = this.document.type
+    context.modifiers = this.document.system.modifiers
+    context.enrichedDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.description, { async: true })
+    context.tags = this.document.tags
+    context.unlocked = this.isEditMode
+    context.locked = this.isPlayMode
+
+    // Select options
+    context.choiceActionTypes = SYSTEM.ACTION_TYPES
+    context.choiceConditionObjects = SYSTEM.CONDITION_OBJECTS
+    context.choiceConditionPredicates = SYSTEM.CONDITION_PREDICATES
+    context.choiceConditionTargets = SYSTEM.CONDITION_TARGETS
+    context.choiceResolverTypes = SYSTEM.RESOLVER_TYPE
+    context.choiceResolverApplyOn = SYSTEM.RESOLVER_RESULT
+    context.choiceResolverTargets = SYSTEM.RESOLVER_TARGET
+    context.choiceResolverScopes = SYSTEM.RESOLVER_SCOPE
+    context.choiceResolverEffectDurationUnit = SYSTEM.COMBAT_UNITE
+    context.choiceResolverEffectElementTypes = SYSTEM.CUSTOM_EFFECT_ELEMENT
+    context.choiceResolverEffectFormulaTypes = SYSTEM.RESOLVER_FORMULA_TYPE
+    context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
+    context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
+    context.choiceModifierApplies = SYSTEM.MODIFIERS.MODIFIERS_APPLY
+
+    context.choiceModifierAbilityTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "ability"))
+    context.choiceModifierCombatTargets = Object.fromEntries(
+      Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "combat" || value.subtype === "attack"),
+    )
+    context.choiceModifierAttributeTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "attribute"))
+    context.choiceModifierResourceTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "resource"))
+    context.choiceModifierSkillTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "ability"))
+    context.choiceModifierStateTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "state"))
+    context.choiceModifierBonusDiceTargets = Object.fromEntries(
+      Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "ability" || value.subtype === "attack"),
+    )
+    context.choiceModifierMalusDiceTargets = Object.fromEntries(
+      Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "ability" || value.subtype === "attack"),
+    )
+
+    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseItemSheet - context`), context)
+    return context
+  }
+
+  /**
+   * Handles the toggle action for a section.
+   * Prevents the default event action, finds the next foldable section,
+   * and toggles its visibility with a sliding animation.
+   *
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
+   * @returns {boolean} - Always returns true.
+   */
+  static #onSectionToggle(event, target) {
+    event.preventDefault()
+    const li = target.closest("li.items-container-header")
+    let foldable = li.nextElementSibling
+    while (foldable && !foldable.classList.contains("foldable")) {
+      foldable = foldable.nextElementSibling
+    }
+    if (foldable) {
+      slideToggle(foldable)
+    }
+    return true
+  }
+
+  /**
+   * SlideToggle: anime l'ouverture ou la fermeture d'un élément
+   * @param {HTMLElement} el L'élément à animer
+   * @param {number} duration Durée de l'animation en ms
+   */
+  slideToggle(el, duration = 200) {
+    // Si déjà en cours d'animation, on ignore
+    if (el._sliding) return
+    el._sliding = true
+
+    // Calcul des styles initiaux
+    const computedStyle = window.getComputedStyle(el)
+    const isHidden = computedStyle.display === "none"
+
+    // Préparation pour slideDown
+    if (isHidden) {
+      el.style.removeProperty("display")
+      let display = window.getComputedStyle(el).display
+      if (display === "none") display = "block"
+      el.style.display = display
+      const height = el.scrollHeight + "px"
+
+      el.style.overflow = "hidden"
+      el.style.height = "0"
+      el.offsetHeight // force repaint
+
+      // Animation vers la hauteur naturelle
+      el.style.transition = `height ${duration}ms ease`
+      el.style.height = height
+
+      setTimeout(() => {
+        // Nettoyage
+        el.style.removeProperty("height")
+        el.style.removeProperty("overflow")
+        el.style.removeProperty("transition")
+        el._sliding = false
+      }, duration)
+    }
+    // Préparation pour slideUp
+    else {
+      const height = el.scrollHeight + "px"
+
+      el.style.overflow = "hidden"
+      el.style.height = height
+      el.offsetHeight // force repaint
+
+      // Animation vers 0
+      el.style.transition = `height ${duration}ms ease`
+      el.style.height = "0"
+
+      setTimeout(() => {
+        // On masque complètement et nettoie
+        el.style.display = "none"
+        el.style.removeProperty("height")
+        el.style.removeProperty("overflow")
+        el.style.removeProperty("transition")
+        el._sliding = false
+      }, duration)
+    }
+  }
+
+  /**
+   * Gère la suppression d'un élément de la feuille.
+   *
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @returns {Promise} - A promise that resolves once the item has been updated.
+   */
+  static #onDeleteItem(event, target) {
+    event.preventDefault()
+    const li = target.closest(".item")
+    const itemType = li.dataset.itemType
+    const uuid = li.dataset.uuid
+    let data = foundry.utils.duplicate(this.item)
+    switch (itemType) {
+      case SYSTEM.ITEM_TYPE.path.id:
+        data.system.paths.splice(data.system.paths.indexOf(uuid), 1)
+        break
+      case SYSTEM.ITEM_TYPE.capacity.id:
+        data.system.capacities.splice(data.system.capacities.indexOf(uuid), 1)
+        break
+      default:
+        break
+    }
+
+    return this.item.update(data)
+  }
+
+  // eslint-disable-next-line jsdoc/require-returns-check
+  /**
+   * Open the item sheet if it's a path or a capacity
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @returns {Promise} - A promise that resolves once the item has been updated.
+   */
+  static #onEditItem(event, target) {
+    event.preventDefault()
+    const li = target.closest(".item")
+    const itemType = li.dataset.itemType
+
+    switch (itemType) {
+      case SYSTEM.ITEM_TYPE.path.id:
+      case SYSTEM.ITEM_TYPE.capacity.id: {
+        const uuid = li.dataset.uuid
+        return fromUuid(uuid).then((document) => document.sheet.render(true))
+      }
+      default:
+        break
+    }
+  }
+
+  /**
+   * Va mémoriser le choix qui a été sélectionné pour les conditionsState
+   * @param {Event} event The event that triggered the selection
+   * @param {COBaseItemSheet} sheet The sheet instance
+   */
+  static #onSelectStatus(event, sheet) {
+    event.preventDefault()
+    sheet.selectedStatus = event.currentTarget.value
+  }
+
+  /**
+   * Handles the addition of a new action to the item and updates the item with the new action list.
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
+   * @returns {Promise} - A promise that resolves once the item has been updated.
+   */
+  static async #onAddAction(event, target) {
+    event.preventDefault()
+    let newActions = foundry.utils.deepClone(this.document.actions)
+    let action = new Action({
+      source: this.document.uuid,
+      indice: newActions.length,
+      type: "melee",
+      img: "icons/svg/d20-highlight.svg",
+      label: `${game.i18n.localize("CO.ui.newAction")}`,
+    })
+    newActions.push(action)
+    return await this.document.update({ "system.actions": newActions })
+  }
+
+  /**
+   * Handles the deletion of an action from the item and updates the item with the new action list.
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
+   * @returns {Promise} - A promise that resolves once the item has been updated.
+   */
+  static async _onDeleteAction(event, target) {
+    event.preventDefault()
+    const actionRootElement = target.closest(".action")
+    const actionIndex = actionRootElement.dataset.itemId
+    let newActions = foundry.utils.deepClone(this.item.actions)
+    newActions.splice(actionIndex, 1)
+    return await this.item.update({ "system.actions": newActions })
+  }
+
+  /**
+   * Handles the addition of a new condition to the item and updates the item with the new action list.
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @returns {Promise} - A promise that resolves once the item has been updated.
+   */
+  static async #onAddCondition(event, target) {
+    event.preventDefault()
+    const li = target.closest(".action")
+    const actionId = li.dataset.itemId
+
+    const actions = this.item.toObject().system.actions
+    actions[actionId].conditions.push(new Condition())
+    return await this.item.update({ "system.actions": actions })
+  }
+
+  /**
+   * Handles the deletion of a condition from an item.
+   *
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @returns {Promise} - A promise that resolves once the item has been updated.
+   */
+  static async #onDeleteCondition(event, target) {
+    event.preventDefault()
+    const li = target.closest(".condition")
+    const actionId = li.dataset.actionId
+    const conditionId = li.dataset.itemId
+
+    const actions = this.item.toObject().system.actions
+    actions[actionId].conditions.splice(conditionId, 1)
+    return await this.item.update({ "system.actions": actions })
+  }
+
+  /**
+   * Handles the addition of a new action modifier.
+   *
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @returns {Promise} - A promise that resolves once the item has been updated.
+   */
+  static async #onAddActionModifier(event, target) {
+    event.preventDefault()
+    const li = target.closest(".action")
+    const actionId = li.dataset.itemId
+
+    const actions = this.item.toObject().system.actions
+    actions[actionId].modifiers.push(new Modifier({ source: this.item.uuid, type: this.item.type }))
+    return await this.item.update({ "system.actions": actions })
+  }
+
+  /**
+   * Handles the deletion of an action modifier from the item.
+   *
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @returns {Promise} - A promise that resolves once the item has been updated.
+   */
+  static async #onDeleteActionModifier(event, target) {
+    event.preventDefault()
+    const li = target.closest(".modifier")
+    const actionId = li.dataset.actionId
+    const modId = li.dataset.itemId
+
+    const actions = this.item.toObject().system.actions
+    actions[actionId].modifiers.splice(modId, 1)
+    return await this.item.update({ "system.actions": actions })
+  }
+
+  /**
+   * Handles the addition of a new resolver to an action item.
+   *
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @returns {Promise} - A promise that resolves when the item is updated.
+   */
+  static async #onAddResolver(event, target) {
+    event.preventDefault()
+    const li = target.closest(".action")
+    const actionId = li.dataset.itemId
+
+    const actions = this.item.toObject().system.actions
+    actions[actionId].resolvers.push(
+      new Resolver({
+        type: SYSTEM.RESOLVER_TYPE.attack.id,
+        skill: {
+          formula: "@atc",
+          crit: "",
+          difficulty: "@cible.def",
+        },
+        damage: {
+          formula: "",
+        },
+      }),
+    )
+
+    return await this.item.update({ "system.actions": actions })
+  }
+
+  /**
+   * Handles the deletion of a resolver from an action within the item.
+   *
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @returns {Promise} - A promise that resolves when the item update is complete.
+   */
+  static async #onDeleteResolver(event, target) {
+    event.preventDefault()
+    const li = target.closest(".resolver")
+    const actionId = li.dataset.actionId
+    const modId = li.dataset.itemId
+
+    const actions = this.item.toObject().system.actions
+    actions[actionId].resolvers.splice(modId, 1)
+    return await this.item.update({ "system.actions": actions })
+  }
+
+  /**
+   * Adds a new Modifier to the item and updates the item with the new modifier list.
+   * Only for the item of type Feature or Profile
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @returns {Promise} - A promise that resolves when the item is updated.
+   */
+  static #onAddModifier(event, target) {
+    event.preventDefault()
+    const currentModifiers = this.item.modifiers
+    currentModifiers.push(new Modifier({ source: this.item.uuid, type: this.item.type }))
+
+    return this.item.update({ "system.modifiers": currentModifiers })
+  }
+
+  // eslint-disable-next-line jsdoc/require-returns-check
+  /**
+   * Handles the deletion of a modifier from the item.
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @returns {Promise} - A promise that resolves when the item is updated.
+   */
+  static #onDeleteModifier(event, target) {
+    event.preventDefault()
+
+    const li = target.closest(".modifier")
+    const rowId = li.dataset.itemId
+
+    const currentModifiers = this.item.modifiers
+    if (currentModifiers.length === 0) return
+
+    currentModifiers.splice(rowId, 1)
+
+    return this.item.update({ "system.modifiers": currentModifiers })
+  }
+
+  /**
+   * Manage the lock/unlock button on the sheet
+   * @param {Event} event The event that triggered the action
+   * @param {COBaseItemSheet} sheet The sheet instance
+   */
+  static async #onSheetChangelock(event, sheet) {
+    event.preventDefault()
+    const modes = sheet.constructor.SHEET_MODES
+    sheet._sheetMode = sheet.isEditMode ? modes.PLAY : modes.EDIT
+    sheet.render()
+  }
+
+  // #region Drag-and-Drop Workflow
+
+  /**
+   * Define whether a user is able to begin a dragstart workflow for a given drag selector
+   * @param {string} selector       The candidate HTML selector for dragging
+   * @returns {boolean}             Can the current user drag this selector?
+   * @protected
+   */
+  _canDragStart(selector) {
+    return this.isEditable
+  }
+
+  /**
+   * Define whether a user is able to conclude a drag-and-drop workflow for a given drop selector
+   * @param {string} selector       The candidate HTML selector for the drop target
+   * @returns {boolean}             Can the current user drop on this selector?
+   * @protected
+   */
+  _canDragDrop(selector) {
+    return this.isEditable && this.document.isOwner
+  }
+
+  /**
+   * Callback actions which occur at the beginning of a drag start workflow.
+   * @param {DragEvent} event       The originating DragEvent
+   * @protected
+   */
+  _onDragStart(event) {
+    const li = event.currentTarget
+    if ("link" in event.target.dataset) return
+
+    let dragData = null
+
+    if (!dragData) return
+
+    // Set data transfer
+    event.dataTransfer.setData("text/plain", JSON.stringify(dragData))
+  }
+
+  /**
+   * Callback actions which occur when a dragged element is over a drop target.
+   * @param {DragEvent} event       The originating DragEvent
+   * @protected
+   */
+  _onDragOver(event) {}
+
+  /**
+   * Callback actions which occur when a dragged element is dropped on a target.
+   * @param {DragEvent} event       The originating DragEvent
+   * @protected
+   */
+  async _onDrop(event) {
+    const data = ux.TextEditor.implementation.getDragEventData(event)
+    const item = this.item
+    const allowed = Hooks.call("dropItemSheetData", item, this, data)
+    if (allowed === false) return
 
     if (data.type !== "Item") return
     return this._onDropItem(event, data)
@@ -143,351 +615,16 @@ export default class CoBaseItemSheet extends ItemSheet {
     return false
   }
 
-  /** @override */
-  async getData(options = {}) {
-    const context = super.getData(options)
-    context.debugMode = game.settings.get("co", "debugMode")
-    context.itemType = this.item.type
-    context.system = this.item.system
-    context.modifiers = this.item.system.modifiers
-    context.enrichedDescription = await TextEditor.enrichHTML(this.item.system.description, { async: true })
-    context.tags = this.item.tags
-    context.unlocked = this.isEditMode
-    context.locked = this.isPlayMode
+  // #endregion
 
-    context.systemFields = this.document.system.schema.fields
-
-    // Select options
-    context.choiceActionTypes = SYSTEM.ACTION_TYPES
-    context.choiceConditionObjects = SYSTEM.CONDITION_OBJECTS
-    context.choiceConditionPredicates = SYSTEM.CONDITION_PREDICATES
-    context.choiceConditionTargets = SYSTEM.CONDITION_TARGETS
-    context.choiceResolverTypes = SYSTEM.RESOLVER_TYPE
-    context.choiceResolverApplyOn = SYSTEM.RESOLVER_RESULT
-    context.choiceResolverTargets = SYSTEM.RESOLVER_TARGET
-    context.choiceResolverScopes = SYSTEM.RESOLVER_SCOPE
-    context.choiceResolverEffectDurationUnit = SYSTEM.COMBAT_UNITE
-    context.choiceResolverEffectElementTypes = SYSTEM.CUSTOM_EFFECT_ELEMENT
-    context.choiceResolverEffectFormulaTypes = SYSTEM.RESOLVER_FORMULA_TYPE
-    context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
-    context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
-    context.choiceModifierApplies = SYSTEM.MODIFIERS.MODIFIERS_APPLY
-
-    context.choiceModifierAbilityTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "ability"))
-    context.choiceModifierCombatTargets = Object.fromEntries(
-      Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "combat" || value.subtype === "attack"),
-    )
-    context.choiceModifierAttributeTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "attribute"))
-    context.choiceModifierResourceTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "resource"))
-    context.choiceModifierSkillTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "ability"))
-    context.choiceModifierStateTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "state"))
-    context.choiceModifierBonusDiceTargets = Object.fromEntries(
-      Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "ability" || value.subtype === "attack"),
-    )
-    context.choiceModifierMalusDiceTargets = Object.fromEntries(
-      Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "ability" || value.subtype === "attack"),
-    )
-
-    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseItemSheet - context`), context)
-    return context
-  }
-
-  /** @inheritdoc */
-  activateListeners(html) {
-    super.activateListeners(html)
-    html.find(".section-toggle").click(this._onSectionToggle.bind(this))
-    html.find(".item-delete").click(this._onDeleteItem.bind(this))
-    html.find(".item-edit").click(this._onEditItem.bind(this))
-
-    html.find(".action-modifier-add").click(this._onAddActionModifier.bind(this))
-    html.find(".action-modifier-delete").click(this._onDeleteActionModifier.bind(this))
-    html.find(".modifier-add").click(this._onAddModifier.bind(this))
-    html.find(".modifier-delete").click(this._onDeleteModifier.bind(this))
-    html.find(".resolver-add").click(this._onAddResolver.bind(this))
-    html.find(".resolver-delete").click(this._onDeleteResolver.bind(this))
-    html.find(".condition-add").click(this._onAddCondition.bind(this))
-    html.find(".condition-delete").click(this._onDeleteCondition.bind(this))
-    html.find(".action-add").click(this._onAddAction.bind(this))
-    html.find(".action-delete").click(this._onDeleteAction.bind(this))
-    html.find(".sheet-change-lock").click(this._onSheetChangelock.bind(this))
-    //html.find(".resolver-status-add").click(this._onAddStatus.bind(this))
-    html.find(".resolver-status-select").change(this._onSelectStatus.bind(this))
-  }
-
-  /**
-   * Handles the toggle action for a section.
-   * Prevents the default event action, finds the next foldable section,
-   * and toggles its visibility with a sliding animation.
-   *
-   * @param {Event} event The event object triggered by the section toggle action.
-   * @returns {boolean} - Always returns true.
-   */
-  _onSectionToggle(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).parent().next(".foldable")
-    li.slideToggle("fast")
-    return true
-  }
-
-  /**
-   * Gère la suppression d'un élément de la feuille.
-   *
-   * @param {Event} event L'événement qui a déclenché la suppression.
-   */
-  _onDeleteItem(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).closest(".item")
-    const itemType = li.data("itemType")
-    const uuid = li.data("uuid")
-    let data = foundry.utils.duplicate(this.item)
-    switch (itemType) {
-      case SYSTEM.ITEM_TYPE.path.id:
-        data.system.paths.splice(data.system.paths.indexOf(uuid), 1)
-        break
-      case SYSTEM.ITEM_TYPE.capacity.id:
-        data.system.capacities.splice(data.system.capacities.indexOf(uuid), 1)
-        break
-      default:
-        break
+  static #onSelectActionIcon(event, target) {
+    const input = target.nextElementSibling
+    const path = input.value
+    const options = {
+      type: "image",
+      current: path,
+      field: input,
     }
-
-    return this.item.update(data)
-  }
-
-  /**
-   * Open the item sheet if it's a path or a capacity
-   * @param {*} event
-   * @private
-   */
-  _onEditItem(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).closest(".item")
-    const itemType = li.data("itemType")
-
-    switch (itemType) {
-      case SYSTEM.ITEM_TYPE.path.id:
-      case SYSTEM.ITEM_TYPE.capacity.id: {
-        const uuid = li.data("uuid")
-        return fromUuid(uuid).then((document) => document.sheet.render(true))
-      }
-      default:
-        break
-    }
-  }
-
-  /**
-   * Handles the addition of a new action to the item and updates the item with the new action list.
-   * @param {*} event
-   * @returns {Item} The updated item.
-   */
-  _onAddAction(event) {
-    event.preventDefault()
-    let newActions = foundry.utils.deepClone(this.item.actions)
-    let action = new Action({
-      source: this.item.uuid,
-      indice: newActions.length,
-      type: "melee",
-      img: "icons/svg/d20-highlight.svg",
-      label: `${game.i18n.localize("CO.ui.newAction")} ${this.item.actions.length + 1}`,
-    })
-    newActions.push(action)
-    return this.item.update({ "system.actions": newActions })
-  }
-
-  /**
-   * Va mémoriser le choix qui a été sélectionné pour les conditionsState
-   * @param {*} event
-   */
-  _onSelectStatus(event) {
-    event.preventDefault()
-    this.selectedStatus = event.currentTarget.value
-  }
-
-  /**
-   * Lorsque l'on va cliquer le le bouton pour ajouter un conditionState à mettre dnas les effets supplémentaires d'une attaque
-   * @param {*} event
-   * @returns
-   
-  _onAddStatus(event) {
-    event.preventDefault()
-    const dataset = event.currentTarget.dataset
-    const actions = this.item.toObject().system.actions
-
-    const itemid = dataset.itemId
-    const actionId = dataset.actionId
-    if (actions[actionId].resolvers[itemid].additionalEffect.statuses) actions[actionId].resolvers[itemid].additionalEffect.statuses += `, ${this.selectedStatus}`
-    else actions[actionId].resolvers[itemid].additionalEffect.statuses = this.selectedStatus
-    return this.item.update({ "system.actions": actions })
-  }*/
-
-  /**
-   * Handles the deletion of an action from the item and updates the item with the new action list.
-   * @param {*} event
-   * @returns {Item} The updated item.
-   */
-  _onDeleteAction(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).closest(".action")
-    const rowId = li.data("itemId")
-    let newActions = foundry.utils.deepClone(this.item.actions)
-    newActions.splice(rowId, 1)
-    return this.item.update({ "system.actions": newActions })
-  }
-
-  /**
-   * Handles the addition of a new condition to the item and updates the item with the new action list.
-   * @param {*} event
-   * @returns {Item} The updated item.
-   */
-  async _onAddCondition(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).closest(".action")
-    const actionId = li.data("itemId")
-
-    const actions = this.item.toObject().system.actions
-    actions[actionId].conditions.push(new Condition())
-    return this.item.update({ "system.actions": actions })
-  }
-
-  /**
-   * Handles the deletion of a condition from an item.
-   *
-   * @param {Event} event The event that triggered the deletion.
-   * @returns {Promise} - A promise that resolves when the item update is complete.
-   * @private
-   */
-  _onDeleteCondition(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).closest(".condition")
-    const actionId = li.data("actionId")
-    const conditionId = li.data("itemId")
-
-    const actions = this.item.toObject().system.actions
-    actions[actionId].conditions.splice(conditionId, 1)
-    return this.item.update({ "system.actions": actions })
-  }
-
-  /**
-   * Handles the addition of a new action modifier.
-   *
-   * @param {Event} event The event that triggered the addition of the action modifier.
-   * @returns {Promise} - A promise that resolves once the item has been updated.
-   */
-  async _onAddActionModifier(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).closest(".action")
-    const actionId = li.data("itemId")
-
-    const actions = this.item.toObject().system.actions
-    actions[actionId].modifiers.push(new Modifier({ source: this.item.uuid, type: this.item.type }))
-    return this.item.update({ "system.actions": actions })
-  }
-
-  /**
-   * Handles the deletion of an action modifier from the item.
-   *
-   * @param {Event} event The event that triggered the deletion.
-   * @returns {Promise} - A promise that resolves once the item has been updated.
-   * @private
-   */
-  _onDeleteActionModifier(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).closest(".modifier")
-    const actionId = li.data("actionId")
-    const modId = li.data("itemId")
-
-    const actions = this.item.toObject().system.actions
-    actions[actionId].modifiers.splice(modId, 1)
-    return this.item.update({ "system.actions": actions })
-  }
-
-  /**
-   * Handles the addition of a new resolver to an action item.
-   *
-   * @param {Event} event The event that triggered the addition of the resolver.
-   * @returns {Promise} - A promise that resolves when the item is updated.
-   */
-  _onAddResolver(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).closest(".action")
-    const actionId = li.data("itemId")
-
-    const actions = this.item.toObject().system.actions
-    actions[actionId].resolvers.push(
-      new Resolver({
-        type: SYSTEM.RESOLVER_TYPE.attack.id,
-        skill: {
-          formula: "@atc",
-          crit: "",
-          difficulty: "@cible.def",
-        },
-        damage: {
-          formula: "",
-        },
-      }),
-    )
-
-    return this.item.update({ "system.actions": actions })
-  }
-
-  /**
-   * Handles the deletion of a resolver from an action within the item.
-   *
-   * @param {Event} event The event that triggered the deletion.
-   * @returns {Promise} - A promise that resolves when the item update is complete.
-   */
-  _onDeleteResolver(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).closest(".resolver")
-    const actionId = li.data("actionId")
-    const modId = li.data("itemId")
-
-    const actions = this.item.toObject().system.actions
-    actions[actionId].resolvers.splice(modId, 1)
-    return this.item.update({ "system.actions": actions })
-  }
-
-  /**
-   * Adds a new Modifier to the item and updates the item with the new modifier list.
-   * Only for the item of type Feature or Profile
-   * @param {Event} event The event object triggered by the user action.
-   * @returns {Promise} A promise that resolves when the item is successfully updated.
-   */
-  _onAddModifier(event) {
-    event.preventDefault()
-    const currentModifiers = this.item.modifiers
-    currentModifiers.push(new Modifier({ source: this.item.uuid, type: this.item.type }))
-
-    return this.item.update({ "system.modifiers": currentModifiers })
-  }
-
-  /**
-   * Handles the deletion of a modifier from the item.
-   *
-   * @param {Event} event The event that triggered the deletion.
-   */
-  _onDeleteModifier(event) {
-    event.preventDefault()
-
-    const li = $(event.currentTarget).closest(".modifier")
-    const rowId = li.data("itemId")
-
-    const currentModifiers = this.item.modifiers
-    if (currentModifiers.length === 0) return
-
-    currentModifiers.splice(rowId, 1)
-
-    return this.item.update({ "system.modifiers": currentModifiers })
-  }
-
-  /**
-   * Manage the lock/unlock button on the sheet
-   * @param {Event} event
-   */
-  async _onSheetChangelock(event) {
-    event.preventDefault()
-    const modes = this.constructor.SHEET_MODES
-    this._sheetMode = this.isEditMode ? modes.PLAY : modes.EDIT
-    this.render()
+    return new foundry.applications.apps.FilePicker(options).browse()
   }
 }

@@ -1,0 +1,43 @@
+.modifiers-container {
+  .modifier {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 32px;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px 8px;
+    margin-bottom: 8px;
+
+    :nth-child(5) {
+      grid-column: auto / span 2;
+
+      label {
+        flex: 2;
+      }
+
+      input[type="text"] {
+        flex: 11;
+      }
+    }
+
+    button {
+      grid-column: 4;
+      grid-row: 1;
+    }
+  }
+}
+
+.resolvers-container {
+  .resolver {
+
+    .form-group.effects .form-fields span {
+      margin-left: 8px;
+    }
+
+    .form-group-stacked.like-grid.effects {
+
+      label,
+      .form-fields {
+        grid-template-columns: repeat(2, 10fr) 15fr;
+      }
+    }
+  }
+}

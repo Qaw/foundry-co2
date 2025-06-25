@@ -964,7 +964,7 @@ export default class COActor extends Actor {
    * @returns {boolean} Returns true if the actor has enough free hands to equip the item, otherwise false.
    */
   _hasEnoughFreeHands(item, bypassChecks) {
-    // Si le contrôle de mains libres n'est pas demandé, on renvoi Vrai
+    // Si le contrôle de mains libres n'est pas demandé, renvoi true
     let checkFreehands = game.settings.get("co", "checkFreeHandsBeforeEquip")
     if (!checkFreehands || checkFreehands === "none") return true
 
@@ -977,9 +977,14 @@ export default class COActor extends Actor {
     // Nombre de mains nécessaire pour l'objet que l'on veux équipper
     let neededHands = item.system.usage.twoHand ? 2 : 1
 
-    // Calcul du nombre de mains déjà utilisées : on récupère les armes ou les boucliers équipés
+    // Calcul du nombre de mains déjà utilisées : on récupère les armes, les boucliers et les objets divers qui utilisent des mains et sont équipés
     let itemsInHands = this.items.filter(
-      (item) => (item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.weapon.id || item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.shield.id) && item.system.equipped,
+      (item) =>
+        (item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.weapon.id ||
+          item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.shield.id ||
+          item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.misc.id) &&
+        item.system.useHands &&
+        item.system.equipped,
     )
     let usedHands = itemsInHands.reduce((total, item) => total + (item.system.usage.twoHand ? 2 : 1), 0)
 
@@ -1187,6 +1192,8 @@ export default class COActor extends Actor {
       const actions = newCapacity[0].toObject().system.actions
       for (const action of actions) {
         action.source = newCapacity[0].uuid
+        // Si la capacité est hors voies, on l'active par défaut
+        action.properties.enabled = true
         // Update the source of all modifiers if there are some
         if (action.modifiers.length > 0) {
           for (const modifier of action.modifiers) {
@@ -1219,6 +1226,8 @@ export default class COActor extends Actor {
       const actions = newCapacity[0].toObject().system.actions
       for (const action of actions) {
         action.source = newCapacity[0].uuid
+        // La capacité est activée par défaut
+        action.properties.enabled = true
         // Update the source of all modifiers if there are some
         if (action.modifiers.length > 0) {
           for (const modifier of action.modifiers) {
@@ -1283,12 +1292,12 @@ export default class COActor extends Actor {
    * Supprime un item de type Capacity ou Feature
    * @param {*} itemId
    */
-  deleteItem(itemId) {
+  async deleteItem(itemId) {
     const item = this.items.find((item) => item.id === itemId)
     switch (item.type) {
       case SYSTEM.ITEM_TYPE.capacity.id:
       case SYSTEM.ITEM_TYPE.feature.id:
-        return this.deleteEmbeddedDocuments("Item", [itemId])
+        return await this.deleteEmbeddedDocuments("Item", [itemId])
       default:
         break
     }
@@ -1313,21 +1322,23 @@ export default class COActor extends Actor {
     for (const capacityUuid of capacitiesUuids) {
       this.deleteCapacity(capacityUuid)
     }
-    this.deleteEmbeddedDocuments("Item", [feature.id])
+    await this.deleteEmbeddedDocuments("Item", [feature.id])
   }
 
   /**
    * Deletes a profile and its linked paths.
    *
-   * @param {string} profileId The ID of the profile to delete.
+   * @param {string} profileUuid The ID of the profile to delete.
    */
-  async deleteProfile(profileId) {
+  async deleteProfile(profileUuid) {
+    const profile = fromUuidSync(profileUuid)
     // Delete linked paths
-    const pathsUuids = this.items.get(profileId).system.paths
+    const pathsUuids = profile.system.paths
     for (const pathUuid of pathsUuids) {
-      this.deletePath(pathUuid)
+      await this.deletePath(pathUuid)
     }
-    this.deleteEmbeddedDocuments("Item", [profileId])
+    const { id } = foundry.utils.parseUuid(profileUuid)
+    await this.deleteEmbeddedDocuments("Item", [id])
   }
 
   /**
@@ -1341,12 +1352,12 @@ export default class COActor extends Actor {
     const path = await fromUuid(pathUuid)
     if (path) {
       const capacitiesUuId = path.system.capacities
-      const capacitiesId = capacitiesUuId.map((capacityUuid) => {
+      const toDeleteIds = capacitiesUuId.map((capacityUuid) => {
         const { id } = foundry.utils.parseUuid(capacityUuid)
         return id
       })
-      this.deleteEmbeddedDocuments("Item", capacitiesId)
-      this.deleteEmbeddedDocuments("Item", [path.id])
+      toDeleteIds.push(path.id)
+      await this.deleteEmbeddedDocuments("Item", toDeleteIds)
     }
   }
 
@@ -1360,14 +1371,15 @@ export default class COActor extends Actor {
   async deleteCapacity(capacityUuid) {
     const capacity = await fromUuid(capacityUuid)
     // Avant on va vérifier que cette capacité n'est pas liée à une autre
-    this.capacities.forEach((c) => {
+    for (const c of this.capacities) {
       if (c.system.linkedCapacity === capacityUuid) {
         c.system.linkedCapacity = null
-        c.update({ "system.linkedCapacity": null })
+        await c.update({ "system.linkedCapacity": null })
       }
-    })
+    }
+
     if (capacity) {
-      this.deleteEmbeddedDocuments("Item", [capacity.id])
+      await this.deleteEmbeddedDocuments("Item", [capacity.id])
     }
   }
   // #endregion

@@ -1,0 +1,146 @@
+ul,
+ol,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item-img {
+  background-size: 28px;
+  cursor: pointer;
+  display: block;
+  flex: 0 0 28px;
+  height: 28px;
+}
+
+.sheet-tabs {
+  align-items: stretch;
+  border-top: 0;
+  border-bottom-color: var(--color-primary);
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 0 8px;
+
+  [data-tab] {
+    align-items: baseline;
+    border: 1px solid transparent;
+    display: flex;
+    flex: 1;
+    flex-flow: row nowrap;
+    gap: 4px;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0 8px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &.active {
+      background-color: var(--color-primary);
+      border: 1px solid var(--color-primary);
+    }
+
+    &:hover {
+      border: 1px dotted var(--color-primary);
+      border-bottom: 0;
+    }
+  }
+}
+
+.tab[data-tab] {
+  padding: 10px 0 10px 10px;
+  overflow: hidden auto;
+  scrollbar-color: var(--color-primary) var(--color-scrollbar-track);
+  scrollbar-gutter: stable;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  // fade effect (top and bottom)
+  mask: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 1) 12px, rgba(0, 0, 0, 1) calc(100% - 12px), rgba(0, 0, 0, 0) 100%);
+
+  &.active {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
+  >* {
+    flex: none
+  }
+}
+
+h4.form-header {
+  display: flex;
+  flex-flow: row nowrap;
+  line-height: 1;
+
+  .section-toggle,
+  [data-action="toggleSection"] {
+    flex: 10;
+  }
+
+  a:not(:first-of-type):last-of-type {
+    flex: 0;
+  }
+}
+
+.resolvers-container {
+  .resolver {
+    display: flex;
+    flex-flow: row wrap;
+
+    &:not(:first-child) {
+      padding-top: 8px;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #999;
+      padding-bottom: 8px;
+    }
+
+    >.form-group,
+    >.form-group-stacked {
+      flex: 2 0 100%;
+    }
+
+    .form-fields {
+      flex-flow: row nowrap;
+
+      .action {
+        flex: none;
+        margin-left: 4px;
+        padding: 4px 8px;
+      }
+
+      .checkbox {
+        flex: 0 0 auto;
+      }
+    }
+
+    .form-group-stacked.difficulty,
+    .form-group-stacked.damages {
+      flex: 0 1 50%;
+    }
+
+    .form-group-stacked.difficulty {
+      margin-right: -1px;
+
+      input[type] {
+        border-radius: 3px 0 0 3px;
+      }
+    }
+
+    .form-group-stacked.damages {
+      input[type] {
+        border-radius: 0 3px 3px 0;
+      }
+    }
+
+    .form-group.effects .form-fields {
+      span {
+        border-right: 0;
+        flex: none;
+        margin-left: 4px;
+      }
+    }
+  }
+}

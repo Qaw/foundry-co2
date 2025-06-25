@@ -1,0 +1,213 @@
+.sheet-sidebar {
+  @color-attack: #e21e26;
+  @color-initiative: #48494f;
+  @color-defense: #0e507c;
+  @color-health: #128541;
+  @color-damages: #800080;
+  @color-resource: #2f4f4f;
+
+  .theme-light & {
+    --color-attack: @color-attack;
+    --color-initiative: @color-initiative;
+    --color-defense: @color-defense;
+    --color-health: @color-health;
+    --color-damages: @color-damages;
+    --color-resource: @color-resource;
+
+  }
+
+  .theme-dark & {
+    --color-attack: darken(@color-attack, 25%);
+    --color-initiative: darken(@color-initiative, 10%);
+    --color-defense: darken(@color-defense, 10%);
+    --color-health: darken(@color-health, 10%);
+    --color-damages: darken(@color-damages, 10%);
+    --color-resource: darken(@color-resource, 10%);
+  }
+
+  overflow: hidden; // hide scrollbar in child
+
+  .scrollable {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(10, min-content);
+    height: 100%;
+
+    overflow: hidden scroll;
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+
+    // fade effect (top and bottom)
+    mask: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 1) 12px, rgba(0, 0, 0, 1) calc(100% - 12px), rgba(0, 0, 0, 0) 100%);
+    padding: 8px 4px;
+
+    .labelled-field {
+      background-color: #FFF;
+      border-radius: 12px 0 0 12px;
+      height: 32px;
+      padding: 4px;
+
+      i.fas,
+      i[class="fa-"] {
+        font-size: 18px;
+        line-height: 1.2;
+      }
+    }
+
+    .sidebar-section {
+      background-color: var(--color-primary);
+      grid-column: auto / span 2;
+
+      .sidebar-section-header {
+        display: flex;
+        flex-direction: column;
+        margin: 4px;
+
+        .sidebar-label {
+          display: flex;
+          align-items: center;
+          font-size: 18px;
+          gap: 4px;
+          line-height: 1;
+          margin: 4px;
+          padding: 0;
+
+          h4 {
+            font-size: inherit;
+            margin: 0;
+
+            .theme-light & {
+              color: #FFF;
+            }
+          }
+        }
+      }
+
+      .field,
+      .labelled-field {
+        color: var(--color-primary);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 1.2;
+        margin: 0;
+        overflow: hidden;
+        padding: 2px 4px;
+
+        select,
+        input {
+          background-color: #FFF;
+          border: 0;
+          color: var(--color-primary);
+          flex: 1;
+          font-size: 18px;
+          padding: 0;
+
+          &::placeholder {
+            color: var(--color-primary);
+          }
+        }
+
+        input {
+          font-weight: bold;
+          line-height: 1.8;
+          text-align: center;
+        }
+
+        select {
+          font-size: 12px;
+        }
+
+        .slash,
+        .max {
+          font-size: 16px;
+          font-weight: normal;
+          margin-top: 6px;
+          transform: scaleX(80%);
+        }
+      }
+
+      .field {
+        background-color: #FFF;
+      }
+
+      .labelled-field {
+        i {
+          justify-self: flex-start;
+        }
+      }
+
+      .sidebar-section-content {
+        padding: 4px;
+
+        .field,
+        .labelled-field {
+          font-weight: normal;
+        }
+      }
+
+      &.init-section {
+        background-color: var(--color-initiative);
+
+        .field,
+        .labelled-field {
+          color: var(--color-initiative);
+        }
+      }
+
+      &.armor-section,
+      &.dr-section {
+        background-color: var(--color-defense);
+
+        .field,
+        .labelled-field {
+          color: var(--color-defense);
+        }
+      }
+
+      &.health-section {
+        background-color: var(--color-health);
+        grid-column: auto / span 3;
+        margin-top: 8px;
+
+        .field,
+        .labelled-field,
+        .labelled-field input {
+          color: var(--color-health);
+        }
+      }
+
+      &.speed-section {
+        grid-column: auto / span 6;
+        margin-top: 8px;
+
+        .sidebar-section-header {
+          display: flex;
+          flex-direction: row;
+          margin: 2px 4px;
+
+          .sidebar-label {
+            flex: 1;
+            
+            .theme-light & {
+              color: #FFF;
+            }
+          }
+
+          .field,
+          .labelled-field {
+            background-color: inherit;
+            color: inherit;
+            font-size: inherit;
+            
+            .theme-light & {
+              color: #FFF;
+            }
+          }
+        }
+      }
+    }
+  }
+}

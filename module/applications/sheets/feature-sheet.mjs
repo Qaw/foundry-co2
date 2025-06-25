@@ -1,10 +1,35 @@
-import { SYSTEM } from "../../config/system.mjs"
-import CoBaseItemSheet from "./base-item-sheet.mjs"
+import CoBaseItemSheetV2 from "./base-item-sheet.mjs"
 
-export default class CoFeatureSheet extends CoBaseItemSheet {
+export default class CoFeatureSheetV2 extends CoBaseItemSheetV2 {
   /** @override */
-  async getData(options = {}) {
-    const context = await super.getData(options)
+  static DEFAULT_OPTIONS = {
+    classes: ["feature"],
+    position: {
+      width: 600,
+      height: 720,
+    },
+  }
+
+  /** @override */
+  static PARTS = {
+    header: { template: "systems/co/templates/items/shared/header.hbs" },
+    tabs: { template: "templates/generic/tab-navigation.hbs" },
+    description: { template: "systems/co/templates/items/shared/description.hbs" },
+    details: { template: "systems/co/templates/items/feature.hbs" },
+  }
+
+  /** @override */
+  static TABS = {
+    primary: {
+      tabs: [{ id: "description" }, { id: "details" }],
+      initial: "details",
+      labelPrefix: "CO.sheet.tabs.feature",
+    },
+  }
+
+  /** @override */
+  async _prepareContext() {
+    const context = await super._prepareContext()
 
     let infosCapacities = []
     for (const capacity of this.item.system.capacities) {
@@ -26,9 +51,21 @@ export default class CoFeatureSheet extends CoBaseItemSheet {
     }
     context.paths = infosPaths
 
-    // Select options
-    context.choiceFeatureSubtypes = SYSTEM.FEATURE_SUBTYPE
+    console.log(`CoFeatureSheetv2 - context`, context)
+    return context
+  }
 
+  /** @inheritdoc */
+  async _preparePartContext(partId, context, options) {
+    await super._preparePartContext(partId, context, options)
+    switch (partId) {
+      case "details":
+        // Select options
+        context.choiceFeatureSubtypes = SYSTEM.FEATURE_SUBTYPE
+        context.choiceModifierSubtypes = SYSTEM.MODIFIERS.MODIFIERS_SUBTYPE
+        context.choiceModifierTargets = SYSTEM.MODIFIERS.MODIFIERS_TARGET
+        break
+    }
     return context
   }
 }

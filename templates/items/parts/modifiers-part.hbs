@@ -1,0 +1,16 @@
+{{!log 'modifiers-partial' this}}
+<h4 class="form-header modifiers">
+    <a data-action="toggleSection">{{localize "CO.ui.modifiers"}}</a>
+    <a data-action="addActionModifier" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
+</h4>
+<div class="modifiers-container foldable">
+    {{#if action.modifiers}}
+        {{#each action.modifiers as |m id|}}
+            {{> "systems/co/templates/items/parts/modifier.hbs" m=m id=id idx=../idx}}
+        {{/each}}
+    {{else}}
+        <div class="empty">
+            {{localize "CO.notif.modifiers.empty"}}
+        </div>
+    {{/if}}
+</div>

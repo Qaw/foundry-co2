@@ -1,19 +1,70 @@
+const { ux } = foundry.applications
+const { HandlebarsApplicationMixin } = foundry.applications.api
+const { DragDrop } = foundry.applications.ux
+
 import { SYSTEM } from "../../config/system.mjs"
 import Utils from "../../utils.mjs"
-
 import CoChat from "../../chat.mjs"
-export default class CoBaseActorSheet extends ActorSheet {
+import slideToggle from "../../elements/slide-toggle.mjs"
+
+export default class COBaseActorSheet extends HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2) {
   /**
    * Different sheet modes.
    * @enum {number}
    */
   static SHEET_MODES = { EDIT: 0, PLAY: 1 }
 
+  /** @override */
+  static DEFAULT_OPTIONS = {
+    classes: ["co", "actor"],
+    position: {
+      width: 800,
+      height: 900,
+    },
+    form: {
+      submitOnChange: true,
+    },
+    window: {
+      resizable: true,
+    },
+    actions: {
+      toggleSection: COBaseActorSheet.#onSectionToggle,
+      changeSheetLock: COBaseActorSheet.#onSheetChangeLock,
+      sendToChat: COBaseActorSheet.#onSendToChat,
+      createItem: COBaseActorSheet.#onCreateItem,
+      editItem: COBaseActorSheet.#onEditItem,
+      sizeChange: COBaseActorSheet.#onSizeChange,
+      learnCapacity: COBaseActorSheet.#onLearnCapacity,
+      unlearnCapacity: COBaseActorSheet.#onUnlearnCapacity,
+      deleteCustomEffect: COBaseActorSheet.#onDeleteCustomEffect,
+    },
+  }
+
   /**
    * The current sheet mode.
    * @type {number}
    */
   _sheetMode = this.constructor.SHEET_MODES.PLAY
+
+  /** @inheritDoc */
+  async _onRender(context, options) {
+    await super._onRender(context, options)
+    new DragDrop.implementation({
+      dragSelector: ".draggable",
+      permissions: {
+        dragstart: this._canDragStart.bind(this),
+        drop: this._canDragDrop.bind(this),
+      },
+      callbacks: {
+        dragstart: this._onDragStart.bind(this),
+        dragover: this._onDragOver.bind(this),
+        drop: this._onDrop.bind(this),
+      },
+    }).bind(this.element)
+
+    // Set toggle state and add status class to frame
+    this._renderModeToggle(this.element)
+  }
 
   /**
    * Is the sheet currently in 'Play' mode?
@@ -32,82 +83,78 @@ export default class CoBaseActorSheet extends ActorSheet {
   }
 
   /** @override */
-  async getData(options) {
-    const context = super.getData(options)
+  async _prepareContext() {
+    const context = await super._prepareContext()
 
     context.debugMode = game.settings.get("co", "debugMode")
-    context.system = this.actor.system
-    context.abilities = this.actor.system.abilities
-    context.combat = this.actor.system.combat
-    context.attributes = this.actor.system.attributes
-    context.resources = this.actor.system.resources
-    context.details = this.actor.system.details
-    context.paths = this.actor.paths
-    context.pathGroups = this.actor.pathGroups
-    context.capacities = this.actor.capacities
-    context.learnedCapacities = this.actor.learnedCapacities
-    context.capacitiesOffPaths = this.actor.capacitiesOffPaths
-    context.features = this.actor.features
-    context.actions = this.actor.actions
-    context.inventory = this.actor.inventory
+    context.fields = this.document.schema.fields
+    context.systemFields = this.document.system.schema.fields
+    context.systemSource = this.document.system._source
+    context.actor = this.document
+    context.system = this.document.system
+    context.source = this.document.toObject()
+
+    context.abilities = this.document.system.abilities
+    context.combat = this.document.system.combat
+    context.attributes = this.document.system.attributes
+    context.resources = this.document.system.resources
+    context.details = this.document.system.details
+    context.paths = this.document.paths
+    context.pathGroups = this.document.pathGroups
+    context.capacities = this.document.capacities
+    context.learnedCapacities = this.document.learnedCapacities
+    context.capacitiesOffPaths = this.document.capacitiesOffPaths
+    context.features = this.document.features
+    context.actions = this.document.actions
+    context.inventory = this.document.inventory
     context.unlocked = this.isEditMode
     context.locked = this.isPlayMode
 
-    context.visibleActions = await this.actor.getVisibleActions()
-    context.visibleActivableActions = await this.actor.getVisibleActivableActions()
-    context.visibleNonActivableActions = await this.actor.getVisibleNonActivableActions()
-    context.visibleActivableTemporaireActions = await this.actor.getVisibleActivableTemporaireActions()
-    context.visibleNonActivableNonTemporaireActions = await this.actor.getVisibleNonActivableNonTemporaireActions()
-    context.currentEffects = await this.actor.customEffects
+    context.visibleActions = await this.document.getVisibleActions()
+    context.visibleActivableActions = await this.document.getVisibleActivableActions()
+    context.visibleNonActivableActions = await this.document.getVisibleNonActivableActions()
+    context.visibleActivableTemporaireActions = await this.document.getVisibleActivableTemporaireActions()
+    context.visibleNonActivableNonTemporaireActions = await this.document.getVisibleNonActivableNonTemporaireActions()
+    context.currentEffects = await this.document.customEffects
 
     // Select options
     context.choiceMoveUnit = SYSTEM.MOVEMENT_UNIT
 
-    // Application V2 style
-    context.fields = this.document.schema.fields
-    context.systemFields = this.document.system.schema.fields
-
-    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseActorSheet - context`), context)
+    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseActorSheetV2 - context`), context)
     return context
   }
 
-  /** @override */
-  activateListeners(html) {
-    super.activateListeners(html)
-    html.find(".section-toggle").click(this._onSectionToggle.bind(this))
-    html.find(".sheet-change-lock").click(this._onSheetChangelock.bind(this))
-    html.find(".item-chat.chat").click(this._onSendToChat.bind(this))
-    html.find(".item-create").click(this._onCreateItem.bind(this))
-    html.find(".item-edit").click(this._onEditItem.bind(this))
-    html.find(".size-select").change(this._onSizeChange.bind(this))
-    html.find(".capacity-learn").click(this._onLearnCapacity.bind(this))
-    html.find(".capacity-unlearn").click(this._onUnlearnCapacity.bind(this))
-    html.find(".customEffect-delete").click(this._onDeleteCustomEffect.bind(this))
-  }
-
-  /** @inheritDoc */
-  _onDragStart(event) {
-    super._onDragStart(event)
-  }
-
   /**
-   * Manage the toggle of the sections
-   * @param {Event} event
+   * Handles the toggle action for a section.
+   * Prevents the default event action, finds the next foldable section,
+   * and toggles its visibility with a sliding animation.
+   *
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
+   * @returns {boolean} - Always returns true.
    */
-  _onSectionToggle(event) {
+  static #onSectionToggle(event, target) {
     event.preventDefault()
-    const li = $(event.currentTarget).parents().next(".foldable")
-    li.slideToggle("fast")
+    const li = target.closest("li.items-container-header")
+    let foldable = li.nextElementSibling
+    while (foldable && !foldable.classList.contains("foldable")) {
+      foldable = foldable.nextElementSibling
+    }
+    if (foldable) {
+      slideToggle(foldable)
+    }
     return true
   }
 
   /**
    * Manage the lock/unlock button on the sheet
-   * @param {Event} event
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @param {COBaseActorSheet} sheet The sheet instance
    */
-  async _onSheetChangelock(event) {
+  static async #onSheetChangeLock(event, target) {
     event.preventDefault()
-    const modes = this.constructor.SHEET_MODES
+    const modes = sheet.constructor.SHEET_MODES
     this._sheetMode = this.isEditMode ? modes.PLAY : modes.EDIT
     this.render()
   }
@@ -118,22 +165,23 @@ export default class CoBaseActorSheet extends ActorSheet {
    * - item : to display an item and all its actions
    * - action : to display the item and the action
    * - loot : to only display informations on the item
-   * @param {Event} event
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
-  async _onSendToChat(event) {
+  static async #onSendToChat(event, target) {
     event.preventDefault()
     // Dataset has tooltip, chatType and if it's an action there are also indice and source
-    const dataset = event.currentTarget.dataset
+    const dataset = target.dataset
     const chatType = dataset.chatType
 
     let item
     let id
     let indice = null
     if (chatType === "item" || chatType === "loot") {
-      id = $(event.currentTarget).parents(".item").data("itemId")
-      item = this.actor.items.get(id)
+      id = target.closest(".item").dataset.itemId
+      item = this.document.items.get(id)
     } else if (chatType === "action") {
-      item = await fromUuid(dataset.source)
+      item = fromUuidSync(dataset.source)
       indice = dataset.indice
     }
 
@@ -156,11 +204,11 @@ export default class CoBaseActorSheet extends ActorSheet {
 
   /**
    * Create a new embedded item
-   * @param {Event} event
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
-  _onCreateItem(event) {
+  static #onCreateItem(event, target) {
     event.preventDefault()
-    const target = event.currentTarget
     const type = target.dataset.type
 
     const itemData = {
@@ -206,82 +254,117 @@ export default class CoBaseActorSheet extends ActorSheet {
     return this.actor.createEmbeddedDocuments("Item", [itemData])
   }
 
-  _onRoll(event) {
-    const dataset = event.currentTarget.dataset
-    const type = dataset.rollType
-    const target = dataset.rollTarget
-
-    switch (type) {
-      case "skillcheck":
-        this.actor.rollSkill(target)
-      case "combatcheck":
-        break
-    }
-    // Return this.actor.dmgRoll(event, this.actor);
-    // return this.actor.attackRoll(event, this.actor)
-    // return this.actor.initRoll(event, this.actor)
-  }
-
   /**
    * Change la taille du prototypeToken en fonction du choix de la taille
    *
-   * @param {Event} event The event object from the size change input.
+   * @param {PointerEvent} event The originating change event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    * @returns {Promise<void>} A promise that resolves when the actor's size has been updated.
    */
-  async _onSizeChange(event) {
+  static async #onSizeChange(event, target) {
     await this.actor.updateSize(event.target.value)
   }
 
   /**
-   * Open the embededd item sheet
-   * @param {*} event
-   * @private
+   * Open the embedded item sheet
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
-  _onEditItem(event) {
+  static #onEditItem(event, target) {
     event.preventDefault()
-    const li = event.currentTarget.closest(".item")
-    const uuid = li.dataset.itemUuid
-    const { id } = foundry.utils.parseUuid(uuid)
-    let document = this.actor.items.get(id)
-    return document.sheet.render(true)
+    const uuid = target.closest(".item").dataset.itemUuid
+    if (uuid) {
+      const document = fromUuidSync(uuid)
+      if (document) return document.sheet.render(true)
+    }
   }
 
   /**
    * Handles the event when a capacity is learned.
    *
-   * @param {Event} event The event object triggered by the user interaction.
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    * @returns {Promise<void>} A promise that resolves when the capacity has been marked as learned.
    */
-  async _onLearnCapacity(event) {
+  static async #onLearnCapacity(event, target) {
     event.preventDefault()
-    const capacityId = $(event.currentTarget).parents(".item").data("itemId")
-    await this.actor.toggleCapacityLearned(capacityId, true)
+    const capacityId = target.closest(".item").dataset.itemId
+    if (capacityId) await this.actor.toggleCapacityLearned(capacityId, true)
   }
 
   /**
    * Handles the event when a capacity is unlearned by the actor.
    *
-   * @param {Event} event The event that triggered the unlearn capacity action.
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    * @returns {Promise<void>} A promise that resolves when the capacity has been unlearned.
    */
-  async _onUnlearnCapacity(event) {
+  static async #onUnlearnCapacity(event, target) {
     event.preventDefault()
-    const capacityId = $(event.currentTarget).parents(".item").data("itemId")
-    await this.actor.toggleCapacityLearned(capacityId, false)
+    const capacityId = target.closest(".item").dataset.itemId
+    if (capacityId) await this.actor.toggleCapacityLearned(capacityId, false)
   }
 
   /**
    * Permet la suppression d'un effet personnalisé à la main au cas où il ne se terminerait pas de lui-même
    * Ou pour simuler un arrêt précoce à cause d'un sort de soin par exemple
-   * @param {Event} event
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
-  async _onDeleteCustomEffect(event) {
+  static async #onDeleteCustomEffect(event, target) {
     event.preventDefault()
-    const dataset = event.currentTarget.dataset
-    let effectname = dataset.ceName
+    let effectname = target.dataset.ceName
+
     const ce = this.actor.system.currentEffects.find((ce) => ce.slug === effectname)
     if (ce) {
       await this.actor.deleteCustomEffect(ce)
+    }
+  }
+
+  // #region Drag-and-Drop Workflow
+
+  /** @inheritDoc */
+  _onDragStart(event) {
+    super._onDragStart(event)
+  }
+
+  // #endregion
+
+  /**
+   * Manage the lock/unlock button on the sheet
+   * @param {Event} event
+   */
+  async _onSheetChangeLock(event) {
+    event.preventDefault()
+    const modes = this.constructor.SHEET_MODES
+    this._sheetMode = this.isEditMode ? modes.PLAY : modes.EDIT
+    await this.submit()
+    this.render()
+  }
+
+  /**
+   * Handle re-rendering the mode toggle on ownership changes.
+   * @param {HTMLElement} element
+   * @protected
+   */
+  _renderModeToggle(element) {
+    const header = element.querySelector(".window-header")
+    const toggle = header.querySelector(".mode-slider")
+    if (this.isEditable && !toggle) {
+      const toggle = document.createElement("co-toggle-switch")
+      toggle.checked = this._sheetMode === this.constructor.SHEET_MODES.EDIT
+      toggle.classList.add("mode-slider")
+      // TODO change tooltip with translation
+      toggle.dataset.tooltip = "CO.SheetModeEdit"
+      toggle.setAttribute("aria-label", game.i18n.localize("CO.SheetModeEdit"))
+      toggle.addEventListener("change", this._onSheetChangeLock.bind(this))
+      toggle.addEventListener("dblclick", (event) => event.stopPropagation())
+      toggle.addEventListener("pointerdown", (event) => event.stopPropagation())
+      header.prepend(toggle)
+    } else if (this.isEditable) {
+      toggle.checked = this._sheetMode === this.constructor.SHEET_MODES.EDIT
+    } else if (!this.isEditable && toggle) {
+      toggle.remove()
     }
   }
 }

@@ -21,6 +21,9 @@ export default class PathData extends ItemData {
     })
   }
 
+  /** @override */
+  static LOCALIZATION_PREFIXES = ["CO.Path"]
+
   /** Retourne la position d'une capacité dans la liste des capacités de la voie
    * @param {string} capacityUuid L'UUID de la capacité recherchée
    * @returns {number} La position dans la liste ou 0 si la capacité n'est pas trouvée
