@@ -106,19 +106,19 @@ fieldset legend {
   height: var(--input-height);
   padding-right: 4px;
 }
-.form-group .form-fields label:has(>input[type="checkbox"]),
-.form-group-stacked .form-fields label:has(>input[type="checkbox"]),
-.form-group .form-fields label:has(>input[type="radio"]),
-.form-group-stacked .form-fields label:has(>input[type="radio"]) {
+.form-group .form-fields label:has(>input[type=checkbox]),
+.form-group-stacked .form-fields label:has(>input[type=checkbox]),
+.form-group .form-fields label:has(>input[type=radio]),
+.form-group-stacked .form-fields label:has(>input[type=radio]) {
   align-items: baseline;
   display: flex;
   flex-flow: row nowrap;
   padding-top: 4px;
 }
-.form-group .form-fields input[type="checkbox"],
-.form-group-stacked .form-fields input[type="checkbox"],
-.form-group .form-fields input[type="radio"],
-.form-group-stacked .form-fields input[type="radio"] {
+.form-group .form-fields input[type=checkbox],
+.form-group-stacked .form-fields input[type=checkbox],
+.form-group .form-fields input[type=radio],
+.form-group-stacked .form-fields input[type=radio] {
   height: var(--input-height);
 }
 .form-group .form-fields button,
@@ -163,14 +163,25 @@ select[disabled] {
   background: var(--input-background-color);
   height: var(--input-height);
 }
+.theme-light input[type=checkbox],
+.theme-light input[type=radio] {
+  --checkbox-background-color: var(--color-dark-4);
+}
 prose-mirror,
 .prosemirror {
   flex: 1;
   max-width: 100%;
+  min-height: 50px;
+  max-height: 100%;
+  position: relative;
 }
 prose-mirror > button,
 .prosemirror > button {
   display: none;
+}
+prose-mirror .editor-menu,
+.prosemirror .editor-menu {
+  padding: 4px;
 }
 prose-mirror .editor-content,
 .prosemirror .editor-content {
@@ -181,6 +192,16 @@ prose-mirror .editor-content,
 prose-mirror:hover:not([open]) > button,
 .prosemirror:hover:not([open]) > button {
   display: flex;
+}
+prose-mirror .editor-container,
+.prosemirror .editor-container {
+  height: clamp(25px, 100%, 50vh);
+  padding: 0 0 8px 8px;
+  overflow: hidden scroll;
+}
+prose-mirror .editor-container .editor-content,
+.prosemirror .editor-container .editor-content {
+  padding: 0;
 }
 multi-select {
   margin-bottom: 4px;
@@ -968,9 +989,9 @@ co-toggle-switch[checked] thumb {
   border: 4px solid var(--color-gold);
   border-bottom: 0;
   gap: 8px;
-  grid-template-columns: 140px auto 1fr minmax(64px, min-content);
+  grid-template-columns: 140px 1fr minmax(64px, min-content);
   grid-template-rows: auto auto auto;
-  grid-template-areas: "img name      name      level" "img species   profiles  profiles" "img abilities abilities abilities";
+  grid-template-areas: "img name      level" "img traits    traits" "img abilities abilities";
   padding-right: 8px;
 }
 .co.application.sheet.actor .window-content .sheet-header .image-container {
@@ -1010,30 +1031,30 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor .window-content .sheet-header .abilities {
   grid-area: abilities;
 }
-.co.application.sheet.actor .window-content .sheet-header .species {
-  grid-area: species;
-}
-.co.application.sheet.actor .window-content .sheet-header .profiles {
-  grid-area: profiles;
-  margin-left: 16px;
-}
-.co.application.sheet.actor .window-content .sheet-header .species,
-.co.application.sheet.actor .window-content .sheet-header .profiles {
-  align-items: center;
+.co.application.sheet.actor .window-content .sheet-header .traits {
   display: flex;
-  font-size: 14px;
-  line-height: 1.2;
-  white-space: nowrap;
-}
-.co.application.sheet.actor .window-content .sheet-header .species a,
-.co.application.sheet.actor .window-content .sheet-header .profiles a {
-  margin-right: 4px;
+  grid-area: traits;
 }
 .co.application.sheet.actor .window-content .sheet-sidebar {
   overflow: hidden;
 }
+.theme-light .co.application.sheet.actor .window-content .sheet-sidebar {
+  --color-attack: #e21e26;
+  --color-initiative: #48494f;
+  --color-defense: #0e507c;
+  --color-health: #128541;
+  --color-damages: #800080;
+  --color-resource: #2f4f4f;
+}
+.theme-dark .co.application.sheet.actor .window-content .sheet-sidebar {
+  --color-attack: #720f13;
+  --color-initiative: #303034;
+  --color-defense: #09324e;
+  --color-health: #0c582b;
+  --color-damages: #4d004d;
+  --color-resource: #1c2f2f;
+}
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable {
-  color: #000;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(10, min-content);
@@ -1076,6 +1097,9 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .sidebar-section-header .sidebar-label h4 {
   font-size: inherit;
   margin: 0;
+}
+.theme-light .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .sidebar-section-header .sidebar-label h4 {
+  color: #FFF;
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field {
@@ -1139,69 +1163,57 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .sidebar-section-content .labelled-field {
   font-weight: normal;
 }
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.melee-section,
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.ranged-section,
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.magic-section {
-  background-color: var(--color-primary);
-}
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.melee-section .field i,
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.ranged-section .field i,
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.magic-section .field i,
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.melee-section .labelled-field i,
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.ranged-section .labelled-field i,
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.magic-section .labelled-field i {
-  color: var(--color-primary);
-}
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.init-section {
-  background-color: var(--color-primary);
+  background-color: var(--color-initiative);
 }
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.init-section .field i,
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.init-section .labelled-field i {
-  color: var(--color-primary);
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.init-section .field,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.init-section .labelled-field {
+  color: var(--color-initiative);
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.armor-section,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.dr-section {
-  background-color: var(--color-primary);
+  background-color: var(--color-defense);
 }
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.armor-section .field i,
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.dr-section .field i,
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.armor-section .labelled-field i,
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.dr-section .labelled-field i {
-  color: var(--color-primary);
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.armor-section .field,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.dr-section .field,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.armor-section .labelled-field,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.dr-section .labelled-field {
+  color: var(--color-defense);
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.health-section {
-  background-color: var(--color-primary);
+  background-color: var(--color-health);
   grid-column: auto / span 3;
   margin-top: 8px;
 }
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.health-section .field i,
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.health-section .labelled-field i {
-  color: var(--color-primary);
-}
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section {
-  margin-top: 8px;
-}
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section .field i,
-.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section .labelled-field i {
-  color: var(--color-primary);
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.health-section .field,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.health-section .labelled-field,
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.health-section .labelled-field input {
+  color: var(--color-health);
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section {
   grid-column: auto / span 6;
   margin-top: 8px;
-  height: auto;
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header {
   display: flex;
   flex-direction: row;
+  margin: 2px 4px;
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .sidebar-label {
   flex: 1;
+}
+.theme-light .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .sidebar-label {
+  color: #FFF;
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .field,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .labelled-field {
   background-color: inherit;
   color: inherit;
   font-size: inherit;
+}
+.theme-light .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .field,
+.theme-light .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .labelled-field {
+  color: #FFF;
 }
 .co.application.sheet.actor .window-content .abilities {
   box-sizing: border-box;
@@ -1217,10 +1229,20 @@ co-toggle-switch[checked] thumb {
   background-color: var(--color-primary);
   line-height: 1.8;
 }
+.co.application.sheet.actor .window-content .abilities .ability .ability-id i.fas.fa-asterisk {
+  font-size: 11px;
+  vertical-align: super;
+}
+.co.application.sheet.actor .window-content .abilities .ability .ability-id input[type=checkbox]::after,
+.co.application.sheet.actor .window-content .abilities .ability .ability-id input[type=checkbox]::before {
+  top: 8px;
+}
 .co.application.sheet.actor .window-content .abilities .ability .ability-mod {
   border: 2px solid var(--color-primary);
+  border-radius: 0;
   display: block;
   line-height: 1.8;
+  text-align: center;
 }
 .co.application.sheet.actor .window-content .abilities .abilities-controls {
   background-color: var(--color-primary);
@@ -1228,6 +1250,71 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.sheet.actor.character:not(.minimized) {
   min-width: 890px;
+}
+.co.application.sheet.actor.character .window-content .sheet-header .profiles {
+  margin-left: 16px;
+}
+.co.application.sheet.actor.character .window-content .sheet-header .species,
+.co.application.sheet.actor.character .window-content .sheet-header .profiles {
+  align-items: center;
+  display: flex;
+  font-size: 14px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.co.application.sheet.actor.character .window-content .sheet-header .species a,
+.co.application.sheet.actor.character .window-content .sheet-header .profiles a {
+  margin-right: 4px;
+}
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.melee-section,
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.ranged-section,
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.magic-section {
+  background-color: var(--color-attack);
+}
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.melee-section .field,
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.ranged-section .field,
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.magic-section .field,
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.melee-section .labelled-field,
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.ranged-section .labelled-field,
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.magic-section .labelled-field {
+  color: var(--color-attack);
+}
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section:nth-child(8) .labelled-field i {
+  color: var(--color-damages);
+}
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section {
+  background-color: var(--color-resource);
+  margin-top: 8px;
+}
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section .field,
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section .labelled-field,
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section .labelled-field input {
+  color: var(--color-resource);
+}
+.co.application.sheet.actor.character .window-content .dropzone {
+  margin-left: 70px;
+}
+.co.application.sheet.actor.encounter:not(.minimized) {
+  min-width: 860px;
+}
+.co.application.sheet.actor.encounter .window-content .sheet-header .traits .trait.size {
+  margin-left: 16px;
+}
+.co.application.sheet.actor.encounter .window-content .sheet-sidebar .scrollable .sidebar-section:nth-child(5) .labelled-field i {
+  color: var(--color-damages);
+}
+.co.application.sheet.actor.encounter .window-content .properties {
+  max-height: 90%;
+  overflow: hidden;
+}
+.co.application.sheet.actor.encounter .window-content .properties .notes {
+  max-height: calc(100% - 20px);
+}
+.co.application.sheet.actor.encounter .window-content .properties .notes .editor {
+  margin: 8px;
+}
+.co.application.sheet.actor.encounter .window-content .properties .notes prose-mirror.editor {
+  margin: 0;
 }
 #interface #ui-left {
   padding: 0;

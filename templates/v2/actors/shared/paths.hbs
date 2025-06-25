@@ -59,8 +59,6 @@
                             <div class="dropzone">
                                 <ol class="item-list foldable" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity.id}}" data-item-type="capacity" draggable="false">
                                     <li class="item flexrow" {{#if (isNotNull capacity.system.linkedCapacity)}} data-item-uuid="{{capacity.system.linkedCapacity}}" data-item-id="{{capacity.system.linkedCapacityItem.id}}" data-item-type="capacity" {{/if}}>
-                                        <div class="item-detail"></div>
-                                        <div class="item-detail"></div>
                                         {{#if (and (isNotNull capacity.system.linkedCapacity) (isNotNull capacity.system.linkedCapacityItem))}}
                                             <div class="item-name flexrow">                                            
                                                     <a class="item-img" data-action="editItem" style="background-image: url('{{capacity.system.linkedCapacityImg}}')"></a>

@@ -13,7 +13,7 @@
           {{#if action.properties.enabled}}
             <li class="item flexrow" data-item-uuid="{{action.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
               <div class="item-name flexrow">
-                <a class="item-image item-edit" style="background-image: url('{{{actionImg}}}')"></a>
+                <a class="item-img item-edit" style="background-image: url('{{{actionImg}}}')"></a>
                 <h4>{{action.itemName}}{{#if action.hasLabel}} - {{action.label}}{{/if}}&nbsp;{{{action.icon}}}</h4>
               </div>
               <div class="item-controls-2"></div>
@@ -33,7 +33,7 @@
           {{#unless action.properties.enabled}}
             <li class="item flexrow" data-item-uuid="{{action.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
               <div class="item-name flexrow">
-                <a class="item-image item-edit" style="background-image: url('{{{actionImg}}}')"></a>
+                <a class="item-img item-edit" style="background-image: url('{{{actionImg}}}')"></a>
                 <h4>{{action.itemName}}{{#if action.hasLabel}} - {{action.label}}{{/if}}&nbsp;{{{action.icon}}}</h4>
               </div>
               <div class="item-controls-2"></div>
@@ -53,7 +53,7 @@
           {{#if action.properties.enabled}}
             <li class="item flexrow" data-item-uuid="{{action.source}}" data-item-indice="{{id}}" data-item-type="action" draggable="false">
               <div class="item-name flexrow">
-                <a class="item-image item-edit" style="background-image: url('{{{actionImg}}}')"></a>
+                <a class="item-img item-edit" style="background-image: url('{{{actionImg}}}')"></a>
                 <h4>{{action.itemName}}{{#if action.hasLabel}} - {{action.label}}{{/if}}&nbsp;{{{action.icon}}}</h4>
               </div>
               <div class="item-controls-2"></div>
@@ -73,7 +73,7 @@
           {{!log (concat "Chroniques Oubliées | customEffect " id) effect}}
           <li class="item flexrow" data-item-uuid="{{effect.source}}" data-item-indice="{{id}}" data-item-type="customEffectData" draggable="false">
             <div class="item-name flexrow">
-              <a class="item-image item-edit" style="background-image: url('icons/svg/aura.svg')"></a>
+              <a class="item-img item-edit" style="background-image: url('icons/svg/aura.svg')"></a>
               <h4 data-tooltip="{{effect.tooltip}}">{{effect.name}} : {{effect.duration}} {{effect.unit}}</h4>
               {{#if ../unlocked}}
                 <a class="item-control customEffect-delete" data-tooltip={{localize "CO.ui.remove"}} data-ce-Name={{effect.slug}}><i class="fas fa-trash"></i></a>

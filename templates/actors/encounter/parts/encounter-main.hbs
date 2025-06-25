@@ -110,7 +110,7 @@
                     {{!log (concat "Chroniques Oubliées | action " id) action}}
                     <li class="item flexrow {{#if action.properties.temporary}}{{#unless action.properties.enabled}}deactivated{{/unless}}{{/if}}" draggable="true" data-item-uuid="{{action.source}}" data-indice="{{action.indice}}">
                         <div class="item-name flexrow">
-                            <div class="item-image" style="background-image: url('{{{actionImg}}}')"></div>
+                            <div class="item-img" style="background-image: url('{{{actionImg}}}')"></div>
                             <h4><a class="item-control item-edit">{{action.itemName}} : {{action.label}}</a>&nbsp;{{{action.icon}}}</h4>
                         </div>
                         <div class="item-controls-3">

@@ -36,7 +36,7 @@
                 {{#each profiles as |item id|}}
                     <li class="item flexrow" data-item-uuid="{{item.uuid}}" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="false">
                         <div class="item-name flexrow">
-                            <a class="item-image item-edit" style="background-image: url('{{item.img}}')"></a>
+                            <a class="item-img item-edit" style="background-image: url('{{item.img}}')"></a>
                             <h4>{{item.name}}</h4>
                         </div>
                         <div class="item-controls-2">
@@ -49,7 +49,7 @@
                 {{#each features as |item id|}}
                     <li class="item flexrow" data-item-uuid="{{item.uuid}}" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="false">
                         <div class="item-name flexrow">
-                            <a class="item-image item-edit" style="background-image: url('{{item.img}}')"></a>
+                            <a class="item-img item-edit" style="background-image: url('{{item.img}}')"></a>
                             <h4>{{item.name}}</h4>
                         </div>
                         <div class="item-controls-2">
@@ -98,7 +98,7 @@
                     {{!log (concat "Chroniques Oubliées | action " id) action}}
                         <li class="item flexrow action {{#if action.properties.temporary}}{{#unless action.properties.enabled}}deactivated{{/unless}}{{/if}}" draggable="true" data-item-uuid="{{action.source}}" data-indice="{{action.indice}}">
                             <div class="item-name flexrow">
-                                <a class="item-image item-edit" style="background-image: url('{{{actionImg}}}')"></a>
+                                <a class="item-img item-edit" style="background-image: url('{{{actionImg}}}')"></a>
                                 <h4>{{action.itemName}}{{#if action.hasLabel}} - {{action.label}}{{/if}}&nbsp;{{{action.icon}}} {{#if action.hasQuantity}}<span data-tooltip="{{localize "CO.ui.remainingQuantity"}}" data-tooltip-direction="UP">({{action.quantity}})</span>{{/if}} {{#if action.hasCharges}}<span data-tooltip="{{localize "CO.ui.remainingQuantity"}}" data-tooltip-direction="UP">({{action.charges}})</span>{{/if}} {{#if action.parent.hasActionType}} ({{action.parent.actionTypeShort}}){{/if}}{{#if action.parent.isSpell}} * (Mana : {{action.manaCost}}{{#if (gt (manaCostFromArmor action.parent.parent @root.actor) 0)}} Malus armure : {{manaCostFromArmor action.parent.parent @root.actor}} {{/if}}){{/if}}</h4>
                             </div>                            <div class="item-controls-3">
                                 {{#each action.getActionIcons as |icon|}}

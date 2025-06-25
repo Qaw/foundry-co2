@@ -16,22 +16,24 @@
       <span>{{attributes.level}}</span>
     {{/if}}
   </div>
-  <div class="species">
-    {{#if (gt features.length 0)}}
-      <a class="item-img" style="background-image: url('{{features.[0].img}}')"></a>
-      <span>{{features.[0].name}}</span>
-    {{/if}}
-  </div>
-  <div class="profiles">
-    {{#if (gt profiles.length 0)}}
-      <a class="item-img" style="background-image: url('{{profiles.[0].img}}')"></a>
-      <span>{{profiles.[0].name}}</span>
-    {{/if}}
-    {{#if (gt profiles.length 1)}}
-      <span class="slash">/</span>
-      <a class="item-img" style="background-image: url('{{profiles.[1].img}}')"></a>
-      <span>{{profiles.[1].name}}</span>
-    {{/if}}
+  <div class="traits">
+    <div class="species">
+      {{#if (gt features.length 0)}}
+        <a class="item-img" style="background-image: url('{{features.[0].img}}')"></a>
+        <span>{{features.[0].name}}</span>
+      {{/if}}
+    </div>
+    <div class="profiles">
+      {{#if (gt profiles.length 0)}}
+        <a class="item-img" style="background-image: url('{{profiles.[0].img}}')"></a>
+        <span>{{profiles.[0].name}}</span>
+      {{/if}}
+      {{#if (gt profiles.length 1)}}
+        <span class="slash">/</span>
+        <a class="item-img" style="background-image: url('{{profiles.[1].img}}')"></a>
+        <span>{{profiles.[1].name}}</span>
+      {{/if}}
+    </div>
   </div>
   <ol class="abilities">
     {{#each abilities as |ability id|}}

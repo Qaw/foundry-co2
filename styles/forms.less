@@ -20,6 +20,9 @@ fieldset {
 
   .form-fields {
 
+    gap: 0;
+    justify-content: stretch;
+
     .theme-light & {
       --input-background-color: rgba(0, 0, 0, 0.1);
       --input-border-color: var(--color-dark-6);
@@ -33,9 +36,6 @@ fieldset {
       --input-box-shadow: none;
       --input-focus-outline-color: var(--color-cool-3);
     }
-
-    gap: 0;
-    justify-content: stretch;
 
     :has(>:only-child) {
 
@@ -89,8 +89,8 @@ fieldset {
       height: var(--input-height);
       padding-right: 4px;
 
-      &:has(>input[type="checkbox"]),
-      &:has(>input[type="radio"]) {
+      &:has(>input[type=checkbox]),
+      &:has(>input[type=radio]) {
         align-items: baseline;
         display: flex;
         flex-flow: row nowrap;
@@ -98,8 +98,8 @@ fieldset {
       }
     }
 
-    input[type="checkbox"],
-    input[type="radio"] {
+    input[type=checkbox],
+    input[type=radio] {
       height: var(--input-height);
     }
 
@@ -151,4 +151,11 @@ input[disabled],
 select[disabled] {
   background: var(--input-background-color);
   height: var(--input-height);
+}
+
+.theme-light {
+  input[type=checkbox],
+  input[type=radio] {
+    --checkbox-background-color: var(--color-dark-4);
+  }
 }
