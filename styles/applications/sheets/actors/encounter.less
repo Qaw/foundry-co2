@@ -1,0 +1,25 @@
+&:not(.minimized) {
+  min-width: 860px;
+}
+
+.window-content {
+  @import "./encounter-header.less";
+  @import "./encounter-sidebar.less";
+
+  .properties {
+    max-height: 90%;
+    overflow: hidden;
+
+    .notes {
+      max-height: calc(100% - 20px);
+
+      .editor {
+        margin: 8px;
+      }
+
+      prose-mirror.editor {
+        margin: 0;
+      }
+    }
+  }
+}

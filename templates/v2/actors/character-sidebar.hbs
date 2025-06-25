@@ -349,11 +349,11 @@
       <div class="sidebar-section-content">
         <div class="mvt-base field">
           <input class="mvt-base" type="number" name="system.attributes.movement.base"
-            value="{{attributes.movement.base}}" data-dtype="Number" placeholder="0"
+            value="{{attributes.movement.base}}" data-dtype="Number" placeholder="10"
             data-tooltip="{{localize 'CO.label.long.base'}}" />
-          <input class="movment-bonus" type="text" name="system.attributes.movement.bonuses.sheet"
+          <input class="movement-bonus" type="text" name="system.attributes.movement.bonuses.sheet"
             value="{{numberFormat attributes.movement.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number"
-            data-tooltip="{{localize 'CO.label.long.bonus'}}" placeholder="0" />
+            data-tooltip="{{localize 'CO.label.long.bonus'}}" placeholder="+0" />
           <select name="system.attributes.movement.unit" data-type="String">
             {{selectOptions choiceMoveUnit selected=system.attributes.movement.unit localize=true}}
           </select>

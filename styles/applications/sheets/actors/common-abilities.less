@@ -10,20 +10,32 @@
 
     .ability-id {
       background-color: var(--color-primary);
-      //height: 50%;
       line-height: 1.8;
+
+      i.fas.fa-asterisk {
+        font-size: 11px;
+        vertical-align: super;
+      }
+
+      input[type=checkbox] {
+        &::after,&::before{
+          top: 8px;
+        }
+      }
     }
 
     .ability-mod {
       border: 2px solid var(--color-primary);
+      border-radius: 0;
       display: block;
       //height: 50%;
       line-height: 1.8;
+      text-align: center;
     }
   }
 
   .abilities-controls {
     background-color: var(--color-primary);
-     line-height: 2.8;
+    line-height: 2.8;
   }
 }
