@@ -9,7 +9,7 @@ import { Condition } from "../../models/schemas/condition.mjs"
 import { Modifier } from "../../models/schemas/modifier.mjs"
 import { Resolver } from "../../models/schemas/resolver.mjs"
 
-export default class CoBaseItemSheetV2 extends HandlebarsApplicationMixin(foundry.applications.sheets.ItemSheetV2) {
+export default class COBaseItemSheet extends HandlebarsApplicationMixin(foundry.applications.sheets.ItemSheetV2) {
   /**
    * Different sheet modes.
    * @enum {number}
@@ -30,22 +30,22 @@ export default class CoBaseItemSheetV2 extends HandlebarsApplicationMixin(foundr
       resizable: true,
     },
     actions: {
-      toggleSection: CoBaseItemSheetV2.#onSectionToggle,
-      changeSheetLock: CoBaseItemSheetV2.#onSheetChangelock,
-      selectStatus: CoBaseItemSheetV2.#onSelectStatus,
-      editItem: CoBaseItemSheetV2.#onEditItem,
-      deleteItem: CoBaseItemSheetV2.#onDeleteItem,
-      addActionModifier: CoBaseItemSheetV2.#onAddActionModifier,
-      deleteActionModifier: CoBaseItemSheetV2.#onDeleteActionModifier,
-      addModifier: CoBaseItemSheetV2.#onAddModifier,
-      deleteModifier: CoBaseItemSheetV2.#onDeleteModifier,
-      addResolver: CoBaseItemSheetV2.#onAddResolver,
-      deleteResolver: CoBaseItemSheetV2.#onDeleteResolver,
-      addCondition: CoBaseItemSheetV2.#onAddCondition,
-      deleteCondition: CoBaseItemSheetV2.#onDeleteCondition,
-      addAction: CoBaseItemSheetV2.#onAddAction,
-      deleteAction: CoBaseItemSheetV2._onDeleteAction,
-      selectActionIcon: CoBaseItemSheetV2.#onSelectActionIcon,
+      toggleSection: COBaseItemSheet.#onSectionToggle,
+      changeSheetLock: COBaseItemSheet.#onSheetChangelock,
+      selectStatus: COBaseItemSheet.#onSelectStatus,
+      editItem: COBaseItemSheet.#onEditItem,
+      deleteItem: COBaseItemSheet.#onDeleteItem,
+      addActionModifier: COBaseItemSheet.#onAddActionModifier,
+      deleteActionModifier: COBaseItemSheet.#onDeleteActionModifier,
+      addModifier: COBaseItemSheet.#onAddModifier,
+      deleteModifier: COBaseItemSheet.#onDeleteModifier,
+      addResolver: COBaseItemSheet.#onAddResolver,
+      deleteResolver: COBaseItemSheet.#onDeleteResolver,
+      addCondition: COBaseItemSheet.#onAddCondition,
+      deleteCondition: COBaseItemSheet.#onDeleteCondition,
+      addAction: COBaseItemSheet.#onAddAction,
+      deleteAction: COBaseItemSheet._onDeleteAction,
+      selectActionIcon: COBaseItemSheet.#onSelectActionIcon,
     },
   }
 
@@ -283,7 +283,7 @@ export default class CoBaseItemSheetV2 extends HandlebarsApplicationMixin(foundr
   /**
    * Va mémoriser le choix qui a été sélectionné pour les conditionsState
    * @param {Event} event The event that triggered the selection
-   * @param {CoBaseItemSheetV2} sheet The sheet instance
+   * @param {COBaseItemSheet} sheet The sheet instance
    */
   static #onSelectStatus(event, sheet) {
     event.preventDefault()
@@ -481,7 +481,7 @@ export default class CoBaseItemSheetV2 extends HandlebarsApplicationMixin(foundr
   /**
    * Manage the lock/unlock button on the sheet
    * @param {Event} event The event that triggered the action
-   * @param {CoBaseItemSheetV2} sheet The sheet instance
+   * @param {COBaseItemSheet} sheet The sheet instance
    */
   static async #onSheetChangelock(event, sheet) {
     event.preventDefault()

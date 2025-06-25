@@ -10,7 +10,6 @@ import * as documents from "./module/documents/_module.mjs"
 import * as applications from "./module/applications/_module.mjs"
 
 // Helpers
-import preloadHandlebarsTemplates from "./module/templates.mjs"
 import registerHandlebarsHelpers from "./module/helpers.mjs"
 import registerSystemSettings from "./module/settings.mjs"
 import registerHooks from "./module/hooks.mjs"
@@ -41,9 +40,9 @@ Hooks.once("init", async function () {
     encounter: models.EncounterData,
   }
 
-  foundry.documents.collections.Actors.unregisterSheet("core", ActorSheet)
-  foundry.documents.collections.Actors.registerSheet(SYSTEM.ID, applications.CharacterSheetV2, { types: ["character"], makeDefault: true, label: "CO.sheet.character" })
-  foundry.documents.collections.Actors.registerSheet(SYSTEM.ID, applications.EncounterSheetV2, { types: ["encounter"], makeDefault: true, label: "CO.sheet.encounter" })
+  foundry.documents.collections.Actors.unregisterSheet("core", foundry.appv1.sheets.ActorSheet)
+  foundry.documents.collections.Actors.registerSheet(SYSTEM.ID, applications.CharacterSheet, { types: ["character"], makeDefault: true, label: "CO.sheet.character" })
+  foundry.documents.collections.Actors.registerSheet(SYSTEM.ID, applications.EncounterSheet, { types: ["encounter"], makeDefault: true, label: "CO.sheet.encounter" })
 
   // Item
   CONFIG.Item.documentClass = documents.COItem
@@ -57,7 +56,7 @@ Hooks.once("init", async function () {
     attack: models.AttackData,
   }
 
-  foundry.documents.collections.Items.unregisterSheet("core", ItemSheet)
+  foundry.documents.collections.Items.unregisterSheet("core", foundry.appv1.sheets.ItemSheet)
   foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.AttackSheet, { types: ["attack"], makeDefault: true, label: "CO.sheet.attack" })
   foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.CapacitySheet, { types: ["capacity"], makeDefault: true, label: "CO.sheet.capacity" })
   foundry.documents.collections.Items.registerSheet(SYSTEM.ID, applications.EquipmentSheet, { types: ["equipment"], makeDefault: true, label: "CO.sheet.equipment" })
@@ -83,9 +82,6 @@ Hooks.once("init", async function () {
 
   // Activate socket handler
   game.socket.on(`system.${SYSTEM.ID}`, handleSocketEvent)
-
-  // Preload Handlebars Templates
-  preloadHandlebarsTemplates()
 
   // Register Handlebars helpers
   registerHandlebarsHelpers()

@@ -4,29 +4,29 @@
     <a class="hover-icon" data-action="show-image"><i class="fas fa-image fa-fw"></i></a>
   </div>
   {{#if unlocked}}
-  <input class="name" name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'CO.label.long.name'}}" spellcheck="false" />
+    <input class="name" name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'CO.label.long.name'}}" spellcheck="false" />
   {{else}}
-  <span class="name">{{actor.name}}</span>
+    <span class="name">{{actor.name}}</span>
   {{/if}}
   <div class="level">
     <label class="level-label">{{localize 'CO.label.short.nc'}}</label>
     {{#if unlocked}}
-    <input class="adjustable" type="text" name="system.attributes.nc" value="{{attributes.nc}}" data-dtype="Number" />
+      <input class="adjustable" type="text" name="system.attributes.nc" value="{{attributes.nc}}" data-dtype="Number" />
     {{else}}
-    <span>{{attributes.nc}}</span>
+      <span>{{attributes.nc}}</span>
     {{/if}}
   </div>
   <div class="traits">
-  {{#if unlocked}}
-    <select class="trait category traits-list-item" name="system.details.category" data-type="String">
-      {{selectOptions choiceCategories selected=system.details.category localize=true}}
-    </select>
-    <select class="trait size traits-list-item" name="system.details.size" data-type="String">
-      {{selectOptions choiceSizes selected=system.details.size localize=true }}
-    </select> 
-  {{else}}
-    <span class="trait category">{{localize (concat 'CO.encounter.category.' system.details.category)}}</span>
-    <span class="trait size">{{localize (concat 'CO.size.' system.details.size)}}</span>
+    {{#if unlocked}}
+      <select class="trait category traits-list-item" name="system.details.category" data-type="String">
+        {{selectOptions choiceCategories selected=system.details.category localize=true}}
+      </select>
+      <select class="trait size traits-list-item" name="system.details.size" data-type="String">
+        {{selectOptions choiceSizes selected=system.details.size localize=true }}
+      </select> 
+    {{else}}
+      <span class="trait category">{{localize (concat 'CO.encounter.category.' system.details.category)}}</span>
+      <span class="trait size">{{localize (concat 'CO.size.' system.details.size)}}</span>
     {{/if}}
   </div>
   <ol class="abilities">
@@ -35,13 +35,13 @@
         <div class="ability-id" data-tooltip="{{localize (concat 'CO.abilities.long.' id)}}" data-tooltip-direction="UP">
           {{localize (concat "CO.abilities.short." id)}}
           {{#if ../unlocked}}
-          <input type="checkbox" name="system.abilities.{{id}}.superior" {{checked ability.superior}} data-tooltip="{{localize 'CO.ui.checkForSuperiorAbility'}}" >
+            <input type="checkbox" name="system.abilities.{{id}}.superior" {{checked ability.superior}} data-tooltip="{{localize 'CO.ui.checkForSuperiorAbility'}}" >
           {{else}}
-          {{#if ability.superior}}<i class="fas fa-asterisk"></i>{{/if}}
+            {{#if ability.superior}}<i class="fas fa-asterisk"></i>{{/if}}
           {{/if}}
         </div>
         {{#if ../unlocked}}
-        <input class="ability-mod" type="text" name="system.abilities.{{id}}.base" value="{{numberFormat ability.base sign=true}}" data-dtype="Number" placeholder="+0">
+          <input class="ability-mod" type="text" name="system.abilities.{{id}}.base" value="{{numberFormat ability.base sign=true}}" data-dtype="Number" placeholder="+0">
         {{else}}
         <a class="ability-mod" data-action="roll"data-roll-type="skillcheck" data-roll-target="{{id}}" data-tooltip="{{ability.tooltipValue}}">
           {{numberFormat ability.value decimals=0 sign=true}}

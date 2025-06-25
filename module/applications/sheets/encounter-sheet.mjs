@@ -1,22 +1,50 @@
-import CoBaseActorSheet from "./base-actor-sheet.mjs"
+import COBaseActorSheet from "./base-actor-sheet.mjs"
 import { SYSTEM } from "../../config/system.mjs"
 import Utils from "../../utils.mjs"
 
-export default class COEncounterSheet extends CoBaseActorSheet {
-  /** @override */
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      height: 600,
+export default class COEncounterSheet extends COBaseActorSheet {
+  static DEFAULT_OPTIONS = {
+    classes: ["encounter"],
+    position: {
       width: 800,
-      template: "systems/co/templates/actors/encounter/encounter-sheet.hbs",
-      classes: ["co", "sheet", "actor", "encounter"],
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main" }],
-    })
+      height: 600,
+    },
+    window: {
+      contentClasses: ["encounter-content"],
+      resizable: true,
+    },
+    actions: {
+      deleteItem: COEncounterSheet.#onDeleteItem,
+      roll: COEncounterSheet.#onRoll,
+      toggleAction: COEncounterSheet.#onUseAction,
+      toggleEffect: COEncounterSheet.#onUseEffect,
+    },
   }
 
   /** @override */
-  async getData(options) {
-    const context = await super.getData(options)
+  static PARTS = {
+    header: { template: "systems/co/templates/v2/actors/encounter-header.hbs" },
+    sidebar: { template: "systems/co/templates/v2/actors/encounter-sidebar.hbs" },
+    tabs: { template: "templates/generic/tab-navigation.hbs" },
+    main: { template: "systems/co/templates/v2/actors/encounter-main.hbs" },
+    loot: { template: "systems/co/templates/v2/actors/encounter-loot.hbs" },
+    paths: { template: "systems/co/templates/v2/actors/shared/paths.hbs", templates: ["systems/co/templates/v2/actors/shared/capacities-nopath.hbs"], scrollable: [""] },
+    effects: { template: "systems/co/templates/v2/actors/shared/effects.hbs" },
+    notes: { template: "systems/co/templates/v2/actors/encounter-notes.hbs" },
+  }
+
+  /** @override */
+  static TABS = {
+    primary: {
+      tabs: [{ id: "main" }, { id: "loot" }, { id: "paths" }, { id: "effects" }, { id: "notes" }],
+      initial: "main",
+      labelPrefix: "CO.sheet.tabs.encounter",
+    },
+  }
+
+  /** @override */
+  async _prepareContext() {
+    const context = await super._prepareContext()
     context.attacks = this.actor.system.attacks
     context.attacksActions = this.actor.attacksActions
 
@@ -30,22 +58,23 @@ export default class COEncounterSheet extends CoBaseActorSheet {
     context.partialDef = this.actor.hasEffect("partialDef")
     context.fullDef = this.actor.hasEffect("fullDef")
 
-    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`COEncounterSheet - context`), context)
+    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`COEncounterSheetV2 - context`), context)
     return context
   }
 
   /** @override */
-  activateListeners(html) {
-    super.activateListeners(html)
-    html.find(".item-delete").click(this._onDeleteItem.bind(this))
-    html.find(".path-delete").click(this._onDeletePath.bind(this))
-    html.find(".rollable").click(this._onRoll.bind(this))
-    html.find(".toggle-action").click(this._onUseAction.bind(this))
-    html.find(".toggle-effect").click(this._onUseEffect.bind(this))
+  async _onRender(context, options) {
+    await super._onRender(context, options)
+    // Additional encounter-specific render logic can go here
   }
 
-  _onUseAction(event) {
-    const dataset = event.currentTarget.dataset
+  /**
+   * Action d'utiliser : active ou désactive une action
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
+   */
+  static async #onUseAction(event, target) {
+    const dataset = target.dataset
     const action = dataset.action
     const type = dataset.type
     const source = dataset.source
@@ -57,9 +86,14 @@ export default class COEncounterSheet extends CoBaseActorSheet {
     }
   }
 
-  _onUseEffect(event) {
+  /**
+   * Action d'utiliser un effet
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
+   */
+  static async #onUseEffect(event, target) {
     event.preventDefault()
-    const dataset = event.currentTarget.dataset
+    const dataset = target.dataset
     const effectid = dataset.effect
     const action = dataset.action
     let activation = false
@@ -71,115 +105,46 @@ export default class COEncounterSheet extends CoBaseActorSheet {
   }
 
   /**
-   * Handle the deletion of an item from the actor's inventory.
-   *
-   * @param {Event} event The event that triggered the deletion.
-   * @returns {Promise<void>} - A promise that resolves when the deletion is complete.
-   *
-   * @private
+   * Delete the selected item
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
-  async _onDeleteItem(event) {
+  static async #onDeleteItem(event, target) {
     event.preventDefault()
-    const li = $(event.currentTarget).parents(".item")
-    const itemId = li.data("itemId")
-    const itemUUID = li.data("itemUuid")
-    const itemType = li.data("itemType")
-    if (itemType === "path") this._onDeletePath(event)
-    else if (itemType === "capacity") this._onDeleteCapacity(event)
-    else if (itemType === "feature") this._onDeleteFeature(event)
-    else this.actor.deleteEmbeddedDocuments("Item", [itemId])
-  }
-
-  /**
-   * Handles the deletion of a feature from the actor.
-   *
-   * @param {Event} event The event that triggered the deletion.
-   * @returns {Promise<void>} - A promise that resolves when the feature is deleted.
-   */
-  async _onDeleteFeature(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).parents(".item")
-    const featureId = li.data("itemId")
-    this.actor.deleteFeature(featureId)
-  }
-
-  /**
-   * Handles the deletion of a path item.
-   *
-   * @param {Event} event The event that triggered the deletion.
-   * @returns {Promise<void>} A promise that resolves when the path is deleted.
-   */
-  async _onDeletePath(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).parents(".item")
-    const pathId = li.data("itemId")
-    this.actor.deletePath(pathId)
-  }
-
-  /**
-   * Delete the selected capacity
-   * @param {Event} event
-   * @private
-   */
-  async _onDeleteCapacity(event) {
-    event.preventDefault()
-    const li = $(event.currentTarget).parents(".item")
-    const itemUuid = li.data("itemUuid")
-    await this.actor.deleteCapacity(itemUuid)
-  }
-
-  /** @inheritdoc */
-  async _onDrop(event) {
-    const data = TextEditor.getDragEventData(event)
-    const actor = this.actor
-
-    /**
-     * A hook event that fires when some useful data is dropped onto an EncounterSheet.
-     * @function dropEncounterSheetData
-     * @memberof hookEvents
-     * @param {Actor} actor      The Actor
-     * @param {ActorSheet} sheet The ActorSheet application
-     * @param {object} data      The data that has been dropped onto the sheet
-     */
-    if (Hooks.call("co.dropEncounterSheetData", actor, this, data) === false) return
-
-    // Handle different data types
-    switch (data.type) {
-      case "Actor":
-        return
-      case "Item":
-        return this._onDropItem(event, data)
-      case "Folder":
+    const li = target.closest(".item")
+    const id = li.dataset.itemId
+    const uuid = li.dataset.itemUuid
+    const type = li.dataset.itemType
+    if (!uuid) return
+    switch (type) {
+      case "path":
+        await this.document.deletePath(uuid)
+        break
+      case "capacity":
+        await this.document.deleteCapacity(uuid)
+        break
+      default:
+        await this.document.deleteEmbeddedDocuments("Item", [id])
     }
   }
 
   /**
-   * Handle the drop event for an item.
+   * Handles the deletion of a capacity item from the actor.
    *
-   * @param {Event} event The drop event.
-   * @param {Object} data The data associated with the dropped item.
-   * @returns {Promise<boolean>} Returns false if the actor is not the owner, otherwise returns the result of the corresponding item addition method.
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
+   * @returns {Promise<void>} A promise that resolves when the capacity item has been deleted.
    */
-  async _onDropItem(event, data) {
-    event.preventDefault()
-    if (!this.actor.isOwner) return false
-    const item = await Item.implementation.fromDropData(data)
+  static async #onRoll(event, target) {
+    const dataset = target.dataset
+    const type = dataset.rollType
+    const rollTarget = dataset.rollTarget
 
-    switch (item.type) {
-      case SYSTEM.ITEM_TYPE.equipment.id:
-        return this.actor.addEquipment(item)
-      case SYSTEM.ITEM_TYPE.feature.id:
-        return false
-      case SYSTEM.ITEM_TYPE.profile.id:
-        return false
-      case SYSTEM.ITEM_TYPE.attack.id:
-        return this.actor.system.addAttack(item)
-      case SYSTEM.ITEM_TYPE.path.id:
-        return this.actor.addPath(item)
-      case SYSTEM.ITEM_TYPE.capacity.id:
-        return this.actor.addCapacity(item, null)
-      default:
-        return false
+    switch (type) {
+      case "skillcheck":
+        this.actor.rollSkill(rollTarget)
+      case "combatcheck":
+        break
     }
   }
 }
