@@ -1,4 +1,4 @@
-const { ux } = foundry.applications
+const { sheets, ux } = foundry.applications
 const { HandlebarsApplicationMixin } = foundry.applications.api
 const { DragDrop } = foundry.applications.ux
 
@@ -9,7 +9,7 @@ import { Condition } from "../../models/schemas/condition.mjs"
 import { Modifier } from "../../models/schemas/modifier.mjs"
 import { Resolver } from "../../models/schemas/resolver.mjs"
 
-export default class COBaseItemSheet extends HandlebarsApplicationMixin(foundry.applications.sheets.ItemSheet) {
+export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.ItemSheetV2) {
   /**
    * Different sheet modes.
    * @enum {number}

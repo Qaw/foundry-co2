@@ -1,4 +1,4 @@
-const { ux } = foundry.applications
+const { sheets, ux } = foundry.applications
 const { HandlebarsApplicationMixin } = foundry.applications.api
 const { DragDrop } = foundry.applications.ux
 
@@ -7,7 +7,7 @@ import Utils from "../../utils.mjs"
 import CoChat from "../../chat.mjs"
 import slideToggle from "../../elements/slide-toggle.mjs"
 
-export default class COBaseActorSheet extends HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheet) {
+export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.ActorSheetV2) {
   /**
    * Different sheet modes.
    * @enum {number}
