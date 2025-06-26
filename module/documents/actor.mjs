@@ -1193,7 +1193,7 @@ export default class COActor extends Actor {
       for (const action of actions) {
         action.source = newCapacity[0].uuid
         // Si la capacité est hors voies, on l'active par défaut
-        action.properties.enabled = true
+        if (pathUuid === null) action.properties.enabled = true
         // Update the source of all modifiers if there are some
         if (action.modifiers.length > 0) {
           for (const modifier of action.modifiers) {
