@@ -857,8 +857,9 @@ export default class CharacterData extends ActorData {
     for (const path of paths) {
       const capacities = path.system.capacities
       for (const [index, capacityUuid] of capacities.entries()) {
-        const capacity = await fromUuid(capacityUuid)
-        if (capacity.system.learned) xp += capacity.system.getXpCost()
+        const { id } = foundry.utils.parseUuid(capacityUuid)
+        const capacity = this.parent.items.get(id)
+        if (capacity && capacity.system.learned) xp += capacity.system.getXpCost()
       }
     }
 
@@ -889,6 +890,70 @@ export default class CharacterData extends ActorData {
     if (current > 0) {
       let newValue = Math.max(current - nbDices, 0)
       await this.parent.update({ "system.resources.recovery.value": newValue })
+    }
+  }
+
+  // Parcourt toutes les actions de tous les items du personnage et met à jour la source des actions
+  async updateAllActionsUuid() {
+    const actorId = this.parent.id
+    for (const item of this.parent.items) {
+      // Equipements et capacités
+      if ([SYSTEM.ITEM_TYPE.equipment.id, SYSTEM.ITEM_TYPE.capacity.id].includes(item.type) && item.actions.length > 0) {
+        // Pour une capacité on met à jour le path
+        if (item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.path) {
+          const { primaryType, primaryId, type, id } = foundry.utils.parseUuid(item.system.path)
+          const newPath = [primaryType, actorId, type, id].flat().filterJoin(".")
+          await item.update({ "system.path": newPath })
+        }
+        const actions = item.toObject().system.actions
+        for (const action of actions) {
+          const { primaryType, primaryId, type, id } = foundry.utils.parseUuid(action.source)
+          const newSource = [primaryType, actorId, type, id].flat().filterJoin(".")
+          action.source = newSource
+          if (action.modifiers.length > 0) {
+            for (const modifier of action.modifiers) {
+              modifier.source = newSource
+            }
+          }
+        }
+        await item.update({ "system.actions": actions })
+      }
+      // Profile et features
+      else if ([SYSTEM.ITEM_TYPE.profile.id, SYSTEM.ITEM_TYPE.feature.id].includes(item.type)) {
+        if (item.modifiers && item.modifiers.length > 0) {
+          const modifiers = item.toObject().system.modifiers
+          for (const modifier of modifiers) {
+            const { primaryType, primaryId, type, id } = foundry.utils.parseUuid(modifier.source)
+            const newSource = [primaryType, actorId, type, id].flat().filterJoin(".")
+            modifier.source = newSource
+          }
+          await item.update({ "system.modifiers": modifiers })
+        }
+        const paths = item.system.paths
+        const newPaths = paths.map((pathUuid) => {
+          const { primaryType, primaryId, type, id } = foundry.utils.parseUuid(pathUuid)
+          return [primaryType, actorId, type, id].flat().filterJoin(".")
+        })
+        await item.update({ "system.paths": newPaths })
+
+        if (item.type === SYSTEM.ITEM_TYPE.feature.id) {
+          const capacities = item.system.capacities
+          const newCapacities = capacities.map((capacityUuid) => {
+            const { primaryType, primaryId, type, id } = foundry.utils.parseUuid(capacityUuid)
+            return [primaryType, actorId, type, id].flat().filterJoin(".")
+          })
+          await item.update({ "system.capacities": newCapacities })
+        }
+      }
+      // Voie : on met à jour le tableau des capacités
+      else if (item.type === SYSTEM.ITEM_TYPE.path.id) {
+        const capacities = item.system.capacities
+        const newCapacities = capacities.map((capacityUuid) => {
+          const { primaryType, primaryId, type, id } = foundry.utils.parseUuid(capacityUuid)
+          return [primaryType, actorId, type, id].flat().filterJoin(".")
+        })
+        await item.update({ "system.capacities": newCapacities })
+      }
     }
   }
 }

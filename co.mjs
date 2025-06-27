@@ -162,3 +162,11 @@ Hooks.once("ready", async function () {
   }
   console.info(Utils.log(game.i18n.localize("CO.notif.ready")))
 })
+
+Hooks.on("createActor", (document, options, userId) => {
+  if (game.user.isGM) {
+    if (document.type === "character") {
+      document.system.updateAllActionsUuid()
+    }
+  }
+})
