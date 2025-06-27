@@ -28,6 +28,7 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
       resizable: true,
     },
     actions: {
+      editImage: COBaseActorSheet.#onEditImage,
       toggleSection: COBaseActorSheet.#onSectionToggle,
       changeSheetLock: COBaseActorSheet.#onSheetChangeLock,
       sendToChat: COBaseActorSheet.#onSendToChat,
@@ -319,6 +320,31 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     if (ce) {
       await this.actor.deleteCustomEffect(ce)
     }
+  }
+
+  /**
+   * Handle changing a Document's image.
+   *
+   * @this COBaseActorSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @returns {Promise}
+   * @private
+   */
+  static async #onEditImage(event, target) {
+    const current = foundry.utils.getProperty(this.document, "img")
+    const { img } = this.document.constructor.getDefaultArtwork?.(this.document.toObject()) ?? {}
+    const fp = new foundry.applications.apps.FilePicker.implementation({
+      current,
+      type: "image",
+      redirectToRoot: img ? [img] : [],
+      callback: (path) => {
+        this.document.update({ img: path })
+      },
+      top: this.position.top + 40,
+      left: this.position.left + 10,
+    })
+    return fp.browse()
   }
 
   // #region Drag-and-Drop Workflow

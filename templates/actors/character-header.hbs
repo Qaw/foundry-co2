@@ -1,7 +1,7 @@
+{{log "Chroniques Oubliées | Character header" this}}
 <header class="sheet-header">
   <div class="image-container">
-    <img class="actor-img" src="{{actor.img}}" data-edit="img" data-tooltip="{{actor.name}}" />
-    <a class="hover-icon" data-action="show-image"><i class="fas fa-image fa-fw"></i></a>
+    <img class="actor-img" src="{{actor.img}}" data-action="editImage" data-tooltip="{{actor.name}}" />
   </div>
   {{#if unlocked}}
     <input class="name" name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'CO.label.long.name'}}" spellcheck="false" />
