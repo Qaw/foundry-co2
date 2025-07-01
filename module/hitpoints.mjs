@@ -49,7 +49,7 @@ export class Hitpoints {
         }
         // Soins
         else {
-          let newHp = Math.max(currentHp + finalAmount, currentMaxHp)
+          let newHp = Math.min(currentHp + finalAmount, currentMaxHp)
           await actor.update({ "system.attributes.hp.value": newHp })
         }
       }
