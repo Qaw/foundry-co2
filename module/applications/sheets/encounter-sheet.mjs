@@ -147,4 +147,40 @@ export default class COEncounterSheet extends COBaseActorSheet {
         break
     }
   }
+
+    /** @override */
+  async _onDrop(event) {
+    // On récupère le type et l'uuid de l'item
+    const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event)
+    const actor = this.document
+
+    // A partir de l'uuid, extraction de primaryId qui est l'id de l'acteur
+    let { primaryId } = foundry.utils.parseUuid(data.uuid)
+    // Pas de drop d'objet sur soi même
+    if (primaryId === actor.id) return
+
+    if (data.type !== "Item") return
+    return this._onDropItem(event, data)
+  }
+
+  /**
+   * Handle the drop event for an item.
+   *
+   * @param {Event} event The drop event.
+   * @param {Object} data The data associated with the dropped item.
+   * @returns {Promise<boolean>} - Returns false if the actor is not the owner or if the item type is not handled.
+   */
+  async _onDropItem(event, data) {
+    event.preventDefault()
+    if (!this.document.isOwner) return false
+    // On récupère l'item de type COItem
+    const item = await Item.implementation.fromDropData(data)
+
+    switch (item.type) {
+      case SYSTEM.ITEM_TYPE.capacity.id:
+        return await this.document.addCapacity(item, null)
+      default:
+        return false
+    }
+  }
 }

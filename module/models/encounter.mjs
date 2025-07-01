@@ -307,4 +307,32 @@ export default class EncounterData extends ActorData {
 
     return newAttack[0].id
   }
+
+  // Parcourt toutes les actions de tous les items du personnage et met à jour la source des actions
+  async updateAllActionsUuid() {
+    const actorId = this.parent.id
+    for (const item of this.parent.items) {
+      // Capacités
+      if ([SYSTEM.ITEM_TYPE.capacity.id].includes(item.type) && item.actions.length > 0) {
+        // Pour une capacité on met à jour le path
+        if (item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.path) {
+          const { primaryType, primaryId, type, id } = foundry.utils.parseUuid(item.system.path)
+          const newPath = [primaryType, actorId, type, id].flat().filterJoin(".")
+          await item.update({ "system.path": newPath })
+        }
+        const actions = item.toObject().system.actions
+        for (const action of actions) {
+          const { primaryType, primaryId, type, id } = foundry.utils.parseUuid(action.source)
+          const newSource = [primaryType, actorId, type, id].flat().filterJoin(".")
+          action.source = newSource
+          if (action.modifiers.length > 0) {
+            for (const modifier of action.modifiers) {
+              modifier.source = newSource
+            }
+          }
+        }
+        await item.update({ "system.actions": actions })
+      }
+    }
+  }
 }

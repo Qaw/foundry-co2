@@ -165,8 +165,6 @@ Hooks.once("ready", async function () {
 
 Hooks.on("createActor", (document, options, userId) => {
   if (game.user.isGM) {
-    if (document.type === "character") {
-      document.system.updateAllActionsUuid()
-    }
+    document.system.updateAllActionsUuid()
   }
 })
