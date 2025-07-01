@@ -820,9 +820,12 @@ export default class CharacterData extends ActorData {
     const roll = await new Roll(formula).roll()
     const toolTip = new Handlebars.SafeString(await roll.getTooltip())
 
-    rp.value -= 1
-    hp.value += roll.total
-    hp.value = Math.min(hp.value, hp.max)
+    const newRp = foundry.utils.duplicate(rp)
+    const newHp = foundry.utils.duplicate(hp)
+
+    newRp.value -= 1
+    newHp.value += roll.total
+    newHp.value = Math.min(newHp.value, newHp.max)
 
     new CoChat(this)
       .withTemplate("systems/co/templates/chat/healing-card.hbs")
@@ -836,7 +839,7 @@ export default class CharacterData extends ActorData {
       })
       .withRoll(roll)
       .create()
-    this.parent.update({ "system.resources.recovery": rp, "system.attributes.hp": hp })
+    this.parent.update({ "system.resources.recovery": newRp, "system.attributes.hp": newHp })
   }
 
   /**

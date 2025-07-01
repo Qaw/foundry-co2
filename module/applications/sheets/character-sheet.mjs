@@ -24,7 +24,6 @@ export default class COCharacterSheet extends COBaseActorSheet {
       damage: COCharacterSheet.#onUseAction,
       inventoryEquip: COCharacterSheet.#onEquippedToggle,
       useRecovery: COCharacterSheet.#onUseRecovery,
-      activeRest: COCharacterSheet.#onUseRecovery,
     },
   }
 
