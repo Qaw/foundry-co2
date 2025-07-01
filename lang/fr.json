@@ -705,7 +705,8 @@
       "tacticalViolentAttack": "Attaque violente",
       "tacticalViolentAttackTooltip": "Attaque -7, DM +2d4°",
       "tacticalPreciseAttack": "Attaque précise",
-      "tacticalPreciseAttackTooltip": "Attaque -3, DM +1d4°"
+      "tacticalPreciseAttackTooltip": "Attaque -3, DM +1d4°",
+      "conditionLiee": "Indiquez le numéro de l'action liée (dans l'ordre d'apparition) qui doit être activée en commençant par 0,1..."
     },
     "properties": {
       "attack": "Attaque",

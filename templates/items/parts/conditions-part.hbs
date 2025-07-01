@@ -13,7 +13,7 @@
                         {{selectOptions @root.choiceConditionPredicates selected=c.predicate localize=true}}
                     </select>
                 {{#if (eq c.predicate "isLinkedActionActivated")}}
-                    <input name="system.actions.{{../idx}}.conditions.{{id}}.object" type="text" value="{{c.object}}" data-dtype="String"  />
+                    <input name="system.actions.{{../idx}}.conditions.{{id}}.object" type="text" value="{{c.object}}" data-dtype="String" data-tooltip="{{localize "CO.ui.conditionLiee"}}" />
                 {{/if}}
                     <button type="button" data-action="deleteCondition"><i class="fas fa-trash"></i></button>
                 </div>

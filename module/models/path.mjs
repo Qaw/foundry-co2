@@ -79,6 +79,7 @@ export default class PathData extends ItemData {
         capacities.push(item)
       }
     }
+    if (capacities.length === 0) return 0
     let learned = capacities.filter((c) => c.system.learned)
     return learned.length
   }
