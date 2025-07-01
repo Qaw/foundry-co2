@@ -45,17 +45,17 @@
                                 <strong>{{attack.name}}</strong>
                                 <span class="activity-icon"></span>
                             </span>
-                            {{!--{{#if attack.system.hasRange}} ({{attack.system.range}}){{/if}}--}}
+                            {{#if attack.system.hasRange}} ({{attack.system.range}}){{/if}}
                             {{attack.system.displayValues.attack}} <strong>DM</strong>
                             {{attack.system.displayValues.damage}}
                         </h4>
                         <div class="attack-controls controls">
-                            <a class="item-chat chat" data-tooltip="{{localize 'CO.label.long.sendToChat'}}"
-                                data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
+                            <a class="chat" data-action="sendToChat" data-chat-type="item" data-tooltip="{{localize 'CO.label.long.sendToChat'}}"
+                                ><i class="fas fa-fw fa-comment-alt"></i></a>
                             {{#if ../unlocked}}
-                            <a class="item-edit edit" data-tooltip="{{localize 'CO.label.long.edit'}}"><i
+                            <a class="edit" data-action="editItem" data-tooltip="{{localize 'CO.label.long.edit'}}"><i
                                     class="fas fa-fw fa-edit"></i></a>
-                            <a class="item-delete delete" data-tooltip="{{localize CO.label.long.delete}}"><i
+                            <a class="delete" data-action="deleteItem" data-tooltip="{{localize 'CO.label.long.delete'}}"><i
                                     class="fas fa-fw fa-trash"></i></a>
                             {{/if}}
                         </div>
@@ -63,14 +63,14 @@
                     <div class="attack-body">
                         <div class="flexrow">
                             <div class="attacks sub-section">
-                                <button type="button" class="btn attack-button toggle-action" data-tooltip=""
-                                    data-action="activate" data-type="attack" data-source="{{attack.uuid}}"
+                                <button type="button" class="btn attack-button toggle-action"
+                                    data-action="toggleAction" data-action-type="activate" data-type="attack" data-source="{{attack.uuid}}"
                                     data-indice="0">{{localize "CO.label.long.attack"}}
                                     {{attack.system.displayValues.attack}}</button>
                             </div>
                             <div class="damage sub-section">
                                 <button type="button" class="damage-button tooltipstered toggle-action"
-                                    data-action="activate" data-type="damage" data-source="{{attack.uuid}}"
+                                    data-action="toggleAction" data-action-type="activate" data-type="damage" data-source="{{attack.uuid}}"
                                     data-indice="0">{{localize "CO.label.long.damage"}}
                                     {{attack.system.displayValues.damage}}</button>
                             </div>
@@ -107,44 +107,38 @@
                         </div>
                         <div class="item-controls-3">
                             {{#if action.properties.activable}}
-                            {{#if action.properties.temporary}}
-                            <a class="item-control item-activate">
-                                {{#if action.properties.enabled}}
-                                <i class="fas fa-power-off green toggle-action" style="font-size:16px"
-                                    data-tooltip="{{localize 'CO.ui.deactivate'}}" data-action="unactivate"
-                                    data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                {{#if action.properties.temporary}}
+                                <a class="item-control item-activate">
+                                    {{#if action.properties.enabled}}
+                                        <i class="fas fa-power-off green toggle-action" style="font-size:16px" data-action="toggleAction"
+                                            data-action-type="activate" data-source="{{action.source}}" data-indice="{{action.indice}}" data-tooltip="{{localize 'CO.ui.deactivate'}}"></i>
+                                    {{else}}
+                                        <i class="fas fa-power-off gray toggle-action" style="font-size:16px" data-action="toggleAction"
+                                            data-action-type="activate" data-source="{{action.source}}" data-indice="{{action.indice}}" data-tooltip="{{localize 'CO.ui.activate'}}"></i>
+                                    {{/if}}
+                                </a>
                                 {{else}}
-                                <i class="fas fa-power-off gray toggle-action" style="font-size:16px"
-                                    data-tooltip="{{localize 'CO.ui.activate'}}" data-action="activate"
-                                    data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
+                                    {{#if (or (eq action.type 'melee') (eq action.type 'ranged') (eq action.type 'magical'))}}
+                                    <a class="item-control">
+                                        <i class="{{action.iconFA}} green toggle-action" style="font-size:16px" data-action="toggleAction"
+                                            data-action-type="activate" data-type="attack" data-source="{{action.source}}"
+                                            data-indice="{{action.indice}}" data-tooltip="{{localize 'CO.label.long.attack'}}"></i>
+                                    </a>
+                                    <a class="item-control">
+                                        <i class="fas fa-hand-back-fist green toggle-action" style="font-size:16px" data-action="toggleAction"
+                                            data-action-type="activate" data-type="damage" data-source="{{action.source}}"
+                                            data-indice="{{action.indice}}" data-tooltip="{{localize 'CO.label.long.damage'}}"></i>
+                                    </a>
+                                    {{else}}
+                                    <a class="item-control">
+                                        <i class="fa-solid fa-hand-pointer green toggle-action" style="font-size:16px" data-action="toggleAction"
+                                            data-action-type="activate" data-source="{{action.source}}" data-indice="{{action.indice}}" data-tooltip="{{localize 'CO.ui.use'}}"></i>
+                                    </a>
+                                    {{/if}}
                                 {{/if}}
-                            </a>
-                            {{else}}
-                            {{#if (or (eq action.type 'melee') (eq action.type 'ranged') (eq action.type 'magical'))}}
-                            <a class="item-control">
-                                <i class="{{action.iconFA}} green toggle-action" style="font-size:16px"
-                                    data-tooltip="{{localize 'CO.label.long.attack'}}" data-action="activate"
-                                    data-type="attack" data-source="{{action.source}}"
-                                    data-indice="{{action.indice}}"></i>
-                            </a>
-                            <a class="item-control">
-                                <i class="fas fa-hand-back-fist green toggle-action" style="font-size:16px"
-                                    data-tooltip="{{localize 'CO.label.long.damage'}}" data-action="activate"
-                                    data-type="damage" data-source="{{action.source}}"
-                                    data-indice="{{action.indice}}"></i>
-                            </a>
-                            {{else}}
-                            <a class="item-control">
-                                <i class="fa-solid fa-hand-pointer green toggle-action" style="font-size:16px"
-                                    data-tooltip="{{localize 'CO.ui.use'}}" data-action="activate"
-                                    data-source="{{action.source}}" data-indice="{{action.indice}}"></i>
-                            </a>
                             {{/if}}
-                            {{/if}}
-                            {{/if}}
-                            <a class="item-chat chat" data-tooltip="{{localize 'CO.label.long.sendToChat'}}"
-                                data-chat-type="action" data-indice="{{action.indice}}"
-                                data-source="{{action.source}}"><i class="fas fa-fw fa-comment-alt"></i></a>
+                            <a class="chat" data-action="sendToChat" data-chat-type="action" data-indice="{{action.indice}}"
+                                data-source="{{action.source}}" data-tooltip="{{localize 'CO.label.long.sendToChat'}}"><i class="fas fa-fw fa-comment-alt"></i></a>
                         </div>
                     </li>
                     {{/each}}

@@ -74,15 +74,19 @@ export default class COEncounterSheet extends COBaseActorSheet {
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
   static async #onUseAction(event, target) {
+    event.preventDefault()
+    const shiftKey = !!event.shiftKey
     const dataset = target.dataset
-    const action = dataset.action
+    const action = dataset.actionType
     const type = dataset.type
     const source = dataset.source
     const indice = dataset.indice
+
+    let activation
     if (action === "activate") {
-      this.actor.activateAction({ state: true, source, indice, type })
+      activation = await this.document.activateAction({ state: true, source, indice, type, shiftKey })
     } else if (action === "unactivate") {
-      this.actor.activateAction({ state: false, source, indice, type })
+      activation = await this.document.activateAction({ state: false, source, indice, type })
     }
   }
 
@@ -148,7 +152,7 @@ export default class COEncounterSheet extends COBaseActorSheet {
     }
   }
 
-    /** @override */
+  /** @override */
   async _onDrop(event) {
     // On récupère le type et l'uuid de l'item
     const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event)
@@ -180,7 +184,7 @@ export default class COEncounterSheet extends COBaseActorSheet {
       case SYSTEM.ITEM_TYPE.capacity.id:
         return await this.document.addCapacity(item, null)
       default:
-        return false
+        return await Item.implementation.create(item.toObject(), { parent: this.actor })
     }
   }
 }

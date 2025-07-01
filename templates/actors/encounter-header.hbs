@@ -43,18 +43,11 @@
         {{#if ../unlocked}}
           <input class="ability-mod" type="text" name="system.abilities.{{id}}.base" value="{{numberFormat ability.base sign=true}}" data-dtype="Number" placeholder="+0">
         {{else}}
-        <a class="ability-mod" data-action="roll"data-roll-type="skillcheck" data-roll-target="{{id}}" data-tooltip="{{ability.tooltipValue}}">
+        <a class="ability-mod" data-action="roll" data-roll-type="skillcheck" data-roll-target="{{id}}" data-tooltip="{{ability.tooltipValue}}">
           {{numberFormat ability.value decimals=0 sign=true}}
         </a>
         {{/if}}
       </li>
     {{/each}}
-    <li class="abilities-controls controls">
-      {{#if unlocked}}
-        <a class="abilities-edit" data-action="editAbilities" data-tooltip="{{localize 'CO.ui.editStats'}}">
-          <i class="fas fa-fw fa-edit"></i>
-        </a>
-      {{/if}}
-    </li>
   </ol>
 </header>

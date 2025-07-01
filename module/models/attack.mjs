@@ -45,7 +45,7 @@ export default class AttackData extends ItemData {
     })
   }
 
-    /** @override */
+  /** @override */
   static LOCALIZATION_PREFIXES = ["CO.Attack"]
 
   get isContact() {
@@ -75,7 +75,7 @@ export default class AttackData extends ItemData {
   }
 
   get hasRange() {
-    if (this.range.value > 0) return true
+    if (this.range?.value > 0) return true
     return false
   }
 
