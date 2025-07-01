@@ -15,8 +15,6 @@ export default class COCharacterSheet extends COBaseActorSheet {
       resizable: true,
     },
     actions: {
-      activate: COCharacterSheet.#onActivateDef,
-      deactivate: COCharacterSheet.#onDeactivateDef,
       editAbilities: COCharacterSheet.#onEditAbilities,
       deleteItem: COCharacterSheet.#onDeleteItem,
       roll: COCharacterSheet.#onRoll,
@@ -329,31 +327,4 @@ export default class COCharacterSheet extends COBaseActorSheet {
     return false
   }
 
-  async _handleDef(effect, state) {
-    // On ne peut pas activer à la fois la défense partielle et la défense totale
-    if (effect === "partialDef" && state) {
-      if (this.actor.hasEffect("fullDef")) {
-        return ui.notifications.warn(game.i18n.localize("CO.notif.cantUseAllDef"))
-      }
-    }
-    if (effect === "fullDef" && state) {
-      if (this.actor.hasEffect("partialDef")) {
-        return ui.notifications.warn(game.i18n.localize("CO.notif.cantUseAllDef"))
-      }
-    }
-
-    const hasEffect = this.actor.statuses.has(effect)
-    if (hasEffect && state === false) return await this.actor.toggleStatusEffect(effect, state)
-    if (!hasEffect && state === true) return await this.actor.toggleStatusEffect(effect, state)
-  }
-
-  static async #onActivateDef(event, target) {
-    const effect = target.dataset.effect
-    this._handleDef(effect, true)
-  }
-
-  static async #onDeactivateDef(event, target) {
-    const effect = target.dataset.effect
-    this._handleDef(effect, false)
-  }
 }

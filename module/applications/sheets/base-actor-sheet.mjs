@@ -29,6 +29,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     },
     actions: {
       editImage: COBaseActorSheet.#onEditImage,
+      activateDef: COBaseActorSheet.#onActivateDef,
+      deactivateDef: COBaseActorSheet.#onDeactivateDef,
       toggleSection: COBaseActorSheet.#onSectionToggle,
       changeSheetLock: COBaseActorSheet.#onSheetChangeLock,
       sendToChat: COBaseActorSheet.#onSendToChat,
@@ -345,6 +347,34 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
       left: this.position.left + 10,
     })
     return fp.browse()
+  }
+
+  static async #onActivateDef(event, target) {
+    const effect = target.dataset.effect
+    this._handleDef(effect, true)
+  }
+
+  static async #onDeactivateDef(event, target) {
+    const effect = target.dataset.effect
+    this._handleDef(effect, false)
+  }
+
+  async _handleDef(effect, state) {
+    // On ne peut pas activer à la fois la défense partielle et la défense totale
+    if (effect === "partialDef" && state) {
+      if (this.actor.hasEffect("fullDef")) {
+        return ui.notifications.warn(game.i18n.localize("CO.notif.cantUseAllDef"))
+      }
+    }
+    if (effect === "fullDef" && state) {
+      if (this.actor.hasEffect("partialDef")) {
+        return ui.notifications.warn(game.i18n.localize("CO.notif.cantUseAllDef"))
+      }
+    }
+
+    const hasEffect = this.actor.statuses.has(effect)
+    if (hasEffect && state === false) return await this.actor.toggleStatusEffect(effect, state)
+    if (!hasEffect && state === true) return await this.actor.toggleStatusEffect(effect, state)
   }
 
   // #region Drag-and-Drop Workflow

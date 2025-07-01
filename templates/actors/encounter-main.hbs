@@ -6,24 +6,19 @@
         <div class="section-header">
             <h4>{{localize "CO.label.long.attacks"}}</h4>
             <div class="actions-controls controls" style="margin-right:5px">
-                <a class="item-control">
-                    {{#if partialDef}}
-                    <i class="fa-solid fa-shield-halved green toggle-effect" data-action="toggleEffect"
-                        data-action="unactivate" data-effect="partialDef"
-                        data-tooltip="{{localize 'CO.customStatus.partialDefDeactivate'}}"></i>
-                    {{else}}
-                    <i class="fa-solid fa-shield-halved gray toggle-effect" data-action="activate"
-                        data-effect="partialDef" data-tooltip="{{localize 'CO.customStatus.partialDefActivate'}}"></i>
-                    {{/if}}
+                  <a class="item-control"
+                    data-tooltip-direction="UP" 
+                    data-tooltip="{{#if partialDef}}{{localize 'CO.customStatus.partialDefDeactivate'}}{{else}}{{localize 'CO.customStatus.partialDefActivate'}}{{/if}}" 
+                    data-action="{{#if partialDef}}deactivateDef{{else}}activateDef{{/if}}" 
+                    data-effect="partialDef">
+                        <i class="fa-solid fa-shield-halved {{#if partialDef}}enabled{{else}}disabled{{/if}} toggle-effect"></i>
                 </a>
-                <a class="item-control">
-                    {{#if fullDef}}
-                    <i class="fa-solid fa-shield green toggle-effect" data-action="unactivate" data-effect="fullDef"
-                        data-tooltip="{{localize 'CO.customStatus.fullDefDeactivate'}}"></i>
-                    {{else}}
-                    <i class="fa-solid fa-shield gray toggle-effect" data-action="activate" data-effect="fullDef"
-                        data-tooltip="{{localize 'CO.customStatus.fullDefActivate'}}"></i>
-                    {{/if}}
+                <a class="item-control"
+                    data-tooltip-direction="UP" 
+                    data-tooltip="{{#if fullDef}}{{localize 'CO.customStatus.fullDefDeactivate'}}{{else}}{{localize 'CO.customStatus.fullDefActivate'}}{{/if}}" 
+                    data-action="{{#if fullDef}}deactivateDef{{else}}activateDef{{/if}}"
+                    data-effect="fullDef">
+                        <i class="fa-solid fa-shield {{#if fullDef}}enabled{{else}}disabled{{/if}} toggle-effect"></i>
                 </a>
             </div>
             <div class="attacks-controls controls">
