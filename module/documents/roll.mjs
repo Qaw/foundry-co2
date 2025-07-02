@@ -470,9 +470,36 @@ export class COAttackRoll extends CORoll {
 
     // Type de jet
     const hasDice = this.options.dice === "bonus" || this.options.dice === "malus"
+    // Libellé du type de jet
+    let diceType = ""
+    if (hasDice) {
+      switch (this.options.dice) {
+        case "bonus":
+          diceType = game.i18n.localize("CO.ui.rollBonus")
+          break
+        case "malus":
+          diceType = game.i18n.localize("CO.ui.rollMalus")
+          break
+      }
+    }
 
     // Option tactique
     const hasTactical = this.options.tactical !== "none"
+    // Libellé de l'option tactique
+    let tactical = ""
+    if (hasTactical) {
+      switch (this.options.tactical) {
+        case "confident":
+          tactical = game.i18n.localize("CO.ui.tactiqueAssuree")
+          break
+        case "precise":
+          tactical = game.i18n.localize("CO.ui.tactiquePrecise")
+          break
+        case "violent":
+          tactical = game.i18n.localize("CO.ui.tactiqueViolente")
+          break
+      }
+    }
 
     return {
       type: this.options.type,
@@ -480,7 +507,7 @@ export class COAttackRoll extends CORoll {
       speaker: ChatMessage.getSpeaker({ actor: this.options.actor, scene: canvas.scene }),
       flavor: `${this.options.flavor} - ${this.options.type === "attack" ? "Attaque" : "Dommages"}`,
       hasDice,
-      diceType: this.options.dice,
+      diceType,
       formula: isPrivate ? "???" : this.formula,
       useDifficulty: this.options.useDifficulty,
       showDifficulty: this.options.showDifficulty,
@@ -498,7 +525,7 @@ export class COAttackRoll extends CORoll {
       user: game.user.id,
       tempDamage: this.options.tempDamage,
       hasTactical,
-      tactical: this.options.tactical,
+      tactical,
     }
   }
 
