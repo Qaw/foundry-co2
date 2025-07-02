@@ -279,7 +279,7 @@ export class Resolver extends foundry.abstract.DataModel {
   }
 
   async _createCustomEffect(actor, item, action) {
-    if (game.combat.round === null) {
+    if (!game.combat || game.combat.round === null) {
       ui.notifications.warn(game.i18n.localize("CO.label.long.customEffectInCombat"))
       return
     }

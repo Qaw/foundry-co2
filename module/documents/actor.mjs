@@ -651,8 +651,8 @@ export default class COActor extends Actor {
     let manaBurnedCost = 0
     // Si l'action consomme du mana, que la capacité est un sort et qu'on l'active, on vérifie que le nombre de PM restants est suffisant
     if (!item.system.actions[indice].properties.noManaCost && state && item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.isSpell) {
-      const spellManaCost = item.system.manaCost + manaCostFromArmor - (manaConcentration ? 2 : 0)
-      if (item.system.manaCost > 0) {
+      const spellManaCost = item.system.actions[indice].manaCost + manaCostFromArmor - (manaConcentration ? 2 : 0)
+      if (spellManaCost > 0) {
         if (this.system.resources.mana.value < spellManaCost) {
           const needed = spellManaCost - this.system.resources.mana.value
           const content = `Vous n'avez pas assez de mana : il vous manque ${needed} point(s) de mana. Voulez-vous tout de même lancer le sort en sacrifiant votre énergie vitale ?`
