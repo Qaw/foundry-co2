@@ -754,8 +754,7 @@ export default class CharacterData extends ActorData {
           modal: true,
         })
         if (proceed) {
-          mp.value = mp.max
-          this.parent.update({ "system.resources.mana": mp })
+          this.parent.update({ "system.resources.mana.value": mp.max })
         }
       }
 
