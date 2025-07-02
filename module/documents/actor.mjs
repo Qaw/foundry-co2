@@ -1891,10 +1891,11 @@ export default class COActor extends Actor {
   async applyDamage(damage) {
     let hp = this.system.attributes.hp
     damage = Math.max(0, damage - this.system.combat.dr.value)
+    if (damage === 0) return
     hp.value = Math.max(0, hp.value - damage)
     await this.update({ "system.attributes.hp": hp })
     const message = game.i18n.format("CO.notif.damaged", { actorName: this.name, amount: damage })
-    await new CoChat(this).withContent(message).create()
+    new CoChat(this).withContent(message).create()
   }
 
   /**
@@ -1908,10 +1909,11 @@ export default class COActor extends Actor {
    */
   async applyHeal(heal) {
     let hp = this.system.attributes.hp
+    if (hp === hp.max) return
     hp.value = Math.min(hp.max, hp.value + heal)
     await this.update({ "system.attributes.hp": hp })
     const message = game.i18n.format("CO.notif.healed", { actorName: this.name, amount: heal })
-    await new CoChat(this).withContent(message).create()
+    new CoChat(this).withContent(message).create()
   }
   // #endregion
 
