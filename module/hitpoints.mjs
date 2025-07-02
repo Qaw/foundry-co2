@@ -1,5 +1,5 @@
 export class Hitpoints {
-  static async applyToTargets(amount, drChecked, tempDamage) {
+  static async applyToTargets(type, amount, drChecked, tempDamage) {
     // On prend les cibles s'il y en a, sinon on prend les tokens actifs.
     // notation [...] transforme un Set en Array
     let targets = [...game.user.targets].length > 0 ? [...game.user.targets] : canvas.tokens.objects.children.filter((t) => t._controlled)
@@ -14,16 +14,21 @@ export class Hitpoints {
 
         let finalAmount = amount
         // Dommages
-        if (amount < 0) {
+        if (type === "full" || type === "half" || type === "double") {
+          if (type === "half") {
+            finalAmount = Math.ceil(finalAmount / 2)
+          } else if (type === "double") {
+            finalAmount = finalAmount * 2
+          }
           // Application de la RD si c'est cochée
-          if (drChecked) finalAmount += actor.system.combat.dr.value
+          if (drChecked) finalAmount -= actor.system.combat.dr.value
           // Dommages minimaux
-          if (finalAmount > -1) finalAmount = -1
+          if (finalAmount <= 0) finalAmount = 1
 
           // Dommages temporaires
           if (tempDamage) {
             const targetFor = actor.system.abilities.for.value
-            const amountTempDamage = Math.max(0, Math.abs(finalAmount) - targetFor)
+            const amountTempDamage = Math.max(0, finalAmount - targetFor)
             let newTempDamage = Math.min(currentTempDamage + amountTempDamage, currentMaxHp)
             await actor.update({ "system.attributes.tempDm": newTempDamage })
 
@@ -34,7 +39,7 @@ export class Hitpoints {
           }
           // Dommages normaux
           else {
-            let newHp = Math.min(currentHp + finalAmount, actor.system.attributes.hp.max)
+            let newHp = currentHp - finalAmount
             if (newHp < 0) newHp = 0
 
             // DM temporaires supérieurs au nombre de PV restant
@@ -47,10 +52,22 @@ export class Hitpoints {
             await actor.update({ "system.attributes.hp.value": newHp })
           }
         }
-        // Soins
+        // Soins : on rend les PV en ajoutant la RD si c'est cochée
         else {
-          let newHp = Math.min(currentHp + finalAmount, currentMaxHp)
-          await actor.update({ "system.attributes.hp.value": newHp })
+          // Application de la RD si c'est cochée
+          if (drChecked) finalAmount -= actor.system.combat.dr.value
+          // Dommages temporaires
+          if (tempDamage) {
+            const targetFor = actor.system.abilities.for.value
+            const amountTempDamage = Math.max(0, finalAmount - targetFor)
+            let newTempDamage = Math.max(currentTempDamage - amountTempDamage, 0)
+            await actor.update({ "system.attributes.tempDm": newTempDamage })
+          }
+          // Dommages normaux
+          else {
+            let newHp = Math.min(currentHp + finalAmount, currentMaxHp)
+            await actor.update({ "system.attributes.hp.value": newHp })
+          }
         }
       }
     }
@@ -70,19 +87,6 @@ export class Hitpoints {
     const tempDamage = html.find("#tempDm").is(":checked")
     const drChecked = html.find("#dr").is(":checked")
 
-    switch (type) {
-      case "full":
-        Hitpoints.applyToTargets(-dmg, drChecked, tempDamage)
-        break
-      case "half":
-        Hitpoints.applyToTargets(-Math.ceil(dmg / 2), drChecked, tempDamage)
-        break
-      case "double":
-        Hitpoints.applyToTargets(-dmg * 2, drChecked, tempDamage)
-        break
-      case "heal":
-        Hitpoints.applyToTargets(dmg, drChecked, false)
-        break
-    }
+    Hitpoints.applyToTargets(type, dmg, drChecked, tempDamage)
   }
 }
