@@ -107,6 +107,19 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     context.capacities = this.document.capacities
     context.learnedCapacities = this.document.learnedCapacities
     context.capacitiesOffPaths = this.document.capacitiesOffPaths
+    // Récupération du statut expended depuis le localStorage
+    let offPathsExpended = true
+    try {
+      const key = `co-${this.document.id}-paths-capacitiesOffPaths`
+      const stored = localStorage.getItem(key)
+      if (stored !== null) {
+        const parsedData = JSON.parse(stored)
+        offPathsExpended = parsedData.expended === true
+      }
+    } catch (e) {
+      offPathsExpended = true
+    }
+    context.capacitiesOffPathsExpended = offPathsExpended
     context.features = this.document.features
     context.actions = this.document.actions
     context.inventory = this.document.inventory
@@ -138,12 +151,29 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
    */
   static #onSectionToggle(event, target) {
     event.preventDefault()
+    const pathSlug = target.dataset.slug
     const li = target.closest("li.items-container-header")
     let foldable = li.nextElementSibling
     while (foldable && !foldable.classList.contains("foldable")) {
       foldable = foldable.nextElementSibling
     }
     if (foldable) {
+      console.log(Utils.log(`CoBaseActorSheet - Toggling section`), foldable)
+      // Change value in local storage to remember the state
+      try {
+        const key = `co-${this.document.id}-paths-${pathSlug}`
+        let stored = localStorage.getItem(key)
+        if (stored !== null) {
+          let value = JSON.parse(stored)
+          value.expended = !value.expended
+          localStorage.setItem(key, JSON.stringify(value))
+        } else {
+          // Créer une nouvelle entrée si elle n'existe pas
+          localStorage.setItem(key, JSON.stringify({ expended: true }))
+        }
+      } catch (e) {
+        console.error(Utils.log(`CoBaseActorSheet - Error updating localStorage for path slug ${pathSlug}`), e)
+      }
       slideToggle(foldable)
     }
     return true

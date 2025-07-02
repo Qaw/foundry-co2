@@ -196,10 +196,22 @@ export default class COActor extends Actor {
         .filter((id) => id !== null)
 
       const capacities = capacitesId.map((id) => this.items.find((i) => i._id === id))
-
+      // Récupère l'état "expended" depuis le localStorage pour chaque voie (path)
+      let expended = true
+      try {
+        const key = `co-${this.id}-paths-${path.system.slug}`
+        const stored = localStorage.getItem(key)
+        if (stored !== null) {
+          const parsedData = JSON.parse(stored)
+          expended = parsedData.expended === true
+        }
+      } catch (e) {
+        expended = true
+      }
       pathGroups.push({
         path: path,
         items: capacities,
+        expended,
       })
     })
     return pathGroups
@@ -1358,6 +1370,12 @@ export default class COActor extends Actor {
       })
       toDeleteIds.push(path.id)
       await this.deleteEmbeddedDocuments("Item", toDeleteIds)
+      // Suppression de la voie du local storage
+      const key = `co-${this.id}-paths-${path.system.slug}`
+      let stored = localStorage.getItem(key)
+      if (stored !== null) {
+        localStorage.removeItem(key)
+      }
     }
   }
 

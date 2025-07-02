@@ -28,7 +28,7 @@
         <ol class="paths items-container" data-tab="features">
             <li class="items-container-header flexrow">
                 <h4 class="item-name flexrow">
-                    <a data-action="toggleSection">{{pg.path.name}} ({{pg.path.system.rank}})</a>
+                    <a data-action="toggleSection" data-slug="{{pg.path.system.slug}}">{{pg.path.name}} ({{pg.path.system.rank}})</a>
                 </h4>
                 <div class="item-controls-3 item" data-item-uuid="{{pg.path.uuid}}" data-item-id="{{pg.path.id}}" data-item-type="path">
                     {{#if ../unlocked}}
@@ -37,7 +37,7 @@
                     {{/if}}
                 </div>
             </li>
-            <ol class="item-list foldable">
+            <ol class="item-list foldable {{#if pg.expended}}expanded{{else}}folded{{/if}}">
                 {{#each pg.items as |capacity id|}}
                     {{!log 'capacity' this}}
                     {{#if capacity.system.learned}}

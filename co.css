@@ -613,6 +613,10 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet .item-list.foldable .items-container-header h4:before {
   content: "▼\202F";
 }
+.co.application.sheet .items-container.folded,
+.co.application.sheet .item-list.folded {
+  display: none;
+}
 .co.application.sheet .items-container.folded .items-container-header h4:before,
 .co.application.sheet .item-list.folded .items-container-header h4:before {
   content: "▶\202F";
