@@ -389,8 +389,8 @@ export class COAttackRoll extends CORoll {
 
     if (dialogContext.type === "attack") {
       const formula = withDialog
-        ? Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaAttack}+${rollContext.skillBonus}-${rollContext.skillMalus}`)
-        : Utils.evaluateFormulaCustomValues(dialogContext.actor, `${dialogContext.formulaAttack}+${dialogContext.skillBonus}-${dialogContext.skillMalus}`)
+        ? Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaAttack}+${rollContext.skillBonus}+${rollContext.skillMalus}`)
+        : Utils.evaluateFormulaCustomValues(dialogContext.actor, `${dialogContext.formulaAttack}+${dialogContext.skillBonus}+${dialogContext.skillMalus}`)
 
       const roll = new this(formula, dialogContext.actor.getRollData())
       await roll.evaluate()
