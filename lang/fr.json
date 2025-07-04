@@ -580,6 +580,8 @@
       "description": "Description",
       "duration": "Durée",
       "action": "Action",
+      "actionName": "Nom de l'action",
+      "actionNamePlaceholder": "Indiquer le nom de l'action",
       "details": "Détails",
       "actions": "Actions",
       "quantity": "Quantité",
