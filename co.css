@@ -148,6 +148,18 @@ fieldset legend {
   grid-auto-flow: column;
   grid-template-columns: repeat(auto-fit, 1fr);
 }
+.form-group .grid,
+.form-group-stacked .grid {
+  display: grid;
+}
+.form-group .grid.grid-4col,
+.form-group-stacked .grid.grid-4col {
+  grid-template-columns: repeat(4, 1fr);
+}
+.form-group .grid.grid-6col,
+.form-group-stacked .grid.grid-6col {
+  grid-template-columns: repeat(6, 1fr);
+}
 .form-group-stacked {
   display: flex;
   flex-flow: column nowrap;
@@ -166,6 +178,9 @@ select[disabled] {
 .theme-light input[type=checkbox],
 .theme-light input[type=radio] {
   --checkbox-background-color: var(--color-dark-4);
+}
+.theme-light input[type=checkbox]:disabled {
+  background: none;
 }
 prose-mirror,
 .prosemirror {

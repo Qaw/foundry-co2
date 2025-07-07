@@ -132,6 +132,16 @@ fieldset {
       grid-template-columns: repeat(auto-fit, 1fr);
     }
   }
+
+  .grid {
+    display: grid;
+    &.grid-4col {
+      grid-template-columns: repeat(4, 1fr);
+    }
+     &.grid-6col {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
 }
 
 .form-group-stacked {
@@ -157,5 +167,8 @@ select[disabled] {
   input[type=checkbox],
   input[type=radio] {
     --checkbox-background-color: var(--color-dark-4);
+  }
+  input[type=checkbox]:disabled {
+    background: none;
   }
 }

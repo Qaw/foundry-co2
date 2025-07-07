@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <label>{{localize "CO.label.long.family"}}</label>
                     <div class="form-fields">
-                        <select name="system.family" data-type="String">
+                        <select name="system.family" data-type="String" {{#if locked}}disabled{{/if}}>
                             {{selectOptions @root.choiceProfileFamily selected=system.family localize=true blank=""}}
                         </select>
                     </div>
@@ -34,8 +34,8 @@
                         <input value="{{system.recoveryDice}}" class="center" disabled />
                     </div>
                 </div>
-                {{formGroup systemFields.maxDefenseArmor value=system.maxDefenseArmor localize=true disabled=isPlayMode}}
-                {{formGroup systemFields.mainProfile value=system.mainProfile localize=true disabled=isPlayMode}}
+                {{formGroup systemFields.maxDefenseArmor value=system.maxDefenseArmor localize=true disabled=locked}}
+                {{formGroup systemFields.mainProfile value=system.mainProfile localize=true disabled=locked}}
             </fieldSet>    
         </section>
     
