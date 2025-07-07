@@ -13,26 +13,40 @@
         </div>
       </div>
       {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="field">
-          {{!--<label>{{localize "CO.label.short.ability"}}</label>--}}
-          <select name="system.combat.melee.ability" data-type="String">
-            {{selectOptions choiceAbilities selected=combat.melee.ability localize=true}}
-          </select>
+        <div class="sidebar-section-content">
+          <div class="field">
+            {{!--<label>{{localize "CO.label.short.ability"}}</label>--}}
+            <select name="system.combat.melee.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=combat.melee.ability localize=true}}
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="sidebar-section-content">
-        <div class="field" data-tooltip="{{combat.melee.tooltipBase}}">
-          {{!--<label></label>--}}
-          <input class="melee-base" type="number" name="system.combat.melee.base" value="{{combat.melee.base}}"
-            data-dtype="Number" placeholder="0" readonly data-tooltip="{{combat.melee.tooltipBase}}" />
-          <span class="slash">/</span>
-          {{!--<label></label>--}}
-          <input class="melee-bonus" type="text" name="system.combat.melee.bonuses.sheet"
-            value="{{numberFormat combat.melee.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0"
-            data-tooltip="{{localize 'CO.label.long.bonus'}}" />
+        <div class="sidebar-section-content">
+          <div class="field" data-tooltip="{{combat.melee.tooltipBase}}">
+            {{!<label></label>}}
+            <input
+              class="melee-base"
+              type="number"
+              name="system.combat.melee.base"
+              value="{{combat.melee.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              readonly
+              data-tooltip="{{combat.melee.tooltipBase}}"
+            />
+            <span class="slash">/</span>
+            {{!<label></label>}}
+            <input
+              class="melee-bonus"
+              type="text"
+              name="system.combat.melee.bonuses.sheet"
+              value="{{numberFormat combat.melee.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+            />
+          </div>
         </div>
-      </div>
       {{/if}}
     </div>
     <!-- RANGED -->
@@ -49,23 +63,37 @@
         </div>
       </div>
       {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="field">
-          <select name="system.combat.ranged.ability" data-type="String">
-            {{selectOptions choiceAbilities selected=combat.ranged.ability localize=true}}
-          </select>
+        <div class="sidebar-section-content">
+          <div class="field">
+            <select name="system.combat.ranged.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=combat.ranged.ability localize=true}}
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="sidebar-section-content">
-        <div class="field">
-          <input class="ranged-base" type="number" name="system.combat.ranged.base" value="{{combat.ranged.base}}"
-            data-dtype="Number" placeholder="0" data-tooltip="{{combat.ranged.tooltipBase}}" readonly />
-          <span class="slash">/</span>
-          <input class="ranged-bonus" type="text" name="system.combat.ranged.bonuses.sheet"
-            value="{{numberFormat combat.ranged.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number"
-            data-tooltip="{{localize 'CO.label.long.bonus'}}" placeholder="0" />
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="ranged-base"
+              type="number"
+              name="system.combat.ranged.base"
+              value="{{combat.ranged.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{combat.ranged.tooltipBase}}"
+              readonly
+            />
+            <span class="slash">/</span>
+            <input
+              class="ranged-bonus"
+              type="text"
+              name="system.combat.ranged.bonuses.sheet"
+              value="{{numberFormat combat.ranged.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+              placeholder="0"
+            />
+          </div>
         </div>
-      </div>
       {{/if}}
     </div>
     <!-- MAGIC -->
@@ -82,23 +110,37 @@
         </div>
       </div>
       {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="field">
-          <select name="system.combat.magic.ability" data-type="String">
-            {{selectOptions choiceAbilities selected=combat.magic.ability localize=true}}
-          </select>
+        <div class="sidebar-section-content">
+          <div class="field">
+            <select name="system.combat.magic.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=combat.magic.ability localize=true}}
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="sidebar-section-content">
-        <div class="field">
-          <input class="magic-base" type="number" name="system.combat.magic.base" value="{{combat.magic.base}}"
-            data-dtype="Number" placeholder="0" data-tooltip="{{combat.magic.tooltipBase}}" readonly />
-          <span class="slash">/</span>
-          <input class="magic-bonus" type="text" name="system.combat.magic.bonuses.sheet"
-            value="{{numberFormat combat.magic.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number"
-            data-tooltip="{{localize 'CO.label.long.bonus'}}" placeholder="0" />
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="magic-base"
+              type="number"
+              name="system.combat.magic.base"
+              value="{{combat.magic.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{combat.magic.tooltipBase}}"
+              readonly
+            />
+            <span class="slash">/</span>
+            <input
+              class="magic-bonus"
+              type="text"
+              name="system.combat.magic.bonuses.sheet"
+              value="{{numberFormat combat.magic.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+              placeholder="0"
+            />
+          </div>
         </div>
-      </div>
       {{/if}}
     </div>
     <!-- INIT -->
@@ -115,23 +157,37 @@
         </div>
       </div>
       {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="field">
-          <select name="system.combat.init.ability" data-type="String">
-            {{selectOptions choiceAbilities selected=combat.init.ability localize=true}}
-          </select>
+        <div class="sidebar-section-content">
+          <div class="field">
+            <select name="system.combat.init.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=combat.init.ability localize=true}}
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="sidebar-section-content">
-        <div class="field">
-          <input class="init-base" type="number" name="system.combat.init.base" value="{{combat.init.base}}"
-            data-dtype="Number" placeholder="0" readonly data-tooltip="{{localize 'CO.label.long.base'}}" />
-          <span class="slash">/</span>
-          <input class="init-bonus" type="text" name="system.combat.init.bonuses.sheet"
-            value="{{numberFormat combat.init.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0"
-            data-tooltip="{{localize 'CO.label.long.bonus'}}" />
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="init-base"
+              type="number"
+              name="system.combat.init.base"
+              value="{{combat.init.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              readonly
+              data-tooltip="{{localize 'CO.label.long.base'}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="init-bonus"
+              type="text"
+              name="system.combat.init.bonuses.sheet"
+              value="{{numberFormat combat.init.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+            />
+          </div>
         </div>
-      </div>
       {{/if}}
     </div>
     <!-- DEF -->
@@ -146,23 +202,37 @@
         </div>
       </div>
       {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="field">
-          <select name="system.combat.def.ability" data-type="String">
-            {{selectOptions choiceAbilities selected=combat.def.ability localize=true}}
-          </select>
+        <div class="sidebar-section-content">
+          <div class="field">
+            <select name="system.combat.def.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=combat.def.ability localize=true}}
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="sidebar-section-content">
-        <div class="field">
-          <input class="def-base" type="number" name="system.combat.def.base" value="{{combat.def.base}}"
-            data-dtype="Number" placeholder="0" readonly data-tooltip="{{combat.def.tooltipBase}}" />
-          <span class="slash">/</span>
-          <input class="def-bonus" type="text" name="system.combat.def.bonuses.sheet"
-            value="{{numberFormat combat.def.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0"
-            data-tooltip="{{localize 'CO.label.long.bonus'}}" />
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="def-base"
+              type="number"
+              name="system.combat.def.base"
+              value="{{combat.def.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              readonly
+              data-tooltip="{{combat.def.tooltipBase}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="def-bonus"
+              type="text"
+              name="system.combat.def.bonuses.sheet"
+              value="{{numberFormat combat.def.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+            />
+          </div>
         </div>
-      </div>
       {{/if}}
     </div>
     <!-- DR -->
@@ -177,16 +247,30 @@
         </div>
       </div>
       {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="field">
-          <input class="dr-base" type="number" name="system.combat.dr.base" value="{{combat.dr.base}}"
-            data-dtype="Number" placeholder="0" readonly data-tooltip="{{combat.dr.tooltipBase}}" />
-          <span class="slash">/</span>
-          <input class="dr-bonus" type="text" name="system.combat.dr.bonuses.sheet"
-            value="{{numberFormat combat.dr.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0"
-            data-tooltip="{{localize 'CO.label.long.bonus'}}" />
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="dr-base"
+              type="number"
+              name="system.combat.dr.base"
+              value="{{combat.dr.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              readonly
+              data-tooltip="{{combat.dr.tooltipBase}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="dr-bonus"
+              type="text"
+              name="system.combat.dr.bonuses.sheet"
+              value="{{numberFormat combat.dr.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+            />
+          </div>
         </div>
-      </div>
       {{/if}}
     </div>
     <!-- HP -->
@@ -197,23 +281,34 @@
         </div>
         <div class="hit-points labelled-field">
           <i class="fas fa-fw fa-heart"></i>
-          <input class="current" name="system.attributes.hp.value" value="{{attributes.hp.value}}" type="number"
-            data-dtype="Number" />
+          <input class="current" name="system.attributes.hp.value" value="{{attributes.hp.value}}" type="number" data-dtype="Number" />
           <span class="slash">/</span>
           <span class="max" data-tooltip="{{attributes.hp.tooltip}}">{{attributes.hp.max}}</span>
         </div>
       </div>
       {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="field">
-          <input class="hp-base" type="number" name="system.attributes.hp.base" value="{{attributes.hp.base}}"
-            data-dtype="Number" data-tooltip="{{localize 'CO.label.long.base'}}" />
-          <span class="slash">/</span>
-          <input class="hp-bonus" type="text" name="system.attributes.hp.bonuses.sheet"
-            value="{{numberFormat attributes.hp.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number"
-            placeholder="0" data-tooltip="{{localize 'CO.label.long.bonus'}}" />
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="hp-base"
+              type="number"
+              name="system.attributes.hp.base"
+              value="{{attributes.hp.base}}"
+              data-dtype="Number"
+              data-tooltip="{{localize 'CO.label.long.base'}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="hp-bonus"
+              type="text"
+              name="system.attributes.hp.bonuses.sheet"
+              value="{{numberFormat attributes.hp.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+            />
+          </div>
         </div>
-      </div>
       {{/if}}
     </div>
     <!-- Temp HP -->
@@ -224,8 +319,7 @@
         </div>
         <div class="hit-points labelled-field">
           <i class="fas fa-fw fa-heart-broken"></i>
-          <input class="tempDm" name="system.attributes.tempDm" value="{{attributes.tempDm}}" type="number"
-            data-dtype="Number" />
+          <input class="tempDm" name="system.attributes.tempDm" value="{{attributes.tempDm}}" type="number" data-dtype="Number" />
         </div>
       </div>
     </div>
@@ -237,31 +331,44 @@
         </div>
         <div class="resource-points labelled-field">
           <i class="fas fa-fw fa-clover"></i>
-          <input class="current" name="system.resources.fortune.value" value="{{resources.fortune.value}}" type="number"
-            data-dtype="Number" placeholder="0" />
+          <input class="current" name="system.resources.fortune.value" value="{{resources.fortune.value}}" type="number" data-dtype="Number" placeholder="0" />
           <span class="slash">/</span>
           <span class="max" data-tooltip="{{resources.fortune.tooltip}}">{{resources.fortune.max}}</span>
         </div>
       </div>
       {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="field">
-          {{!--<label>{{localize "CO.label.short.ability"}}</label>--}}
-          <select name="system.resources.fortune.ability" data-type="String">
-            {{selectOptions choiceAbilities selected=resources.fortune.ability localize=true}}
-          </select>
+        <div class="sidebar-section-content">
+          <div class="field">
+            {{!--<label>{{localize "CO.label.short.ability"}}</label>--}}
+            <select name="system.resources.fortune.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=resources.fortune.ability localize=true}}
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="sidebar-section-content">
-        <div class="field">
-          <input class="hp-base" type="number" name="system.resources.fortune.base" value="{{resources.fortune.base}}"
-            data-dtype="Number" placeholder="0" readonly data-tooltip="{{localize 'CO.label.long.base'}}" />
-          <span class="slash">/</span>
-          <input class="hp-bonus" type="text" name="system.resources.fortune.bonuses.sheet"
-            value="{{numberFormat resources.fortune.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number"
-            data-tooltip="{{localize 'CO.label.long.bonus'}}" placeholder="0" />
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="hp-base"
+              type="number"
+              name="system.resources.fortune.base"
+              value="{{resources.fortune.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              readonly
+              data-tooltip="{{localize 'CO.label.long.base'}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="hp-bonus"
+              type="text"
+              name="system.resources.fortune.bonuses.sheet"
+              value="{{numberFormat resources.fortune.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+              placeholder="0"
+            />
+          </div>
         </div>
-      </div>
       {{/if}}
     </div>
     <!-- RP -->
@@ -272,31 +379,44 @@
         </div>
         <div class="resource-points labelled-field">
           <i class="fas fa-fw fa-heart-pulse use-recovery"></i>
-          <input class="current" name="system.resources.recovery.value" value="{{resources.recovery.value}}"
-            type="number" data-dtype="Number" placeholder="0" />
+          <input class="current" name="system.resources.recovery.value" value="{{resources.recovery.value}}" type="number" data-dtype="Number" placeholder="0" />
           <span class="slash">/</span>
           <span class="max" data-tooltip="{{resources.recovery.tooltip}}">{{resources.recovery.max}}</span>
         </div>
       </div>
       {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="field">
-          {{!--<label>{{localize "CO.label.short.ability"}}</label>--}}
-          <select name="system.resources.recovery.ability" data-type="String">
-            {{selectOptions choiceAbilities selected=resources.recovery.ability localize=true}}
-          </select>
+        <div class="sidebar-section-content">
+          <div class="field">
+            {{!--<label>{{localize "CO.label.short.ability"}}</label>--}}
+            <select name="system.resources.recovery.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=resources.recovery.ability localize=true}}
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="sidebar-section-content">
-        <div class="field">
-          <input class="hp-base" type="number" name="system.resources.recovery.base" value="{{resources.recovery.base}}"
-            data-dtype="Number" placeholder="0" readonly data-tooltip="{{localize 'CO.label.long.base'}}" />
-          <span class="slash">/</span>
-          <input class="hp-bonus" type="text" name="system.resources.recovery.bonuses.sheet"
-            value="{{numberFormat resources.recovery.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number"
-            data-tooltip="{{localize 'CO.label.long.bonus'}}" placeholder="0" />
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="hp-base"
+              type="number"
+              name="system.resources.recovery.base"
+              value="{{resources.recovery.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              readonly
+              data-tooltip="{{localize 'CO.label.long.base'}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="hp-bonus"
+              type="text"
+              name="system.resources.recovery.bonuses.sheet"
+              value="{{numberFormat resources.recovery.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+              placeholder="0"
+            />
+          </div>
         </div>
-      </div>
       {{/if}}
     </div>
     <!-- MP -->
@@ -307,31 +427,44 @@
         </div>
         <div class="resource-points labelled-field">
           <i class="fas fa-fw fa-bolt"></i>
-          <input class="current" name="system.resources.mana.value" value="{{resources.mana.value}}" type="number"
-            data-dtype="Number" placeholder="0" />
+          <input class="current" name="system.resources.mana.value" value="{{resources.mana.value}}" type="number" data-dtype="Number" placeholder="0" />
           <span class="slash">/</span>
           <span class="max" data-tooltip="{{resources.mana.tooltip}}">{{resources.mana.max}}</span>
         </div>
       </div>
       {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="field">
-          {{!--<label>{{localize "CO.label.short.ability"}}</label>--}}
-          <select name="system.resources.mana.ability" data-type="String">
-            {{selectOptions choiceAbilities selected=resources.mana.ability localize=true}}
-          </select>
+        <div class="sidebar-section-content">
+          <div class="field">
+            {{!--<label>{{localize "CO.label.short.ability"}}</label>--}}
+            <select name="system.resources.mana.ability" data-type="String">
+              {{selectOptions choiceAbilities selected=resources.mana.ability localize=true}}
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="sidebar-section-content">
-        <div class="field">
-          <input class="mp-base" type="number" name="system.resources.mana.base" value="{{resources.mana.base}}"
-            data-dtype="Number" placeholder="0" readonly data-tooltip="{{localize 'CO.label.long.base'}}" />
-          <span class="slash">/</span>
-          <input class="mp-bonus" type="text" name="system.resources.mana.bonuses.sheet"
-            value="{{numberFormat resources.mana.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number"
-            data-tooltip="{{localize 'CO.label.long.bonus'}}" placeholder="0" />
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="mp-base"
+              type="number"
+              name="system.resources.mana.base"
+              value="{{resources.mana.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              readonly
+              data-tooltip="{{localize 'CO.label.long.base'}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="mp-bonus"
+              type="text"
+              name="system.resources.mana.bonuses.sheet"
+              value="{{numberFormat resources.mana.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+              placeholder="0"
+            />
+          </div>
         </div>
-      </div>
       {{/if}}
     </div>
     <!-- MOVEMENT -->
@@ -346,20 +479,47 @@
         </div>
       </div>
       {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="mvt-base field">
-          <input class="mvt-base" type="number" name="system.attributes.movement.base"
-            value="{{attributes.movement.base}}" data-dtype="Number" placeholder="10"
-            data-tooltip="{{localize 'CO.label.long.base'}}" />
-          <input class="movement-bonus" type="text" name="system.attributes.movement.bonuses.sheet"
-            value="{{numberFormat attributes.movement.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number"
-            data-tooltip="{{localize 'CO.label.long.bonus'}}" placeholder="+0" />
-          <select name="system.attributes.movement.unit" data-type="String">
-            {{selectOptions choiceMoveUnit selected=system.attributes.movement.unit localize=true}}
-          </select>
+        <div class="sidebar-section-content">
+          <div class="mvt-base field">
+            <input
+              class="mvt-base"
+              type="number"
+              name="system.attributes.movement.base"
+              value="{{attributes.movement.base}}"
+              data-dtype="Number"
+              placeholder="10"
+              data-tooltip="{{localize 'CO.label.long.base'}}"
+            />
+            <input
+              class="movement-bonus"
+              type="text"
+              name="system.attributes.movement.bonuses.sheet"
+              value="{{numberFormat attributes.movement.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+              placeholder="+0"
+            />
+            <select name="system.attributes.movement.unit" data-type="String">
+              {{selectOptions choiceMoveUnit selected=system.attributes.movement.unit localize=true}}
+            </select>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+    <!-- STATE MODIFIERS -->
+    <div class="sidebar-section speed-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label">
+          <h4>{{localize "CO.label.long.states"}}</h4>
         </div>
       </div>
-      {{/if}}
+      <div class="sidebar-section-content">
+        {{#each stateModifiers as |state|}}
+          <div class="state-modifier">
+            <span class="state-name">{{localize (concat "CO.label.long." state)}}</span>
+          </div>
+        {{/each}}
+      </div>
     </div>
   </div>
 </div>

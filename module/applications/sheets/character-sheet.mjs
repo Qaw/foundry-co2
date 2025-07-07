@@ -53,20 +53,19 @@ export default class COCharacterSheet extends COBaseActorSheet {
     const context = await super._prepareContext()
 
     context.profiles = this.document.profiles
-
     context.xpMax = this.document.system.attributes.xp.max
     context.xpSpent = await this.document.system.getSpentXP()
     context.xpLeft = await this.document.system.getAvailableXP()
-
     context.overloadMalus = this.document.malusFromArmor
-
-    // Select options
-    context.choiceAbilities = SYSTEM.ABILITIES
-    context.choiceSize = SYSTEM.SIZES
+    context.stateModifiers = this.document.system.stateModifiers
 
     // Gestion des défenses
     context.partialDef = this.document.hasEffect("partialDef")
     context.fullDef = this.document.hasEffect("fullDef")
+
+    // Select options
+    context.choiceAbilities = SYSTEM.ABILITIES
+    context.choiceSize = SYSTEM.SIZES
 
     if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`COCharacterSheet - context`), context)
 

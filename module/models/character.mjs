@@ -726,6 +726,28 @@ export default class CharacterData extends ActorData {
     return allActions
   }
 
+  /**
+   * Retourne la liste de tous les modificateurs d'état provenant des actions activées du parent.
+   *
+   * Parcourt les actions du parent qui sont activées, puis collecte les cibles des modificateurs
+   * associés à ces actions.
+   *
+   * @returns {Array<any>} Un tableau contenant les cibles des modificateurs d'état actifs.
+   */
+  get stateModifiers() {
+    let allStateModifiers = []
+    // On récupère les modificateurs des effets actifs
+    const enabledActions = this.parent.actions.filter((action) => action.properties.enabled)
+    for (const action of enabledActions) {
+      if (action.hasModifiers) {
+        for (const modifier of action.modifiers) {
+          if (modifier.isState) allStateModifiers.push(modifier.target)
+        }
+      }
+    }
+    return allStateModifiers
+  }
+
   // #endregion
 
   /**
