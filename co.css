@@ -975,10 +975,148 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.item.feature .modifiers-container .form-fields.like-grid .form-fields {
   grid-template-columns: 2fr 2fr 1fr 30px;
 }
-.co.application.sheet.item.profile .modifiers-container .form-group-stacked.like-grid label,
-.co.application.sheet.item.profile .modifiers-container .form-fields.like-grid label,
-.co.application.sheet.item.profile .modifiers-container .form-group-stacked.like-grid .form-fields,
-.co.application.sheet.item.profile .modifiers-container .form-fields.like-grid .form-fields {
+.co.application.sheet.item.path.item.path {
+  --color-path-dark: #54145d;
+  --color-path-light: #b234f5;
+}
+.theme-dark .co.application.sheet.item.path.item.path .sheet-header {
+  background: linear-gradient(5deg, var(--color-path-dark) 60%, #000000);
+}
+.theme-light .co.application.sheet.item.path.item.path .sheet-header {
+  background: linear-gradient(5deg, var(--color-path-light) 60%, var(--color-path-dark));
+}
+.co.application.sheet.item.path.item.path .window-content {
+  gap: 0;
+}
+.theme-dark .co.application.sheet.item.path.item.path .window-content {
+  background-color: #00000094;
+}
+.theme-light .co.application.sheet.item.path.item.path .window-content {
+  background-color: #584a756b;
+}
+.co.application.sheet.item.path.item.path .window-content fieldset {
+  margin-bottom: 15px;
+  gap: 4px;
+}
+.co.application.sheet.item.path.item.path .window-content .form-group {
+  gap: 10px;
+  margin-top: 3px;
+}
+.co.application.sheet.item.path.item.path .window-content select {
+  text-align: left;
+}
+.co.application.sheet.item.path.item.path .window-content legend {
+  margin-bottom: 5px;
+  text-align: center;
+}
+.theme-dark .co.application.sheet.item.path.item.path .window-content legend {
+  color: #ba6ce4;
+}
+.theme-light .co.application.sheet.item.path.item.path .window-content legend {
+  color: var(--color-path-dark);
+}
+.co.application.sheet.item.path.item.path .window-content .halfPanel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.co.application.sheet.item.path.item.path .window-content .form-header {
+  padding: 4px 10px 0px 15px;
+  border-radius: 12px 12px 0px 0px;
+}
+.theme-dark .co.application.sheet.item.path.item.path .window-content .form-header {
+  background-color: var(--color-path-dark);
+  color: #e7d1b1;
+}
+.theme-light .co.application.sheet.item.path.item.path .window-content .form-header {
+  background-color: var(--color-path-light);
+  color: #222;
+}
+.co.application.sheet.item.path.item.path .modifiers-container .form-group-stacked.like-grid label,
+.co.application.sheet.item.path.item.path .modifiers-container .form-fields.like-grid label,
+.co.application.sheet.item.path.item.path .modifiers-container .form-group-stacked.like-grid .form-fields,
+.co.application.sheet.item.path.item.path .modifiers-container .form-fields.like-grid .form-fields {
+  grid-template-columns: repeat(3, 10fr) 30px;
+}
+.theme-dark .co.application.sheet.item.profile.item.profile .sheet-header {
+  background: linear-gradient(5deg, #14195d 60%, #000000);
+}
+.theme-light .co.application.sheet.item.profile.item.profile .sheet-header {
+  background: linear-gradient(5deg, #325fbf 60%, #14195d);
+}
+.co.application.sheet.item.profile.item.profile .window-content {
+  gap: 0;
+}
+.theme-dark .co.application.sheet.item.profile.item.profile .window-content {
+  background-color: #00000094;
+}
+.theme-light .co.application.sheet.item.profile.item.profile .window-content {
+  background-color: #584a756b;
+}
+.co.application.sheet.item.profile.item.profile .window-content fieldset {
+  margin-bottom: 15px;
+  gap: 4px;
+}
+.co.application.sheet.item.profile.item.profile .window-content .form-group {
+  gap: 10px;
+  margin-top: 3px;
+}
+.co.application.sheet.item.profile.item.profile .window-content select {
+  text-align: left;
+}
+.co.application.sheet.item.profile.item.profile .window-content legend {
+  margin-bottom: 5px;
+  text-align: center;
+}
+.theme-dark .co.application.sheet.item.profile.item.profile .window-content legend {
+  color: #325fbf;
+}
+.theme-light .co.application.sheet.item.profile.item.profile .window-content legend {
+  color: #14195d;
+}
+.co.application.sheet.item.profile.item.profile .window-content .halfPanel {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 15px;
+}
+.co.application.sheet.item.profile.item.profile .window-content .form-header {
+  padding: 4px 10px 0px 15px;
+  border-radius: 12px 12px 0px 0px;
+}
+.theme-dark .co.application.sheet.item.profile.item.profile .window-content .form-header {
+  background-color: #14195d;
+  color: #e7d1b1;
+}
+.theme-light .co.application.sheet.item.profile.item.profile .window-content .form-header {
+  background-color: #325fbf;
+  color: #222;
+}
+.co.application.sheet.item.profile.item.profile .window-content .proficiencies-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: start;
+}
+.co.application.sheet.item.profile.item.profile .window-content .proficiencies-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: -5px;
+}
+.co.application.sheet.item.profile.item.profile .window-content .proficiencies-form .form-group .grid {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+}
+.co.application.sheet.item.profile.item.profile .window-content .proficiencies-form .form-group .grid label {
+  margin-bottom: -15px;
+}
+.co.application.sheet.item.profile.item.profile .window-content .proficiencies-form .form-group .grid label input {
+  background-color: transparent;
+}
+.co.application.sheet.item.profile.item.profile .modifiers-container .form-group-stacked.like-grid label,
+.co.application.sheet.item.profile.item.profile .modifiers-container .form-fields.like-grid label,
+.co.application.sheet.item.profile.item.profile .modifiers-container .form-group-stacked.like-grid .form-fields,
+.co.application.sheet.item.profile.item.profile .modifiers-container .form-fields.like-grid .form-fields {
   grid-template-columns: repeat(3, 10fr) 30px;
 }
 .co.application.sheet.actor {

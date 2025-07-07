@@ -1,0 +1,73 @@
+&.item.path {
+  --color-path-dark: #54145d;
+  --color-path-light: #b234f5;
+
+  .sheet-header {
+    .theme-dark & {
+      background: linear-gradient(5deg, var(--color-path-dark) 60%, #000000);
+    }
+    .theme-light & {
+      background: linear-gradient(5deg, var(--color-path-light) 60%, var(--color-path-dark));
+    }
+  }
+  .window-content {
+    gap: 0;
+
+    .theme-dark & {
+      background-color: #00000094;
+    }
+    .theme-light & {
+      background-color: #584a756b;
+    }
+
+    fieldset {
+      margin-bottom: 15px;
+      gap: 4px;
+    }
+
+    .form-group {
+      gap: 10px;
+      margin-top: 3px;
+    }
+    select {
+      text-align: left;
+    }
+    legend {
+      margin-bottom: 5px;
+      text-align: center;
+      .theme-dark & {
+        color: #ba6ce4;
+      }
+      .theme-light & {
+        color: var(--color-path-dark);
+      }
+    }
+
+    .halfPanel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    .form-header {
+      padding: 4px 10px 0px 15px;
+      border-radius: 12px 12px 0px 0px;
+      .theme-dark & {
+        background-color: var(--color-path-dark);
+        color: #e7d1b1;
+      }
+      .theme-light & {
+        background-color: var(--color-path-light);
+        color: #222;
+      }
+    }
+  }
+  .modifiers-container {
+    .form-group-stacked.like-grid,
+    .form-fields.like-grid {
+      label,
+      .form-fields {
+        grid-template-columns: repeat(3, 10fr) 30px;
+      }
+    }
+  }
+}
