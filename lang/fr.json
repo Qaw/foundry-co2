@@ -133,10 +133,10 @@
         },
         "quantity": {
           "current": {
-            "label": "Quantité actuelle"
+            "label": "Actuelle"
           },
           "max": {
-            "label": "Quantité maximale"
+            "label": "Max"
           },
           "destroyIfEmpty": {
             "label": "Détruire si vide"
@@ -144,10 +144,10 @@
         },
         "charges": {
           "current": {
-            "label": "Charges/Munitions actuelles"
+            "label": "Actuelles"
           },
           "max": {
-            "label": "Charges/Munitions maximales"
+            "label": "Maximales"
           },
           "destroyIfEmpty": {
             "label": "Détruire si vide"
@@ -176,10 +176,10 @@
           "label": "Rang"
         },
         "maxDefenseArmor": {
-          "label": "Défense maximale de l'armure"
+          "label": "Défense max de l'armure"
         },
         "pvByLevel": {
-          "label": "Points de vigueur par niveau"
+          "label": "Vigueur par niveau"
         }
       }
     },
@@ -198,7 +198,7 @@
           "label": "Famille"
         },
         "maxDefenseArmor": {
-          "label": "Défense maximale de l'armure"
+          "label": "Défense max de l'armure"
         },
         "mainProfile": {
           "label": "Profil principal"
@@ -463,7 +463,8 @@
         "needCharges": "Vous devez vous reposer pour récupérer des utilisations",
         "tempHP": "DM temporaires",
         "diceType": "Type de jet",
-        "tactical": "Option tactique"
+        "tactical": "Option tactique",
+        "special": "Spécial"
       },
       "short": {
         "label": "Label",
@@ -676,10 +677,10 @@
       "editYourAbilities": "Éditez vos Caractéristiques",
       "buy": "Apprendre",
       "unbuy": "Ne plus apprendre",
-      "recovery": "Dé de récupération",
+      "recovery": "Dé de Récupération",
       "fastRest": "Récupération rapide",
       "fullRest": "Récupération complète",
-      "pvLevel": "Points de vigueur par niveau",
+      "pvLevel": "Vigueur par niveau",
       "noTarget": "Vous n'avez ciblé personne",
       "critTooltip": "Laisser vide pour utiliser la valeur par défaut du personnage",
       "formulaTooltip": "Vous pouvez utiliser : @agi, @con, @for, @per, @cha, @int, @vol, @atc, @atd, @atm, @def, @ini, @niv, d4°, @toutrang[x], @rang, @rang[x,x,x,x,x], @cible, @oppose",
@@ -691,7 +692,7 @@
       "manaCost": "Coût en mana",
       "defense": "Défense",
       "magicalDefense": "Défense magique",
-      "maxDefenseArmor": "Défense maximale de l'armure",
+      "maxDefenseArmor": "Défense max de l'armure",
       "remainingQuantity": "Quantité restante",
       "melee": "Contact",
       "ranged": "Distance",
@@ -701,7 +702,7 @@
       "addCapacityMsg": "Glissez déposez une capacité ici",
       "linkedCapacity": "Capacité liée",
       "parentCapacity": "Capacité parente",
-      "pvByLevel": "Points de vigueur par niveau",
+      "pvByLevel": "Vigueur par niveau",
       "warningPrestigeAlreadyExist": "Vous avez déjà une classe de prestige, vous devez la désapprendre pour pouvoir en apprendre une autre",
       "tempDamage": "Temporaires",
       "attackTarget": "Les cibles de l'attaque",
@@ -717,8 +718,19 @@
       "tacticalViolentAttackTooltip": "Attaque -7, DM +2d4°",
       "tacticalPreciseAttack": "Attaque précise",
       "tacticalPreciseAttackTooltip": "Attaque -3, DM +1d4°",
-      "conditionLiee": "Indiquez le numéro de l'action liée (dans l'ordre d'apparition) qui doit être activée en commençant par 0,1...",
-      "initialInformations": "Informations Initiales"
+      "initialInformations": "Informations Initiales",
+      "charge": "Charges",
+      "rankCost": "Rang et Coût",
+      "learn": "Capacité apprise ?",
+      "typeFrequency": "Temps d'Action et Fréquence",
+      "spell": "Sort",
+      "allowCapacity": "Autoriser une capacité liée",
+      "TypeEquipement": "Type d'Équipement",
+      "rangeWeapon": "Portée de l'arme",
+      "rechargeable": "Charges et Munitions",
+      "PoidsValeur": "Poids et Valeur",
+      "equip": "Équipé ?",
+      "noneModif": "Aucun modificateur"
     },
     "properties": {
       "attack": "Attaque",
