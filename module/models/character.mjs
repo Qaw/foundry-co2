@@ -364,8 +364,21 @@ export default class CharacterData extends ActorData {
     const hpMaxModifiers = this.computeTotalModifiersByTarget(this.attributeModifiers, "hp")
 
     const nbProfiles = this.parent.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.profile.id).length
+
+    // Pas de profil
+    if (nbProfiles === 0) {
+      const constitutionBonus = this.attributes.level * this.abilities.con.value
+      this.attributes.hp.base = 0
+      this.attributes.hp.max = this.attributes.hp.base + constitutionBonus + hpMaxBonuses + hpMaxModifiers.total
+      this.attributes.hp.tooltip = Utils.getTooltip("Base ", this.attributes.hp.base).concat(
+        ` ${Utils.getAbilityName("con")} : `,
+        constitutionBonus,
+        hpMaxModifiers.tooltip,
+        Utils.getTooltip("Bonus", hpMaxBonuses),
+      )
+    }
     // Profil unique
-    if (nbProfiles === 1) {
+    else if (nbProfiles === 1) {
       // Calcul de la base de PV sans le bonus de constitution
       // Au niveau 1 : 2 * PV de la famille
       // Pour chaque niveau supplémentaire : + PV de la famille
