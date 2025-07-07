@@ -77,6 +77,9 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
         drop: this._onDrop.bind(this),
       },
     }).bind(this.element)
+
+    // Set toggle state and add status class to frame
+    this._renderModeToggle(this.element)
   }
 
   /**
@@ -627,5 +630,43 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
       field: input,
     }
     return new foundry.applications.apps.FilePicker(options).browse()
+  }
+
+  /**
+   * Manage the lock/unlock button on the sheet
+   * @param {Event} event
+   */
+  async _onSheetChangeLock(event) {
+    event.preventDefault()
+    const modes = this.constructor.SHEET_MODES
+    this._sheetMode = this.isEditMode ? modes.PLAY : modes.EDIT
+    await this.submit()
+    this.render()
+  }
+
+  /**
+   * Handle re-rendering the mode toggle on ownership changes.
+   * @param {HTMLElement} element
+   * @protected
+   */
+  _renderModeToggle(element) {
+    const header = element.querySelector(".window-header")
+    const toggle = header.querySelector(".mode-slider")
+    if (this.isEditable && !toggle) {
+      const toggle = document.createElement("co-toggle-switch")
+      toggle.checked = this._sheetMode === this.constructor.SHEET_MODES.EDIT
+      toggle.classList.add("mode-slider")
+      // TODO change tooltip with translation
+      toggle.dataset.tooltip = "CO.SheetModeEdit"
+      toggle.setAttribute("aria-label", game.i18n.localize("CO.SheetModeEdit"))
+      toggle.addEventListener("change", this._onSheetChangeLock.bind(this))
+      toggle.addEventListener("dblclick", (event) => event.stopPropagation())
+      toggle.addEventListener("pointerdown", (event) => event.stopPropagation())
+      header.prepend(toggle)
+    } else if (this.isEditable) {
+      toggle.checked = this._sheetMode === this.constructor.SHEET_MODES.EDIT
+    } else if (!this.isEditable && toggle) {
+      toggle.remove()
+    }
   }
 }
