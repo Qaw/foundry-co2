@@ -15,6 +15,10 @@
 
     {{formGroup systemFields.actionType value=systemSource.actionType localize=true}}
     {{formGroup systemFields.frequency value=systemSource.frequency localize=true}}
+    {{#if system.hasFrequency}}
+        {{formGroup systemFields.charges.fields.current value=systemSource.charges.current localize=true}}
+        {{formGroup systemFields.charges.fields.max value=systemSource.charges.max localize=true}}
+    {{/if}}
 
     {{formGroup systemFields.properties.fields.spell value=systemSource.properties.spell}}
     {{#if system.isSpell}}

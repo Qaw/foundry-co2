@@ -237,6 +237,14 @@
         "frequency": {
           "label": "Fréquence d'utilisation"
         },
+        "charges": {
+          "current": {
+            "label": "Utilisations actuelles"
+          },
+          "max": {
+            "label": "Utilisations maximales"
+          }
+        },
         "properties": {
           "spell": {
             "label": "Sortilège"

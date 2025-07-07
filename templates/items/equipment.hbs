@@ -134,14 +134,14 @@
     {{formGroup systemFields.rarity value=systemSource.rarity localize=true}}
 
     {{#if system.properties.stackable }}
-    {{formGroup systemFields.quantity.fields.current value=systemSource.quantity.current localize=true}}
-    {{formGroup systemFields.quantity.fields.max value=systemSource.quantity.max localize=true}}
-    {{formGroup systemFields.quantity.fields.destroyIfEmpty value=systemSource.quantity.destroyIfEmpty localize=true}}
+        {{formGroup systemFields.quantity.fields.current value=systemSource.quantity.current localize=true}}
+        {{formGroup systemFields.quantity.fields.max value=systemSource.quantity.max localize=true}}
+        {{formGroup systemFields.quantity.fields.destroyIfEmpty value=systemSource.quantity.destroyIfEmpty localize=true}}
     {{/if}}
 
     {{#if system.properties.reloadable }}
-    {{formGroup systemFields.charges.fields.current value=systemSource.charges.current localize=true}}
-    {{formGroup systemFields.charges.fields.max value=systemSource.charges.max localize=true}}
-    {{formGroup systemFields.charges.fields.destroyIfEmpty value=systemSource.charges.destroyIfEmpty localize=true}}
+        {{formGroup systemFields.charges.fields.current value=systemSource.charges.current localize=true}}
+        {{formGroup systemFields.charges.fields.max value=systemSource.charges.max localize=true}}
+        {{formGroup systemFields.charges.fields.destroyIfEmpty value=systemSource.charges.destroyIfEmpty localize=true}}
     {{/if}}
 </section>
