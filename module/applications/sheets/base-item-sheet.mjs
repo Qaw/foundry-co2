@@ -8,6 +8,7 @@ import { Action } from "../../models/schemas/action.mjs"
 import { Condition } from "../../models/schemas/condition.mjs"
 import { Modifier } from "../../models/schemas/modifier.mjs"
 import { Resolver } from "../../models/schemas/resolver.mjs"
+import slideToggle from "../../elements/slide-toggle.mjs"
 
 export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.ItemSheetV2) {
   /**
@@ -158,7 +159,7 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
    */
   static #onSectionToggle(event, target) {
     event.preventDefault()
-    const li = target.closest("li.items-container-header")
+    const li = target.closest(".form-header")
     let foldable = li.nextElementSibling
     while (foldable && !foldable.classList.contains("foldable")) {
       foldable = foldable.nextElementSibling
