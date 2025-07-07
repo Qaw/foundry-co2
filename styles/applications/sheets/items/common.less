@@ -6,9 +6,15 @@
 .window-content {
   padding: 0;
 
-  // 
+  //
   margin-top: -36px;
   padding-top: 36px;
+
+  .halfPanel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
 
   .sheet-header {
     display: grid;
@@ -24,9 +30,9 @@
       margin-bottom: 4px;
     }
 
-    >.name,
-    >.adjustment-select,
-    >.tags {
+    > .name,
+    > .adjustment-select,
+    > .tags {
       margin: 0 8px;
     }
 
@@ -49,7 +55,7 @@
       justify-content: flex-start;
     }
 
-    >.tags {
+    > .tags {
       grid-area: tags;
     }
 
@@ -69,7 +75,7 @@
     }
   }
 
-  >.sheet-tabs {
+  > .sheet-tabs {
     padding-left: calc(132px + 8px); // img width + tabs original padding left
     margin-top: -40px;
   }

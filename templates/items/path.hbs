@@ -1,6 +1,8 @@
 {{log "Chroniques Oubliées | path" this}}
 <section class="tab standard-form path{{#if tabs.details.active}} active{{/if}}" data-group="primary" data-tab="details">
 
+<section class="halfPanel">
+<section class="panelLeft">
     {{#if debugMode}}
         <fieldset class="debug">
             <legend>{{localize "CO.ui.debug"}}</legend>
@@ -9,7 +11,8 @@
         </fieldset>
     {{/if}}
 
-
+    <fieldSet class="infoInitial">
+    <legend>{{localize "CO.ui.initialInformations"}}</legend>
     <div class="form-group">
         <label>{{localize "CO.label.long.subtype"}}</label>
         <div class="form-fields">
@@ -25,7 +28,10 @@
     {{#if (isPathprestigious @root.system.subtype)}}
         {{formGroup systemFields.pvByLevel value=systemSource.pvByLevel localize=true}}
     {{/if}}
+    </fieldSet> 
+</section>
 
+<section class="panelRight">
     <h4 class="form-header">
         <a data-action="toggleSection">{{localize "CO.label.long.capacities"}}</a>
     </h4>
@@ -58,4 +64,6 @@
             </div>
         {{/each}}
     </div>
+</section>
+</section>
 </section>

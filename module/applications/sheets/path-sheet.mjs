@@ -5,8 +5,8 @@ export default class CoPathSheet extends CoBaseItemSheet {
   static DEFAULT_OPTIONS = {
     classes: ["path"],
     position: {
-      width: 600,
-      height: 720,
+      width: 650,
+      height: 500,
     },
   }
 

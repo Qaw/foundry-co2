@@ -828,6 +828,11 @@ co-toggle-switch[checked] thumb {
   margin-top: -36px;
   padding-top: 36px;
 }
+.co.application.sheet.item .window-content .halfPanel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
 .co.application.sheet.item .window-content .sheet-header {
   display: grid;
   grid-template-columns: 132px 1fr;
