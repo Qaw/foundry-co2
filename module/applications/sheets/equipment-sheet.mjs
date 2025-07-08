@@ -25,7 +25,7 @@ export default class CoEquipmentSheet extends CoBaseItemSheet {
         "systems/co/templates/items/parts/resolvers-part.hbs",
         "systems/co/templates/items/parts/resolver-part.hbs",
       ],
-      scrollable: [""],
+      scrollable: [".tab", ".action-body"],
     },
   }
 

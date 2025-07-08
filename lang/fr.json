@@ -220,7 +220,7 @@
           "label": "Rang"
         },
         "learned": {
-          "label": "Appris"
+          "label": "Apprise"
         },
         "allowLinkedCapacity": {
           "label": "Autorise une capacité liée"
@@ -648,7 +648,7 @@
       "range": "Portée",
       "consumes": "Consomme",
       "perUsage": "Par utilisation",
-      "learned": "Appris",
+      "learned": "Apprise",
       "equipped": "Équipé",
       "biography": "Biographie",
       "appearance": "Apparence",

@@ -2,6 +2,61 @@
 <section class="tab standard-form equipment{{#if tabs.details.active}} active{{/if}}" data-group="primary" data-tab="details">
 
     <section class="halfPanel">
+
+        <section class="panelLeft">
+        <!-- Mode Debug Détails -->
+            <div>
+                {{#if debugMode}}
+                <fieldset class="debug">
+                    <legend>{{localize "CO.ui.debug"}}</legend>
+                    {{formGroup fields._id value=item.id disabled=true localize=true label="CO.ui.id"}}
+                    {{formGroup systemFields.slug value=system.slug disabled=true localize=true}}
+                </fieldset>
+                {{/if}}
+            </div>
+
+        <!-- POIDS -->
+            <fieldset class="PoidsValeur">
+                <legend>{{localize "CO.ui.PoidsValeur"}}</legend>
+            <div class="form-group">
+                <label>{{localize "CO.ui.weight"}}</label>
+                <div class="form-fields">
+                    {{formInput systemFields.weight.fields.value value=systemSource.weight.value localize=true}}
+                    {{formInput systemFields.weight.fields.unit value=systemSource.weight.unit localize=true}}
+                </div>
+            </div>
+
+        <!-- PRIX RARETE-->
+            <div class="form-group">
+                <label>{{localize "CO.ui.price"}}</label>
+                <div class="form-fields">
+                    {{formInput systemFields.price.fields.value value=systemSource.price.value localize=true}}
+                    {{formInput systemFields.price.fields.unit value=systemSource.price.unit localize=true}}
+                </div>
+            </div>
+            {{formGroup systemFields.rarity value=systemSource.rarity localize=true}}
+            </fieldset>
+
+        <!-- EMPILLABLE -->
+            {{#if system.properties.stackable }}
+            <fieldset class="empilage">
+                <legend>{{localize "CO.ui.quantity"}}</legend>
+            {{formGroup systemFields.quantity.fields.current value=systemSource.quantity.current localize=true}}
+            {{formGroup systemFields.quantity.fields.max value=systemSource.quantity.max localize=true}}
+            {{formGroup systemFields.quantity.fields.destroyIfEmpty value=systemSource.quantity.destroyIfEmpty localize=true}}
+            {{/if}}    
+            </fieldset>
+
+        <!-- EQUIPABLE -->
+            
+            {{#if system.properties.equipable}}
+            <fieldset class="equip">
+                <legend>{{localize "CO.ui.equip"}}</legend>    
+            {{formGroup systemFields.equipped value=systemSource.equipped localize=true}}
+            {{/if}}
+            </fieldset>
+        </section>
+
         <section class="panelRight">    
         <!-- Type d'équipement -->
         <fieldSet class="TypeEquipement">
@@ -66,33 +121,33 @@
             {{/if}}
         </fieldSet>
         <!-- PROPRIETES -->
-            <fieldSet class="properties">
-                <legend>{{localize "CO.label.long.properties"}}</legend>
-                <div class="flexrow">
-                    {{#if (or isWeapon isArmor isShield isMisc)}}
-                    <label>
-                        <input type="checkbox" name="system.properties.equipable" {{checked systemSource.properties.equipable}} />
-                        {{systemFields.properties.fields.equipable.label}}
-                    </label>
-                    {{/if}}
-                    {{#if isWeapon}}
-                    <label>
-                        <input type="checkbox" name="system.properties.reloadable" {{checked systemSource.properties.reloadable}} />
-                        {{systemFields.properties.fields.reloadable.label}}
-                    </label>
-                    <label>
-                        <input type="checkbox" name="system.properties.stackable" {{checked systemSource.properties.stackable}} />
-                        {{systemFields.properties.fields.stackable.label}}
-                    </label>
-                    {{/if}}
-                    {{#if isConsumable}}
-                    <label>
-                        <input type="checkbox" name="system.properties.stackable" {{checked systemSource.properties.stackable}} />
-                        {{systemFields.properties.fields.stackable.label}}
-                    </label>
-                    {{/if}}
-                </div>
-            </fieldSet>
+        <fieldSet class="properties">
+            <legend>{{localize "CO.label.long.properties"}}</legend>
+            <div class="flexrow">
+                {{#if (or isWeapon isArmor isShield isMisc)}}
+                <label>
+                    <input type="checkbox" name="system.properties.equipable" {{checked systemSource.properties.equipable}} />
+                    {{systemFields.properties.fields.equipable.label}}
+                </label>
+                {{/if}}
+                {{#if isWeapon}}
+                <label>
+                    <input type="checkbox" name="system.properties.reloadable" {{checked systemSource.properties.reloadable}} />
+                    {{systemFields.properties.fields.reloadable.label}}
+                </label>
+                <label>
+                    <input type="checkbox" name="system.properties.stackable" {{checked systemSource.properties.stackable}} />
+                    {{systemFields.properties.fields.stackable.label}}
+                </label>
+                {{/if}}
+                {{#if isConsumable}}
+                <label>
+                    <input type="checkbox" name="system.properties.stackable" {{checked systemSource.properties.stackable}} />
+                    {{systemFields.properties.fields.stackable.label}}
+                </label>
+                {{/if}}
+            </div>
+        </fieldSet>
 
         <!-- USAGE UNE OU DEUX MAINS -->
             {{#if (or isWeapon isShield isMisc)}}
@@ -138,59 +193,6 @@
             {{/if}}
         </section>
 
-        <section class="panelLeft">
-        <!-- Mode Debug Détails -->
-            <div>
-            {{#if debugMode}}
-            <fieldset class="debug">
-                <legend>{{localize "CO.ui.debug"}}</legend>
-                {{formGroup fields._id value=item.id disabled=true localize=true label="CO.ui.id"}}
-                {{formGroup systemFields.slug value=system.slug disabled=true localize=true}}
-            </fieldset>
-            {{/if}}
-            </div>
-
-        <!-- POIDS -->
-            <fieldset class="PoidsValeur">
-                <legend>{{localize "CO.ui.PoidsValeur"}}</legend>
-            <div class="form-group">
-                <label>{{localize "CO.ui.weight"}}</label>
-                <div class="form-fields">
-                    {{formInput systemFields.weight.fields.value value=systemSource.weight.value localize=true}}
-                    {{formInput systemFields.weight.fields.unit value=systemSource.weight.unit localize=true}}
-                </div>
-            </div>
-
-        <!-- PRIX RARETE-->
-            <div class="form-group">
-                <label>{{localize "CO.ui.price"}}</label>
-                <div class="form-fields">
-                    {{formInput systemFields.price.fields.value value=systemSource.price.value localize=true}}
-                    {{formInput systemFields.price.fields.unit value=systemSource.price.unit localize=true}}
-                </div>
-            </div>
-            {{formGroup systemFields.rarity value=systemSource.rarity localize=true}}
-            </fieldset>
-
-        <!-- EMPILLABLE -->
-            {{#if system.properties.stackable }}
-            <fieldset class="empilage">
-                <legend>{{localize "CO.ui.quantity"}}</legend>
-            {{formGroup systemFields.quantity.fields.current value=systemSource.quantity.current localize=true}}
-            {{formGroup systemFields.quantity.fields.max value=systemSource.quantity.max localize=true}}
-            {{formGroup systemFields.quantity.fields.destroyIfEmpty value=systemSource.quantity.destroyIfEmpty localize=true}}
-            {{/if}}    
-            </fieldset>
-
-        <!-- EQUIPABLE -->
-            
-            {{#if system.properties.equipable}}
-            <fieldset class="equip">
-                <legend>{{localize "CO.ui.equip"}}</legend>    
-            {{formGroup systemFields.equipped value=systemSource.equipped localize=true}}
-            {{/if}}
-            </fieldset>
-        </section>
     </section>
     
 </section>
