@@ -4,192 +4,189 @@
     <section class="halfPanel">
 
         <section class="panelLeft">
-        <!-- Mode Debug Détails -->
-            <div>
-                {{#if debugMode}}
+            <!-- Mode Debug Détails -->
+            {{#if debugMode}}
                 <fieldset class="debug">
                     <legend>{{localize "CO.ui.debug"}}</legend>
                     {{formGroup fields._id value=item.id disabled=true localize=true label="CO.ui.id"}}
-                    {{formGroup systemFields.slug value=system.slug disabled=true localize=true}}
+                    {{formGroup systemFields.slug value=system.slug disabled=true localize=true disabled=locked}}
                 </fieldset>
-                {{/if}}
-            </div>
+            {{/if}}
 
-        <!-- POIDS -->
+             <!-- POIDS -->
             <fieldset class="PoidsValeur">
                 <legend>{{localize "CO.ui.PoidsValeur"}}</legend>
-            <div class="form-group">
-                <label>{{localize "CO.ui.weight"}}</label>
-                <div class="form-fields">
-                    {{formInput systemFields.weight.fields.value value=systemSource.weight.value localize=true}}
-                    {{formInput systemFields.weight.fields.unit value=systemSource.weight.unit localize=true}}
+                <div class="form-group">
+                    <label>{{localize "CO.ui.weight"}}</label>
+                    <div class="form-fields">
+                        {{formInput systemFields.weight.fields.value value=systemSource.weight.value localize=true disabled=locked}}
+                        {{formInput systemFields.weight.fields.unit value=systemSource.weight.unit localize=true disabled=locked}}
+                    </div>
                 </div>
-            </div>
 
-        <!-- PRIX RARETE-->
-            <div class="form-group">
-                <label>{{localize "CO.ui.price"}}</label>
-                <div class="form-fields">
-                    {{formInput systemFields.price.fields.value value=systemSource.price.value localize=true}}
-                    {{formInput systemFields.price.fields.unit value=systemSource.price.unit localize=true}}
+                <!-- PRIX RARETE-->
+                <div class="form-group">
+                    <label>{{localize "CO.ui.price"}}</label>
+                    <div class="form-fields">
+                        {{formInput systemFields.price.fields.value value=systemSource.price.value localize=true disabled=locked}}
+                        {{formInput systemFields.price.fields.unit value=systemSource.price.unit localize=true disabled=locked}}
+                    </div>
                 </div>
-            </div>
-            {{formGroup systemFields.rarity value=systemSource.rarity localize=true}}
+                {{formGroup systemFields.rarity value=systemSource.rarity localize=true disabled=locked}}
             </fieldset>
 
-        <!-- EMPILLABLE -->
+            <!-- EMPILABLE -->
             {{#if system.properties.stackable }}
-            <fieldset class="empilage">
-                <legend>{{localize "CO.ui.quantity"}}</legend>
-            {{formGroup systemFields.quantity.fields.current value=systemSource.quantity.current localize=true}}
-            {{formGroup systemFields.quantity.fields.max value=systemSource.quantity.max localize=true}}
-            {{formGroup systemFields.quantity.fields.destroyIfEmpty value=systemSource.quantity.destroyIfEmpty localize=true}}
+                <fieldset class="empilage">
+                    <legend>{{localize "CO.ui.quantity"}}</legend>
+                    {{formGroup systemFields.quantity.fields.current value=systemSource.quantity.current localize=true disabled=locked}}
+                    {{formGroup systemFields.quantity.fields.max value=systemSource.quantity.max localize=true disabled=locked}}
+                    {{formGroup systemFields.quantity.fields.destroyIfEmpty value=systemSource.quantity.destroyIfEmpty localize=true disabled=locked}}
+                </fieldset>
             {{/if}}    
-            </fieldset>
 
-        <!-- EQUIPABLE -->
-            
+            <!-- EQUIPABLE -->
             {{#if system.properties.equipable}}
-            <fieldset class="equip">
-                <legend>{{localize "CO.ui.equip"}}</legend>    
-            {{formGroup systemFields.equipped value=systemSource.equipped localize=true}}
+                <fieldset class="equip">
+                    <legend>{{localize "CO.ui.equip"}}</legend>    
+                    {{formGroup systemFields.equipped value=systemSource.equipped localize=true disabled=locked}}
+                </fieldset>
             {{/if}}
-            </fieldset>
+            
         </section>
 
         <section class="panelRight">    
-        <!-- Type d'équipement -->
-        <fieldSet class="TypeEquipement">
-            <legend>{{localize "CO.ui.TypeEquipement"}}</legend>
-            <div class="form-group">
-                <label>{{localize "CO.label.long.subtype"}}</label>
-                <div class="form-fields">
-                    <select name="system.subtype" data-type="String">
-                        {{selectOptions @root.choiceEquipmentSubTypes selected=system.subtype localize=true}}
-                    </select>
+            <!-- Type d'équipement -->
+            <fieldSet class="TypeEquipement">
+                <legend>{{localize "CO.ui.TypeEquipement"}}</legend>
+                <div class="form-group">
+                    <label>{{localize "CO.label.long.subtype"}}</label>
+                    <div class="form-fields">
+                        <select name="system.subtype" data-type="String" {{#if @root.locked}}disabled{{/if}}>
+                            {{selectOptions @root.choiceEquipmentSubTypes selected=system.subtype localize=true disabled=locked}}
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-        <!-- si ARME ARMURE BOUCLIER -->
-            {{#if (or isWeapon isArmor isShield)}}
-            <div class="form-group">
-                <label>{{localize "CO.label.long.martialCategory"}}</label>
-                <div class="form-fields">
+                <!-- si ARME ARMURE BOUCLIER -->
+                {{#if (or isWeapon isArmor isShield)}}
+                    <div class="form-group">
+                        <label>{{localize "CO.label.long.martialCategory"}}</label>
+                        <div class="form-fields">
+                            {{#if isWeapon}}
+                            <select name="system.martialCategory" data-type="String" {{#if @root.locked}}disabled{{/if}}>
+                                {{selectOptions martialTrainingsWeaponsList selected=systemSource.martialCategory localize=true disabled=locked}}
+                            </select>
+                            {{else if isArmor}}
+                            <select name="system.martialCategory" data-type="String" {{#if @root.locked}}disabled{{/if}}>
+                                {{selectOptions martialTrainingsArmorsList selected=systemSource.martialCategory localize=true disabled=locked}}
+                            </select>
+                            {{else if isShield}}
+                            <select name="system.martialCategory" data-type="String" {{#if @root.locked}}disabled{{/if}}>
+                                {{selectOptions martialTrainingsShieldsList selected=systemSource.martialCategory localize=true disabled=locked}}
+                            </select>
+                            {{/if}}
+                        </div>
+                    </div>
+                {{/if}}
+
+                <!-- si ARME -->
+                {{#if isWeapon}}
+                    <div class="form-group">
+                        <label>{{localize "CO.label.long.damagetype"}}</label>
+                        <div class="form-fields">
+                            <select name="system.damagetype" data-type="String" {{#if @root.locked}}disabled{{/if}}>
+                                {{selectOptions choiceDamageType selected=systemSource.damagetype localize=true disabled=locked}}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- DM temporaires -->
+                    {{#if (eq document.type "equipment")}}
+                        <div class="form-group">
+                            <label>{{localize "CO.label.long.special"}}</label>
+                            <div class="tags">
+                                {{formInput systemFields.tags value=system.tags localize=true disabled=locked}}
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/if}}
+
+                <!-- si ARMURE -->
+                {{#if (or isArmor isShield)}}
+                    {{formGroup systemFields.defense value=systemSource.defense localize=true disabled=locked}}
+                    {{formGroup systemFields.magicalDefense value=systemSource.magicalDefense localize=true disabled=locked}}
+                {{/if}}
+            </fieldSet>
+
+            <!-- PROPRIETES -->
+            <fieldSet class="properties">
+                <legend>{{localize "CO.label.long.properties"}}</legend>
+                <div class="flexrow">
+                    {{#if (or isWeapon isArmor isShield isMisc)}}
+                        <label>
+                            <input type="checkbox" name="system.properties.equipable" {{checked systemSource.properties.equipable}} {{#if @root.locked}}disabled{{/if}}/>
+                            {{systemFields.properties.fields.equipable.label}}
+                        </label>
+                    {{/if}}
                     {{#if isWeapon}}
-                    <select name="system.martialCategory" data-type="String">
-                        {{selectOptions martialTrainingsWeaponsList selected=systemSource.martialCategory localize=true}}
-                    </select>
-                    {{else if isArmor}}
-                    <select name="system.martialCategory" data-type="String">
-                        {{selectOptions martialTrainingsArmorsList selected=systemSource.martialCategory localize=true}}
-                    </select>
-                    {{else if isShield}}
-                    <select name="system.martialCategory" data-type="String">
-                        {{selectOptions martialTrainingsShieldsList selected=systemSource.martialCategory localize=true}}
-                    </select>
+                        <label>
+                            <input type="checkbox" name="system.properties.reloadable" {{checked systemSource.properties.reloadable}} {{#if @root.locked}}disabled{{/if}}/>
+                            {{systemFields.properties.fields.reloadable.label}}
+                        </label>
+                        <label>
+                            <input type="checkbox" name="system.properties.stackable" {{checked systemSource.properties.stackable}} {{#if @root.locked}}disabled{{/if}}/>
+                            {{systemFields.properties.fields.stackable.label}}
+                        </label>
+                    {{/if}}
+                    {{#if isConsumable}}
+                        <label>
+                            <input type="checkbox" name="system.properties.stackable" {{checked systemSource.properties.stackable}} {{#if @root.locked}}disabled{{/if}}/>
+                            {{systemFields.properties.fields.stackable.label}}
+                        </label>
                     {{/if}}
                 </div>
-            </div>
-            {{/if}}
-
-        <!-- si ARME -->
-            {{#if isWeapon}}
-            <div class="form-group">
-                <label>{{localize "CO.label.long.damagetype"}}</label>
-                <div class="form-fields">
-                    <select name="system.damagetype" data-type="String">
-                        {{selectOptions choiceDamageType selected=systemSource.damagetype localize=true}}
-                    </select>
-                </div>
-            </div>
-
-        <!-- DM temporaires -->
-            {{#if (eq document.type "equipment")}}
-            <div class="form-group">
-            <label>{{localize "CO.label.long.special"}}</label>
-            <div class="tags">
-                {{formInput systemFields.tags value=system.tags localize=true}}
-            </div>
-            </div>
-            {{/if}}
-        {{/if}}
-
-        <!-- si ARMURE -->
-            {{#if (or isArmor isShield)}}
-            {{formGroup systemFields.defense value=systemSource.defense localize=true}}
-            {{formGroup systemFields.magicalDefense value=systemSource.magicalDefense localize=true}}
-            {{/if}}
-        </fieldSet>
-        <!-- PROPRIETES -->
-        <fieldSet class="properties">
-            <legend>{{localize "CO.label.long.properties"}}</legend>
-            <div class="flexrow">
-                {{#if (or isWeapon isArmor isShield isMisc)}}
-                <label>
-                    <input type="checkbox" name="system.properties.equipable" {{checked systemSource.properties.equipable}} />
-                    {{systemFields.properties.fields.equipable.label}}
-                </label>
-                {{/if}}
-                {{#if isWeapon}}
-                <label>
-                    <input type="checkbox" name="system.properties.reloadable" {{checked systemSource.properties.reloadable}} />
-                    {{systemFields.properties.fields.reloadable.label}}
-                </label>
-                <label>
-                    <input type="checkbox" name="system.properties.stackable" {{checked systemSource.properties.stackable}} />
-                    {{systemFields.properties.fields.stackable.label}}
-                </label>
-                {{/if}}
-                {{#if isConsumable}}
-                <label>
-                    <input type="checkbox" name="system.properties.stackable" {{checked systemSource.properties.stackable}} />
-                    {{systemFields.properties.fields.stackable.label}}
-                </label>
-                {{/if}}
-            </div>
-        </fieldSet>
+            </fieldSet>
 
         <!-- USAGE UNE OU DEUX MAINS -->
             {{#if (or isWeapon isShield isMisc)}}
-                <fieldSet class="usages">
+                <fieldset class="usages">
                     <legend>{{localize "CO.ui.usage"}}</legend>
                     <div class="flexrow">
                         <label>
-                            <input type="checkbox" name="system.usage.oneHand" {{checked systemSource.usage.oneHand}} />
+                            <input type="checkbox" name="system.usage.oneHand" {{checked systemSource.usage.oneHand}} {{#if @root.locked}}disabled{{/if}}/>
                             {{systemFields.usage.fields.oneHand.label}}
                         </label>
                         <label>
-                            <input type="checkbox" name="system.usage.twoHand" {{checked systemSource.usage.twoHand}} />
+                            <input type="checkbox" name="system.usage.twoHand" {{checked systemSource.usage.twoHand}} {{#if @root.locked}}disabled{{/if}}/>
                             {{systemFields.usage.fields.twoHand.label}}
                         </label>
                     </div>
                 </fieldSet>
             {{/if}}
 
-        <!-- PORTEE -->
+            <!-- PORTEE -->
             {{#if isWeapon}}
-            <fieldset class="portee">
-                <legend>{{localize "CO.ui.rangeWeapon"}}</legend>
-                <div class="form-group">
-                    <label>{{localize "CO.ui.range"}}</label>
-                    <div class="form-fields">
-                        {{formInput systemFields.range.fields.value value=systemSource.range.value localize=true}}
-                        {{formInput systemFields.range.fields.unit value=systemSource.range.unit localize=true}}
+                <fieldset class="portee">
+                    <legend>{{localize "CO.ui.rangeWeapon"}}</legend>
+                    <div class="form-group">
+                        <label>{{localize "CO.ui.range"}}</label>
+                        <div class="form-fields">
+                            {{formInput systemFields.range.fields.value value=systemSource.range.value localize=true disabled=locked}}
+                            {{formInput systemFields.range.fields.unit value=systemSource.range.unit localize=true disabled=locked}}
+                        </div>
                     </div>
-                </div>
-            </fieldset>
+                </fieldset>
             {{/if}}
 
-
-        <!-- RECHARGEABLE -->
-
+            <!-- RECHARGEABLE -->
             {{#if system.properties.reloadable }}
-            <fieldset class="rechargeable">
-                <legend>{{localize "CO.ui.rechargeable"}}</legend>
-            {{formGroup systemFields.charges.fields.current value=systemSource.charges.current localize=true}}
-            {{formGroup systemFields.charges.fields.max value=systemSource.charges.max localize=true}}
-            {{formGroup systemFields.charges.fields.destroyIfEmpty value=systemSource.charges.destroyIfEmpty localize=true}}
-            </fieldset>
+                <fieldset class="rechargeable">
+                    <legend>{{localize "CO.ui.rechargeable"}}</legend>
+                    {{formGroup systemFields.charges.fields.current value=systemSource.charges.current localize=true disabled=locked}}
+                    {{formGroup systemFields.charges.fields.max value=systemSource.charges.max localize=true disabled=locked}}
+                    {{formGroup systemFields.charges.fields.destroyIfEmpty value=systemSource.charges.destroyIfEmpty localize=true disabled=locked}}
+                </fieldset>
             {{/if}}
         </section>
 

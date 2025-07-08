@@ -1,7 +1,7 @@
 {{!log 'resolvers-partial' this}}
 <h4 class="form-header resolvers">
     <a data-action="toggleSection">{{localize "CO.ui.resolvers"}}</a>
-    <a data-action="addResolver" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
+    {{#if @root.unlocked}}<a data-action="addResolver" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>{{/if}}
 </h4>
 <div class="resolvers-container foldable">
     {{#if action.resolvers}}

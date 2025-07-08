@@ -1,7 +1,7 @@
 {{!log 'modifiers-partial' this}}
 <h4 class="form-header modifiers">
     <a data-action="toggleSection">{{localize "CO.ui.modifiers"}}</a>
-    <a data-action="addActionModifier" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
+    {{#if @root.unlocked}}<a data-action="addActionModifier" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>{{/if}}
 </h4>
 <div class="modifiers-container foldable">
     {{#if action.modifiers}}

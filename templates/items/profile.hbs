@@ -4,12 +4,13 @@
     <section class="halfPanel">
         <section class="panelLeft">
 
+            <!-- Mode Debug Détails -->
             {{#if debugMode}}
-            <fieldset class="debug">
-                    <legend>{{localize "CO.ui.debug"}}</legend>
-                    {{formGroup fields._id value=item.id disabled=true localize=true label="CO.ui.id"}}
-                    {{formGroup systemFields.slug value=system.slug disabled=true localize=true}}
-            </fieldset>
+                <fieldset class="debug">
+                        <legend>{{localize "CO.ui.debug"}}</legend>
+                        {{formGroup fields._id value=item.id disabled=true localize=true label="CO.ui.id"}}
+                        {{formGroup systemFields.slug value=system.slug disabled=true localize=true}}
+                </fieldset>
             {{/if}}
 
             <fieldSet class="infoInitial">

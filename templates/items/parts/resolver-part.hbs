@@ -8,15 +8,17 @@
             </select>
             <label class="checkbox">
                 <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.bonusDiceAdd" {{checked
-                    r.bonusDiceAdd}}>
+                    r.bonusDiceAdd}} >
                 {{localize "CO.modifier.subtype.bonusDice"}}
             </label>
             <label class="checkbox">
                 <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.malusDiceAdd" {{checked
-                    r.malusDiceAdd}}>
+                    r.malusDiceAdd}} >
                 {{localize "CO.modifier.subtype.malusDice"}}
             </label>
-            <button class="action" data-action="deleteResolver"><i class="fas fa-trash"></i></button>
+            {{#if @root.unlocked}}
+                <button class="action" data-action="deleteResolver"><i class="fas fa-trash"></i></button>
+            {{/if}}
         </div>
     </div>
     {{#if (eq r.type @root.choiceResolverTypes.attack.id) }}

@@ -1,58 +1,59 @@
 {{log "Chroniques Oubliées | attack" this}}
 <section class="tab standard-form attack{{#if tabs.details.active}} active{{/if}}" data-group="primary" data-tab="details">
 
-<section class="halfPanel">
-<section class="panelLeft">
+    <section class="halfPanel">
+        <section class="panelLeft">
 
-    {{#if debugMode}}
-        <fieldset class="debug">
-            <legend>{{localize "CO.ui.debug"}}</legend>
-            {{formGroup fields._id value=item.id disabled=true localize=true label="CO.ui.id"}}
-            {{formGroup systemFields.slug value=system.slug disabled=true localize=true}}
-        </fieldset>
-    {{/if}}
+            {{#if debugMode}}
+                <fieldset class="debug">
+                    <legend>{{localize "CO.ui.debug"}}</legend>
+                    {{formGroup fields._id value=item.id disabled=true localize=true label="CO.ui.id"}}
+                    {{formGroup systemFields.slug value=system.slug disabled=true localize=true}}
+                </fieldset>
+            {{/if}}
 
-<fieldSet class="infoInitial">
-    <legend>{{localize "CO.ui.initialInformations"}}</legend>
-    <div class="form-group">
-        <label>{{localize "CO.label.long.subtype"}}</label>
-        <div class="form-fields">
-            <select name="system.subtype" data-type="String" style="width:100%">
-                {{selectOptions @root.choiceAttackType selected=system.subtype localize=true}}
-            </select>
-        </div>
-    </div>
-    
-</fieldSet> 
-</section>
-
-<section class="panelLeft">
-<fieldSet class="properties">
-        <legend>{{localize "CO.label.long.properties"}}</legend>
-    <label>
-        <input type="checkbox" name="system.properties.chargeable" {{checked systemSource.properties.chargeable}} />
-        {{localize "CO.ui.charge"}}
-        </label>    
-    {{#if system.properties.chargeable}}
-        <div class="form-group">
-            <label>{{localize "CO.ui.charges"}}</label>
-            <div class="form-fields">
-                <input class="field-value" name="system.charges.current" type="text" value="{{system.charges.current}}" placeholder="{{localize 'CO.ui.current'}}" data-dtype="Number">
-                /
-                <input class="field-value" name="system.charges.max" type="text" value="{{system.charges.max}}" placeholder="{{localize 'CO.ui.max'}}" data-dtype="Number">
+        <fieldSet class="infoInitial">
+            <legend>{{localize "CO.ui.initialInformations"}}</legend>
+            <div class="form-group">
+                <label>{{localize "CO.label.long.subtype"}}</label>
+                <div class="form-fields">
+                    <select name="system.subtype" data-type="String" style="width:100%">
+                        {{selectOptions @root.choiceAttackType selected=system.subtype localize=true}}
+                    </select>
+                </div>
             </div>
-        </div>
-    {{/if}}
-    {{#if (or system.isRanged system.isMagic)}}
-        <div class="form-group">
-            <label>{{localize "CO.ui.range"}}</label>
-            <div class="form-fields">
-                <input class="field-value" name="system.range.value" type="text" value="{{system.range.value}}" data-dtype="Number">
-                <input class="field-value" name="system.range.unit" type="text" value="{{system.range.unit}}" data-dtype="String">                
-            </div>
-        </div>    
-    {{/if}}
-</fieldSet>
-</section>
-</section>
+            
+        </fieldSet> 
+        </section>
+
+        <section class="panelLeft">
+        <fieldSet class="properties">
+                <legend>{{localize "CO.label.long.properties"}}</legend>
+            <label>
+                <input type="checkbox" name="system.properties.chargeable" {{checked systemSource.properties.chargeable}} />
+                {{localize "CO.ui.charge"}}
+                </label>    
+            {{#if system.properties.chargeable}}
+                <div class="form-group">
+                    <label>{{localize "CO.ui.charges"}}</label>
+                    <div class="form-fields">
+                        <input class="field-value" name="system.charges.current" type="text" value="{{system.charges.current}}" placeholder="{{localize 'CO.ui.current'}}" data-dtype="Number">
+                        /
+                        <input class="field-value" name="system.charges.max" type="text" value="{{system.charges.max}}" placeholder="{{localize 'CO.ui.max'}}" data-dtype="Number">
+                    </div>
+                </div>
+            {{/if}}
+            {{#if (or system.isRanged system.isMagic)}}
+                <div class="form-group">
+                    <label>{{localize "CO.ui.range"}}</label>
+                    <div class="form-fields">
+                        <input class="field-value" name="system.range.value" type="text" value="{{system.range.value}}" data-dtype="Number">
+                        <input class="field-value" name="system.range.unit" type="text" value="{{system.range.unit}}" data-dtype="String">                
+                    </div>
+                </div>    
+            {{/if}}
+        </fieldSet>
+        </section>
+    </section>
+
 </section>
