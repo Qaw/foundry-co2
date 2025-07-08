@@ -1,6 +1,9 @@
 {{log "Chroniques Oubliées | attack" this}}
 <section class="tab standard-form attack{{#if tabs.details.active}} active{{/if}}" data-group="primary" data-tab="details">
 
+<section class="halfPanel">
+<section class="panelLeft">
+
     {{#if debugMode}}
         <fieldset class="debug">
             <legend>{{localize "CO.ui.debug"}}</legend>
@@ -9,6 +12,8 @@
         </fieldset>
     {{/if}}
 
+<fieldSet class="infoInitial">
+    <legend>{{localize "CO.ui.initialInformations"}}</legend>
     <div class="form-group">
         <label>{{localize "CO.label.long.subtype"}}</label>
         <div class="form-fields">
@@ -17,15 +22,17 @@
             </select>
         </div>
     </div>
-    {{#if (or system.isRanged system.isMagic)}}
-        <div class="form-group">
-            <label>{{localize "CO.ui.range"}}</label>
-            <div class="form-fields">
-                <input class="field-value" name="system.range.value" type="text" value="{{system.range.value}}" data-dtype="Number">
-                <input class="field-value" name="system.range.unit" type="text" value="{{system.range.unit}}" data-dtype="String">                
-            </div>
-        </div>    
-    {{/if}}     
+    
+</fieldSet> 
+</section>
+
+<section class="panelLeft">
+<fieldSet class="properties">
+        <legend>{{localize "CO.label.long.properties"}}</legend>
+    <label>
+        <input type="checkbox" name="system.properties.chargeable" {{checked systemSource.properties.chargeable}} />
+        {{localize "CO.ui.charge"}}
+        </label>    
     {{#if system.properties.chargeable}}
         <div class="form-group">
             <label>{{localize "CO.ui.charges"}}</label>
@@ -35,7 +42,17 @@
                 <input class="field-value" name="system.charges.max" type="text" value="{{system.charges.max}}" placeholder="{{localize 'CO.ui.max'}}" data-dtype="Number">
             </div>
         </div>
-
     {{/if}}
-
+    {{#if (or system.isRanged system.isMagic)}}
+        <div class="form-group">
+            <label>{{localize "CO.ui.range"}}</label>
+            <div class="form-fields">
+                <input class="field-value" name="system.range.value" type="text" value="{{system.range.value}}" data-dtype="Number">
+                <input class="field-value" name="system.range.unit" type="text" value="{{system.range.unit}}" data-dtype="String">                
+            </div>
+        </div>    
+    {{/if}}
+</fieldSet>
+</section>
+</section>
 </section>
