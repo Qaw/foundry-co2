@@ -996,212 +996,407 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.item.equipment .resolvers-container .resolver .form-group-stacked.like-grid.effects .form-fields {
   grid-template-columns: repeat(2, 10fr) 15fr;
 }
-.co.application.sheet.item.feature.item.feature {
+.co.application.sheet.item.feature {
   --color-path-dark: #1a5d71;
   --color-path-light: #1eb0db;
 }
-.theme-dark .co.application.sheet.item.feature.item.feature .sheet-header {
+.theme-dark .co.application.sheet.item.feature .sheet-header {
   background: linear-gradient(5deg, var(--color-path-dark) 60%, #000000);
 }
-.theme-light .co.application.sheet.item.feature.item.feature .sheet-header {
+.theme-light .co.application.sheet.item.feature .sheet-header {
   background: linear-gradient(5deg, var(--color-path-light) 60%, var(--color-path-dark));
 }
-.co.application.sheet.item.feature.item.feature .window-content {
+.co.application.sheet.item.feature .window-content {
   gap: 0;
 }
-.theme-dark .co.application.sheet.item.feature.item.feature .window-content {
+.theme-dark .co.application.sheet.item.feature .window-content {
   background-color: #00000094;
 }
-.theme-light .co.application.sheet.item.feature.item.feature .window-content {
+.theme-light .co.application.sheet.item.feature .window-content {
   background-color: #584a756b;
 }
-.co.application.sheet.item.feature.item.feature .window-content fieldset {
+.co.application.sheet.item.feature .window-content fieldset {
   margin-bottom: 15px;
   gap: 4px;
 }
-.co.application.sheet.item.feature.item.feature .window-content .form-group {
+.co.application.sheet.item.feature .window-content .form-group {
   gap: 10px;
   margin-top: 3px;
 }
-.co.application.sheet.item.feature.item.feature .window-content select {
+.co.application.sheet.item.feature .window-content select {
   text-align: left;
 }
-.co.application.sheet.item.feature.item.feature .window-content legend {
+.co.application.sheet.item.feature .window-content legend {
   margin-bottom: 5px;
   text-align: center;
 }
-.theme-dark .co.application.sheet.item.feature.item.feature .window-content legend {
-  color: #1eb0db;
+.theme-dark .co.application.sheet.item.feature .window-content legend {
+  color: var(--color-path-light);
 }
-.theme-light .co.application.sheet.item.feature.item.feature .window-content legend {
-  color: #1a5d71;
+.theme-light .co.application.sheet.item.feature .window-content legend {
+  color: var(--color-path-dark);
 }
-.co.application.sheet.item.feature.item.feature .window-content .halfPanel {
+.co.application.sheet.item.feature .window-content .halfPanel {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
 }
-.co.application.sheet.item.feature.item.feature .window-content .form-header {
+.co.application.sheet.item.feature .window-content .form-header {
   padding: 4px 10px 0px 15px;
   border-radius: 12px 12px 0px 0px;
 }
-.theme-dark .co.application.sheet.item.feature.item.feature .window-content .form-header {
+.theme-dark .co.application.sheet.item.feature .window-content .form-header {
   background-color: var(--color-path-dark);
   color: #e7d1b1;
 }
-.theme-light .co.application.sheet.item.feature.item.feature .window-content .form-header {
+.theme-light .co.application.sheet.item.feature .window-content .form-header {
   background-color: var(--color-path-light);
   color: #222;
 }
-.co.application.sheet.item.feature.item.feature .modifiers-container .form-group-stacked.like-grid label,
-.co.application.sheet.item.feature.item.feature .modifiers-container .form-fields.like-grid label,
-.co.application.sheet.item.feature.item.feature .modifiers-container .form-group-stacked.like-grid .form-fields,
-.co.application.sheet.item.feature.item.feature .modifiers-container .form-fields.like-grid .form-fields {
+.co.application.sheet.item.feature .modifiers-container .form-group-stacked.like-grid label,
+.co.application.sheet.item.feature .modifiers-container .form-fields.like-grid label,
+.co.application.sheet.item.feature .modifiers-container .form-group-stacked.like-grid .form-fields,
+.co.application.sheet.item.feature .modifiers-container .form-fields.like-grid .form-fields {
   grid-template-columns: 2fr 2fr 1fr 30px;
 }
-.co.application.sheet.item.path.item.path {
+.co.application.sheet.item.path {
   --color-path-dark: #54145d;
   --color-path-light: #b234f5;
 }
-.theme-dark .co.application.sheet.item.path.item.path .sheet-header {
+.theme-dark .co.application.sheet.item.path .sheet-header {
   background: linear-gradient(5deg, var(--color-path-dark) 60%, #000000);
 }
-.theme-light .co.application.sheet.item.path.item.path .sheet-header {
+.theme-light .co.application.sheet.item.path .sheet-header {
   background: linear-gradient(5deg, var(--color-path-light) 60%, var(--color-path-dark));
 }
-.co.application.sheet.item.path.item.path .window-content {
+.co.application.sheet.item.path .window-content {
   gap: 0;
 }
-.theme-dark .co.application.sheet.item.path.item.path .window-content {
+.theme-dark .co.application.sheet.item.path .window-content {
   background-color: #00000094;
 }
-.theme-light .co.application.sheet.item.path.item.path .window-content {
+.theme-light .co.application.sheet.item.path .window-content {
   background-color: #584a756b;
 }
-.co.application.sheet.item.path.item.path .window-content fieldset {
+.co.application.sheet.item.path .window-content fieldset {
   margin-bottom: 15px;
   gap: 4px;
 }
-.co.application.sheet.item.path.item.path .window-content .form-group {
+.co.application.sheet.item.path .window-content .form-group {
   gap: 10px;
   margin-top: 3px;
 }
-.co.application.sheet.item.path.item.path .window-content select {
+.co.application.sheet.item.path .window-content select {
   text-align: left;
 }
-.co.application.sheet.item.path.item.path .window-content legend {
+.co.application.sheet.item.path .window-content legend {
   margin-bottom: 5px;
   text-align: center;
 }
-.theme-dark .co.application.sheet.item.path.item.path .window-content legend {
-  color: #ba6ce4;
+.theme-dark .co.application.sheet.item.path .window-content legend {
+  color: var(--color-path-light);
 }
-.theme-light .co.application.sheet.item.path.item.path .window-content legend {
+.theme-light .co.application.sheet.item.path .window-content legend {
   color: var(--color-path-dark);
 }
-.co.application.sheet.item.path.item.path .window-content .halfPanel {
+.co.application.sheet.item.path .window-content .halfPanel {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
 }
-.co.application.sheet.item.path.item.path .window-content .form-header {
+.co.application.sheet.item.path .window-content .form-header {
   padding: 4px 10px 0px 15px;
   border-radius: 12px 12px 0px 0px;
 }
-.theme-dark .co.application.sheet.item.path.item.path .window-content .form-header {
+.theme-dark .co.application.sheet.item.path .window-content .form-header {
   background-color: var(--color-path-dark);
   color: #e7d1b1;
 }
-.theme-light .co.application.sheet.item.path.item.path .window-content .form-header {
+.theme-light .co.application.sheet.item.path .window-content .form-header {
   background-color: var(--color-path-light);
   color: #222;
 }
-.co.application.sheet.item.path.item.path .modifiers-container .form-group-stacked.like-grid label,
-.co.application.sheet.item.path.item.path .modifiers-container .form-fields.like-grid label,
-.co.application.sheet.item.path.item.path .modifiers-container .form-group-stacked.like-grid .form-fields,
-.co.application.sheet.item.path.item.path .modifiers-container .form-fields.like-grid .form-fields {
+.co.application.sheet.item.path .modifiers-container .form-group-stacked.like-grid label,
+.co.application.sheet.item.path .modifiers-container .form-fields.like-grid label,
+.co.application.sheet.item.path .modifiers-container .form-group-stacked.like-grid .form-fields,
+.co.application.sheet.item.path .modifiers-container .form-fields.like-grid .form-fields {
   grid-template-columns: repeat(3, 10fr) 30px;
 }
-.theme-dark .co.application.sheet.item.profile.item.profile .sheet-header {
-  background: linear-gradient(5deg, #14195d 60%, #000000);
+.co.application.sheet.item.profile {
+  --color-path-dark: #14195d;
+  --color-path-light: #325fbf;
 }
-.theme-light .co.application.sheet.item.profile.item.profile .sheet-header {
-  background: linear-gradient(5deg, #325fbf 60%, #14195d);
+.theme-dark .co.application.sheet.item.profile .sheet-header {
+  background: linear-gradient(5deg, var(--color-path-dark) 60%, #000000);
 }
-.co.application.sheet.item.profile.item.profile .window-content {
+.theme-light .co.application.sheet.item.profile .sheet-header {
+  background: linear-gradient(5deg, var(--color-path-light) 60%, var(--color-path-dark));
+}
+.co.application.sheet.item.profile .window-content {
   gap: 0;
 }
-.theme-dark .co.application.sheet.item.profile.item.profile .window-content {
+.theme-dark .co.application.sheet.item.profile .window-content {
   background-color: #00000094;
 }
-.theme-light .co.application.sheet.item.profile.item.profile .window-content {
+.theme-light .co.application.sheet.item.profile .window-content {
   background-color: #584a756b;
 }
-.co.application.sheet.item.profile.item.profile .window-content fieldset {
+.co.application.sheet.item.profile .window-content fieldset {
   margin-bottom: 15px;
   gap: 4px;
 }
-.co.application.sheet.item.profile.item.profile .window-content .form-group {
+.co.application.sheet.item.profile .window-content .form-group {
   gap: 10px;
   margin-top: 3px;
 }
-.co.application.sheet.item.profile.item.profile .window-content select {
+.co.application.sheet.item.profile .window-content select {
   text-align: left;
 }
-.co.application.sheet.item.profile.item.profile .window-content legend {
+.co.application.sheet.item.profile .window-content legend {
   margin-bottom: 5px;
   text-align: center;
 }
-.theme-dark .co.application.sheet.item.profile.item.profile .window-content legend {
-  color: #325fbf;
+.theme-dark .co.application.sheet.item.profile .window-content legend {
+  color: var(--color-path-light);
 }
-.theme-light .co.application.sheet.item.profile.item.profile .window-content legend {
-  color: #14195d;
+.theme-light .co.application.sheet.item.profile .window-content legend {
+  color: var(--color-path-dark);
 }
-.co.application.sheet.item.profile.item.profile .window-content .halfPanel {
+.co.application.sheet.item.profile .window-content .halfPanel {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   gap: 15px;
 }
-.co.application.sheet.item.profile.item.profile .window-content .form-header {
+.co.application.sheet.item.profile .window-content .form-header {
   padding: 4px 10px 0px 15px;
   border-radius: 12px 12px 0px 0px;
 }
-.theme-dark .co.application.sheet.item.profile.item.profile .window-content .form-header {
-  background-color: #14195d;
+.theme-dark .co.application.sheet.item.profile .window-content .form-header {
+  background-color: var(--color-path-dark);
   color: #e7d1b1;
 }
-.theme-light .co.application.sheet.item.profile.item.profile .window-content .form-header {
-  background-color: #325fbf;
+.theme-light .co.application.sheet.item.profile .window-content .form-header {
+  background-color: var(--color-path-light);
   color: #222;
 }
-.co.application.sheet.item.profile.item.profile .window-content .proficiencies-form {
+.co.application.sheet.item.profile .window-content .proficiencies-form {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: start;
 }
-.co.application.sheet.item.profile.item.profile .window-content .proficiencies-form .form-group {
+.co.application.sheet.item.profile .window-content .proficiencies-form .form-group {
   display: flex;
   flex-direction: column;
   gap: 0;
   margin-top: -5px;
 }
-.co.application.sheet.item.profile.item.profile .window-content .proficiencies-form .form-group .grid {
+.co.application.sheet.item.profile .window-content .proficiencies-form .form-group .grid {
   display: flex;
   flex-direction: column;
   height: 200px;
 }
-.co.application.sheet.item.profile.item.profile .window-content .proficiencies-form .form-group .grid label {
+.co.application.sheet.item.profile .window-content .proficiencies-form .form-group .grid label {
   margin-bottom: -15px;
 }
-.co.application.sheet.item.profile.item.profile .window-content .proficiencies-form .form-group .grid label input {
+.co.application.sheet.item.profile .window-content .proficiencies-form .form-group .grid label input {
   background-color: transparent;
 }
-.co.application.sheet.item.profile.item.profile .modifiers-container .form-group-stacked.like-grid label,
-.co.application.sheet.item.profile.item.profile .modifiers-container .form-fields.like-grid label,
-.co.application.sheet.item.profile.item.profile .modifiers-container .form-group-stacked.like-grid .form-fields,
-.co.application.sheet.item.profile.item.profile .modifiers-container .form-fields.like-grid .form-fields {
+.co.application.sheet.item.profile .modifiers-container .form-group-stacked.like-grid label,
+.co.application.sheet.item.profile .modifiers-container .form-fields.like-grid label,
+.co.application.sheet.item.profile .modifiers-container .form-group-stacked.like-grid .form-fields,
+.co.application.sheet.item.profile .modifiers-container .form-fields.like-grid .form-fields {
   grid-template-columns: repeat(3, 10fr) 30px;
+}
+.theme-dark .co.application.sheet.item.attack .sheet-header {
+  background: linear-gradient(5deg, var(--color-path-dark) 60%, #000000);
+}
+.theme-light .co.application.sheet.item.attack .sheet-header {
+  background: linear-gradient(5deg, var(--color-path-light) 60%, var(--color-path-dark));
+}
+.theme-dark .co.application.sheet.item.attack .window-content {
+  background-color: #00000094;
+}
+.theme-light .co.application.sheet.item.attack .window-content {
+  background-color: #584a756b;
+}
+.co.application.sheet.item.attack .window-content fieldset {
+  margin-bottom: 15px;
+  gap: 4px;
+}
+.co.application.sheet.item.attack .window-content .form-group {
+  gap: 10px;
+  margin-top: 3px;
+}
+.co.application.sheet.item.attack .window-content select {
+  text-align: left;
+}
+.co.application.sheet.item.attack .window-content legend {
+  margin-bottom: 5px;
+  text-align: center;
+}
+.theme-dark .co.application.sheet.item.attack .window-content legend {
+  color: var(--color-path-light);
+}
+.theme-light .co.application.sheet.item.attack .window-content legend {
+  color: var(--color-path-dark);
+}
+.co.application.sheet.item.attack .window-content .action.item.active {
+  gap: 0;
+}
+.co.application.sheet.item.attack .window-content .action-tabs {
+  margin-top: 0px;
+}
+.co.application.sheet.item.attack .window-content .halfPanel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.co.application.sheet.item.attack .window-content .form-header {
+  padding: 4px 10px 0px 15px;
+  border-radius: 12px 12px 0px 0px;
+}
+.theme-dark .co.application.sheet.item.attack .window-content .form-header {
+  background-color: var(--color-path-dark);
+  color: #e7d1b1;
+}
+.theme-light .co.application.sheet.item.attack .window-content .form-header {
+  background-color: var(--color-path-light);
+  color: #222;
+}
+.co.application.sheet.item.attack .window-content .labelModifier {
+  display: grid;
+  grid-template-columns: 0.3fr 0.4fr 0.4fr;
+  column-gap: 10px;
+}
+.co.application.sheet.item.attack .window-content .labelModifier label {
+  font-weight: bold;
+  padding-left: 15px;
+}
+.co.application.sheet.item.attack .window-content .modifier {
+  display: grid;
+  grid-template-columns: 0.7fr 0.9fr 0.8fr 0.1fr;
+  grid-template-rows: auto;
+  column-gap: 10px;
+  padding: 3px;
+}
+.theme-dark .co.application.sheet.item.attack .window-content .modifier {
+  border: 1px solid #6b0202;
+}
+.theme-light .co.application.sheet.item.attack .window-content .modifier {
+  border: 1px solid #d33434;
+}
+.co.application.sheet.item.attack .window-content .modifier .buttonModifier {
+  align-self: center;
+  justify-self: end;
+  height: 25px;
+  margin-top: -8px;
+}
+.co.application.sheet.item.attack .window-content .modifier .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+}
+.co.application.sheet.item.attack .window-content .modifier .form-group input {
+  height: 45px;
+}
+.co.application.sheet.item.attack .window-content .modifier label {
+  margin-bottom: -7px;
+  margin-top: -6px;
+  align-self: flex-start;
+  padding-left: 15px;
+}
+.co.application.sheet.item.attack .valueField {
+  grid-column: 3 / 5;
+}
+.co.application.sheet.item.attack .form-group.notesField {
+  grid-column: 2 / 4;
+  height: 25px;
+  margin-top: 4px;
+}
+.co.application.sheet.item.attack .form-group.rowTarget {
+  flex-direction: row;
+}
+.co.application.sheet.item.attack .form-group.rowTarget label.targetCenter {
+  margin-top: 0px;
+}
+.co.application.sheet.item.attack .form-group.rowTarget select {
+  height: 25px;
+}
+.co.application.sheet.item.attack .columnValue {
+  grid-column: 3/5;
+}
+.co.application.sheet.item.attack .resolver {
+  margin-bottom: 5px;
+  padding: 5px;
+}
+.co.application.sheet.item.attack .resolver .resolverMain {
+  display: grid;
+  grid-template-columns: 0.4fr 1fr 1fr 0.6fr 1fr;
+  grid-template-rows: 0.3fr 50px;
+  width: 100%;
+}
+.co.application.sheet.item.attack .resolver .effectsSupp {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  grid-template-rows: 0.3fr auto;
+  margin-top: 10px;
+}
+.theme-dark .co.application.sheet.item.attack .resolver {
+  border-bottom: 1px solid #6b0202;
+}
+.theme-light .co.application.sheet.item.attack .resolver {
+  border-bottom: 1px solid #d33434;
+}
+.co.application.sheet.item.attack .resolver .form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0;
+}
+.co.application.sheet.item.attack .resolver .form-group label {
+  font-weight: bold;
+  margin: -6px 0px -7px 0px;
+}
+.co.application.sheet.item.attack .resolver .form-fields,
+.co.application.sheet.item.attack .resolver input,
+.co.application.sheet.item.attack .resolver select {
+  height: 27px;
+}
+.co.application.sheet.item.attack .resolver input {
+  font-size: 15px;
+  text-align: center;
+}
+.co.application.sheet.item.attack .resolver input .checkbox {
+  align-content: center;
+}
+.co.application.sheet.item.attack .resolver input.bolder {
+  font-weight: bold;
+}
+.co.application.sheet.item.attack .resolver .form-group-stacked {
+  display: flex;
+  flex-direction: row;
+}
+.co.application.sheet.item.attack .resolver .form-fields.type {
+  grid-column: 2 / 6;
+}
+.co.application.sheet.item.attack .resolver .form-group.formula,
+.co.application.sheet.item.attack .resolver .form-group.targets,
+.co.application.sheet.item.attack .resolver .form-group.heal,
+.co.application.sheet.item.attack .resolver .form-group.difficulty {
+  grid-column: 1/3;
+}
+.co.application.sheet.item.attack .resolver .form-group.damages {
+  grid-column: 3/5;
+}
+.co.application.sheet.item.attack .resolver .form-group.effects {
+  grid-column: 1/4;
+}
+.co.application.sheet.item.attack .resolver .form-group.status {
+  grid-column: 1/3;
+}
+.co.application.sheet.item.attack .resolver .form-group.duration {
+  grid-column: 3/4;
 }
 .co.application.sheet.actor {
   gap: 0;
