@@ -54,7 +54,9 @@
                         <div class="field-label ellipse">{{path.name}}</div>
                     </div>
                     <div class="cell right item item-controls" data-uuid="{{path.uuid}}" data-item-type="path">
-                        <button type="button" class="item-control" data-action="deleteItem" data-tooltip="{{localize 'CO.label.long.deleteItem'}}"><i class="fas fa-trash"></i></button>
+                        {{#if @root.unlocked}}
+                            <button type="button" class="item-control" data-action="deleteItem" data-tooltip="{{localize 'CO.label.long.deleteItem'}}"><i class="fas fa-trash"></i></button>
+                        {{/if}}
                     </div>
                 {{/each}}
             </div>    
@@ -64,7 +66,7 @@
     <!-- MODIFIERS -->
     <h4 class="form-header">
         <a data-action="toggleSection">{{localize "CO.label.long.modifiers"}}</a>
-        <a data-action="addModifier" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>
+        {{#if @root.unlocked}}<a data-action="addModifier" data-tooltip="{{localize 'CO.ui.add'}}"><i class="fas fa-add"></i></a>{{/if}}
     </h4>
     <div class="modifiers-container foldable">
         {{#if modifiers}}
@@ -76,13 +78,13 @@
                     <span>&nbsp;</span>
                 </label>
             {{#each modifiers as |m id|}}
-                <input name="system.modifiers.{{id}}.type" type="hidden" value="{{m.type}}" data-dtype="String" />
-                <input name="system.modifiers.{{id}}.source" type="hidden" value="{{m.source}}" data-dtype="String" />
+                <input name="system.modifiers.{{id}}.type" type="hidden" value="{{m.type}}" data-dtype="String" {{#if @root.locked}}disabled{{/if}}/>
+                <input name="system.modifiers.{{id}}.source" type="hidden" value="{{m.source}}" data-dtype="String" {{#if @root.locked}}disabled{{/if}}/>
                 <div class="form-fields modifier" data-item-id="{{id}}" data-item-type="modifier">
-                    <select name="system.modifiers.{{id}}.subtype" data-type="String">
+                    <select name="system.modifiers.{{id}}.subtype" data-type="String" {{#if @root.locked}}disabled{{/if}}>
                         {{selectOptions @root.choiceModifierSubtypes selected=m.subtype localize=true}}
                     </select>
-                    <select name="system.modifiers.{{id}}.target" data-type="String">
+                    <select name="system.modifiers.{{id}}.target" data-type="String" {{#if @root.locked}}disabled{{/if}}>
                         {{#if (eq m.subtype 'ability')}}
                             {{selectOptions @root.choiceModifierAbilityTargets selected=m.target localize=true}}
                         {{/if}}
@@ -109,7 +111,7 @@
                         {{/if}} 
                     </select>
                     <input name="system.modifiers.{{id}}.value" type="text" value="{{m.value}}" data-dtype="String" />
-                    <button data-action="deleteModifier"><i class="fas fa-trash"></i></button>
+                    {{#if @root.unlocked}}<button data-action="deleteModifier"><i class="fas fa-trash"></i></button>{{/if}}
                 </div>
             {{/each}}
             </div>

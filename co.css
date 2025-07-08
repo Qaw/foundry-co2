@@ -996,10 +996,67 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.item.equipment .resolvers-container .resolver .form-group-stacked.like-grid.effects .form-fields {
   grid-template-columns: repeat(2, 10fr) 15fr;
 }
-.co.application.sheet.item.feature .modifiers-container .form-group-stacked.like-grid label,
-.co.application.sheet.item.feature .modifiers-container .form-fields.like-grid label,
-.co.application.sheet.item.feature .modifiers-container .form-group-stacked.like-grid .form-fields,
-.co.application.sheet.item.feature .modifiers-container .form-fields.like-grid .form-fields {
+.co.application.sheet.item.feature.item.feature {
+  --color-path-dark: #1a5d71;
+  --color-path-light: #1eb0db;
+}
+.theme-dark .co.application.sheet.item.feature.item.feature .sheet-header {
+  background: linear-gradient(5deg, var(--color-path-dark) 60%, #000000);
+}
+.theme-light .co.application.sheet.item.feature.item.feature .sheet-header {
+  background: linear-gradient(5deg, var(--color-path-light) 60%, var(--color-path-dark));
+}
+.co.application.sheet.item.feature.item.feature .window-content {
+  gap: 0;
+}
+.theme-dark .co.application.sheet.item.feature.item.feature .window-content {
+  background-color: #00000094;
+}
+.theme-light .co.application.sheet.item.feature.item.feature .window-content {
+  background-color: #584a756b;
+}
+.co.application.sheet.item.feature.item.feature .window-content fieldset {
+  margin-bottom: 15px;
+  gap: 4px;
+}
+.co.application.sheet.item.feature.item.feature .window-content .form-group {
+  gap: 10px;
+  margin-top: 3px;
+}
+.co.application.sheet.item.feature.item.feature .window-content select {
+  text-align: left;
+}
+.co.application.sheet.item.feature.item.feature .window-content legend {
+  margin-bottom: 5px;
+  text-align: center;
+}
+.theme-dark .co.application.sheet.item.feature.item.feature .window-content legend {
+  color: #1eb0db;
+}
+.theme-light .co.application.sheet.item.feature.item.feature .window-content legend {
+  color: #1a5d71;
+}
+.co.application.sheet.item.feature.item.feature .window-content .halfPanel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.co.application.sheet.item.feature.item.feature .window-content .form-header {
+  padding: 4px 10px 0px 15px;
+  border-radius: 12px 12px 0px 0px;
+}
+.theme-dark .co.application.sheet.item.feature.item.feature .window-content .form-header {
+  background-color: var(--color-path-dark);
+  color: #e7d1b1;
+}
+.theme-light .co.application.sheet.item.feature.item.feature .window-content .form-header {
+  background-color: var(--color-path-light);
+  color: #222;
+}
+.co.application.sheet.item.feature.item.feature .modifiers-container .form-group-stacked.like-grid label,
+.co.application.sheet.item.feature.item.feature .modifiers-container .form-fields.like-grid label,
+.co.application.sheet.item.feature.item.feature .modifiers-container .form-group-stacked.like-grid .form-fields,
+.co.application.sheet.item.feature.item.feature .modifiers-container .form-fields.like-grid .form-fields {
   grid-template-columns: 2fr 2fr 1fr 30px;
 }
 .co.application.sheet.item.path.item.path {
