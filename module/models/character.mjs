@@ -163,6 +163,16 @@ export default class CharacterData extends ActorData {
   }
 
   /**
+   * Checks if the character's profile belongs to the "mage" family.
+   *
+   * @returns {boolean} Returns true if the profile exists and its system family is "mage"; otherwise, false.
+   */
+  get hasProfileMageFamily() {
+    const profile = this.profile
+    return profile && profile.system.family === "mage"
+  }
+
+  /**
    * Retrieves an array of modifiers from various sources associated with the character.
    * The sources include features, profiles, capacities, and equipment.
    * Each source is checked for enabled modifiers of the specified type and subtype.
@@ -290,7 +300,9 @@ export default class CharacterData extends ActorData {
     }
 
     // XP dépensés dans les capacités des voies
-    this.attributes.xp.max = 3 + 2 * (this.attributes.level - 1)
+    // Un personnage a 3 points de capacités au niveau 1, et 2 points de capacités par niveau supplémentaire
+    // Un personnage avec un profil de la famille des mages a un point de capacité supplémentaire au niveau 1
+    this.attributes.xp.max = 3 + 2 * (this.attributes.level - 1) + (this.hasProfileMageFamily ? 1 : 0)
     this._prepareVision()
 
     // Cas des points de vie à 1 : statut affaibli

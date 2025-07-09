@@ -780,24 +780,14 @@ export default class COActor extends Actor {
     let capacity = this.items.get(capacityId)
     if (!capacity) return
 
-    // Rang actuel de la voie
     let path = fromUuidSync(capacity.system.path)
     if (!path) return
+    // Rang actuel de la voie
     const currentRank = path.system.rank
 
     // Apprentissage d'une capacité
     if (state) {
-      // RULE : Pour obtenir une capacité, il faut avoir un niveau minimal
-      // Les capacités de rang 6 à 8 sont réservées aux voies de prestige
-      const newRank = currentRank + 1
-      if (this.system.attributes.level < SYSTEM.CAPACITY_MINIMUM_LEVEL[newRank]) return ui.notifications.warn(game.i18n.localize("CO.notif.warningLevelTooLow"))
-      // RULE : Pour apprendre une capacité, il faut avoir appris les précédentes
-      let pos = path.system.getCapacityRank(capacity.uuid)
-      for (let i = 0; i < pos; i++) {
-        let c = path.system.capacities[i]
-        const current = fromUuidSync(c)
-        if (!current.system.learned) return ui.notifications.warn(game.i18n.localize("CO.notif.warningNeedLearnedCapacities"))
-      }
+      if (!this.canLearnCapacity(capacity, path)) return
     }
 
     // Mise à jour de la capacité et de ses actions
@@ -810,6 +800,35 @@ export default class COActor extends Actor {
       // Mise à jour du rang de la voie correspondante
       await path.update({ "system.rank": currentRank - 1 })
     }
+  }
+
+  canLearnCapacity(capacity, path) {
+    // RULE : Pour obtenir une capacité, il faut avoir un niveau minimal
+    // Les capacités de rang 6 à 8 sont réservées aux voies de prestige
+    const requiredLevel = SYSTEM.CAPACITY_MINIMUM_LEVEL[capacity.system.rank]
+
+    // Exception : Au niveau 1, un personnage avec un profil de la famille des mages peut apprendre une capacité de rang 2 parmi les 2 voies de profil choisies
+    if (this.type === "character" && this.system.profile && this.system.profile.system.family === "mage" && this.system.attributes.level === 1 && capacity.system.rank === 2) {
+      return true
+    }
+
+    if (this.system.attributes.level < requiredLevel) {
+      ui.notifications.warn(game.i18n.localize("CO.notif.warningLevelTooLow"))
+      return false
+    }
+
+    // RULE : Pour apprendre une capacité, il faut avoir appris les précédentes
+    let pos = path.system.getCapacityRank(capacity.uuid)
+    for (let i = 0; i < pos; i++) {
+      let c = path.system.capacities[i]
+      const current = fromUuidSync(c)
+      if (!current.system.learned) {
+        ui.notifications.warn(game.i18n.localize("CO.notif.warningNeedLearnedCapacities"))
+        return false
+      }
+    }
+
+    return true
   }
 
   /**
