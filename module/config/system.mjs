@@ -12,6 +12,7 @@ import * as PROFILE from "./profile.mjs"
 import * as EFFECTS from "./effects.mjs"
 import * as COMBAT from "./combat.mjs"
 import * as CHAT from "./chat.mjs"
+import * as TEMPLATE from "./template.mjs"
 
 export const ASCII = `
    ******    *******  
@@ -131,5 +132,6 @@ export const SYSTEM = {
   RESOURCES: CHARACTER.RESOURCES,
   SIZES,
   STATUS_EFFECT: EFFECTS.CUSTOM_STATUS_EFFECT,
+  TEMPLATE: TEMPLATE.TEMPLATE,
   TOKEN_SIZE,
 }
