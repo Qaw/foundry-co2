@@ -1,5 +1,5 @@
 {{!-- Character Inventory Tab Template --}}
-{{log "Chroniques Oubliées | Character inventory" this}}
+{{!log "Chroniques Oubliées | Character inventory" this}}
 <section class="tab standard-form inventory{{#if tabs.inventory.active}} active{{/if}}" data-group="primary" data-tab="inventory">
 
 <!-- Currencies -->
@@ -18,7 +18,7 @@
 </ol>
 
 {{#each inventory as |items category|}}
-  {{log "Chroniques Oubliées | inventory group" items category}}
+  {{!log "Chroniques Oubliées | inventory group" items category}}
   <ol class="items-container" data-tab="inventory" data-category="{{category}}">
     <li class="items-container-header flexrow">
       <h4 class="item-name flexrow">

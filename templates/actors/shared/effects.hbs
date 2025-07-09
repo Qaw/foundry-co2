@@ -1,5 +1,5 @@
 {{!-- Character Effects Tab Template --}}
-{{log "Chroniques Oubliées | effects" this}}
+{{!log "Chroniques Oubliées | effects" this}}
 <section class="tab standard-form effects{{#if tabs.effects.active}} active{{/if}}" data-group="primary" data-tab="effects">
     <div class="section-body-no-flex">
         <!-- ACTIONS -->
@@ -71,7 +71,7 @@
         <ol class="item-list">
             <!-- Liste des customEffects actuellement actifs -->
             {{#each currentEffects as |effect id|}}
-            {{log (concat "Chroniques Oubliées | customEffect " id) effect}}
+            {{!log (concat "Chroniques Oubliées | customEffect " id) effect}}
             <li class="item flexrow" data-item-uuid="{{effect.source}}" data-item-indice="{{id}}" data-item-type="customEffectData" draggable="false">
                 <div class="item-name flexrow">
                     <a class="item-img" data-action="editItem" style="background-image: url('icons/svg/aura.svg')"></a>

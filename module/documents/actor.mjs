@@ -721,7 +721,7 @@ export default class COActor extends Actor {
           let quantity = item.system.quantity.current - 1
           // Message chat
           const message = game.i18n.format("CO.notif.consume", { actorName: this.name, itemName: item.name })
-          await new CoChat(this).withContent(message).create()
+          await new CoChat(this).withTemplate(SYSTEM.TEMPLATE.MESSAGE).withData({ message: message }).create()
 
           if (quantity === 0 && item.system.quantity.destroyIfEmpty) {
             await this.deleteEmbeddedDocuments("Item", [item.id])
@@ -747,9 +747,9 @@ export default class COActor extends Actor {
             const recoveryDice = this.system.hd
             if (recoveryDice) {
               const burnRoll = new Roll(`${manaBurnedCost}${recoveryDice}`)
-              await burnRoll.roll()
-              // TODO : Notifier la perte de PV
-              burnRoll.toMessage()
+              let result = await burnRoll.roll()
+              const message = game.i18n.format("CO.notif.manaBurn", { actorName: this.name, amount: result.total, capacityName: item.name })
+              await new CoChat(this).withTemplate(SYSTEM.TEMPLATE.MESSAGE).withData({ message: message }).create()
               const newHP = Math.max(this.system.attributes.hp.value - burnRoll.total, 0)
               await this.update({ "system.attributes.hp.value": newHP })
             }
@@ -1893,8 +1893,7 @@ export default class COActor extends Actor {
     } else {
       message = game.i18n.localize("CO.notif.healed").replace("{actorName}", this.name).replace("{amount}", Math.abs(healValue).toString())
     }
-
-    await ui.chat.processMessage(message, { actor: this._id, alias: this.name })
+    await new CoChat(this).withTemplate(SYSTEM.TEMPLATE.MESSAGE).withData({ message: message }).create()
   }
 
   /**
@@ -1911,9 +1910,12 @@ export default class COActor extends Actor {
     damage = Math.max(0, damage - this.system.combat.dr.value)
     if (damage === 0) return
     hp.value = Math.max(0, hp.value - damage)
+    if (hp.value === 0) {
+      if (this.type !== "character") this.toggleStatusEffect("dead", true)
+    }
     await this.update({ "system.attributes.hp": hp })
     const message = game.i18n.format("CO.notif.damaged", { actorName: this.name, amount: damage })
-    new CoChat(this).withContent(message).create()
+    await new CoChat(this).withTemplate(SYSTEM.TEMPLATE.MESSAGE).withData({ message: message }).create()
   }
 
   /**
@@ -1931,7 +1933,7 @@ export default class COActor extends Actor {
     hp.value = Math.min(hp.max, hp.value + heal)
     await this.update({ "system.attributes.hp": hp })
     const message = game.i18n.format("CO.notif.healed", { actorName: this.name, amount: heal })
-    new CoChat(this).withContent(message).create()
+    await new CoChat(this).withTemplate(SYSTEM.TEMPLATE.MESSAGE).withData({ message: message }).create()
   }
   // #endregion
 
