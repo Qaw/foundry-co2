@@ -110,9 +110,9 @@ export class Resolver extends foundry.abstract.DataModel {
       bonusDice: this.bonusDiceAdd ? 1 : 0,
       malusDice: this.malusDiceAdd ? 1 : 0,
       customEffect,
-      applyOn: this.additionalEffect.applyOn,
+      additionalEffect: this.additionalEffect,
     })
-
+    console.log("resolver - customEffet - attack result", customEffect, this.additionalEffect, result)
     if (result === null) return false
 
     // Gestion des effets supplémentaires

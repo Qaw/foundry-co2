@@ -45,8 +45,6 @@ export default class CoCapacitySheet extends CoBaseItemSheet {
     const context = await super._prepareContext()
 
     context.resolverSystemFields = this.document.system.schema.fields.actions.element.fields.resolvers.element.fields
-
-    console.log(`CoCapacitySheet - context`, context)
     return context
   }
 
