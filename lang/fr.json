@@ -662,6 +662,8 @@
       "inventory": "Inventaire",
       "armors": "Armures",
       "weapons": "Armes",
+      "consumables": "Consommables",
+      "miscs": "Divers",
       "shields": "Boucliers",
       "miscBonuses": "Bonus divers",
       "totalBonus": "Bonus total",

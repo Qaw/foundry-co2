@@ -123,6 +123,19 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     context.features = this.document.features
     context.actions = this.document.actions
     context.inventory = this.document.inventory
+    // Récupération du statut expended depuis le localStorage
+    let currenciesExpended = true
+    try {
+      const key = `co-${this.document.id}-currencies`
+      const stored = localStorage.getItem(key)
+      if (stored !== null) {
+        const parsedData = JSON.parse(stored)
+        currenciesExpended = parsedData.expended === true
+      }
+    } catch (e) {
+      currenciesExpended = true
+    }
+    context.currenciesExpended = currenciesExpended
     context.unlocked = this.isEditMode
     context.locked = this.isPlayMode
 
@@ -147,12 +160,13 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
    *
    * @param {PointerEvent} event The originating click event
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
-   * @returns {boolean} - Always returns true.
+   * @returns {boolean}
    */
   static #onSectionToggle(event, target) {
     event.preventDefault()
+    const toggleType = target.dataset.toggleType
     const pathSlug = target.dataset.slug
-    const li = target.closest("li.items-container-header")
+    let li = target.closest("li.items-container-header")
     let foldable = li.nextElementSibling
     while (foldable && !foldable.classList.contains("foldable")) {
       foldable = foldable.nextElementSibling
@@ -161,7 +175,12 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
       console.log(Utils.log(`CoBaseActorSheet - Toggling section`), foldable)
       // Change value in local storage to remember the state
       try {
-        const key = `co-${this.document.id}-paths-${pathSlug}`
+        let key
+        if (toggleType === "paths") {
+          key = `co-${this.document.id}-${toggleType}-${pathSlug}`
+        } else {
+          key = `co-${this.document.id}-${toggleType}`
+        }
         let stored = localStorage.getItem(key)
         if (stored !== null) {
           let value = JSON.parse(stored)

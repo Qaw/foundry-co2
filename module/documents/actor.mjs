@@ -30,7 +30,6 @@ export default class COActor extends Actor {
         actorLink: true,
         disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
       })
-
       this.updateSource({ prototypeToken })
     }
 
@@ -218,13 +217,37 @@ export default class COActor extends Actor {
   }
 
   get inventory() {
-    return {
-      armors: this.armors,
-      shields: this.shields,
-      weapons: this.weapons,
-      consumable: this.consumables,
-      misc: this.misc,
-    }
+    let inventory = []
+    const categories = [
+      SYSTEM.EQUIPMENT_SUBTYPES.armor.id,
+      SYSTEM.EQUIPMENT_SUBTYPES.shield.id,
+      SYSTEM.EQUIPMENT_SUBTYPES.weapon.id,
+      SYSTEM.EQUIPMENT_SUBTYPES.consumable.id,
+      SYSTEM.EQUIPMENT_SUBTYPES.misc.id,
+    ]
+
+    categories.forEach((category) => {
+      // Récupère l'état "expended" depuis le localStorage pour chaque voie (path)
+      let expended = true
+      try {
+        const key = `co-${this.id}-${category}`
+        const stored = localStorage.getItem(key)
+        if (stored !== null) {
+          const parsedData = JSON.parse(stored)
+          expended = parsedData.expended === true
+        }
+      } catch (e) {
+        expended = true
+      }
+
+      inventory.push({
+        category,
+        items: this.items.filter((item) => item.system.subtype === category),
+        expended,
+      })
+    })
+
+    return inventory
   }
 
   get learnedCapacities() {
