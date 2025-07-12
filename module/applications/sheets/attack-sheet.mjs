@@ -44,8 +44,6 @@ export default class CoAttackSheet extends CoBaseItemSheet {
 
     context.resolverSystemFields = this.document.system.schema.fields.actions.element.fields.resolvers.element.fields
     context.choiceAttackType = SYSTEM.ATTACK_TYPE
-
-    console.log(`CoAttackSheet - context`, context)
     return context
   }
 

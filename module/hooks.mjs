@@ -54,7 +54,6 @@ export default function registerHooks() {
 
     // Clic sur les boutons d'action
     html.find(".toggle-action").click(async (event) => {
-      console.log("Hook toggle-action", event)
       const shiftKey = !!event.shiftKey
       const dataset = event.currentTarget.dataset
 
@@ -176,10 +175,8 @@ export default function registerHooks() {
       const dataset = event.currentTarget.dataset
       const oppositeValue = dataset.oppositeValue
       const oppositeTarget = dataset.oppositeTarget
-      console.log("Jet opposé", oppositeValue, oppositeTarget)
 
       const messageId = event.currentTarget.closest(".message").dataset.messageId
-      console.log("Message ID", messageId)
 
       const targetActor = await fromUuid(oppositeTarget)
       const value = Utils.evaluateOppositeFormula(oppositeValue, targetActor)
@@ -187,7 +184,6 @@ export default function registerHooks() {
       const formula = value ? `1d20 + ${value}` : `1d20`
       const roll = await new Roll(formula).roll()
       const difficulty = roll.total
-
       const message = game.messages.get(messageId)
 
       let rolls = message.rolls
