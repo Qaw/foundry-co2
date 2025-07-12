@@ -36,7 +36,6 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
       sendToChat: COBaseActorSheet.#onSendToChat,
       createItem: COBaseActorSheet.#onCreateItem,
       editItem: COBaseActorSheet.#onEditItem,
-      sizeChange: COBaseActorSheet.#onSizeChange,
       learnCapacity: COBaseActorSheet.#onLearnCapacity,
       unlearnCapacity: COBaseActorSheet.#onUnlearnCapacity,
       deleteCustomEffect: COBaseActorSheet.#onDeleteCustomEffect,
@@ -67,6 +66,14 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
 
     // Set toggle state and add status class to frame
     this._renderModeToggle(this.element)
+
+    // Add onChange handler
+    const selectSize = document.querySelector('select[data-action="sizeChange"]')
+    if (selectSize) {
+      selectSize.addEventListener("change", async (event) => {
+        await this.constructor._onSizeChange.call(this, event, event.target)
+      })
+    }
   }
 
   /**
@@ -313,7 +320,7 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    * @returns {Promise<void>} A promise that resolves when the actor's size has been updated.
    */
-  static async #onSizeChange(event, target) {
+  static async _onSizeChange(event, target) {
     await this.actor.updateSize(event.target.value)
   }
 
