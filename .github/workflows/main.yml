@@ -115,10 +115,10 @@ jobs:
              ./system.zip                        \
             `# The files that will be included.` \
             system.json                          \
-            co.mjs                         \
+            co.mjs                               \
+            co.css                               \
             README.md                            \
-            css/                                 \
-            ui/                               \
+            ui/                                  \
             lang/                                \
             module/                              \
             templates/                           
