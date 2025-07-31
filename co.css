@@ -564,6 +564,333 @@ co-toggle-switch[checked] thumb {
   width: 131px;
   border: 1px solid var(--tertiary);
 }
+.co.application.dialog.skill-roll .window-header {
+  border-radius: 5px 5px 0 0;
+  background-color: var(--color-backgroundSkillDialog);
+  border-bottom: 2px solid #5d142b;
+  /*.theme-dark & {
+      background: none;
+      background-color: rgba(0, 0, 0, 0.8);
+    }*/
+}
+.co.application.dialog.skill-roll .window-header .window-title {
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  color: #5d142b;
+}
+.theme-dark .co.application.dialog.skill-roll .window-header .window-title {
+  color: #b3b4b5;
+}
+.co.application.dialog.skill-roll .icone {
+  text-align: center;
+  font-size: 30px;
+  align-content: center;
+}
+.co.application.dialog.skill-roll #totalSkillBonuses {
+  color: #5d142b;
+  font-weight: bolder;
+  font-size: 30px;
+}
+.theme-dark .co.application.dialog.skill-roll #totalSkillBonuses {
+  color: #d33e6d;
+}
+.co.application.dialog.skill-roll .window-content {
+  background-color: var(--color-backgroundSkillDialog);
+  padding: 10px;
+}
+.co.application.dialog.skill-roll .window-content .skill-roll-1 {
+  display: grid;
+  grid-template-columns: 0.5fr 1.5fr 0.3fr 1.7fr 0.3fr 1.5fr;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #5d142b;
+}
+.co.application.dialog.skill-roll .window-content .skill-roll-2 {
+  display: grid;
+  grid-template-columns: 0.6fr 3fr 0.8fr 0.8fr 1.2fr 1fr;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #5d142b;
+}
+.co.application.dialog.skill-roll .window-content .skill-roll-3 {
+  padding-bottom: 0px;
+  border-bottom: 2px solid #5d142b;
+  margin-bottom: 3px;
+}
+.co.application.dialog.skill-roll .window-content .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: start;
+  justify-content: flex-end;
+  padding-left: 8px;
+}
+.co.application.dialog.skill-roll .window-content .form-group label.near {
+  margin-bottom: -18px;
+}
+.co.application.dialog.skill-roll .window-content .form-group .form-fields {
+  border: none;
+}
+.co.application.dialog.skill-roll .window-content .form-group label {
+  margin-bottom: -8px;
+  font-weight: bold;
+}
+.co.application.dialog.skill-roll .window-content .textCenter {
+  text-align: center;
+  align-self: center;
+}
+.co.application.dialog.skill-roll .diffGroup {
+  padding-right: 30px;
+}
+.co.application.dialog.skill-roll .form-group.rollMode {
+  padding: 0px 0px 0px 10px;
+}
+.co.application.dialog.skill-roll .form-fields-radio {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0;
+  margin: 0px;
+  align-items: start;
+  justify-content: start;
+}
+.co.application.dialog.skill-roll .form-fields-radio .radio {
+  margin: 0;
+}
+.co.application.dialog.skill-roll input {
+  margin: 0px;
+  text-align: left;
+}
+.co.application.dialog.skill-roll .field-value,
+.co.application.dialog.skill-roll select {
+  text-align: left;
+  font-size: 20px;
+  font-weight: bolder;
+  background-color: #ffffff57;
+}
+.theme-dark .co.application.dialog.skill-roll .field-value,
+.theme-dark .co.application.dialog.skill-roll select {
+  color: #e7d1b1;
+}
+.co.application.dialog.skill-roll .standard-form {
+  gap: 0;
+}
+.co.application.dialog.skill-roll .flex1.skill-bonuses {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 3px;
+}
+.co.application.dialog.skill-roll .fas.fa-fw.fa-shield-alt {
+  color: #0e507c;
+}
+.co.application.dialog.skill-roll .fa-solid.fa-dice {
+  color: #2f4f4f;
+}
+.co.application.dialog.skill-roll .fa-solid.fa-dice-d20 {
+  color: #393939;
+}
+.co.application.dialog.skill-roll .bonus-description {
+  display: flex;
+  flex-direction: column;
+}
+.co.application.dialog.skill-roll .bonus-value.flex0 {
+  font-size: 25px;
+  font-weight: bolder;
+  padding-right: 10px;
+  padding-left: 0px;
+}
+.co.application.dialog.skill-roll .bonus-name.flex1 {
+  font-size: 15px;
+  font-weight: bold;
+  padding-right: 5px;
+}
+.co.application.dialog.skill-roll .bonus-name.flex2 {
+  font-style: italic;
+  padding-right: 5px;
+  margin-left: 10px;
+}
+.co.application.dialog.skill-roll .bonus-item.flexrow {
+  border: 2px solid grey;
+  padding: 5px;
+  margin: 5px;
+  background-color: #ffffff57;
+}
+.co.application.dialog.skill-roll .bonus-item.flexrow.checked {
+  color: #b3b4b5;
+  padding: 5px;
+  margin: 5px;
+  border: 2px solid #b3b4b5;
+  background-color: #5d142b;
+}
+.theme-dark .co.application.dialog.skill-roll {
+  color: #e7d1b1;
+}
+.theme-dark .co.application.dialog.skill-roll input {
+  color: #b3b4b5;
+  text-align: left;
+}
+.co.application.dialog.attack-roll .window-header {
+  border-radius: 5px 5px 0 0;
+  background-color: var(--color-backgroundAttackDialog);
+  border-bottom: 2px solid #ad0606;
+  /*.theme-dark & {
+      background: none;
+      background-color: rgba(0, 0, 0, 0.8);
+    }*/
+}
+.co.application.dialog.attack-roll .window-header .window-title {
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  color: #5d142b;
+}
+.theme-dark .co.application.dialog.attack-roll .window-header .window-title {
+  color: #b3b4b5;
+}
+.co.application.dialog.attack-roll .icone {
+  text-align: center;
+  font-size: 30px;
+  align-content: center;
+}
+.co.application.dialog.attack-roll .window-content {
+  background-color: var(--color-backgroundAttackDialog);
+  padding: 10px;
+}
+.co.application.dialog.attack-roll .window-content .attack-roll-1 {
+  display: grid;
+  grid-template-columns: 0.5fr 1.5fr 0.3fr 1.7fr 0.3fr 1.5fr;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #ad0606;
+  gap: 0;
+}
+.co.application.dialog.attack-roll .window-content .attack-roll-2 {
+  display: grid;
+  grid-template-columns: 0.5fr 3fr 0.8fr 0.8fr 1.2fr;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #ad0606;
+  gap: 0;
+}
+.co.application.dialog.attack-roll .window-content .rollDommages {
+  display: grid;
+  grid-template-columns: 2.4fr 0.3fr 2fr 2.4fr;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #ad0606;
+}
+.co.application.dialog.attack-roll .window-content .dommageDialog {
+  display: grid;
+  grid-template-columns: 0.5fr 3fr 0.8fr 0.8fr 1.2fr;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+  border-bottom: 2px solid #ad0606;
+  gap: 0;
+}
+.co.application.dialog.attack-roll .window-content .tacticalTargets {
+  display: grid;
+  grid-template-columns: 0.6fr 1fr;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+  border-bottom: 2px solid #ad0606;
+}
+.co.application.dialog.attack-roll .window-content .tacticalOptions {
+  display: grid;
+  grid-template-columns: 0.7fr 2.7fr;
+  gap: 0;
+}
+.co.application.dialog.attack-roll .window-content .form-fields {
+  border: none;
+  justify-content: center;
+}
+.co.application.dialog.attack-roll .window-content .form-fields .temp-checkbox {
+  align-content: center;
+}
+.co.application.dialog.attack-roll .window-content .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: start;
+  justify-content: flex-end;
+  padding-left: 8px;
+}
+.co.application.dialog.attack-roll .window-content .form-group label.near {
+  margin-bottom: -18px;
+}
+.co.application.dialog.attack-roll .window-content .form-group label {
+  margin-bottom: -8px;
+  font-weight: bold;
+}
+.co.application.dialog.attack-roll .window-content .form-group .textCenter {
+  text-align: center;
+  align-self: center;
+}
+.co.application.dialog.attack-roll .window-content .diffGroup {
+  padding-right: 30px;
+}
+.co.application.dialog.attack-roll .window-content .form-group.rollMode {
+  padding-left: 0px 0px 0px 10px;
+}
+.co.application.dialog.attack-roll .window-content .form-fields-radio {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0;
+  margin: 0px;
+  align-items: start;
+  justify-content: start;
+}
+.co.application.dialog.attack-roll .window-content .form-fields-radio .radio {
+  margin: 0;
+}
+.co.application.dialog.attack-roll .window-content input {
+  margin: 0px;
+  text-align: left;
+}
+.co.application.dialog.attack-roll .window-content .field-value,
+.co.application.dialog.attack-roll .window-content select {
+  text-align: left;
+  font-size: 20px;
+  font-weight: bolder;
+  background-color: #ffffff57;
+}
+.theme-dark .co.application.dialog.attack-roll .window-content .field-value,
+.theme-dark .co.application.dialog.attack-roll .window-content select {
+  color: #e7d1b1;
+}
+.co.application.dialog.attack-roll .window-content .standard-form {
+  gap: 0;
+}
+.co.application.dialog.attack-roll .window-content .fas.fa-fw.fa-shield-alt {
+  color: #0e507c;
+}
+.co.application.dialog.attack-roll .window-content .fa-solid.fa-dice {
+  color: #2f4f4f;
+}
+.co.application.dialog.attack-roll .window-content .fa-solid.fa-dice-d20 {
+  color: #393939;
+}
+.co.application.dialog.attack-roll .window-content .fa-solid.fa-droplet {
+  color: #9f0000;
+}
+.co.application.dialog.attack-roll .window-content .fa-solid.fa-sliders-up {
+  color: #532d75;
+  align-content: start;
+}
+.co.application.dialog.attack-roll .window-content legend {
+  text-align: center;
+  padding-bottom: 3px;
+}
+.co.application.dialog.attack-roll .window-content .targets.center {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.co.application.dialog.attack-roll .window-content .target {
+  margin: 3px 8px;
+}
+.theme-dark .co.application.dialog.attack-roll .window-content {
+  color: #e7d1b1;
+}
+.theme-dark .co.application.dialog.attack-roll .window-content input {
+  color: #b3b4b5;
+  text-align: left;
+}
 .co.application.sheet {
   --color-primary: var(--color-text-selection-bg);
 }
