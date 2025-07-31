@@ -36,8 +36,8 @@ export default class CapacityData extends ItemData {
       rank: new fields.NumberField({ required: false, nullable: true, integer: true, initial: 0, min: 0 }),
       frequency: new fields.StringField({ required: true, choices: SYSTEM.CAPACITY_FREQUENCY, initial: "none" }),
       charges: new fields.SchemaField({
-        current: new fields.NumberField({ required: false, nullable: true, integer: true, initial: 0, min: 0 }),
-        max: new fields.NumberField({ required: false, nullable: true, integer: true, initial: 0, min: 0 }),
+        current: new fields.NumberField({ required: false, nullable: true, integer: true, min: 0 }),
+        max: new fields.NumberField({ required: false, nullable: true, integer: true, min: 0 }),
       }),
       properties: new fields.SchemaField({
         spell: new fields.BooleanField({}),

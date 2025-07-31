@@ -46,14 +46,14 @@ fieldset legend {
   --input-box-shadow: none;
   --input-focus-outline-color: var(--color-cool-3);
 }
-.form-group .form-fields :has(>:only-child) input[disabled],
-.form-group-stacked .form-fields :has(>:only-child) input[disabled],
-.form-group .form-fields :has(>:only-child) select[disabled],
-.form-group-stacked .form-fields :has(>:only-child) select[disabled] {
+.form-group .form-fields :has(> :only-child) input[disabled],
+.form-group-stacked .form-fields :has(> :only-child) input[disabled],
+.form-group .form-fields :has(> :only-child) select[disabled],
+.form-group-stacked .form-fields :has(> :only-child) select[disabled] {
   height: var(--input-height);
 }
-.form-group .form-fields:not(:has(>:only-child)),
-.form-group-stacked .form-fields:not(:has(>:only-child)) {
+.form-group .form-fields:not(:has(> :only-child)),
+.form-group-stacked .form-fields:not(:has(> :only-child)) {
   background: var(--input-background-color);
   border: 1px solid var(--input-border-color);
   border-radius: 4px;
@@ -62,43 +62,43 @@ fieldset legend {
   outline: 1px solid transparent;
   transition: outline-color 0.5s;
 }
-.form-group .form-fields:not(:has(>:only-child)):focus,
-.form-group-stacked .form-fields:not(:has(>:only-child)):focus,
-.form-group .form-fields:not(:has(>:only-child)):focus-visible,
-.form-group-stacked .form-fields:not(:has(>:only-child)):focus-visible,
-.form-group .form-fields:not(:has(>:only-child)):focus-within,
-.form-group-stacked .form-fields:not(:has(>:only-child)):focus-within {
+.form-group .form-fields:not(:has(> :only-child)):focus,
+.form-group-stacked .form-fields:not(:has(> :only-child)):focus,
+.form-group .form-fields:not(:has(> :only-child)):focus-visible,
+.form-group-stacked .form-fields:not(:has(> :only-child)):focus-visible,
+.form-group .form-fields:not(:has(> :only-child)):focus-within,
+.form-group-stacked .form-fields:not(:has(> :only-child)):focus-within {
   outline-color: var(--input-focus-outline-color);
 }
-.form-group .form-fields:not(:has(>:only-child)) input,
-.form-group-stacked .form-fields:not(:has(>:only-child)) input,
-.form-group .form-fields:not(:has(>:only-child)) select,
-.form-group-stacked .form-fields:not(:has(>:only-child)) select,
-.form-group .form-fields:not(:has(>:only-child)) input:disabled,
-.form-group-stacked .form-fields:not(:has(>:only-child)) input:disabled,
-.form-group .form-fields:not(:has(>:only-child)) select:disabled,
-.form-group-stacked .form-fields:not(:has(>:only-child)) select:disabled {
+.form-group .form-fields:not(:has(> :only-child)) input,
+.form-group-stacked .form-fields:not(:has(> :only-child)) input,
+.form-group .form-fields:not(:has(> :only-child)) select,
+.form-group-stacked .form-fields:not(:has(> :only-child)) select,
+.form-group .form-fields:not(:has(> :only-child)) input:disabled,
+.form-group-stacked .form-fields:not(:has(> :only-child)) input:disabled,
+.form-group .form-fields:not(:has(> :only-child)) select:disabled,
+.form-group-stacked .form-fields:not(:has(> :only-child)) select:disabled {
   background: none;
   border: 0;
   box-shadow: none;
   height: var(--input-height);
 }
-.form-group .form-fields:not(:has(>:only-child)) > :not(:last-child),
-.form-group-stacked .form-fields:not(:has(>:only-child)) > :not(:last-child) {
+.form-group .form-fields:not(:has(> :only-child)) > :not(:last-child),
+.form-group-stacked .form-fields:not(:has(> :only-child)) > :not(:last-child) {
   border: 0;
   border-right: 1px solid var(--input-border-color);
   border-radius: 0;
 }
-.form-group .form-fields:not(:has(>:only-child)) label,
-.form-group-stacked .form-fields:not(:has(>:only-child)) label,
-.form-group .form-fields:not(:has(>:only-child)) span,
-.form-group-stacked .form-fields:not(:has(>:only-child)) span,
-.form-group .form-fields:not(:has(>:only-child)) > *:has(+ a),
-.form-group-stacked .form-fields:not(:has(>:only-child)) > *:has(+ a),
-.form-group .form-fields:not(:has(>:only-child)) > *:has(+ button),
-.form-group-stacked .form-fields:not(:has(>:only-child)) > *:has(+ button),
-.form-group .form-fields:not(:has(>:only-child)) > *:has(+ label),
-.form-group-stacked .form-fields:not(:has(>:only-child)) > *:has(+ label) {
+.form-group .form-fields:not(:has(> :only-child)) label,
+.form-group-stacked .form-fields:not(:has(> :only-child)) label,
+.form-group .form-fields:not(:has(> :only-child)) span,
+.form-group-stacked .form-fields:not(:has(> :only-child)) span,
+.form-group .form-fields:not(:has(> :only-child)) > *:has(+ a),
+.form-group-stacked .form-fields:not(:has(> :only-child)) > *:has(+ a),
+.form-group .form-fields:not(:has(> :only-child)) > *:has(+ button),
+.form-group-stacked .form-fields:not(:has(> :only-child)) > *:has(+ button),
+.form-group .form-fields:not(:has(> :only-child)) > *:has(+ label),
+.form-group-stacked .form-fields:not(:has(> :only-child)) > *:has(+ label) {
   border: 0 !important;
 }
 .form-group .form-fields label,
@@ -106,19 +106,19 @@ fieldset legend {
   height: var(--input-height);
   padding-right: 4px;
 }
-.form-group .form-fields label:has(>input[type=checkbox]),
-.form-group-stacked .form-fields label:has(>input[type=checkbox]),
-.form-group .form-fields label:has(>input[type=radio]),
-.form-group-stacked .form-fields label:has(>input[type=radio]) {
+.form-group .form-fields label:has(> input[type="checkbox"]),
+.form-group-stacked .form-fields label:has(> input[type="checkbox"]),
+.form-group .form-fields label:has(> input[type="radio"]),
+.form-group-stacked .form-fields label:has(> input[type="radio"]) {
   align-items: baseline;
   display: flex;
   flex-flow: row nowrap;
   padding-top: 4px;
 }
-.form-group .form-fields input[type=checkbox],
-.form-group-stacked .form-fields input[type=checkbox],
-.form-group .form-fields input[type=radio],
-.form-group-stacked .form-fields input[type=radio] {
+.form-group .form-fields input[type="checkbox"],
+.form-group-stacked .form-fields input[type="checkbox"],
+.form-group .form-fields input[type="radio"],
+.form-group-stacked .form-fields input[type="radio"] {
   height: var(--input-height);
 }
 .form-group .form-fields button,
@@ -175,11 +175,11 @@ select[disabled] {
   background: var(--input-background-color);
   height: var(--input-height);
 }
-.theme-light input[type=checkbox],
-.theme-light input[type=radio] {
+.theme-light input[type="checkbox"],
+.theme-light input[type="radio"] {
   --checkbox-background-color: var(--color-dark-4);
 }
-.theme-light input[type=checkbox]:disabled {
+.theme-light input[type="checkbox"]:disabled {
   background: none;
 }
 prose-mirror,
@@ -330,10 +330,11 @@ co-toggle-switch[checked] thumb {
 .co.application .sheet-tabs {
   align-items: stretch;
   border-top: 0;
-  border-bottom-color: var(--color-primary);
+  border-bottom-color: var(--color-abilities);
   display: flex;
   flex-flow: row nowrap;
   padding: 0 8px;
+  gap: 0;
 }
 .co.application .sheet-tabs [data-tab] {
   align-items: baseline;
@@ -349,17 +350,19 @@ co-toggle-switch[checked] thumb {
   white-space: nowrap;
 }
 .co.application .sheet-tabs [data-tab].active {
-  background-color: var(--color-primary);
-  border: 1px solid var(--color-primary);
+  background-color: var(--color-abilities);
+  border: 1px solid var(--color-abilities);
+  color: var(--color-backgroundGrey);
+  font-weight: bold;
 }
 .co.application .sheet-tabs [data-tab]:hover {
-  border: 1px dotted var(--color-primary);
+  border: 2px dotted var(--color-abilities);
   border-bottom: 0;
 }
 .co.application .tab[data-tab] {
   padding: 10px 0 10px 10px;
   overflow: hidden auto;
-  scrollbar-color: var(--color-primary) var(--color-scrollbar-track);
+  scrollbar-color: var(--color-abilities) var(--color-scrollbar-track);
   scrollbar-gutter: stable;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -383,6 +386,16 @@ co-toggle-switch[checked] thumb {
 }
 .co.application h4.form-header a:not(:first-of-type):last-of-type {
   flex: 0;
+}
+.co.application .actionRow {
+  display: grid;
+  grid-template-columns: 25px 20px 1fr;
+  align-items: center;
+}
+.co.application .actionColumn {
+  justify-self: center;
+  font-size: 15px;
+  font-weight: bold;
 }
 .co.application .resolvers-container .resolver {
   display: flex;
@@ -1499,14 +1512,17 @@ co-toggle-switch[checked] thumb {
   border: 4px solid var(--color-gold);
   border-bottom: 0;
   gap: 8px;
-  grid-template-columns: 140px 1fr minmax(64px, min-content);
-  grid-template-rows: auto auto auto;
-  grid-template-areas: "img name      level" "img traits    traits" "img abilities abilities";
+  grid-template-columns: 140px 1fr 180px minmax(64px, min-content);
+  grid-template-rows: auto auto;
+  grid-template-areas: "img   name      traits   level" "img abilities abilities abilities";
   padding-right: 8px;
 }
 .co.application.sheet.actor .window-content .sheet-header .image-container {
   grid-area: img;
   position: relative;
+  max-height: 150px;
+  justify-items: center;
+  align-content: center;
 }
 .co.application.sheet.actor .window-content .sheet-header .image-container .hover-icon {
   color: var(--color-light-3);
@@ -1516,10 +1532,18 @@ co-toggle-switch[checked] thumb {
   right: 0;
   text-align: center;
 }
+.co.application.sheet.actor .window-content .sheet-header .image-container .actor-img {
+  max-height: 150px;
+  align-self: center;
+}
 .co.application.sheet.actor .window-content .sheet-header .name {
   font-size: 42px;
   grid-area: name;
   height: 65px;
+  align-content: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .co.application.sheet.actor .window-content .sheet-header .level {
   grid-area: level;
@@ -1543,7 +1567,10 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.sheet.actor .window-content .sheet-header .traits {
   display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   grid-area: traits;
+  overflow: hidden;
 }
 .co.application.sheet.actor .window-content .sheet-sidebar {
   overflow: hidden;
@@ -1576,7 +1603,7 @@ co-toggle-switch[checked] thumb {
   padding: 8px 4px;
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .labelled-field {
-  background-color: #FFF;
+  background-color: var(--color-backgroundGrey);
   border-radius: 12px 0 0 12px;
   height: 32px;
   padding: 4px;
@@ -1609,11 +1636,11 @@ co-toggle-switch[checked] thumb {
   margin: 0;
 }
 .theme-light .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .sidebar-section-header .sidebar-label h4 {
-  color: #FFF;
+  color: var(--color-textLight);
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field {
-  color: var(--color-primary);
+  color: var(--color-backgroundGrey);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1628,7 +1655,7 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field select,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field input,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field input {
-  background-color: #FFF;
+  background-color: var(--color-backgroundGrey);
   border: 0;
   color: var(--color-primary);
   flex: 1;
@@ -1651,6 +1678,10 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field select {
   font-size: 12px;
 }
+.theme-dark .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field select option,
+.theme-dark .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field select option {
+  background: var(--color-backgroundGrey);
+}
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field .slash,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field .slash,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field .max,
@@ -1661,7 +1692,7 @@ co-toggle-switch[checked] thumb {
   transform: scaleX(80%);
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field {
-  background-color: #FFF;
+  background-color: var(--color-backgroundGrey);
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field i {
   justify-self: flex-start;
@@ -1713,7 +1744,7 @@ co-toggle-switch[checked] thumb {
   flex: 1;
 }
 .theme-light .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .sidebar-label {
-  color: #FFF;
+  color: var(--color-textLight);
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .field,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .labelled-field {
@@ -1723,11 +1754,14 @@ co-toggle-switch[checked] thumb {
 }
 .theme-light .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .field,
 .theme-light .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .labelled-field {
-  color: #FFF;
+  color: var(--color-textLight);
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .state-modifier {
+  color: var(--color-textLight);
 }
 .co.application.sheet.actor .window-content .abilities {
   box-sizing: border-box;
-  border: 2px solid var(--color-primary);
+  border: 2px solid var(--color-abilities);
   display: grid;
   font-size: 20px;
   grid-template-columns: repeat(7, minmax(80px, 1fr)) auto;
@@ -1736,33 +1770,47 @@ co-toggle-switch[checked] thumb {
   text-align: center;
 }
 .co.application.sheet.actor .window-content .abilities .ability .ability-id {
-  background-color: var(--color-primary);
+  background-color: var(--color-abilities);
   line-height: 1.8;
+  color: var(--color-backgroundGrey);
+  font-weight: bold;
 }
 .co.application.sheet.actor .window-content .abilities .ability .ability-id i.fas.fa-asterisk {
   font-size: 11px;
   vertical-align: super;
 }
-.co.application.sheet.actor .window-content .abilities .ability .ability-id input[type=checkbox]::after,
-.co.application.sheet.actor .window-content .abilities .ability .ability-id input[type=checkbox]::before {
+.co.application.sheet.actor .window-content .abilities .ability .ability-id input[type="checkbox"]::after,
+.co.application.sheet.actor .window-content .abilities .ability .ability-id input[type="checkbox"]::before {
   top: 8px;
 }
 .co.application.sheet.actor .window-content .abilities .ability .ability-mod {
-  border: 2px solid var(--color-primary);
+  border: 2px solid var(--color-abilities);
   border-radius: 0;
   display: block;
-  line-height: 1.8;
+  line-height: 1.3;
   text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--color-abilities);
+  background-color: var(--color-backgroundGrey);
 }
 .co.application.sheet.actor .window-content .abilities .abilities-controls {
-  background-color: var(--color-primary);
+  background-color: var(--color-abilities);
   line-height: 2.8;
+}
+.co.application.sheet.actor .window-content .abilities .abilities-edit {
+  font-size: 23px;
+  padding: 0px 6px;
+  color: var(--color-backgroundGrey);
 }
 .co.application.sheet.actor.character:not(.minimized) {
   min-width: 890px;
 }
-.co.application.sheet.actor.character .window-content .sheet-header .profiles {
-  margin-left: 16px;
+.co.application.sheet.actor.character .window-content .sheet-header {
+  /*.profiles {
+    margin-left: 16px;
+  }*/
+  background-color: var(--color-characterSheet);
 }
 .co.application.sheet.actor.character .window-content .sheet-header .species,
 .co.application.sheet.actor.character .window-content .sheet-header .profiles {
@@ -1775,6 +1823,9 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor.character .window-content .sheet-header .species a,
 .co.application.sheet.actor.character .window-content .sheet-header .profiles a {
   margin-right: 4px;
+}
+.co.application.sheet.actor.character .window-content .sheet-sidebar {
+  background-color: var(--color-characterSheet);
 }
 .co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.melee-section,
 .co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.ranged-section,
@@ -1801,14 +1852,58 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section .labelled-field input {
   color: var(--color-resource);
 }
+.co.application.sheet.actor.character .window-content .sheet-sidebar span.max,
+.co.application.sheet.actor.character .window-content .sheet-sidebar span.slash {
+  color: var(--color-abilities);
+}
+.co.application.sheet.actor.character .window-content .sheet-sidebar .state-name {
+  list-style: "\1F782";
+  margin-left: 5px;
+  color: var(--color-backgroundGrey);
+}
 .co.application.sheet.actor.character .window-content .dropzone {
   margin-left: 70px;
+}
+.co.application.sheet.actor.character .features-container .item-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 5px 10px 0px 10px;
+  column-gap: 20px;
+}
+.co.application.sheet.actor.character .features.section-container {
+  margin: 0;
+  padding: 0;
+}
+.co.application.sheet.actor.character .currencyRow {
+  gap: 20px;
+}
+.co.application.sheet.actor.character .currencyRow label {
+  text-align: end;
+  font-weight: bold;
+  font-size: 15px;
+}
+.co.application.sheet.actor.character .currencyRow .current {
+  margin-left: 0px;
+  font-weight: bold;
+  font-size: 15px;
+  background-color: transparent;
+  border: none;
+  box-shadow: 2px 2px var(--color-abilities);
+  height: 25px;
 }
 .co.application.sheet.actor.encounter:not(.minimized) {
   min-width: 860px;
 }
-.co.application.sheet.actor.encounter .window-content .sheet-header .traits .trait.size {
-  margin-left: 16px;
+.co.application.sheet.actor.encounter .window-content .sheet-header {
+  /* .traits {
+    .trait.size {
+      margin-left: 16px;
+    }
+  }*/
+  background-color: var(--color-encounterSheet);
+}
+.co.application.sheet.actor.encounter .window-content .sheet-sidebar {
+  background-color: var(--color-encounterSheet);
 }
 .co.application.sheet.actor.encounter .window-content .sheet-sidebar .scrollable .sidebar-section:nth-child(5) .labelled-field i {
   color: var(--color-damages);
@@ -1819,12 +1914,16 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.sheet.actor.encounter .window-content .properties .notes {
   max-height: calc(100% - 20px);
+  text-wrap: auto;
 }
 .co.application.sheet.actor.encounter .window-content .properties .notes .editor {
   margin: 8px;
 }
-.co.application.sheet.actor.encounter .window-content .properties .notes prose-mirror.editor {
+.co.application.sheet.actor.encounter .window-content .properties prose-mirror.editor {
   margin: 0;
+}
+.co.application.sheet.actor.encounter .window-content .editor-content {
+  text-wrap: auto;
 }
 #interface #ui-left {
   padding: 0;

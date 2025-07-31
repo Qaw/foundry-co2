@@ -1,7 +1,7 @@
 .sheet-sidebar {
+  background-color: var(--color-characterSheet);
   .scrollable {
     .sidebar-section {
-
       &.melee-section,
       &.ranged-section,
       &.magic-section {
@@ -10,7 +10,6 @@
         .field,
         .labelled-field {
           color: var(--color-attack);
-
         }
       }
 
@@ -31,5 +30,14 @@
         }
       }
     }
+  }
+  span.max,
+  span.slash {
+    color: var(--color-abilities);
+  }
+  .state-name {
+    list-style: "\1F782";
+    margin-left: 5px;
+    color: var(--color-backgroundGrey);
   }
 }

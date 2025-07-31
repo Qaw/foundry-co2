@@ -7,7 +7,7 @@
   <li class="items-container-header flexrow">
     <h4 class="item-name flexrow"><a data-action="toggleSection" data-toggle-type="currencies">{{localize "CO.ui.richness"}}</a></h4>
   </li>
-  <div class="flexrow foldable {{#if currenciesExpended}}expanded{{else}}folded{{/if}}">
+  <div class="flexrow currencyRow foldable {{#if currenciesExpended}}expanded{{else}}folded{{/if}}">
     {{#each system.wealth as |currency id|}}
       <div class="flexrow">
         <label>{{localize (concat 'CO.currency.' id)}} : </label>

@@ -153,7 +153,7 @@
         </div>
         <div class="init-value labelled-field" data-tooltip="{{combat.init.tooltipValue}}">
           <i class="fas fa-solid fa-swords fa-fw"></i>
-          <span>{{combat.init.value}}</span>
+          {{combat.init.value}}
         </div>
       </div>
       {{#if unlocked}}
@@ -514,11 +514,12 @@
         </div>
       </div>
       <div class="sidebar-section-content">
+        <ul class="state-modifier"></ul>
         {{#each stateModifiers as |state|}}
-          <div class="state-modifier">
-            <span class="state-name">{{localize (concat "CO.label.long." state)}}</span>
-          </div>
-        {{/each}}
+          
+            <li class="state-name">  {{localize (concat "CO.label.long." state)}}</li>
+          
+        {{/each}}</ul>
       </div>
     </div>
   </div>

@@ -17,9 +17,7 @@ fieldset {
 
 .form-group,
 .form-group-stacked {
-
   .form-fields {
-
     gap: 0;
     justify-content: stretch;
 
@@ -37,15 +35,14 @@ fieldset {
       --input-focus-outline-color: var(--color-cool-3);
     }
 
-    :has(>:only-child) {
-
+    :has(> :only-child) {
       input[disabled],
       select[disabled] {
         height: var(--input-height);
       }
     }
 
-    &:not(:has(>:only-child)) {
+    &:not(:has(> :only-child)) {
       background: var(--input-background-color);
       border: 1px solid var(--input-border-color);
       border-radius: 4px;
@@ -70,7 +67,7 @@ fieldset {
         height: var(--input-height);
       }
 
-      >:not(:last-child) {
+      > :not(:last-child) {
         border: 0;
         border-right: 1px solid var(--input-border-color);
         border-radius: 0;
@@ -78,9 +75,9 @@ fieldset {
 
       label,
       span,
-      >*:has(+ a),
-      >*:has(+ button),
-      >*:has(+ label) {
+      > *:has(+ a),
+      > *:has(+ button),
+      > *:has(+ label) {
         border: 0 !important;
       }
     }
@@ -89,8 +86,8 @@ fieldset {
       height: var(--input-height);
       padding-right: 4px;
 
-      &:has(>input[type=checkbox]),
-      &:has(>input[type=radio]) {
+      &:has(> input[type="checkbox"]),
+      &:has(> input[type="radio"]) {
         align-items: baseline;
         display: flex;
         flex-flow: row nowrap;
@@ -98,8 +95,8 @@ fieldset {
       }
     }
 
-    input[type=checkbox],
-    input[type=radio] {
+    input[type="checkbox"],
+    input[type="radio"] {
       height: var(--input-height);
     }
 
@@ -117,7 +114,6 @@ fieldset {
   }
 
   &.like-grid {
-
     label {
       overflow: hidden;
       position: relative;
@@ -138,7 +134,7 @@ fieldset {
     &.grid-4col {
       grid-template-columns: repeat(4, 1fr);
     }
-     &.grid-6col {
+    &.grid-6col {
       grid-template-columns: repeat(6, 1fr);
     }
   }
@@ -164,11 +160,11 @@ select[disabled] {
 }
 
 .theme-light {
-  input[type=checkbox],
-  input[type=radio] {
+  input[type="checkbox"],
+  input[type="radio"] {
     --checkbox-background-color: var(--color-dark-4);
   }
-  input[type=checkbox]:disabled {
+  input[type="checkbox"]:disabled {
     background: none;
   }
 }

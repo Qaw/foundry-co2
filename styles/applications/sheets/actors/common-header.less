@@ -3,17 +3,19 @@
   border: 4px solid var(--color-gold);
   border-bottom: 0;
   gap: 8px;
-  grid-template-columns: 140px 1fr minmax(64px, min-content);
-  grid-template-rows: auto auto auto;
+  grid-template-columns: 140px 1fr 180px minmax(64px, min-content);
+  grid-template-rows: auto auto;
   grid-template-areas:
-    "img name      level"
-    "img traits    traits"
-    "img abilities abilities";
+    "img   name      traits   level"
+    "img abilities abilities abilities";
   padding-right: 8px;
 
   .image-container {
     grid-area: img;
     position: relative;
+    max-height: 150px;
+    justify-items: center;
+    align-content: center;
 
     .hover-icon {
       color: var(--color-light-3);
@@ -23,12 +25,20 @@
       right: 0;
       text-align: center;
     }
+    .actor-img {
+      max-height: 150px;
+      align-self: center;
+    }
   }
 
   .name {
     font-size: 42px;
     grid-area: name;
     height: 65px;
+    align-content: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .level {
@@ -58,6 +68,9 @@
 
   .traits {
     display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     grid-area: traits;
+    overflow: hidden;
   }
 }

@@ -17,10 +17,11 @@ li {
 .sheet-tabs {
   align-items: stretch;
   border-top: 0;
-  border-bottom-color: var(--color-primary);
+  border-bottom-color: var(--color-abilities);
   display: flex;
   flex-flow: row nowrap;
   padding: 0 8px;
+  gap: 0;
 
   [data-tab] {
     align-items: baseline;
@@ -36,12 +37,14 @@ li {
     white-space: nowrap;
 
     &.active {
-      background-color: var(--color-primary);
-      border: 1px solid var(--color-primary);
+      background-color: var(--color-abilities);
+      border: 1px solid var(--color-abilities);
+      color: var(--color-backgroundGrey);
+      font-weight: bold;
     }
 
     &:hover {
-      border: 1px dotted var(--color-primary);
+      border: 2px dotted var(--color-abilities);
       border-bottom: 0;
     }
   }
@@ -50,7 +53,7 @@ li {
 .tab[data-tab] {
   padding: 10px 0 10px 10px;
   overflow: hidden auto;
-  scrollbar-color: var(--color-primary) var(--color-scrollbar-track);
+  scrollbar-color: var(--color-abilities) var(--color-scrollbar-track);
   scrollbar-gutter: stable;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -63,8 +66,8 @@ li {
     flex-flow: column nowrap;
   }
 
-  >* {
-    flex: none
+  > * {
+    flex: none;
   }
 }
 
@@ -82,6 +85,16 @@ h4.form-header {
     flex: 0;
   }
 }
+.actionRow {
+  display: grid;
+  grid-template-columns: 25px 20px 1fr;
+  align-items: center;
+}
+.actionColumn {
+  justify-self: center;
+  font-size: 15px;
+  font-weight: bold;
+}
 
 .resolvers-container {
   .resolver {
@@ -97,8 +110,8 @@ h4.form-header {
       padding-bottom: 8px;
     }
 
-    >.form-group,
-    >.form-group-stacked {
+    > .form-group,
+    > .form-group-stacked {
       flex: 2 0 100%;
     }
 
