@@ -88,7 +88,7 @@ fieldset {
 
       &:has(> input[type="checkbox"]),
       &:has(> input[type="radio"]) {
-        align-items: baseline;
+        align-items: center;
         display: flex;
         flex-flow: row nowrap;
         padding-top: 4px;
@@ -98,6 +98,8 @@ fieldset {
     input[type="checkbox"],
     input[type="radio"] {
       height: var(--input-height);
+      background: none;
+      align-content: center;
     }
 
     button {
@@ -158,13 +160,22 @@ select[disabled] {
   background: var(--input-background-color);
   height: var(--input-height);
 }
+input[type="checkbox"] {
+  vertical-align: middle;
+}
 
 .theme-light {
   input[type="checkbox"],
   input[type="radio"] {
     --checkbox-background-color: var(--color-dark-4);
   }
-  input[type="checkbox"]:disabled {
-    background: none;
+  input[type="checkbox"]:checked:disabled::before {
+    color: var(--color-warm-1);
+  }
+}
+
+.theme-dark {
+  input[type="checkbox"]:checked:disabled::after {
+    color: var(--color-warm-1);
   }
 }

@@ -5,8 +5,6 @@
 
 .window-content {
   padding: 0;
-
-  //
   margin-top: -36px;
   padding-top: 36px;
 
@@ -15,19 +13,24 @@
     grid-template-columns: 1fr 1fr;
     gap: 15px;
   }
-
+  .tab {
+    gap: 0;
+  }
   .sheet-header {
     display: grid;
-    grid-template-columns: 132px 1fr;
-    grid-template-rows: auto auto 1fr;
+    grid-template-columns: 100px 1fr 100px;
+    grid-template-rows: auto 1fr;
     grid-template-areas:
-      "img name"
-      "img adjustment"
-      "img tags";
+      "img name adjustment"
+      "img tags tags";
+    min-height: 100px;
+    max-height: 100px;
+    overflow: hidden;
 
     img {
       grid-area: img;
-      margin-bottom: 4px;
+      align-self: center;
+      width: 100%;
     }
 
     > .name,
@@ -39,12 +42,22 @@
     .name {
       font-size: 2.5rem;
       grid-area: name;
+      align-content: center;
 
       input[type="text"] {
         font-size: inherit;
         height: 52px;
         padding: 0 8px;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        text-overflow: ellipsis;
+        vertical-align: middle;
       }
+    }
+
+    input[type="checkbox"]:disabled {
+      color: var(--color-warm-1);
     }
 
     .adjustment-select {
@@ -52,7 +65,7 @@
       display: flex;
       gap: 8px;
       grid-area: adjustment;
-      justify-content: flex-start;
+      justify-content: flex-end;
     }
 
     > .tags {
@@ -67,17 +80,28 @@
       .theme-light & {
         background-color: var(--color-light-3);
       }
-
+      text-align: center;
       border: 1px solid var(--color-cool-3);
-
       margin: 8px 0;
       padding: 4px 8px;
     }
   }
-
+  input {
+    height: auto;
+  }
+  //input[disabled] {
+  //
+  //}
+  input[type="checkbox"] {
+    --checkbox-size: var(--font-size-18);
+    background: none;
+  }
+  /*input[type="checkbox"]:checked::after {
+    line-height: 0;
+  }*/
   > .sheet-tabs {
-    padding-left: calc(132px + 8px); // img width + tabs original padding left
-    margin-top: -40px;
+    padding-left: calc(100px + 8px); // img width + tabs original padding left
+    margin-top: -38px;
   }
 
   .tab[data-tab].actions {
@@ -87,7 +111,6 @@
     position: relative;
     overflow: hidden;
     scrollbar-gutter: unset;
-
     mask: none;
 
     .action-button {

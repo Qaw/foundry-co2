@@ -23,15 +23,15 @@
     {{! Formula parts }}
     <div class="form-group-stacked like-grid formula">
       <label>
-        <span data-tooltip="{{localize 'CO.ui.formulaTooltip'}}" data-tooltip-direction="UP">
-          {{localize "CO.ui.skillformula"}}
-        </span>
-        <span data-tooltip="{{localize 'CO.ui.critTooltip'}}" data-tooltip-direction="UP">
-          {{localize "CO.ui.crit"}}</span>
-        <span data-tooltip="{{localize 'CO.ui.formulaTooltip'}}" data-tooltip-direction="UP">
-          {{localize "CO.ui.difficulty"}}
-        </span>
-        <span>{{localize "CO.ui.dmg"}}</span>
+        <div><span data-tooltip="{{localize 'CO.ui.formulaTooltip'}}" data-tooltip-direction="UP">
+            {{localize "CO.ui.skillformula"}}
+          </span></div>
+        <div><span data-tooltip="{{localize 'CO.ui.critTooltip'}}" data-tooltip-direction="UP">
+            {{localize "CO.ui.crit"}}</span></div>
+        <div><span data-tooltip="{{localize 'CO.ui.formulaTooltip'}}" data-tooltip-direction="UP">
+            {{localize "CO.ui.difficulty"}}
+          </span></div>
+        <div><span>{{localize "CO.ui.dmg"}}</span></div>
       </label>
       <div class="form-fields">
         <input name="system.actions.{{idx}}.resolvers.{{id}}.skill.formula" type="text" value="{{r.skill.formula}}" data-dtype="String" />
@@ -66,22 +66,22 @@
   <div class="form-group-stacked like-grid target">
     <label>
       <span>{{localize "CO.ui.target"}}</span>
-      {{#if (eq r.target.type "multiple")}}
+      <!--{{#if (eq r.target.type "multiple")}}
         <span>{{localize "CO.resolver.target.number"}}</span>
       {{/if}}
       {{#if (or (eq r.target.type "single") (eq r.target.type "multiple"))}}
         <span>{{localize "CO.resolver.scope.title"}}</span>
-      {{/if}}
+      {{/if}}-->
     </label>
     <div class="form-fields">
       <select name="system.actions.{{idx}}.resolvers.{{id}}.target.type" data-type="String">
         {{selectOptions @root.choiceResolverTargets selected=r.target.type localize=true}}
       </select>
       {{#if (eq r.target.type "multiple")}}
-        <input name="system.actions.{{idx}}.resolvers.{{id}}.target.number" type="text" value="{{r.target.number}}" data-dtype="String" />
+        <input class="centerInput" name="system.actions.{{idx}}.resolvers.{{id}}.target.number" type="text" value="{{r.target.number}}" data-dtype="String" data-tooltip={{localize "CO.resolver.target.number"}}>
       {{/if}}
       {{#if (or (eq r.target.type "single") (eq r.target.type "multiple"))}}
-        <select name="system.actions.{{idx}}.resolvers.{{id}}.target.scope" data-type="String">
+        <select name="system.actions.{{idx}}.resolvers.{{id}}.target.scope" data-type="String" data-tooltip={{localize "CO.resolver.scope.title"}}>
           {{selectOptions @root.choiceResolverScopes selected=r.target.scope localize=true}}
         </select>
       {{/if}}
@@ -115,7 +115,7 @@
     <div class="form-group-stacked like-grid effects">
       <label>
         <span>{{localize "CO.resolver.additionalEffect.formulaType"}}</span>
-        <span data-tooltip="{{localize 'CO.resolver.additionalEffect.applyFormulaTooltip'}}" data-tooltip-direction="UP">
+        <span class="centerInput" data-tooltip="{{localize 'CO.resolver.additionalEffect.applyFormulaTooltip'}}" data-tooltip-direction="UP">
           {{localize "CO.resolver.additionalEffect.applyFormula"}}
         </span>
         <span data-tooltip="{{localize 'CO.resolver.additionalEffect.elementType'}}" data-tooltip-direction="UP">
@@ -126,7 +126,7 @@
         <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.formulaType" data-type="String">
           {{selectOptions @root.choiceResolverEffectFormulaTypes selected=r.additionalEffect.formulaType localize=true}}
         </select>
-        <input name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.formula" type="text" value="{{r.additionalEffect.formula}}" data-dtype="String" />
+        <input class="centerInput" name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.formula" type="text" value="{{r.additionalEffect.formula}}" data-dtype="String" />
         <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.elementType" data-type="String">
           {{selectOptions @root.choiceResolverEffectElementTypes selected=r.additionalEffect.elementType localize=true blank=""}}
         </select>
@@ -138,7 +138,7 @@
         {{localize "CO.resolver.additionalEffect.statusAvailable"}}
       </label>
       <div class="form-fields tags">
-        {{formGroup
+        {{formGroup        
           @root.resolverSystemFields.additionalEffect.fields.statuses
           name=(concat "system.actions." idx ".resolvers." @index ".additionalEffect.statuses")
           value=r.additionalEffect.statuses

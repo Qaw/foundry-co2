@@ -31,6 +31,16 @@
                 <legend>{{localize "CO.ui.typeFrequency"}}</legend>
                 {{formGroup systemFields.actionType value=systemSource.actionType localize=true disabled=locked}}
                 {{formGroup systemFields.frequency value=systemSource.frequency localize=true disabled=locked}}
+                {{#if system.hasFrequency}}
+                    <div class="form-group">
+                        <label>{{localize "CO.label.long.usageNumber"}}</label>
+                        <div class="form-fields borderRight">
+                            <input class="field-value" name="system.charges.current" type="text" value="{{system.charges.current}}" placeholder="{{localize 'CO.ui.current'}}" data-dtype="Number"/>
+                                /
+                            <input class="field-value" name="system.charges.max" type="text" value="{{system.charges.max}}" placeholder="{{localize 'CO.ui.max'}}" data-dtype="String" />
+                        </div>
+                    </div>
+                {{/if}}
             </fieldset>
 
             <fieldSet class="spell">
