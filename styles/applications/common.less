@@ -1,3 +1,31 @@
+@color-characterSheet: #ba9442;
+@color-abilities: #0c4f7b;
+@color-backgroundGrey: #ebebe8;
+@color-encounterSheet: #95262699;
+@color-WindowContentDark: #00000094;
+@color-WindowContentLight: #584a756b;
+
+.theme-light & {
+  --color-characterSheet: @color-characterSheet;
+  --color-abilities: @color-abilities;
+  --color-backgroundGrey: @color-backgroundGrey;
+  --color-encounterSheet: @color-encounterSheet;
+  --color-WindowContent: @color-WindowContentLight;
+  --color-textLight: #fffaf2;
+  --color-backgroundAttackDialog: #754a548c;
+  --color-backgroundSkillDialog: #2a3c876b;
+}
+.theme-dark & {
+  --color-characterSheet: darken(@color-characterSheet, 25%);
+  --color-abilities: darken(@color-abilities, 10%);
+  --color-backgroundGrey: darken(@color-backgroundGrey, 20%);
+  --color-encounterSheet: darken(@color-encounterSheet, 10%);
+  --color-WindowContent: @color-WindowContentDark;
+  --color-textLight: #e7d1b1;
+  --color-backgroundAttackDialog: #33161d8c;
+  --color-backgroundSkillDialog: #313a5f6b;
+}
+
 ul,
 ol,
 li {
