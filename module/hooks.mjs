@@ -254,5 +254,10 @@ export default function registerHooks() {
       document.setFlag("co", "statuses.unconsciousFromZeroHP", true)
       document.system.spendDR(1)
     }
+
+    // Une rencontre est morte à 0 PV
+    if (document.type === "encounter" && changed?.system?.attributes?.hp?.value === 0 && !document.statuses.has("dead")) {
+      document.toggleStatusEffect("dead", { active: true })
+    }
   })
 }

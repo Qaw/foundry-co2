@@ -136,7 +136,7 @@ export default class EncounterData extends ActorData {
     this._prepareCombat()
   }
 
-  async _prepareCombat() {
+  _prepareCombat() {
     for (const [key, skill] of Object.entries(this.combat)) {
       // Somme du bonus de la feuille et du bonus des effets
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr)
@@ -166,11 +166,6 @@ export default class EncounterData extends ActorData {
           this.combat.crit.value = this.combat.crit.base
         }
       }
-    }
-
-    // Si hp à 0 il est mort
-    if (this.attributes.hp.value === 0 && !this.parent.statuses.has("dead")) {
-      await this.parent.toggleStatusEffect("dead", { active: true })
     }
 
     this.magic = this.abilities.vol.value + (this.attributes.nc === 0.5 ? 1 : this.attributes.nc)
