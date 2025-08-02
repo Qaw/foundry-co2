@@ -1,5 +1,5 @@
 @import "./typo.less";
-@import "./forms.less";
+
 @import "./prose-mirror.less";
 
 @import "./elements/_index.less";
@@ -13,10 +13,28 @@
   }
 
   .inactivated {
-    color: var(--color-grey);
+    color: #999;
+  }
+  .green {
+    color: var(--color-green);
+  }
+  .blue {
+    color: var(--color-abilities);
   }
 
+  .theme-dark & {
+    .blue {
+      color: #266995;
+    }
+    h4,
+    label,
+    span {
+      color: var(--color-backgroundGrey);
+    }
+  }
+  @import "./forms.less";
   @import "./applications/_index.less";
 }
 
 @import "./ui/_index.less";
+@import "./applications/chat/_index.less";

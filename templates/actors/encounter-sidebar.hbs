@@ -1,4 +1,3 @@
-
 {{log "Chroniques Oubliées | Encounter sidebar" this}}
 <div class="sheet-sidebar">
   <div class="scrollable">
@@ -15,12 +14,12 @@
       </div>
       {{#if unlocked}}
         <div class="sidebar-section-content">
-          <div class="labelled-field" data-tooltip="{{localize "CO.label.long.base"}}">
+          <div class="labelled-field" data-tooltip="{{localize 'CO.label.long.base'}}">
             <input class="init-base" type="number" name="system.combat.init.base" value="{{combat.init.base}}" data-dtype="Number" placeholder="0" />
           </div>
         </div>
         <div class="sidebar-section-content">
-          <div class="labelled-field" data-tooltip="{{localize "CO.label.long.bonus"}}">
+          <div class="labelled-field" data-tooltip="{{localize 'CO.label.long.bonus'}}">
             <input
               class="init-bonus"
               type="text"
@@ -47,7 +46,7 @@
       </div>
       {{#if unlocked}}
         <div class="sidebar-section-content">
-          <div class="labelled-field" data-tooltip="{{localize "CO.label.long.base"}}">
+          <div class="labelled-field" data-tooltip="{{localize 'CO.label.long.base'}}">
             <input
               class="def-base"
               type="number"
@@ -60,7 +59,7 @@
           </div>
         </div>
         <div class="sidebar-section-content">
-          <div class="labelled-field" data-tooltip="{{localize "CO.label.long.bonus"}}">
+          <div class="labelled-field" data-tooltip="{{localize 'CO.label.long.bonus'}}">
             <input
               class="def-bonus"
               type="text"
@@ -85,16 +84,30 @@
         </div>
       </div>
       {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="field">
-          <input class="dr-base" type="number" name="system.combat.dr.base" value="{{combat.dr.base}}"
-            data-dtype="Number" placeholder="0" readonly data-tooltip="{{combat.dr.tooltipBase}}" />
-          <span class="slash">/</span>
-          <input class="dr-bonus" type="text" name="system.combat.dr.bonuses.sheet"
-            value="{{numberFormat combat.dr.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number" placeholder="0"
-            data-tooltip="{{localize 'CO.label.long.bonus'}}" />
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="dr-base"
+              type="number"
+              name="system.combat.dr.base"
+              value="{{combat.dr.base}}"
+              data-dtype="Number"
+              placeholder="0"
+              readonly
+              data-tooltip="{{combat.dr.tooltipBase}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="dr-bonus"
+              type="text"
+              name="system.combat.dr.bonuses.sheet"
+              value="{{numberFormat combat.dr.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+            />
+          </div>
         </div>
-      </div>
       {{/if}}
     </div>
     <!-- HP -->
@@ -105,23 +118,34 @@
         </div>
         <div class="hit-points labelled-field">
           <i class="fas fa-fw fa-heart"></i>
-          <input class="current" name="system.attributes.hp.value" value="{{attributes.hp.value}}" type="number"
-            data-dtype="Number" />
+          <input class="current" name="system.attributes.hp.value" value="{{attributes.hp.value}}" type="number" data-dtype="Number" />
           <span class="slash">/</span>
           <span class="max" data-tooltip="{{attributes.hp.tooltip}}">{{attributes.hp.max}}</span>
         </div>
       </div>
       {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="field">
-          <input class="hp-base" type="number" name="system.attributes.hp.base" value="{{attributes.hp.base}}"
-            data-dtype="Number" data-tooltip="{{localize 'CO.label.long.base'}}" />
-          <span class="slash">/</span>
-          <input class="hp-bonus" type="text" name="system.attributes.hp.bonuses.sheet"
-            value="{{numberFormat attributes.hp.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number"
-            placeholder="0" data-tooltip="{{localize 'CO.label.long.bonus'}}" />
+        <div class="sidebar-section-content">
+          <div class="field">
+            <input
+              class="hp-base"
+              type="number"
+              name="system.attributes.hp.base"
+              value="{{attributes.hp.base}}"
+              data-dtype="Number"
+              data-tooltip="{{localize 'CO.label.long.base'}}"
+            />
+            <span class="slash">/</span>
+            <input
+              class="hp-bonus"
+              type="text"
+              name="system.attributes.hp.bonuses.sheet"
+              value="{{numberFormat attributes.hp.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              placeholder="0"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+            />
+          </div>
         </div>
-      </div>
       {{/if}}
     </div>
     <!-- Temp HP -->
@@ -132,8 +156,7 @@
         </div>
         <div class="hit-points labelled-field">
           <i class="fas fa-fw fa-heart-broken"></i>
-          <input class="tempDm" name="system.attributes.tempDm" value="{{attributes.tempDm}}" type="number"
-            data-dtype="Number" />
+          <input class="tempDm" name="system.attributes.tempDm" value="{{attributes.tempDm}}" type="number" data-dtype="Number" />
         </div>
       </div>
     </div>
@@ -196,19 +219,31 @@
         </div>
       </div>
       {{#if unlocked}}
-      <div class="sidebar-section-content">
-        <div class="mvt-base field">
-          <input class="mvt-base" type="number" name="system.attributes.movement.base"
-            value="{{attributes.movement.base}}" data-dtype="Number" placeholder="10"
-            data-tooltip="{{localize 'CO.label.long.base'}}" />
-          <input class="movement-bonus" type="text" name="system.attributes.movement.bonuses.sheet"
-            value="{{numberFormat attributes.movement.bonuses.sheet decimals=0 sign=true}}" data-dtype="Number"
-            data-tooltip="{{localize 'CO.label.long.bonus'}}" placeholder="+0" />
-          <select name="system.attributes.movement.unit" data-type="String">
-            {{selectOptions choiceMoveUnit selected=system.attributes.movement.unit localize=true}}
-          </select>
+        <div class="sidebar-section-content">
+          <div class="mvt-base field">
+            <input
+              class="mvt-base"
+              type="number"
+              name="system.attributes.movement.base"
+              value="{{attributes.movement.base}}"
+              data-dtype="Number"
+              placeholder="10"
+              data-tooltip="{{localize 'CO.label.long.base'}}"
+            />
+            <input
+              class="movement-bonus"
+              type="text"
+              name="system.attributes.movement.bonuses.sheet"
+              value="{{numberFormat attributes.movement.bonuses.sheet decimals=0 sign=true}}"
+              data-dtype="Number"
+              data-tooltip="{{localize 'CO.label.long.bonus'}}"
+              placeholder="+0"
+            />
+            <select name="system.attributes.movement.unit" data-type="String">
+              {{selectOptions choiceMoveUnit selected=system.attributes.movement.unit localize=true}}
+            </select>
+          </div>
         </div>
-      </div>
       {{/if}}
     </div>
   </div>

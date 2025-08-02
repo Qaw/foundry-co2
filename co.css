@@ -13,175 +13,6 @@ strong,
 .strong {
   font-weight: 700;
 }
-fieldset {
-  border: 0;
-  border-top: 2px solid var(--color-primary);
-  border-radius: 0;
-  margin: 0;
-  overflow: hidden;
-  padding: 0;
-}
-fieldset legend {
-  font-size: 120%;
-}
-.form-header {
-  margin: 8px 0 4px 0;
-}
-.form-group .form-fields,
-.form-group-stacked .form-fields {
-  gap: 0;
-  justify-content: stretch;
-}
-.theme-light .form-group .form-fields,
-.theme-light .form-group-stacked .form-fields {
-  --input-background-color: rgba(0, 0, 0, 0.1);
-  --input-border-color: var(--color-dark-6);
-  --input-box-shadow: inset 0 0 6px var(--input-background-color);
-  --input-focus-outline-color: var(--color-warm-2);
-}
-.theme-dark .form-group .form-fields,
-.theme-dark .form-group-stacked .form-fields {
-  --input-background-color: var(--color-cool-4);
-  --input-border-color: transparent;
-  --input-box-shadow: none;
-  --input-focus-outline-color: var(--color-cool-3);
-}
-.form-group .form-fields :has(>:only-child) input[disabled],
-.form-group-stacked .form-fields :has(>:only-child) input[disabled],
-.form-group .form-fields :has(>:only-child) select[disabled],
-.form-group-stacked .form-fields :has(>:only-child) select[disabled] {
-  height: var(--input-height);
-}
-.form-group .form-fields:not(:has(>:only-child)),
-.form-group-stacked .form-fields:not(:has(>:only-child)) {
-  background: var(--input-background-color);
-  border: 1px solid var(--input-border-color);
-  border-radius: 4px;
-  box-shadow: var(--input-box-shadow);
-  color: var(--input-text-color);
-  outline: 1px solid transparent;
-  transition: outline-color 0.5s;
-}
-.form-group .form-fields:not(:has(>:only-child)):focus,
-.form-group-stacked .form-fields:not(:has(>:only-child)):focus,
-.form-group .form-fields:not(:has(>:only-child)):focus-visible,
-.form-group-stacked .form-fields:not(:has(>:only-child)):focus-visible,
-.form-group .form-fields:not(:has(>:only-child)):focus-within,
-.form-group-stacked .form-fields:not(:has(>:only-child)):focus-within {
-  outline-color: var(--input-focus-outline-color);
-}
-.form-group .form-fields:not(:has(>:only-child)) input,
-.form-group-stacked .form-fields:not(:has(>:only-child)) input,
-.form-group .form-fields:not(:has(>:only-child)) select,
-.form-group-stacked .form-fields:not(:has(>:only-child)) select,
-.form-group .form-fields:not(:has(>:only-child)) input:disabled,
-.form-group-stacked .form-fields:not(:has(>:only-child)) input:disabled,
-.form-group .form-fields:not(:has(>:only-child)) select:disabled,
-.form-group-stacked .form-fields:not(:has(>:only-child)) select:disabled {
-  background: none;
-  border: 0;
-  box-shadow: none;
-  height: var(--input-height);
-}
-.form-group .form-fields:not(:has(>:only-child)) > :not(:last-child),
-.form-group-stacked .form-fields:not(:has(>:only-child)) > :not(:last-child) {
-  border: 0;
-  border-right: 1px solid var(--input-border-color);
-  border-radius: 0;
-}
-.form-group .form-fields:not(:has(>:only-child)) label,
-.form-group-stacked .form-fields:not(:has(>:only-child)) label,
-.form-group .form-fields:not(:has(>:only-child)) span,
-.form-group-stacked .form-fields:not(:has(>:only-child)) span,
-.form-group .form-fields:not(:has(>:only-child)) > *:has(+ a),
-.form-group-stacked .form-fields:not(:has(>:only-child)) > *:has(+ a),
-.form-group .form-fields:not(:has(>:only-child)) > *:has(+ button),
-.form-group-stacked .form-fields:not(:has(>:only-child)) > *:has(+ button),
-.form-group .form-fields:not(:has(>:only-child)) > *:has(+ label),
-.form-group-stacked .form-fields:not(:has(>:only-child)) > *:has(+ label) {
-  border: 0 !important;
-}
-.form-group .form-fields label,
-.form-group-stacked .form-fields label {
-  height: var(--input-height);
-  padding-right: 4px;
-}
-.form-group .form-fields label:has(>input[type=checkbox]),
-.form-group-stacked .form-fields label:has(>input[type=checkbox]),
-.form-group .form-fields label:has(>input[type=radio]),
-.form-group-stacked .form-fields label:has(>input[type=radio]) {
-  align-items: baseline;
-  display: flex;
-  flex-flow: row nowrap;
-  padding-top: 4px;
-}
-.form-group .form-fields input[type=checkbox],
-.form-group-stacked .form-fields input[type=checkbox],
-.form-group .form-fields input[type=radio],
-.form-group-stacked .form-fields input[type=radio] {
-  height: var(--input-height);
-}
-.form-group .form-fields button,
-.form-group-stacked .form-fields button {
-  height: calc(var(--button-size) - 4px);
-  margin: 1px;
-  min-height: calc(var(--button-size) - 4px);
-}
-.form-group .form-fields img.action-icon,
-.form-group-stacked .form-fields img.action-icon {
-  flex: 0 1 32px;
-  height: 32px;
-  max-width: 32px;
-}
-.form-group.like-grid label,
-.form-group-stacked.like-grid label {
-  overflow: hidden;
-  position: relative;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.form-group.like-grid label,
-.form-group-stacked.like-grid label,
-.form-group.like-grid .form-fields,
-.form-group-stacked.like-grid .form-fields {
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: repeat(auto-fit, 1fr);
-}
-.form-group .grid,
-.form-group-stacked .grid {
-  display: grid;
-}
-.form-group .grid.grid-4col,
-.form-group-stacked .grid.grid-4col {
-  grid-template-columns: repeat(4, 1fr);
-}
-.form-group .grid.grid-6col,
-.form-group-stacked .grid.grid-6col {
-  grid-template-columns: repeat(6, 1fr);
-}
-.form-group-stacked {
-  display: flex;
-  flex-flow: column nowrap;
-}
-input.center {
-  text-align: center;
-}
-select {
-  width: 100%;
-}
-input[disabled],
-select[disabled] {
-  background: var(--input-background-color);
-  height: var(--input-height);
-}
-.theme-light input[type=checkbox],
-.theme-light input[type=radio] {
-  --checkbox-background-color: var(--color-dark-4);
-}
-.theme-light input[type=checkbox]:disabled {
-  background: none;
-}
 prose-mirror,
 .prosemirror {
   flex: 1;
@@ -241,7 +72,7 @@ multi-select .tags.input-element-tags::after {
 multi-select .tags.input-element-tags .tag {
   border: 1px solid var(--color-cool-3);
   height: calc(var(--input-height) - 5px);
-  max-width: 100px;
+  max-width: 170px;
   overflow: hidden;
   padding: 2px 4px;
   vertical-align: baseline;
@@ -260,6 +91,12 @@ multi-select .tags.input-element-tags .tag span {
 multi-select .tags.input-element-tags .tag a.remove {
   pointer-events: all;
   margin-top: -2px;
+}
+.theme-dark select option {
+  background: var(--color-WindowContent);
+}
+.theme-light select option {
+  background: inherit;
 }
 co-toggle-switch {
   --toggle-switch-height: 20px;
@@ -311,7 +148,218 @@ co-toggle-switch[checked] thumb {
   color: var(--color-green);
 }
 .co .inactivated {
-  color: var(--color-grey);
+  color: #999;
+}
+.co .green {
+  color: var(--color-green);
+}
+.co .blue {
+  color: var(--color-abilities);
+}
+.theme-dark .co .blue {
+  color: #266995;
+}
+.theme-dark .co h4,
+.theme-dark .co label,
+.theme-dark .co span {
+  color: var(--color-backgroundGrey);
+}
+.co fieldset {
+  border: 0;
+  border-top: 2px solid var(--color-primary);
+  border-radius: 0;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+.co fieldset legend {
+  font-size: 120%;
+}
+.co .form-header {
+  margin: 8px 0 4px 0;
+}
+.co .form-group .form-fields,
+.co .form-group-stacked .form-fields {
+  gap: 0;
+  justify-content: stretch;
+}
+.theme-light .co .form-group .form-fields,
+.theme-light .co .form-group-stacked .form-fields {
+  --input-background-color: rgba(0, 0, 0, 0.1);
+  --input-border-color: var(--color-dark-6);
+  --input-box-shadow: inset 0 0 6px var(--input-background-color);
+  --input-focus-outline-color: var(--color-warm-2);
+}
+.theme-dark .co .form-group .form-fields,
+.theme-dark .co .form-group-stacked .form-fields {
+  --input-background-color: var(--color-cool-4);
+  --input-border-color: transparent;
+  --input-box-shadow: none;
+  --input-focus-outline-color: var(--color-cool-3);
+}
+.co .form-group .form-fields :has(> :only-child) input[disabled],
+.co .form-group-stacked .form-fields :has(> :only-child) input[disabled],
+.co .form-group .form-fields :has(> :only-child) select[disabled],
+.co .form-group-stacked .form-fields :has(> :only-child) select[disabled] {
+  height: var(--input-height);
+}
+.co .form-group .form-fields:not(:has(> :only-child)),
+.co .form-group-stacked .form-fields:not(:has(> :only-child)) {
+  background: var(--input-background-color);
+  border: 1px solid var(--input-border-color);
+  border-radius: 4px;
+  box-shadow: var(--input-box-shadow);
+  color: var(--input-text-color);
+  outline: 1px solid transparent;
+  transition: outline-color 0.5s;
+}
+.co .form-group .form-fields:not(:has(> :only-child)):focus,
+.co .form-group-stacked .form-fields:not(:has(> :only-child)):focus,
+.co .form-group .form-fields:not(:has(> :only-child)):focus-visible,
+.co .form-group-stacked .form-fields:not(:has(> :only-child)):focus-visible,
+.co .form-group .form-fields:not(:has(> :only-child)):focus-within,
+.co .form-group-stacked .form-fields:not(:has(> :only-child)):focus-within {
+  outline-color: var(--input-focus-outline-color);
+}
+.co .form-group .form-fields:not(:has(> :only-child)) input,
+.co .form-group-stacked .form-fields:not(:has(> :only-child)) input,
+.co .form-group .form-fields:not(:has(> :only-child)) select,
+.co .form-group-stacked .form-fields:not(:has(> :only-child)) select,
+.co .form-group .form-fields:not(:has(> :only-child)) input:disabled,
+.co .form-group-stacked .form-fields:not(:has(> :only-child)) input:disabled,
+.co .form-group .form-fields:not(:has(> :only-child)) select:disabled,
+.co .form-group-stacked .form-fields:not(:has(> :only-child)) select:disabled {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  height: var(--input-height);
+}
+.co .form-group .form-fields:not(:has(> :only-child)) > :not(:last-child),
+.co .form-group-stacked .form-fields:not(:has(> :only-child)) > :not(:last-child) {
+  border: 0;
+  border-right: 1px solid var(--input-border-color);
+  border-radius: 0;
+}
+.co .form-group .form-fields:not(:has(> :only-child)) label,
+.co .form-group-stacked .form-fields:not(:has(> :only-child)) label,
+.co .form-group .form-fields:not(:has(> :only-child)) span,
+.co .form-group-stacked .form-fields:not(:has(> :only-child)) span,
+.co .form-group .form-fields:not(:has(> :only-child)) > *:has(+ a),
+.co .form-group-stacked .form-fields:not(:has(> :only-child)) > *:has(+ a),
+.co .form-group .form-fields:not(:has(> :only-child)) > *:has(+ button),
+.co .form-group-stacked .form-fields:not(:has(> :only-child)) > *:has(+ button),
+.co .form-group .form-fields:not(:has(> :only-child)) > *:has(+ label),
+.co .form-group-stacked .form-fields:not(:has(> :only-child)) > *:has(+ label) {
+  border: 0 !important;
+}
+.co .form-group .form-fields label,
+.co .form-group-stacked .form-fields label {
+  height: var(--input-height);
+  padding-right: 4px;
+}
+.co .form-group .form-fields label:has(> input[type="checkbox"]),
+.co .form-group-stacked .form-fields label:has(> input[type="checkbox"]),
+.co .form-group .form-fields label:has(> input[type="radio"]),
+.co .form-group-stacked .form-fields label:has(> input[type="radio"]) {
+  align-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  padding-top: 4px;
+}
+.co .form-group .form-fields input[type="checkbox"],
+.co .form-group-stacked .form-fields input[type="checkbox"],
+.co .form-group .form-fields input[type="radio"],
+.co .form-group-stacked .form-fields input[type="radio"] {
+  height: var(--input-height);
+  background: none;
+  align-content: center;
+}
+.co .form-group .form-fields button,
+.co .form-group-stacked .form-fields button {
+  height: calc(var(--button-size) - 4px);
+  margin: 1px;
+  min-height: calc(var(--button-size) - 4px);
+}
+.co .form-group .form-fields img.action-icon,
+.co .form-group-stacked .form-fields img.action-icon {
+  flex: 0 1 32px;
+  height: 32px;
+  max-width: 32px;
+}
+.co .form-group.like-grid label,
+.co .form-group-stacked.like-grid label {
+  overflow: hidden;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.co .form-group.like-grid label,
+.co .form-group-stacked.like-grid label,
+.co .form-group.like-grid .form-fields,
+.co .form-group-stacked.like-grid .form-fields {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(auto-fit, 1fr);
+}
+.co .form-group .grid,
+.co .form-group-stacked .grid {
+  display: grid;
+}
+.co .form-group .grid.grid-4col,
+.co .form-group-stacked .grid.grid-4col {
+  grid-template-columns: repeat(4, 1fr);
+}
+.co .form-group .grid.grid-6col,
+.co .form-group-stacked .grid.grid-6col {
+  grid-template-columns: repeat(6, 1fr);
+}
+.co .form-group-stacked {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.co input.center {
+  text-align: center;
+}
+.co select {
+  width: 100%;
+}
+.co input[disabled],
+.co select[disabled] {
+  background: var(--input-background-color);
+  height: var(--input-height);
+}
+.co input[type="checkbox"] {
+  vertical-align: middle;
+}
+.co .theme-light input[type="checkbox"],
+.co .theme-light input[type="radio"] {
+  --checkbox-background-color: var(--color-dark-4);
+}
+.co .theme-light input[type="checkbox"]:checked:disabled::before {
+  color: var(--color-warm-1);
+}
+.co .theme-dark input[type="checkbox"]:checked:disabled::after {
+  color: var(--color-warm-1);
+}
+.theme-light .co.application {
+  --color-characterSheet: #ba9442;
+  --color-abilities: #0c4f7b;
+  --color-backgroundGrey: #ebebe8;
+  --color-encounterSheet: #95262699;
+  --color-WindowContent: #584a756b;
+  --color-textLight: #fffaf2;
+  --color-backgroundAttackDialog: #754a548c;
+  --color-backgroundSkillDialog: #2a3c876b;
+}
+.theme-dark .co.application {
+  --color-characterSheet: #5c4921;
+  --color-abilities: #07314d;
+  --color-backgroundGrey: #bcbcb1;
+  --color-encounterSheet: rgba(108, 28, 28, 0.6);
+  --color-WindowContent: #00000094;
+  --color-textLight: #e7d1b1;
+  --color-backgroundAttackDialog: #33161d8c;
+  --color-backgroundSkillDialog: #313a5f6b;
 }
 .co.application ul,
 .co.application ol,
@@ -330,10 +378,11 @@ co-toggle-switch[checked] thumb {
 .co.application .sheet-tabs {
   align-items: stretch;
   border-top: 0;
-  border-bottom-color: var(--color-primary);
+  border-bottom-color: var(--color-abilities);
   display: flex;
   flex-flow: row nowrap;
   padding: 0 8px;
+  gap: 0;
 }
 .co.application .sheet-tabs [data-tab] {
   align-items: baseline;
@@ -349,17 +398,19 @@ co-toggle-switch[checked] thumb {
   white-space: nowrap;
 }
 .co.application .sheet-tabs [data-tab].active {
-  background-color: var(--color-primary);
-  border: 1px solid var(--color-primary);
+  background-color: var(--color-abilities);
+  border: 1px solid var(--color-abilities);
+  color: var(--color-backgroundGrey);
+  font-weight: bold;
 }
 .co.application .sheet-tabs [data-tab]:hover {
-  border: 1px dotted var(--color-primary);
+  border: 2px dotted var(--color-abilities);
   border-bottom: 0;
 }
 .co.application .tab[data-tab] {
   padding: 10px 0 10px 10px;
   overflow: hidden auto;
-  scrollbar-color: var(--color-primary) var(--color-scrollbar-track);
+  scrollbar-color: var(--color-abilities) var(--color-scrollbar-track);
   scrollbar-gutter: stable;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -383,6 +434,16 @@ co-toggle-switch[checked] thumb {
 }
 .co.application h4.form-header a:not(:first-of-type):last-of-type {
   flex: 0;
+}
+.co.application .actionRow {
+  display: grid;
+  grid-template-columns: 25px 20px 1fr;
+  align-items: center;
+}
+.co.application .actionColumn {
+  justify-self: center;
+  font-size: 15px;
+  font-weight: bold;
 }
 .co.application .resolvers-container .resolver {
   display: flex;
@@ -551,6 +612,333 @@ co-toggle-switch[checked] thumb {
   width: 131px;
   border: 1px solid var(--tertiary);
 }
+.co.application.dialog.skill-roll .window-header {
+  border-radius: 5px 5px 0 0;
+  background-color: var(--color-backgroundSkillDialog);
+  border-bottom: 2px solid #5d142b;
+  /*.theme-dark & {
+      background: none;
+      background-color: rgba(0, 0, 0, 0.8);
+    }*/
+}
+.co.application.dialog.skill-roll .window-header .window-title {
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  color: #5d142b;
+}
+.theme-dark .co.application.dialog.skill-roll .window-header .window-title {
+  color: #b3b4b5;
+}
+.co.application.dialog.skill-roll .icone {
+  text-align: center;
+  font-size: 30px;
+  align-content: center;
+}
+.co.application.dialog.skill-roll #totalSkillBonuses {
+  color: #5d142b;
+  font-weight: bolder;
+  font-size: 30px;
+}
+.theme-dark .co.application.dialog.skill-roll #totalSkillBonuses {
+  color: #d33e6d;
+}
+.co.application.dialog.skill-roll .window-content {
+  background-color: var(--color-backgroundSkillDialog);
+  padding: 10px;
+}
+.co.application.dialog.skill-roll .window-content .skill-roll-1 {
+  display: grid;
+  grid-template-columns: 0.5fr 1.5fr 0.3fr 1.7fr 0.3fr 1.5fr;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #5d142b;
+}
+.co.application.dialog.skill-roll .window-content .skill-roll-2 {
+  display: grid;
+  grid-template-columns: 0.6fr 3fr 0.8fr 0.8fr 1.2fr 1fr;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #5d142b;
+}
+.co.application.dialog.skill-roll .window-content .skill-roll-3 {
+  padding-bottom: 0px;
+  border-bottom: 2px solid #5d142b;
+  margin-bottom: 3px;
+}
+.co.application.dialog.skill-roll .window-content .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: start;
+  justify-content: flex-end;
+  padding-left: 8px;
+}
+.co.application.dialog.skill-roll .window-content .form-group label.near {
+  margin-bottom: -18px;
+}
+.co.application.dialog.skill-roll .window-content .form-group .form-fields {
+  border: none;
+}
+.co.application.dialog.skill-roll .window-content .form-group label {
+  margin-bottom: -8px;
+  font-weight: bold;
+}
+.co.application.dialog.skill-roll .window-content .textCenter {
+  text-align: center;
+  align-self: center;
+}
+.co.application.dialog.skill-roll .diffGroup {
+  padding-right: 30px;
+}
+.co.application.dialog.skill-roll .form-group.rollMode {
+  padding: 0px 0px 0px 10px;
+}
+.co.application.dialog.skill-roll .form-fields-radio {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0;
+  margin: 0px;
+  align-items: start;
+  justify-content: start;
+}
+.co.application.dialog.skill-roll .form-fields-radio .radio {
+  margin: 0;
+}
+.co.application.dialog.skill-roll input {
+  margin: 0px;
+  text-align: left;
+}
+.co.application.dialog.skill-roll .field-value,
+.co.application.dialog.skill-roll select {
+  text-align: left;
+  font-size: 20px;
+  font-weight: bolder;
+  background-color: #ffffff57;
+}
+.theme-dark .co.application.dialog.skill-roll .field-value,
+.theme-dark .co.application.dialog.skill-roll select {
+  color: #e7d1b1;
+}
+.co.application.dialog.skill-roll .standard-form {
+  gap: 0;
+}
+.co.application.dialog.skill-roll .flex1.skill-bonuses {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 3px;
+}
+.co.application.dialog.skill-roll .fas.fa-fw.fa-shield-alt {
+  color: #0e507c;
+}
+.co.application.dialog.skill-roll .fa-solid.fa-dice {
+  color: #2f4f4f;
+}
+.co.application.dialog.skill-roll .fa-solid.fa-dice-d20 {
+  color: #393939;
+}
+.co.application.dialog.skill-roll .bonus-description {
+  display: flex;
+  flex-direction: column;
+}
+.co.application.dialog.skill-roll .bonus-value.flex0 {
+  font-size: 25px;
+  font-weight: bolder;
+  padding-right: 10px;
+  padding-left: 0px;
+}
+.co.application.dialog.skill-roll .bonus-name.flex1 {
+  font-size: 15px;
+  font-weight: bold;
+  padding-right: 5px;
+}
+.co.application.dialog.skill-roll .bonus-name.flex2 {
+  font-style: italic;
+  padding-right: 5px;
+  margin-left: 10px;
+}
+.co.application.dialog.skill-roll .bonus-item.flexrow {
+  border: 2px solid grey;
+  padding: 5px;
+  margin: 5px;
+  background-color: #ffffff57;
+}
+.co.application.dialog.skill-roll .bonus-item.flexrow.checked {
+  color: #b3b4b5;
+  padding: 5px;
+  margin: 5px;
+  border: 2px solid #b3b4b5;
+  background-color: #5d142b;
+}
+.theme-dark .co.application.dialog.skill-roll {
+  color: #e7d1b1;
+}
+.theme-dark .co.application.dialog.skill-roll input {
+  color: #b3b4b5;
+  text-align: left;
+}
+.co.application.dialog.attack-roll .window-header {
+  border-radius: 5px 5px 0 0;
+  background-color: var(--color-backgroundAttackDialog);
+  border-bottom: 2px solid #ad0606;
+  /*.theme-dark & {
+      background: none;
+      background-color: rgba(0, 0, 0, 0.8);
+    }*/
+}
+.co.application.dialog.attack-roll .window-header .window-title {
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  color: #5d142b;
+}
+.theme-dark .co.application.dialog.attack-roll .window-header .window-title {
+  color: #b3b4b5;
+}
+.co.application.dialog.attack-roll .icone {
+  text-align: center;
+  font-size: 30px;
+  align-content: center;
+}
+.co.application.dialog.attack-roll .window-content {
+  background-color: var(--color-backgroundAttackDialog);
+  padding: 10px;
+}
+.co.application.dialog.attack-roll .window-content .attack-roll-1 {
+  display: grid;
+  grid-template-columns: 0.5fr 1.5fr 0.3fr 1.7fr 0.3fr 1.5fr;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #ad0606;
+  gap: 0;
+}
+.co.application.dialog.attack-roll .window-content .attack-roll-2 {
+  display: grid;
+  grid-template-columns: 0.5fr 3fr 0.8fr 0.8fr 1.2fr;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #ad0606;
+  gap: 0;
+}
+.co.application.dialog.attack-roll .window-content .rollDommages {
+  display: grid;
+  grid-template-columns: 2.4fr 0.3fr 2fr 2.4fr;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #ad0606;
+}
+.co.application.dialog.attack-roll .window-content .dommageDialog {
+  display: grid;
+  grid-template-columns: 0.5fr 3fr 0.8fr 0.8fr 1.2fr;
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+  border-bottom: 2px solid #ad0606;
+  gap: 0;
+}
+.co.application.dialog.attack-roll .window-content .tacticalTargets {
+  display: grid;
+  grid-template-columns: 0.6fr 1fr;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+  border-bottom: 2px solid #ad0606;
+}
+.co.application.dialog.attack-roll .window-content .tacticalOptions {
+  display: grid;
+  grid-template-columns: 0.7fr 2.7fr;
+  gap: 0;
+}
+.co.application.dialog.attack-roll .window-content .form-fields {
+  border: none;
+  justify-content: center;
+}
+.co.application.dialog.attack-roll .window-content .form-fields .temp-checkbox {
+  align-content: center;
+}
+.co.application.dialog.attack-roll .window-content .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: start;
+  justify-content: flex-end;
+  padding-left: 8px;
+}
+.co.application.dialog.attack-roll .window-content .form-group label.near {
+  margin-bottom: -18px;
+}
+.co.application.dialog.attack-roll .window-content .form-group label {
+  margin-bottom: -8px;
+  font-weight: bold;
+}
+.co.application.dialog.attack-roll .window-content .form-group .textCenter {
+  text-align: center;
+  align-self: center;
+}
+.co.application.dialog.attack-roll .window-content .diffGroup {
+  padding-right: 30px;
+}
+.co.application.dialog.attack-roll .window-content .form-group.rollMode {
+  padding-left: 0px 0px 0px 10px;
+}
+.co.application.dialog.attack-roll .window-content .form-fields-radio {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0;
+  margin: 0px;
+  align-items: start;
+  justify-content: start;
+}
+.co.application.dialog.attack-roll .window-content .form-fields-radio .radio {
+  margin: 0;
+}
+.co.application.dialog.attack-roll .window-content input {
+  margin: 0px;
+  text-align: left;
+}
+.co.application.dialog.attack-roll .window-content .field-value,
+.co.application.dialog.attack-roll .window-content select {
+  text-align: left;
+  font-size: 20px;
+  font-weight: bolder;
+  background-color: #ffffff57;
+}
+.theme-dark .co.application.dialog.attack-roll .window-content .field-value,
+.theme-dark .co.application.dialog.attack-roll .window-content select {
+  color: #e7d1b1;
+}
+.co.application.dialog.attack-roll .window-content .standard-form {
+  gap: 0;
+}
+.co.application.dialog.attack-roll .window-content .fas.fa-fw.fa-shield-alt {
+  color: #0e507c;
+}
+.co.application.dialog.attack-roll .window-content .fa-solid.fa-dice {
+  color: #2f4f4f;
+}
+.co.application.dialog.attack-roll .window-content .fa-solid.fa-dice-d20 {
+  color: #393939;
+}
+.co.application.dialog.attack-roll .window-content .fa-solid.fa-droplet {
+  color: #9f0000;
+}
+.co.application.dialog.attack-roll .window-content .fa-solid.fa-sliders-up {
+  color: #532d75;
+  align-content: start;
+}
+.co.application.dialog.attack-roll .window-content legend {
+  text-align: center;
+  padding-bottom: 3px;
+}
+.co.application.dialog.attack-roll .window-content .targets.center {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.co.application.dialog.attack-roll .window-content .target {
+  margin: 3px 8px;
+}
+.theme-dark .co.application.dialog.attack-roll .window-content {
+  color: #e7d1b1;
+}
+.theme-dark .co.application.dialog.attack-roll .window-content input {
+  color: #b3b4b5;
+  text-align: left;
+}
 .co.application.sheet {
   --color-primary: var(--color-text-selection-bg);
 }
@@ -578,7 +966,7 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.sheet .section-container {
   display: flex;
-  border: 1px solid var(--color-primary);
+  border: 1px solid var(--color-abilities);
   border-radius: 0 0 3px 3px;
   flex-direction: column;
   margin-bottom: 8px;
@@ -590,9 +978,11 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet .section-container .section-header {
   display: flex;
   align-items: center;
-  background-color: var(--color-primary);
-  color: #FFF;
+  /*background-color: var(--color-primary);
+    color: #fff;*/
   flex-direction: row;
+  color: var(--color-backgroundGrey);
+  background-color: var(--color-abilities);
 }
 .co.application.sheet .section-container .section-header h4 {
   flex: 1;
@@ -601,6 +991,7 @@ co-toggle-switch[checked] thumb {
   margin: 0;
   padding: 2px 8px;
   text-transform: uppercase;
+  color: var(--color-backgroundGrey);
 }
 .co.application.sheet .section-container .section-header .controls {
   display: flex;
@@ -613,7 +1004,7 @@ co-toggle-switch[checked] thumb {
   border: 0;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 10px 0 0;
 }
 .co.application.sheet .items-container.foldable .items-container-header h4,
 .co.application.sheet .item-list.foldable .items-container-header h4 {
@@ -720,6 +1111,11 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet .item-list .attack .attack-body .critical-button {
   background-color: var(--color-primary);
 }
+.co.application.sheet .pathGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 5px;
+}
 .co.application.sheet .items-container {
   margin-bottom: 8px;
 }
@@ -730,13 +1126,18 @@ co-toggle-switch[checked] thumb {
   flex-direction: row;
   height: 30px;
   line-height: 30px;
+  flex-wrap: nowrap;
 }
 .co.application.sheet .items-container .items-container-header {
-  background: var(--color-primary);
-  color: #FFF;
+  /*background: var(--color-primary);
+    color: #FFF;*/
   font-weight: bold;
-  padding: 0;
-  padding-left: 4px;
+  /*padding: 0;
+    padding-left: 4px;*/
+  color: var(--color-backgroundGrey);
+  background-color: var(--color-abilities);
+  padding: 0 10px;
+  border-radius: 10px 10px 0 0;
 }
 .co.application.sheet .items-container .items-container-header h4 {
   border: 0;
@@ -746,6 +1147,7 @@ co-toggle-switch[checked] thumb {
   margin: 0;
   padding: 2px 8px;
   text-transform: uppercase;
+  color: var(--color-backgroundGrey);
 }
 .co.application.sheet .items-container .items-container-header .item-name {
   flex: 1;
@@ -756,20 +1158,28 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet .items-container .item:hover {
   background: rgba(0, 0, 0, 0.1);
 }
+.co.application.sheet .items-container .item i.fa-solid.fa-circle-check,
+.co.application.sheet .items-container .item i.fa-regular.fa-circle-xmark {
+  font-size: 16px;
+  margin-left: 5px;
+}
 .co.application.sheet .items-container .item .item-name {
   display: flex;
   flex: 1;
   flex-direction: row;
 }
 .co.application.sheet .items-container .item .item-name h4 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   margin: 0 0 0 4px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .co.application.sheet .items-container .item-detail {
   border-right: 1px solid var(--color-blue);
   flex: 0 70px;
-  font-size: 14px;
+  font-size: 16px;
   text-align: center;
   white-space: nowrap;
   word-break: break-word;
@@ -779,6 +1189,10 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.sheet .items-container .item-detail.item-action {
   flex: 0 0 100px;
+}
+.co.application.sheet .items-container .item-detail.rank {
+  flex: 0 40px;
+  font-size: 22px;
 }
 .co.application.sheet .items-container .item-controls,
 .co.application.sheet .items-container .item-controls-1,
@@ -797,7 +1211,7 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet .items-container .item-controls-2 .item-control,
 .co.application.sheet .items-container .item-controls-3 .item-control {
   display: inline-block;
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
   width: 22px;
 }
@@ -814,7 +1228,7 @@ co-toggle-switch[checked] thumb {
   width: 66px;
 }
 .co.application.sheet .theme-dark .items-container {
-  color: #CCC;
+  color: #ccc;
 }
 .co.application.sheet .theme-dark .item:hover {
   background: rgba(0, 0, 0, 0.2);
@@ -842,21 +1256,31 @@ co-toggle-switch[checked] thumb {
   padding: 0;
   margin-top: -36px;
   padding-top: 36px;
+  /*input[type="checkbox"]:checked::after {
+    line-height: 0;
+  }*/
 }
 .co.application.sheet.item .window-content .halfPanel {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
 }
+.co.application.sheet.item .window-content .tab {
+  gap: 0;
+}
 .co.application.sheet.item .window-content .sheet-header {
   display: grid;
-  grid-template-columns: 132px 1fr;
-  grid-template-rows: auto auto 1fr;
-  grid-template-areas: "img name" "img adjustment" "img tags";
+  grid-template-columns: 100px 1fr 100px;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "img name adjustment" "img tags tags";
+  min-height: 100px;
+  max-height: 100px;
+  overflow: hidden;
 }
 .co.application.sheet.item .window-content .sheet-header img {
   grid-area: img;
-  margin-bottom: 4px;
+  align-self: center;
+  width: 100%;
 }
 .co.application.sheet.item .window-content .sheet-header > .name,
 .co.application.sheet.item .window-content .sheet-header > .adjustment-select,
@@ -866,23 +1290,33 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.item .window-content .sheet-header .name {
   font-size: 2.5rem;
   grid-area: name;
+  align-content: center;
 }
 .co.application.sheet.item .window-content .sheet-header .name input[type="text"] {
   font-size: inherit;
   height: 52px;
   padding: 0 8px;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+.co.application.sheet.item .window-content .sheet-header input[type="checkbox"]:disabled {
+  color: var(--color-warm-1);
 }
 .co.application.sheet.item .window-content .sheet-header .adjustment-select {
   align-items: flex-start;
   display: flex;
   gap: 8px;
   grid-area: adjustment;
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 .co.application.sheet.item .window-content .sheet-header > .tags {
   grid-area: tags;
 }
 .co.application.sheet.item .window-content .sheet-header .trait {
+  text-align: center;
   border: 1px solid var(--color-cool-3);
   margin: 8px 0;
   padding: 4px 8px;
@@ -893,9 +1327,16 @@ co-toggle-switch[checked] thumb {
 .theme-light .co.application.sheet.item .window-content .sheet-header .trait {
   background-color: var(--color-light-3);
 }
+.co.application.sheet.item .window-content input {
+  height: auto;
+}
+.co.application.sheet.item .window-content input[type="checkbox"] {
+  --checkbox-size: var(--font-size-18);
+  background: none;
+}
 .co.application.sheet.item .window-content > .sheet-tabs {
-  padding-left: calc(132px + 8px);
-  margin-top: -40px;
+  padding-left: calc(100px + 8px);
+  margin-top: -38px;
 }
 .co.application.sheet.item .window-content .tab[data-tab].actions {
   margin-left: -10px;
@@ -948,15 +1389,21 @@ co-toggle-switch[checked] thumb {
 .theme-light .co.application.sheet.item.capacity .sheet-header {
   background: linear-gradient(5deg, var(--color-capacity-light) 60%, var(--color-capacity-dark));
 }
-.theme-dark .co.application.sheet.item.capacity .window-content {
-  background-color: #00000094;
+.co.application.sheet.item.capacity .window-content {
+  background-color: var(--color-WindowContent);
 }
-.theme-light .co.application.sheet.item.capacity .window-content {
-  background-color: #584a756b;
+.co.application.sheet.item.capacity .window-content .fa-add {
+  font-size: 22px;
+}
+.co.application.sheet.item.capacity .window-content .action-button {
+  font-size: 14px;
+  margin-right: 10px;
 }
 .co.application.sheet.item.capacity .window-content fieldset {
-  margin-bottom: 15px;
   gap: 4px;
+}
+.co.application.sheet.item.capacity .window-content .borderRight input {
+  border-right: none;
 }
 .co.application.sheet.item.capacity .window-content .form-group {
   gap: 10px;
@@ -1012,10 +1459,12 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.sheet.item.capacity .window-content .modifiers-container .modifier {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 32px;
-  grid-template-rows: 1fr 1fr;
-  gap: 2px 8px;
-  margin-bottom: 8px;
+  grid-template-columns: 1fr 1.2fr 1fr auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0px 8px;
+  margin-bottom: 4px;
+  padding: 0 8px;
 }
 .theme-dark .co.application.sheet.item.capacity .window-content .modifiers-container .modifier {
   border: 1px solid var(--color-capacity-dark);
@@ -1032,9 +1481,27 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.item.capacity .window-content .modifiers-container .modifier :nth-child(5) input[type="text"] {
   flex: 11;
 }
-.co.application.sheet.item.capacity .window-content .modifiers-container .modifier button {
+.co.application.sheet.item.capacity .window-content .modifiers-container .modifier input,
+.co.application.sheet.item.capacity .window-content .modifiers-container .modifier select {
+  height: 25px;
+}
+.co.application.sheet.item.capacity .window-content .modifiers-container .modifier button,
+.co.application.sheet.item.capacity .window-content .modifiers-container .modifier .emptyButton {
   grid-column: 4;
-  grid-row: 1;
+  grid-row: 1 / 3;
+}
+.co.application.sheet.item.capacity .window-content .modifiers-container .modifierHeader {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 0 8px;
+  margin: -4px 0 2px 10px;
+}
+.co.application.sheet.item.capacity .window-content .resolvers-container .resolver select,
+.co.application.sheet.item.capacity .window-content .resolvers-container .resolver input,
+.co.application.sheet.item.capacity .window-content .resolvers-container .resolver label {
+  height: 25px;
+  align-content: center;
+  line-height: 1;
 }
 .co.application.sheet.item.capacity .window-content .resolvers-container .resolver .form-group.effects .form-fields span {
   margin-left: 8px;
@@ -1043,15 +1510,50 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.item.capacity .window-content .resolvers-container .resolver .form-group-stacked.like-grid.effects .form-fields {
   grid-template-columns: repeat(2, 10fr) 15fr;
 }
+.co.application.sheet.item.capacity .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target,
+.co.application.sheet.item.capacity .window-content .resolvers-container .resolver .form-group-stacked.type {
+  display: flex;
+  flex-flow: column nowrap;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-top: 2px;
+}
+.co.application.sheet.item.capacity .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target label,
+.co.application.sheet.item.capacity .window-content .resolvers-container .resolver .form-group-stacked.type label {
+  padding-right: 20px;
+}
+.co.application.sheet.item.capacity .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target {
+  padding-bottom: 5px;
+}
+.theme-dark .co.application.sheet.item.capacity .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target {
+  border-bottom: 1px solid var(--color-capacity-dark);
+}
+.theme-light .co.application.sheet.item.capacity .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target {
+  border-bottom: 1px solid var(--color-capacity-light);
+}
+.co.application.sheet.item.capacity .window-content .resolvers-container .resolver .centerInput {
+  text-align: center;
+}
+.co.application.sheet.item.capacity .window-content .resolvers-container .resolver .form-group-stacked.like-grid.formula label {
+  justify-items: center;
+  text-align: center;
+}
+.co.application.sheet.item.capacity .window-content .resolvers-container .resolver .form-group-stacked.like-grid.formula label div {
+  width: 120px;
+}
+.co.application.sheet.item.capacity .window-content .resolvers-container .resolver .form-group-stacked.like-grid.formula input[type="text"] {
+  text-align: center;
+}
 .co.application.sheet.item.equipment {
   --color-equipment-dark: #7a581d;
   --color-equipment-light: #ba872c;
 }
 .theme-dark .co.application.sheet.item.equipment .sheet-header {
-  background: linear-gradient(5deg, var(--color-attack-dark) 60%, #000000);
+  background: linear-gradient(5deg, var(--color-equipment-dark) 60%, #000000);
 }
 .theme-light .co.application.sheet.item.equipment .sheet-header {
-  background: linear-gradient(5deg, var(--color-attack-light) 60%, var(--color-attack-dark));
+  background: linear-gradient(5deg, var(--color-equipment-light) 60%, var(--color-equipment-dark));
 }
 .theme-dark .co.application.sheet.item.equipment .window-content {
   background-color: #00000094;
@@ -1059,8 +1561,14 @@ co-toggle-switch[checked] thumb {
 .theme-light .co.application.sheet.item.equipment .window-content {
   background-color: #584a756b;
 }
+.co.application.sheet.item.equipment .window-content .fa-add {
+  font-size: 22px;
+}
+.co.application.sheet.item.equipment .window-content .action-button {
+  font-size: 14px;
+  margin-right: 10px;
+}
 .co.application.sheet.item.equipment .window-content fieldset {
-  margin-bottom: 15px;
   gap: 4px;
 }
 .co.application.sheet.item.equipment .window-content .rechargeable {
@@ -1133,16 +1641,18 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.sheet.item.equipment .window-content .modifiers-container .modifier {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 32px;
-  grid-template-rows: 1fr 1fr;
-  gap: 2px 8px;
-  margin-bottom: 8px;
+  grid-template-columns: 1fr 1.2fr 1fr auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0px 8px;
+  margin-bottom: 4px;
+  padding: 0 8px;
 }
 .theme-dark .co.application.sheet.item.equipment .window-content .modifiers-container .modifier {
-  border: 1px solid var(--color-attack-dark);
+  border: 1px solid var(--color-equipment-dark);
 }
 .theme-light .co.application.sheet.item.equipment .window-content .modifiers-container .modifier {
-  border: 1px solid var(--color-attack-light);
+  border: 1px solid var(--color-equipment-light);
 }
 .co.application.sheet.item.equipment .window-content .modifiers-container .modifier :nth-child(5) {
   grid-column: auto / span 2;
@@ -1153,9 +1663,27 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.item.equipment .window-content .modifiers-container .modifier :nth-child(5) input[type="text"] {
   flex: 11;
 }
-.co.application.sheet.item.equipment .window-content .modifiers-container .modifier button {
+.co.application.sheet.item.equipment .window-content .modifiers-container .modifier input,
+.co.application.sheet.item.equipment .window-content .modifiers-container .modifier select {
+  height: 25px;
+}
+.co.application.sheet.item.equipment .window-content .modifiers-container .modifier button,
+.co.application.sheet.item.equipment .window-content .modifiers-container .modifier .emptyButton {
   grid-column: 4;
-  grid-row: 1;
+  grid-row: 1 / 3;
+}
+.co.application.sheet.item.equipment .window-content .modifiers-container .modifierHeader {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 0 8px;
+  margin: -4px 0 2px 10px;
+}
+.co.application.sheet.item.equipment .window-content .resolvers-container .resolver select,
+.co.application.sheet.item.equipment .window-content .resolvers-container .resolver input,
+.co.application.sheet.item.equipment .window-content .resolvers-container .resolver label {
+  height: 25px;
+  align-content: center;
+  line-height: 1;
 }
 .co.application.sheet.item.equipment .window-content .resolvers-container .resolver .form-group.effects .form-fields span {
   margin-left: 8px;
@@ -1163,6 +1691,41 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.item.equipment .window-content .resolvers-container .resolver .form-group-stacked.like-grid.effects label,
 .co.application.sheet.item.equipment .window-content .resolvers-container .resolver .form-group-stacked.like-grid.effects .form-fields {
   grid-template-columns: repeat(2, 10fr) 15fr;
+}
+.co.application.sheet.item.equipment .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target,
+.co.application.sheet.item.equipment .window-content .resolvers-container .resolver .form-group-stacked.type {
+  display: flex;
+  flex-flow: column nowrap;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-top: 2px;
+}
+.co.application.sheet.item.equipment .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target label,
+.co.application.sheet.item.equipment .window-content .resolvers-container .resolver .form-group-stacked.type label {
+  padding-right: 20px;
+}
+.co.application.sheet.item.equipment .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target {
+  padding-bottom: 5px;
+}
+.theme-dark .co.application.sheet.item.equipment .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target {
+  border-bottom: 1px solid var(--color-equipment-dark);
+}
+.theme-light .co.application.sheet.item.equipment .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target {
+  border-bottom: 1px solid var(--color-equipment-light);
+}
+.co.application.sheet.item.equipment .window-content .resolvers-container .resolver .centerInput {
+  text-align: center;
+}
+.co.application.sheet.item.equipment .window-content .resolvers-container .resolver .form-group-stacked.like-grid.formula label {
+  justify-items: center;
+  text-align: center;
+}
+.co.application.sheet.item.equipment .window-content .resolvers-container .resolver .form-group-stacked.like-grid.formula label div {
+  width: 120px;
+}
+.co.application.sheet.item.equipment .window-content .resolvers-container .resolver .form-group-stacked.like-grid.formula input[type="text"] {
+  text-align: center;
 }
 .co.application.sheet.item.feature {
   --color-feature-dark: #1a5d71;
@@ -1220,6 +1783,11 @@ co-toggle-switch[checked] thumb {
 .theme-light .co.application.sheet.item.feature .window-content .form-header {
   background-color: var(--color-feature-light);
   color: #222;
+}
+.co.application.sheet.item.feature .modifier {
+  margin: 1px 0;
+  height: 23px;
+  align-content: center;
 }
 .co.application.sheet.item.feature .modifiers-container .form-group-stacked.like-grid label,
 .co.application.sheet.item.feature .modifiers-container .form-fields.like-grid label,
@@ -1284,6 +1852,9 @@ co-toggle-switch[checked] thumb {
   background-color: var(--color-path-light);
   color: #222;
 }
+.co.application.sheet.item.path .panelRight .capacity-list {
+  margin-right: 7px;
+}
 .co.application.sheet.item.path .modifiers-container .form-group-stacked.like-grid label,
 .co.application.sheet.item.path .modifiers-container .form-fields.like-grid label,
 .co.application.sheet.item.path .modifiers-container .form-group-stacked.like-grid .form-fields,
@@ -1347,6 +1918,14 @@ co-toggle-switch[checked] thumb {
   background-color: var(--color-profile-light);
   color: #222;
 }
+.co.application.sheet.item.profile .window-content .panelRight .path-list {
+  margin-right: 7px;
+}
+.co.application.sheet.item.profile .window-content .modifier {
+  margin: 1px 0;
+  height: 23px;
+  align-content: center;
+}
 .co.application.sheet.item.profile .window-content .proficiencies-form {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -1364,10 +1943,11 @@ co-toggle-switch[checked] thumb {
   height: 200px;
 }
 .co.application.sheet.item.profile .window-content .proficiencies-form .form-group .grid label {
-  margin-bottom: -15px;
+  margin-bottom: -8px;
 }
 .co.application.sheet.item.profile .window-content .proficiencies-form .form-group .grid label input {
   background-color: transparent;
+  height: auto;
 }
 .co.application.sheet.item.profile .modifiers-container .form-group-stacked.like-grid label,
 .co.application.sheet.item.profile .modifiers-container .form-fields.like-grid label,
@@ -1385,14 +1965,17 @@ co-toggle-switch[checked] thumb {
 .theme-light .co.application.sheet.item.attack .sheet-header {
   background: linear-gradient(5deg, var(--color-attack-light) 60%, var(--color-attack-dark));
 }
-.theme-dark .co.application.sheet.item.attack .window-content {
-  background-color: #00000094;
+.co.application.sheet.item.attack .window-content {
+  background-color: var(--color-WindowContent);
 }
-.theme-light .co.application.sheet.item.attack .window-content {
-  background-color: #584a756b;
+.co.application.sheet.item.attack .window-content .fa-add {
+  font-size: 22px;
+}
+.co.application.sheet.item.attack .window-content .action-button {
+  font-size: 14px;
+  margin-right: 10px;
 }
 .co.application.sheet.item.attack .window-content fieldset {
-  margin-bottom: 15px;
   gap: 4px;
 }
 .co.application.sheet.item.attack .window-content .form-group {
@@ -1437,10 +2020,12 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.sheet.item.attack .window-content .modifiers-container .modifier {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 32px;
-  grid-template-rows: 1fr 1fr;
-  gap: 2px 8px;
-  margin-bottom: 8px;
+  grid-template-columns: 1fr 1.2fr 1fr auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0px 8px;
+  margin-bottom: 4px;
+  padding: 0 8px;
 }
 .theme-dark .co.application.sheet.item.attack .window-content .modifiers-container .modifier {
   border: 1px solid var(--color-attack-dark);
@@ -1457,9 +2042,27 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.item.attack .window-content .modifiers-container .modifier :nth-child(5) input[type="text"] {
   flex: 11;
 }
-.co.application.sheet.item.attack .window-content .modifiers-container .modifier button {
+.co.application.sheet.item.attack .window-content .modifiers-container .modifier input,
+.co.application.sheet.item.attack .window-content .modifiers-container .modifier select {
+  height: 25px;
+}
+.co.application.sheet.item.attack .window-content .modifiers-container .modifier button,
+.co.application.sheet.item.attack .window-content .modifiers-container .modifier .emptyButton {
   grid-column: 4;
-  grid-row: 1;
+  grid-row: 1 / 3;
+}
+.co.application.sheet.item.attack .window-content .modifiers-container .modifierHeader {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 0 8px;
+  margin: -4px 0 2px 10px;
+}
+.co.application.sheet.item.attack .window-content .resolvers-container .resolver select,
+.co.application.sheet.item.attack .window-content .resolvers-container .resolver input,
+.co.application.sheet.item.attack .window-content .resolvers-container .resolver label {
+  height: 25px;
+  align-content: center;
+  line-height: 1;
 }
 .co.application.sheet.item.attack .window-content .resolvers-container .resolver .form-group.effects .form-fields span {
   margin-left: 8px;
@@ -1467,6 +2070,41 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.item.attack .window-content .resolvers-container .resolver .form-group-stacked.like-grid.effects label,
 .co.application.sheet.item.attack .window-content .resolvers-container .resolver .form-group-stacked.like-grid.effects .form-fields {
   grid-template-columns: repeat(2, 10fr) 15fr;
+}
+.co.application.sheet.item.attack .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target,
+.co.application.sheet.item.attack .window-content .resolvers-container .resolver .form-group-stacked.type {
+  display: flex;
+  flex-flow: column nowrap;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-top: 2px;
+}
+.co.application.sheet.item.attack .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target label,
+.co.application.sheet.item.attack .window-content .resolvers-container .resolver .form-group-stacked.type label {
+  padding-right: 20px;
+}
+.co.application.sheet.item.attack .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target {
+  padding-bottom: 5px;
+}
+.theme-dark .co.application.sheet.item.attack .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target {
+  border-bottom: 1px solid var(--color-attack-dark);
+}
+.theme-light .co.application.sheet.item.attack .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target {
+  border-bottom: 1px solid var(--color-attack-light);
+}
+.co.application.sheet.item.attack .window-content .resolvers-container .resolver .centerInput {
+  text-align: center;
+}
+.co.application.sheet.item.attack .window-content .resolvers-container .resolver .form-group-stacked.like-grid.formula label {
+  justify-items: center;
+  text-align: center;
+}
+.co.application.sheet.item.attack .window-content .resolvers-container .resolver .form-group-stacked.like-grid.formula label div {
+  width: 120px;
+}
+.co.application.sheet.item.attack .window-content .resolvers-container .resolver .form-group-stacked.like-grid.formula input[type="text"] {
+  text-align: center;
 }
 .co.application.sheet.actor {
   gap: 0;
@@ -1499,14 +2137,17 @@ co-toggle-switch[checked] thumb {
   border: 4px solid var(--color-gold);
   border-bottom: 0;
   gap: 8px;
-  grid-template-columns: 140px 1fr minmax(64px, min-content);
-  grid-template-rows: auto auto auto;
-  grid-template-areas: "img name      level" "img traits    traits" "img abilities abilities";
+  grid-template-columns: 140px 1fr 180px minmax(64px, min-content);
+  grid-template-rows: auto auto;
+  grid-template-areas: "img   name      traits   level" "img abilities abilities abilities";
   padding-right: 8px;
 }
 .co.application.sheet.actor .window-content .sheet-header .image-container {
   grid-area: img;
   position: relative;
+  max-height: 150px;
+  justify-items: center;
+  align-content: center;
 }
 .co.application.sheet.actor .window-content .sheet-header .image-container .hover-icon {
   color: var(--color-light-3);
@@ -1516,10 +2157,18 @@ co-toggle-switch[checked] thumb {
   right: 0;
   text-align: center;
 }
+.co.application.sheet.actor .window-content .sheet-header .image-container .actor-img {
+  max-height: 150px;
+  align-self: center;
+}
 .co.application.sheet.actor .window-content .sheet-header .name {
   font-size: 42px;
   grid-area: name;
   height: 65px;
+  align-content: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .co.application.sheet.actor .window-content .sheet-header .level {
   grid-area: level;
@@ -1543,7 +2192,10 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.sheet.actor .window-content .sheet-header .traits {
   display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   grid-area: traits;
+  overflow: hidden;
 }
 .co.application.sheet.actor .window-content .sheet-sidebar {
   overflow: hidden;
@@ -1576,7 +2228,7 @@ co-toggle-switch[checked] thumb {
   padding: 8px 4px;
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .labelled-field {
-  background-color: #FFF;
+  background-color: var(--color-backgroundGrey);
   border-radius: 12px 0 0 12px;
   height: 32px;
   padding: 4px;
@@ -1609,11 +2261,11 @@ co-toggle-switch[checked] thumb {
   margin: 0;
 }
 .theme-light .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .sidebar-section-header .sidebar-label h4 {
-  color: #FFF;
+  color: var(--color-textLight);
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field {
-  color: var(--color-primary);
+  color: var(--color-backgroundGrey);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1628,7 +2280,7 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field select,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field input,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field input {
-  background-color: #FFF;
+  background-color: var(--color-backgroundGrey);
   border: 0;
   color: var(--color-primary);
   flex: 1;
@@ -1651,6 +2303,10 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field select {
   font-size: 12px;
 }
+.theme-dark .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field select option,
+.theme-dark .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field select option {
+  background: var(--color-backgroundGrey);
+}
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field .slash,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field .slash,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field .max,
@@ -1661,7 +2317,7 @@ co-toggle-switch[checked] thumb {
   transform: scaleX(80%);
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field {
-  background-color: #FFF;
+  background-color: var(--color-backgroundGrey);
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field i {
   justify-self: flex-start;
@@ -1713,7 +2369,7 @@ co-toggle-switch[checked] thumb {
   flex: 1;
 }
 .theme-light .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .sidebar-label {
-  color: #FFF;
+  color: var(--color-textLight);
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .field,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .labelled-field {
@@ -1723,11 +2379,14 @@ co-toggle-switch[checked] thumb {
 }
 .theme-light .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .field,
 .theme-light .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section.speed-section .sidebar-section-header .labelled-field {
-  color: #FFF;
+  color: var(--color-textLight);
+}
+.co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .state-modifier {
+  color: var(--color-textLight);
 }
 .co.application.sheet.actor .window-content .abilities {
   box-sizing: border-box;
-  border: 2px solid var(--color-primary);
+  border: 2px solid var(--color-abilities);
   display: grid;
   font-size: 20px;
   grid-template-columns: repeat(7, minmax(80px, 1fr)) auto;
@@ -1736,33 +2395,47 @@ co-toggle-switch[checked] thumb {
   text-align: center;
 }
 .co.application.sheet.actor .window-content .abilities .ability .ability-id {
-  background-color: var(--color-primary);
+  background-color: var(--color-abilities);
   line-height: 1.8;
+  color: var(--color-backgroundGrey);
+  font-weight: bold;
 }
 .co.application.sheet.actor .window-content .abilities .ability .ability-id i.fas.fa-asterisk {
   font-size: 11px;
   vertical-align: super;
 }
-.co.application.sheet.actor .window-content .abilities .ability .ability-id input[type=checkbox]::after,
-.co.application.sheet.actor .window-content .abilities .ability .ability-id input[type=checkbox]::before {
+.co.application.sheet.actor .window-content .abilities .ability .ability-id input[type="checkbox"]::after,
+.co.application.sheet.actor .window-content .abilities .ability .ability-id input[type="checkbox"]::before {
   top: 8px;
 }
 .co.application.sheet.actor .window-content .abilities .ability .ability-mod {
-  border: 2px solid var(--color-primary);
+  border: 2px solid var(--color-abilities);
   border-radius: 0;
   display: block;
-  line-height: 1.8;
+  line-height: 1.3;
   text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--color-abilities);
+  background-color: var(--color-backgroundGrey);
 }
 .co.application.sheet.actor .window-content .abilities .abilities-controls {
-  background-color: var(--color-primary);
+  background-color: var(--color-abilities);
   line-height: 2.8;
+}
+.co.application.sheet.actor .window-content .abilities .abilities-edit {
+  font-size: 23px;
+  padding: 0px 6px;
+  color: var(--color-backgroundGrey);
 }
 .co.application.sheet.actor.character:not(.minimized) {
   min-width: 890px;
 }
-.co.application.sheet.actor.character .window-content .sheet-header .profiles {
-  margin-left: 16px;
+.co.application.sheet.actor.character .window-content .sheet-header {
+  /*.profiles {
+    margin-left: 16px;
+  }*/
+  background-color: var(--color-characterSheet);
 }
 .co.application.sheet.actor.character .window-content .sheet-header .species,
 .co.application.sheet.actor.character .window-content .sheet-header .profiles {
@@ -1775,6 +2448,9 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor.character .window-content .sheet-header .species a,
 .co.application.sheet.actor.character .window-content .sheet-header .profiles a {
   margin-right: 4px;
+}
+.co.application.sheet.actor.character .window-content .sheet-sidebar {
+  background-color: var(--color-characterSheet);
 }
 .co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.melee-section,
 .co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.ranged-section,
@@ -1801,14 +2477,58 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section .labelled-field input {
   color: var(--color-resource);
 }
+.co.application.sheet.actor.character .window-content .sheet-sidebar span.max,
+.co.application.sheet.actor.character .window-content .sheet-sidebar span.slash {
+  color: var(--color-abilities);
+}
+.co.application.sheet.actor.character .window-content .sheet-sidebar .state-name {
+  list-style: "\1F782";
+  margin-left: 5px;
+  color: var(--color-backgroundGrey);
+}
 .co.application.sheet.actor.character .window-content .dropzone {
   margin-left: 70px;
+}
+.co.application.sheet.actor.character .features-container .item-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 5px 10px 0px 10px;
+  column-gap: 20px;
+}
+.co.application.sheet.actor.character .features.section-container {
+  margin: 0;
+  padding: 0;
+}
+.co.application.sheet.actor.character .currencyRow {
+  gap: 20px;
+}
+.co.application.sheet.actor.character .currencyRow label {
+  text-align: end;
+  font-weight: bold;
+  font-size: 15px;
+}
+.co.application.sheet.actor.character .currencyRow .current {
+  margin-left: 0px;
+  font-weight: bold;
+  font-size: 15px;
+  background-color: transparent;
+  border: none;
+  box-shadow: 2px 2px var(--color-abilities);
+  height: 25px;
 }
 .co.application.sheet.actor.encounter:not(.minimized) {
   min-width: 860px;
 }
-.co.application.sheet.actor.encounter .window-content .sheet-header .traits .trait.size {
-  margin-left: 16px;
+.co.application.sheet.actor.encounter .window-content .sheet-header {
+  /* .traits {
+    .trait.size {
+      margin-left: 16px;
+    }
+  }*/
+  background-color: var(--color-encounterSheet);
+}
+.co.application.sheet.actor.encounter .window-content .sheet-sidebar {
+  background-color: var(--color-encounterSheet);
 }
 .co.application.sheet.actor.encounter .window-content .sheet-sidebar .scrollable .sidebar-section:nth-child(5) .labelled-field i {
   color: var(--color-damages);
@@ -1819,12 +2539,16 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.sheet.actor.encounter .window-content .properties .notes {
   max-height: calc(100% - 20px);
+  text-wrap: auto;
 }
 .co.application.sheet.actor.encounter .window-content .properties .notes .editor {
   margin: 8px;
 }
-.co.application.sheet.actor.encounter .window-content .properties .notes prose-mirror.editor {
+.co.application.sheet.actor.encounter .window-content .properties prose-mirror.editor {
   margin: 0;
+}
+.co.application.sheet.actor.encounter .window-content .editor-content {
+  text-wrap: auto;
 }
 #interface #ui-left {
   padding: 0;
@@ -1868,4 +2592,383 @@ co-toggle-switch[checked] thumb {
 }
 #interface #hotbar {
   margin-bottom: 0;
+}
+.theme-dark #interface #sidebar .chat-message,
+.theme-dark #interface #ui-right-column-1 .chat-message {
+  background: #0b0a13e6;
+  color: var(--color-textLight);
+}
+.theme-dark #interface #sidebar .chat-message span,
+.theme-dark #interface #ui-right-column-1 .chat-message span,
+.theme-dark #interface #sidebar .chat-message label,
+.theme-dark #interface #ui-right-column-1 .chat-message label {
+  color: var(--color-textLight);
+}
+.theme-light #interface #sidebar .chat-message,
+.theme-light #interface #ui-right-column-1 .chat-message {
+  background-color: var(--color-light-3);
+  color: #222;
+}
+.theme-light #interface #sidebar .chat-message span,
+.theme-light #interface #ui-right-column-1 .chat-message span,
+.theme-light #interface #sidebar .chat-message label,
+.theme-light #interface #ui-right-column-1 .chat-message label {
+  color: #222;
+}
+.theme-dark #interface #sidebar .chat-message.whisper,
+.theme-dark #interface #ui-right-column-1 .chat-message.whisper {
+  background: #210000e8;
+}
+.theme-light #interface #sidebar .chat-message.whisper,
+.theme-light #interface #ui-right-column-1 .chat-message.whisper {
+  background: #b5a2a2;
+}
+.theme-dark #interface #sidebar .chat-message.blind,
+.theme-dark #interface #ui-right-column-1 .chat-message.blind {
+  border: 3px solid #990000;
+}
+.theme-light #interface #sidebar .chat-message.blind,
+.theme-light #interface #ui-right-column-1 .chat-message.blind {
+  border: 3px solid var(--color-blind-border);
+}
+#interface #sidebar .chat-message .message-header,
+#interface #ui-right-column-1 .chat-message .message-header {
+  border-bottom: 1px solid #5d142b;
+  display: grid;
+}
+.theme-dark #interface #sidebar .chat-message .message-header,
+.theme-dark #interface #ui-right-column-1 .chat-message .message-header {
+  color: var(--color-textLight);
+}
+.theme-light #interface #sidebar .chat-message .message-header,
+.theme-light #interface #ui-right-column-1 .chat-message .message-header {
+  color: #222;
+}
+#interface #sidebar .chat-message .message-header .message-metadata,
+#interface #ui-right-column-1 .chat-message .message-header .message-metadata {
+  margin-top: -53px;
+}
+#interface #sidebar .chat-message .message-header img,
+#interface #ui-right-column-1 .chat-message .message-header img {
+  max-width: 50px;
+  max-height: 50px;
+  margin-right: 4px;
+}
+#interface #sidebar .chat-message .message-header .title,
+#interface #ui-right-column-1 .chat-message .message-header .title {
+  font-size: 18px;
+  font-weight: bold;
+  display: inline;
+  text-wrap: auto;
+}
+#interface #sidebar .chat-message .message-header .message-sender,
+#interface #ui-right-column-1 .chat-message .message-header .message-sender {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#interface #sidebar .chat-message .message-content .card-content,
+#interface #ui-right-column-1 .chat-message .message-content .card-content {
+  font-size: 16px;
+  margin: -6px 0px 0px 0px;
+}
+#interface #sidebar .chat-message .message-content .card-content p,
+#interface #ui-right-column-1 .chat-message .message-content .card-content p {
+  margin-bottom: -15px;
+  border: 2px solid var(--color-abilities);
+  border-radius: 15px;
+  background-color: #084f7b66;
+  font-weight: bold;
+  padding: 1px 0 0px 10px;
+}
+#interface #sidebar .chat-message .message-content .attack-card .card-content p,
+#interface #ui-right-column-1 .chat-message .message-content .attack-card .card-content p {
+  border: 2px solid var(--color-encounterSheet);
+  background-color: #5d142b3d;
+}
+#interface #sidebar .chat-message .message-content strong,
+#interface #ui-right-column-1 .chat-message .message-content strong {
+  font-size: 15px;
+}
+#interface #sidebar .chat-message .message-content label,
+#interface #ui-right-column-1 .chat-message .message-content label {
+  font-size: 14px;
+}
+#interface #sidebar .chat-message .message-content .result,
+#interface #ui-right-column-1 .chat-message .message-content .result {
+  display: flex;
+  justify-content: center;
+}
+#interface #sidebar .chat-message .message-content .totalResult,
+#interface #ui-right-column-1 .chat-message .message-content .totalResult,
+#interface #sidebar .chat-message .message-content .diffResult,
+#interface #ui-right-column-1 .chat-message .message-content .diffResult,
+#interface #sidebar .chat-message .message-content .vs,
+#interface #ui-right-column-1 .chat-message .message-content .vs {
+  font-size: 38px;
+  font-weight: bold;
+  text-align: center;
+}
+#interface #sidebar .chat-message .message-content .totalResult label,
+#interface #ui-right-column-1 .chat-message .message-content .totalResult label,
+#interface #sidebar .chat-message .message-content .diffResult label,
+#interface #ui-right-column-1 .chat-message .message-content .diffResult label,
+#interface #sidebar .chat-message .message-content .vs label,
+#interface #ui-right-column-1 .chat-message .message-content .vs label {
+  font-size: 20px;
+}
+#interface #sidebar .chat-message .message-content .totalResult .vs,
+#interface #ui-right-column-1 .chat-message .message-content .totalResult .vs,
+#interface #sidebar .chat-message .message-content .diffResult .vs,
+#interface #ui-right-column-1 .chat-message .message-content .diffResult .vs,
+#interface #sidebar .chat-message .message-content .vs .vs,
+#interface #ui-right-column-1 .chat-message .message-content .vs .vs {
+  flex-basis: 40px;
+}
+#interface #sidebar .chat-message .message-content .display-difficulty,
+#interface #ui-right-column-1 .chat-message .message-content .display-difficulty,
+#interface #sidebar .chat-message .message-content .dice-total,
+#interface #ui-right-column-1 .chat-message .message-content .dice-total {
+  margin-bottom: -10px;
+}
+#interface #sidebar .chat-message .message-content .vs,
+#interface #ui-right-column-1 .chat-message .message-content .vs {
+  margin: 0px 25px;
+  align-self: center;
+}
+#interface #sidebar .chat-message .message-content .ResultSentence,
+#interface #ui-right-column-1 .chat-message .message-content .ResultSentence {
+  text-align: center;
+  margin: -5px 0px -10px 0px;
+}
+#interface #sidebar .chat-message .message-content .ResultSentence span,
+#interface #ui-right-column-1 .chat-message .message-content .ResultSentence span {
+  text-align: center;
+  font-size: 20px;
+}
+.theme-dark #interface #sidebar .chat-message .message-content .ResultSentence span,
+.theme-dark #interface #ui-right-column-1 .chat-message .message-content .ResultSentence span {
+  color: #0b0a13e6;
+  padding: 0 15px;
+  border-radius: 15px;
+  font-weight: bold;
+}
+.theme-dark #interface #sidebar .chat-message .message-content .ResultSentence .success,
+.theme-dark #interface #ui-right-column-1 .chat-message .message-content .ResultSentence .success {
+  background: #2c532c;
+}
+.theme-dark #interface #sidebar .chat-message .message-content .ResultSentence .critical,
+.theme-dark #interface #ui-right-column-1 .chat-message .message-content .ResultSentence .critical {
+  background: green;
+}
+.theme-dark #interface #sidebar .chat-message .message-content .ResultSentence .failure,
+.theme-dark #interface #ui-right-column-1 .chat-message .message-content .ResultSentence .failure {
+  background: darkred;
+}
+.theme-dark #interface #sidebar .chat-message .message-content .ResultSentence .failure.fumble,
+.theme-dark #interface #ui-right-column-1 .chat-message .message-content .ResultSentence .failure.fumble {
+  background: red;
+}
+.theme-light #interface #sidebar .chat-message .message-content .ResultSentence .success,
+.theme-light #interface #ui-right-column-1 .chat-message .message-content .ResultSentence .success {
+  color: #2c532c;
+}
+.theme-light #interface #sidebar .chat-message .message-content .ResultSentence .critical,
+.theme-light #interface #ui-right-column-1 .chat-message .message-content .ResultSentence .critical {
+  color: green;
+}
+.theme-light #interface #sidebar .chat-message .message-content .ResultSentence .failure,
+.theme-light #interface #ui-right-column-1 .chat-message .message-content .ResultSentence .failure {
+  color: darkred;
+}
+.theme-light #interface #sidebar .chat-message .message-content .ResultSentence .failure.fumble,
+.theme-light #interface #ui-right-column-1 .chat-message .message-content .ResultSentence .failure.fumble {
+  color: red;
+}
+#interface #sidebar .chat-message .message-content button,
+#interface #ui-right-column-1 .chat-message .message-content button {
+  background: #084f7b66;
+  justify-self: center;
+  margin-top: 5px;
+  font-weight: bold;
+  padding: 0 10px;
+  box-shadow: 1px 1px 0px 1px #084f7b;
+}
+.theme-dark #interface #sidebar .chat-message .message-content button,
+.theme-dark #interface #ui-right-column-1 .chat-message .message-content button {
+  color: var(--color-light-3);
+}
+.theme-light #interface #sidebar .chat-message .message-content button,
+.theme-light #interface #ui-right-column-1 .chat-message .message-content button {
+  color: #222;
+}
+#interface #sidebar .chat-message .message-content button.opposite-roll,
+#interface #ui-right-column-1 .chat-message .message-content button.opposite-roll {
+  height: 40px;
+  font-size: 18px;
+  color: #910000;
+  background: #5d142b3d;
+  border: 2px solid var(--color-encounterSheet);
+  border-radius: 15px;
+  box-shadow: 1px 1px 0px 1px var(--color-encounterSheet);
+  padding: 0px 5px;
+}
+.theme-dark #interface #sidebar .chat-message .message-content .typeCard,
+.theme-dark #interface #ui-right-column-1 .chat-message .message-content .typeCard,
+.theme-dark #interface #sidebar .chat-message .message-content .typeCardSkill,
+.theme-dark #interface #ui-right-column-1 .chat-message .message-content .typeCardSkill {
+  text-shadow: 0px 0px 4px #795403;
+}
+.theme-light #interface #sidebar .chat-message .message-content .typeCard,
+.theme-light #interface #ui-right-column-1 .chat-message .message-content .typeCard,
+.theme-light #interface #sidebar .chat-message .message-content .typeCardSkill,
+.theme-light #interface #ui-right-column-1 .chat-message .message-content .typeCardSkill {
+  text-shadow: 0 0px 4px #cf7306c4;
+}
+#interface #sidebar .chat-message .message-content .typeCard label,
+#interface #ui-right-column-1 .chat-message .message-content .typeCard label,
+#interface #sidebar .chat-message .message-content .typeCardSkill label,
+#interface #ui-right-column-1 .chat-message .message-content .typeCardSkill label {
+  font-size: 25px;
+  font-weight: bold;
+  font-variant: small-caps;
+}
+.theme-dark #interface #sidebar .chat-message .message-content .typeCard label,
+.theme-dark #interface #ui-right-column-1 .chat-message .message-content .typeCard label {
+  color: #8b0a33;
+}
+.theme-light #interface #sidebar .chat-message .message-content .typeCard label,
+.theme-light #interface #ui-right-column-1 .chat-message .message-content .typeCard label {
+  color: #5d142b;
+}
+.theme-dark #interface #sidebar .chat-message .message-content .typeCardSkill label,
+.theme-dark #interface #ui-right-column-1 .chat-message .message-content .typeCardSkill label {
+  color: #306687;
+}
+.theme-light #interface #sidebar .chat-message .message-content .typeCardSkill label,
+.theme-light #interface #ui-right-column-1 .chat-message .message-content .typeCardSkill label {
+  color: #084f7b;
+}
+#interface #sidebar .chat-message .message-content .actionName strong,
+#interface #ui-right-column-1 .chat-message .message-content .actionName strong {
+  font-size: 18px;
+  font-style: italic;
+}
+#interface #sidebar .chat-message .message-content .luckyPoints,
+#interface #ui-right-column-1 .chat-message .message-content .luckyPoints {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  margin-top: 35px;
+}
+#interface #sidebar .chat-message .message-content .luckyPoints .imgLucky,
+#interface #ui-right-column-1 .chat-message .message-content .luckyPoints .imgLucky {
+  height: 25px;
+  margin-left: 5px;
+}
+#interface #sidebar .chat-message .message-content .luckyPoints label,
+#interface #ui-right-column-1 .chat-message .message-content .luckyPoints label {
+  font-size: 17px;
+}
+#interface #sidebar .chat-message .message-content .damagePart,
+#interface #ui-right-column-1 .chat-message .message-content .damagePart {
+  margin: 18px 0px 0px 15px;
+}
+#interface #sidebar .chat-message .message-content .damage-buttons,
+#interface #ui-right-column-1 .chat-message .message-content .damage-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 37px);
+  grid-template-rows: 30px 30px;
+  justify-items: center;
+  border-left: 4px solid var(--color-encounterSheet);
+  padding-left: 10px;
+}
+#interface #sidebar .chat-message .message-content .damage-buttons .fas,
+#interface #ui-right-column-1 .chat-message .message-content .damage-buttons .fas {
+  font-size: 25px;
+  text-shadow: 0px 0px 2px red;
+}
+#interface #sidebar .chat-message .message-content .tempDm,
+#interface #ui-right-column-1 .chat-message .message-content .tempDm {
+  grid-column: 1/3;
+}
+#interface #sidebar .chat-message .message-content .dr,
+#interface #ui-right-column-1 .chat-message .message-content .dr {
+  grid-column: 3/5;
+}
+#interface #sidebar .chat-message .message-content .message-card p,
+#interface #ui-right-column-1 .chat-message .message-content .message-card p {
+  font-size: 15px;
+}
+#interface #sidebar .chat-message .message-content .itemTitle,
+#interface #ui-right-column-1 .chat-message .message-content .itemTitle {
+  font-size: 16px;
+  display: flex;
+  align-items: flex-end;
+}
+#interface #sidebar .chat-message .message-content .itemTitle span,
+#interface #ui-right-column-1 .chat-message .message-content .itemTitle span {
+  text-transform: uppercase;
+  font-weight: bold;
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#interface #sidebar .chat-message .message-content .itemTitle img,
+#interface #ui-right-column-1 .chat-message .message-content .itemTitle img {
+  height: 27px;
+  margin-right: 5px;
+}
+#interface #sidebar .chat-message .message-content .chatroll .heal,
+#interface #ui-right-column-1 .chat-message .message-content .chatroll .heal {
+  font-size: 22px;
+  color: #2c532c;
+  margin: 5px;
+}
+#interface #sidebar .chat-message .message-content .chatroll .healFormula,
+#interface #ui-right-column-1 .chat-message .message-content .chatroll .healFormula {
+  margin-bottom: -10px;
+  border: 2px solid #2c532c;
+  border-radius: 15px;
+  background-color: #087b1f66;
+  font-weight: bold;
+  padding: 1px 0 0px 10px;
+  font-size: 16px;
+}
+#interface #sidebar .chat-message .message-content .chatroll .healResult,
+#interface #ui-right-column-1 .chat-message .message-content .chatroll .healResult {
+  font-size: 38px;
+  font-weight: bold;
+  text-align: center;
+}
+#interface #sidebar .chat-message .message-content .chatroll .healResult label,
+#interface #ui-right-column-1 .chat-message .message-content .chatroll .healResult label {
+  font-size: 20px;
+}
+#interface #sidebar .chat-message .message-content .chatroll .healMessage,
+#interface #ui-right-column-1 .chat-message .message-content .chatroll .healMessage {
+  width: 150px;
+  margin-left: 30px;
+}
+#interface #sidebar .chat-message .message-content .chatroll p,
+#interface #ui-right-column-1 .chat-message .message-content .chatroll p {
+  margin: 0;
+}
+#interface #sidebar .chat-message .message-content .chatroll h3,
+#interface #ui-right-column-1 .chat-message .message-content .chatroll h3 {
+  text-align: center;
+  margin: -10px 0 0 0;
+}
+.theme-dark #interface #sidebar .chat-message .message-content .chatroll strong,
+.theme-dark #interface #ui-right-column-1 .chat-message .message-content .chatroll strong {
+  color: #e7d1b1;
+}
+.theme-light #interface #sidebar .chat-message .message-content .chatroll strong,
+.theme-light #interface #ui-right-column-1 .chat-message .message-content .chatroll strong {
+  color: #222;
+}
+#interface #sidebar .chat-message .message-content h4.dice-total,
+#interface #ui-right-column-1 .chat-message .message-content h4.dice-total {
+  margin: 0;
 }

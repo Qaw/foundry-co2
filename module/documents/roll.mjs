@@ -508,7 +508,7 @@ export class COAttackRoll extends CORoll {
       type: this.options.type,
       actor: this.options.actor,
       speaker: ChatMessage.getSpeaker({ actor: this.options.actor, scene: canvas.scene }),
-      flavor: `${this.options.flavor} - ${this.options.type === "attack" ? "Attaque" : "Dommages"}`,
+      flavor: `${this.options.flavor}`,
       hasDice,
       diceType,
       formula: isPrivate ? "???" : this.formula,

@@ -1,0 +1,170 @@
+&.attack-roll {
+  .window-header {
+    border-radius: 5px 5px 0 0;
+    background-color: var(--color-backgroundAttackDialog);
+    border-bottom: 2px solid #ad0606;
+    .window-title {
+      text-align: center;
+      font-size: 25px;
+      font-weight: bold;
+      color: #5d142b;
+      .theme-dark & {
+        color: #b3b4b5;
+      }
+    }
+    /*.theme-dark & {
+      background: none;
+      background-color: rgba(0, 0, 0, 0.8);
+    }*/
+  }
+  .icone {
+    text-align: center;
+    font-size: 30px;
+    align-content: center;
+  }
+  .window-content {
+    background-color: var(--color-backgroundAttackDialog);
+    padding: 10px;
+    .attack-roll-1 {
+      display: grid;
+      grid-template-columns: 0.5fr 1.5fr 0.3fr 1.7fr 0.3fr 1.5fr;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #ad0606;
+      gap: 0;
+    }
+    .attack-roll-2 {
+      display: grid;
+      grid-template-columns: 0.5fr 3fr 0.8fr 0.8fr 1.2fr;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #ad0606;
+      gap: 0;
+    }
+    .rollDommages {
+      display: grid;
+      grid-template-columns: 2.4fr 0.3fr 2fr 2.4fr;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #ad0606;
+    }
+    .dommageDialog {
+      display: grid;
+      grid-template-columns: 0.5fr 3fr 0.8fr 0.8fr 1.2fr;
+      padding-bottom: 6px;
+      margin-bottom: 6px;
+      border-bottom: 2px solid #ad0606;
+      gap: 0;
+    }
+    .tacticalTargets {
+      display: grid;
+      grid-template-columns: 0.6fr 1fr;
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+      border-bottom: 2px solid #ad0606;
+    }
+    .tacticalOptions {
+      display: grid;
+      grid-template-columns: 0.7fr 2.7fr;
+      gap: 0;
+    }
+    .form-fields {
+      border: none;
+      justify-content: center;
+      .temp-checkbox {
+        align-content: center;
+      }
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+      align-items: start;
+      justify-content: flex-end;
+      padding-left: 8px;
+      label.near {
+        margin-bottom: -18px;
+      }
+      label {
+        margin-bottom: -8px;
+        font-weight: bold;
+      }
+      .textCenter {
+        text-align: center;
+        align-self: center;
+      }
+    }
+    .diffGroup {
+      padding-right: 30px;
+    }
+
+    .form-group.rollMode {
+      padding-left: 0px 0px 0px 10px;
+    }
+    .form-fields-radio {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 0;
+      margin: 0px;
+      align-items: start;
+      justify-content: start;
+      .radio {
+        margin: 0;
+      }
+    }
+    input {
+      margin: 0px;
+      text-align: left;
+    }
+    .field-value,
+    select {
+      text-align: left;
+      font-size: 20px;
+      font-weight: bolder;
+      background-color: #ffffff57;
+      .theme-dark & {
+        color: #e7d1b1;
+      }
+    }
+    .standard-form {
+      gap: 0;
+    }
+
+    .fas.fa-fw.fa-shield-alt {
+      color: #0e507c;
+    }
+    .fa-solid.fa-dice {
+      color: #2f4f4f;
+    }
+    .fa-solid.fa-dice-d20 {
+      color: #393939;
+    }
+    .fa-solid.fa-droplet {
+      color: #9f0000;
+    }
+    .fa-solid.fa-sliders-up {
+      color: #532d75;
+      align-content: start;
+    }
+    legend {
+      text-align: center;
+      padding-bottom: 3px;
+    }
+    .targets.center {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .target {
+      margin: 3px 8px;
+    }
+
+    .theme-dark & {
+      // background: none;
+      // background-color: rgba(0, 0, 0, 0.8);
+      color: #e7d1b1;
+      input {
+        color: #b3b4b5;
+        text-align: left;
+      }
+    }
+  }
+}

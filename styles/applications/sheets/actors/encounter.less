@@ -12,14 +12,17 @@
 
     .notes {
       max-height: calc(100% - 20px);
-
+      text-wrap: auto;
       .editor {
         margin: 8px;
       }
-
-      prose-mirror.editor {
-        margin: 0;
-      }
     }
+
+    prose-mirror.editor {
+      margin: 0;
+    }
+  }
+  .editor-content {
+    text-wrap: auto;
   }
 }

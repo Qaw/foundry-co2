@@ -1566,7 +1566,7 @@ export default class COActor extends Actor {
     if (skillValue < 0) formula += `-${skillValue}`
 
     // Construction du message de chat
-    if (!chatFlavor) chatFlavor = `${game.i18n.localize("CO.dialogs.skillCheck")} ${game.i18n.localize(`CO.abilities.long.${skillId}`)}`
+    if (!chatFlavor) chatFlavor = `${game.i18n.localize(`CO.abilities.long.${skillId}`)}`
 
     const skillBonuses = this.getSkillBonuses(skillId) // Récupère un tableau d'objets avec {name, description, value}
     const hasSkillBonuses = skillBonuses.length > 0

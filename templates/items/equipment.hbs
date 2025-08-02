@@ -37,11 +37,17 @@
 
             <!-- EMPILABLE -->
             {{#if system.properties.stackable }}
-                <fieldset class="empilage">
+                <fieldset >
                     <legend>{{localize "CO.ui.quantity"}}</legend>
-                    {{formGroup systemFields.quantity.fields.current value=systemSource.quantity.current localize=true disabled=locked}}
-                    {{formGroup systemFields.quantity.fields.max value=systemSource.quantity.max localize=true disabled=locked}}
+                    <div class="form-group">
+                    <label>{{localize "CO.Equipment.FIELDS.quantity.current.label"}} / {{localize "CO.Equipment.FIELDS.quantity.max.label"}}</label>
+                    <div class="form-fields">
+                    {{formInput systemFields.quantity.fields.current value=systemSource.quantity.current placeholder=0 localize=true disabled=locked}}
+                    /
+                    {{formInput systemFields.quantity.fields.max value=systemSource.quantity.max placeholder=0 localize=true disabled=locked}}
+                    </div></div>
                     {{formGroup systemFields.quantity.fields.destroyIfEmpty value=systemSource.quantity.destroyIfEmpty localize=true disabled=locked}}
+                    
                 </fieldset>
             {{/if}}    
 
@@ -172,8 +178,8 @@
                     <div class="form-group">
                         <label>{{localize "CO.ui.range"}}</label>
                         <div class="form-fields">
-                            {{formInput systemFields.range.fields.value value=systemSource.range.value localize=true disabled=locked}}
-                            {{formInput systemFields.range.fields.unit value=systemSource.range.unit localize=true disabled=locked}}
+                            {{formInput systemFields.range.fields.value value=systemSource.range.value placeholder=0 localize=true disabled=locked}}
+                            {{formInput systemFields.range.fields.unit value=systemSource.range.unit placeholder="unit" localize=true disabled=locked}}
                         </div>
                     </div>
                 </fieldset>
@@ -181,10 +187,15 @@
 
             <!-- RECHARGEABLE -->
             {{#if system.properties.reloadable }}
-                <fieldset class="rechargeable">
+                <fieldset>
                     <legend>{{localize "CO.ui.rechargeable"}}</legend>
-                    {{formGroup systemFields.charges.fields.current value=systemSource.charges.current localize=true disabled=locked}}
-                    {{formGroup systemFields.charges.fields.max value=systemSource.charges.max localize=true disabled=locked}}
+                    <div class="form-group">
+                    <label>{{localize "CO.Equipment.FIELDS.charges.current.label"}} / {{localize "CO.Equipment.FIELDS.charges.max.label"}}</label>
+                    <div class="form-fields">
+                    {{formInput systemFields.charges.fields.current value=systemSource.charges.current placeholder=0 localize=true disabled=locked}}
+                    /
+                    {{formInput systemFields.charges.fields.max value=systemSource.charges.max placeholder=0 localize=true disabled=locked}}
+                    </div></div>
                     {{formGroup systemFields.charges.fields.destroyIfEmpty value=systemSource.charges.destroyIfEmpty localize=true disabled=locked}}
                 </fieldset>
             {{/if}}

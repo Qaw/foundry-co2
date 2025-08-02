@@ -6,6 +6,7 @@
     {{#if action.conditions}}
         <div class="form-group-stacked">
             <label></label>
+
             {{#each action.conditions as |c id|}}
                 {{log 'condition' c id @root}}
                 <div class="form-fields condition" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="condition">

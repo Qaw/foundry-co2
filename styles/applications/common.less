@@ -1,3 +1,31 @@
+@color-characterSheet: #ba9442;
+@color-abilities: #0c4f7b;
+@color-backgroundGrey: #ebebe8;
+@color-encounterSheet: #95262699;
+@color-WindowContentDark: #00000094;
+@color-WindowContentLight: #584a756b;
+
+.theme-light & {
+  --color-characterSheet: @color-characterSheet;
+  --color-abilities: @color-abilities;
+  --color-backgroundGrey: @color-backgroundGrey;
+  --color-encounterSheet: @color-encounterSheet;
+  --color-WindowContent: @color-WindowContentLight;
+  --color-textLight: #fffaf2;
+  --color-backgroundAttackDialog: #754a548c;
+  --color-backgroundSkillDialog: #2a3c876b;
+}
+.theme-dark & {
+  --color-characterSheet: darken(@color-characterSheet, 25%);
+  --color-abilities: darken(@color-abilities, 10%);
+  --color-backgroundGrey: darken(@color-backgroundGrey, 20%);
+  --color-encounterSheet: darken(@color-encounterSheet, 10%);
+  --color-WindowContent: @color-WindowContentDark;
+  --color-textLight: #e7d1b1;
+  --color-backgroundAttackDialog: #33161d8c;
+  --color-backgroundSkillDialog: #313a5f6b;
+}
+
 ul,
 ol,
 li {
@@ -17,10 +45,11 @@ li {
 .sheet-tabs {
   align-items: stretch;
   border-top: 0;
-  border-bottom-color: var(--color-primary);
+  border-bottom-color: var(--color-abilities);
   display: flex;
   flex-flow: row nowrap;
   padding: 0 8px;
+  gap: 0;
 
   [data-tab] {
     align-items: baseline;
@@ -36,12 +65,14 @@ li {
     white-space: nowrap;
 
     &.active {
-      background-color: var(--color-primary);
-      border: 1px solid var(--color-primary);
+      background-color: var(--color-abilities);
+      border: 1px solid var(--color-abilities);
+      color: var(--color-backgroundGrey);
+      font-weight: bold;
     }
 
     &:hover {
-      border: 1px dotted var(--color-primary);
+      border: 2px dotted var(--color-abilities);
       border-bottom: 0;
     }
   }
@@ -50,7 +81,7 @@ li {
 .tab[data-tab] {
   padding: 10px 0 10px 10px;
   overflow: hidden auto;
-  scrollbar-color: var(--color-primary) var(--color-scrollbar-track);
+  scrollbar-color: var(--color-abilities) var(--color-scrollbar-track);
   scrollbar-gutter: stable;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -63,8 +94,8 @@ li {
     flex-flow: column nowrap;
   }
 
-  >* {
-    flex: none
+  > * {
+    flex: none;
   }
 }
 
@@ -82,6 +113,16 @@ h4.form-header {
     flex: 0;
   }
 }
+.actionRow {
+  display: grid;
+  grid-template-columns: 25px 20px 1fr;
+  align-items: center;
+}
+.actionColumn {
+  justify-self: center;
+  font-size: 15px;
+  font-weight: bold;
+}
 
 .resolvers-container {
   .resolver {
@@ -97,8 +138,8 @@ h4.form-header {
       padding-bottom: 8px;
     }
 
-    >.form-group,
-    >.form-group-stacked {
+    > .form-group,
+    > .form-group-stacked {
       flex: 2 0 100%;
     }
 

@@ -1,0 +1,332 @@
+& .chat-message {
+  .theme-dark & {
+    background: #0b0a13e6;
+    color: var(--color-textLight);
+    span,
+    label {
+      color: var(--color-textLight);
+    }
+  }
+  .theme-light & {
+    background-color: var(--color-light-3);
+    color: #222;
+    span,
+    label {
+      color: #222;
+    }
+  }
+  &.whisper {
+    .theme-dark & {
+      background: #210000e8;
+    }
+    .theme-light & {
+      background: #b5a2a2;
+    }
+  }
+  &.blind {
+    .theme-dark & {
+      border: 3px solid #990000;
+    }
+    .theme-light & {
+      border: 3px solid var(--color-blind-border);
+    }
+  }
+  .message-header {
+    border-bottom: 1px solid #5d142b;
+    display: grid;
+    .theme-dark & {
+      color: var(--color-textLight);
+    }
+    .theme-light & {
+      color: #222;
+    }
+
+    .message-metadata {
+      margin-top: -53px;
+    }
+
+    img {
+      max-width: 50px;
+      max-height: 50px;
+      margin-right: 4px;
+    }
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+      display: inline;
+      text-wrap: auto;
+    }
+    .message-sender {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+  .message-content {
+    .card-content {
+      font-size: 16px;
+      margin: -6px 0px 0px 0px;
+      p {
+        margin-bottom: -15px;
+        border: 2px solid var(--color-abilities);
+        border-radius: 15px;
+        background-color: #084f7b66;
+        font-weight: bold;
+        padding: 1px 0 0px 10px;
+      }
+    }
+    .attack-card {
+      .card-content {
+        p {
+          border: 2px solid var(--color-encounterSheet);
+          background-color: #5d142b3d;
+        }
+      }
+    }
+    strong {
+      font-size: 15px;
+    }
+    label {
+      font-size: 14px;
+    }
+    .result {
+      display: flex;
+      justify-content: center;
+      //grid-template-columns: auto 40px auto;
+    }
+    .totalResult,
+    .diffResult,
+    .vs {
+      font-size: 38px;
+      font-weight: bold;
+      text-align: center;
+      label {
+        font-size: 20px;
+      }
+      .vs {
+        flex-basis: 40px;
+      }
+    }
+    .display-difficulty,
+    .dice-total {
+      margin-bottom: -10px;
+    }
+
+    .vs {
+      margin: 0px 25px;
+      align-self: center;
+    }
+    .ResultSentence {
+      text-align: center;
+      margin: -5px 0px -10px 0px;
+      span {
+        text-align: center;
+        font-size: 20px;
+
+        .theme-dark & {
+          color: #0b0a13e6;
+          padding: 0 15px;
+          border-radius: 15px;
+          font-weight: bold;
+        }
+      }
+      .theme-dark & {
+        .success {
+          background: #2c532c;
+        }
+        .critical {
+          background: green;
+        }
+        .failure {
+          background: darkred;
+        }
+        .failure.fumble {
+          background: red;
+        }
+      }
+
+      .theme-light & {
+        .success {
+          color: #2c532c;
+        }
+        .critical {
+          color: green;
+        }
+        .failure {
+          color: darkred;
+        }
+        .failure.fumble {
+          color: red;
+        }
+      }
+    }
+
+    button {
+      background: #084f7b66;
+      justify-self: center;
+      margin-top: 5px;
+      font-weight: bold;
+      padding: 0 10px;
+      box-shadow: 1px 1px 0px 1px #084f7b;
+      .theme-dark & {
+        color: var(--color-light-3);
+      }
+      .theme-light & {
+        color: #222;
+      }
+    }
+    button.opposite-roll {
+      height: 40px;
+      font-size: 18px;
+      color: #910000;
+      background: #5d142b3d;
+      border: 2px solid var(--color-encounterSheet);
+      border-radius: 15px;
+      box-shadow: 1px 1px 0px 1px var(--color-encounterSheet);
+      padding: 0px 5px;
+    }
+    .typeCard,
+    .typeCardSkill {
+      .theme-dark & {
+        text-shadow: 0px 0px 4px #795403;
+      }
+      .theme-light & {
+        text-shadow: 0 0px 4px #cf7306c4;
+      }
+      label {
+        font-size: 25px;
+        font-weight: bold;
+        font-variant: small-caps;
+      }
+    }
+    .typeCard {
+      label {
+        .theme-dark & {
+          color: #8b0a33;
+        }
+        .theme-light & {
+          color: #5d142b;
+        }
+      }
+    }
+    .typeCardSkill {
+      label {
+        .theme-dark & {
+          color: #306687;
+        }
+        .theme-light & {
+          color: #084f7b;
+        }
+      }
+    }
+    .actionName {
+      strong {
+        font-size: 18px;
+        font-style: italic;
+      }
+    }
+
+    .luckyPoints {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 5px;
+      margin-top: 35px;
+      .imgLucky {
+        height: 25px;
+        margin-left: 5px;
+      }
+      label {
+        font-size: 17px;
+      }
+    }
+    .damagePart {
+      margin: 18px 0px 0px 15px;
+    }
+    .damage-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 37px);
+      grid-template-rows: 30px 30px;
+      justify-items: center;
+      border-left: 4px solid var(--color-encounterSheet);
+      padding-left: 10px;
+      .fas {
+        font-size: 25px;
+        text-shadow: 0px 0px 2px red;
+      }
+    }
+    .tempDm {
+      grid-column: 1/3;
+    }
+    .dr {
+      grid-column: 3/5;
+    }
+    .message-card {
+      p {
+        font-size: 15px;
+      }
+    }
+    .itemTitle {
+      font-size: 16px;
+      display: flex;
+      align-items: flex-end;
+      span {
+        text-transform: uppercase;
+        font-weight: bold;
+        text-wrap: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      img {
+        height: 27px;
+        margin-right: 5px;
+      }
+    }
+    .chatroll {
+      .heal {
+        font-size: 22px;
+        color: #2c532c;
+        margin: 5px;
+      }
+      .healFormula {
+        margin-bottom: -10px;
+        border: 2px solid #2c532c;
+        border-radius: 15px;
+        background-color: #087b1f66;
+        font-weight: bold;
+        padding: 1px 0 0px 10px;
+        font-size: 16px;
+      }
+      .healResult {
+        font-size: 38px;
+        font-weight: bold;
+        text-align: center;
+        label {
+          font-size: 20px;
+        }
+      }
+      .healMessage {
+        width: 150px;
+        margin-left: 30px;
+      }
+      p {
+        margin: 0;
+      }
+      h3 {
+        text-align: center;
+        margin: -10px 0 0 0;
+      }
+      strong {
+        .theme-dark & {
+          color: #e7d1b1;
+        }
+        .theme-light & {
+          color: #222;
+        }
+      }
+    }
+    h4.dice-total {
+      margin: 0;
+    }
+  }
+}

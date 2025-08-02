@@ -1,0 +1,172 @@
+&.skill-roll {
+  .window-header {
+    border-radius: 5px 5px 0 0;
+    background-color: var(--color-backgroundSkillDialog);
+    border-bottom: 2px solid #5d142b;
+    .window-title {
+      text-align: center;
+      font-size: 25px;
+      font-weight: bold;
+      color: #5d142b;
+      .theme-dark & {
+        color: #b3b4b5;
+      }
+    }
+    /*.theme-dark & {
+      background: none;
+      background-color: rgba(0, 0, 0, 0.8);
+    }*/
+  }
+
+  .icone {
+    text-align: center;
+    font-size: 30px;
+    align-content: center;
+  }
+  #totalSkillBonuses {
+    color: #5d142b;
+    font-weight: bolder;
+    font-size: 30px;
+    .theme-dark & {
+      color: #d33e6d;
+    }
+  }
+
+  .window-content {
+    background-color: var(--color-backgroundSkillDialog);
+    padding: 10px;
+    .skill-roll-1 {
+      display: grid;
+      grid-template-columns: 0.5fr 1.5fr 0.3fr 1.7fr 0.3fr 1.5fr;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #5d142b;
+    }
+    .skill-roll-2 {
+      display: grid;
+      grid-template-columns: 0.6fr 3fr 0.8fr 0.8fr 1.2fr 1fr;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #5d142b;
+    }
+    .skill-roll-3 {
+      padding-bottom: 0px;
+      border-bottom: 2px solid #5d142b;
+      margin-bottom: 3px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+      align-items: start;
+      justify-content: flex-end;
+      padding-left: 8px;
+      label.near {
+        margin-bottom: -18px;
+      }
+      .form-fields {
+        border: none;
+      }
+      label {
+        margin-bottom: -8px;
+        font-weight: bold;
+      }
+    }
+    .textCenter {
+      text-align: center;
+      align-self: center;
+    }
+  }
+  .diffGroup {
+    padding-right: 30px;
+  }
+
+  .form-group.rollMode {
+    padding: 0px 0px 0px 10px;
+  }
+  .form-fields-radio {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0;
+    margin: 0px;
+    align-items: start;
+    justify-content: start;
+    .radio {
+      margin: 0;
+    }
+  }
+  input {
+    margin: 0px;
+    text-align: left;
+  }
+  .field-value,
+  select {
+    text-align: left;
+    font-size: 20px;
+    font-weight: bolder;
+    background-color: #ffffff57;
+
+    .theme-dark & {
+      color: #e7d1b1;
+    }
+  }
+  .standard-form {
+    gap: 0;
+  }
+  .flex1.skill-bonuses {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 3px;
+  }
+  .fas.fa-fw.fa-shield-alt {
+    color: #0e507c;
+  }
+  .fa-solid.fa-dice {
+    color: #2f4f4f;
+  }
+  .fa-solid.fa-dice-d20 {
+    color: #393939;
+  }
+  .bonus-description {
+    display: flex;
+    flex-direction: column;
+  }
+  .bonus-value.flex0 {
+    font-size: 25px;
+    font-weight: bolder;
+    padding-right: 10px;
+    padding-left: 0px;
+  }
+  .bonus-name.flex1 {
+    font-size: 15px;
+    font-weight: bold;
+    padding-right: 5px;
+  }
+  .bonus-name.flex2 {
+    font-style: italic;
+    padding-right: 5px;
+    margin-left: 10px;
+  }
+  .bonus-item.flexrow {
+    border: 2px solid grey;
+    padding: 5px;
+    margin: 5px;
+    background-color: #ffffff57;
+  }
+  .bonus-item.flexrow.checked {
+    color: #b3b4b5;
+    padding: 5px;
+    margin: 5px;
+    border: 2px solid #b3b4b5;
+    background-color: #5d142b;
+  }
+  .theme-dark & {
+    // background: none;
+    // background-color: rgba(0, 0, 0, 0.8);
+    color: #e7d1b1;
+
+    input {
+      color: #b3b4b5;
+      text-align: left;
+    }
+  }
+}
