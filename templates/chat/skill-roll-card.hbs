@@ -1,18 +1,20 @@
 {{!log "skill-roll-card" this}}
 <div class="co chat-card roll-card skill-card" data-actor-id="{{actor.id}}">
   <header class="card-header flexcol">
-     <div class="typeCardSkill"><label><i class="fa-solid fa-dice-d6"></i>  {{flavor}}</label></div>
-     <!--<strong>{{localize "CO.dialogs.skillCheck"}}</strong>
-   {{#if showDifficulty}}
-      <label class="display-difficulty">{{localize "CO.label.long.difficulty"}} : <strong class="display-difficulty">{{difficulty}}</strong></label>
-    {{/if}}-->
+     <div class="typeCardSkill">
+        <label><i class="fa-solid fa-dice-d6"></i>  {{flavor}}</label>
+      </div>
+      <!--<strong>{{localize "CO.dialogs.skillCheck"}}</strong>
+      {{#if showDifficulty}}
+        <label class="display-difficulty">{{localize "CO.label.long.difficulty"}} : <strong class="display-difficulty">{{difficulty}}</strong></label>
+      {{/if}}-->
   </header>
    
   <div class="card-content">
     <p>{{localize "CO.ui.formula"}} : {{formula}}</p>
 
     <section class="result">
-      <div class="form-group totalResult">
+      <div class="form-group total-result">
         <div class="dice-total"><label>{{localize "CO.ui.total"}}</label></div>
         <div>{{total}}
         </div>
@@ -32,7 +34,7 @@
     {{#if (eq difficulty "")}}
     {{else}}
       <div class="vs"><label>VS</label></div>
-      <div class="form-group diffResult">
+      <div class="form-group diff-result">
         <div class="display-difficulty"><label>{{localize "CO.label.long.difficulty"}}</label></div>
         
         {{#if oppositeRoll}}
@@ -47,7 +49,7 @@
         {{/if}}
     </section>
 
-    <section class="ResultSentence">
+    <section class="result-sentence">
       <!--<h4 class="dice-total">{{localize "CO.ui.total"}} : {{total}}</h4>-->
       {{#if showDifficulty}}
         {{#if isSuccess}}

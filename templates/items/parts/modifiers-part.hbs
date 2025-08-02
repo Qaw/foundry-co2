@@ -5,18 +5,16 @@
 </h4>
 <div class="modifiers-container foldable">
 
-    {{#if action.modifiers}}
-<div class="modifierHeader">
-  
-    <label>{{localize "CO.ui.type"}}</label>
-    <label>{{localize "CO.ui.subtype"}}</label>
-    <label>{{localize "CO.ui.value"}}</label>
-    <label></label>
-  
-</div>
-        {{#each action.modifiers as |m id|}}
-            {{> "systems/co/templates/items/parts/modifier.hbs" m=m id=id idx=../idx}}
-        {{/each}}
+{{#if action.modifiers}}
+    <div class="modifier-header">
+        <label>{{localize "CO.ui.type"}}</label>
+        <label>{{localize "CO.ui.subtype"}}</label>
+        <label>{{localize "CO.ui.value"}}</label>
+        <label></label>
+    </div>
+    {{#each action.modifiers as |m id|}}
+        {{> "systems/co/templates/items/parts/modifier.hbs" m=m id=id idx=../idx}}
+    {{/each}}
     {{else}}
         <div class="empty">
             {{localize "CO.notif.modifiers.empty"}}

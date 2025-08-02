@@ -1,42 +1,42 @@
 {{!log "Chroniques Oubliées | dialog attack-roll" this}}
 {{#if (eq type 'attack')}}
-<section class="attack-roll-1">
-<div class="icone"><i class="fa-solid fa-dice"></i></div>
-<div class="form-group">
-<div class="form-fields-radio">
-    <div class="radioRow">
-        <input type="radio" name="dice" id="diceMalus" value="malus" {{#if (eq dice "malus")}}checked{{/if}} />
-        <label for="dice">{{localize 'CO.ui.rollMalus'}}</label>
-    </div>
-    <div class="radioRow">
-        <input type="radio" name="dice" id="diceStandard" value="standard" {{#if (eq dice "standard")}}checked{{/if}}/>
-        <label for="dice">{{localize 'CO.ui.rollStandard'}}</label>
-    </div>
-    <div class="radioRow">
-        <input type="radio" name="dice" id="diceBonus" value="bonus" {{#if (eq dice "bonus")}}checked{{/if}}/>
-        <label for="dice">{{localize 'CO.ui.rollBonus'}}</label>
-    </div>
-</div>
-</div> 
-{{#if showDifficulty}}
-<div class="icone"><i class="fas fa-fw fa-shield-alt"></i></div>
-<div class="form-group diffGroup">
-    <label class="textCenter near">{{localize 'CO.label.long.difficulty'}}</label> 
-    <div class="form-fields" style="{{#if showDifficulty}}visibility:visible;{{else}}visibility:collapse;{{/if}}" >                                               
-        <input class="field-value textCenter" id="difficulty" name="difficulty" type="text" value="{{difficulty}}" data-dtype="String" data-tooltip="{{difficultyTooltip}}" {{#if auto}}readonly{{/if}}/>
-    </div>
-</div>
-{{/if}}
-<div class="icone"><i class="fa-solid fa-user-secret"></i></div>  
-<div class="form-group rollMode">
-    <label class="near" for="rollMode">{{localize 'CHAT.RollDefault'}}</label>
-    <div class="form-fields">
-        <select name="rollMode" id="rollMode">
-            {{selectOptions rollModes selected=rollMode localize=true}}            
-        </select>
-    </div>
-</div>
-</section>
+    <section class="attack-roll-1">
+        <div class="icone"><i class="fa-solid fa-dice"></i></div>
+        <div class="form-group">
+        <div class="form-fields-radio">
+            <div class="radio-row">
+                <input type="radio" name="dice" id="diceMalus" value="malus" {{#if (eq dice "malus")}}checked{{/if}} />
+                <label for="dice">{{localize 'CO.ui.rollMalus'}}</label>
+            </div>
+            <div class="radio-row">
+                <input type="radio" name="dice" id="diceStandard" value="standard" {{#if (eq dice "standard")}}checked{{/if}}/>
+                <label for="dice">{{localize 'CO.ui.rollStandard'}}</label>
+            </div>
+            <div class="radio-row">
+                <input type="radio" name="dice" id="diceBonus" value="bonus" {{#if (eq dice "bonus")}}checked{{/if}}/>
+                <label for="dice">{{localize 'CO.ui.rollBonus'}}</label>
+            </div>
+        </div>
+        </div> 
+        {{#if showDifficulty}}
+            <div class="icone"><i class="fas fa-fw fa-shield-alt"></i></div>
+            <div class="form-group diffGroup">
+                <label class="textCenter near">{{localize 'CO.label.long.difficulty'}}</label> 
+                <div class="form-fields" style="{{#if showDifficulty}}visibility:visible;{{else}}visibility:collapse;{{/if}}" >                                               
+                    <input class="field-value textCenter" id="difficulty" name="difficulty" type="text" value="{{difficulty}}" data-dtype="String" data-tooltip="{{difficultyTooltip}}" {{#if auto}}readonly{{/if}}/>
+                </div>
+            </div>
+        {{/if}}
+        <div class="icone"><i class="fa-solid fa-user-secret"></i></div>  
+        <div class="form-group rollMode">
+            <label class="near" for="rollMode">{{localize 'CHAT.RollDefault'}}</label>
+            <div class="form-fields">
+                <select name="rollMode" id="rollMode">
+                    {{selectOptions rollModes selected=rollMode localize=true}}            
+                </select>
+            </div>
+        </div>
+    </section>
 
     <fieldset class="attack-roll-2">      
         <!--<legend>{{localize "CO.resolver.types.attack"}}</legend>-->
@@ -68,36 +68,36 @@
     </fieldset>
             
     {{#if useComboRolls}}   
-    <fieldset class="dommageDialog">      
-    <!--<legend>{{ localize "CO.resolver.formula.damage"}}</legend>-->
-    <div class="icone"><i class="fa-solid fa-droplet"></i></div>       
-        <div class="form-group">
-        <label data-tooltip="{{localize 'CO.tooltip.formulaDamage'}}">Jet de Dommages</label>          
-            <div class="form-fields">
-                <input class="field-value" id="formulaDamage" name="formulaDamage" type="text" value="{{formulaDamage}}" data-dtype="String" data-tooltip="{{formulaDamageTooltip}}"/>
+        <fieldset class="dommageDialog">      
+            <!--<legend>{{ localize "CO.resolver.formula.damage"}}</legend>-->
+            <div class="icone"><i class="fa-solid fa-droplet"></i></div>       
+            <div class="form-group">
+                <label data-tooltip="{{localize 'CO.tooltip.formulaDamage'}}">Jet de Dommages</label>          
+                <div class="form-fields">
+                    <input class="field-value" id="formulaDamage" name="formulaDamage" type="text" value="{{formulaDamage}}" data-dtype="String" data-tooltip="{{formulaDamageTooltip}}"/>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="textCenter">{{localize 'CO.label.long.bonus'}}</label>
-            <div class="form-fields flex1">
-                <input class="field-value textCenter" id="damageBonus" name="damageBonus" type="text" value="{{damageBonus}}" data-dtype="String"/>
+            <div class="form-group">
+                <label class="textCenter">{{localize 'CO.label.long.bonus'}}</label>
+                <div class="form-fields flex1">
+                    <input class="field-value textCenter" id="damageBonus" name="damageBonus" type="text" value="{{damageBonus}}" data-dtype="String"/>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="textCenter">{{localize 'CO.label.long.malus'}}</label>
-            <div class="form-fields">
-                <input class="field-value textCenter" id="damageMalus" name="damageMalus" type="text" value="{{damageMalus}}" data-dtype="String"/>
+            <div class="form-group">
+                <label class="textCenter">{{localize 'CO.label.long.malus'}}</label>
+                <div class="form-fields">
+                    <input class="field-value textCenter" id="damageMalus" name="damageMalus" type="text" value="{{damageMalus}}" data-dtype="String"/>
+                </div>
             </div>
-        </div>
-        <div class="form-group">  
-            <label class="textCenter">{{localize 'CO.ui.tempDamage'}}</label>
-            <div class="form-fields">
-                <input class="temp-checkbox" type="checkbox" name="tempDamage" {{checked tempDamage}} data-canBeTempDamage="{{canBeTempDamage}}" />
-            </div>  
-        </div>
-    </div> 
-    </fieldset>           
-    {{/if}} 
+            <div class="form-group">  
+                <label class="textCenter">{{localize 'CO.ui.tempDamage'}}</label>
+                <div class="form-fields">
+                    <input class="temp-checkbox" type="checkbox" name="tempDamage" {{checked tempDamage}} data-canBeTempDamage="{{canBeTempDamage}}" />
+                </div>  
+            </div>
+        </fieldset>           
+    {{/if}}
+
     <section class="tacticalTargets">   
     <fieldset class="tacticalOptions">      
         <legend>{{localize "CO.ui.optionsTactiques"}}</legend>
@@ -136,23 +136,24 @@
         
 {{else}}
     <section class="rollDommages">
-    <div></div>
-    <div class="icone"><i class="fa-solid fa-user-secret"></i></div>
-    <div class="form-group rollMode">
-        <label for="rollMode">{{localize 'CHAT.RollDefault'}}</label>
-        <div class="form-fields">
-            <select name="rollMode" id="rollMode">
-                {{selectOptions rollModes selected=rollMode localize=true}}            
-            </select>
+        <div></div>
+        <div class="icone"><i class="fa-solid fa-user-secret"></i></div>
+        <div class="form-group rollMode">
+            <label for="rollMode">{{localize 'CHAT.RollDefault'}}</label>
+            <div class="form-fields">
+                <select name="rollMode" id="rollMode">
+                    {{selectOptions rollModes selected=rollMode localize=true}}            
+                </select>
+            </div>
         </div>
-    </div>
-    <div></div>
+        <div></div>
     </section>
-    <fieldset class="dommageDialog">      
-    <!--<legend>{{ localize "CO.resolver.formula.damage"}}</legend>-->
-    <div class="icone"><i class="fa-solid fa-droplet"></i></div>       
+    
+    <fieldset class="dommageDialog">          
+        <!--<legend>{{ localize "CO.resolver.formula.damage"}}</legend>-->
+        <div class="icone"><i class="fa-solid fa-droplet"></i></div>       
         <div class="form-group">
-        <label data-tooltip="{{localize 'CO.tooltip.formulaDamage'}}">Jet de Dommages</label>          
+            <label data-tooltip="{{localize 'CO.tooltip.formulaDamage'}}">Jet de Dommages</label>          
             <div class="form-fields flex1">
                 <input class="field-value" id="formulaDamage" name="formulaDamage" type="text" value="{{formulaDamage}}" data-dtype="String" data-tooltip="{{formulaDamageTooltip}}"/>
             </div>
@@ -175,6 +176,5 @@
                 <input class="temp-checkbox textCenter" type="checkbox" name="tempDamage" {{checked tempDamage}} data-canBeTempDamage="{{canBeTempDamage}}" />
             </div>  
         </div>
-    </div> 
     </fieldset>    
 {{/if}}

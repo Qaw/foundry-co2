@@ -1,8 +1,8 @@
 {{log "Chroniques Oubliées | capacity" this}}
 <section class="tab standard-form capacity{{#if tabs.details.active}} active{{/if}}" data-group="primary" data-tab="details">
 
-    <section class="halfPanel">
-        <section class="panelLeft">
+    <section class="half-panel">
+        <section class="panel-left">
             <!-- Mode Debug Détails -->
             {{#if debugMode}}
                 <fieldset class="debug">
@@ -34,7 +34,7 @@
                 {{#if system.hasFrequency}}
                     <div class="form-group">
                         <label>{{localize "CO.label.long.usageNumber"}}</label>
-                        <div class="form-fields borderRight">
+                        <div class="form-fields border-right">
                             <input class="field-value" name="system.charges.current" type="text" value="{{system.charges.current}}" placeholder="{{localize 'CO.ui.current'}}" data-dtype="Number"/>
                                 /
                             <input class="field-value" name="system.charges.max" type="text" value="{{system.charges.max}}" placeholder="{{localize 'CO.ui.max'}}" data-dtype="String" />

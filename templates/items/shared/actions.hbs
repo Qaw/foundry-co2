@@ -19,7 +19,7 @@
                 {{log 'action-partial action' idx action}}
                 <div class="tab action item{{#if (isActionSubtabActive @root.subtabs idx)}} active{{/if}}" data-group="actions" data-tab="action-{{idx}}" data-item-id="{{idx}}" data-item-type="action">
                     
-                    <section class="halfPanel">
+                    <section class="half-panel">
                         <section class="panel1">
                             <input type="hidden" name="system.actions.{{idx}}.source" value="{{action.source}}" data-dtype="String">
                             <input type="hidden" name="system.actions.{{idx}}.indice" value="{{idx}}" data-dtype="Number">
