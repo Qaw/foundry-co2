@@ -1330,6 +1330,10 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.item .window-content input {
   height: auto;
 }
+.co.application.sheet.item .window-content input[type="number"] {
+  text-align: center;
+  font-size: 18px;
+}
 .co.application.sheet.item .window-content input[type="checkbox"] {
   --checkbox-size: var(--font-size-18);
   background: none;
@@ -1337,6 +1341,9 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.item .window-content > .sheet-tabs {
   padding-left: calc(100px + 8px);
   margin-top: -38px;
+}
+.co.application.sheet.item .window-content .border-right input {
+  border-right: none;
 }
 .co.application.sheet.item .window-content .tab[data-tab].actions {
   margin-left: -10px;
@@ -1401,9 +1408,6 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.sheet.item.capacity .window-content fieldset {
   gap: 4px;
-}
-.co.application.sheet.item.capacity .window-content .border-right input {
-  border-right: none;
 }
 .co.application.sheet.item.capacity .window-content .form-group {
   gap: 10px;
@@ -2739,7 +2743,7 @@ co-toggle-switch[checked] thumb {
 #interface #sidebar .chat-message .message-content .result-sentence,
 #interface #ui-right-column-1 .chat-message .message-content .result-sentence {
   text-align: center;
-  margin: -5px 0px -10px 0px;
+  margin: -5px 0px -5px 0px;
 }
 #interface #sidebar .chat-message .message-content .result-sentence span,
 #interface #ui-right-column-1 .chat-message .message-content .result-sentence span {
@@ -2835,7 +2839,7 @@ co-toggle-switch[checked] thumb {
 }
 .theme-dark #interface #sidebar .chat-message .message-content .typeCard label,
 .theme-dark #interface #ui-right-column-1 .chat-message .message-content .typeCard label {
-  color: #8b0a33;
+  color: #d11111;
 }
 .theme-light #interface #sidebar .chat-message .message-content .typeCard label,
 .theme-light #interface #ui-right-column-1 .chat-message .message-content .typeCard label {
@@ -2843,7 +2847,7 @@ co-toggle-switch[checked] thumb {
 }
 .theme-dark #interface #sidebar .chat-message .message-content .typeCardSkill label,
 .theme-dark #interface #ui-right-column-1 .chat-message .message-content .typeCardSkill label {
-  color: #306687;
+  color: #2a83b9;
 }
 .theme-light #interface #sidebar .chat-message .message-content .typeCardSkill label,
 .theme-light #interface #ui-right-column-1 .chat-message .message-content .typeCardSkill label {
@@ -2906,6 +2910,7 @@ co-toggle-switch[checked] thumb {
   font-size: 16px;
   display: flex;
   align-items: flex-end;
+  margin-top: 3px;
 }
 #interface #sidebar .chat-message .message-content .itemTitle span,
 #interface #ui-right-column-1 .chat-message .message-content .itemTitle span {
@@ -2920,11 +2925,32 @@ co-toggle-switch[checked] thumb {
   height: 27px;
   margin-right: 5px;
 }
+#interface #sidebar .chat-message .message-content .button-row,
+#interface #ui-right-column-1 .chat-message .message-content .button-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-bottom: 3px;
+}
+#interface #sidebar .chat-message .message-content .button-row button,
+#interface #ui-right-column-1 .chat-message .message-content .button-row button {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 #interface #sidebar .chat-message .message-content .chatroll .heal,
 #interface #ui-right-column-1 .chat-message .message-content .chatroll .heal {
   font-size: 22px;
-  color: #2c532c;
   margin: 5px;
+}
+.theme-dark #interface #sidebar .chat-message .message-content .chatroll .heal,
+.theme-dark #interface #ui-right-column-1 .chat-message .message-content .chatroll .heal {
+  color: #3fa13f;
+}
+.theme-light #interface #sidebar .chat-message .message-content .chatroll .heal,
+.theme-light #interface #ui-right-column-1 .chat-message .message-content .chatroll .heal {
+  color: #2c532c;
 }
 #interface #sidebar .chat-message .message-content .chatroll .heal-formula,
 #interface #ui-right-column-1 .chat-message .message-content .chatroll .heal-formula {

@@ -7,14 +7,16 @@
   </div>
 
   <div>{{{description}}}</div>
-  {{#each actions as |action|}}
-    <button
-      class="toggle-action"
-      data-actor-id="{{@root.actorId}}"
-      data-action="{{action.action}}"
-      data-type="{{action.type}}"
-      data-source="{{@root.uuid}}"
-      data-indice="{{action.indice}}"
-    >{{action.label}}</button>
-  {{/each}}
+  <div class="button-row">
+    {{#each actions as |action|}}
+      <button
+        class="toggle-action"
+        data-actor-id="{{@root.actorId}}"
+        data-action="{{action.action}}"
+        data-type="{{action.type}}"
+        data-source="{{@root.uuid}}"
+        data-indice="{{action.indice}}"
+      >{{action.label}}</button>
+    {{/each}}
+  </div>
 </div>
