@@ -5,9 +5,11 @@
 <!-- Currencies -->
 <ol class="items-container" data-tab="inventory">
   <li class="items-container-header flexrow">
-    <h4 class="item-name flexrow"><a data-action="toggleSection" data-toggle-type="currencies">{{localize "CO.ui.richness"}}</a></h4>
+    <h4 class="item-name flexrow">
+      <a data-action="toggleSection" data-toggle-type="currencies">{{localize "CO.ui.richness"}}</a>
+    </h4>
   </li>
-  <div class="flexrow currency-row foldable {{#if currenciesExpended}}expanded{{else}}folded{{/if}}">
+  <div class="flexrow currency-row foldable">
     {{#each system.wealth as |currency id|}}
       <div class="flexrow">
         <label>{{localize (concat 'CO.currency.' id)}} : </label>
@@ -32,7 +34,7 @@
         </div>
       {{/if}}
     </li>
-    <ol class="item-list foldable {{#if group.expended}}expanded{{else}}folded{{/if}}">
+    <ol class="item-list foldable {{ifThen group.expanded 'expanded' 'folded'}}">
       {{#each group.items as |item id|}}
         {{!log 'Character inventory item' item}}
         <li class="item flexrow" data-item-uuid="{{item.uuid}}" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="true">

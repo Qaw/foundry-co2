@@ -54,6 +54,10 @@ export default class COEncounterSheet extends COBaseActorSheet {
     context.choiceBossRanks = SYSTEM.ENCOUNTER_BOSS_RANKS
     context.choiceSizes = SYSTEM.SIZES
 
+    // Enrich notes
+    context.enrichedNotesPublic = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.details.notes.public, { async: true })
+    context.enrichedNotesPrivate = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.details.notes.private, { async: true })
+
     // Gestion des défenses
     context.partialDef = this.actor.hasEffect("partialDef")
     context.fullDef = this.actor.hasEffect("fullDef")

@@ -4,33 +4,17 @@
     <div class="notes foldable">
         <div class="notes-section public-notes">
             <label class="details-label">{{localize "CO.ui.public"}}</label>
-            {{#if unlocked}}
-            <prose-mirror name="system.details.notes.public" value="{{system.details.notes.public}}"
-                document-uuid="{{actor.uuid}}" compact>
-            </prose-mirror>
-            {{else}}
-            <div class="editor">
-                <div class="editor-content">
-                    {{{system.details.notes.public}}}
-                </div>
+            <div class="notes-text">
+                {{formInput systemFields.details.fields.notes.fields.public enriched=enrichedNotesPublic value=system.details.notes.public name="system.details.notes.public" toggled=true}}
             </div>
-            {{/if}}
         </div>
     </div>
     <div class="notes foldable">
         <div class="notes-section private-notes">
             <label class="details-label">{{localize "CO.ui.private"}}</label>
-            {{#if unlocked}}
-            <prose-mirror name="system.details.notes.private" value="{{system.details.notes.private}}"
-                document-uuid="{{actor.uuid}}" compact>
-            </prose-mirror>
-            {{else}}
-            <div class="editor">
-                <div class="editor-content">
-                    {{{system.details.notes.private}}}
-                </div>
+            <div class="notes-text">
+                {{formInput systemFields.details.fields.notes.fields.private enriched=enrichedNotesPrivate value=system.details.notes.private name="system.details.notes.private" toggled=true}}
             </div>
-            {{/if}}
         </div>
     </div>
 </section>

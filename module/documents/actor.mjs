@@ -195,22 +195,22 @@ export default class COActor extends Actor {
         .filter((id) => id !== null)
 
       const capacities = capacitesId.map((id) => this.items.find((i) => i._id === id))
-      // Récupère l'état "expended" depuis le localStorage pour chaque voie (path)
-      let expended = true
+      // Récupère l'état "expanded" depuis le localStorage pour chaque voie (path)
+      let expanded = true
       try {
         const key = `co-${this.id}-paths-${path.system.slug}`
         const stored = localStorage.getItem(key)
         if (stored !== null) {
           const parsedData = JSON.parse(stored)
-          expended = parsedData.expended === true
+          expanded = parsedData.expanded === true
         }
       } catch (e) {
-        expended = true
+        expanded = true
       }
       pathGroups.push({
         path: path,
         items: capacities,
-        expended,
+        expanded,
       })
     })
     return pathGroups
@@ -227,23 +227,23 @@ export default class COActor extends Actor {
     ]
 
     categories.forEach((category) => {
-      // Récupère l'état "expended" depuis le localStorage pour chaque voie (path)
-      let expended = true
+      // Récupère l'état "expanded" depuis le localStorage pour chaque voie (path)
+      let expanded = true
       try {
         const key = `co-${this.id}-${category}`
         const stored = localStorage.getItem(key)
         if (stored !== null) {
           const parsedData = JSON.parse(stored)
-          expended = parsedData.expended === true
+          expanded = parsedData.expanded === true
         }
       } catch (e) {
-        expended = true
+        expanded = true
       }
 
       inventory.push({
         category,
         items: this.items.filter((item) => item.system.subtype === category),
-        expended,
+        expanded,
       })
     })
 

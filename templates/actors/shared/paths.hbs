@@ -32,7 +32,7 @@
                             {{/if}}
                         </div>
                     </li>
-                    <ol class="item-list foldable {{#if pg.expended}}expanded{{else}}folded{{/if}}">
+                    <ol class="item-list foldable {{#if pg.expanded}}expanded{{else}}folded{{/if}}">
                         {{#each pg.items as |capacity id|}}
                             {{!log 'capacity' this}}
                             {{#if capacity.system.learned}}

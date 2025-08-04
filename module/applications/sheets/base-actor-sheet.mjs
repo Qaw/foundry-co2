@@ -116,35 +116,35 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     context.capacities = this.document.capacities
     context.learnedCapacities = this.document.learnedCapacities
     context.capacitiesOffPaths = this.document.capacitiesOffPaths
-    // Récupération du statut expended depuis le localStorage
-    let offPathsExpended = true
+    // Récupération du statut expanded depuis le localStorage
+    let offPathsExpanded = true
     try {
       const key = `co-${this.document.id}-paths-capacitiesOffPaths`
       const stored = localStorage.getItem(key)
       if (stored !== null) {
         const parsedData = JSON.parse(stored)
-        offPathsExpended = parsedData.expended === true
+        offPathsExpanded = parsedData.expanded === true
       }
     } catch (e) {
-      offPathsExpended = true
+      offPathsExpanded = true
     }
-    context.capacitiesOffPathsExpended = offPathsExpended
+    context.capacitiesOffPathsExpanded = offPathsExpanded
     context.features = this.document.features
     context.actions = this.document.actions
     context.inventory = this.document.inventory
-    // Récupération du statut expended depuis le localStorage
-    let currenciesExpended = true
+    // Récupération du statut expanded depuis le localStorage
+    let currenciesExpanded = true
     try {
       const key = `co-${this.document.id}-currencies`
       const stored = localStorage.getItem(key)
       if (stored !== null) {
         const parsedData = JSON.parse(stored)
-        currenciesExpended = parsedData.expended === true
+        currenciesExpanded = parsedData.expanded === true
       }
     } catch (e) {
-      currenciesExpended = true
+      currenciesExpanded = true
     }
-    context.currenciesExpended = currenciesExpended
+    context.currenciesExpanded = currenciesExpanded
     context.unlocked = this.isEditMode
     context.locked = this.isPlayMode
 
@@ -175,8 +175,12 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     event.preventDefault()
     const toggleType = target.dataset.toggleType
     const pathSlug = target.dataset.slug
+    // Inventaire et voies
     let li = target.closest("li.items-container-header")
-    let foldable = li.nextElementSibling
+    let foldable
+    if (li) foldable = li.nextElementSibling
+    // Biographie
+    else foldable = target.closest(".form-header").nextElementSibling
     while (foldable && !foldable.classList.contains("foldable")) {
       foldable = foldable.nextElementSibling
     }
@@ -193,11 +197,11 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
         let stored = localStorage.getItem(key)
         if (stored !== null) {
           let value = JSON.parse(stored)
-          value.expended = !value.expended
+          value.expanded = !value.expanded
           localStorage.setItem(key, JSON.stringify(value))
         } else {
           // Créer une nouvelle entrée si elle n'existe pas
-          localStorage.setItem(key, JSON.stringify({ expended: true }))
+          localStorage.setItem(key, JSON.stringify({ expanded: true }))
         }
       } catch (e) {
         console.error(Utils.log(`CoBaseActorSheet - Error updating localStorage for path slug ${pathSlug}`), e)

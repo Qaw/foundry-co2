@@ -162,7 +162,7 @@ co-toggle-switch[checked] thumb {
 .theme-dark .co h4,
 .theme-dark .co label,
 .theme-dark .co span {
-  color: var(--color-backgroundGrey);
+  color: var(--color-background-grey);
 }
 .co fieldset {
   border: 0;
@@ -344,7 +344,7 @@ co-toggle-switch[checked] thumb {
 .theme-light .co.application {
   --color-characterSheet: #ba9442;
   --color-abilities: #0c4f7b;
-  --color-backgroundGrey: #ebebe8;
+  --color-background-grey: #ebebe8;
   --color-encounterSheet: #95262699;
   --color-WindowContent: #584a756b;
   --color-textLight: #fffaf2;
@@ -354,7 +354,7 @@ co-toggle-switch[checked] thumb {
 .theme-dark .co.application {
   --color-characterSheet: #5c4921;
   --color-abilities: #07314d;
-  --color-backgroundGrey: #bcbcb1;
+  --color-background-grey: #bcbcb1;
   --color-encounterSheet: rgba(108, 28, 28, 0.6);
   --color-WindowContent: #00000094;
   --color-textLight: #e7d1b1;
@@ -400,7 +400,7 @@ co-toggle-switch[checked] thumb {
 .co.application .sheet-tabs [data-tab].active {
   background-color: var(--color-abilities);
   border: 1px solid var(--color-abilities);
-  color: var(--color-backgroundGrey);
+  color: var(--color-background-grey);
   font-weight: bold;
 }
 .co.application .sheet-tabs [data-tab]:hover {
@@ -981,7 +981,7 @@ co-toggle-switch[checked] thumb {
   /*background-color: var(--color-primary);
     color: #fff;*/
   flex-direction: row;
-  color: var(--color-backgroundGrey);
+  color: var(--color-background-grey);
   background-color: var(--color-abilities);
 }
 .co.application.sheet .section-container .section-header h4 {
@@ -991,7 +991,7 @@ co-toggle-switch[checked] thumb {
   margin: 0;
   padding: 2px 8px;
   text-transform: uppercase;
-  color: var(--color-backgroundGrey);
+  color: var(--color-background-grey);
 }
 .co.application.sheet .section-container .section-header .controls {
   display: flex;
@@ -1111,7 +1111,7 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet .item-list .attack .attack-body .critical-button {
   background-color: var(--color-primary);
 }
-.co.application.sheet .pathGrid {
+.co.application.sheet .path-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 5px;
@@ -1134,7 +1134,7 @@ co-toggle-switch[checked] thumb {
   font-weight: bold;
   /*padding: 0;
     padding-left: 4px;*/
-  color: var(--color-backgroundGrey);
+  color: var(--color-background-grey);
   background-color: var(--color-abilities);
   padding: 0 10px;
   border-radius: 10px 10px 0 0;
@@ -1147,7 +1147,7 @@ co-toggle-switch[checked] thumb {
   margin: 0;
   padding: 2px 8px;
   text-transform: uppercase;
-  color: var(--color-backgroundGrey);
+  color: var(--color-background-grey);
 }
 .co.application.sheet .items-container .items-container-header .item-name {
   flex: 1;
@@ -2238,7 +2238,7 @@ co-toggle-switch[checked] thumb {
   padding: 8px 4px;
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .labelled-field {
-  background-color: var(--color-backgroundGrey);
+  background-color: var(--color-background-grey);
   border-radius: 12px 0 0 12px;
   height: 32px;
   padding: 4px;
@@ -2275,7 +2275,7 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field {
-  color: var(--color-backgroundGrey);
+  color: var(--color-background-grey);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2290,7 +2290,7 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field select,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field input,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field input {
-  background-color: var(--color-backgroundGrey);
+  background-color: var(--color-background-grey);
   border: 0;
   color: var(--color-primary);
   flex: 1;
@@ -2315,7 +2315,7 @@ co-toggle-switch[checked] thumb {
 }
 .theme-dark .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field select option,
 .theme-dark .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field select option {
-  background: var(--color-backgroundGrey);
+  background: var(--color-background-grey);
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field .slash,
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field .slash,
@@ -2327,7 +2327,7 @@ co-toggle-switch[checked] thumb {
   transform: scaleX(80%);
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .field {
-  background-color: var(--color-backgroundGrey);
+  background-color: var(--color-background-grey);
 }
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .labelled-field i {
   justify-self: flex-start;
@@ -2412,7 +2412,7 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor .window-content .abilities .ability .ability-id {
   background-color: var(--color-abilities);
   line-height: 1.8;
-  color: var(--color-backgroundGrey);
+  color: var(--color-background-grey);
   font-weight: bold;
 }
 .co.application.sheet.actor .window-content .abilities .ability .ability-id i.fas.fa-asterisk {
@@ -2432,7 +2432,7 @@ co-toggle-switch[checked] thumb {
   font-size: 26px;
   font-weight: bold;
   color: var(--color-abilities);
-  background-color: var(--color-backgroundGrey);
+  background-color: var(--color-background-grey);
 }
 .co.application.sheet.actor .window-content .abilities .abilities-controls {
   background-color: var(--color-abilities);
@@ -2441,7 +2441,11 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor .window-content .abilities .abilities-edit {
   font-size: 23px;
   padding: 0px 6px;
-  color: var(--color-backgroundGrey);
+  color: var(--color-background-grey);
+}
+.co.application.sheet.actor .notes .notes-section .details-label {
+  font-weight: bold;
+  font-size: 1rem;
 }
 .co.application.sheet.actor.character:not(.minimized) {
   min-width: 890px;
@@ -2499,7 +2503,7 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor.character .window-content .sheet-sidebar .state-name {
   list-style: "\1F782";
   margin-left: 5px;
-  color: var(--color-backgroundGrey);
+  color: var(--color-background-grey);
 }
 .co.application.sheet.actor.character .window-content .dropzone {
   margin-left: 70px;
@@ -2530,6 +2534,11 @@ co-toggle-switch[checked] thumb {
   border: none;
   box-shadow: 2px 2px var(--color-abilities);
   height: 25px;
+}
+.co.application.sheet.actor.character section.biography .misc.folded,
+.co.application.sheet.actor.character section.biography .bio.folded,
+.co.application.sheet.actor.character section.biography .appearance.folded {
+  display: none;
 }
 .co.application.sheet.actor.encounter:not(.minimized) {
   min-width: 860px;

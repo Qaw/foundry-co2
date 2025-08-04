@@ -63,6 +63,50 @@ export default class COCharacterSheet extends COBaseActorSheet {
     context.partialDef = this.document.hasEffect("partialDef")
     context.fullDef = this.document.hasEffect("fullDef")
 
+    // Biographie et Apparence
+    context.enrichedBiographyPublic = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.details.biography.public, { async: true })
+    context.enrichedBiographyPrivate = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.details.biography.private, { async: true })
+    context.enrichedAppearancePublic = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.details.appearance.public, { async: true })
+    context.enrichedAppearancePrivate = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.details.appearance.private, { async: true })
+
+    // Récupération du statut expanded depuis le localStorage
+    let biographyMiscExpanded = true
+    try {
+      const key = `co-${this.document.id}-biography-misc`
+      const stored = localStorage.getItem(key)
+      if (stored !== null) {
+        const parsedData = JSON.parse(stored)
+        biographyMiscExpanded = parsedData.expanded === true
+      }
+    } catch (e) {
+      biographyMiscExpanded = true
+    }
+    let biographyBioExpanded = true
+    try {
+      const key = `co-${this.document.id}-biography-bio`
+      const stored = localStorage.getItem(key)
+      if (stored !== null) {
+        const parsedData = JSON.parse(stored)
+        biographyBioExpanded = parsedData.expanded === true
+      }
+    } catch (e) {
+      biographyBioExpanded = true
+    }
+    let biographyAppearanceExpanded = true
+    try {
+      const key = `co-${this.document.id}-biography-appearance`
+      const stored = localStorage.getItem(key)
+      if (stored !== null) {
+        const parsedData = JSON.parse(stored)
+        biographyAppearanceExpanded = parsedData.expanded === true
+      }
+    } catch (e) {
+      biographyAppearanceExpanded = true
+    }
+    context.biographyMiscExpanded = biographyMiscExpanded
+    context.biographyBioExpanded = biographyBioExpanded
+    context.biographyAppearanceExpanded = biographyAppearanceExpanded
+
     // Select options
     context.choiceAbilities = SYSTEM.ABILITIES
     context.choiceSize = SYSTEM.SIZES
