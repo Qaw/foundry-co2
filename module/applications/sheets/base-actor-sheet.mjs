@@ -104,6 +104,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     context.system = this.document.system
     context.source = this.document.toObject()
 
+    context.isCharacter = this.document.type === "character"
+
     context.abilities = this.document.system.abilities
     context.combat = this.document.system.combat
     context.attributes = this.document.system.attributes
