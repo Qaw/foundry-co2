@@ -8,7 +8,7 @@
 .theme-light & {
   --color-characterSheet: @color-characterSheet;
   --color-abilities: @color-abilities;
-  --color-backgroundGrey: @color-backgroundGrey;
+  --color-background-grey: @color-backgroundGrey;
   --color-encounterSheet: @color-encounterSheet;
   --color-WindowContent: @color-WindowContentLight;
   --color-textLight: #fffaf2;
@@ -18,7 +18,7 @@
 .theme-dark & {
   --color-characterSheet: darken(@color-characterSheet, 25%);
   --color-abilities: darken(@color-abilities, 10%);
-  --color-backgroundGrey: darken(@color-backgroundGrey, 20%);
+  --color-background-grey: darken(@color-backgroundGrey, 20%);
   --color-encounterSheet: darken(@color-encounterSheet, 10%);
   --color-WindowContent: @color-WindowContentDark;
   --color-textLight: #e7d1b1;
@@ -67,7 +67,7 @@ li {
     &.active {
       background-color: var(--color-abilities);
       border: 1px solid var(--color-abilities);
-      color: var(--color-backgroundGrey);
+      color: var(--color-background-grey);
       font-weight: bold;
     }
 
