@@ -8,7 +8,7 @@
                     <a data-action="toggleSection">{{localize (concat "CO.ui." category)}}</a>
                 </h4>
                 <div class="item-detail">{{localize "CO.label.short.quantity"}}</div>
-                {{#if @root.editable}}
+                {{#if @root.unlocked}}
                     <div class="item-detail">{{localize "CO.ui.actions"}}</div>
                     <div class="item-controls-2">
                         <a class="item-control" data-action="createItem" data-type="equipment" data-subtype="{{category}}" data-tooltip="{{localize 'CO.label.long.add'}}"><i class="fas fa-plus"></i></a>
@@ -26,7 +26,7 @@
                         <div class="item-detail">
                             <a class="item-control inventory-qty" data-tooltip="{{localize 'CO.label.short.quantity'}}">{{item.system.quantity.current}}</a>
                         </div>
-                        {{#if @root.editable}}
+                        {{#if @root.unlocked}}
                             <div class="item-controls-3">
                                 <a class="chat" data-action="sendToChat" data-chat-type="loot" data-tooltip="{{localize 'CO.label.long.sendToChat'}}"><i class="fas fa-fw fa-comment-alt"></i></a>
                                 {{#if @root/unlocked}}
