@@ -2388,6 +2388,11 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor .window-content .sheet-sidebar .scrollable .sidebar-section .state-modifier {
   color: var(--color-textLight);
 }
+@-moz-document url-prefix('') {
+  .co.application.sheet.actor .window-content .sheet-sidebar .scrollable {
+    margin-right: 2px;
+  }
+}
 .co.application.sheet.actor .window-content .abilities {
   box-sizing: border-box;
   border: 2px solid var(--color-abilities);
