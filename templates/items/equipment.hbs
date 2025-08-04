@@ -18,7 +18,7 @@
                 <legend>{{localize "CO.ui.PoidsValeur"}}</legend>
                 <div class="form-group">
                     <label>{{localize "CO.ui.weight"}}</label>
-                    <div class="form-fields">
+                    <div class="form-fields border-right">
                         {{formInput systemFields.weight.fields.value value=systemSource.weight.value localize=true disabled=locked}}
                         {{formInput systemFields.weight.fields.unit value=systemSource.weight.unit localize=true disabled=locked}}
                     </div>
@@ -27,7 +27,7 @@
                 <!-- PRIX RARETE-->
                 <div class="form-group">
                     <label>{{localize "CO.ui.price"}}</label>
-                    <div class="form-fields">
+                    <div class="form-fields border-right">
                         {{formInput systemFields.price.fields.value value=systemSource.price.value localize=true disabled=locked}}
                         {{formInput systemFields.price.fields.unit value=systemSource.price.unit localize=true disabled=locked}}
                     </div>
@@ -41,7 +41,7 @@
                     <legend>{{localize "CO.ui.quantity"}}</legend>
                     <div class="form-group">
                     <label>{{localize "CO.Equipment.FIELDS.quantity.current.label"}} / {{localize "CO.Equipment.FIELDS.quantity.max.label"}}</label>
-                    <div class="form-fields">
+                    <div class="form-fields  border-right">
                     {{formInput systemFields.quantity.fields.current value=systemSource.quantity.current placeholder=0 localize=true disabled=locked}}
                     /
                     {{formInput systemFields.quantity.fields.max value=systemSource.quantity.max placeholder=0 localize=true disabled=locked}}
@@ -177,8 +177,8 @@
                     <legend>{{localize "CO.ui.rangeWeapon"}}</legend>
                     <div class="form-group">
                         <label>{{localize "CO.ui.range"}}</label>
-                        <div class="form-fields">
-                            {{formInput systemFields.range.fields.value value=systemSource.range.value placeholder=0 localize=true disabled=locked}}
+                        <div class="form-fields border-right">
+                            {{formInput systemFields.range.fields.value value=systemSource.range.value placeholder=0 min=0 localize=true disabled=locked}}
                             {{formInput systemFields.range.fields.unit value=systemSource.range.unit placeholder="unit" localize=true disabled=locked}}
                         </div>
                     </div>
@@ -191,7 +191,7 @@
                     <legend>{{localize "CO.ui.rechargeable"}}</legend>
                     <div class="form-group">
                     <label>{{localize "CO.Equipment.FIELDS.charges.current.label"}} / {{localize "CO.Equipment.FIELDS.charges.max.label"}}</label>
-                    <div class="form-fields">
+                    <div class="form-fields border-right">
                     {{formInput systemFields.charges.fields.current value=systemSource.charges.current placeholder=0 localize=true disabled=locked}}
                     /
                     {{formInput systemFields.charges.fields.max value=systemSource.charges.max placeholder=0 localize=true disabled=locked}}

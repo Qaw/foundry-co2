@@ -118,7 +118,7 @@
     }
     .result-sentence {
       text-align: center;
-      margin: -5px 0px -10px 0px;
+      margin: -5px 0px -5px 0px;
       span {
         text-align: center;
         font-size: 20px;
@@ -202,7 +202,7 @@
     .typeCard {
       label {
         .theme-dark & {
-          color: #8b0a33;
+          color: #d11111;
         }
         .theme-light & {
           color: #5d142b;
@@ -212,7 +212,7 @@
     .typeCardSkill {
       label {
         .theme-dark & {
-          color: #306687;
+          color: #2a83b9;
         }
         .theme-light & {
           color: #084f7b;
@@ -270,6 +270,7 @@
       font-size: 16px;
       display: flex;
       align-items: flex-end;
+      margin-top: 3px;
       span {
         text-transform: uppercase;
         font-weight: bold;
@@ -282,11 +283,28 @@
         margin-right: 5px;
       }
     }
+    .button-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+      margin-bottom: 3px;
+      button {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
     .chatroll {
       .heal {
         font-size: 22px;
-        color: #2c532c;
         margin: 5px;
+        .theme-dark & {
+          color: #3fa13f;
+        }
+        .theme-light & {
+          color: #2c532c;
+        }
       }
       .heal-formula {
         margin-bottom: -10px;

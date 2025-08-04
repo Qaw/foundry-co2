@@ -21,8 +21,12 @@
 {{/if}}
 
 
+{{#if (eq actor.type "character")}}
+    <div class="pathGrid">
+{{else}}
+    <div class="pathEncounter">
+{{/if}}
 
-<div class="pathGrid">
 {{#each pathGroups as |pg id|}}
     {{!log 'pathGroup' this}}
     {{#if (or @root.unlocked pg.path.system.displayPath)}}

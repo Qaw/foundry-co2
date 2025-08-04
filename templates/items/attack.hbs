@@ -30,9 +30,9 @@
                 {{#if (or system.isRanged system.isMagic)}}
                     <div class="form-group">
                         <label>{{localize "CO.ui.range"}}</label>
-                        <div class="form-fields">
-                            <input class="field-value" name="system.range.value" type="text" value="{{system.range.value}}" data-dtype="Number">
-                            <input class="field-value" name="system.range.unit" type="text" value="{{system.range.unit}}" data-dtype="String">                
+                        <div class="form-fields border-right">
+                            <input class="field-value" name="system.range.value" type="number" value="{{system.range.value}}" data-dtype="Number" min="0">
+                            <input class="field-value" name="system.range.unit" type="text" value="{{system.range.unit}}" placeholder="{{localize 'CO.ui.unit'}}" data-dtype="String">                
                         </div>
                     </div>    
                 {{/if}}
@@ -43,10 +43,10 @@
                 {{#if system.properties.chargeable}}
                     <div class="form-group">
                         <label>{{localize "CO.ui.charges"}}</label>
-                        <div class="form-fields">
-                            <input class="field-value" name="system.charges.current" type="text" value="{{system.charges.current}}" placeholder="{{localize 'CO.ui.current'}}" data-dtype="Number">
+                        <div class="form-fields border-right">
+                            <input class="field-value" name="system.charges.current" type="number" value="{{system.charges.current}}" placeholder="{{localize 'CO.ui.current'}}" data-dtype="Number" min="0">
                             /
-                            <input class="field-value" name="system.charges.max" type="text" value="{{system.charges.max}}" placeholder="{{localize 'CO.ui.max'}}" data-dtype="Number">
+                            <input class="field-value" name="system.charges.max" type="number" value="{{system.charges.max}}" placeholder="{{localize 'CO.ui.max'}}" data-dtype="Number" min="0">
                         </div>
                     </div>
                 {{/if}}
