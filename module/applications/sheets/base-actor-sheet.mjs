@@ -179,7 +179,7 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
       foldable = foldable.nextElementSibling
     }
     if (foldable) {
-      console.log(Utils.log(`CoBaseActorSheet - Toggling section`), foldable)
+      //console.log(Utils.log(`CoBaseActorSheet - Toggling section`), foldable)
       // Change value in local storage to remember the state
       try {
         let key
@@ -281,13 +281,13 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
         itemData.name = game.i18n.format("CO.ui.newItem", { item: "Equipement" })
         let subtype
         switch (itemData.system.subtype) {
-          case "armors":
+          case "armor":
             subtype = SYSTEM.EQUIPMENT_SUBTYPES.armor.id
             break
-          case "shields":
+          case "shield":
             subtype = SYSTEM.EQUIPMENT_SUBTYPES.shield.id
             break
-          case "weapons":
+          case "weapon":
             subtype = SYSTEM.EQUIPMENT_SUBTYPES.weapon.id
             break
           case "consumable":
