@@ -157,6 +157,24 @@ export default class COEncounterSheet extends COBaseActorSheet {
   }
 
   /** @override */
+  _onDragStart(event) {
+    if (!game.user.isGM) return
+    const target = event.currentTarget
+    let dragData
+
+    // Owned Items
+    if (target.dataset.itemId) {
+      const item = this.actor.items.get(target.dataset.itemId)
+      dragData = item.toDragData()
+    }
+
+    // Set data transfer
+    if (!dragData) return
+    dragData.sourceTransfer = "encounter"
+    event.dataTransfer.setData("text/plain", JSON.stringify(dragData))
+  }
+
+  /** @override */
   async _onDrop(event) {
     // On récupère le type et l'uuid de l'item
     const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event)

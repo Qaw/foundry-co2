@@ -219,9 +219,9 @@ export default class COActor extends Actor {
   get inventory() {
     let inventory = []
     const categories = [
+      SYSTEM.EQUIPMENT_SUBTYPES.weapon.id,
       SYSTEM.EQUIPMENT_SUBTYPES.armor.id,
       SYSTEM.EQUIPMENT_SUBTYPES.shield.id,
-      SYSTEM.EQUIPMENT_SUBTYPES.weapon.id,
       SYSTEM.EQUIPMENT_SUBTYPES.consumable.id,
       SYSTEM.EQUIPMENT_SUBTYPES.misc.id,
     ]

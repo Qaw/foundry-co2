@@ -326,7 +326,18 @@ export default class COCharacterSheet extends COBaseActorSheet {
 
     switch (item.type) {
       case SYSTEM.ITEM_TYPE.equipment.id:
-        return await this.document.addEquipment(item)
+        await this.document.addEquipment(item)
+        // L'item vient d'une rencontre, on le supprime de l'inventaire de la rencontre
+        if (data?.sourceTransfer === "encounter") {
+          const { id, primaryId } = foundry.utils.parseUuid(data.uuid)
+          if (id && primaryId) {
+            const encounter = game.actors.get(primaryId)
+            if (encounter) {
+              await encounter.deleteEmbeddedDocuments("Item", [id])
+            }
+          }
+        }
+        return true
       case SYSTEM.ITEM_TYPE.feature.id:
         return await this.document.addFeature(item)
       case SYSTEM.ITEM_TYPE.profile.id:
