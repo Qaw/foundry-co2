@@ -1536,6 +1536,12 @@ co-toggle-switch[checked] thumb {
 .theme-light .co.application.sheet.item.capacity .window-content .resolvers-container .resolver .form-group-stacked.like-grid.target {
   border-bottom: 1px solid var(--color-capacity-light);
 }
+.co.application.sheet.item.capacity .window-content .resolvers-container .resolver .tags .form-group {
+  display: grid;
+  grid-template-columns: 0px auto;
+  margin: 0;
+  gap: 0;
+}
 .co.application.sheet.item.capacity .window-content .resolvers-container .resolver .center-input {
   text-align: center;
 }
