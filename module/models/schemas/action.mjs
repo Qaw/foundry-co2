@@ -308,16 +308,16 @@ export class Action extends foundry.abstract.DataModel {
   getChatData(item, actor) {
     if (this.isVisible(item, actor) && this.properties.activable) {
       if (this.properties.temporary) {
-        if (this.properties.enabled) return [{ label: `Désactiver ${this.label}`, action: "unactivate", indice: this.indice }]
-        else return [{ label: `Activer ${this.label}`, action: "activate", indice: this.indice }]
+        if (this.properties.enabled) return [{ label: `${game.i18n.localize("CO.ui.deactivate")} ${this.label}`, action: "unactivate", indice: this.indice }]
+        else return [{ label: `${game.i18n.localize("CO.ui.activate")} ${this.label}`, action: "activate", indice: this.indice }]
       } else {
         if (this.type === "melee" || this.type === "ranged" || this.type === "magical") {
           return [
-            { label: `${this.label} Attaque`, action: "activate", type: "attack", indice: this.indice },
-            { label: `${this.label} Dommages`, action: "activate", type: "damage", indice: this.indice },
+            { label: `${this.label} ${game.i18n.localize("CO.label.long.attack")}`, action: "activate", type: "attack", indice: this.indice },
+            { label: `${this.label} ${game.i18n.localize("CO.label.long.damage")}`, action: "activate", type: "damage", indice: this.indice },
           ]
         } else {
-          return [{ label: this.label, action: "activate", indice: this.indice }]
+          return [{ label: `${this.label} ${game.i18n.localize("CO.ui.use")}`, action: "activate", indice: this.indice }]
         }
       }
     }
