@@ -2574,6 +2574,23 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor.encounter .window-content .editor-content {
   text-wrap: auto;
 }
+.co.application.sheet.actor.encounter .currency-row {
+  gap: 20px;
+}
+.co.application.sheet.actor.encounter .currency-row label {
+  text-align: end;
+  font-weight: bold;
+  font-size: 15px;
+}
+.co.application.sheet.actor.encounter .currency-row .current {
+  margin-left: 0px;
+  font-weight: bold;
+  font-size: 15px;
+  background-color: transparent;
+  border: none;
+  box-shadow: 2px 2px var(--color-abilities);
+  height: 25px;
+}
 #interface #ui-left {
   padding: 0;
 }

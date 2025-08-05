@@ -365,7 +365,7 @@
       "manaBurn": "{actorName} brûle {amount} point(s) de vigueur pour accomplir son sort {capacityName}",
       "warningNeedLearnedCapacities": "Vous devez apprendre les capacités des rangs précédents avant d'apprendre celle-ci",
       "consume": "{actorName} a consommé un(e) {itemName}",
-      "attackActionLimit": "Une attaque de créature ne peux avoir qu'une seule action"
+      "attackActionLimit": "Une attaque de créature ne peut avoir qu'une seule action"
     },
     "tooltip": {
       "formulaAttack": "Formule d'attaque (sans le dé)",

@@ -81,6 +81,21 @@ export default class EncounterData extends ActorData {
       properties: new fields.HTMLField(),
     })
 
+    // Currencies
+    const currencyField = (label) => {
+      const schema = {
+        value: new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true }),
+      }
+      return new fields.SchemaField(schema, { label })
+    }
+
+    schema.wealth = new fields.SchemaField(
+      Object.values(SYSTEM.CURRENCY).reduce((obj, currency) => {
+        obj[currency.id] = currencyField(currency.label)
+        return obj
+      }, {}),
+    )
+
     schema.currentEffects = new fields.ArrayField(new fields.EmbeddedDataField(CustomEffectData))
 
     return foundry.utils.mergeObject(super.defineSchema(), schema)

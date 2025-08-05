@@ -62,8 +62,23 @@ export default class COEncounterSheet extends COBaseActorSheet {
     context.partialDef = this.actor.hasEffect("partialDef")
     context.fullDef = this.actor.hasEffect("fullDef")
 
+    // Gestion des richesses
+    context.hasWealth = this.#checkHasWealth(context.system.wealth)
+
     if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`COEncounterSheet - context`), context)
     return context
+  }
+
+  /**
+   * Vérifie si le personnage possède au moins une devise
+   * @param {Object} wealth L'objet wealth du système
+   * @returns {boolean} True si au moins une devise > 0
+   * @private
+   */
+  #checkHasWealth(wealth) {
+    if (!wealth || typeof wealth !== "object") return false
+
+    return Object.values(wealth).some((currency) => currency?.value && currency.value > 0)
   }
 
   /** @override */
@@ -161,6 +176,19 @@ export default class COEncounterSheet extends COBaseActorSheet {
     if (!game.user.isGM) return
     const target = event.currentTarget
     let dragData
+
+    // Si c'est un des champs de richesse
+    if (target.classList.contains("wealth")) {
+      const wealthType = target.nextElementSibling.dataset.wealthType
+      const wealthValue = this.document.system.wealth[wealthType]?.value
+      if (wealthValue === 0) return // Ne pas drag si la richesse est à 0
+      dragData = {
+        type: "wealth",
+        wealthType: wealthType,
+        value: wealthValue,
+        encounterId: this.document.id,
+      }
+    }
 
     // Owned Items
     if (target.dataset.itemId) {

@@ -290,7 +290,30 @@ export default class COCharacterSheet extends COBaseActorSheet {
   async _onDrop(event) {
     // On récupère le type et l'uuid de l'item
     const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event)
+    if (foundry.utils.isEmpty(data)) return false // Si pas de données, on ne fait rien
     const actor = this.document
+
+    // Drop d'éléments de richesse
+    if (data.type === "wealth" && data?.sourceTransfer === "encounter") {
+      const encounter = game.actors.get(data.encounterId)
+      // Si on ne trouve pas la rencontre, on ne fait rien
+      if (!encounter) return false
+      // TODO Ajouter l'argent à l'acteur et supprimer de la rencontre
+      // data.wealthType : type
+      // value : valeur
+      // Il va manquer l'id de la rencontre
+      // Ajouter l'argent au personnage
+      const wealthType = data.wealthType
+      const value = data.value
+      const currentWealth = Number(this.document.system.wealth[wealthType]?.value) || 0
+      const newWealth = currentWealth + value
+      await this.document.update({
+        [`system.wealth.${wealthType}.value`]: newWealth,
+      })
+      // Supprimer l'argent de la rencontre
+      await encounter.update({ [`system.wealth.${wealthType}.value`]: 0 })
+      return true
+    }
 
     // A partir de l'uuid, extraction de primaryId qui est l'id de l'acteur
     let { primaryId } = foundry.utils.parseUuid(data.uuid)
