@@ -121,10 +121,6 @@ Hooks.once("init", async function () {
   console.info(Utils.log("Initialized"))
 })
 
-/* -------------------------------------------- */
-/*  Localization                                */
-/* -------------------------------------------- */
-
 Hooks.once("i18nInit", function () {
   // Traduction du tableau des conditions
   const customeffects = CONFIG.statusEffects.map((element) => {
@@ -166,5 +162,17 @@ Hooks.once("ready", async function () {
 Hooks.on("createActor", (document, options, userId) => {
   if (game.user.isGM) {
     document.system.updateAllActionsUuid()
+  }
+})
+
+// A la fin d'un combat on supprime les Active Effects
+Hooks.on("deleteCombat", (combat, options, userId) => {
+  if (game.user.isGM) {
+    combat.combatants.forEach((combatant) => {
+      const actor = combatant.actor
+      if (actor) {
+        actor.deleteEffects()
+      }
+    })
   }
 })

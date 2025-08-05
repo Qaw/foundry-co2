@@ -2029,20 +2029,8 @@ export default class COActor extends Actor {
   // #endregion
 
   /* -------------------------------------------- */
-  /*  Combat Encounters and Turn Order            */
+  /*  Combat and Turn Order            */
   /* -------------------------------------------- */
-
-  /**
-   * On va supprimer les customEffect restant surl'acteur
-   * @param {COCombat} combat
-   */
-  combaEnding(combat) {
-    if (this.system.currentEffects) {
-      for (let i = this.system.currentEffects.length - 1; i >= 0; i--) {
-        this.deleteCustomEffect(this.system.currentEffects[i])
-      }
-    }
-  }
 
   /**
    * Supprime un customEffet de l'acteur
@@ -2132,6 +2120,19 @@ export default class COActor extends Actor {
   async expireEffects() {
     for (const effect of this.system.currentEffects) {
       if (effect.lastRound === game.combat.round) await this.deleteCustomEffect(effect)
+    }
+  }
+
+  /**
+   * Asynchronously deletes all current effects associated with this actor.
+   * Iterates over each effect in `this.system.currentEffects` and removes it
+   * using the `deleteCustomEffect` method.
+   *
+   * @returns {Promise<void>} A promise that resolves when all effects have been deleted.
+   */
+  async deleteEffects() {
+    for (const effect of this.system.currentEffects) {
+      await this.deleteCustomEffect(effect)
     }
   }
 
