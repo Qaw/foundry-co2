@@ -303,6 +303,10 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
   static async #onAddAction(event, target) {
     event.preventDefault()
     let newActions = foundry.utils.deepClone(this.document.actions)
+    if (newActions.length !== 0 && this.document.type === SYSTEM.ITEM_TYPE.attack.id) {
+      ui.notifications.warn(game.i18n.localize("CO.notif.attackActionLimit"))
+      return false
+    }
     let action = new Action({
       source: this.document.uuid,
       indice: newActions.length,
