@@ -406,16 +406,6 @@ export default class COActor extends Actor {
   }
 
   /**
-   * Checks if the actor has a specific effect.
-   *
-   * @param {string} effectid The ID of the effect to check.
-   * @returns {boolean} Returns true if the actor has the effect, otherwise false.
-   */
-  hasEffect(effectid) {
-    return this.statuses.has(effectid)
-  }
-
-  /**
    * Checks if the actor can use capacities based on their equipped armor and shields
    *
    * @returns {boolean} Returns true if the actor is trained with the equipped armor and/or shield
@@ -428,6 +418,24 @@ export default class COActor extends Actor {
     const shield = this.mainShield
     if (shield) shieldTrained = this.isTrainedWithShield(shield.id)
     return armorTrained && shieldTrained
+  }
+
+  /**
+   * Renvoi la liste des effets personnalisé actuellement sur l'acteur
+   * @returns {Array<CustomEffectData>} Tableau de customEffectData
+   */
+  get customEffects() {
+    return this.system.currentEffects
+  }
+
+  /**
+   * Checks if the actor has a specific effect.
+   *
+   * @param {string} effectid The ID of the effect to check.
+   * @returns {boolean} Returns true if the actor has the effect, otherwise false.
+   */
+  hasEffect(effectid) {
+    return this.statuses.has(effectid)
   }
 
   // #endregion
@@ -532,14 +540,6 @@ export default class COActor extends Actor {
    */
   getEmbeddedItemByKey(key) {
     return this.items.find((item) => item.system.key === key)
-  }
-
-  /**
-   * Renvoi la liste des effets personnalisé actuellement sur l'acteur
-   * @returns {Array<CustomEffectData>} Tableau de customEffectData
-   */
-  get customEffects() {
-    return this.system.currentEffects
   }
 
   /**
@@ -1481,6 +1481,31 @@ export default class COActor extends Actor {
       targets = undefined,
     } = {},
   ) {
+    const options = {
+      rollMode,
+      chatFlavor,
+      bonus,
+      malus,
+      critical,
+      bonusDice,
+      malusDice,
+      difficulty,
+      oppositeRoll,
+      useDifficulty,
+      showDifficulty,
+      withDialog,
+      targets,
+    }
+    /**
+     * A hook event that fires before the roll is made.
+     * @function co.preRollSkill
+     * @memberof hookEvents
+     * @param {Object} item             Item used for the roll.
+     * @param {Object} options          Options for the roll.
+     * @returns {boolean}               Explicitly return `false` to prevent roll to be made.
+     */
+    if (Hooks.call("co.preRollSkill", item, options) === false) return
+
     // Gestion de la visibilité du jet
     if (rollMode === undefined) {
       rollMode = game.settings.get("core", "rollMode")
@@ -1603,7 +1628,29 @@ export default class COActor extends Actor {
     let roll = await COSkillRoll.prompt(dialogContext, { withDialog: withDialog })
     if (!roll) return null
 
+    /**
+     * A hook event that fires after the roll is made.
+     * @function co.postRollSkill
+     * @memberof hookEvents
+     * @param {Object} item             Item used for the roll.
+     * @param {Object} options          Options for the roll.
+     * @param {Array<Roll>} rolls       The rolls made during the attack.
+     * @returns {boolean}               Explicitly return `false` to prevent roll to be made.
+     */
+    if (Hooks.call("co.postRollSkill", item, options, rolls) === false) return
+
     let result = CORoll.analyseRollResult(roll)
+
+    /**
+     * A hook event that fires before the results of the roll.
+     * @function co.resultRollSkill
+     * @memberof hookEvents
+     * @param {Object} item             Item used for the roll.
+     * @param {Object} options          Options for the roll.
+     * @param {Object} result          The analysed result of the roll.
+     * @returns {boolean}               Explicitly return `false` to prevent roll to be made.
+     */
+    if (Hooks.call("co.resultRollSkill", item, options, rolls, result) === false) return
 
     // Prépare le message de résultat
     const speaker = ChatMessage.getSpeaker({ actor: this, scene: canvas.scene })
@@ -1644,6 +1691,44 @@ export default class COActor extends Actor {
       tactical = undefined, // Values : confident, precise, violent
     } = {},
   ) {
+    const options = {
+      rollMode,
+      auto,
+      type,
+      useComboRolls,
+      actionName,
+      actionType,
+      chatFlavor,
+      skillBonus,
+      skillMalus,
+      damageBonus,
+      damageMalus,
+      critical,
+      bonusDice,
+      malusDice,
+      difficulty,
+      useDifficulty,
+      showDifficulty,
+      withDialog,
+      skillFormula,
+      skillFormulaTooltip,
+      damageFormula,
+      damageFormulaTooltip,
+      targets,
+      customEffect,
+      additionalEffect,
+      tactical,
+    }
+    /**
+     * A hook event that fires before the roll is made.
+     * @function co.preRollAttack
+     * @memberof hookEvents
+     * @param {Object} item             Item used for the roll.
+     * @param {Object} options          Options for the roll.
+     * @returns {boolean}               Explicitly return `false` to prevent roll to be made.
+     */
+    if (Hooks.call("co.preRollAttack", item, options) === false) return
+
     // Si l'arme a la propriété "reloadable", on vérifie si l'arme assez de munitions
     if (item.system.properties.reloadable && item.system.charges.current <= 0) {
       return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoAmmo"))
@@ -1823,7 +1908,29 @@ export default class COActor extends Actor {
     let rolls = await COAttackRoll.prompt(dialogContext, { withDialog: withDialog })
     if (!rolls) return null
 
+    /**
+     * A hook event that fires after the roll is made.
+     * @function co.postRollAttack
+     * @memberof hookEvents
+     * @param {Object} item             Item used for the roll.
+     * @param {Object} options          Options for the roll.
+     * @param {Array<Roll>} rolls       The rolls made during the attack.
+     * @returns {boolean}               Explicitly return `false` to prevent roll to be made.
+     */
+    if (Hooks.call("co.postRollAttack", item, options, rolls) === false) return
+
     let results = rolls.map((roll) => CORoll.analyseRollResult(roll))
+
+    /**
+     * A hook event that fires before the results of the roll.
+     * @function co.resultRollAttack
+     * @memberof hookEvents
+     * @param {Object} item             Item used for the roll.
+     * @param {Object} options          Options for the roll.
+     * @param {Object} results          The analysed results of the rolls.
+     * @returns {boolean}               Explicitly return `false` to prevent roll to be made.
+     */
+    if (Hooks.call("co.resultRollAttack", item, options, rolls, results) === false) return
 
     // Prépare le message de résultat
     const speaker = ChatMessage.getSpeaker({ actor: this, scene: canvas.scene })
@@ -1869,17 +1976,18 @@ export default class COActor extends Actor {
     if (item.system.properties.reloadable) {
       await this.consumeAmmunition(item)
     }
+
     return results
   }
 
   /**
    * Fonction assurant les jet de dé pour le soin
    * @param {COItem} item Item à l'origine du soin (ex : Restauration mineure de prêtre)
-   * @param {object} param1 Elements permettant le calcul du soin
-   * @param {string} param1.actionName  action déclencheur
-   * @param {string} param1.healFormula formule utilisée pour le soin
-   * @param {string}  param1.targetType : indique si on se cible soit-même, ou d'autres personnes etc.
-   * @param {Array<COActor>} param1.targets : une liste d'acteurs ciblés
+   * @param {object} options Elements permettant le calcul du soin
+   * @param {string} options.actionName  action déclencheur
+   * @param {string} options.healFormula formule utilisée pour le soin
+   * @param {string}  options.targetType : indique si on se cible soit-même, ou d'autres personnes etc.
+   * @param {Array<COActor>} options.targets : une liste d'acteurs ciblés
    */
   async rollHeal(item, { actionName = "", healFormula = undefined, targetType = SYSTEM.RESOLVER_TARGET.none.id, targets = [] } = {}) {
     let roll = new Roll(healFormula)
@@ -2028,10 +2136,7 @@ export default class COActor extends Actor {
   }
   // #endregion
 
-  /* -------------------------------------------- */
-  /*  Combat and Turn Order            */
-  /* -------------------------------------------- */
-
+  // #region Gestion des Custom Effects
   /**
    * Supprime un customEffet de l'acteur
    * @param {CustomEffectData} customEffect

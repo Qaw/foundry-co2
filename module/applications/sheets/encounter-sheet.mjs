@@ -208,6 +208,16 @@ export default class COEncounterSheet extends COBaseActorSheet {
     const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event)
     const actor = this.document
 
+    /**
+     * A hook event that fires when some useful data is dropped onto a CharacterSheet.
+     * @function dropCharacterSheetData
+     * @memberof hookEvents
+     * @param {Actor} actor      The Actor
+     * @param {ActorSheet} sheet The ActorSheet application
+     * @param {object} data      The data that has been dropped onto the sheet
+     */
+    if (Hooks.call("co.dropEncounterSheetData", actor, this, data) === false) return
+
     // A partir de l'uuid, extraction de primaryId qui est l'id de l'acteur
     let { primaryId } = foundry.utils.parseUuid(data.uuid)
     // Pas de drop d'objet sur soi même

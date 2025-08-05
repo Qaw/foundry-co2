@@ -293,6 +293,16 @@ export default class COCharacterSheet extends COBaseActorSheet {
     if (foundry.utils.isEmpty(data)) return false // Si pas de données, on ne fait rien
     const actor = this.document
 
+    /**
+     * A hook event that fires when some useful data is dropped onto a CharacterSheet.
+     * @function dropCharacterSheetData
+     * @memberof hookEvents
+     * @param {Actor} actor      The Actor
+     * @param {ActorSheet} sheet The ActorSheet application
+     * @param {object} data      The data that has been dropped onto the sheet
+     */
+    if (Hooks.call("co.dropCharacterSheetData", actor, this, data) === false) return
+
     // Drop d'éléments de richesse
     if (data.type === "wealth" && data?.sourceTransfer === "encounter") {
       const encounter = game.actors.get(data.encounterId)
@@ -319,16 +329,6 @@ export default class COCharacterSheet extends COBaseActorSheet {
     let { primaryId } = foundry.utils.parseUuid(data.uuid)
     // Pas de drop d'objet sur soi même
     if (primaryId === actor.id) return
-
-    /**
-     * A hook event that fires when some useful data is dropped onto a CharacterSheet.
-     * @function dropCharacterSheetData
-     * @memberof hookEvents
-     * @param {Actor} actor      The Actor
-     * @param {ActorSheet} sheet The ActorSheet application
-     * @param {object} data      The data that has been dropped onto the sheet
-     */
-    if (Hooks.call("co.dropCharacterSheetData", actor, this, data) === false) return
 
     if (data.type !== "Item") return
     return this._onDropItem(event, data)
