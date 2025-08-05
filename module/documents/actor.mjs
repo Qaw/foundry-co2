@@ -1500,11 +1500,11 @@ export default class COActor extends Actor {
      * A hook event that fires before the roll is made.
      * @function co.preRollSkill
      * @memberof hookEvents
-     * @param {Object} item             Item used for the roll.
+     * @param {String} skillId          skillId for the roll.
      * @param {Object} options          Options for the roll.
      * @returns {boolean}               Explicitly return `false` to prevent roll to be made.
      */
-    if (Hooks.call("co.preRollSkill", item, options) === false) return
+    if (Hooks.call("co.preRollSkill", skillId, options) === false) return
 
     // Gestion de la visibilité du jet
     if (rollMode === undefined) {
@@ -1632,12 +1632,12 @@ export default class COActor extends Actor {
      * A hook event that fires after the roll is made.
      * @function co.postRollSkill
      * @memberof hookEvents
-     * @param {Object} item             Item used for the roll.
-     * @param {Object} options          Options for the roll.
-     * @param {Array<Roll>} rolls       The rolls made during the attack.
-     * @returns {boolean}               Explicitly return `false` to prevent roll to be made.
+     * @param {String} skillId         skillId for the roll.
+     * @param {Object} options         Options for the roll.
+     * @param {Roll} roll              The roll made.
+     * @returns {boolean}              Explicitly return `false` to prevent roll to be made.
      */
-    if (Hooks.call("co.postRollSkill", item, options, rolls) === false) return
+    if (Hooks.call("co.postRollSkill", skillId, options, roll) === false) return
 
     let result = CORoll.analyseRollResult(roll)
 
@@ -1645,12 +1645,12 @@ export default class COActor extends Actor {
      * A hook event that fires before the results of the roll.
      * @function co.resultRollSkill
      * @memberof hookEvents
-     * @param {Object} item             Item used for the roll.
+     * @param {String} skillId          skillId for the roll.
      * @param {Object} options          Options for the roll.
-     * @param {Object} result          The analysed result of the roll.
+     * @param {Object} result           The analysed result of the roll.
      * @returns {boolean}               Explicitly return `false` to prevent roll to be made.
      */
-    if (Hooks.call("co.resultRollSkill", item, options, rolls, result) === false) return
+    if (Hooks.call("co.resultRollSkill", skillId, options, roll, result) === false) return
 
     // Prépare le message de résultat
     const speaker = ChatMessage.getSpeaker({ actor: this, scene: canvas.scene })
