@@ -32,7 +32,7 @@ export default class COCharacterSheet extends COBaseActorSheet {
     header: { template: "systems/co/templates/actors/character-header.hbs" },
     sidebar: { template: "systems/co/templates/actors/character-sidebar.hbs" },
     tabs: { template: "templates/generic/tab-navigation.hbs" },
-    main: { template: "systems/co/templates/actors/character-main.hbs" },
+    main: { template: "systems/co/templates/actors/character-main.hbs", templates: ["systems/co/templates/actors/shared/actions.hbs"] },
     inventory: { template: "systems/co/templates/actors/character-inventory.hbs" },
     paths: { template: "systems/co/templates/actors/shared/paths.hbs", templates: ["systems/co/templates/actors/shared/capacities-nopath.hbs"], scrollable: [""] },
     effects: { template: "systems/co/templates/actors/shared/effects.hbs" },
