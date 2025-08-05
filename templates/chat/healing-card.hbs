@@ -13,7 +13,7 @@
 
     <div class="flexrow heal-message">
       <div class="flex1 no-wrap">
-        <h3><strong>{{label}}</strong></h3>
+        <h3 {{#if hasLabelToolTip}}data-tooltip="{{labelTooltip}}"{{/if}}><strong>{{label}}</strong></h3>
       </div>
     </div>
   </section>

@@ -788,8 +788,9 @@ export default class CharacterData extends ActorData {
       // Dépense d'un DR et récupération de PV
       const level = Math.round(this.attributes.level / 2) // +1/2 niveau
       const formula = `${hd} + ${level}`
+      const labelTooltip = game.i18n.format("CO.ui.fastRestLabelTooltip", { formula: formula })
 
-      await this._applyRecovery(rp, hp, formula, game.i18n.localize("CO.dialogs.fastRest.title"))
+      await this._applyRecovery(rp, hp, formula, game.i18n.localize("CO.dialogs.fastRest.title"), labelTooltip)
 
       // Récupération des charges des capacités
       await this.recoverCapacityCharges(isFullRest)
@@ -833,7 +834,8 @@ export default class CharacterData extends ActorData {
           formula = `${this.hd.replace("d", "")}+${level}`
         }
 
-        await this._applyRecovery(rp, hp, formula, game.i18n.localize("CO.dialogs.fullRest.title"))
+        const labelTooltip = game.i18n.format("CO.ui.fullRestLabelTooltip", { formula: formula })
+        await this._applyRecovery(rp, hp, formula, game.i18n.localize("CO.dialogs.fullRest.title"), labelTooltip)
       }
 
       // Récupération des charges des capacités
@@ -867,7 +869,19 @@ export default class CharacterData extends ActorData {
     }
   }
 
-  async _applyRecovery(rp, hp, formula, title) {
+  /**
+   * Applique une récupération au personnage : met à jour les points de récupération (rp) et les points de vigueur (hp),
+   * Lance le jet de dés pour la récupération de PV, et affiche un message de chat avec le résultat.
+   *
+   * @async
+   * @param {Object} rp Objet représentant les points de récupération actuels.
+   * @param {Object} hp Objet représentant les points de vie actuels.
+   * @param {string} formula Formule de dés à lancer pour la récupération de PV.
+   * @param {string} title Clé de localisation pour le titre de la carte de chat.
+   * @param {string} labelTooltip Texte à afficher dans l'infobulle du label de la carte de chat.
+   * @returns {Promise<void>} Résout lorsque la récupération est appliquée et le message de chat créé.
+   */
+  async _applyRecovery(rp, hp, formula, title, labelTooltip) {
     const roll = await new Roll(formula).roll()
     const toolTip = new Handlebars.SafeString(await roll.getTooltip())
 
@@ -878,18 +892,23 @@ export default class CharacterData extends ActorData {
     newHp.value += roll.total
     newHp.value = Math.min(newHp.value, newHp.max)
 
+    const hasLabelToolTip = labelTooltip !== undefined && labelTooltip !== null && labelTooltip !== ""
+
     new CoChat(this.parent)
       .withTemplate("systems/co/templates/chat/healing-card.hbs")
       .withData({
         actorId: this.id,
         title: game.i18n.localize(title),
         label: game.i18n.format("CO.dialogs.restHpRecovered", { hp: roll.total }),
+        hasLabelToolTip,
+        labelTooltip,
         formula: formula,
         total: roll.total,
         toolTip: toolTip,
       })
       .withRoll(roll)
       .create()
+
     this.parent.update({ "system.resources.recovery": newRp, "system.attributes.hp": newHp })
   }
 
