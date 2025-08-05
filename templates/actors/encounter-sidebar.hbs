@@ -203,5 +203,20 @@
         </div>
       {{/if}}
     </div>
+    <!-- STATE MODIFIERS -->
+    <div class="sidebar-section speed-section">
+      <div class="sidebar-section-header">
+        <div class="sidebar-label">
+          <h4>{{localize "CO.label.long.states"}}</h4>
+        </div>
+      </div>
+      <div class="sidebar-section-content">
+        <ul class="state-modifier">
+          {{#each stateModifiers as |state|}}
+            <li class="state-name"> {{localize (concat "CO.label.long." state)}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
