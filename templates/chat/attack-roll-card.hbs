@@ -14,9 +14,7 @@
     
   </header>
 
-  <div class="card-content">
-    <p>{{localize "CO.ui.formula"}} : {{formula}}</p>
-    
+  <div class="card-content">   
     <section class="result">
       <div class="form-group total-result">
           <div class="dice-total"><label>{{localize "CO.ui.total"}}</label></div>
@@ -114,8 +112,11 @@
   </div>
 
   <footer class="card-footer">
-    <div class="dice-result">
-      {{{tooltip}}}
+    <div class="dice-roll" data-action="expandRoll">
+      <div class="dice-result">
+        <div class="dice-formula" style>{{localize "CO.ui.formula"}} :{{formula}}</div>
+        {{{tooltip}}}
+      </div>
     </div>
   </footer>
 
