@@ -47,7 +47,7 @@ export default class COEncounterSheet extends COBaseActorSheet {
     const context = await super._prepareContext()
     context.attacks = this.actor.system.attacks
     context.attacksActions = this.actor.attacksActions
-
+    context.stateModifiers = this.document.system.stateModifiers
     // Select options
     context.choiceArchetypes = SYSTEM.ENCOUNTER_ARCHETYPES
     context.choiceCategories = SYSTEM.ENCOUNTER_CATEGORIES
