@@ -49,6 +49,9 @@ export default class EncounterData extends ActorData {
       def: new fields.EmbeddedDataField(BaseValue),
       dr: new fields.EmbeddedDataField(BaseValue),
       crit: new fields.EmbeddedDataField(BaseValue),
+      melee: new fields.EmbeddedDataField(BaseValue), // Va servir à stocker les modifiers
+      ranged: new fields.EmbeddedDataField(BaseValue), // Va servir à stocker les modifiers
+      magic: new fields.EmbeddedDataField(BaseValue), // Va servir à stocker les modifiers
     })
 
     schema.magic = new fields.NumberField({ ...requiredInteger, initial: 0 })
@@ -178,15 +181,7 @@ export default class EncounterData extends ActorData {
       // Somme du bonus de la feuille et du bonus des effets
       const bonuses = Object.values(skill.bonuses).reduce((prev, curr) => prev + curr)
       const combatModifiersBonus = this.computeTotalModifiersByTarget(this.combatModifiers, key)
-      if (key === SYSTEM.COMBAT.init.id) {
-        skill.value = skill.base + bonuses + combatModifiersBonus.total
-      }
-
-      if (key === SYSTEM.COMBAT.def.id) {
-        skill.value = skill.base + bonuses + combatModifiersBonus.total
-      }
-
-      if (key === SYSTEM.COMBAT.dr.id) {
+      if (key !== SYSTEM.COMBAT.crit.id) {
         skill.value = skill.base + bonuses + combatModifiersBonus.total
       }
 
