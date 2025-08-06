@@ -17,11 +17,14 @@ export default class COActor extends Actor {
     await super._preCreate(data, options, user)
 
     // Configure the default image
-    if (SYSTEM.ACTOR_ICONS[this.type]) {
-      const img = SYSTEM.ACTOR_ICONS[this.type]
-      this.updateSource({ img })
+    if (!foundry.utils.hasProperty(data, "img")) {
+      if (SYSTEM.ACTOR_ICONS[this.type]) {
+        const img = SYSTEM.ACTOR_ICONS[this.type]
+        if (img) this.updateSource({ img })
+      }
     }
-    // Configure prototype token settings
+
+    // Configure prototype token settings : vision basic, actorLink true, friendly disposition
     if (this.type === "character") {
       const prototypeToken = {}
 
