@@ -74,6 +74,15 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
         await this.constructor._onSizeChange.call(this, event, event.target)
       })
     }
+
+    // Add right click handler to the image
+    const img = this.element.querySelector(".resetImage")
+    if (img) {
+      img.addEventListener("contextmenu", async (event) => {
+        event.preventDefault()
+        await this.constructor._onResetImage.call(this, event, event.target)
+      })
+    }
   }
 
   /**
@@ -185,7 +194,6 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
       foldable = foldable.nextElementSibling
     }
     if (foldable) {
-      //console.log(Utils.log(`CoBaseActorSheet - Toggling section`), foldable)
       // Change value in local storage to remember the state
       try {
         let key
@@ -328,6 +336,23 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
    */
   static async _onSizeChange(event, target) {
     await this.actor.updateSize(event.target.value)
+  }
+
+  /**
+   * Resets the actor's image and the prototype token to the default icon based on actor type.
+   *
+   * @param {Event} event The event triggered by the user action.
+   * @param {HTMLElement} target The target element of the event.
+   * @returns {Promise<void>} Resolves when the actor's image has been updated.
+   */
+  static async _onResetImage(event, target) {
+    event.preventDefault()
+    if (SYSTEM.ACTOR_ICONS[this.actor.type]) {
+      const imgPath = SYSTEM.ACTOR_ICONS[this.actor.type]
+      if (imgPath) {
+        await this.document.update({ img: imgPath, "prototypeToken.texture.src": imgPath })
+      }
+    }
   }
 
   /**
