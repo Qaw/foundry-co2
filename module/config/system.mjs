@@ -30,7 +30,7 @@ export const SYSTEM_DESCRIPTION = "Chroniques Oubliées"
 export const MOVEMENT_UNIT = { m: "CO.label.long.meters", ft: "CO.label.long.feet" }
 export const SIZES = {
   tiny: "CO.size.tiny",
-  verSmall: "CO.size.verySmall",
+  verySmall: "CO.size.verySmall",
   small: "CO.size.small",
   medium: "CO.size.medium",
   large: "CO.size.large",
@@ -42,7 +42,7 @@ export const TOKEN_SIZE = {
     size: 0.5,
     scale: 0.5,
   },
-  verSmall: {
+  verySmall: {
     size: 0.5,
     scale: 1,
   },
