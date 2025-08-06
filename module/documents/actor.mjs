@@ -1500,7 +1500,7 @@ export default class COActor extends Actor {
      * A hook event that fires before the roll is made.
      * @function co.preRollSkill
      * @memberof hookEvents
-     * @param {String} skillId          skillId for the roll.
+     * @param {string} skillId          skillId for the roll.
      * @param {Object} options          Options for the roll.
      * @returns {boolean}               Explicitly return `false` to prevent roll to be made.
      */
@@ -1632,7 +1632,7 @@ export default class COActor extends Actor {
      * A hook event that fires after the roll is made.
      * @function co.postRollSkill
      * @memberof hookEvents
-     * @param {String} skillId         skillId for the roll.
+     * @param {string} skillId         skillId for the roll.
      * @param {Object} options         Options for the roll.
      * @param {Roll} roll              The roll made.
      * @returns {boolean}              Explicitly return `false` to prevent roll to be made.
@@ -1645,7 +1645,7 @@ export default class COActor extends Actor {
      * A hook event that fires before the results of the roll.
      * @function co.resultRollSkill
      * @memberof hookEvents
-     * @param {String} skillId          skillId for the roll.
+     * @param {string} skillId          skillId for the roll.
      * @param {Object} options          Options for the roll.
      * @param {Object} result           The analysed result of the roll.
      * @returns {boolean}               Explicitly return `false` to prevent roll to be made.
@@ -1660,6 +1660,12 @@ export default class COActor extends Actor {
     await roll.toMessage({ style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "skill", system: { targets: targetsUuid, result: result }, speaker }, { rollMode: roll.options.rollMode })
   }
 
+  /**
+   * Lance un jet d'attaque
+   * @param {COItem} item : la source de l'action
+   * @param {*} options : Ensemble d'elements permettant les calculs
+   * @returns {*} Renvoi un tableau de résultat de jet de dé
+   */
   async rollAttack(
     item,
     {
@@ -1869,6 +1875,22 @@ export default class COActor extends Actor {
 
     // Construction du message de chat
     if (chatFlavor === "") chatFlavor = `${item.name} ${actionName}`
+
+    // Si l'actor est un encounter je dois prendre en comtpe en skillBonus ou skillMalus les modifiers qui lui sont apportés
+    if (this.type === "encounter") {
+      if (item.type === "attack") {
+        if (item.system.isContact) {
+          if (this.system.combat.melee.value > 0) skillBonus += this.system.combat.melee.value
+          else if (this.system.combat.melee.value < 0) skillMalus += this.system.combat.melee.value
+        } else if (item.system.isRanged) {
+          if (this.system.combat.ranged.value > 0) skillBonus += this.system.combat.ranged.value
+          else if (this.system.combat.ranged.value < 0) skillMalus += this.system.combat.ranged.value
+        } else if (item.system.isMagic) {
+          if (this.system.combat.magic.value > 0) skillBonus += this.system.combat.magic.value
+          else if (this.system.combat.magic.value < 0) skillMalus += this.system.combat.magic.value
+        }
+      }
+    }
 
     const dialogContext = {
       rollMode,
