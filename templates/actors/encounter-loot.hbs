@@ -29,7 +29,9 @@
             </h4>
             <div class="item-detail">{{localize "CO.label.short.quantity"}}</div>
                 <div class="item-controls-2">
-                <a class="item-control" data-action="createItem" data-type="equipment" data-subtype="{{group.category}}" data-tooltip="{{localize 'CO.label.long.add'}}"><i class="fas fa-plus"></i></a>
+                    {{#if @root/unlocked}}
+                        <a class="item-control" data-action="createItem" data-type="equipment" data-subtype="{{group.category}}" data-tooltip="{{localize 'CO.label.long.add'}}"><i class="fas fa-plus"></i></a>
+                    {{/if}}
                 </div>
             </li>
             <ol class="item-list foldable {{ifThen group.expanded 'expanded' 'folded'}}">
