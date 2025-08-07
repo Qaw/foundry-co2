@@ -159,12 +159,6 @@ Hooks.once("ready", async function () {
   console.info(Utils.log(game.i18n.localize("CO.notif.ready")))
 })
 
-Hooks.on("createActor", (document, options, userId) => {
-  if (game.user.isGM) {
-    document.system.updateAllActionsUuid()
-  }
-})
-
 // A la fin d'un combat on supprime les Active Effects
 Hooks.on("deleteCombat", (combat, options, userId) => {
   if (game.user.isGM) {

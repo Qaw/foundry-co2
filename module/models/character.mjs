@@ -141,6 +141,53 @@ export default class CharacterData extends ActorData {
     return foundry.utils.mergeObject(super.defineSchema(), schema)
   }
 
+  /** @inheritDoc */
+  async _preCreate(data, options, user) {
+    const allowed = await super._preCreate(data, options, user)
+    if (allowed === false) return false
+
+    const updates = {
+      prototypeToken: {
+        actorLink: true,
+        disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
+        sight: {
+          enabled: true,
+          visionMode: "basic",
+        },
+      },
+    }
+
+    const stats = this.parent._stats
+
+    // Pour un acteur non dupliqué, non provenant d'un compendium et non exporté
+    if (!stats.duplicateSource && !stats.compendiumSource && !stats.exportSource) {
+      // Image par défaut
+      if (!foundry.utils.hasProperty(data, "img")) {
+        if (SYSTEM.ACTOR_ICONS[this.parent.type]) {
+          const img = SYSTEM.ACTOR_ICONS[this.parent.type]
+          if (img) updates.img = img
+        }
+      }
+
+      const sizemodifier = SYSTEM.TOKEN_SIZE[this.details.size]
+      // Configuration du prototype token : size et scale
+      foundry.utils.mergeObject(updates.prototypeToken, {
+        width: sizemodifier.size,
+        height: sizemodifier.size,
+        texture: {
+          scaleX: sizemodifier.scale,
+          scaleY: sizemodifier.scale,
+        },
+      })
+
+      const items = await Promise.all(Object.values(game.system.CONST.BASE_ITEM_UUID).map((uuid) => fromUuid(uuid)))
+      // The method updateSource will merge the arrays for embedded collections
+      updates.items = items.map((i) => game.items.fromCompendium(i, { keepId: true, clearFolder: true }))
+    }
+
+    this.parent.updateSource(updates)
+  }
+
   get fpFromFamily() {
     return this.profile ? SYSTEM.FAMILIES[this.profile.system.family].fp : 0
   }
@@ -265,7 +312,6 @@ export default class CharacterData extends ActorData {
     // Un personnage avec un profil de la famille des mages a un point de capacité supplémentaire au niveau 1
     this.attributes.xp.max = 3 + 2 * (this.attributes.level - 1) + (this.hasProfileMageFamily ? 1 : 0)
     this._prepareVision()
-
   }
 
   /**

@@ -104,6 +104,53 @@ export default class EncounterData extends ActorData {
     return foundry.utils.mergeObject(super.defineSchema(), schema)
   }
 
+  /** @inheritDoc */
+  async _preCreate(data, options, user) {
+    const allowed = await super._preCreate(data, options, user)
+    if (allowed === false) return false
+
+    const updates = {
+      prototypeToken: {
+        sight: {
+          enabled: true,
+          visionMode: "basic",
+        },
+      },
+    }
+
+    const stats = this.parent._stats
+
+    // Pour un acteur non dupliqué, non provenant d'un compendium et non exporté
+    if (!stats.duplicateSource && !stats.compendiumSource && !stats.exportSource) {
+      // Image par défaut
+      if (!foundry.utils.hasProperty(data, "img")) {
+        if (SYSTEM.ACTOR_ICONS[this.parent.type]) {
+          const img = SYSTEM.ACTOR_ICONS[this.parent.type]
+          if (img) updates.img = img
+        }
+      }
+
+      const sizemodifier = SYSTEM.TOKEN_SIZE[this.details.size]
+      // Configuration du prototype token : size et scale
+      foundry.utils.mergeObject(updates.prototypeToken, {
+        width: sizemodifier.size,
+        height: sizemodifier.size,
+        texture: {
+          scaleX: sizemodifier.scale,
+          scaleY: sizemodifier.scale,
+        },
+      })
+
+      const items = []
+      const item = await fromUuid(game.system.CONST.BASE_ITEM_UUID.hands)
+      if (item) items.push(item)
+      // The method updateSource will merge the arrays for embedded collections
+      updates.items = items.map((i) => game.items.fromCompendium(i, { keepId: true, clearFolder: true }))
+    }
+
+    this.parent.updateSource(updates)
+  }
+
   get currentLevel() {
     return this.attributes.nc
   }

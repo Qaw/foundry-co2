@@ -13,46 +13,6 @@ import Utils from "../utils.mjs"
  * @function
  */
 export default class COActor extends Actor {
-  async _preCreate(data, options, user) {
-    await super._preCreate(data, options, user)
-
-    // Configure the default image
-    if (!foundry.utils.hasProperty(data, "img")) {
-      if (SYSTEM.ACTOR_ICONS[this.type]) {
-        const img = SYSTEM.ACTOR_ICONS[this.type]
-        if (img) this.updateSource({ img })
-      }
-    }
-
-    // Configure prototype token settings : vision basic, actorLink true, friendly disposition
-    if (this.type === "character") {
-      const prototypeToken = {}
-
-      Object.assign(prototypeToken, {
-        sight: { enabled: true, visionMode: "basic" },
-        actorLink: true,
-        disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY,
-      })
-      this.updateSource({ prototypeToken })
-    }
-
-    const sizemodifier = SYSTEM.TOKEN_SIZE[this.system.details.size]
-    // Prototype token size
-    if (sizemodifier.size !== this.prototypeToken.width || sizemodifier.scale !== this.prototypeToken.texture.scaleX) {
-      this.updateSource({ prototypeToken: { width: sizemodifier.size, height: sizemodifier.size, "texture.scaleX": sizemodifier.scale, "texture.scaleY": sizemodifier.scale } })
-    }
-  }
-
-  async _onCreate(data, options, user) {
-    await super._onCreate(data, options, user)
-    // Création de l'item mains nues pour un personnage
-    if (this.type === "character") {
-      await this.addBaseItemItem(SYSTEM.BASE_ITEM_UUID.hands, SYSTEM.ITEM_TYPE.equipment.id)
-    }
-    if (this.type === "character" || this.type === "encounter") {
-      await this.addBaseItemItem(SYSTEM.BASE_ITEM_UUID.support, SYSTEM.ITEM_TYPE.capacity.id)
-    }
-  }
 
   /**
    * Ajoute un objet à l'acteur s'il n'existe pas déjà lors de la création de cet acteur.
