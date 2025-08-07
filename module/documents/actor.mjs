@@ -806,7 +806,9 @@ export default class COActor extends Actor {
     let capacity = this.items.get(capacityId)
     if (!capacity) return
 
-    let path = fromUuidSync(capacity.system.path)
+    const { id } = foundry.utils.parseUuid(capacity.system.path)
+    if (!id) return
+    let path = this.items.get(id)
     if (!path) return
     // Rang actuel de la voie
     const currentRank = path.system.rank
@@ -847,7 +849,8 @@ export default class COActor extends Actor {
     let pos = path.system.getCapacityRank(capacity.uuid)
     for (let i = 0; i < pos; i++) {
       let c = path.system.capacities[i]
-      const current = fromUuidSync(c)
+      const { id } = foundry.utils.parseUuid(c)
+      const current = this.items.get(id)
       if (!current.system.learned) {
         ui.notifications.warn(game.i18n.localize("CO.notif.warningNeedLearnedCapacities"))
         return false
@@ -1385,14 +1388,15 @@ export default class COActor extends Actor {
    * @param {string} profileUuid The ID of the profile to delete.
    */
   async deleteProfile(profileUuid) {
-    const profile = fromUuidSync(profileUuid)
+    const { id } = foundry.utils.parseUuid(profileUuid)
+    const profile = this.items.get(id)
     // Delete linked paths
     const pathsUuids = profile.system.paths
     for (const pathUuid of pathsUuids) {
       await this.deletePath(pathUuid)
     }
-    const { id } = foundry.utils.parseUuid(profileUuid)
-    await this.deleteEmbeddedDocuments("Item", [id])
+    const idProfile = foundry.utils.parseUuid(profileUuid)?.id
+    await this.deleteEmbeddedDocuments("Item", [idProfile])
   }
 
   /**
@@ -1402,9 +1406,10 @@ export default class COActor extends Actor {
    * @returns {Promise<void>}  A promise that resolves when the deletion is complete.
    */
   async deletePath(pathUuid) {
-    // Delete linked capacities
-    const path = await fromUuid(pathUuid)
+    const { id } = foundry.utils.parseUuid(pathUuid)
+    const path = this.items.get(id)
     if (path) {
+      // Delete linked capacities
       const capacitiesUuId = path.system.capacities
       const toDeleteIds = capacitiesUuId.map((capacityUuid) => {
         const { id } = foundry.utils.parseUuid(capacityUuid)

@@ -109,40 +109,6 @@ export default class EncounterData extends ActorData {
   }
 
   /**
-   * Retrieves an array of modifiers from currentEffects for the encounter.
-   *
-   * @param {string} subtype The subtype of the modifier.
-   * @returns {Array} An array of modifiers.
-   */
-  _getModifiers(subtype) {
-    let modifiersArray = []
-
-    const sources = ["capacities", "equipments"]
-    sources.forEach((source) => {
-      let items = this.parent[source]
-      if (items) {
-        let allModifiers = items
-          .reduce((mods, item) => mods.concat(item.enabledModifiers), [])
-          .filter((m) => m.subtype === subtype && (m.apply === SYSTEM.MODIFIERS_APPLY.self.id || m.apply === SYSTEM.MODIFIERS_APPLY.both.id))
-        modifiersArray.push(...allModifiers)
-      }
-    })
-
-    // Prise en compte des customEffects en cours (applyOn others ou both)
-    if (this.currentEffects.length > 0) {
-      for (const effect of this.currentEffects) {
-        if (effect.modifiers.length > 0) {
-          modifiersArray.push(
-            ...effect.modifiers.filter((m) => m.subtype === subtype && (m.apply === SYSTEM.MODIFIERS_APPLY.others.id || m.apply === SYSTEM.MODIFIERS_APPLY.both.id)),
-          )
-        }
-      }
-    }
-
-    return modifiersArray
-  }
-
-  /**
    * Retourne la liste de tous les modificateurs d'état provenant des actions activées du parent.
    *
    * Parcourt les actions du parent qui sont activées, puis collecte les cibles des modificateurs

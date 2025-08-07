@@ -163,7 +163,8 @@ export default class CapacityData extends ItemData {
     // Capacité hors voie
     if (!this.path) return 0
     // Recherche la voie pour obtenir la défense maximale pour utiliser la capacité
-    const path = fromUuidSync(this.path)
+    const { id } = foundry.utils.parseUuid(this.path)
+    const path = this.items.get(id)
     if (!path) return 0
     const maxDefenseArmor = path.system.maxDefenseArmor
     return Math.max(armor.system.defense - maxDefenseArmor, 0)

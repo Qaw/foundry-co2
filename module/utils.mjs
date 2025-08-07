@@ -130,21 +130,25 @@ export default class Utils {
    * Il est possible d'écrire un nomnbre ou un dé (d4)
    * @param {*} actor : acteur concerné
    * @param {*} content : le texte contenant une référence à un rang
-   * @param {UUID} source The item source's UUID : used for the #rank
+   * @param {UUID} source The item source's UUID : used for the #rank Actor.primaryId.Item.id
    */
   static _replaceRank(actor, content, source) {
-    // Pour connaitre le rang d'une voie il faut remonter à la source pour savoir de quelle voie il s'agit
-    let itemSource = fromUuidSync(source)
+    if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`Utils - _replaceRank `), actor, content, source)
+    const id = foundry.utils.parseUuid(source)?.id
+
+    let itemSource = actor.items.get(id)
     if (!itemSource || itemSource.type !== "capacity") return content
 
     // Si on est sur une capacité enfant, on dépend du rang du parent
     if (itemSource.system.parentCapacity) {
-      itemSource = fromUuidSync(itemSource.system.parentCapacity)
+      const { id } = foundry.utils.parseUuid(itemSource.system.parentCapacity)
+      itemSource = actor.items.get(id)
     }
 
-    if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`Utils - _replaceRank - actor, formula, source, itemSource`), actor, content, source, itemSource)
     const pathUuid = itemSource.system.path
-    const path = fromUuidSync(pathUuid)
+    const pathId = foundry.utils.parseUuid(pathUuid)?.id
+    if (!pathId) return content
+    const path = actor.items.get(pathId)
     const rank = path?.system.rank ?? 0
 
     // Cas @rank[x,x,x,x,x,x,x,x]
@@ -203,12 +207,15 @@ export default class Utils {
    */
   static _replaceAllRank(actor, content, source) {
     if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`Utils - _replaceAllRank `), actor, content, source)
-    let itemSource = fromUuidSync(source)
-    if (itemSource.type !== "capacity") return content
+    const id = foundry.utils.parseUuid(source)?.id
+
+    let itemSource = actor.items.get(id)
+    if (!itemSource || itemSource.type !== "capacity") return content
 
     // Si on est sur une capacité enfant on depend du rang du parent
     if (itemSource.system.parentCapacity) {
-      itemSource = fromUuidSync(itemSource.system.parentCapacity)
+      const { id } = foundry.utils.parseUuid(itemSource.system.parentCapacity)
+      itemSource = actor.items.get(id)
     }
 
     let startRank = content.includes("@allrank") ? content.substring(content.indexOf("@allrank")) : content.substring(content.indexOf("@toutrang"))
@@ -222,7 +229,8 @@ export default class Utils {
           let compteur = 0
           // Toutes les voies du profil qui ont atteint le rang demandé
           profile.system.paths.forEach((p) => {
-            const path = fromUuidSync(p)
+            const id = foundry.utils.parseUuid(p)?.id
+            const path = actor.items.get(id)
             if (path && path.system.rank >= rank) compteur += 1
           })
           content = content.includes("@allrank") ? content.replace(`@allrank[${targetRank}]`, compteur) : content.replace(`@toutrang[${targetRank}]`, compteur)

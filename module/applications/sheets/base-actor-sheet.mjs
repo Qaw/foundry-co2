@@ -252,9 +252,10 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     let indice = null
     if (chatType === "item" || chatType === "loot") {
       id = target.closest(".item").dataset.itemId
-      item = this.document.items.get(id)
+      item = this.actor.items.get(id)
     } else if (chatType === "action") {
-      item = fromUuidSync(dataset.source)
+      const { id } = foundry.utils.parseUuid(dataset.source)
+      item = this.actor.items.get(id)
       indice = dataset.indice
     }
 
@@ -364,8 +365,11 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     event.preventDefault()
     const uuid = target.closest(".item").dataset.itemUuid
     if (uuid) {
-      const document = fromUuidSync(uuid)
-      if (document) return document.sheet.render(true)
+      const { id } = foundry.utils.parseUuid(uuid)
+      if (id) {
+        const document = this.actor.items.get(id)
+        if (document) return document.sheet.render(true)
+      }
     }
   }
 

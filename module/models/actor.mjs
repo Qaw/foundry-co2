@@ -3,7 +3,6 @@ import { AbilityValue } from "./schemas/ability-value.mjs"
 export default class ActorData extends foundry.abstract.TypeDataModel {
   static defineSchema() {
     const fields = foundry.data.fields
-    const requiredInteger = { required: true, nullable: false, integer: true }
 
     const schema = {}
 
@@ -95,6 +94,48 @@ export default class ActorData extends foundry.abstract.TypeDataModel {
   }
 
   /**
+   * Retrieves an array of modifiers from various sources
+   *
+   * For character : the sources include features, profiles, capacities, and equipment.
+   * For encounter : the sources include capacities, and equipment.
+   *
+   * Each source is checked for enabled modifiers of the specified type and subtype.
+   * Only modifiers of applyOn self or both should be considered.
+   * For features and profiles, the modifiers are in the item
+   * for capacities and equipment, the modifiers are in the actions
+   *
+   * @param {string} subtype The subtype of the modifier.
+   * @returns {Array} An array of modifiers.
+   */
+  _getModifiers(subtype) {
+    const sources = this.type === "character" ? ["features", "profiles", "capacities", "equipments"] : ["capacities", "equipments"]
+    let modifiersArray = []
+
+    sources.forEach((source) => {
+      let items = this.parent[source]
+      if (items) {
+        let allModifiers = items
+          .reduce((mods, item) => mods.concat(item.enabledModifiers), [])
+          .filter((m) => m.subtype === subtype && (m.apply === SYSTEM.MODIFIERS_APPLY.self.id || m.apply === SYSTEM.MODIFIERS_APPLY.both.id))
+        modifiersArray.push(...allModifiers)
+      }
+    })
+
+    // Prise en compte des customEffects en cours (applyOn others ou both)
+    if (this.currentEffects.length > 0) {
+      for (const effect of this.currentEffects) {
+        if (effect.modifiers.length > 0) {
+          modifiersArray.push(
+            ...effect.modifiers.filter((m) => m.subtype === subtype && (m.apply === SYSTEM.MODIFIERS_APPLY.others.id || m.apply === SYSTEM.MODIFIERS_APPLY.both.id)),
+          )
+        }
+      }
+    }
+
+    return modifiersArray
+  }
+
+  /**
    * Checks if there are any bonus dice modifiers for a given attack type.
    *
    * @param {string} attackType The type of attack to check for bonus dice modifiers.
@@ -118,6 +159,11 @@ export default class ActorData extends foundry.abstract.TypeDataModel {
     return modifiers.length > 0
   }
 
+  /**
+   * Determines whether the current temporary damage (tempDm) exceeds the current hit points (hp).
+   *
+   * @returns {boolean} True if the temporary damage is greater than the current hit points, otherwise false.
+   */
   get isTempDmSuperiorToCurrentHp() {
     const currentHp = this.attributes.hp.value
     const currentTempDamage = this.attributes.tempDm

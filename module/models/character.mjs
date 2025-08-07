@@ -173,45 +173,6 @@ export default class CharacterData extends ActorData {
   }
 
   /**
-   * Retrieves an array of modifiers from various sources associated with the character.
-   * The sources include features, profiles, capacities, and equipment.
-   * Each source is checked for enabled modifiers of the specified type and subtype.
-   * Only modifiers of applyOn self or both should be considered.
-   * For features and profiles, the modifiers are in the item
-   * for capacities and equipment, the modifiers are in the actions
-   *
-   * @param {string} subtype The subtype of the modifier.
-   * @returns {Array} An array of modifiers.
-   */
-  _getModifiers(subtype) {
-    const sources = ["features", "profiles", "capacities", "equipments"]
-    let modifiersArray = []
-
-    sources.forEach((source) => {
-      let items = this.parent[source]
-      if (items) {
-        let allModifiers = items
-          .reduce((mods, item) => mods.concat(item.enabledModifiers), [])
-          .filter((m) => m.subtype === subtype && (m.apply === SYSTEM.MODIFIERS_APPLY.self.id || m.apply === SYSTEM.MODIFIERS_APPLY.both.id))
-        modifiersArray.push(...allModifiers)
-      }
-    })
-
-    // Prise en compte des customEffects en cours (applyOn others ou both)
-    if (this.currentEffects.length > 0) {
-      for (const effect of this.currentEffects) {
-        if (effect.modifiers.length > 0) {
-          modifiersArray.push(
-            ...effect.modifiers.filter((m) => m.subtype === subtype && (m.apply === SYSTEM.MODIFIERS_APPLY.others.id || m.apply === SYSTEM.MODIFIERS_APPLY.both.id)),
-          )
-        }
-      }
-    }
-
-    return modifiersArray
-  }
-
-  /**
    * Return the total modifier and the tooltip for the given target and an array of modifiers.
    * @param {Array} modifiers An array of modifier objects.
    * @param {SYSTEM.MODIFIERS.MODIFIER_TARGET} target The target for which the modifiers are filtered.
@@ -244,7 +205,7 @@ export default class CharacterData extends ActorData {
     return { total: total, tooltip: tooltip }
   }
 
-  async prepareDerivedData() {
+  prepareDerivedData() {
     super.prepareDerivedData()
 
     this._prepareAbilities()
@@ -305,27 +266,6 @@ export default class CharacterData extends ActorData {
     this.attributes.xp.max = 3 + 2 * (this.attributes.level - 1) + (this.hasProfileMageFamily ? 1 : 0)
     this._prepareVision()
 
-    // Cas des points de vie à 1 : statut affaibli
-    if (this.attributes.hp.value === 1 && !this.parent.statuses.has("weakened")) {
-      if (this.parent.statuses.has("unconscious") && this.parent.getFlag("co", "statuses.unconsciousFromZeroHP")) {
-        await this.parent.toggleStatusEffect("unconscious", { active: false })
-        await this.parent.unsetFlag("co", "statuses.unconsciousFromZeroHP")
-      }
-      await this.parent.toggleStatusEffect("weakened", { active: true })
-      await this.parent.setFlag("co", "statuses.weakenedFromOneHP", true)
-    }
-
-    // Cas des points de vie > 1 : statuts affaible et inconscient
-    if (this.attributes.hp.value > 1) {
-      if (this.parent.statuses.has("weakened") && this.parent.getFlag("co", "statuses.weakenedFromOneHP")) {
-        await this.parent.toggleStatusEffect("weakened", { active: false })
-        await this.parent.unsetFlag("co", "statuses.weakenedFromOneHP")
-      }
-      if (this.parent.statuses.has("unconscious") && this.parent.getFlag("co", "statuses.unconsciousFromZeroHP")) {
-        await this.parent.toggleStatusEffect("unconscious", { active: false })
-        await this.parent.unsetFlag("co", "statuses.unconsciousFromZeroHP")
-      }
-    }
   }
 
   /**

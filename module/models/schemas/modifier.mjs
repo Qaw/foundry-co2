@@ -50,7 +50,9 @@ export class Modifier extends foundry.abstract.DataModel {
    * @returns {string|undefined} The generated tooltip string or undefined if the item is not found.
    */
   getTooltip(actor) {
-    let item = fromUuidSync(this.source)
+    const id = foundry.utils.parseUuid(this.source)?.id
+    if (!id) return
+    let item = actor.items.get(id)
     if (!item) return
     let name = item.name
     let value = this.evaluate(actor)
@@ -68,7 +70,9 @@ export class Modifier extends foundry.abstract.DataModel {
    * @property {string} description - The description of the item.
    */
   getSourceInfos(actor) {
-    let item = fromUuidSync(this.parent.source)
+    const id = foundry.utils.parseUuid(this.parent.source)?.id
+    if (!id) return
+    let item = actor.items.get(id)
     if (!item) return
     const sourceType = item.type
     const name = item.name
@@ -76,9 +80,9 @@ export class Modifier extends foundry.abstract.DataModel {
     let pathType = ""
     // Pour une capacité, remonte le type de voie
     if (item.type === SYSTEM.ITEM_TYPE.capacity.id) {
-      const pathId = item.system.path
+      const pathId = foundry.utils.parseUuid(item.system.path)?.id
       if (pathId) {
-        const path = fromUuidSync(pathId)
+        const path = actor.items.get(pathId)
         if (path) pathType = game.i18n.localize(SYSTEM.PATH_TYPES[path.system.subtype].label)
       }
     }

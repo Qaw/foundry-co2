@@ -91,6 +91,7 @@ export default class COItem extends Item {
    * Renvoie true si c'est une capacité avec une fréquence d'utilisation, false sinon
    * @returns {boolean}
    */
+  // FIXME Not used anymore ?
   getIsActivableAndChargeable() {
     if (foundry.utils.isEmpty(this.system.actions)) return false
     if (this.type === SYSTEM.ITEM_TYPE.capacity.id && this.system.frequency !== SYSTEM.CAPACITY_FREQUENCY.none.id && this.system.learned) {
@@ -236,23 +237,6 @@ export default class COItem extends Item {
       return this.update({ "system.paths": newPaths })
     }
     return false
-  }
-
-  /**
-   * Update the rank for an embedded path item
-   */
-  async updateRank() {
-    if (this.type !== SYSTEM.ITEM_TYPE.path.id || !this.actor) return
-    let max = 0
-
-    for (const uuid of this.system.capacities) {
-      const capacity = fromUuidSync(uuid)
-      if (capacity && capacity.system.learned) {
-        const rank = this.system.capacities.indexOf(uuid) + 1
-        if (rank > max) max = rank
-      }
-    }
-    this.update({ "system.rank": max })
   }
 
   // #endregion
