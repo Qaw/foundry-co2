@@ -914,7 +914,10 @@
       },
       "equip": "Équiper",
       "unequip": "Déséquiper",
-      "consume": "Consommer"
+      "consume": "Consommer",
+      "noConsume": "pas assez de quantité",
+      "charge": "charger",
+      "noCharge": "pas de charge/munition"
     },
     "condition": {
       "objects": {

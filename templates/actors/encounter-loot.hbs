@@ -28,12 +28,9 @@
                 <a data-action="toggleSection" data-toggle-type="{{group.category}}">{{localize (concat "CO.ui." group.category "s")}}</a>
             </h4>
             <div class="item-detail">{{localize "CO.label.short.quantity"}}</div>
-            {{#if @root.unlocked}}
-                <div class="item-detail">{{localize "CO.ui.actions"}}</div>
                 <div class="item-controls-2">
                 <a class="item-control" data-action="createItem" data-type="equipment" data-subtype="{{group.category}}" data-tooltip="{{localize 'CO.label.long.add'}}"><i class="fas fa-plus"></i></a>
                 </div>
-            {{/if}}
             </li>
             <ol class="item-list foldable {{ifThen group.expanded 'expanded' 'folded'}}">
             {{#each group.items as |item id|}}
@@ -46,7 +43,6 @@
                     <div class="item-detail">
                         <a class="item-control inventory-qty" data-tooltip="{{localize 'CO.label.short.quantity'}}">{{item.system.quantity.current}}</a>
                     </div>
-                    {{#if @root.unlocked}}
                         <div class="item-controls-2">
                         <a class="chat" data-action="sendToChat" data-chat-type="item" data-tooltip="{{localize 'CO.label.long.sendToChat'}}"><i class="fas fa-fw fa-comment-alt"></i></a>
                         {{#if @root/unlocked}}
@@ -54,7 +50,6 @@
                             <a class="item-control" data-action="deleteItem" data-tooltip="{{localize 'CO.ui.remove'}}"><i class="fas fa-trash"></i></a>
                         {{/if}}
                         </div>
-                    {{/if}}
                 </li>
             {{/each}}
             </ol>
