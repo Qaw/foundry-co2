@@ -94,6 +94,14 @@ export default class EquipmentData extends ItemData {
     return this.subtype === SYSTEM.EQUIPMENT_SUBTYPES.consumable.id
   }
 
+  get hasCharges() {
+    return this.charges.current > 0
+  }
+
+  get hasQuantity() {
+    return this.quantity.current > 0
+  }
+
   /**
    * Calcule la valeur de défense totale de l'équipement.
    *

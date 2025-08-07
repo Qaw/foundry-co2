@@ -915,9 +915,9 @@
       "equip": "Équiper",
       "unequip": "Déséquiper",
       "consume": "Consommer",
-      "noConsume": "pas assez de quantité",
-      "charge": "charger",
-      "noCharge": "pas de charge/munition"
+      "noConsume": "Rien à consommer",
+      "charge": "Il reste {charges} charge(s)/munition(s)",
+      "noCharge": "Plus de charges/munitions"
     },
     "condition": {
       "objects": {

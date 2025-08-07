@@ -36,7 +36,7 @@
     </li>
     <ol class="item-list foldable {{ifThen group.expanded 'expanded' 'folded'}}">
       {{#each group.items as |item id|}}
-        {{!log 'Character inventory item' item}}
+        {{log 'Character inventory item' item}}
         <li class="item flexrow" data-item-uuid="{{item.uuid}}" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="true">
           <div class="item-name flexrow">
             <a class="item-img" data-action="editItem" style="background-image: url('{{item.img}}')"></a>
@@ -58,7 +58,7 @@
             </a>
           </div>
           <div class="item-detail">
-            <a class="item-control inventory-qty" data-tooltip="{{localize 'CO.label.short.quantity'}}">{{item.system.quantity.current}}</a>
+            <a class="item-control inventory-qty">{{item.system.quantity.current}}</a>
           </div>
             <div class="item-detail">
               {{#if item.system.properties.equipable}}
@@ -69,16 +69,16 @@
                 {{/if}}
               {{/if}}
               {{#if item.system.properties.stackable}}
-                {{#if (gt item.system.quantity.current 0)}}
+                {{#if item.system.hasQuantity}}
                   <a class="item-control inventory-consume" style="color: green;" data-tooltip="{{localize 'CO.action.consume'}}"><i class="fas fa-drumstick-bite"></i></a>
-                  {{else}}
+                {{else}}
                   <a class="item-control inventory-consume" style="color: grey;" data-tooltip="{{localize 'CO.action.noConsume'}}"><i class="fas fa-drumstick-bite"></i></a>
                 {{/if}}
               {{/if}}
               {{#if item.system.properties.reloadable}}
-                {{#if (gt item.system.charges.current 0)}}
-                  <a class="item-control inventory-consume" style="color: green;" data-tooltip="{{localize 'CO.action.charge'}}"><i class="fa-solid fa-bullseye-arrow"></i></a>
-                  {{else}}
+                {{#if item.system.hasCharges}}
+                  <a class="item-control inventory-consume" style="color: green;" data-tooltip="{{localize 'CO.action.charge' charges=item.system.charges.current}}"><i class="fa-solid fa-bullseye-arrow"></i></a>
+                {{else}}
                   <a class="item-control inventory-consume" style="color: grey;" data-tooltip="{{localize 'CO.action.noCharge'}}"><i class="fa-regular fa-bullseye-arrow"></i></a>
                 {{/if}}
               {{/if}}
