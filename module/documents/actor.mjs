@@ -1789,9 +1789,9 @@ export default class COActor extends Actor {
 
     if (this.type === "character") {
       // Gestion du dé bonus : en fonction de la formule (skillFormulaTooltip contient la formule d'origine), on déduit le type d'attaque et on cherche dans les modifiers
-      if (this.system.hasBonusDiceForAttack(Utils.getAttackTypeFromFormula(skillFormulaTooltip))) bonusDices += 1
+      if (this.system.hasBonusDiceForAttack(Utils.getAttackTypeFromFormula(skillFormulaTooltip, actionType))) bonusDices += 1
       // Gestion du dé malus : en fonction de la formule (skillFormulaTooltip contient la formule d'origine), on déduit le type d'attaque et on cherche dans les modifiers
-      if (this.system.hasMalusDiceForAttack(Utils.getAttackTypeFromFormula(skillFormulaTooltip))) malusDices += 1
+      if (this.system.hasMalusDiceForAttack(Utils.getAttackTypeFromFormula(skillFormulaTooltip, actionType))) malusDices += 1
     } else if (this.type === "encounter") {
       // Gestion du dé bonus : en fonction de la formule, on déduit le type d'attaque et on cherche dans les modifiers
       if (this.system.hasBonusDiceForAttack(actionType)) bonusDices += 1
