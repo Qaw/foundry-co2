@@ -18,8 +18,6 @@ export default class COCharacterSheet extends COBaseActorSheet {
       editAbilities: COCharacterSheet.#onEditAbilities,
       deleteItem: COCharacterSheet.#onDeleteItem,
       roll: COCharacterSheet.#onRoll,
-      toggleAction: COCharacterSheet.#onUseAction,
-      toggleEffect: COCharacterSheet.#onUseEffect,
       attack: COCharacterSheet.#onUseAction,
       damage: COCharacterSheet.#onUseAction,
       inventoryEquip: COCharacterSheet.#onEquippedToggle,

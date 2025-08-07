@@ -39,6 +39,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
       learnCapacity: COBaseActorSheet.#onLearnCapacity,
       unlearnCapacity: COBaseActorSheet.#onUnlearnCapacity,
       deleteCustomEffect: COBaseActorSheet.#onDeleteCustomEffect,
+      toggleAction: COBaseActorSheet.#onUseAction,
+      toggleEffect: COBaseActorSheet.#onUseEffect,
     },
   }
 
@@ -169,6 +171,46 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
 
     if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseActorSheet - context`), context)
     return context
+  }
+
+  /**
+   * Action d'utiliser : active ou désactive une action
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
+   */
+  static async #onUseAction(event, target) {
+    event.preventDefault()
+    const shiftKey = !!event.shiftKey
+    const dataset = target.dataset
+    const action = dataset.actionType
+    const type = dataset.type
+    const source = dataset.source
+    const indice = dataset.indice
+
+    let activation
+    if (action === "activate") {
+      activation = await this.document.activateAction({ state: true, source, indice, type, shiftKey })
+    } else if (action === "unactivate") {
+      activation = await this.document.activateAction({ state: false, source, indice, type })
+    }
+  }
+
+  /**
+   * Action d'utiliser un effet
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
+   */
+  static async #onUseEffect(event, target) {
+    event.preventDefault()
+    const dataset = target.dataset
+    const effectid = dataset.effect
+    const action = dataset.action
+    let activation = false
+    if (action === "activate") {
+      activation = this.actor.activateCOStatusEffect({ state: true, effectid })
+    } else if (action === "unactivate") {
+      activation = this.actor.activateCOStatusEffect({ state: false, effectid })
+    }
   }
 
   /**

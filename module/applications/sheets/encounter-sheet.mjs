@@ -16,8 +16,6 @@ export default class COEncounterSheet extends COBaseActorSheet {
     actions: {
       deleteItem: COEncounterSheet.#onDeleteItem,
       roll: COEncounterSheet.#onRoll,
-      toggleAction: COEncounterSheet.#onUseAction,
-      toggleEffect: COEncounterSheet.#onUseEffect,
     },
   }
 
@@ -88,52 +86,11 @@ export default class COEncounterSheet extends COBaseActorSheet {
   }
 
   /**
-   * Action d'utiliser : active ou désactive une action
-   * @param {PointerEvent} event The originating click event
-   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
-   */
-  static async #onUseAction(event, target) {
-    event.preventDefault()
-    const shiftKey = !!event.shiftKey
-    const dataset = target.dataset
-    const action = dataset.actionType
-    const type = dataset.type
-    const source = dataset.source
-    const indice = dataset.indice
-
-    let activation
-    if (action === "activate") {
-      activation = await this.document.activateAction({ state: true, source, indice, type, shiftKey })
-    } else if (action === "unactivate") {
-      activation = await this.document.activateAction({ state: false, source, indice, type })
-    }
-  }
-
-  /**
-   * Action d'utiliser un effet
-   * @param {PointerEvent} event The originating click event
-   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
-   */
-  static async #onUseEffect(event, target) {
-    event.preventDefault()
-    const dataset = target.dataset
-    const effectid = dataset.effect
-    const action = dataset.action
-    let activation = false
-    if (action === "activate") {
-      activation = this.actor.activateCOStatusEffect({ state: true, effectid })
-    } else if (action === "unactivate") {
-      activation = this.actor.activateCOStatusEffect({ state: false, effectid })
-    }
-  }
-
-  /**
    * Delete the selected item
    * @param {PointerEvent} event The originating click event
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
   static async #onDeleteItem(event, target) {
-    event.preventDefault()
     const li = target.closest(".item")
     const id = li.dataset.itemId
     const uuid = li.dataset.itemUuid
