@@ -188,6 +188,33 @@ export default class CharacterData extends ActorData {
     this.parent.updateSource(updates)
   }
 
+  /** @inheritDoc */
+  async _preUpdate(changes, options, user) {
+    if (foundry.utils.hasProperty(changes, "system.attributes.hp.value")) {
+      // Cas des points de vie à 1 : statut affaibli
+      if (changes.system.attributes.hp.value === 1 && !this.parent.statuses.has("weakened")) {
+        if (this.parent.statuses.has("unconscious") && this.parent.getFlag("co", "statuses.unconsciousFromZeroHP")) {
+          await this.parent.toggleStatusEffect("unconscious", { active: false })
+          await this.parent.unsetFlag("co", "statuses.unconsciousFromZeroHP")
+        }
+        await this.parent.toggleStatusEffect("weakened", { active: true })
+        await this.parent.setFlag("co", "statuses.weakenedFromOneHP", true)
+      }
+
+      // Cas des points de vie > 1 : suppression des statuts affaibli et inconscient
+      if (changes.system.attributes.hp.value > 1) {
+        if (this.parent.statuses.has("weakened") && this.parent.getFlag("co", "statuses.weakenedFromOneHP")) {
+          await this.parent.toggleStatusEffect("weakened", { active: false })
+          await this.parent.unsetFlag("co", "statuses.weakenedFromOneHP")
+        }
+        if (this.parent.statuses.has("unconscious") && this.parent.getFlag("co", "statuses.unconsciousFromZeroHP")) {
+          await this.parent.toggleStatusEffect("unconscious", { active: false })
+          await this.parent.unsetFlag("co", "statuses.unconsciousFromZeroHP")
+        }
+      }
+    }
+  }
+
   get fpFromFamily() {
     return this.profile ? SYSTEM.FAMILIES[this.profile.system.family].fp : 0
   }
