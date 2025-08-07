@@ -13,7 +13,6 @@ import Utils from "../utils.mjs"
  * @function
  */
 export default class COActor extends Actor {
-
   /**
    * Ajoute un objet à l'acteur s'il n'existe pas déjà lors de la création de cet acteur.
    *
@@ -203,9 +202,12 @@ export default class COActor extends Actor {
         expanded = true
       }
 
+      const items = this.equipments.filter((item) => item.system.subtype === category)
+
       inventory.push({
         category,
-        items: this.items.filter((item) => item.system.subtype === category),
+        nbItems: items.length,
+        items,
         expanded,
       })
     })
