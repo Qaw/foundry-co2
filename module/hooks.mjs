@@ -236,11 +236,11 @@ export default function registerHooks() {
   })
 
   Hooks.on("hotbarDrop", (bar, data, slot) => {
-    if (["Item", "co.action"].includes(data.type)) {
+    if (["Item", "co.action", "co.ability"].includes(data.type)) {
       if (CONFIG.debug.co?.hooks) console.debug(Utils.log(`HotbarDrop`), bar, data, slot)
       createCOMacro(data, slot)
+      return false
     }
-    return false
   })
 
   Hooks.on("updateActor", (document, changed, options, userId) => {
@@ -258,6 +258,25 @@ export default function registerHooks() {
     // Une rencontre est morte à 0 PV
     if (document.type === "encounter" && changed?.system?.attributes?.hp?.value === 0 && !document.statuses.has("dead")) {
       document.toggleStatusEffect("dead", { active: true })
+    }
+  })
+
+  // A la fin d'un combat on supprime les Active Effects
+  Hooks.on("deleteCombat", (combat, options, userId) => {
+    if (game.user.isGM) {
+      combat.combatants.forEach((combatant) => {
+        const actor = combatant.actor
+        if (actor) {
+          actor.deleteEffects()
+        }
+      })
+    }
+  })
+
+  Hooks.on("createActor", (document, options, userId) => {
+    // Uniquement pour une création depuis un compendium ou un acteur existant
+    if (options?.fromCompendium || (!options?.strict && !options?.renderSheet)) {
+      if (game.user.isGM) document.system.updateAllActionsUuid()
     }
   })
 }

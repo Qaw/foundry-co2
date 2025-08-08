@@ -279,6 +279,18 @@ export default class COCharacterSheet extends COBaseActorSheet {
       dragData.actionName = item.actions[indice].actionName
       event.dataTransfer.setData("text/plain", JSON.stringify(dragData))
     }
+    // Si c'est une caractéristique : dataset contient itemUuid et indice
+    if (target.classList.contains("ability-id")) {
+      const type = "co.ability"
+      const rollType = "skillcheck"
+      const rollTarget = target.dataset.rollTarget
+      dragData = {
+        type,
+        rollType,
+        rollTarget,
+      }
+      event.dataTransfer.setData("text/plain", JSON.stringify(dragData))
+    }
     // Sinon dataset contient itemUuid, itemId, itemType
     else super._onDragStart(event)
   }
@@ -288,6 +300,7 @@ export default class COCharacterSheet extends COBaseActorSheet {
     // On récupère le type et l'uuid de l'item
     const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event)
     if (foundry.utils.isEmpty(data)) return false // Si pas de données, on ne fait rien
+    if (foundry.utils.hasProperty(data, "source")) return false
     const actor = this.document
 
     /**
