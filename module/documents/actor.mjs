@@ -642,7 +642,7 @@ export default class COActor extends Actor {
 
     // Concentration accrue pour les sorts qui nécessitent une action d'attaque
     let manaConcentration = false
-    if (item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.isSpell && item.system.isActionTypeAttack && shiftKey) {
+    if (item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.isSpell && item.system.actions[indice].isActionTypeAttack && shiftKey) {
       manaConcentration = true
     }
 

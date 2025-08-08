@@ -118,6 +118,7 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
 
     // Select options
     context.choiceActionTypes = SYSTEM.ACTION_TYPES
+    context.choiceActionFrequency = SYSTEM.CAPACITY_ACTION_TYPE
     context.choiceConditionObjects = SYSTEM.CONDITION_OBJECTS
     context.choiceConditionPredicates = SYSTEM.CONDITION_PREDICATES
     context.choiceConditionTargets = SYSTEM.CONDITION_TARGETS

@@ -35,6 +35,7 @@ export class Action extends foundry.abstract.DataModel {
       img: new fields.FilePathField({ categories: ["IMAGE"] }),
       label: new fields.StringField(),
       chatFlavor: new fields.StringField(),
+      actionType: new fields.StringField({ required: true, choices: SYSTEM.CAPACITY_ACTION_TYPE, initial: "none" }),
       properties: new fields.SchemaField({
         visible: new fields.BooleanField(),
         activable: new fields.BooleanField(),
@@ -226,6 +227,29 @@ export class Action extends foundry.abstract.DataModel {
 
   get isReloadable() {
     return this.parent.properties.reloadable
+  }
+
+  /**
+   * Permet de récupérer la lettre représentant le nombre d'actions que prend une.. action : "","m","a","l","f"
+   */
+  get actionTypeShort() {
+    if (this.hasActionType) return game.i18n.localize(`CO.capacity.action.short.${SYSTEM.CAPACITY_ACTION_TYPE[this.actionType].id}`)
+    return ""
+  }
+
+  /**
+   * Renvoi true si on est sur un type attaque. Utile si on veux utiliser un sort avec concentration
+   */
+  get isActionTypeAttack() {
+    if (this.hasActionType) return this.actionType === "a"
+    return false
+  }
+
+  /**
+   * Renvoi true si on a une durée d'action indiquée
+   */
+  get hasActionType() {
+    return this.actionType !== "none"
   }
 
   /**
