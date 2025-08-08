@@ -6,7 +6,7 @@ export default class CoFeatureSheet extends CoBaseItemSheet {
     classes: ["feature"],
     position: {
       width: 600,
-      height: 720,
+      height: 500,
     },
   }
 

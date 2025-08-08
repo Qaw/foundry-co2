@@ -6,7 +6,7 @@ export default class CoAttackSheet extends CoBaseItemSheet {
     classes: ["attack"],
     position: {
       width: 600,
-      height: 720,
+      height: 600,
     },
   }
 

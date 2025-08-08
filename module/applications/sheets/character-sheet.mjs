@@ -7,8 +7,8 @@ export default class COCharacterSheet extends COBaseActorSheet {
   static DEFAULT_OPTIONS = {
     classes: ["character"],
     position: {
-      width: 800,
-      height: 900,
+      width: 840,
+      height: 600,
     },
     window: {
       contentClasses: ["character-content"],

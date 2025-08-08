@@ -439,6 +439,8 @@ co-toggle-switch[checked] thumb {
   display: grid;
   grid-template-columns: 25px 20px 1fr;
   align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .co.application .actionColumn {
   justify-self: center;
@@ -1004,7 +1006,7 @@ co-toggle-switch[checked] thumb {
   border: 0;
   list-style: none;
   margin: 0;
-  padding: 0 10px 0 0;
+  padding: 0 5px 0 0;
 }
 .co.application.sheet .items-container.foldable .items-container-header h4,
 .co.application.sheet .item-list.foldable .items-container-header h4 {
@@ -1167,6 +1169,7 @@ co-toggle-switch[checked] thumb {
   display: flex;
   flex: 1;
   flex-direction: row;
+  width: 150px;
 }
 .co.application.sheet .items-container .item .item-name h4 {
   font-size: 18px;
@@ -2125,7 +2128,7 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.sheet.actor .window-content {
   display: grid;
-  grid-template-columns: 250px 1fr;
+  grid-template-columns: minmax(17em, 25%) 1fr;
   grid-template-rows: auto auto 1fr;
   grid-template-areas: "header header" "sidebar tabs" "sidebar content";
   padding: 0;
@@ -2448,7 +2451,7 @@ co-toggle-switch[checked] thumb {
   font-size: 1rem;
 }
 .co.application.sheet.actor.character:not(.minimized) {
-  min-width: 890px;
+  min-width: 840px;
 }
 .co.application.sheet.actor.character .window-content .sheet-header {
   /*.profiles {
@@ -2541,7 +2544,7 @@ co-toggle-switch[checked] thumb {
   display: none;
 }
 .co.application.sheet.actor.encounter:not(.minimized) {
-  min-width: 860px;
+  min-width: 725px;
 }
 .co.application.sheet.actor.encounter .window-content .sheet-header {
   /* .traits {
@@ -3034,4 +3037,9 @@ co-toggle-switch[checked] thumb {
 #interface #sidebar .chat-message .message-content h4.dice-total,
 #interface #ui-right-column-1 .chat-message .message-content h4.dice-total {
   margin: 0;
+}
+#interface #sidebar .chat-message .message-content .dice-roll,
+#interface #ui-right-column-1 .chat-message .message-content .dice-roll {
+  margin-top: 8px;
+  font-weight: bold;
 }

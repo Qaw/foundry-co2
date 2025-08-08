@@ -6,7 +6,7 @@ export default class CoCapacitySheet extends CoBaseItemSheet {
     classes: ["capacity"],
     position: {
       width: 600,
-      height: 720,
+      height: 600,
     },
   }
 
