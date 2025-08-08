@@ -108,7 +108,7 @@ export default class ActorData extends foundry.abstract.TypeDataModel {
    * @returns {Array} An array of modifiers.
    */
   _getModifiers(subtype) {
-    const sources = this.type === "character" ? ["features", "profiles", "capacities", "equipments"] : ["capacities", "equipments"]
+    const sources = this.parent.type === "character" ? ["features", "profiles", "capacities", "equipments"] : ["capacities", "equipments"]
     let modifiersArray = []
 
     sources.forEach((source) => {
