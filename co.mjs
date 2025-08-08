@@ -170,3 +170,10 @@ Hooks.on("deleteCombat", (combat, options, userId) => {
     })
   }
 })
+
+Hooks.on("createActor", (document, options, userId) => {
+  // Uniquement pour une création depuis un compendium ou un acteur existant
+  if (options?.fromCompendium || (!options?.strict && !options?.renderSheet)) {
+    if (game.user.isGM) document.system.updateAllActionsUuid()
+  }
+})
