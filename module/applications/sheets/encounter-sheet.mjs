@@ -45,12 +45,6 @@ export default class COEncounterSheet extends COBaseActorSheet {
     const context = await super._prepareContext()
     context.attacks = this.actor.system.attacks
     context.attacksActions = this.actor.attacksActions
-    context.stateModifiers = this.document.system.stateModifiers
-    // Select options
-    context.choiceArchetypes = SYSTEM.ENCOUNTER_ARCHETYPES
-    context.choiceCategories = SYSTEM.ENCOUNTER_CATEGORIES
-    context.choiceBossRanks = SYSTEM.ENCOUNTER_BOSS_RANKS
-    context.choiceSizes = SYSTEM.SIZES
 
     // Enrich notes
     context.enrichedNotesPublic = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.details.notes.public, { async: true })
@@ -62,6 +56,12 @@ export default class COEncounterSheet extends COBaseActorSheet {
 
     // Gestion des richesses
     context.hasWealth = this.#checkHasWealth(context.system.wealth)
+
+    // Select options
+    context.choiceArchetypes = SYSTEM.ENCOUNTER_ARCHETYPES
+    context.choiceCategories = SYSTEM.ENCOUNTER_CATEGORIES
+    context.choiceBossRanks = SYSTEM.ENCOUNTER_BOSS_RANKS
+    context.choiceSizes = SYSTEM.SIZES
 
     if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`COEncounterSheet - context`), context)
     return context

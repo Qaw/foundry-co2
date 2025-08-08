@@ -166,6 +166,17 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     context.visibleNonActivableNonTemporaireActions = await this.document.getVisibleNonActivableNonTemporaireActions()
     context.currentEffects = await this.document.customEffects
 
+    let states = []
+    // Récupération des modifiers de type state
+    this.document.system.stateModifiers.forEach((state) => {
+      states.push(game.i18n.localize(`CO.label.long.${state.target}`))
+    })
+    // Récupération des statusEffects
+    this.document.effects.forEach((effect) => {
+      states.push(effect.name)
+    })
+    context.stateModifiers = states
+
     // Select options
     context.choiceMoveUnit = SYSTEM.MOVEMENT_UNIT
 

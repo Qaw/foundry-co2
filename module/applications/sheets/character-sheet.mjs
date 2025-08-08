@@ -55,7 +55,6 @@ export default class COCharacterSheet extends COBaseActorSheet {
     context.xpSpent = await this.document.system.getSpentXP()
     context.xpLeft = await this.document.system.getAvailableXP()
     context.overloadMalus = this.document.malusFromArmor
-    context.stateModifiers = this.document.system.stateModifiers
 
     // Gestion des défenses
     context.partialDef = this.document.hasEffect("partialDef")
