@@ -338,7 +338,7 @@ export default class CharacterData extends ActorData {
     // Un personnage a 3 points de capacités au niveau 1, et 2 points de capacités par niveau supplémentaire
     // Un personnage avec un profil de la famille des mages a un point de capacité supplémentaire au niveau 1
     this.attributes.xp.max = 3 + 2 * (this.attributes.level - 1) + (this.hasProfileMageFamily ? 1 : 0)
-    this._prepareVision()
+    //his._prepareVision()
   }
 
   /**
