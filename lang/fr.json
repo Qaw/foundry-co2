@@ -232,7 +232,7 @@
           "label": "Coût en points de mana"
         },
         "actionType": {
-          "label": "Type d'action"
+          "label": "Temps d'action"
         },
         "frequency": {
           "label": "Fréquence d'utilisation"
