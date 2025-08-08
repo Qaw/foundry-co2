@@ -8,7 +8,7 @@
                                     <a class="item-img" data-action="editItem" style="background-image: url('{{{actionImg}}}')" data-tooltip="{{action.parent.description}}"></a>
                                     <div class="actionRow">
                                         
-                                        <div class="actionColumn">{{#if action.parent.hasActionType}} ({{action.parent.actionTypeShort}}){{/if}}</div>
+                                        <div class="actionColumn">{{#if action.hasActionType}} ({{action.actionTypeShort}}){{else if action.parent.hasActionType}} ({{action.parent.actionTypeShort}}){{/if}}</div>
                                         <div class="actionColumn">{{{action.icon}}} </div>
                                         <div><h4>{{action.itemName}}
                                         {{#if action.hasLabel}} - {{action.label}}{{/if}}

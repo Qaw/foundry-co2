@@ -10,7 +10,7 @@ export default class CapacityData extends ItemData {
    *
    * Fields:
    * - `subtype` {StringField}: A required, non-nullable string field with an initial value of an empty string.
-   * - `actionType` {StringField}: none, l, a, m, f (Limité, Attaque, Mouvement)
+   * - `actionType` {StringField}: none, l, a, m, f (Limité, Attaque, Mouvement, Gratuite)
    * - `learned` {BooleanField}: A boolean field indicating whether the capacity is learned.
    * - `rank` {NumberField}:Rang de la capacité au sein d'une voie
    * - `frequency` {StringField}: A required string field with predefined choices from `SYSTEM.CAPACITY_FREQUENCY` and an initial value of "none".

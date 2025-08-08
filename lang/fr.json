@@ -729,6 +729,7 @@
       "rankCost": "Rang et Coût",
       "learn": "Capacité apprise ?",
       "typeFrequency": "Temps d'Action et Fréquence",
+      "typeFrequencyShort": "Temps d'Action",
       "spell": "Sort",
       "allowCapacity": "Autoriser une capacité liée",
       "TypeEquipement": "Type d'Équipement",
