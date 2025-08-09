@@ -6,6 +6,7 @@
       <select name="system.actions.{{idx}}.resolvers.{{id}}.type" data-type="String">
         {{selectOptions @root.choiceResolverTypes selected=r.type localize=true}}
       </select>
+      {{#if (or (eq r.type @root.choiceResolverTypes.auto.id) (eq r.type @root.choiceResolverTypes.attack.id))}}
       <label class="checkbox">
         <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.bonusDiceAdd" {{checked r.bonusDiceAdd}} />
         {{localize "CO.modifier.subtype.bonusDice"}}
@@ -14,6 +15,7 @@
         <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.malusDiceAdd" {{checked r.malusDiceAdd}} />
         {{localize "CO.modifier.subtype.malusDice"}}
       </label>
+      {{/if}}
       {{#if @root.unlocked}}
         <button class="action" data-action="deleteResolver"><i class="fas fa-trash"></i></button>
       {{/if}}
@@ -42,11 +44,11 @@
     </div>
   {{/if}}
   {{#if (eq r.type @root.choiceResolverTypes.auto.id)}}
-    {{! Difficulty }}
+    <!--{{! Difficulty }}
     <div class="form-group-stacked difficulty" data-tooltip="{{localize 'CO.ui.formulaTooltip'}}" data-tooltip-direction="UP">
       <label>{{localize "CO.ui.difficulty"}}</label>
       <input name="system.actions.{{idx}}.resolvers.{{id}}.skill.difficulty" type="text" value="{{r.skill.difficulty}}" data-dtype="String" />
-    </div>
+    </div>-->
     {{! Damages }}
     <div class="form-group-stacked damages">
       <label>{{localize "CO.ui.dmg"}}</label>
@@ -63,6 +65,7 @@
     </div>
   {{/if}}
   {{! Target }}
+  {{#unless (or (eq r.type @root.choiceResolverTypes.consumable.id) (eq r.type @root.choiceResolverTypes.buffDebuff.id))}}
   <div class="form-group-stacked like-grid target">
     <label>
       <span>{{localize "CO.ui.target"}}</span>
@@ -87,7 +90,9 @@
       {{/if}}
     </div>
   </div>
+  {{/unless}}
   {{! Additional effects }}
+{{#if (or (eq r.type @root.choiceResolverTypes.auto.id) (eq r.type @root.choiceResolverTypes.attack.id) (eq r.type @root.choiceResolverTypes.heal.id))}}
   <div class="form-group effects">
     <label class="checkbox">
       <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.active" {{checked r.additionalEffect.active}} />
@@ -163,5 +168,6 @@
         </select>
       </div>
     </div>
+  {{/if}}
   {{/if}}
 </div>

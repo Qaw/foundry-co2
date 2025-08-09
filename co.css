@@ -450,6 +450,13 @@ co-toggle-switch[checked] thumb {
 .co.application .resolvers-container .resolver {
   display: flex;
   flex-flow: row wrap;
+  /*.form-group-stacked.difficulty {
+      margin-right: -1px;
+
+      input[type] {
+        border-radius: 3px 0 0 3px;
+      }
+    }*/
 }
 .co.application .resolvers-container .resolver:not(:first-child) {
   padding-top: 8px;
@@ -473,18 +480,26 @@ co-toggle-switch[checked] thumb {
 .co.application .resolvers-container .resolver .form-fields .checkbox {
   flex: 0 0 auto;
 }
-.co.application .resolvers-container .resolver .form-group-stacked.difficulty,
 .co.application .resolvers-container .resolver .form-group-stacked.damages {
-  flex: 0 1 50%;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  margin: 5px 0;
 }
-.co.application .resolvers-container .resolver .form-group-stacked.difficulty {
-  margin-right: -1px;
-}
-.co.application .resolvers-container .resolver .form-group-stacked.difficulty input[type] {
-  border-radius: 3px 0 0 3px;
+.co.application .resolvers-container .resolver .form-group-stacked.damages label {
+  margin-right: 10px;
 }
 .co.application .resolvers-container .resolver .form-group-stacked.damages input[type] {
   border-radius: 0 3px 3px 0;
+}
+.co.application .resolvers-container .resolver .form-group-stacked.heal {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  margin: 5px 0;
+}
+.co.application .resolvers-container .resolver .form-group-stacked.heal label {
+  margin-right: 10px;
 }
 .co.application .resolvers-container .resolver .form-group.effects .form-fields span {
   border-right: 0;
