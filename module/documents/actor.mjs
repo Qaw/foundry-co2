@@ -648,8 +648,8 @@ export default class COActor extends Actor {
       return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoAmmo"))
     }
 
-    // Si la capacité a des charges est ce qu'il lui en reste ?
-    if (item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.hasFrequency && !item.system.hasCharges)
+    // Si la capacité a des charges est ce qu'il lui en reste pour l'activer ?
+    if (state && item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.hasFrequency && !item.system.hasCharges)
       return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoCharge"))
 
     // TODO Incantation
@@ -760,15 +760,10 @@ export default class COActor extends Actor {
           }
         }
       }
-      // Si c'est une capacité avec une charge il faut la consommer
-      if (item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.hasFrequency && item.system.hasCharges) {
+      // Si c'est une capacité avec une charge il faut la consommer, mais uniquement à l'activation
+      if (state && item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.hasFrequency && item.system.hasCharges) {
         item.system.charges.current = Math.max(item.system.charges.current - 1, 0)
         await item.update({ "system.charges.current": item.system.charges.current })
-        if (item.system.charges.current === 0) {
-          const newActions = item.system.toObject().actions
-          newActions[indice].properties.enabled = false
-          await item.update({ "system.actions": newActions })
-        }
       }
     }
 
