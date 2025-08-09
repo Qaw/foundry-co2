@@ -53,11 +53,11 @@
                                 {{#if capacity.system.allowLinkedCapacity}}
                                     <div class="dropzone">
                                         <ol class="item-list foldable" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity.id}}" data-item-type="capacity" draggable="false">
-                                            <li class="item flexrow" {{#if (isNotNull capacity.system.linkedCapacity)}} data-item-uuid="{{capacity.system.linkedCapacity}}" data-item-id="{{capacity.system.linkedCapacityItem.id}}" data-item-type="capacity" {{/if}}>
-                                                {{#if (and (isNotNull capacity.system.linkedCapacity) (isNotNull capacity.system.linkedCapacityItem))}}
+                                            <li class="item flexrow" {{#if (isNotNull capacity.system.linkedCapacity)}} data-item-uuid="{{capacity.system.linkedCapacity}}" data-item-id="{{capacity.system.getLinkedCapacityItem.id}}" data-item-type="capacity" {{/if}}>
+                                                {{#if (and (isNotNull capacity.system.linkedCapacity) (isNotNull capacity.system.getLinkedCapacityItem))}}
                                                     <div class="item-name flexrow">                                            
-                                                            <a class="item-img" data-action="editItem" style="background-image: url('{{capacity.system.linkedCapacityImg}}')" data-tooltip="{{capacity.system.description}}"></a>
-                                                            <h4>{{capacity.system.linkedCapacityName}}{{#if capacity.system.linkedCapacityItem.system.isSpell}} * {{/if}}{{#if capacity.system.linkedCapacityItem.system.hasActionType}} ({{capacity.system.linkedCapacityItem.system.actionTypeShort}}){{/if}}</h4>
+                                                            <a class="item-img" data-action="editItem" style="background-image: url('{{capacity.system.getLinkedCapacityImg}}')" data-tooltip="{{capacity.system.description}}"></a>
+                                                            <h4>{{capacity.system.getLinkedCapacityName}}{{#if capacity.system.getLinkedCapacityItem.system.isSpell}} * {{/if}}{{#if capacity.system.getLinkedCapacityItem.system.hasActionType}} ({{capacity.system.getLinkedCapacityItem.system.actionTypeShort}}){{/if}}</h4>
                                                     </div>
                                                     <div class="item-controls-3">
                                                         <a class="chat" data-action="sendToChat" data-tooltip="{{localize 'CO.label.long.sendToChat'}}" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
@@ -67,10 +67,10 @@
                                                     </div>
                                                 {{else}}
                                                     <div class="item-name flexrow">                                            
-                                                            <a class="item-img" data-action="editItem" style="background-image: url('{{capacity.system.linkedCapacityImg}}')" data-tooltip="{{capacity.system.description}}"></a>
+                                                            <a class="item-img" data-action="editItem" style="background-image: url('{{capacity.system.getLinkedCapacityImg}}')" data-tooltip="{{capacity.system.description}}"></a>
                                                             <h4>{{localize 'CO.ui.addCapacityMsg'}}</h4>
                                                     </div>
-                                                {{/if}}
+                                                {{/if}}s
                                             </li>
                                         </ol>
                                     </div>

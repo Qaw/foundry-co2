@@ -97,25 +97,25 @@ export default class CapacityData extends ItemData {
     return this.charges.current > 0
   }
 
-  get linkedCapacityName() {
+  async getLinkedCapacityName() {
     if (this.allowLinkedCapacity && this.linkedCapacity) {
-      const linkedCapacity = fromUuidSync(this.linkedCapacity)
+      const linkedCapacity = await fromUuid(this.linkedCapacity)
       if (linkedCapacity) return linkedCapacity.name
     }
     return ""
   }
 
-  get linkedCapacityImg() {
+  async getLinkedCapacityImg() {
     if (this.allowLinkedCapacity && this.linkedCapacity) {
-      const linkedCapacity = fromUuidSync(this.linkedCapacity)
+      const linkedCapacity = await fromUuid(this.linkedCapacity)
       if (linkedCapacity) return linkedCapacity.img
     }
     return "systems/co/ui/effects/question.webp"
   }
 
-  get linkedCapacityItem() {
+  async getLinkedCapacityItem() {
     if (this.allowLinkedCapacity && this.linkedCapacity) {
-      const linkedCapacity = fromUuidSync(this.linkedCapacity)
+      const linkedCapacity = await fromUuid(this.linkedCapacity)
       if (linkedCapacity) return linkedCapacity
     }
     return null
