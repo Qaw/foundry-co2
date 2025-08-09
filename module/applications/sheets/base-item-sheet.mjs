@@ -142,10 +142,10 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
     context.choiceModifierSkillTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "ability"))
     context.choiceModifierStateTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "state"))
     context.choiceModifierBonusDiceTargets = Object.fromEntries(
-      Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "ability" || value.subtype === "attack"),
+      Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.id !== "all" && (value.subtype === "ability" || value.subtype === "attack")),
     )
     context.choiceModifierMalusDiceTargets = Object.fromEntries(
-      Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "ability" || value.subtype === "attack"),
+      Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.id !== "all" && (value.subtype === "ability" || value.subtype === "attack")),
     )
 
     if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseItemSheet - context`), context)
