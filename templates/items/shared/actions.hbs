@@ -16,7 +16,7 @@
         
             <div class="action-body">
                 {{#each system.actions as |action idx|}}
-                {{log 'action-partial action' idx action}}
+                {{!log 'action-partial action' idx action}}
                     <div class="tab action item{{#if (isActionSubtabActive @root.subtabs idx)}} active{{/if}}" data-group="actions" data-tab="action-{{idx}}" data-item-id="{{idx}}" data-item-type="action">
                         
                         <section class="half-panel">

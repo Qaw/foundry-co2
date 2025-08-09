@@ -8,7 +8,7 @@
             <label></label>
 
             {{#each action.conditions as |c id|}}
-                {{log 'condition' c id @root}}
+                {{!log 'condition' c id @root}}
                 <div class="form-fields condition" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="condition">
                     <select name="system.actions.{{../idx}}.conditions.{{id}}.predicate" data-type="String">
                         {{selectOptions @root.choiceConditionPredicates selected=c.predicate localize=true}}

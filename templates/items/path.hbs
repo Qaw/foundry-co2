@@ -43,7 +43,7 @@
                 <div class="cell right item-controls">
                 </div>
                 {{#each capacities as |capacity id|}}
-                    {{log 'capacity' capacity id}}
+                    {{!log 'capacity' capacity id}}
                     <div class="cell center">
                         <span class="field-label header">{{#if (isPathprestigious @root.system.subtype)}}{{add id 4}}{{else}}{{add id 1}}{{/if}}</span>
                     </div>
