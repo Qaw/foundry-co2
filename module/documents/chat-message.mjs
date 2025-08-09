@@ -1,9 +1,8 @@
 export default class COChatMessage extends ChatMessage {
   /** @inheritDoc */
-  async getHTML(options = {}) {
-    const html = await super.getHTML(options)
-    const element = html instanceof HTMLElement ? html : html[0]
-    this._enrichChatCard(element)
+  async renderHTML({ canDelete, canClose = false, ...rest } = {}) {
+    const html = await super.renderHTML({ canDelete, canClose, ...rest })
+    this._enrichChatCard(html)
     return html
   }
 
