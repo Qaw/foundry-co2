@@ -16,7 +16,7 @@ export async function createCOMacro(dropData, slot) {
       foundry.utils.mergeObject(macroData, {
         name: itemData.name,
         img: itemData.img,
-        command: `game.system.api.macros.sendToChat("${itemData.uuid}","${itemData.name}", null)`,
+        command: `if (event.ctrlKey) {game.system.api.macros.openSheet("${itemData.uuid}","${itemData.name}")} else { game.system.api.macros.sendToChat("${itemData.uuid}","${itemData.name}", null) }`,
         flags: { "co.itemMacro": true },
       })
       break
@@ -24,8 +24,16 @@ export async function createCOMacro(dropData, slot) {
       foundry.utils.mergeObject(macroData, {
         name: `${dropData.name} - ${dropData.actionName}`,
         img: dropData.img,
-        command: `game.system.api.macros.sendToChat("${dropData.source}","${dropData.name}","${dropData.indice}")`,
+        command: `if (event.ctrlKey) {game.system.api.macros.openSheet("${dropData.source}")} else { game.system.api.macros.sendToChat("${dropData.source}","${dropData.name}","${dropData.indice}") }`,
         flags: { "co.actionMacro": true },
+      })
+      break
+    case "co.ability":
+      foundry.utils.mergeObject(macroData, {
+        name: `Jet de caractéristique (${game.i18n.localize(`CO.abilities.long.${dropData.rollTarget}`)})`,
+        img: "icons/svg/dice-target.svg",
+        command: `game.system.api.macros.rollSkill("${dropData.rollTarget}")`,
+        flags: { "co.abilityMacro": true },
       })
       break
     default:
@@ -54,7 +62,8 @@ export default class Macros {
       if (indice === null) {
         let itemChatData = item.getChatData(null)
         if (item.type === SYSTEM.ITEM_TYPE.capacity.id && !item.system.learned) return ui.notifications.warn(game.i18n.format("CO.macro.capacityNotLearned", { name: itemName }))
-        if (item.type === SYSTEM.ITEM_TYPE.equipment.id && !item.system.equipped) return ui.notifications.warn(game.i18n.format("CO.macro.itemNotEquipped", { name: itemName }))
+        if (item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.properties.equipable && !item.system.equipped)
+          return ui.notifications.warn(game.i18n.format("CO.macro.itemNotEquipped", { name: itemName }))
         new CoChat(actor)
           .withTemplate("systems/co/templates/chat/item-card.hbs")
           .withData({
@@ -71,7 +80,8 @@ export default class Macros {
       } else {
         let itemChatData = item.getChatData(item, actor, "action", indice)
         if (item.type === SYSTEM.ITEM_TYPE.capacity.id && !item.system.learned) return ui.notifications.warn(game.i18n.format("CO.macro.capacityNotLearned", { name: itemName }))
-        if (item.type === SYSTEM.ITEM_TYPE.equipment.id && !item.system.equipped) return ui.notifications.warn(game.i18n.format("CO.macro.itemNotEquipped", { name: itemName }))
+        if (item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.properties.equipable && !item.system.equipped)
+          return ui.notifications.warn(game.i18n.format("CO.macro.itemNotEquipped", { name: itemName }))
         new CoChat(actor)
           .withTemplate("systems/co/templates/chat/item-card.hbs")
           .withData({
@@ -86,6 +96,24 @@ export default class Macros {
           .withWhisper(ChatMessage.getWhisperRecipients("GM").map((u) => u.id))
           .create()
       }
+    }
+  }
+
+  static async openSheet(itemUuid, itemName) {
+    const { item, actor } = await Macros.getMacroTarget(itemUuid, itemName, "Item")
+    if (item instanceof COItem) {
+      item.sheet.render(true)
+    }
+  }
+
+  static async rollSkill(rollTarget) {
+    let actor
+    const speaker = ChatMessage.getSpeaker()
+    if (speaker.token) actor = game.actors.tokens[speaker.token]
+    actor ??= game.actors.get(speaker.actor)
+    if (!actor) return ui.notifications.warn(game.i18n.localize("CO.macro.noActorSelected"))
+    if (actor) {
+      await actor.rollSkill(rollTarget)
     }
   }
 

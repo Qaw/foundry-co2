@@ -158,22 +158,3 @@ Hooks.once("ready", async function () {
   }
   console.info(Utils.log(game.i18n.localize("CO.notif.ready")))
 })
-
-// A la fin d'un combat on supprime les Active Effects
-Hooks.on("deleteCombat", (combat, options, userId) => {
-  if (game.user.isGM) {
-    combat.combatants.forEach((combatant) => {
-      const actor = combatant.actor
-      if (actor) {
-        actor.deleteEffects()
-      }
-    })
-  }
-})
-
-Hooks.on("createActor", (document, options, userId) => {
-  // Uniquement pour une création depuis un compendium ou un acteur existant
-  if (options?.fromCompendium || (!options?.strict && !options?.renderSheet)) {
-    if (game.user.isGM) document.system.updateAllActionsUuid()
-  }
-})

@@ -13,7 +13,7 @@
             {{!log "Chroniques Oubliées | capacity" capacity}}
             {{#if capacity.system.learned }}
             {{#if (isNull capacity.system.parentCapacity)}}
-                <li class="item flexrow" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity._id}}" data-item-type="capacity" draggable="true">
+                <li class="item flexrow draggable" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity._id}}" data-item-type="capacity">
                     <div class="item-name flexrow">
                         <a class="item-img" data-action="editItem" style="background-image: url('{{capacity.img}}')"></a>
                         <h4>{{capacity.name}}{{#if capacity.system.isSpell}} * {{/if}}</h4>

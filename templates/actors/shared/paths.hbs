@@ -77,7 +77,7 @@
                                 {{/if}}
                             {{else}}
                                 {{#if @root.unlocked}}
-                                    <li class="item flexrow" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity._id}}" data-item-type="capacity" draggable="false" style="opacity: 40% ; font-style: Italic">
+                                    <li class="item flexrow" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity._id}}" data-item-type="capacity" style="opacity: 40% ; font-style: Italic">
                                         <div class="item-detail rank">{{capacity.system.rank}}</div>
                                         <div class="item-name flexrow">
                                             <a class="item-img" data-action="editItem" style="background-image: url('{{capacity.img}}')" data-tooltip="{{capacity.system.description}}"></a>

@@ -37,7 +37,7 @@
     <ol class="item-list foldable {{ifThen group.expanded 'expanded' 'folded'}}">
       {{#each group.items as |item id|}}
         {{!log 'Character inventory item' item}}
-        <li class="item flexrow" data-item-uuid="{{item.uuid}}" data-item-id="{{item._id}}" data-item-type="{{item.type}}" draggable="true">
+        <li class="item flexrow draggable" data-item-uuid="{{item.uuid}}" data-item-id="{{item._id}}" data-item-type="{{item.type}}">
           <div class="item-name flexrow">
             <a class="item-img" data-action="editItem" style="background-image: url('{{item.img}}')"></a>
             <h4>{{item.name}}
