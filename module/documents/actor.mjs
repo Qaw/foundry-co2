@@ -147,9 +147,9 @@ export default class COActor extends Actor {
   /**
    * Retourne  un tableau d'objets comprenant les voies et les capacités associées
    */
-  get pathGroups() {
+  async getPathGroups() {
     let pathGroups = []
-    this.paths.forEach((path) => {
+    for (const path of this.paths) {
       const capacitesId = path.system.capacities
         .map((uuid) => {
           return uuid ? foundry.utils.parseUuid(uuid).id : null
@@ -157,6 +157,25 @@ export default class COActor extends Actor {
         .filter((id) => id !== null)
 
       const capacities = capacitesId.map((id) => this.items.find((i) => i._id === id))
+
+      // Cas des capacités liées
+      for (const capacity of capacities) {
+        if (capacity.system.allowLinkedCapacity) {
+          if (capacity.system.linkedCapacity) {
+            const linkedCapacity = await fromUuid(capacity.system.linkedCapacity)
+            if (linkedCapacity) {
+              capacity.linkedCapacityName = linkedCapacity.name
+              capacity.linkedCapacityImg = linkedCapacity.img
+              capacity.linkedCapacityItem = linkedCapacity
+            }
+          } else {
+            capacity.linkedCapacityName = ""
+            capacity.linkedCapacityImg = "systems/co/ui/effects/question.webp"
+            capacity.linkedCapacityItem = null
+          }
+        }
+      }
+
       // Récupère l'état "expanded" depuis le localStorage pour chaque voie (path)
       let expanded = true
       try {
@@ -174,7 +193,7 @@ export default class COActor extends Actor {
         items: capacities,
         expanded,
       })
-    })
+    }
     return pathGroups
   }
 

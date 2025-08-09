@@ -123,7 +123,7 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     context.resources = this.document.system.resources
     context.details = this.document.system.details
     context.paths = this.document.paths
-    context.pathGroups = this.document.pathGroups
+    context.pathGroups = await this.document.getPathGroups()
     context.capacities = this.document.capacities
     context.learnedCapacities = this.document.learnedCapacities
     context.capacitiesOffPaths = this.document.capacitiesOffPaths

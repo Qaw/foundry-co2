@@ -98,52 +98,6 @@ export default class CapacityData extends ItemData {
   }
 
   /**
-   * Asynchronously retrieves the name of the linked capacity if allowed and available.
-   *
-   * @async
-   * @returns {Promise<string>} The name of the linked capacity, or an empty string if not available.
-   */
-  async getLinkedCapacityName() {
-    if (this.allowLinkedCapacity && this.linkedCapacity) {
-      const linkedCapacity = await fromUuid(this.linkedCapacity)
-      if (linkedCapacity) return linkedCapacity.name
-    }
-    return ""
-  }
-
-  /**
-   * Retrieves the image associated with the linked capacity, if available.
-   *
-   * If `allowLinkedCapacity` is true and `linkedCapacity` is set, attempts to resolve the linked capacity
-   * using its UUID and returns its image path. If the linked capacity cannot be resolved or is not set,
-   * returns a default image path.
-   *
-   * @async
-   * @returns {Promise<string>} The image path of the linked capacity, or a default image if not available.
-   */
-  async getLinkedCapacityImg() {
-    if (this.allowLinkedCapacity && this.linkedCapacity) {
-      const linkedCapacity = await fromUuid(this.linkedCapacity)
-      if (linkedCapacity) return linkedCapacity.img
-    }
-    return "systems/co/ui/effects/question.webp"
-  }
-
-  /**
-   * Asynchronously retrieves the linked capacity item if linking is allowed and a linked capacity UUID is present.
-   *
-   * @async
-   * @returns {Promise<Object|null>} The linked capacity item object if found, otherwise null.
-   */
-  async getLinkedCapacityItem() {
-    if (this.allowLinkedCapacity && this.linkedCapacity) {
-      const linkedCapacity = await fromUuid(this.linkedCapacity)
-      if (linkedCapacity) return linkedCapacity
-    }
-    return null
-  }
-
-  /**
    * Calculates the capacity points cost based on the rank.
    *
    * @returns {number} The calculated cost. If the cost is different than -1, it returns this cost.

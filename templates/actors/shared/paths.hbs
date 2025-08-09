@@ -34,9 +34,9 @@
                     </li>
                     <ol class="item-list foldable {{#if pg.expanded}}expanded{{else}}folded{{/if}}">
                         {{#each pg.items as |capacity id|}}
-                            {{!log 'capacity' this}}
+                            {{log 'capacity' this}}
                             {{#if capacity.system.learned}}
-                                <li class="item flexrow" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity._id}}" data-item-type="capacity" draggable="false">
+                                <li class="item flexrow" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity._id}}" data-item-type="capacity">
                                     <div class="item-detail rank">{{capacity.system.rank}}</div>
                                     <div class="item-name flexrow">
                                         <a class="item-img" data-action="editItem" style="background-image: url('{{capacity.img}}')" data-tooltip="{{capacity.system.description}}"></a>
@@ -52,12 +52,12 @@
                                 </li>
                                 {{#if capacity.system.allowLinkedCapacity}}
                                     <div class="dropzone">
-                                        <ol class="item-list foldable" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity.id}}" data-item-type="capacity" draggable="false">
-                                            <li class="item flexrow" {{#if (isNotNull capacity.system.linkedCapacity)}} data-item-uuid="{{capacity.system.linkedCapacity}}" data-item-id="{{capacity.system.getLinkedCapacityItem.id}}" data-item-type="capacity" {{/if}}>
-                                                {{#if (and (isNotNull capacity.system.linkedCapacity) (isNotNull capacity.system.getLinkedCapacityItem))}}
+                                        <ol class="item-list foldable" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity.id}}" data-item-type="capacity">
+                                            <li class="item flexrow" {{#if (isNotNull capacity.system.linkedCapacity)}} data-item-uuid="{{capacity.system.linkedCapacity}}" data-item-type="capacity" {{/if}}>
+                                                {{#if (and (isNotNull capacity.system.linkedCapacity) (isNotNull capacity.linkedCapacityItem))}}
                                                     <div class="item-name flexrow">                                            
-                                                            <a class="item-img" data-action="editItem" style="background-image: url('{{capacity.system.getLinkedCapacityImg}}')" data-tooltip="{{capacity.system.description}}"></a>
-                                                            <h4>{{capacity.system.getLinkedCapacityName}}{{#if capacity.system.getLinkedCapacityItem.system.isSpell}} * {{/if}}{{#if capacity.system.getLinkedCapacityItem.system.hasActionType}} ({{capacity.system.getLinkedCapacityItem.system.actionTypeShort}}){{/if}}</h4>
+                                                            <a class="item-img" data-action="editItem" style="background-image: url('{{capacity.linkedCapacityImg}}')" data-tooltip="{{capacity.linkedCapacityItem.system.description}}"></a>
+                                                            <h4>{{capacity.linkedCapacityItem.name}}{{#if capacity.linkedCapacityItem.system.isSpell}} * {{/if}}{{#if capacity.linkedCapacityItem.system.hasActionType}} ({{capacity.linkedCapacityItem.system.actionTypeShort}}){{/if}}</h4>
                                                     </div>
                                                     <div class="item-controls-3">
                                                         <a class="chat" data-action="sendToChat" data-tooltip="{{localize 'CO.label.long.sendToChat'}}" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
@@ -67,10 +67,10 @@
                                                     </div>
                                                 {{else}}
                                                     <div class="item-name flexrow">                                            
-                                                            <a class="item-img" data-action="editItem" style="background-image: url('{{capacity.system.getLinkedCapacityImg}}')" data-tooltip="{{capacity.system.description}}"></a>
+                                                            <a class="item-img" data-action="editItem" style="background-image: url('{{capacity.linkedCapacityImg}}')"></a>
                                                             <h4>{{localize 'CO.ui.addCapacityMsg'}}</h4>
                                                     </div>
-                                                {{/if}}s
+                                                {{/if}}
                                             </li>
                                         </ol>
                                     </div>
