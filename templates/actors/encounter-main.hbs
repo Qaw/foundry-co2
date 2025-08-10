@@ -31,7 +31,7 @@
 
             <ol class="attacks-list strikes-list item-list">
                 {{#each attacks as |attack id|}}
-                    {{!log "Chroniques Oubliées | attack" attack id}}
+                    {{log "Chroniques Oubliées | attack" attack id}}
                     <li class="item attack flexrow" data-item-type="attack" data-item-uuid="{{attack.uuid}}"
                         data-item-id="{{attack.id}}" draggable="false">
                         <div class="attack-header">
@@ -39,20 +39,17 @@
                                 <i class="{{attack.system.subtypeIcon}}"></i>
                                 <span>
                                     <strong>{{attack.name}}</strong>
-                                    <span class="activity-icon"></span>
                                 </span>
+                                {{#if (and attack.system.isReloadable attack.system.hasCharges)}}<span data-tooltip="{{localize "CO.ui.remainingQuantity"}}" data-tooltip-direction="UP">({{attack.system.charges.current}})</span>{{/if}}
                                 {{#if attack.system.hasRange}} ({{attack.system.range}}){{/if}}
-                                {{attack.system.displayValues.attack}} <strong>DM</strong>
-                                {{attack.system.displayValues.damage}}
+                                {{attack.system.displayValues.attack}} <strong>  DM </strong>{{attack.system.displayValues.damage}}
                             </h4>
                             <div class="attack-controls controls">
                                 <a class="chat" data-action="sendToChat" data-chat-type="item" data-tooltip="{{localize 'CO.label.long.sendToChat'}}"
                                     ><i class="fas fa-fw fa-comment-alt"></i></a>
                                 {{#if ../unlocked}}
-                                <a class="edit" data-action="editItem" data-tooltip="{{localize 'CO.label.long.edit'}}"><i
-                                        class="fas fa-fw fa-edit"></i></a>
-                                <a class="delete" data-action="deleteItem" data-tooltip="{{localize 'CO.label.long.delete'}}"><i
-                                        class="fas fa-fw fa-trash"></i></a>
+                                <a class="edit" data-action="editItem" data-tooltip="{{localize 'CO.label.long.edit'}}"><i class="fas fa-fw fa-edit"></i></a>
+                                <a class="delete" data-action="deleteItem" data-tooltip="{{localize 'CO.label.long.delete'}}"><i class="fas fa-fw fa-trash"></i></a>
                                 {{/if}}
                             </div>
                         </div>

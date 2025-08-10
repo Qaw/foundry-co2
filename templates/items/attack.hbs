@@ -24,9 +24,10 @@
             </fieldSet> 
         </section>
 
-        <section class="panel-left">
+        <section class="panel-right">
             <fieldSet class="properties">
                 <legend>{{localize "CO.label.long.properties"}}</legend>
+                <!-- PORTEE -->
                 {{#if (or system.isRanged system.isMagic)}}
                     <div class="form-group">
                         <label>{{localize "CO.ui.range"}}</label>
@@ -37,10 +38,12 @@
                     </div>    
                 {{/if}}
                 <label>
-                    <input type="checkbox" name="system.properties.chargeable" {{checked systemSource.properties.chargeable}} />
-                    {{systemFields.properties.fields.chargeable.label}}
-                </label>    
-                {{#if system.properties.chargeable}}
+                    <input type="checkbox" name="system.properties.reloadable" {{checked systemSource.properties.reloadable}} />
+                    {{systemFields.properties.fields.reloadable.label}}
+                </label>   
+
+                 <!-- RECHARGEABLE --> 
+                {{#if system.properties.reloadable}}
                     <fieldset>
                         <legend>{{localize "CO.ui.rechargeable"}}</legend>
                         <div class="form-group">

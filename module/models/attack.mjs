@@ -14,7 +14,7 @@ export default class AttackData extends ItemData {
       }),
       properties: new fields.SchemaField({
         spell: new fields.BooleanField({}),
-        chargeable: new fields.BooleanField({}),
+        reloadable: new fields.BooleanField({}),
       }),
       range: new fields.EmbeddedDataField(BaseValue, { label: "CO.ui.range", nullable: true }),
       actions: new fields.ArrayField(new fields.EmbeddedDataField(Action)),
@@ -63,6 +63,14 @@ export default class AttackData extends ItemData {
   get rangeLabel() {
     if (this.hasRange) return this.range.value + this.range.unit
     return ""
+  }
+
+  get hasCharges() {
+    return this.charges.current > 0
+  }
+
+  get isReloadable() {
+    return this.properties.reloadable
   }
 
   get displayValues() {

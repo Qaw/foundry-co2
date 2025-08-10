@@ -58,10 +58,7 @@ export default class EquipmentData extends ItemData {
         oneHand: new fields.BooleanField(),
         twoHand: new fields.BooleanField(),
       }),
-      range: new fields.EmbeddedDataField(BaseValue, {
-        label: "CO.ui.range",
-        nullable: true,
-      }),
+      range: new fields.EmbeddedDataField(BaseValue, { label: "CO.ui.range", nullable: true }),
       actions: new fields.ArrayField(new fields.EmbeddedDataField(Action)),
     })
   }
