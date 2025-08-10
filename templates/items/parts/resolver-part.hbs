@@ -92,7 +92,7 @@
   </div>
   {{/unless}}
   {{! Additional effects }}
-{{#if (or (eq r.type @root.choiceResolverTypes.auto.id) (eq r.type @root.choiceResolverTypes.attack.id) (eq r.type @root.choiceResolverTypes.heal.id))}}
+{{#unless (eq r.type @root.choiceResolverTypes.consumable.id)}}
   <div class="form-group effects">
     <label class="checkbox">
       <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.active" {{checked r.additionalEffect.active}} />
@@ -169,5 +169,5 @@
       </div>
     </div>
   {{/if}}
-  {{/if}}
+  {{/unless}}
 </div>
