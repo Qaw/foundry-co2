@@ -12,7 +12,7 @@
             {{/if}}
 
             <fieldSet class="infoInitial">
-                <legend>{{localize "CO.ui.initialInformations"}}</legend>
+                <legend>{{localize "CO.ui.typeAttack"}}</legend>
                 <div class="form-group">
                     <label>{{localize "CO.label.long.subtype"}}</label>
                     <div class="form-fields">
@@ -38,17 +38,20 @@
                 {{/if}}
                 <label>
                     <input type="checkbox" name="system.properties.chargeable" {{checked systemSource.properties.chargeable}} />
-                    {{localize "CO.ui.charge"}}
+                    {{systemFields.properties.fields.chargeable.label}}
                 </label>    
                 {{#if system.properties.chargeable}}
-                    <div class="form-group">
-                        <label>{{localize "CO.ui.charges"}}</label>
-                        <div class="form-fields border-right">
-                            <input class="field-value" name="system.charges.current" type="number" value="{{system.charges.current}}" placeholder="{{localize 'CO.ui.current'}}" data-dtype="Number">
-                            /
-                            <input class="field-value" name="system.charges.max" type="number" value="{{system.charges.max}}" placeholder="{{localize 'CO.ui.max'}}" data-dtype="Number">
+                    <fieldset>
+                        <legend>{{localize "CO.ui.rechargeable"}}</legend>
+                        <div class="form-group">
+                            <label>{{localize "CO.Attack.FIELDS.charges.current.label"}} / {{localize "CO.Attack.FIELDS.charges.max.label"}}</label>
+                            <div class="form-fields border-right">
+                                {{formInput systemFields.charges.fields.current value=systemSource.charges.current placeholder=0 localize=true disabled=locked}}
+                                /
+                                {{formInput systemFields.charges.fields.max value=systemSource.charges.max placeholder=0 localize=true disabled=locked}}
+                            </div>
                         </div>
-                    </div>
+                    </fieldset>
                 {{/if}}
             </fieldSet>
         </section>

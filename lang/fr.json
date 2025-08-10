@@ -284,6 +284,22 @@
         },
         "slug": {
           "label": "Clé"
+        },
+        "properties": {
+          "spell": {
+            "label": "Sort"
+          },
+          "chargeable": {
+            "label": "Rechargeable"
+          }
+        },
+        "charges": {
+          "current": {
+            "label": "Actuelles"
+          },
+          "max": {
+            "label": "Maximales"
+          }
         }
       }
     },
@@ -725,14 +741,14 @@
       "tacticalPreciseAttack": "Attaque précise",
       "tacticalPreciseAttackTooltip": "Attaque -3, DM +1d4°",
       "initialInformations": "Informations Initiales",
-      "charge": "Charges",
       "rankCost": "Rang et Coût",
       "learn": "Capacité apprise ?",
       "typeFrequency": "Temps d'Action et Fréquence",
       "typeFrequencyShort": "Temps d'Action",
       "spell": "Sort",
       "allowCapacity": "Autoriser une capacité liée",
-      "TypeEquipement": "Type d'Équipement",
+      "typeEquipment": "Type d'Équipement",
+      "typeAttack": "Type d'Attaque",
       "rangeWeapon": "Portée de l'arme",
       "rechargeable": "Charges et Munitions",
       "PoidsValeur": "Poids et Valeur",
