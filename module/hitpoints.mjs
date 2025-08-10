@@ -84,8 +84,8 @@ export class Hitpoints {
     const dataset = event.currentTarget.dataset
     const type = dataset.apply
     const dmg = parseInt(dataset.total)
-    const tempDamage = html.find("#tempDm").is(":checked")
-    const drChecked = html.find("#dr").is(":checked")
+    const tempDamage = html.querySelector("#tempDm").checked
+    const drChecked = html.querySelector("#dr").checked
 
     Hitpoints.applyToTargets(type, dmg, drChecked, tempDamage)
   }
