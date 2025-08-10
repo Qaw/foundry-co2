@@ -6,14 +6,16 @@
       <select name="system.actions.{{idx}}.resolvers.{{id}}.type" data-type="String">
         {{selectOptions @root.choiceResolverTypes selected=r.type localize=true}}
       </select>
-      <label class="checkbox">
-        <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.bonusDiceAdd" {{checked r.bonusDiceAdd}} />
-        {{localize "CO.modifier.subtype.bonusDice"}}
-      </label>
-      <label class="checkbox">
-        <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.malusDiceAdd" {{checked r.malusDiceAdd}} />
-        {{localize "CO.modifier.subtype.malusDice"}}
-      </label>
+      {{#if (eq r.type @root.choiceResolverTypes.attack.id)}}
+        <label class="checkbox">
+          <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.bonusDiceAdd" {{checked r.bonusDiceAdd}} />
+          {{localize "CO.modifier.subtype.bonusDice"}}
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.malusDiceAdd" {{checked r.malusDiceAdd}} />
+          {{localize "CO.modifier.subtype.malusDice"}}
+        </label>
+      {{/if}}
       {{#if @root.unlocked}}
         <button class="action" data-action="deleteResolver"><i class="fas fa-trash"></i></button>
       {{/if}}
@@ -42,11 +44,6 @@
     </div>
   {{/if}}
   {{#if (eq r.type @root.choiceResolverTypes.auto.id)}}
-    {{! Difficulty }}
-    <div class="form-group-stacked difficulty" data-tooltip="{{localize 'CO.ui.formulaTooltip'}}" data-tooltip-direction="UP">
-      <label>{{localize "CO.ui.difficulty"}}</label>
-      <input name="system.actions.{{idx}}.resolvers.{{id}}.skill.difficulty" type="text" value="{{r.skill.difficulty}}" data-dtype="String" />
-    </div>
     {{! Damages }}
     <div class="form-group-stacked damages">
       <label>{{localize "CO.ui.dmg"}}</label>
@@ -63,105 +60,107 @@
     </div>
   {{/if}}
   {{! Target }}
-  <div class="form-group-stacked like-grid target">
-    <label>
-      <span>{{localize "CO.ui.target"}}</span>
-      <!--{{#if (eq r.target.type "multiple")}}
-        <span>{{localize "CO.resolver.target.number"}}</span>
-      {{/if}}
-      {{#if (or (eq r.target.type "single") (eq r.target.type "multiple"))}}
-        <span>{{localize "CO.resolver.scope.title"}}</span>
-      {{/if}}-->
-    </label>
-    <div class="form-fields">
-      <select name="system.actions.{{idx}}.resolvers.{{id}}.target.type" data-type="String">
-        {{selectOptions @root.choiceResolverTargets selected=r.target.type localize=true}}
-      </select>
-      {{#if (eq r.target.type "multiple")}}
-        <input class="center-input" name="system.actions.{{idx}}.resolvers.{{id}}.target.number" type="text" value="{{r.target.number}}" data-dtype="String" data-tooltip={{localize "CO.resolver.target.number"}}>
-      {{/if}}
-      {{#if (or (eq r.target.type "single") (eq r.target.type "multiple"))}}
-        <select name="system.actions.{{idx}}.resolvers.{{id}}.target.scope" data-type="String" data-tooltip={{localize "CO.resolver.scope.title"}}>
-          {{selectOptions @root.choiceResolverScopes selected=r.target.scope localize=true}}
+  {{#unless (eq r.type @root.choiceResolverTypes.consumable.id) }}
+    <div class="form-group-stacked like-grid target">
+      <label>
+        <span>{{localize "CO.ui.target"}}</span>
+      </label>
+      <div class="form-fields">
+        <select name="system.actions.{{idx}}.resolvers.{{id}}.target.type" data-type="String">
+          {{selectOptions @root.choiceResolverTargets selected=r.target.type localize=true}}
         </select>
-      {{/if}}
+        {{#if (eq r.target.type "multiple")}}
+          <input class="center-input" name="system.actions.{{idx}}.resolvers.{{id}}.target.number" type="text" value="{{r.target.number}}" data-dtype="String" data-tooltip={{localize "CO.resolver.target.number"}}>
+        {{/if}}
+        {{#if (or (eq r.target.type "single") (eq r.target.type "multiple"))}}
+          <select name="system.actions.{{idx}}.resolvers.{{id}}.target.scope" data-type="String" data-tooltip={{localize "CO.resolver.scope.title"}}>
+            {{selectOptions @root.choiceResolverScopes selected=r.target.scope localize=true}}
+          </select>
+        {{/if}}
+      </div>
     </div>
-  </div>
-  {{! Additional effects }}
-  <div class="form-group effects">
-    <label class="checkbox">
-      <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.active" {{checked r.additionalEffect.active}} />
-      {{localize "CO.resolver.additionalEffect.active"}}
-    </label>
-    <div class="form-fields">
-      {{#if r.additionalEffect.active}}
-        <span>{{localize "CO.resolver.additionalEffect.applyOn"}}</span>
-        <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.applyOn" data-type="String">
-          {{selectOptions @root.choiceResolverApplyOn selected=r.additionalEffect.applyOn localize=true}}
-        </select>
-        {{#if (eq r.additionalEffect.applyOn "successTreshold")}}
+  {{/unless}}
+{{! Additional effects }}
+{{#unless (eq r.type @root.choiceResolverTypes.consumable.id)}}
+    <div class="form-group effects">
+      <label class="checkbox">
+        <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.active" {{checked r.additionalEffect.active}} />
+        {{localize "CO.resolver.additionalEffect.active"}}
+      </label>
+      <div class="form-fields">
+        {{#if r.additionalEffect.active}}
+          <span>{{localize "CO.resolver.additionalEffect.applyOn"}}</span>
+          <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.applyOn" data-type="String">
+            {{#if (eq r.type @root.choiceResolverTypes.attack.id)}}
+              {{selectOptions @root.choiceResolverApplyOn selected=r.additionalEffect.applyOn localize=true}}
+            {{else}}
+              {{selectOptions @root.choiceResolverApplyOnAlways selected=r.additionalEffect.applyOn localize=true}}
+            {{/if}}
+          </select>
+          {{#if (eq r.additionalEffect.applyOn "successTreshold")}}
+            <input
+              class="field-value"
+              name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.successThreshold"
+              type="text"
+              value="{{r.additionalEffect.successThreshold}}"
+              data-dtype="String"
+            />
+          {{/if}}
+        {{/if}}
+      </div>
+    </div>
+    {{#if r.additionalEffect.active}}
+      <div class="form-group-stacked like-grid effects">
+        <label>
+          <span>{{localize "CO.resolver.additionalEffect.formulaType"}}</span>
+          <span class="center-input" data-tooltip="{{localize 'CO.resolver.additionalEffect.applyFormulaTooltip'}}" data-tooltip-direction="UP">
+            {{localize "CO.resolver.additionalEffect.applyFormula"}}
+          </span>
+          <span data-tooltip="{{localize 'CO.resolver.additionalEffect.elementType'}}" data-tooltip-direction="UP">
+            {{localize "CO.resolver.additionalEffect.elementType"}}
+          </span>
+        </label>
+        <div class="form-fields">
+          <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.formulaType" data-type="String">
+            {{selectOptions @root.choiceResolverEffectFormulaTypes selected=r.additionalEffect.formulaType localize=true}}
+          </select>
+          <input class="center-input" name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.formula" type="text" value="{{r.additionalEffect.formula}}" data-dtype="String" />
+          <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.elementType" data-type="String">
+            {{selectOptions @root.choiceResolverEffectElementTypes selected=r.additionalEffect.elementType localize=true blank=""}}
+          </select>
+        </div>
+      </div>
+      {{! Status }}
+      <div class="form-group status">
+        <label data-tooltip="{{localize 'CO.resolver.additionalEffect.statusAvailable'}}" data-tooltip-direction="UP">
+          {{localize "CO.resolver.additionalEffect.statusAvailable"}}
+        </label>
+        <div class="form-fields tags">
+          {{formGroup        
+            @root.resolverSystemFields.additionalEffect.fields.statuses
+            name=(concat "system.actions." idx ".resolvers." @index ".additionalEffect.statuses")
+            value=r.additionalEffect.statuses
+            localize=true
+          }}
+        </div>
+      </div>
+      {{! Duration }}
+      <div class="form-group duration">
+        <label>{{localize "CO.ui.duration"}}</label>
+        <div class="form-fields">
           <input
             class="field-value"
-            name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.successThreshold"
+            name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.duration"
             type="text"
-            value="{{r.additionalEffect.successThreshold}}"
+            value="{{r.additionalEffect.duration}}"
+            placeholder="{{localize 'CO.resolver.additionalEffect.duration'}}"
             data-dtype="String"
           />
-        {{/if}}
-      {{/if}}
-    </div>
-  </div>
-  {{#if r.additionalEffect.active}}
-    <div class="form-group-stacked like-grid effects">
-      <label>
-        <span>{{localize "CO.resolver.additionalEffect.formulaType"}}</span>
-        <span class="center-input" data-tooltip="{{localize 'CO.resolver.additionalEffect.applyFormulaTooltip'}}" data-tooltip-direction="UP">
-          {{localize "CO.resolver.additionalEffect.applyFormula"}}
-        </span>
-        <span data-tooltip="{{localize 'CO.resolver.additionalEffect.elementType'}}" data-tooltip-direction="UP">
-          {{localize "CO.resolver.additionalEffect.elementType"}}
-        </span>
-      </label>
-      <div class="form-fields">
-        <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.formulaType" data-type="String">
-          {{selectOptions @root.choiceResolverEffectFormulaTypes selected=r.additionalEffect.formulaType localize=true}}
-        </select>
-        <input class="center-input" name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.formula" type="text" value="{{r.additionalEffect.formula}}" data-dtype="String" />
-        <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.elementType" data-type="String">
-          {{selectOptions @root.choiceResolverEffectElementTypes selected=r.additionalEffect.elementType localize=true blank=""}}
-        </select>
-      </div>
-    </div>
-    {{! Status }}
-    <div class="form-group status">
-      <label data-tooltip="{{localize 'CO.resolver.additionalEffect.statusAvailable'}}" data-tooltip-direction="UP">
-        {{localize "CO.resolver.additionalEffect.statusAvailable"}}
-      </label>
-      <div class="form-fields tags">
-        {{formGroup        
-          @root.resolverSystemFields.additionalEffect.fields.statuses
-          name=(concat "system.actions." idx ".resolvers." @index ".additionalEffect.statuses")
-          value=r.additionalEffect.statuses
-          localize=true
-        }}
-      </div>
-    </div>
-    {{! Duration }}
-    <div class="form-group duration">
-      <label>{{localize "CO.ui.duration"}}</label>
-      <div class="form-fields">
-        <input
-          class="field-value"
-          name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.duration"
-          type="text"
-          value="{{r.additionalEffect.duration}}"
-          placeholder="{{localize 'CO.resolver.additionalEffect.duration'}}"
-          data-dtype="String"
-        />
-        <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.unit" data-type="String">
-          {{selectOptions @root.choiceResolverEffectDurationUnit selected=r.additionalEffect.unit localize=true}}
-        </select>
-      </div>
-    </div>
-  {{/if}}
+          <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.unit" data-type="String">
+            {{selectOptions @root.choiceResolverEffectDurationUnit selected=r.additionalEffect.unit localize=true}}
+          </select>
+        </div>
+      </div>  
+    {{/if}}
+  {{/unless}}
 </div>

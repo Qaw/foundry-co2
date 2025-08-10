@@ -159,22 +159,37 @@ h4.form-header {
       }
     }
 
-    .form-group-stacked.difficulty,
+    //.form-group-stacked.difficulty,
     .form-group-stacked.damages {
-      flex: 0 1 50%;
+      display: flex;
+      flex-direction: row;
+      flex: 1;
+      margin: 5px 0;
+      label {
+        margin-right: 10px;
+      }
     }
 
-    .form-group-stacked.difficulty {
+    /*.form-group-stacked.difficulty {
       margin-right: -1px;
 
       input[type] {
         border-radius: 3px 0 0 3px;
       }
-    }
+    }*/
 
     .form-group-stacked.damages {
       input[type] {
         border-radius: 0 3px 3px 0;
+      }
+    }
+    .form-group-stacked.heal {
+      display: flex;
+      flex-direction: row;
+      flex: 1;
+      margin: 5px 0;
+      label {
+        margin-right: 10px;
       }
     }
 
