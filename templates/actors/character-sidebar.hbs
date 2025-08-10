@@ -516,7 +516,21 @@
       <div class="sidebar-section-content">
         <ul class="state-modifier">
           {{#each stateModifiers as |state|}}
-            <li class="state-name"> {{state}}</li>
+            <li class="state-name">
+              {{state}}
+              {{log "darkvision" state}}
+              {{#if @root.darkVisionShow}}
+                {{log "darkvision s'affiche"}}
+                <input
+                  type="checkbox"
+                  class="vision-slider"
+                  data-tooltip="Activer/désactiver la vision dans le noir"
+                  data-action="toggleDarkVision"
+                  name="darkVisionActivation"
+                  {{checked @root.darkVisionActivation}}
+                />
+              {{/if}}
+            </li>
           {{/each}}
         </ul>
       </div>
