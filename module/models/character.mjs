@@ -3,7 +3,7 @@ import { BaseValue } from "./schemas/base-value.mjs"
 import ActorData from "./actor.mjs"
 import Utils from "../utils.mjs"
 import CoChat from "../chat.mjs"
-import { CustomEffectData } from "./schemas/custom-effect.mjs"
+
 import DefaultConfiguration from "../config/configuration.mjs"
 import { Modifier } from "./schemas/modifier.mjs"
 export default class CharacterData extends ActorData {
@@ -131,7 +131,6 @@ export default class CharacterData extends ActorData {
       }, {}),
     )
 
-    schema.currentEffects = new fields.ArrayField(new fields.EmbeddedDataField(CustomEffectData))
     // Permet de stocker l'ancienne distance de visibilité avant de passer en vision nocturne ou autre, de façon à revenir dessus si on l'enleve (cf fix#141)
     schema.oldDistanceView = new fields.NumberField({ required: true, nullable: false, initial: 0, integer: true, min: 0 })
 

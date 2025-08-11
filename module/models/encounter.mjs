@@ -2,7 +2,6 @@ import { SYSTEM } from "../config/system.mjs"
 import { BaseValue } from "./schemas/base-value.mjs"
 import ActorData from "./actor.mjs"
 import Utils from "../utils.mjs"
-import { CustomEffectData } from "./schemas/custom-effect.mjs"
 
 export default class EncounterData extends ActorData {
   static defineSchema() {
@@ -98,8 +97,6 @@ export default class EncounterData extends ActorData {
         return obj
       }, {}),
     )
-
-    schema.currentEffects = new fields.ArrayField(new fields.EmbeddedDataField(CustomEffectData))
 
     return foundry.utils.mergeObject(super.defineSchema(), schema)
   }
@@ -209,8 +206,19 @@ export default class EncounterData extends ActorData {
     for (const [key, ability] of Object.entries(this.abilities)) {
       // Somme du bonus de la feuille et du bonus des actives effects
       const bonuses = Object.values(ability.bonuses).reduce((prev, curr) => prev + curr)
-      ability.value = ability.base + bonuses
-      ability.tooltipValue = Utils.getTooltip(Utils.getAbilityName(key), ability.base).concat(Utils.getTooltip("Bonus", bonuses))
+      const abilityModifiers = this.computeTotalModifiersByTarget(this.abilityModifiers, key)
+
+      // Prise en compte d'un modifier qui donne un dé bonus
+      if (this.bonusDiceModifiers) {
+        let bonusDice = this.bonusDiceModifiers.find((m) => m.target === key)
+        if (bonusDice) {
+          ability.superior = true
+        }
+      }
+      ability.modifiers = abilityModifiers.total
+
+      ability.value = ability.base + bonuses + ability.modifiers
+      ability.tooltipValue = Utils.getTooltip(Utils.getAbilityName(key), ability.base).concat(abilityModifiers.tooltip, Utils.getTooltip("Bonus", bonuses))
     }
 
     this.magic = this.abilities.vol.value + (this.attributes.nc === 0.5 ? 0 : this.attributes.nc)
@@ -256,18 +264,6 @@ export default class EncounterData extends ActorData {
       }
     })
     return allActions
-  }
-
-  /**
-   * Retrieves the malusDice modifiers for the character.
-   *
-   * @returns {Array} An array of state modifiers.
-   */
-  get malusDiceModifiers() {
-    const lstCapacities = this.parent.capacities
-    if (!lstCapacities) return []
-    let allModifiers = lstCapacities.reduce((mods, item) => mods.concat(item.enabledModifiers), []).filter((m) => m.subtype === SYSTEM.MODIFIERS_SUBTYPE.malusDice.id)
-    return allModifiers
   }
 
   /**
