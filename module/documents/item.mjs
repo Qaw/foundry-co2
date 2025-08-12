@@ -88,18 +88,6 @@ export default class COItem extends Item {
   }
 
   /**
-   * Renvoie true si c'est une capacité avec une fréquence d'utilisation, false sinon
-   * @returns {boolean}
-   */
-  // FIXME Not used anymore ?
-  getIsActivableAndChargeable() {
-    if (foundry.utils.isEmpty(this.system.actions)) return false
-    if (this.type === SYSTEM.ITEM_TYPE.capacity.id && this.system.frequency !== SYSTEM.CAPACITY_FREQUENCY.none.id && this.system.learned) {
-      return true
-    } else return false
-  }
-
-  /**
    * Basic info for a capacity : uuid, name, img, description
    */
   get infos() {

@@ -252,7 +252,7 @@ export class Resolver extends foundry.abstract.DataModel {
   async _manageAdditionalEffect(actor, item, action) {
     // Si pas de combat, pas d'effet sur la durée
     if (!game.combat || !game.combat.started) {
-      // FIXME : Debug pour l'instant, à supprimer
+      // FIXME Debug pour l'instant, à supprimer
       ui.notifications.warn("Pas de combat en cours ou combat non démarré !")
       return false
     }

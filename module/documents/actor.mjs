@@ -2168,6 +2168,7 @@ export default class COActor extends Actor {
    * @param {CustomEffectData} effect : Custom effect appliqué sur l'acteur
    */
   async applyCustomEffect(effect) {
+
     // Appliquer les éventuels statuts
     if (effect.statuses.length > 0) {
       for (const status of effect.statuses) {

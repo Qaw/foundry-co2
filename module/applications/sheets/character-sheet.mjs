@@ -318,10 +318,6 @@ export default class COCharacterSheet extends COBaseActorSheet {
       const encounter = game.actors.get(data.encounterId)
       // Si on ne trouve pas la rencontre, on ne fait rien
       if (!encounter) return false
-      // TODO Ajouter l'argent à l'acteur et supprimer de la rencontre
-      // data.wealthType : type
-      // value : valeur
-      // Il va manquer l'id de la rencontre
       // Ajouter l'argent au personnage
       const wealthType = data.wealthType
       const value = data.value

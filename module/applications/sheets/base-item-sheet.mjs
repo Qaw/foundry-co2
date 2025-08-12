@@ -662,7 +662,6 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
       const toggle = document.createElement("co-toggle-switch")
       toggle.checked = this._sheetMode === this.constructor.SHEET_MODES.EDIT
       toggle.classList.add("mode-slider")
-      // TODO change tooltip with translation
       toggle.dataset.tooltip = "CO.SheetModeEdit"
       toggle.setAttribute("aria-label", game.i18n.localize("CO.SheetModeEdit"))
       toggle.addEventListener("change", this._onSheetChangeLock.bind(this))
