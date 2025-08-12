@@ -1948,7 +1948,6 @@ export default class COActor extends Actor {
 
     // Jet d'attaque
     if (type === "attack") {
-      console.log("jet de type attaque avant message : ", customEffect, additionalEffect)
       // Affichage du jet d'attaque
       await rolls[0].toMessage(
         {

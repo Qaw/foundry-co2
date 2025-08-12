@@ -1,4 +1,5 @@
 import { AbilityValue } from "./schemas/ability-value.mjs"
+import { CustomEffectData } from "./schemas/custom-effect.mjs"
 
 export default class ActorData extends foundry.abstract.TypeDataModel {
   static defineSchema() {
@@ -12,7 +13,7 @@ export default class ActorData extends foundry.abstract.TypeDataModel {
         return obj
       }, {}),
     )
-
+    schema.currentEffects = new fields.ArrayField(new fields.EmbeddedDataField(CustomEffectData))
     return schema
   }
 
