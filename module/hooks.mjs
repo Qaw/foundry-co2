@@ -148,16 +148,20 @@ export default function registerHooks() {
         const customEffect = message.system.customEffect
         const additionalEffect = message.system.additionalEffect
         if (customEffect && additionalEffect && Resolver.shouldManageAdditionalEffect(newResult, additionalEffect)) {
-          if (game.user.isGM) await targetActor.applyCustomEffect(customEffect)
-          else {
-            game.socket.emit(`system.${SYSTEM.ID}`, {
-              action: "customEffect",
-              data: {
-                userId: game.user.id,
-                ce: customEffect,
-                targets: [targetActor.uuid],
-              },
-            })
+          const target = message.system.targets.length > 0 ? message.system.targets[0] : null
+          if (target) {
+            const targetActor = await fromUuid(target)
+            if (game.user.isGM) await targetActor.applyCustomEffect(customEffect)
+            else {
+              game.socket.emit(`system.${SYSTEM.ID}`, {
+                action: "customEffect",
+                data: {
+                  userId: game.user.id,
+                  ce: customEffect,
+                  targets: [targetActor.uuid],
+                },
+              })
+            }
           }
         }
 
