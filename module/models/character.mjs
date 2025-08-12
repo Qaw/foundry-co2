@@ -441,15 +441,30 @@ export default class CharacterData extends ActorData {
   }
 
   /**
-   * On regarde si un modifier modifie la vision
+   * Permet de savoir si le personnage a un modifier lui attribuant la vision dans le noir
    */
-  _prepareVision() {
+  get hasDarkVisionModifier() {
+    let modifiersVision = this.stateModifiers.find((m) => m.target === "darkvision")
+    return modifiersVision !== undefined && modifiersVision !== null
+  }
+
+  /**
+   * Permet de savoir si le personnage a DarkVision activé
+   */
+  get hasDarkVisionActivated() {
+    return this.parent.prototypeToken.sight?.visionMode === "darkvision"
+  }
+
+  /**
+   * On regarde si un modifier modifie la vision et on l'active / désactive selon l'appuie sur le bouton toggle de la fiche de perso
+   * @param {Boolean} active Active (tue) ou désactive (false) la vision dans le noir
+   */
+  async toggleDarkVision(active) {
     const modifiers = this.stateModifiers
     if (!modifiers) return { total: 0, tooltip: "" }
     let currentactor = this.parent
     let modifiersVision = modifiers.find((m) => m.target === "darkvision")
-
-    if (modifiersVision && this.parent.prototypeToken.sight.visionMode !== "darkvision") {
+    if (modifiersVision && !this.hasDarkVisionActivated && active) {
       // On stock l'ancinne valeur de distance (cf fix#141)
       this.oldDistanceView = this.parent.prototypeToken.sight.range
       this.parent?.update({ "system.oldDistanceView": this.oldDistanceView })
@@ -468,8 +483,8 @@ export default class CharacterData extends ActorData {
       }
     }
 
-    // Inversement si on a pas de darkvision
-    if (!modifiersVision && this.parent.prototypeToken.sight?.visionMode === "darkvision") {
+    // Inversement on le desactive
+    if (!active && this.hasDarkVisionActivated) {
       // On le retire
       const prototypeToken = {}
       Object.assign(prototypeToken, {

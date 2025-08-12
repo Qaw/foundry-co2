@@ -34,7 +34,7 @@
                     </li>
                     <ol class="item-list foldable {{#if pg.expanded}}expanded{{else}}folded{{/if}}">
                         {{#each pg.items as |capacity id|}}
-                            {{log 'capacity' this}}
+                            {{!log 'capacity' this}}
                             {{#if capacity.system.learned}}
                                 <li class="item flexrow" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity._id}}" data-item-type="capacity">
                                     <div class="item-detail rank">{{capacity.system.rank}}</div>

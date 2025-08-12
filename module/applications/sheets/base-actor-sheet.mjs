@@ -41,6 +41,7 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
       deleteCustomEffect: COBaseActorSheet.#onDeleteCustomEffect,
       toggleAction: COBaseActorSheet.#onUseAction,
       toggleEffect: COBaseActorSheet.#onUseEffect,
+      toggleDarkVision: COBaseActorSheet.#onToggleDarkVision,
     },
   }
 
@@ -114,7 +115,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     context.actor = this.document
     context.system = this.document.system
     context.source = this.document.toObject()
-
+    context.darkVisionActivation = this.document.system.hasDarkVisionActivated
+    context.darkVisionShow = this.document.system.hasDarkVisionModifier
     context.isCharacter = this.document.type === "character"
 
     context.abilities = this.document.system.abilities
@@ -166,22 +168,24 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     context.visibleNonActivableNonTemporaireActions = await this.document.getVisibleNonActivableNonTemporaireActions()
     context.currentEffects = await this.document.customEffects
 
-    let states = []
-    // Récupération des modifiers de type state
-    this.document.system.stateModifiers.forEach((state) => {
-      states.push(game.i18n.localize(`CO.label.long.${state.target}`))
-    })
-    // Récupération des statusEffects
-    this.document.effects.forEach((effect) => {
-      states.push(effect.name)
-    })
-    context.stateModifiers = states
+    context.stateModifiers = this.document.system.stateModifiers
 
     // Select options
     context.choiceMoveUnit = SYSTEM.MOVEMENT_UNIT
 
     if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseActorSheet - context`), context)
     return context
+  }
+
+  /**
+   * Active desactive la vision dans le noir
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
+   */
+  static async #onToggleDarkVision(event, target) {
+    event.preventDefault()
+    await this.document.system.toggleDarkVision(target.checked)
+    this.render()
   }
 
   /**
