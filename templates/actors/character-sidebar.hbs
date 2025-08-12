@@ -517,10 +517,9 @@
         <ul class="state-modifier">
           {{#each stateModifiers as |state|}}
             <li class="state-name">
-              {{state}}
-              {{log "darkvision" state}}
-              {{#if @root.darkVisionShow}}
-                {{log "darkvision s'affiche"}}
+              {{log "state" state}}
+              {{localize (concat 'CO.label.long.' state.target)}}
+              {{#if (eq state.target "darkvision")}}
                 <input
                   type="checkbox"
                   class="vision-slider"
