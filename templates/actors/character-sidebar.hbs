@@ -517,8 +517,8 @@
         <ul class="state-modifier">
           {{#each stateModifiers as |state|}}
             <li class="state-name">
-              {{log "state" state}}
-              {{localize (concat 'CO.label.long.' state.target)}}
+              {{!log "state" state}}
+              {{localize (concat "CO.label.long." state.target)}}
               {{#if (eq state.target "darkvision")}}
                 <input
                   type="checkbox"
