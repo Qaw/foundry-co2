@@ -474,7 +474,7 @@ export default class CharacterData extends ActorData {
         actorLink: true,
         disposition: 1,
       })
-      this.parent?.updateSource({ prototypeToken })
+      this.parent?.update({ prototypeToken: prototypeToken })
       let targets = this.parent.getActiveTokens(true, true)
       for (let i = 0; i < targets.length; i++) {
         let sight = {}
@@ -492,7 +492,7 @@ export default class CharacterData extends ActorData {
         actorLink: true,
         disposition: 1,
       })
-      this.parent?.updateSource({ prototypeToken })
+      this.parent?.update({ prototypeToken: prototypeToken })
       let targets = this.parent.getActiveTokens(true, true)
       for (let i = 0; i < targets.length; i++) {
         let sight = {}
