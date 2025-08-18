@@ -145,7 +145,7 @@
                             {{systemFields.properties.fields.stackable.label}}
                         </label>
                     {{/if}}
-                    {{#if isConsumable}}
+                    {{#if (or isConsumable isMisc)}}
                         <label>
                             <input type="checkbox" name="system.properties.stackable" {{checked systemSource.properties.stackable}} {{#if @root.locked}}disabled{{/if}}/>
                             {{systemFields.properties.fields.stackable.label}}
