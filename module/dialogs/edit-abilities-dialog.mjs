@@ -4,12 +4,12 @@ export class CoEditAbilitiesDialog extends foundry.applications.api.DialogV2 {
     classes: ["co", "edit-abilities-dialog"],
     position: {
       width: 1000,
-      height: 420,
+      height: 380,
     },
     actions: {
       reset: CoEditAbilitiesDialog.#onReset,
       toggleSuperior: CoEditAbilitiesDialog.#onToggleSuperior,
-    }
+    },
   }
 
   constructor({ actor }) {

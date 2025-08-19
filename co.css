@@ -508,68 +508,111 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.dialog.edit-abilities-dialog .window-header {
   border-radius: 5px 5px 0 0;
+  background: var(--color-abilities);
+  border: none;
+  /*.theme-dark & {
+      background: none;
+      background-color: rgba(0, 0, 0, 0.8);
+    }*/
 }
-.theme-dark .co.application.dialog.edit-abilities-dialog .window-header {
-  background: none;
-  background-color: rgba(0, 0, 0, 0.8);
+.co.application.dialog.edit-abilities-dialog .window-header .window-title {
+  color: var(--color-abilities);
 }
 .co.application.dialog.edit-abilities-dialog .window-content {
   display: grid;
   gap: 0;
   grid-template-columns: 200px repeat(7, 1fr);
-  grid-template-rows: 60px repeat(6, 40px);
+  grid-template-rows: 40px 23px repeat(4, 40px) 50px;
   grid-auto-flow: column;
   align-items: stretch;
   justify-content: center;
   overflow: hidden auto;
-  padding: 10px 20px 20px 20px;
+  padding: 0;
+}
+.theme-light .co.application.dialog.edit-abilities-dialog .window-content {
+  background-color: #0c4f7b29;
 }
 .theme-dark .co.application.dialog.edit-abilities-dialog .window-content {
   background: none;
   background-color: rgba(0, 0, 0, 0.8);
-  color: #B3B4B5;
+  color: #b3b4b5;
 }
 .theme-dark .co.application.dialog.edit-abilities-dialog .window-content input {
-  color: #B3B4B5;
+  color: #b3b4b5;
   text-align: center;
 }
-.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n+1),
-.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n+2),
-.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n+3),
-.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n+4),
-.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n+5),
-.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n+6),
-.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n+7) {
-  background-color: rgba(68, 55, 48, 0.1);
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n + 1),
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n + 2),
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n + 3),
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n + 4),
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n + 5),
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n + 6),
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n + 14) {
+  background-color: var(--color-abilities);
+  color: var(--color-background-grey);
+}
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n + 1) input[type="number"],
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n + 2) input[type="number"],
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n + 3) input[type="number"],
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n + 4) input[type="number"],
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n + 5) input[type="number"],
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n + 6) input[type="number"],
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(14n + 14) input[type="number"] {
+  color: var(--color-background-grey);
+}
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(2),
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(3),
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(4),
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(5),
+.co.application.dialog.edit-abilities-dialog .window-content > :nth-child(6) {
+  text-align: right;
+  padding-right: 10px;
 }
 .co.application.dialog.edit-abilities-dialog .window-content .cell {
   padding: 8px;
   text-align: center;
+  align-content: center;
+  justify-items: center;
+  font-size: large;
+  font-weight: bold;
+  /*&.extra {
+        background-color: transparent;
+      }*/
 }
-.co.application.dialog.edit-abilities-dialog .window-content .cell.extra {
-  background-color: transparent;
+.co.application.dialog.edit-abilities-dialog .window-content .cell input[type="number"] {
+  text-align: center;
+  height: 25px;
 }
 .co.application.dialog.edit-abilities-dialog .window-content label .title {
-  line-height: 3;
-  margin: 4px;
+  line-height: 2;
+  margin-left: 20px;
+  font-size: large;
+  font-weight: bold;
+}
+.co.application.dialog.edit-abilities-dialog .window-content label .total-bonus {
+  font-size: x-large;
+  text-align: right;
 }
 .co.application.dialog.edit-abilities-dialog .window-content .value {
   font-family: var(--serif);
-  font-size: var(--font-size-24);
+  font-size: var(--font-size-28);
   font-weight: 700;
+  text-shadow: 0px 0px 5px #c30000b5;
 }
 .co.application.dialog.edit-abilities-dialog .window-content h3 {
   font-size: var(--font-size-24);
   line-height: var(--font-size-24);
   margin: 0;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  align-content: center;
   text-align: center;
 }
 .co.application.dialog.edit-abilities-dialog .window-content h3:first-child {
   padding-left: 4px;
   padding-right: 4px;
   text-align: left;
+  grid-row: 1/3;
+  padding: 10px;
+  text-align: center;
 }
 .co.application.dialog.edit-abilities-dialog .window-content h4 {
   color: #605856;
@@ -578,16 +621,29 @@ co-toggle-switch[checked] thumb {
   font-weight: 400;
   text-transform: uppercase;
   text-align: center;
+  margin: 0;
 }
 .co.application.dialog.edit-abilities-dialog .window-content .hint-container {
   position: absolute;
-  background: rgba(211, 204, 188, 0.4);
-  border: 1px solid #d3ccbc;
-  border-radius: 3px;
-  padding: 8px;
-  padding-bottom: 16px;
-  bottom: 16px;
-  width: 200px;
+  background-color: var(--color-abilities);
+  color: var(--color-background-grey);
+  border: 2px solid #c3000096;
+  border-radius: 10px;
+  padding: 5px;
+  bottom: 5px;
+  width: 550px;
+  display: flex;
+  align-items: center;
+  position-area: bottom;
+}
+.co.application.dialog.edit-abilities-dialog .window-content .hint-container h3 {
+  margin-right: 20px;
+  color: var(--color-background-grey);
+}
+.co.application.dialog.edit-abilities-dialog .window-content .hint-container button {
+  margin-left: 20px;
+  background-color: #c30000b5;
+  padding: 15px;
 }
 .co.application.dialog.edit-abilities-dialog .window-content button {
   align-items: center;
@@ -1612,7 +1668,7 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.item.equipment .window-content .panel-left {
   order: 1;
 }
-.co.application.sheet.item.equipment .window-content .panelRight {
+.co.application.sheet.item.equipment .window-content .panel-right {
   order: 2;
 }
 .co.application.sheet.item.equipment .window-content .form-group {
@@ -1880,7 +1936,7 @@ co-toggle-switch[checked] thumb {
   background-color: var(--color-path-light);
   color: #222;
 }
-.co.application.sheet.item.path .panelRight .capacity-list {
+.co.application.sheet.item.path .panel-right .capacity-list {
   margin-right: 7px;
 }
 .co.application.sheet.item.path .modifiers-container .form-group-stacked.like-grid label,
@@ -1946,7 +2002,7 @@ co-toggle-switch[checked] thumb {
   background-color: var(--color-profile-light);
   color: #222;
 }
-.co.application.sheet.item.profile .window-content .panelRight .path-list {
+.co.application.sheet.item.profile .window-content .panel-right .path-list {
   margin-right: 7px;
 }
 .co.application.sheet.item.profile .window-content .modifier {

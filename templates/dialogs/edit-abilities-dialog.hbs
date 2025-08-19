@@ -1,5 +1,6 @@
 {{!log "Edit Abilities" this}}
-<h3>{{localize "CO.ui.editYourAbilities"}}</h3>
+<h3 class="first-title">{{localize "CO.ui.editYourAbilities"}}</h3>
+
 <label>
     <span class="title">{{localize "CO.label.long.superior"}}</span>
 </label>
@@ -14,10 +15,13 @@
 <label>
     <span class="title">{{localize "CO.label.long.bonus"}}</span>
 </label>
-<div class="extra cell"></div>
-<div class="extra cell"></div>
+<label>
+    <span class="title total-bonus">{{localize "CO.ui.totalBonus"}}</span>
+</label>
+
 {{#each system.abilities as |ability id|}}
     <h3>{{localize (concat "CO.abilities.short." id)}}</h3>
+    <h4>{{localize (concat "CO.abilities.long." id)}}</h4>
     <div class="cell" data-ability="{{id}}">
         <button type="button" data-action="toggleSuperior" data-ability="{{id}}" data-value="{{not ability.superior}}"
             class="tooltip superior-button superior {{#if ability.superior}}selected{{/if}}">
@@ -39,7 +43,7 @@
     <div class="cell" data-ability="{{id}}">
         <div class="value" data-tooltip="{{ability.tooltipValue}}">{{ability.value}}</div>
     </div>
-    <h4>{{localize (concat "CO.abilities.long." id)}}</h4>
+    
 {{/each}}
 <aside class="hint-container">
     <h3>Réinitialisation</h3>
