@@ -213,7 +213,10 @@
       <div class="sidebar-section-content">
         <ul class="state-modifier">
           {{#each stateModifiers as |state|}}
-            <li class="state-name"> {{state}}</li>
+            <li class="state-name">
+              {{!log "state" state}}
+              {{localize (concat "CO.label.long." state.target)}}
+            </li>
           {{/each}}
         </ul>
       </div>

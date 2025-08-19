@@ -1116,16 +1116,16 @@ co-toggle-switch[checked] thumb {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 2px;
+  gap: 6px;
   white-space: nowrap;
   margin: 0 4px 0 0;
-  font-size: 0.9rem;
+  font-size: 1.3rem;
   font-weight: 500;
 }
 .co.application.sheet .items-container .attack .attack-name > span,
 .co.application.sheet .item-list .attack .attack-name > span {
   gap: 3px;
-  margin-right: 4px;
+  margin-right: 10px;
   display: flex;
   align-items: baseline;
   line-height: 1.125rem;
@@ -2579,6 +2579,9 @@ co-toggle-switch[checked] thumb {
   margin-left: 5px;
   color: var(--color-background-grey);
 }
+.co.application.sheet.actor.character .window-content .sheet-sidebar input.vision-slider:not(:checked)::before {
+  color: var(--color-background-grey);
+}
 .co.application.sheet.actor.character .window-content .dropzone {
   margin-left: 70px;
 }
@@ -2631,6 +2634,11 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor.encounter .window-content .sheet-sidebar .scrollable .sidebar-section:nth-child(5) .labelled-field i {
   color: var(--color-damages);
 }
+.co.application.sheet.actor.encounter .window-content .sheet-sidebar .state-name {
+  list-style: "\1F782";
+  margin-left: 5px;
+  color: var(--color-background-grey);
+}
 .co.application.sheet.actor.encounter .window-content .properties {
   max-height: 90%;
   overflow: hidden;
@@ -2647,6 +2655,23 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.sheet.actor.encounter .window-content .editor-content {
   text-wrap: auto;
+}
+.co.application.sheet.actor.encounter .window-content .attack-detail {
+  max-height: 120px;
+  white-space: nowrap;
+  overflow-y: scroll;
+  text-wrap: auto;
+  width: 100%;
+  mask: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, #000000 12px, #000000 calc(100% - 20px), rgba(0, 0, 0, 0) 100%);
+}
+.co.application.sheet.actor.encounter .window-content .attack-description {
+  margin-bottom: 5px;
+}
+.co.application.sheet.actor.encounter li.item.attack {
+  border-bottom: 2px solid var(--color-encounterSheet);
+}
+.co.application.sheet.actor.encounter li.item.attack:last-child {
+  border-bottom: none;
 }
 .co.application.sheet.actor.encounter .currency-row {
   gap: 20px;
