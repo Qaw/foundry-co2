@@ -52,6 +52,9 @@ export default class CoCapacitySheet extends CoBaseItemSheet {
   async _preparePartContext(partId, context, options) {
     context = await super._preparePartContext(partId, context, options)
     switch (partId) {
+      case "description":
+        context.enrichedInGame = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.inGame, { async: true })
+        break
       case "actions":
         context.subtabs = this._prepareActionsTabs()
         break

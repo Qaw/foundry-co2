@@ -30,6 +30,7 @@ export default class CapacityData extends ItemData {
   static defineSchema() {
     const fields = foundry.data.fields
     return foundry.utils.mergeObject(super.defineSchema(), {
+      inGame: new fields.HTMLField({ textSearch: true }),
       subtype: new fields.StringField({ required: true, nullable: false, initial: "" }),
       actionType: new fields.StringField({ required: true, choices: SYSTEM.CAPACITY_ACTION_TYPE, initial: "none" }),
       learned: new fields.BooleanField({}),

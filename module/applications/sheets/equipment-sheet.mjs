@@ -56,7 +56,6 @@ export default class CoEquipmentSheet extends CoBaseItemSheet {
     const doc = this.document
     switch (partId) {
       case "description":
-        context.enrichedDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.description, { async: true })
         break
 
       case "details":

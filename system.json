@@ -50,7 +50,7 @@
       "equipment": { "htmlFields": ["description"] },
       "feature": { "htmlFields": ["description"] },
       "profile": { "htmlFields": ["description"] },
-      "capacity": { "htmlFields": ["description"] },
+      "capacity": { "htmlFields": ["description", "inGame"] },
       "attack": { "htmlFields": ["description"] },
       "path": { "htmlFields": ["description"] }
     }

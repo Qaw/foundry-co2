@@ -606,6 +606,7 @@
       "dice20kh": "2d20 Garder le plus haut",
       "dice20kl": "2d20 Garder le plus bas",
       "description": "Description",
+      "inGame": "Usage en jeu",
       "duration": "Durée",
       "action": "Action",
       "actionName": "Nom de l'action",
