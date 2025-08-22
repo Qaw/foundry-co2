@@ -425,8 +425,8 @@ export class COAttackRoll extends CORoll {
       // Jet de dommages si l'option Jet combiné est activée
       if (dialogContext.useComboRolls) {
         const damageFormula = withDialog
-          ? Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaDamage}+${rollContext.damageBonus}-${rollContext.damageMalus}`)
-          : Utils.evaluateFormulaCustomValues(dialogContext.actor, `${dialogContext.formulaDamage}+${dialogContext.damageBonus}-${dialogContext.damageMalus}`)
+          ? Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaDamage}+${rollContext.damageBonus}+${rollContext.damageMalus}`)
+          : Utils.evaluateFormulaCustomValues(dialogContext.actor, `${dialogContext.formulaDamage}+${dialogContext.damageBonus}+${dialogContext.damageMalus}`)
 
         if (damageFormula !== "0" && damageFormula !== "") {
           const damageRoll = new this(damageFormula, dialogContext.actor.getRollData())
@@ -445,8 +445,8 @@ export class COAttackRoll extends CORoll {
       }
     } else if (dialogContext.type === "damage") {
       const formula = withDialog
-        ? Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaDamage}+${rollContext.damageBonus}-${rollContext.damageMalus}`)
-        : Utils.evaluateFormulaCustomValues(dialogContext.actor, `${dialogContext.formulaDamage}+${dialogContext.damageBonus}-${dialogContext.damageMalus}`)
+        ? Utils.evaluateFormulaCustomValues(dialogContext.actor, `${rollContext.formulaDamage}+${rollContext.damageBonus}+${rollContext.damageMalus}`)
+        : Utils.evaluateFormulaCustomValues(dialogContext.actor, `${dialogContext.formulaDamage}+${dialogContext.damageBonus}+${dialogContext.damageMalus}`)
       const roll = new this(formula, dialogContext.actor.getRollData())
       await roll.evaluate()
 
