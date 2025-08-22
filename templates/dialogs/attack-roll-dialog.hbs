@@ -49,14 +49,14 @@
         </div>    
         <div class="form-group">
             <label class="textCenter">{{localize 'CO.label.long.bonus'}}</label>              
-            <div class="form-fields">
-                <input class="field-value textCenter" id="skillBonus" name="skillBonus" type="text" value="{{skillBonus}}" data-dtype="String"/>
+            <div class="form-fields" data-tooltip="Saisir un nombre positif">
+                {{ numberInput skillBonus min=0 step=1 name="skillBonus" class="field-value textCenter"}}
             </div>
         </div>
         <div class="form-group">           
             <label class="textCenter">{{localize 'CO.label.long.malus'}}</label>                
-            <div class="form-fields">                    
-                <input class="field-value textCenter" id="skillMalus" name="skillMalus" type="text" value="{{skillMalus}}" data-dtype="String"/>
+            <div class="form-fields" data-tooltip="Saisir un nombre négatif">                    
+                {{ numberInput skillMalus max=0 step=1 name="skillMalus" class="field-value textCenter"}}
             </div>
         </div> 
         <div class="form-group">         
@@ -74,19 +74,19 @@
             <div class="form-group">
                 <label data-tooltip="{{localize 'CO.tooltip.formulaDamage'}}">Jet de Dommages</label>          
                 <div class="form-fields">
-                    <input class="field-value" id="formulaDamage" name="formulaDamage" type="text" value="{{formulaDamage}}" data-dtype="String" data-tooltip="{{formulaDamageTooltip}}"/>
+                    <input class="field-value" id="formulaDamage" name="formulaDamage" type="text" value="{{formulaDamage}}" data-dtype="String" data-tooltip="{{formulaDamageTooltip}}"/>                    
                 </div>
             </div>
             <div class="form-group">
                 <label class="textCenter">{{localize 'CO.label.long.bonus'}}</label>
-                <div class="form-fields flex1">
-                    <input class="field-value textCenter" id="damageBonus" name="damageBonus" type="text" value="{{damageBonus}}" data-dtype="String"/>
+                <div class="form-fields flex1" data-tooltip="Saisir un nombre positif">
+                    {{ numberInput damageBonus min=0 step=1 name="damageBonus" class="field-value textCenter"}}
                 </div>
             </div>
             <div class="form-group">
                 <label class="textCenter">{{localize 'CO.label.long.malus'}}</label>
-                <div class="form-fields">
-                    <input class="field-value textCenter" id="damageMalus" name="damageMalus" type="text" value="{{damageMalus}}" data-dtype="String"/>
+                <div class="form-fields" data-tooltip="Saisir un nombre négatif">
+                    {{ numberInput damageMalus max=0 step=1 name="damageMalus" class="field-value textCenter"}}
                 </div>
             </div>
             <div class="form-group">  
@@ -159,15 +159,15 @@
             </div>
         </div>
         <div class="form-group">
-            <label>{{localize 'CO.label.long.bonus'}}</label>
-            <div class="form-fields flex1">
-                <input class="field-value" id="damageBonus" name="damageBonus" type="text" value="{{damageBonus}}" data-dtype="String"/>
+            <label class="textCenter">{{localize 'CO.label.long.bonus'}}</label>
+            <div class="form-fields flex1" data-tooltip="Saisir un nombre positif">
+                {{ numberInput damageBonus min=0 step=1 name="damageBonus" class="field-value textCenter"}}
             </div>
         </div>
         <div class="form-group">
-            <label>{{localize 'CO.label.long.malus'}}</label>
-            <div class="form-fields flex1">
-                <input class="field-value" id="damageMalus" name="damageMalus" type="text" value="{{damageMalus}}" data-dtype="String"/>
+            <label class="textCenter">{{localize 'CO.label.long.malus'}}</label>
+            <div class="form-fields flex1" data-tooltip="Saisir un nombre négatif">
+                {{ numberInput damageMalus max=0 step=1 name="damageMalus" class="field-value textCenter"}}
             </div>
         </div>
         <div class="form-group">  

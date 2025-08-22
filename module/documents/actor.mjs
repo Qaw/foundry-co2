@@ -1571,8 +1571,8 @@ export default class COActor extends Actor {
     }
 
     const skillValue = foundry.utils.getProperty(this, `system.abilities.${skillId}`).value
-    if (skillValue > 0) formula += `+${skillValue}`
-    if (skillValue < 0) formula += `-${skillValue}`
+    if (skillValue > 0) formula += `+${Math.abs(skillValue)}`
+    if (skillValue < 0) formula += `-${Math.abs(skillValue)}`
 
     // Construction du message de chat
     if (!chatFlavor) chatFlavor = `${game.i18n.localize(`CO.abilities.long.${skillId}`)}`

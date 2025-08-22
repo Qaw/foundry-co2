@@ -1,4 +1,4 @@
-{{!log "Chroniques Oubliées | dialog skill-roll" this}}
+{{log "Chroniques Oubliées | dialog skill-roll" this}}
 <section class="skill-roll-1">
   <div class="icone"><i class="fa-solid fa-dice"></i></div>
   <div class="form-group">
@@ -48,20 +48,20 @@
   </div>
   <div class="form-group">
     <label class="textCenter">{{localize "CO.label.long.bonus"}}</label>
-    <div class="form-fields">
-      <input class="field-value textCenter" id="bonus" name="bonus" type="text" value="{{numberFormat bonus decimals=0 sign=true}}" data-dtype="Number" />
+    <div class="form-fields" data-tooltip="Saisir un nombre positif">      
+      {{ numberInput bonus min=0 step=1 name="bonus" class="field-value textCenter"}}
     </div>
   </div>
   <div class="form-group">
     <label class="textCenter">{{localize "CO.label.long.malus"}}</label>
-    <div class="form-fields">
-      <input class="field-value textCenter" id="malus" name="malus" type="text" value="{{numberFormat malus decimals=0 sign=true}}" data-dtype="Number" />
+    <div class="form-fields" data-tooltip="Saisir un nombre négatif">
+      {{ numberInput malus max=0 step=1 name="malus" class="field-value textCenter"}}
     </div>
   </div>
   <div class="form-group">
     <label class="textCenter">{{localize "CO.ui.totalBonus"}}</label>
     <div class="form-fields">
-      <input class="field-value textCenter" id="totalSkillBonuses" name="totalSkillBonuses" type="text" value="{{totalSkillBonuses}}" data-dtype="Number" />
+      <input class="field-value textCenter" id="totalSkillBonuses" name="totalSkillBonuses" type="text" value="{{numberFormat totalSkillBonuses sign=true}}" data-dtype="Number" />
     </div>
   </div>
   <div class="form-group">
