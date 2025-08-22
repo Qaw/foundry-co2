@@ -192,6 +192,11 @@
         white-space: nowrap;
         overflow: hidden;
       }
+      .icon-effet {
+        font-size: 0.8rem;
+        margin-left: 5px;
+        color: darkred;
+      }
     }
   }
 
@@ -230,6 +235,16 @@
       font-size: 16px;
       text-align: center;
       width: 22px;
+      .theme-dark & {
+        .enabled {
+          color: #9c03e7;
+        }
+      }
+      .theme-light & {
+        .enabled {
+          color: darken(#9c03e7, 10%);
+        }
+      }
     }
   }
 

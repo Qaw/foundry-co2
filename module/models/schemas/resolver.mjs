@@ -335,4 +335,8 @@ export class Resolver extends foundry.abstract.DataModel {
 
     return ce
   }
+
+  get hasAdditionalEffect() {
+    return this.additionalEffect.active
+  }
 }

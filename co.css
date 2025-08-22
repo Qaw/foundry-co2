@@ -1250,6 +1250,11 @@ co-toggle-switch[checked] thumb {
   white-space: nowrap;
   overflow: hidden;
 }
+.co.application.sheet .items-container .item .item-name .icon-effet {
+  font-size: 0.8rem;
+  margin-left: 5px;
+  color: darkred;
+}
 .co.application.sheet .items-container .item-detail {
   border-right: 1px solid var(--color-blue);
   flex: 0 70px;
@@ -1288,6 +1293,26 @@ co-toggle-switch[checked] thumb {
   font-size: 16px;
   text-align: center;
   width: 22px;
+}
+.theme-dark .co.application.sheet .items-container .item-controls a .enabled,
+.theme-dark .co.application.sheet .items-container .item-controls-1 a .enabled,
+.theme-dark .co.application.sheet .items-container .item-controls-2 a .enabled,
+.theme-dark .co.application.sheet .items-container .item-controls-3 a .enabled,
+.theme-dark .co.application.sheet .items-container .item-controls .item-control .enabled,
+.theme-dark .co.application.sheet .items-container .item-controls-1 .item-control .enabled,
+.theme-dark .co.application.sheet .items-container .item-controls-2 .item-control .enabled,
+.theme-dark .co.application.sheet .items-container .item-controls-3 .item-control .enabled {
+  color: #9c03e7;
+}
+.theme-light .co.application.sheet .items-container .item-controls a .enabled,
+.theme-light .co.application.sheet .items-container .item-controls-1 a .enabled,
+.theme-light .co.application.sheet .items-container .item-controls-2 a .enabled,
+.theme-light .co.application.sheet .items-container .item-controls-3 a .enabled,
+.theme-light .co.application.sheet .items-container .item-controls .item-control .enabled,
+.theme-light .co.application.sheet .items-container .item-controls-1 .item-control .enabled,
+.theme-light .co.application.sheet .items-container .item-controls-2 .item-control .enabled,
+.theme-light .co.application.sheet .items-container .item-controls-3 .item-control .enabled {
+  color: #7a02b5;
 }
 .co.application.sheet .items-container .item-controls-1 {
   flex: 0 0 22px;

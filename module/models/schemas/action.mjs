@@ -414,7 +414,7 @@ export class Action extends foundry.abstract.DataModel {
           }
           // Bouton de dégâts
           icons.push({
-            icon: "fa-regular fa-hand-back-fist",
+            icon: "fa-solid fa-hand-fist",
             iconClass: `${this.iconColor} toggle-action`,
             tooltip: "CO.label.long.damage",
             actionType: "activate",
