@@ -812,14 +812,14 @@ export default class CharacterData extends ActorData {
           modal: true,
         })
         if (proceed) {
-          this.parent.update({ "system.resources.mana.value": mp.max })
+          await this.parent.update({ "system.resources.mana.value": mp.max })
         }
       }
 
       // Récupération d'un DR
       if (rp.value < rp.max) {
-        rp.value += 1
-        this.parent.update({ "system.resources.recovery": rp })
+        const newValue = rp.value + 1
+        await this.parent.update({ "system.resources.recovery.value": newValue })
       }
 
       const proceedFullRestRollDice = await foundry.applications.api.DialogV2.confirm({
