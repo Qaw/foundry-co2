@@ -773,6 +773,7 @@ export default class COActor extends Actor {
   /**
    * Bascule l'état appris d'une capacité pour un acteur.
    * Si l'acteur apprend une capacité, le rang de la voie correspondante est augmenté.
+   * Si l'acteur désapprend une capacité, le rang de la voie correspondante est diminué et une éventuelle capacité liée doit aussi être désapprise.
    *
    * @param {string} capacityId L'ID de la capacité à basculer.
    * @param {boolean} state L'état appris souhaité de la capacité.
@@ -803,6 +804,14 @@ export default class COActor extends Actor {
     } else {
       // Mise à jour du rang de la voie correspondante
       await path.update({ "system.rank": currentRank - 1 })
+    }
+
+    // Gestion d'une éventuelle capacité liée
+    if (capacity.system.allowLinkedCapacity && capacity.system.linkedCapacity) {
+      const linkedCapacity = await fromUuid(capacity.system.linkedCapacity)
+      if (linkedCapacity && linkedCapacity.system.learned !== state) {
+        await this._toggleItemFieldAndActions(linkedCapacity, "learned", state)
+      }
     }
   }
 
@@ -2168,7 +2177,6 @@ export default class COActor extends Actor {
    * @param {CustomEffectData} effect : Custom effect appliqué sur l'acteur
    */
   async applyCustomEffect(effect) {
-
     // Appliquer les éventuels statuts
     if (effect.statuses.length > 0) {
       for (const status of effect.statuses) {
