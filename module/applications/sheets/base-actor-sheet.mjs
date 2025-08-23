@@ -128,7 +128,27 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     context.pathGroups = await this.document.getPathGroups()
     context.capacities = this.document.capacities
     context.learnedCapacities = this.document.learnedCapacities
-    context.capacitiesOffPaths = this.document.capacitiesOffPaths
+
+    const capacitiesOffPaths = this.document.capacitiesOffPaths
+
+    for (const capacity of capacitiesOffPaths) {
+      if (capacity.system.allowLinkedCapacity) {
+        if (capacity.system.linkedCapacity) {
+          const linkedCapacity = await fromUuid(capacity.system.linkedCapacity)
+          if (linkedCapacity) {
+            capacity.linkedCapacityName = linkedCapacity.name
+            capacity.linkedCapacityImg = linkedCapacity.img
+            capacity.linkedCapacityItem = linkedCapacity
+          }
+        } else {
+          capacity.linkedCapacityName = ""
+          capacity.linkedCapacityImg = "systems/co/ui/effects/question.webp"
+          capacity.linkedCapacityItem = null
+        }
+      }
+    }
+    context.capacitiesOffPaths = capacitiesOffPaths
+
     // Récupération du statut expanded depuis le localStorage
     let offPathsExpanded = true
     try {
