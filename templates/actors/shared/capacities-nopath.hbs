@@ -10,15 +10,15 @@
     </li>
     <ol class="item-list foldable {{#if capacitiesOffPathsExpanded}}expanded{{else}}folded{{/if}}">
         {{#each capacitiesOffPaths as |capacity id|}}
-            {{!log "Chroniques Oubliées | capacity" capacity}}
+            {{!log "Chroniques Oubliées | capacity offPath" capacity}}
             {{#if capacity.system.learned }}
-            {{#if (isNull capacity.system.parentCapacity)}}
-                <li class="item flexrow draggable" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity._id}}" data-item-type="capacity">
-                    <div class="item-name flexrow">
-                        <a class="item-img" data-action="editItem" style="background-image: url('{{capacity.img}}')"></a>
-                        <h4>{{capacity.name}}{{#if capacity.system.isSpell}} * {{/if}}</h4>
-                    </div>
-                    <div class="item-controls-3">
+                {{#if (isNull capacity.system.parentCapacity)}}
+                    <li class="item flexrow draggable" data-item-uuid="{{capacity.uuid}}" data-item-id="{{capacity._id}}" data-item-type="capacity">
+                        <div class="item-name flexrow">
+                            <a class="item-img" data-action="editItem" style="background-image: url('{{capacity.img}}')" data-tooltip="{{capacity.system.description}}"></a>
+                            <h4>{{capacity.name}}{{#if capacity.system.isSpell}} * {{/if}}</h4>
+                        </div>
+                        <div class="item-controls-3">
                         <a class="chat" data-action="sendToChat" data-chat-type="item" data-tooltip="{{localize 'CO.label.long.sendToChat'}}"><i class="fas fa-fw fa-comment-alt"></i></a>
                         {{#if ../unlocked}}
                             <a class="edit" data-action="editItem" data-tooltip="{{localize 'CO.label.long.edit'}}"><i class="fas fa-fw fa-edit"></i></a>
