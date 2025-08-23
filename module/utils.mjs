@@ -145,11 +145,19 @@ export default class Utils {
       itemSource = actor.items.get(id)
     }
 
+    let rank
     const pathUuid = itemSource.system.path
-    const pathId = foundry.utils.parseUuid(pathUuid)?.id
-    if (!pathId) return content
-    const path = actor.items.get(pathId)
-    const rank = path?.system.rank ?? 0
+
+    // Cas des capacités hors voies : on prend directement le rang de la capacité
+    if (!pathUuid) rank = itemSource.system.rank
+    else {
+      const pathId = foundry.utils.parseUuid(pathUuid)?.id
+      if (!pathId) rank = null
+      const path = actor.items.get(pathId)
+      rank = path?.system.rank ?? 0
+    }
+
+    if (!rank) return content
 
     // Cas @rank[x,x,x,x,x,x,x,x]
     // ex : @rang[1d6,1d8,1d10,1d12,2d6], pour le rang 5 remplace par 2d6
