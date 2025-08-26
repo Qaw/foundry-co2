@@ -60,7 +60,7 @@ export default class Utils {
 
   /**
    * Pour un acteur, évalue une formule  en remplaçant les valeurs custom pour le rang ou le dé évolutif
-   * Gère : @rank, @rang, @allrank, @toutrang, @arme.dmg, @arme.skill, d4° (dé évolutif)
+   * Gère : @rank, @rang, @allrank, @toutrang, @arme.dmg, @arme.skill, d4° (dé évolutif), @nivmod
    * @param {*} actor : l'acteur concerné
    * @param {*} formula : une formule de type texte qui peut potentiellement contenir des @rank/@rang ou du dé évolutif
    * @param {UUID} sourceUuid The item source's UUID : used for the #rank
@@ -68,6 +68,11 @@ export default class Utils {
    */
   static evaluateFormulaCustomValues(actor, formula, sourceUuid = null) {
     let replacedFormula = foundry.utils.duplicate(formula)
+
+    //@nivmod[niv, mod] permet de dire par exemple +1 au niveau 10
+    if (replacedFormula.includes("@nivmod")) {
+      replacedFormula = this._replaceLevelModValue(actor, replacedFormula)
+    }
     // @arme est traité en premier car elle peut elle même contenir des dés evolutifs ou des notion de @rang !
     // Cas du @arme qui remplace par les dommages de l'action principale de la première arme équipée
     if (replacedFormula.includes("@arme.dmg")) {
@@ -245,6 +250,30 @@ export default class Utils {
         }
       }
     }
+    return content
+  }
+
+  /**
+   * Retourne un texte dans lequel on a remplacé @modniv[niv,modificateur] par le modificateur si le niveau du PJ est égale ou supérieur à cette valeur
+   * @param {*} actor : acteur concerné
+   * @param {*} content : le texte contenant une référence à un rang
+   */
+  static _replaceLevelModValue(actor, content) {
+    if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`Utils - _replaceLevelModValue `), actor, content)
+    if (content === "" || content.match("@nivmod'[[0-9]{1,},[0-9]{1,}']")) {
+      return content //Vérifie le formatage de la variable on sort si pas bien formaté
+    }
+
+    let startNiv = content.substring(content.indexOf("@nivmod"))
+
+    let targetNivMod = startNiv.substring(startNiv.indexOf("[") + 1, startNiv.indexOf("]"))
+    let targetNiv = targetNivMod.substring(0, targetNivMod.indexOf(","))
+    let targetMod = targetNivMod.substring(targetNivMod.indexOf(",") + 1)
+
+    if (actor.system.attributes.level >= Number(targetNiv))
+      //si on est supérieur ou égale on ajoute le modificateurs
+      content = content.replace(`@nivmod[${targetNiv},${targetMod}]`, targetMod)
+    else content = content.replace(`@nivmod[${targetNiv},${targetMod}]`, "0") //sinon on retire la variable dela formule
     return content
   }
 
