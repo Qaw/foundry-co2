@@ -20,7 +20,7 @@ export default class CoProfileSheet extends CoBaseItemSheet {
   static TABS = {
     primary: {
       tabs: [{ id: "description" }, { id: "details" }],
-      initial: "details",
+      initial: "description",
       labelPrefix: "CO.sheet.tabs.profile",
     },
   }

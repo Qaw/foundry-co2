@@ -31,7 +31,7 @@ export default class CoAttackSheet extends CoBaseItemSheet {
   static TABS = {
     primary: {
       tabs: [{ id: "description" }, { id: "details" }, { id: "actions" }],
-      initial: "details",
+      initial: "description",
       labelPrefix: "CO.sheet.tabs.attack",
     },
   }
