@@ -42,7 +42,19 @@
                     <div class="form-group">
                     <label>{{localize "CO.Equipment.FIELDS.quantity.current.label"}} / {{localize "CO.Equipment.FIELDS.quantity.max.label"}}</label>
                     <div class="form-fields  border-right">
-                    {{formInput systemFields.quantity.fields.current value=systemSource.quantity.current placeholder=0 localize=true disabled=locked}}
+                    {{#if (and (ne systemSource.quantity.max 0) (ne systemSource.quantity.max ""))}}
+                        {{formInput systemFields.quantity.fields.current
+                            type="number"
+                            value=systemSource.quantity.current
+                            placeholder=0
+                            localize=true
+                            max=systemSource.quantity.max}}
+                    {{else}}
+                        {{formInput systemFields.quantity.fields.current
+                            value=systemSource.quantity.current
+                            placeholder=0
+                            localize=true}}
+                    {{/if}}
                     /
                     {{formInput systemFields.quantity.fields.max value=systemSource.quantity.max placeholder=0 localize=true disabled=locked}}
                     </div></div>
@@ -192,7 +204,19 @@
                     <div class="form-group">
                         <label>{{localize "CO.Equipment.FIELDS.charges.current.label"}} / {{localize "CO.Equipment.FIELDS.charges.max.label"}}</label>
                         <div class="form-fields border-right">
-                            {{formInput systemFields.charges.fields.current value=systemSource.charges.current placeholder=0 localize=true disabled=locked}}
+                            {{#if (and (ne systemSource.charges.max 0) (ne systemSource.charges.max ""))}}
+                                {{formInput systemFields.charges.fields.current
+                                    type="number"
+                                    value=systemSource.charges.current
+                                    placeholder=0
+                                    localize=true
+                                    max=systemSource.charges.max}}
+                            {{else}}
+                                {{formInput systemFields.charges.fields.current
+                                    value=systemSource.charges.current
+                                    placeholder=0
+                                    localize=true}}
+                            {{/if}}
                             /
                             {{formInput systemFields.charges.fields.max value=systemSource.charges.max placeholder=0 localize=true disabled=locked}}
                         </div>
