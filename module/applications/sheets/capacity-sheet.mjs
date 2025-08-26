@@ -33,7 +33,7 @@ export default class CoCapacitySheet extends CoBaseItemSheet {
   static TABS = {
     primary: {
       tabs: [{ id: "description" }, { id: "details" }, { id: "actions" }],
-      initial: "details",
+      initial: "description",
       labelPrefix: "CO.sheet.tabs.capacity",
     },
   }
