@@ -58,7 +58,14 @@
             </a>
           </div>
           <div class="item-detail">
-            <a class="item-control inventory-qty">{{item.system.quantity.current}}</a>
+            <a class="item-control inventory-qty">
+              {{item.system.quantity.current}}
+              {{#if system.properties.stackable}}
+                {{#if (gt item.system.quantity.max 0)}}
+                  / {{item.system.quantity.max}}
+                {{/if}}
+              {{/if}} 
+            </a>
           </div>
             <div class="item-detail">
               {{#if item.system.properties.equipable}}
