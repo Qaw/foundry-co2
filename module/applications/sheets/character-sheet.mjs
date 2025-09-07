@@ -6,7 +6,7 @@ import { COMiniCharacterSheet } from "./mini-character-sheet.mjs"
 
 export default class COCharacterSheet extends COBaseActorSheet {
   static DEFAULT_OPTIONS = {
-    classes: ["co", "actor", "character"],
+    classes: ["character"],
     position: {
       width: 840,
       height: 600,
@@ -149,8 +149,8 @@ export default class COCharacterSheet extends COBaseActorSheet {
    */
   static async #onOpenMiniSheet(event, target) {
     event.preventDefault()
-    const win = new COMiniCharacterSheet({ document: this.document })
-    return win.render(true)
+    const miniSheet = new COMiniCharacterSheet({ document: this.document })
+    return miniSheet.render(true)
   }
 
   /**
