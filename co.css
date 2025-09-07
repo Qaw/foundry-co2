@@ -1071,6 +1071,7 @@ co-toggle-switch[checked] thumb {
   flex-direction: row;
   gap: 8px;
   margin: 0 8px;
+  align-items: center;
 }
 .co.application.sheet .items-container,
 .co.application.sheet .item-list {
@@ -1270,7 +1271,7 @@ co-toggle-switch[checked] thumb {
   flex: 0 0 100px;
 }
 .co.application.sheet .items-container .item-detail.rank {
-  flex: 0 40px;
+  flex: 0 25px;
   font-size: 22px;
 }
 .co.application.sheet .items-container .item-controls,
@@ -2549,6 +2550,9 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor.character:not(.minimized) {
   min-width: 840px;
 }
+.co.application.sheet.actor.character.character-mini:not(.minimized) {
+  min-width: 350px;
+}
 .co.application.sheet.actor.character .window-content .sheet-header {
   /*.profiles {
     margin-left: 16px;
@@ -2595,6 +2599,9 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section .labelled-field input {
   color: var(--color-resource);
 }
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section .current {
+  width: 25px;
+}
 .co.application.sheet.actor.character .window-content .sheet-sidebar span.max,
 .co.application.sheet.actor.character .window-content .sheet-sidebar span.slash {
   color: var(--color-abilities);
@@ -2608,7 +2615,30 @@ co-toggle-switch[checked] thumb {
   color: var(--color-background-grey);
 }
 .co.application.sheet.actor.character .window-content .dropzone {
-  margin-left: 70px;
+  margin-left: 53px;
+}
+.co.application.sheet.actor.character .window-content .dropzone .item-list {
+  padding: 0;
+}
+.co.application.sheet.actor.character .window-content .no-path .dropzone {
+  margin-left: 28px;
+}
+.co.application.sheet.actor.character .window-content .no-path .dropzone .item-list {
+  padding: 0;
+}
+.co.application.sheet.actor.character .window-content .btn-mini-sheet {
+  border: none;
+  background: none;
+  color: var(--color-characterSheet);
+  margin-right: 30px;
+  font-size: var(--font-size-20);
+}
+.co.application.sheet.actor.character .window-content .btn-mini-sheet:focus {
+  outline: none;
+  box-shadow: none;
+}
+.co.application.sheet.actor.character .window-content .btn-mini-sheet:hover {
+  color: red;
 }
 .co.application.sheet.actor.character .features-container .item-list {
   display: grid;
@@ -2714,6 +2744,224 @@ co-toggle-switch[checked] thumb {
   border: none;
   box-shadow: 2px 2px var(--color-abilities);
   height: 25px;
+}
+.co.application.sheet.actor.character-mini:not(.minimized) {
+  min-width: 350px;
+  min-height: 250px;
+  height: fit-content;
+  max-height: 900px;
+}
+.co.application.sheet.actor.character-mini.minimized {
+  max-width: var(--minimized-width);
+  max-height: var(--header-height);
+}
+.co.application.sheet.actor.character-mini .window-header .mode-slider {
+  display: none;
+}
+.co.application.sheet.actor.character-mini .window-content {
+  gap: 0;
+  display: flex;
+  flex-direction: column;
+}
+.co.application.sheet.actor.character-mini .window-content .image-container,
+.co.application.sheet.actor.character-mini .window-content .level,
+.co.application.sheet.actor.character-mini .window-content .traits {
+  display: none;
+}
+.co.application.sheet.actor.character-mini .window-content .tab {
+  padding: 5px 0 0 5px;
+  mask: none;
+}
+.co.application.sheet.actor.character-mini .window-content .tab .section-container {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+.co.application.sheet.actor.character-mini .window-content .tab .section-container .actions-container {
+  margin-bottom: 0;
+}
+.co.application.sheet.actor.character-mini .window-content .sheet-header {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  gap: 0;
+}
+.co.application.sheet.actor.character-mini .window-content .abilities {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-size: 17px;
+}
+.co.application.sheet.actor.character-mini .window-content .abilities .ability-id {
+  line-height: normal;
+}
+.co.application.sheet.actor.character-mini .window-content .abilities .ability-mod {
+  line-height: 1;
+  font-size: 22px;
+}
+.co.application.sheet.actor.character-mini .window-content .abilities-edit {
+  display: none;
+}
+.co.application.sheet.actor.character-mini .window-content .btn-mini-sheet {
+  display: none;
+}
+.co.application.sheet.actor.character-mini .window-content .name {
+  font-size: 25px;
+  display: flex;
+  height: 30px;
+  font-weight: bold;
+  justify-content: center;
+  margin: 5px 0px;
+}
+.co.application.sheet.actor.character-mini .window-content .name::before,
+.co.application.sheet.actor.character-mini .window-content .name::after {
+  content: "\f005";
+  /* code de l’icône 'star' */
+  font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "Font Awesome 6 Pro", "Font Awesome 5 Pro";
+  font-weight: 900;
+  /* 'solid' */
+  margin: 0 0.5rem;
+  line-height: 1;
+  vertical-align: middle;
+  pointer-events: none;
+  color: red;
+  font-size: large;
+  align-self: center;
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  padding: 5px 0;
+  overflow: visible;
+  mask: none;
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .labelled-field {
+  background-color: var(--color-background-grey);
+  border-radius: 12px 0 0 12px;
+  height: 23px;
+  padding: 4px;
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .labelled-field i.fas,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .labelled-field i[class="fa-"] {
+  font-size: 18px;
+  line-height: 1.2;
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section {
+  background-color: var(--color-primary);
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .sidebar-label h4 {
+  font-size: inherit;
+  margin: 0;
+}
+.theme-light .co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .sidebar-label h4 {
+  color: var(--color-textLight);
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .field,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .labelled-field {
+  color: var(--color-background-grey);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 0;
+  overflow: hidden;
+  padding: 2px 4px;
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .field select,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .labelled-field select,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .field input,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .labelled-field input {
+  background-color: var(--color-background-grey);
+  border: 0;
+  color: var(--color-primary);
+  flex: 1;
+  font-size: 20px;
+  padding: 0;
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .field select::placeholder,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .labelled-field select::placeholder,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .field input::placeholder,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .labelled-field input::placeholder {
+  color: var(--color-primary);
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .field input,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .labelled-field input {
+  font-weight: bold;
+  line-height: 1.8;
+  text-align: center;
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .field select,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .labelled-field select {
+  font-size: 12px;
+}
+.theme-dark .co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .field select option,
+.theme-dark .co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .labelled-field select option {
+  background: var(--color-background-grey);
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .field .slash,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .labelled-field .slash,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .field .max,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .labelled-field .max {
+  font-size: 16px;
+  font-weight: normal;
+  margin-top: 6px;
+  transform: scaleX(80%);
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .field {
+  background-color: var(--color-background-grey);
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section .labelled-field i {
+  justify-self: flex-start;
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section-content {
+  padding: 4px;
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section-content .field,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .sidebar-section-content .labelled-field {
+  font-weight: normal;
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .armor-section,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .dr-section {
+  background-color: var(--color-defense);
+  padding: 5px;
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .armor-section .field,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .dr-section .field,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .armor-section .labelled-field,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .dr-section .labelled-field {
+  color: var(--color-defense);
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .health-section {
+  grid-column: auto;
+  margin-top: 0;
+  background-color: var(--color-health);
+  padding: 5px;
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .health-section .field,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .health-section .labelled-field,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .health-section .labelled-field input {
+  color: var(--color-health);
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .hp-section {
+  grid-column: 1 / 3;
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .resource-section.mini-section {
+  grid-column: auto;
+  margin-top: 0;
+  background-color: var(--color-resource);
+  padding: 5px;
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .resource-section.mini-section .field,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .resource-section.mini-section .labelled-field,
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .resource-section.mini-section .labelled-field input {
+  color: var(--color-resource);
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .fa-heart-broken {
+  color: var(--color-damages);
 }
 #interface #ui-left {
   padding: 0;
