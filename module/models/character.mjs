@@ -389,9 +389,9 @@ export default class CharacterData extends ActorData {
 
     const nbProfiles = this.parent.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.profile.id).length
 
+    const constitutionBonus = this.attributes.level * this.abilities.con.value
     // Pas de profil
     if (nbProfiles === 0) {
-      const constitutionBonus = this.attributes.level * this.abilities.con.value
       this.attributes.hp.base = 0
       this.attributes.hp.max = this.attributes.hp.base + constitutionBonus + hpMaxBonuses + hpMaxModifiers.total
       this.attributes.hp.tooltip = Utils.getTooltip("Base ", this.attributes.hp.base).concat(
@@ -408,7 +408,6 @@ export default class CharacterData extends ActorData {
       // Pour chaque niveau supplémentaire : + PV de la famille
       const pvFromFamily = this.profile ? SYSTEM.FAMILIES[this.profile.system.family].hp : 0
       this.attributes.hp.base = 2 * pvFromFamily + (this.attributes.level - 1) * pvFromFamily
-      const constitutionBonus = this.attributes.level * this.abilities.con.value
 
       // Si une voie de prestige offre des PV/rang appris il faut les ajouter ici
       let currentprestige = this.parent.paths.find((item) => item.system.subtype === SYSTEM.PATH_TYPES.prestige.id)
@@ -430,8 +429,8 @@ export default class CharacterData extends ActorData {
     else if (nbProfiles > 1) {
       const tooltipBase = Utils.getTooltip("Base", this.attributes.hp.base)
 
-      this.attributes.hp.max = this.attributes.hp.base + hpMaxBonuses + hpMaxModifiers.total
-      this.attributes.hp.tooltip = tooltipBase.concat(hpMaxModifiers.tooltip, Utils.getTooltip("Bonus", hpMaxBonuses))
+      this.attributes.hp.max = this.attributes.hp.base + constitutionBonus + hpMaxBonuses + hpMaxModifiers.total
+      this.attributes.hp.tooltip = tooltipBase.concat(` ${Utils.getAbilityName("con")} : `, constitutionBonus, hpMaxModifiers.tooltip, Utils.getTooltip("Bonus", hpMaxBonuses))
     }
   }
 
