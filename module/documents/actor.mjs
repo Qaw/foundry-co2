@@ -156,7 +156,7 @@ export default class COActor extends Actor {
         })
         .filter((id) => id !== null)
 
-      const capacities = capacitesId.map((id) => this.items.find((i) => i._id === id))
+      const capacities = capacitesId.map((id) => this.items.find((i) => i._id === id)).filter((item) => item !== null && item !== undefined)
 
       // Cas des capacités liées
       for (const capacity of capacities) {
