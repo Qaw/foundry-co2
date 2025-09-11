@@ -11,6 +11,7 @@ export class COMiniCharacterSheet extends COBaseActorSheet {
     actions: {
       roll: COMiniCharacterSheet.#onRoll,
       useRecovery: COMiniCharacterSheet.#onUseRecovery,
+      rollFortune: COMiniCharacterSheet.#onRollFortune,
     },
   }
 
@@ -79,5 +80,23 @@ export class COMiniCharacterSheet extends COBaseActorSheet {
     let isFullRest = false
     if (dataset.option && dataset.option === "fullRest") isFullRest = true
     return this.document.system.useRecovery(isFullRest)
+  }
+
+  static async #onRollFortune(event, target) {
+    event.preventDefault()
+
+    const actor = this.document
+    const currentFP = foundry.utils.getProperty(actor.system, "resources.fortune.value") ?? 0
+    const formula = `1d6x + ${currentFP}`
+
+    const roll = new Roll(formula)
+    await roll.evaluate()
+    const label = game.i18n.localize("CO.roll.fortune") || "Jet de chance"
+
+    await roll.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor }),
+      flavor: `${label} : <strong>${formula}</strong>`,
+      flags: { co: { type: "fortune-roll" } },
+    })
   }
 }

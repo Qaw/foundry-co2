@@ -916,7 +916,8 @@
       "critical": "Succès critique",
       "success": "Succès",
       "fumble": "Échec critique",
-      "failure": "Échec"
+      "failure": "Échec",
+      "fortune": "Test de Chance"
     },
     "action": {
       "types": {

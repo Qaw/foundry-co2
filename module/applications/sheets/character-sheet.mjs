@@ -24,6 +24,7 @@ export default class COCharacterSheet extends COBaseActorSheet {
       inventoryEquip: COCharacterSheet.#onEquippedToggle,
       useRecovery: COCharacterSheet.#onUseRecovery,
       openMiniSheet: COCharacterSheet.#onOpenMiniSheet,
+      rollFortune: COCharacterSheet.#onRollFortune,
     },
   }
 
@@ -419,5 +420,23 @@ export default class COCharacterSheet extends COBaseActorSheet {
       parent = parent.parentElement
     }
     return false
+  }
+
+  static async #onRollFortune(event, target) {
+    event.preventDefault()
+
+    const actor = this.document
+    const currentFP = foundry.utils.getProperty(actor.system, "resources.fortune.value") ?? 0
+    const formula = `1d6x + ${currentFP}`
+
+    const roll = new Roll(formula)
+    await roll.evaluate()
+    const label = game.i18n.localize("CO.roll.fortune") || "Jet de chance"
+
+    await roll.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor }),
+      flavor: `${label} : <strong>${formula}</strong>`,
+      flags: { co: { type: "fortune-roll" } },
+    })
   }
 }
