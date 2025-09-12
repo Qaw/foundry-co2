@@ -907,6 +907,15 @@
         "manaContent": "Récupérez-vous le maximum de points de mana ?",
         "manaTitle": "Récupération de mana"
       },
+      "editYourAbilities": {
+        "type": "Type de personnage",
+        "libre": "Caractéristiques Libres",
+        "polyvalent": "Polyvalent",
+        "expert": "Expert",
+        "specialist": "Spécialiste",
+        "infoLibre": "Indiquez les valeurs de chaque caractéristique manuellement",
+        "infoAutres": "Glissez-déposez les valeurs ci-dessus à la place sur la ligne Base"
+      },
       "restHpRecovered": "Vous avez récupéré {hp} points de vigueur"
     },
     "roll": {
