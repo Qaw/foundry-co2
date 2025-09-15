@@ -1033,4 +1033,27 @@ export default class CharacterData extends ActorData {
       }
     }
   }
+
+  /**
+   * Rolls a fortune check for the character using a custom formula based on current fortune points.
+   * Displays the result as a chat message with appropriate localization and flavor text.
+   *
+   * @async
+   * @function
+   * @returns {Promise<void>} Resolves when the roll message has been sent.
+   */
+  async rollFortune() {
+    const currentFP = this.resources.fortune.value
+    const formula = `1d6x + ${currentFP}`
+
+    const roll = new Roll(formula)
+    await roll.evaluate()
+    const label = game.i18n.localize("CO.roll.fortune")
+
+    await roll.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: this.parent }),
+      flavor: `${label} : <strong>${formula}</strong>`,
+      flags: { co: { type: "fortune-roll" } },
+    })
+  }
 }

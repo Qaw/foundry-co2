@@ -422,21 +422,18 @@ export default class COCharacterSheet extends COBaseActorSheet {
     return false
   }
 
+  /**
+   * Handles the "roll fortune" event for the character sheet.
+   * Prevents the default event behavior and triggers the actor's fortune roll.
+   *
+   * @private
+   * @static
+   * @param {Event} event The event object triggered by the user interaction.
+   * @param {HTMLElement} target The target element associated with the event.
+   * @returns {Promise<void>} Resolves when the fortune roll is complete.
+   */
   static async #onRollFortune(event, target) {
     event.preventDefault()
-
-    const actor = this.document
-    const currentFP = foundry.utils.getProperty(actor.system, "resources.fortune.value") ?? 0
-    const formula = `1d6x + ${currentFP}`
-
-    const roll = new Roll(formula)
-    await roll.evaluate()
-    const label = game.i18n.localize("CO.roll.fortune") || "Jet de chance"
-
-    await roll.toMessage({
-      speaker: ChatMessage.getSpeaker({ actor }),
-      flavor: `${label} : <strong>${formula}</strong>`,
-      flags: { co: { type: "fortune-roll" } },
-    })
+    await this.actor.system.rollFortune()
   }
 }

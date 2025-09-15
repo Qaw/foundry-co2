@@ -84,19 +84,6 @@ export class COMiniCharacterSheet extends COBaseActorSheet {
 
   static async #onRollFortune(event, target) {
     event.preventDefault()
-
-    const actor = this.document
-    const currentFP = foundry.utils.getProperty(actor.system, "resources.fortune.value") ?? 0
-    const formula = `1d6x + ${currentFP}`
-
-    const roll = new Roll(formula)
-    await roll.evaluate()
-    const label = game.i18n.localize("CO.roll.fortune") || "Jet de chance"
-
-    await roll.toMessage({
-      speaker: ChatMessage.getSpeaker({ actor }),
-      flavor: `${label} : <strong>${formula}</strong>`,
-      flags: { co: { type: "fortune-roll" } },
-    })
+    await this.actor.system.rollFortune()
   }
 }
