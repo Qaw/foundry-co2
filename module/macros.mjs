@@ -32,7 +32,7 @@ export async function createCOMacro(dropData, slot) {
       foundry.utils.mergeObject(macroData, {
         name: `Jet de caractéristique (${game.i18n.localize(`CO.abilities.long.${dropData.rollTarget}`)})`,
         img: "icons/svg/dice-target.svg",
-        command: `game.system.api.macros.rollSkill("${dropData.rollTarget}")`,
+        command: `game.system.api.macros.rollSkill("${dropData.rollTarget}", {})`,
         flags: { "co.abilityMacro": true },
       })
       break
@@ -106,14 +106,14 @@ export default class Macros {
     }
   }
 
-  static async rollSkill(rollTarget) {
+  static async rollSkill(rollTarget, options = {}) {
     let actor
     const speaker = ChatMessage.getSpeaker()
     if (speaker.token) actor = game.actors.tokens[speaker.token]
     actor ??= game.actors.get(speaker.actor)
     if (!actor) return ui.notifications.warn(game.i18n.localize("CO.macro.noActorSelected"))
     if (actor) {
-      await actor.rollSkill(rollTarget)
+      await actor.rollSkill(rollTarget, options)
     }
   }
 
