@@ -24,6 +24,7 @@ export default class COCharacterSheet extends COBaseActorSheet {
       inventoryEquip: COCharacterSheet.#onEquippedToggle,
       useRecovery: COCharacterSheet.#onUseRecovery,
       openMiniSheet: COCharacterSheet.#onOpenMiniSheet,
+      rollFortune: COCharacterSheet.#onRollFortune,
     },
   }
 
@@ -419,5 +420,20 @@ export default class COCharacterSheet extends COBaseActorSheet {
       parent = parent.parentElement
     }
     return false
+  }
+
+  /**
+   * Handles the "roll fortune" event for the character sheet.
+   * Prevents the default event behavior and triggers the actor's fortune roll.
+   *
+   * @private
+   * @static
+   * @param {Event} event The event object triggered by the user interaction.
+   * @param {HTMLElement} target The target element associated with the event.
+   * @returns {Promise<void>} Resolves when the fortune roll is complete.
+   */
+  static async #onRollFortune(event, target) {
+    event.preventDefault()
+    await this.actor.system.rollFortune()
   }
 }

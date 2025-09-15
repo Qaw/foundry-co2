@@ -11,6 +11,7 @@ export class COMiniCharacterSheet extends COBaseActorSheet {
     actions: {
       roll: COMiniCharacterSheet.#onRoll,
       useRecovery: COMiniCharacterSheet.#onUseRecovery,
+      rollFortune: COMiniCharacterSheet.#onRollFortune,
     },
   }
 
@@ -79,5 +80,10 @@ export class COMiniCharacterSheet extends COBaseActorSheet {
     let isFullRest = false
     if (dataset.option && dataset.option === "fullRest") isFullRest = true
     return this.document.system.useRecovery(isFullRest)
+  }
+
+  static async #onRollFortune(event, target) {
+    event.preventDefault()
+    await this.actor.system.rollFortune()
   }
 }

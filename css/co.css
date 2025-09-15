@@ -2602,6 +2602,12 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section .current {
   width: 25px;
 }
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section .fa-clover {
+  cursor: pointer;
+}
+.co.application.sheet.actor.character .window-content .sheet-sidebar .scrollable .sidebar-section.resource-section .fa-clover:hover {
+  text-shadow: 0px 0px 4px darkred;
+}
 .co.application.sheet.actor.character .window-content .sheet-sidebar span.max,
 .co.application.sheet.actor.character .window-content .sheet-sidebar span.slash {
   color: var(--color-abilities);
@@ -2959,6 +2965,12 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor.character-mini .window-content .mini-sidebar .resource-section.mini-section .labelled-field,
 .co.application.sheet.actor.character-mini .window-content .mini-sidebar .resource-section.mini-section .labelled-field input {
   color: var(--color-resource);
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .resource-section.mini-section .fa-clover {
+  cursor: pointer;
+}
+.co.application.sheet.actor.character-mini .window-content .mini-sidebar .resource-section.mini-section .fa-clover:hover {
+  text-shadow: 0px 0px 4px darkred;
 }
 .co.application.sheet.actor.character-mini .window-content .mini-sidebar .fa-heart-broken {
   color: var(--color-damages);
