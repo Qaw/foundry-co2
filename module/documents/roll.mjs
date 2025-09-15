@@ -168,9 +168,11 @@ export class COSkillRoll extends CORoll {
     }
     // Pas de prompt
     else {
-      let dice = dialogContext.dice
-      if (dice === "1d20" && dialogContext.superior) dice = "2d20kh"
-      formula = `${dice}+${parseInt(dialogContext.skillValue)}`
+      let dice = dialogContext.dice // Valeurs possibles : standard, bonus, malus
+      let diceFormula = "1d20"
+      if (dice === "bonus") diceFormula = "2d20kh"
+      else if (dice === "malus") diceFormula = "2d20kl"
+      formula = `${diceFormula}+${parseInt(dialogContext.skillValue)}`
       if (parseInt(dialogContext.bonus) !== 0) formula += `+${parseInt(dialogContext.bonus)}`
       if (parseInt(dialogContext.malus) !== 0) formula += `+${parseInt(Math.abs(dialogContext.malus))}`
       if (parseInt(dialogContext.totalSkillBonuses) !== 0) formula += `+${parseInt(dialogContext.totalSkillBonuses)}`
@@ -189,7 +191,7 @@ export class COSkillRoll extends CORoll {
       bonus: withDialog ? rollContext.bonus : dialogContext.bonus,
       malus: withDialog ? rollContext.malus : dialogContext.malus,
       critical: withDialog ? rollContext.critical : dialogContext.critical,
-      oppositeRoll: withDialog ? rollContext.difficulty?.includes("@oppose") : dialogContext.oppositeRoll.includes("@oppose"),
+      oppositeRoll: withDialog ? rollContext.difficulty?.includes("@oppose") : dialogContext.difficulty?.includes("@oppose"),
       oppositeTarget: dialogContext.targets?.length > 0 ? dialogContext.targets[0].uuid : null,
       oppositeValue: withDialog ? rollContext.difficulty : dialogContext.difficulty,
       hasLuckyPoints: withDialog ? rollContext.hasLuckyPoints === "true" : dialogContext.hasLuckyPoints,
