@@ -116,8 +116,9 @@ jobs:
             `# The files that will be included.` \
             system.json                          \
             co.mjs                               \
-            co.css                               \
             README.md                            \
+            CHANGELOG.md                         \
+            css/
             ui/                                  \
             lang/                                \
             module/                              \

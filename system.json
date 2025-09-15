@@ -1,10 +1,12 @@
 {
   "id": "co",
-  "title": "Chroniques Oubliées V2",
+  "title": "Chroniques Oubliées 2",
   "description": "Le système Chroniques Oubliées pour FoundryVTT.",
-  "version": "13.344.0",
+  "url": "#{URL}#",
+  "version": "#{VERSION}#",
   "compatibility": {
     "minimum": "13",
+    "maximum": "13",
     "verified": "13"
   },
   "authors": [
@@ -18,11 +20,14 @@
       "name": "LionelL2"
     },
     {
+      "name": "L'Alchimiste"
+    },
+    {
       "name": "Zigmund"
     }
   ],
   "esmodules": ["co.mjs"],
-  "styles": ["co.css"],
+  "styles": ["css/co.css"],
   "packs": [],
   "languages": [
     {
@@ -63,10 +68,8 @@
   "secondaryTokenAttribute": "resources.mana",
   "socket": true,
   "initiative": "1d20",
-  "url": "",
-  "manifest": "",
-  "download": "",
-  "license": "",
+  "manifest": "#{MANIFEST}#",
+  "download": "#{DOWNLOAD}#",
   "flags": {
     "hotReload": {
       "extensions": ["css", "html", "hbs", "json", "mjs"],
