@@ -633,7 +633,6 @@ export default class COActor extends Actor {
    * @param {*} state true to enable the action, false to disable the action
    * @param {*} source uuid of the embedded item which is the source of the action
    * @param {*} indice indice of the action in the array of actions
-   * @param {*} type define if it's an attack or just a damage
    * @param {*} shiftKey true if the shift key is pressed
      @param {string("attack","damage")} type  define if it's an attack or just a damage
    */
@@ -701,7 +700,6 @@ export default class COActor extends Actor {
         let resolvers = Object.values(action.resolvers).map((r) => foundry.utils.deepClone(r))
         // Résolution de tous les resolvers avant de continuer
         results = await Promise.all(resolvers.map((resolver) => resolver.resolve(this, item, action, type)))
-
         // Si tous les resolvers ont réussi
         allResolversTrue = results.length > 0 && results.every((result) => result === true)
       }
@@ -719,28 +717,16 @@ export default class COActor extends Actor {
       results = await Promise.all(resolvers.map((resolver) => resolver.resolve(this, item, action, type)))
       // Si tous les resolvers ont réussi
       allResolversTrue = results.length > 0 && results.every((result) => result === true)
-
-      if (results.length === 0 || allResolversTrue) {
-        // Cas des items consommables
-        if (item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.subtype === SYSTEM.EQUIPMENT_SUBTYPES.consumable.id) {
-          // Diminution de la quantité et destruction si à 0 et destructible
-          let quantity = item.system.quantity.current - 1
-          // Message chat
-          const message = game.i18n.format("CO.notif.consume", { actorName: this.name, itemName: item.name })
-          await new CoChat(this).withTemplate(SYSTEM.TEMPLATE.MESSAGE).withData({ message: message }).create()
-
-          if (quantity === 0 && item.system.quantity.destroyIfEmpty) {
-            await this.deleteEmbeddedDocuments("Item", [item.id])
-          } else {
-            await item.update({ "system.quantity.current": quantity })
-          }
-        }
-      }
     }
     // Pas de resolvers ou tous les resolvers ont été résolus avec succès
     if (results.length === 0 || allResolversTrue) {
-      // Si c'est un sort et qu'on l'active, il faut consommer les Points de Mana
-      if (!item.system.actions[indice].properties.noManaCost && state && item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.isSpell) {
+      // Si c'est une capacité avec une charge qui est activée, il faut la consommer une charge
+      if (item.type === SYSTEM.ITEM_TYPE.capacity.id && state && item.system.hasFrequency && item.system.hasCharges) {
+        item.system.charges.current = Math.max(item.system.charges.current - 1, 0)
+        await item.update({ "system.charges.current": item.system.charges.current })
+      }
+      // Si c'est une capacité qui est un sort avec un coût en mana et qu'on l'active, il faut consommer les Points de Mana
+      if (item.type === SYSTEM.ITEM_TYPE.capacity.id && state && item.system.isSpell && !item.system.actions[indice].properties.noManaCost) {
         const spellManaCost = item.system.getManaCost() + manaCostFromArmor - (manaConcentration ? 2 : 0)
         if (spellManaCost > 0) {
           const newMana = Math.max(this.system.resources.mana.value - spellManaCost, 0)
@@ -759,11 +745,6 @@ export default class COActor extends Actor {
             }
           }
         }
-      }
-      // Si c'est une capacité avec une charge il faut la consommer, mais uniquement à l'activation
-      if (state && item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.hasFrequency && item.system.hasCharges) {
-        item.system.charges.current = Math.max(item.system.charges.current - 1, 0)
-        await item.update({ "system.charges.current": item.system.charges.current })
       }
     }
 

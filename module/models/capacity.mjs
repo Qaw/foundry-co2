@@ -9,6 +9,7 @@ export default class CapacityData extends ItemData {
    * @returns {Object} The merged schema object containing the defined fields.
    *
    * Fields:
+   * - `inGame` {HTMLField}: Describe how the capacity is represented in the game.
    * - `subtype` {StringField}: A required, non-nullable string field with an initial value of an empty string.
    * - `actionType` {StringField}: none, l, a, m, f (Limité, Attaque, Mouvement, Gratuite)
    * - `learned` {BooleanField}: A boolean field indicating whether the capacity is learned.
