@@ -187,8 +187,6 @@ export default class EncounterData extends ActorData {
         }
       }
     }
-
-    this.magic = this.abilities.vol.value + (this.attributes.nc === 0.5 ? 1 : this.attributes.nc)
   }
 
   _prepareMovement() {
