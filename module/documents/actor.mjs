@@ -1782,9 +1782,13 @@ export default class COActor extends Actor {
       }
     }
 
-    // Gestion du critique
+    // Gestion du critique de l'attaque
+    // Si l'attaque n'est pas défini (champ vide dans l'item) on prend la valeur par défaut de l'acteur
     if (critical === undefined || critical === "") {
       critical = this.system.combat.crit.value
+    } else {
+      // Sinon on prend la valeur définie dans l'attaque et on applique le bonus éventuel de l'acteur
+      critical = Math.max(16, parseInt(critical) - (SYSTEM.BASE_CRITICAL - this.system.combat.crit.value))
     }
 
     // Gestion des dés bonus et malus
