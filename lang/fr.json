@@ -695,7 +695,6 @@
       "capacitiesOffPaths": "Capacités hors voies",
       "capacitiesLearned": "Capacités acquises",
       "capacitiesNotLearned": "Capacités non-acquises",
-      "editYourAbilities": "Éditez vos Caractéristiques",
       "buy": "Apprendre",
       "unbuy": "Ne plus apprendre",
       "recovery": "Dé de Récupération",
@@ -906,6 +905,16 @@
         "content": "Souhaitez-vous effectuer une récupération complète ?",
         "manaContent": "Récupérez-vous le maximum de points de mana ?",
         "manaTitle": "Récupération de mana"
+      },
+      "editYourAbilities": {
+        "title": "Éditez vos Caractéristiques",
+        "mode": "Type de personnage",
+        "libre": "Caractéristiques Libres",
+        "polyvalent": "Polyvalent",
+        "expert": "Expert",
+        "specialist": "Spécialiste",
+        "infoLibre": "Indiquez les valeurs de chaque caractéristique manuellement",
+        "infoAutres": "Glissez-déposez les valeurs ci-dessus à la place sur la ligne Base"
       },
       "restHpRecovered": "Vous avez récupéré {hp} points de vigueur"
     },
