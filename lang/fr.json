@@ -695,7 +695,6 @@
       "capacitiesOffPaths": "Capacités hors voies",
       "capacitiesLearned": "Capacités acquises",
       "capacitiesNotLearned": "Capacités non-acquises",
-      "editYourAbilities": "Éditez vos Caractéristiques",
       "buy": "Apprendre",
       "unbuy": "Ne plus apprendre",
       "recovery": "Dé de Récupération",
@@ -908,7 +907,8 @@
         "manaTitle": "Récupération de mana"
       },
       "editYourAbilities": {
-        "type": "Type de personnage",
+        "title": "Éditez vos Caractéristiques",
+        "mode": "Type de personnage",
         "libre": "Caractéristiques Libres",
         "polyvalent": "Polyvalent",
         "expert": "Expert",

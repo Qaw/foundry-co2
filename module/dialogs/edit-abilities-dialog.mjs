@@ -7,7 +7,6 @@ export class CoEditAbilitiesDialog extends foundry.applications.api.DialogV2 {
       height: 415,
     },
     actions: {
-      reset: CoEditAbilitiesDialog.#onReset,
       toggleSuperior: CoEditAbilitiesDialog.#onToggleSuperior,
     },
   }
@@ -24,6 +23,16 @@ export class CoEditAbilitiesDialog extends foundry.applications.api.DialogV2 {
     this.actor = actor
     this.mode = "libre"
     this.assignedIds = {}
+
+    // Bind methods once pour optimiser les performances
+    this.boundHandlers = {
+      onChangeAbilityBase: this._onChangeAbilityBase.bind(this),
+      onChangeAbilityBonus: this._onChangeAbilityBonus.bind(this),
+      onChangeDistributionMode: this._onChangeDistributionMode.bind(this),
+      onDragValue: this._onDragValue.bind(this),
+      onDropValue: this._onDropValue.bind(this),
+      onDragOver: (ev) => ev.preventDefault(),
+    }
   }
 
   /**
@@ -40,7 +49,7 @@ export class CoEditAbilitiesDialog extends foundry.applications.api.DialogV2 {
       },
     ]
     options = super._initializeApplicationOptions(options)
-    options.window.title = game.i18n.localize("CO.ui.editYourAbilities")
+    options.window.title = game.i18n.localize("CO.dialogs.editYourAbilities.title")
     return options
   }
 
@@ -75,23 +84,35 @@ export class CoEditAbilitiesDialog extends foundry.applications.api.DialogV2 {
    */
   _replaceHTML(result, content, options) {
     content.innerHTML = result
-    $(this.element).find("input.ability-base").change(this._onChangeAbilityBase.bind(this))
-    $(this.element).find("input.ability-bonus").change(this._onChangeAbilityBonus.bind(this))
-    $(this.element).find("#distribution-mode").change(this._onChangeDistributionMode.bind(this))
-    // Drag source
+
+    // Attacher les event listeners avec DOM vanilla et handlers optimisés
+    content.querySelectorAll("input.ability-base").forEach((el) => {
+      el.addEventListener("change", this.boundHandlers.onChangeAbilityBase)
+    })
+
+    content.querySelectorAll("input.ability-bonus").forEach((el) => {
+      el.addEventListener("change", this.boundHandlers.onChangeAbilityBonus)
+    })
+
+    const distributionMode = content.querySelector("#distribution-mode")
+    if (distributionMode) {
+      distributionMode.addEventListener("change", this.boundHandlers.onChangeDistributionMode)
+    }
+
+    // Drag sources
     content.querySelectorAll(".draggable-value").forEach((el) => {
-      el.addEventListener("dragstart", this._onDragValue.bind(this))
+      el.addEventListener("dragstart", this.boundHandlers.onDragValue)
     })
 
     // Drop targets
     content.querySelectorAll(".dropzone").forEach((el) => {
-      el.addEventListener("dragover", (ev) => ev.preventDefault())
-      el.addEventListener("drop", this._onDropValue.bind(this))
+      el.addEventListener("dragover", this.boundHandlers.onDragOver)
+      el.addEventListener("drop", this.boundHandlers.onDropValue)
     })
   }
 
   async _onChangeAbilityBase(event) {
-    const ability = $(event.currentTarget).attr("data-ability")
+    const ability = event.currentTarget.dataset.ability
     const raw = event.currentTarget.value
     const value = raw === "" ? null : Number(raw)
     const { actor } = this
@@ -100,7 +121,7 @@ export class CoEditAbilitiesDialog extends foundry.applications.api.DialogV2 {
   }
 
   async _onChangeAbilityBonus(event) {
-    const ability = $(event.currentTarget).attr("data-ability")
+    const ability = event.currentTarget.dataset.ability
     const raw = event.currentTarget.value
     const value = raw === "" ? null : parseInt(raw)
     const { actor } = this
@@ -109,7 +130,7 @@ export class CoEditAbilitiesDialog extends foundry.applications.api.DialogV2 {
   }
 
   static async #onToggleSuperior(event, target) {
-    const ability = $(target).attr("data-ability")
+    const ability = target.dataset.ability
     const { actor } = this
     const value = !actor.system.abilities[ability].superior
     await actor.update({ [`system.abilities.${ability}.superior`]: value })
@@ -166,38 +187,15 @@ export class CoEditAbilitiesDialog extends foundry.applications.api.DialogV2 {
 
     // Réinitialiser les caractéristiques si mode ≠ libre
     if (this.mode !== "libre") {
-      const reset = {}
-      for (const [id, _] of Object.entries(this.actor.system.abilities)) {
-        reset[`system.abilities.${id}.base`] = null
-      }
-      await this.actor.update(reset)
+      const abilities = this.actor.system.abilities
+      const resetUpdates = Object.keys(abilities).reduce((updates, id) => {
+        updates[`system.abilities.${id}.base`] = null
+        return updates
+      }, {})
+
+      await this.actor.update(resetUpdates)
     }
 
     this.render(true)
-  }
-
-  // TODO Garder ou refaire ?
-  static async #onReset() {
-    const { actor } = this
-    // Construct the Roll instance
-    let r = new Roll("{1d4,1d4,1d4,1d4,1d4,1d4}")
-    await r.roll()
-    const newAbilityScores = {
-      agi: { base: r.terms[0].results[0].result },
-      con: { base: r.terms[0].results[1].result },
-      for: { base: r.terms[0].results[2].result },
-      per: { base: r.terms[0].results[3].result },
-      cha: { base: r.terms[0].results[4].result },
-      int: { base: r.terms[0].results[5].result },
-      vol: { base: r.terms[0].results[5].result },
-    }
-    r.toMessage({
-      user: game.user.id,
-      flavor: "Réinitialisation des caractéristiques",
-      speaker: ChatMessage.getSpeaker({ actor: actor }),
-      flags: { msgType: "damage" },
-    })
-    // Await r.evaluate();
-    return actor.update({ "system.abilities": newAbilityScores }).then(() => this.render(true))
   }
 }

@@ -1,6 +1,6 @@
 {{!log "Edit Abilities" this}}
 <section class="abilities-table">
-  <h3 class="first-title">{{localize "CO.ui.editYourAbilities"}}</h3>
+  <h3 class="first-title">{{localize "CO.dialogs.editYourAbilities.title"}}</h3>
 
   <label><span class="title">{{localize "CO.label.long.superior"}}</span></label>
   <label><span class="title">{{localize "CO.label.long.base"}}</span></label>
@@ -43,7 +43,7 @@
 
 <section class="abilities-type">
   <div class="select-abilities-type">
-    <label for="distribution-mode">{{localize "CO.dialogs.editYourAbilities.type"}}</label>
+    <label for="distribution-mode">{{localize "CO.dialogs.editYourAbilities.title"}}</label>
     <select id="distribution-mode" name="distribution-mode">
       <option value="libre" {{#if (eq mode "libre")}}selected{{/if}}>{{localize "CO.dialogs.editYourAbilities.libre"}}</option>
       <option value="polyvalent" {{#if (eq mode "polyvalent")}}selected{{/if}}>{{localize "CO.dialogs.editYourAbilities.polyvalent"}}</option>
