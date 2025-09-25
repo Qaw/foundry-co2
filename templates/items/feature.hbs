@@ -85,8 +85,8 @@
                     <span></span>
                 </label>
             {{#each modifiers as |m id|}}
-                <input name="system.modifiers.{{id}}.type" type="hidden" value="{{m.type}}" data-dtype="String" {{#if @root.locked}}disabled{{/if}}/>
-                <input name="system.modifiers.{{id}}.source" type="hidden" value="{{m.source}}" data-dtype="String" {{#if @root.locked}}disabled{{/if}}/>
+                <input name="system.modifiers.{{id}}.type" type="hidden" value="{{m.type}}" data-dtype="String" {{#if @root.locked}}readonly{{/if}}/>
+                <input name="system.modifiers.{{id}}.source" type="hidden" value="{{m.source}}" data-dtype="String" {{#if @root.locked}}readonly{{/if}}/>
                 <div class="form-fields modifier flexrow" data-item-id="{{id}}" data-item-type="modifier">
                     <select name="system.modifiers.{{id}}.subtype" data-type="String" {{#if @root.locked}}disabled{{/if}}>
                         {{selectOptions @root.choiceModifierSubtypes selected=m.subtype localize=true}}
@@ -117,7 +117,7 @@
                             {{selectOptions @root.choiceModifierMalusDiceTargets selected=m.target localize=true}}
                         {{/if}}   
                     </select>
-                    <input name="system.modifiers.{{id}}.value" type="text" value="{{m.value}}" data-dtype="String" {{#if @root.locked}}disabled{{/if}}/>
+                    <input name="system.modifiers.{{id}}.value" type="text" value="{{m.value}}" data-dtype="String" {{#if @root.locked}}readonly{{/if}}/>
                     {{#if @root.unlocked}}<button data-action="deleteModifier"><i class="fas fa-trash"></i></button>{{/if}}
                 </div>
             {{/each}}

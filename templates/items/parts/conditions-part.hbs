@@ -5,18 +5,16 @@
 <div class="conditions-container foldable">
     {{#if action.conditions}}
         <div class="form-group-stacked">
-            <label></label>
-
             {{#each action.conditions as |c id|}}
                 {{!log 'condition' c id @root}}
                 <div class="form-fields condition" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="condition">
-                    <select name="system.actions.{{../idx}}.conditions.{{id}}.predicate" data-type="String">
+                    <select name="system.actions.{{../idx}}.conditions.{{id}}.predicate" data-type="String" {{#if @root.locked}}disabled{{/if}}>
                         {{selectOptions @root.choiceConditionPredicates selected=c.predicate localize=true}}
                     </select>
                 {{#if (eq c.predicate "isLinkedActionActivated")}}
-                    <input name="system.actions.{{../idx}}.conditions.{{id}}.object" type="text" value="{{c.object}}" data-dtype="String" data-tooltip="{{localize "CO.ui.conditionLiee"}}" />
+                    <input name="system.actions.{{../idx}}.conditions.{{id}}.object" type="text" value="{{c.object}}" data-dtype="String" data-tooltip="{{localize "CO.ui.conditionLiee"}}" {{#if @root.locked}}readonly{{/if}}/>
                 {{/if}}
-                    {{#if @root.unlocked}}<button type="button" data-action="deleteCondition"><i class="fas fa-trash"></i></button>{{/if}}
+                    {{#if @root.unlocked}}<button type="button" data-action="deleteCondition" {{#if @root.locked}}disabled{{/if}}><i class="fas fa-trash"></i></button>{{/if}}
                 </div>
             {{/each}}
         </div>

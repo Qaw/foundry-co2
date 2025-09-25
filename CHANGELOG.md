@@ -4,6 +4,7 @@
 - Récupération complète : gestion du cas où le DR est déjà au max et du cas particulier de DR max à 0
 - Modificateur de type Combat et sous-type Dommages : possibilités de saisir un dé (1d6, 1d4°, etc...)
 - Onglet Inventaire : possibilité d'augmenter ou diminuer la quantité d'objets ou de charges/ressources
+- Correction sur les objets et acteurs de tous les champs qui étaient éditables alors que la fiche était en lecture seule
 
 ## Corrections
 - Correction d'un critique lorsque le total est inférieur à la difficulté
