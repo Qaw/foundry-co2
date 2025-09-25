@@ -5,7 +5,7 @@ import { SYSTEM } from "./config/system.mjs"
   - isLearned : type Capacité et appris
   - isOwned : type Equipement ou Capacité et possédé par l'acteur
   - isLinkedActionActivated : action liée activée, utilise l'indice de l'action
-  - isTagged : item tagué avec un tag spécifique
+  - TO DO - isTagged : item tagué avec un tag spécifique
 */
 
 export default class RulesEngine {
@@ -50,11 +50,12 @@ export default class RulesEngine {
         else return false
       },
     },
-    {
+    /*{
       name: "isTagged",
       parameters: ["item", "tag"],
       expression: (object, item, tag) => item.tags && item.tags.includes(tag),
     },
+    */
   ]
 
   static evaluate(condition, ...args) {
