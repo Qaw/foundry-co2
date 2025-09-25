@@ -1,17 +1,6 @@
-# IDE
-.idea/
-.vs/
-styles/**/*.css
-
 # Node Modules
 node_modules/
 
-# OS Specific
-.DS_Store
-foundry.js
-
-# Foundry specific
-*.lock
-
 # Foundry VTT
-packs/
+packs
+styles/**/*.css
