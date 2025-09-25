@@ -1,7 +1,7 @@
 {
   "id": "co",
   "title": "Chroniques Oubliées 2",
-  "description": "Le système Chroniques Oubliées pour FoundryVTT.",
+  "description": "Le système Chroniques Oubliées 2 pour FoundryVTT.",
   "url": "#{URL}#",
   "version": "#{VERSION}#",
   "compatibility": {
