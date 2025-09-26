@@ -3441,3 +3441,64 @@ co-toggle-switch[checked] thumb {
   margin-top: 8px;
   font-weight: bold;
 }
+.icon.co {
+  background-image: url('/systems/co/ui/icone_co.webp');
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.co-sidebar {
+  flex-direction: column;
+  overflow-y: auto;
+  color: var(--color-text-secondary);
+}
+.co-sidebar.active {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+.co-sidebar section {
+  gap: 0.5rem;
+}
+.co-sidebar section h4 {
+  margin: 0;
+}
+.co-sidebar section a.button {
+  flex-basis: 2rem;
+}
+.co-sidebar .info {
+  font-size: var(--font-size-13);
+}
+.co-sidebar .info .title {
+  margin: 0;
+  font-size: var(--font-size-32);
+  text-align: center;
+  letter-spacing: -0.3px;
+}
+.co-sidebar .info .subtitle {
+  margin: -0.5rem 0 0;
+  color: var(--color-text-subtle);
+  text-align: center;
+}
+.co-sidebar .info > div {
+  display: flex;
+  justify-content: space-between;
+}
+.co-sidebar .info > div .label {
+  color: var(--color-text-emphatic);
+}
+.co-sidebar .info > div .value {
+  color: var(--color-text-secondary);
+}
+.co-sidebar .info .notification-pip {
+  margin-left: 0.25rem;
+  color: var(--color-text-accent);
+  position: initial;
+}
+#co-popout {
+  overflow-y: hidden;
+}
+#co-popout .window-content {
+  gap: 1.5rem;
+  overflow-y: auto;
+}

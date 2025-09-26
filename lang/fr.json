@@ -1229,6 +1229,17 @@
         "gm": "Vérification (ignorable uniquement par le MJ)"
       }
     },
-    "SheetModeEdit": "Basculer entre le mode édition et le mode visualisation"
+    "SheetModeEdit": "Basculer entre le mode édition et le mode visualisation",
+    "Sidebar": {
+      "title": "Chroniques Oubliées",
+      "support": "Support",
+      "discordLaFonderie": "Discord de la Fonderie",
+      "discordLaFonderieTooltip": "Rejoignez le serveur francophone dédié à Foundry VTT et son canal Chroniques Oubliées",
+      "github": "GitHub",
+      "githubTooltip": "Le dépôt GitHub du système Chroniques Oubliées",
+      "bugReport": "Signaler un bug",
+      "bugReportTooltip": "Signalez un bug ou demandez une nouvelle fonctionnalité",
+      "menu": "Système"
+    }
   }
 }

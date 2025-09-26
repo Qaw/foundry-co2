@@ -7,3 +7,5 @@ export { default as AttackSheet } from "./sheets/attack-sheet.mjs"
 
 export { default as CharacterSheet } from "./sheets/character-sheet.mjs"
 export { default as EncounterSheet } from "./sheets/encounter-sheet.mjs"
+
+export { default as COSidebarMenu } from "./sidebar-menu.mjs"

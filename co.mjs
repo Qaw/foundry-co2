@@ -1,8 +1,5 @@
 // Configuration
 import { SYSTEM } from "./module/config/system.mjs"
-globalThis.SYSTEM = SYSTEM
-
-export * as elements from "./module/elements/_module.mjs"
 
 // Import modules
 import * as models from "./module/models/_module.mjs"
@@ -16,6 +13,10 @@ import registerHooks from "./module/hooks.mjs"
 import Macros from "./module/macros.mjs"
 import Utils from "./module/utils.mjs"
 import { handleSocketEvent } from "./module/socket.mjs"
+
+export * as elements from "./module/elements/_module.mjs"
+
+globalThis.SYSTEM = SYSTEM
 
 Hooks.once("init", async function () {
   console.info(SYSTEM.ASCII)
@@ -83,13 +84,8 @@ Hooks.once("init", async function () {
   // Activate socket handler
   game.socket.on(`system.${SYSTEM.ID}`, handleSocketEvent)
 
-  // Register Handlebars helpers
   registerHandlebarsHelpers()
-
-  // Register System Settings
   registerSystemSettings()
-
-  // Register hooks
   registerHooks()
 
   // Load Martial Training
@@ -118,6 +114,15 @@ Hooks.once("init", async function () {
   CONFIG.Combat.documentClass = documents.CombatCO
   // Un round dure 6s
   CONFIG.time.roundTime = 6
+
+  // Add a custom sidebar tab
+  CONFIG.ui.sidebar.TABS.co = {
+    active: false,
+    icon: `co`,
+    tooltip: `Chroniques Oubliées`,
+  }
+  CONFIG.ui.co = applications.COSidebarMenu
+
   console.info(Utils.log("Initialized"))
 })
 
