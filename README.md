@@ -13,7 +13,7 @@
 
 <h2>Contributeurs</h2>
 <ul>
-<li>Merci à Kristov avoir porté le projet sur la durée.</li>
+<li>Merci à Kristov d'avoir porté le projet sur la durée.</li>
 <li>Merci à Caloup pour avoir contribué au système ces derniers mois, et créé une grande partie des items et acteurs du module.</li>
 <li>Merci à l'Alchimiste pour les tests, les changements de css, et la création du guide du système.</li>
 <li>Merci à LionelL2 pour la refonte de la structure less et css, et le design des interfaces.</li>
@@ -22,7 +22,7 @@
 </ul>
 
 <h2>Mentions Légales</h2>
-© Black Book Éditions, 2024. Chroniques Oubliées Fantasy est une marque déposée par Black Book Éditions. Tous droits réservés.
+© Black Book Éditions, 2025. Chroniques Oubliées Fantasy est une marque déposée par Black Book Éditions. Tous droits réservés.
 
 <h2>Communauté</h2>
 
