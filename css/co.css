@@ -3462,6 +3462,9 @@ co-toggle-switch[checked] thumb {
 .co-sidebar section h4 {
   margin: 0;
 }
+.co-sidebar section h4.divider.center {
+  text-align: center;
+}
 .co-sidebar section a.button {
   flex-basis: 2rem;
 }
