@@ -3445,7 +3445,6 @@ co-toggle-switch[checked] thumb {
   background-image: url('/systems/co/ui/icone_co.webp');
   background-size: 100%;
   background-position: center;
-  background-repeat: no-repeat;
 }
 .co-sidebar {
   flex-direction: column;
