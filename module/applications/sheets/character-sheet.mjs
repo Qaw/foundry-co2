@@ -372,12 +372,22 @@ export default class COCharacterSheet extends COBaseActorSheet {
         await this.document.addEquipment(item)
         // L'item vient d'une rencontre, on le supprime de l'inventaire de la rencontre
         if (data?.sourceTransfer === "encounter") {
-          const { id, primaryId } = foundry.utils.parseUuid(data.uuid)
-          if (id && primaryId) {
-            const encounter = game.actors.get(primaryId)
-            if (encounter) {
-              await encounter.deleteEmbeddedDocuments("Item", [id])
-            }
+          // La variable primaryType est Scene si l'item vient d'un token d'une scène, Actor s'il vient d'un acteur
+          // La variable id est l'id de l'item
+          const { primaryType, primaryId, id } = foundry.utils.parseUuid(data.uuid)
+          const parts = data.uuid.split(".")
+          let encounter
+          // Acteur du monde
+          if (primaryType === "Actor") {
+            encounter = game.actors.get(primaryId)
+          }
+          // Acteur d'un token
+          if (primaryType === "Scene") {
+            const tokenId = parts[3]
+            encounter = fromUuidSync(`Scene.${primaryId}.Token.${tokenId}`).actor
+          }
+          if (encounter) {
+            await encounter.deleteEmbeddedDocuments("Item", [id])
           }
         }
         return true
