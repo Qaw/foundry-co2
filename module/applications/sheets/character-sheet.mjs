@@ -313,9 +313,11 @@ export default class COCharacterSheet extends COBaseActorSheet {
   async _onDrop(event) {
     // On récupère le type et l'uuid de l'item
     const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event)
-    if (foundry.utils.isEmpty(data)) return false // Si pas de données, on ne fait rien
-    if (foundry.utils.hasProperty(data, "source")) return false
-    const actor = this.document
+    if (foundry.utils.isEmpty(data)) return // Si pas de données, on ne fait rien
+    if (foundry.utils.hasProperty(data, "source")) return
+    const actor = this.actor
+    const allowed = Hooks.call("dropActorSheetData", actor, this, data)
+    if (allowed === false) return
 
     /**
      * A hook event that fires when some useful data is dropped onto a CharacterSheet.
@@ -345,31 +347,23 @@ export default class COCharacterSheet extends COBaseActorSheet {
       return true
     }
 
-    // A partir de l'uuid, extraction de primaryId qui est l'id de l'acteur
-    let { primaryId } = foundry.utils.parseUuid(data.uuid)
-    // Pas de drop d'objet sur soi même
-    if (primaryId === actor.id) return
-
     if (data.type !== "Item") return
-    return this._onDropItem(event, data)
-  }
-
-  /**
-   * Handle the drop event for an item.
-   *
-   * @param {Event} event The drop event.
-   * @param {Object} data The data associated with the dropped item.
-   * @returns {Promise<boolean>} - Returns false if the actor is not the owner or if the item type is not handled.
-   */
-  async _onDropItem(event, data) {
-    event.preventDefault()
-    if (!this.document.isOwner) return false
     // On récupère l'item de type COItem
     const item = await Item.implementation.fromDropData(data)
+    return this._onDropItem(event, item)
+  }
+
+  /** @override */
+  async _onDropItem(event, item) {
+    if (!this.actor.isOwner) return null
+    if (this.actor.uuid === item.parent?.uuid) {
+      const result = await this._onSortItem(event, item)
+      return result?.length ? item : null
+    }
 
     switch (item.type) {
       case SYSTEM.ITEM_TYPE.equipment.id:
-        await this.document.addEquipment(item)
+        await this.actor.addEquipment(item)
         // L'item vient d'une rencontre, on le supprime de l'inventaire de la rencontre
         if (data?.sourceTransfer === "encounter") {
           // La variable primaryType est Scene si l'item vient d'un token d'une scène, Actor s'il vient d'un acteur
@@ -392,11 +386,11 @@ export default class COCharacterSheet extends COBaseActorSheet {
         }
         return true
       case SYSTEM.ITEM_TYPE.feature.id:
-        return await this.document.addFeature(item)
+        return await this.actor.addFeature(item)
       case SYSTEM.ITEM_TYPE.profile.id:
-        return await this.document.addProfile(item)
+        return await this.actor.addProfile(item)
       case SYSTEM.ITEM_TYPE.path.id:
-        return await this.document.addPath(item)
+        return await this.actor.addPath(item)
       case SYSTEM.ITEM_TYPE.capacity.id:
         // Soit on dépose n'importe où sur la feuille, soit on dépose dans une zone prévue pour y ajouter des 'sous-capacités' (dropZone)
         const isDropZone = await this.isDropZone(event)
@@ -405,9 +399,9 @@ export default class COCharacterSheet extends COBaseActorSheet {
           // C'est une sous capacité on cherche la capacité parente
           let parentItem = event.target.closest(".item-list")
           let parentItemUuid = parentItem.dataset.itemUuid
-          return await this.document.addLinkedCapacity(item, parentItemUuid)
+          return await this.actor.addLinkedCapacity(item, parentItemUuid)
         } else {
-          return await this.document.addCapacity(item, null)
+          return await this.actor.addCapacity(item, null)
         }
       default:
         return false

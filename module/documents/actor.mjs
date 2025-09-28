@@ -221,7 +221,8 @@ export default class COActor extends Actor {
         expanded = true
       }
 
-      const items = this.equipments.filter((item) => item.system.subtype === category)
+      // Trier selon la valeur de sort
+      const items = this.equipments.filter((item) => item.system.subtype === category).sort((a, b) => a.sort - b.sort)
 
       inventory.push({
         category,
