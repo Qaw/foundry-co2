@@ -331,7 +331,19 @@ export default class COCharacterSheet extends COBaseActorSheet {
 
     // Drop d'éléments de richesse
     if (data.type === "wealth" && data?.sourceTransfer === "encounter") {
-      const encounter = game.actors.get(data.encounterId)
+      // La variable primaryType est Scene si l'item vient d'un token d'une scène, Actor s'il vient d'un acteur
+      const { primaryType, primaryId } = foundry.utils.parseUuid(data.encounterUuid)
+      const parts = data.encounterUuid.split(".")
+      let encounter
+      // Acteur du monde (Actor.id)
+      if (primaryType === undefined) {
+        encounter = game.actors.get(parts[1])
+      }
+      // Acteur d'un token (Scene.id.Token.id.Actor.id)
+      if (primaryType === "Scene") {
+        const tokenId = parts[3]
+        encounter = fromUuidSync(`Scene.${primaryId}.Token.${tokenId}`).actor
+      }
       // Si on ne trouve pas la rencontre, on ne fait rien
       if (!encounter) return false
       // Ajouter l'argent au personnage

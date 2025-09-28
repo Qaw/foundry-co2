@@ -144,6 +144,7 @@ export default class COEncounterSheet extends COBaseActorSheet {
         wealthType: wealthType,
         value: wealthValue,
         encounterId: this.document.id,
+        encounterUuid: this.document.uuid,
       }
     }
 
