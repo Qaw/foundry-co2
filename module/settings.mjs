@@ -70,4 +70,15 @@ export default function registerSystemSettings() {
       gm: "CO.settings.checkFreeHandsBeforeEquip.gm",
     },
   })
+
+  /**
+   * World key used for statistics
+   */
+  game.settings.register("co", "worldKey", {
+    name: "Unique world key",
+    scope: "world",
+    config: false,
+    type: String,
+    default: "",
+  })
 }
