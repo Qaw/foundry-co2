@@ -68,6 +68,7 @@
   "secondaryTokenAttribute": "resources.mana",
   "socket": true,
   "initiative": "1d20",
+  "background": "systems/co/ui/logo_cof.webp",
   "manifest": "#{MANIFEST}#",
   "download": "#{DOWNLOAD}#"
 }
