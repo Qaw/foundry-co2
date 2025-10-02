@@ -1,2 +1,2 @@
 # 1.0.0
-- Release officielle
+- Sortie officielle du système

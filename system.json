@@ -69,11 +69,5 @@
   "socket": true,
   "initiative": "1d20",
   "manifest": "#{MANIFEST}#",
-  "download": "#{DOWNLOAD}#",
-  "flags": {
-    "hotReload": {
-      "extensions": ["css", "html", "hbs", "json", "mjs"],
-      "path": ["css", "templates", "lang", "module"]
-    }
-  }
+  "download": "#{DOWNLOAD}#"
 }
