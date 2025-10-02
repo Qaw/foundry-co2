@@ -11,10 +11,10 @@ export default class CoProfileSheet extends CoBaseItemSheet {
   }
 
   static PARTS = {
-    header: { template: "systems/co/templates/items/shared/header.hbs" },
+    header: { template: "systems/co2/templates/items/shared/header.hbs" },
     tabs: { template: "templates/generic/tab-navigation.hbs" },
-    description: { template: "systems/co/templates/items/shared/description.hbs" },
-    details: { template: "systems/co/templates/items/profile.hbs", scrollable: [""] },
+    description: { template: "systems/co2/templates/items/shared/description.hbs" },
+    details: { template: "systems/co2/templates/items/profile.hbs", scrollable: [""] },
   }
 
   static TABS = {

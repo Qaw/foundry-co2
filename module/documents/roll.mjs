@@ -55,9 +55,9 @@ export class CORoll extends Roll {
 export class COSkillRoll extends CORoll {
   static ROLL_TYPE = "skill"
 
-  static DIALOG_TEMPLATE = "systems/co/templates/dialogs/skill-roll-dialog.hbs"
+  static DIALOG_TEMPLATE = "systems/co2/templates/dialogs/skill-roll-dialog.hbs"
 
-  static CHAT_TEMPLATE = "systems/co/templates/chat/skill-roll-card.hbs"
+  static CHAT_TEMPLATE = "systems/co2/templates/chat/skill-roll-card.hbs"
 
   static ROLL_CSS = ["co", "skill-roll"]
 
@@ -245,9 +245,9 @@ export class COSkillRoll extends CORoll {
 export class COAttackRoll extends CORoll {
   static ROLL_TYPE = "attack"
 
-  static DIALOG_TEMPLATE = "systems/co/templates/dialogs/attack-roll-dialog.hbs"
+  static DIALOG_TEMPLATE = "systems/co2/templates/dialogs/attack-roll-dialog.hbs"
 
-  static CHAT_TEMPLATE = "systems/co/templates/chat/attack-roll-card.hbs"
+  static CHAT_TEMPLATE = "systems/co2/templates/chat/attack-roll-card.hbs"
 
   static ROLL_CSS = ["co", "attack-roll"]
 

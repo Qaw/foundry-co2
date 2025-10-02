@@ -170,7 +170,7 @@ export default class COActor extends Actor {
             }
           } else {
             capacity.linkedCapacityName = ""
-            capacity.linkedCapacityImg = "systems/co/ui/effects/question.webp"
+            capacity.linkedCapacityImg = "systems/co2/ui/effects/question.webp"
             capacity.linkedCapacityItem = null
           }
         }

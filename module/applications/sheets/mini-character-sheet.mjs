@@ -17,11 +17,11 @@ export class COMiniCharacterSheet extends COBaseActorSheet {
 
   // PARTS réduits : header + main (main inclut déjà actions.hbs via "templates")
   static PARTS = {
-    header: { template: "systems/co/templates/actors/character-header.hbs" },
-    sidebar: { template: "systems/co/templates/actors/mini-character-sidebar.hbs" },
+    header: { template: "systems/co2/templates/actors/character-header.hbs" },
+    sidebar: { template: "systems/co2/templates/actors/mini-character-sidebar.hbs" },
     main: {
-      template: "systems/co/templates/actors/character-main.hbs",
-      templates: ["systems/co/templates/actors/shared/actions.hbs"],
+      template: "systems/co2/templates/actors/character-main.hbs",
+      templates: ["systems/co2/templates/actors/shared/actions.hbs"],
     },
   }
 

@@ -18,7 +18,7 @@ export default class COSidebarMenu extends HandlebarsApplicationMixin(AbstractSi
   /** @override */
   static PARTS = {
     co: {
-      template: "systems/co/templates/sidebar-menu.hbs",
+      template: "systems/co2/templates/sidebar-menu.hbs",
       root: true, // Permet d'avoir plusieurs sections dans le hbs
     },
   }

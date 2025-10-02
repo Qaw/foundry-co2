@@ -12,18 +12,18 @@ export default class CoCapacitySheet extends CoBaseItemSheet {
 
   /** @override */
   static PARTS = {
-    header: { template: "systems/co/templates/items/shared/header.hbs" },
+    header: { template: "systems/co2/templates/items/shared/header.hbs" },
     tabs: { template: "templates/generic/tab-navigation.hbs" },
-    description: { template: "systems/co/templates/items/shared/description.hbs" },
-    details: { template: "systems/co/templates/items/capacity.hbs" },
+    description: { template: "systems/co2/templates/items/shared/description.hbs" },
+    details: { template: "systems/co2/templates/items/capacity.hbs" },
     actions: {
-      template: "systems/co/templates/items/shared/actions.hbs",
+      template: "systems/co2/templates/items/shared/actions.hbs",
       templates: [
-        "systems/co/templates/items/parts/conditions-part.hbs",
-        "systems/co/templates/items/parts/modifiers-part.hbs",
-        "systems/co/templates/items/parts/modifier.hbs",
-        "systems/co/templates/items/parts/resolvers-part.hbs",
-        "systems/co/templates/items/parts/resolver-part.hbs",
+        "systems/co2/templates/items/parts/conditions-part.hbs",
+        "systems/co2/templates/items/parts/modifiers-part.hbs",
+        "systems/co2/templates/items/parts/modifier.hbs",
+        "systems/co2/templates/items/parts/resolvers-part.hbs",
+        "systems/co2/templates/items/parts/resolver-part.hbs",
       ],
       scrollable: [".tab", ".action-body"],
     },

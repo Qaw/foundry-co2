@@ -65,7 +65,7 @@ export default class Macros {
         if (item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.properties.equipable && !item.system.equipped)
           return ui.notifications.warn(game.i18n.format("CO.macro.itemNotEquipped", { name: itemName }))
         new CoChat(actor)
-          .withTemplate("systems/co/templates/chat/item-card.hbs")
+          .withTemplate("systems/co2/templates/chat/item-card.hbs")
           .withData({
             actorId: actor.id,
             id: itemChatData.id,
@@ -83,7 +83,7 @@ export default class Macros {
         if (item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.properties.equipable && !item.system.equipped)
           return ui.notifications.warn(game.i18n.format("CO.macro.itemNotEquipped", { name: itemName }))
         new CoChat(actor)
-          .withTemplate("systems/co/templates/chat/item-card.hbs")
+          .withTemplate("systems/co2/templates/chat/item-card.hbs")
           .withData({
             actorId: actor.id,
             id: itemChatData.id,

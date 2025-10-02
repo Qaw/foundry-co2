@@ -21,14 +21,14 @@ export default class COEncounterSheet extends COBaseActorSheet {
 
   /** @override */
   static PARTS = {
-    header: { template: "systems/co/templates/actors/encounter-header.hbs" },
-    sidebar: { template: "systems/co/templates/actors/encounter-sidebar.hbs" },
+    header: { template: "systems/co2/templates/actors/encounter-header.hbs" },
+    sidebar: { template: "systems/co2/templates/actors/encounter-sidebar.hbs" },
     tabs: { template: "templates/generic/tab-navigation.hbs" },
-    main: { template: "systems/co/templates/actors/encounter-main.hbs", templates: ["systems/co/templates/actors/shared/actions.hbs"] },
-    loot: { template: "systems/co/templates/actors/encounter-loot.hbs" },
-    paths: { template: "systems/co/templates/actors/shared/paths.hbs", templates: ["systems/co/templates/actors/shared/capacities-nopath.hbs"], scrollable: [""] },
-    effects: { template: "systems/co/templates/actors/shared/effects.hbs" },
-    notes: { template: "systems/co/templates/actors/encounter-notes.hbs" },
+    main: { template: "systems/co2/templates/actors/encounter-main.hbs", templates: ["systems/co2/templates/actors/shared/actions.hbs"] },
+    loot: { template: "systems/co2/templates/actors/encounter-loot.hbs" },
+    paths: { template: "systems/co2/templates/actors/shared/paths.hbs", templates: ["systems/co2/templates/actors/shared/capacities-nopath.hbs"], scrollable: [""] },
+    effects: { template: "systems/co2/templates/actors/shared/effects.hbs" },
+    notes: { template: "systems/co2/templates/actors/encounter-notes.hbs" },
   }
 
   /** @override */

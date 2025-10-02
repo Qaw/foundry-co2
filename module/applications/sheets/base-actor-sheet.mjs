@@ -142,7 +142,7 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
           }
         } else {
           capacity.linkedCapacityName = ""
-          capacity.linkedCapacityImg = "systems/co/ui/effects/question.webp"
+          capacity.linkedCapacityImg = "systems/co2/ui/effects/question.webp"
           capacity.linkedCapacityItem = null
         }
       }
@@ -339,7 +339,7 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     let itemChatData = item.getChatData(item, this.actor, chatType, indice)
 
     await new CoChat(this.actor)
-      .withTemplate("systems/co/templates/chat/item-card.hbs")
+      .withTemplate("systems/co2/templates/chat/item-card.hbs")
       .withData({
         actorId: this.actor.id,
         id: itemChatData.id,

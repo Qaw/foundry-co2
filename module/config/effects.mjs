@@ -41,7 +41,7 @@ export const CUSTOM_STATUS_EFFECT = [
   {
     id: "immobilized",
     name: "CO.customStatus.immobilized",
-    img: "systems/co/ui/effects/immobilized.webp",
+    img: "systems/co2/ui/effects/immobilized.webp",
     changes: [
       {
         key: "system.attribute.movment.base",
@@ -113,7 +113,7 @@ export const CUSTOM_STATUS_EFFECT = [
   {
     id: "outOfBreath",
     name: "CO.customStatus.outOfBreath",
-    img: "systems/co/ui/effects/breath.webp",
+    img: "systems/co2/ui/effects/breath.webp",
     changes: [
       {
         key: "system.attributes.movement.base",
@@ -141,7 +141,7 @@ export const CUSTOM_STATUS_EFFECT = [
   {
     id: "invalid",
     name: "CO.customStatus.invalid",
-    img: "systems/co/ui/effects/disably.webp",
+    img: "systems/co2/ui/effects/disably.webp",
     changes: [
       {
         key: "system.attributes.movement.bonuses.effects",
@@ -159,13 +159,13 @@ export const CUSTOM_STATUS_EFFECT = [
   {
     id: "slowed",
     name: "CO.customStatus.slowed",
-    img: "systems/co/ui/effects/slow.webp",
+    img: "systems/co2/ui/effects/slow.webp",
     description: "CO.customStatus.slowedDescription",
   },
   {
     id: "overturned",
     name: "CO.customStatus.overturned",
-    img: "systems/co/ui/effects/upsidedown.webp",
+    img: "systems/co2/ui/effects/upsidedown.webp",
     changes: [
       {
         key: "system.combat.melee.bonuses.effects",
@@ -193,7 +193,7 @@ export const CUSTOM_STATUS_EFFECT = [
   {
     id: "surprised",
     name: "CO.customStatus.surprised",
-    img: "systems/co/ui/effects/surprised.webp",
+    img: "systems/co2/ui/effects/surprised.webp",
     changes: [
       {
         key: "system.combat.def.bonuses.effects",
@@ -259,7 +259,7 @@ export const CUSTOM_STATUS_EFFECT = [
   {
     id: "partialDef",
     name: "CO.customStatus.partialDef",
-    img: "systems/co/ui/effects/partialdef.webp",
+    img: "systems/co2/ui/effects/partialdef.webp",
     changes: [
       {
         key: "system.combat.def.bonuses.effects",
@@ -272,7 +272,7 @@ export const CUSTOM_STATUS_EFFECT = [
   {
     id: "fullDef",
     name: "CO.customStatus.fullDef",
-    img: "systems/co/ui/effects/totaldef.webp",
+    img: "systems/co2/ui/effects/totaldef.webp",
     changes: [
       {
         key: "system.combat.def.bonuses.effects",

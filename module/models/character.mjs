@@ -901,7 +901,7 @@ export default class CharacterData extends ActorData {
     const hasLabelToolTip = labelTooltip !== undefined && labelTooltip !== null && labelTooltip !== ""
 
     new CoChat(this.parent)
-      .withTemplate("systems/co/templates/chat/healing-card.hbs")
+      .withTemplate("systems/co2/templates/chat/healing-card.hbs")
       .withData({
         actorId: this.id,
         title: game.i18n.localize(title),
