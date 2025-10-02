@@ -119,8 +119,8 @@ jobs:
             README.md                            \
             CHANGELOG.md                         \
             LICENSE                              \
-            css/                                 \  
-            lang/                                \                        
+            css/                                 \
+            lang/                                \
             module/                              \
             ui/                                  \
             templates/                           
