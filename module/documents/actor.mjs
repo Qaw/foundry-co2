@@ -1375,21 +1375,23 @@ export default class COActor extends Actor {
   async deletePath(pathUuid) {
     const { id } = foundry.utils.parseUuid(pathUuid)
     const path = this.items.get(id)
-    if (path) {
-      // Delete linked capacities
-      const capacitiesUuId = path.system.capacities
-      const toDeleteIds = capacitiesUuId.map((capacityUuid) => {
-        const { id } = foundry.utils.parseUuid(capacityUuid)
-        return id
-      })
-      toDeleteIds.push(path.id)
-      await this.deleteEmbeddedDocuments("Item", toDeleteIds)
-      // Suppression de la voie du local storage
-      const key = `co-${this.id}-paths-${path.system.slug}`
-      let stored = localStorage.getItem(key)
-      if (stored !== null) {
-        localStorage.removeItem(key)
-      }
+    if (!path) return
+
+    // Delete linked capacities
+    const capacitiesUuId = path.system.capacities
+    // Pour chaque uuid, on appelle la méthode deleteCapacity
+    for (const capacityUuid of capacitiesUuId) {
+      await this.deleteCapacity(capacityUuid)
+    }
+
+    // Suppression de la voie
+    await this.deleteEmbeddedDocuments("Item", [path.id])
+
+    // Suppression de la voie du local storage
+    const key = `co-${this.id}-paths-${path.system.slug}`
+    let stored = localStorage.getItem(key)
+    if (stored !== null) {
+      localStorage.removeItem(key)
     }
   }
 
@@ -1402,7 +1404,18 @@ export default class COActor extends Actor {
    */
   async deleteCapacity(capacityUuid) {
     const capacity = await fromUuid(capacityUuid)
-    // Avant on va vérifier que cette capacité n'est pas liée à une autre
+    if (!capacity) return
+
+    // Si la capacité a une capacité liée, on la supprime aussi
+    if (capacity.system.allowLinkedCapacity && capacity.system.linkedCapacity) {
+      const linkedCapacity = await fromUuid(capacity.system.linkedCapacity)
+      if (linkedCapacity) {
+        await this.deleteEmbeddedDocuments("Item", [linkedCapacity.id])
+      }
+    }
+
+    // On vérifie que cette capacité n'est pas liée à une autre
+    // Si c'est le cas, on enlève le lien
     for (const c of this.capacities) {
       if (c.system.linkedCapacity === capacityUuid) {
         c.system.linkedCapacity = null
@@ -1410,9 +1423,8 @@ export default class COActor extends Actor {
       }
     }
 
-    if (capacity) {
-      await this.deleteEmbeddedDocuments("Item", [capacity.id])
-    }
+    // Suppression de la capacité
+    await this.deleteEmbeddedDocuments("Item", [capacity.id])
   }
   // #endregion
 
