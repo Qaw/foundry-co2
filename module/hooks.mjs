@@ -29,7 +29,7 @@ import Utils from "./utils.mjs"
 export default function registerHooks() {
   Hooks.on("renderChatMessageHTML", (message, html, context) => {
     // Affiche ou non les boutons d'application des dommages
-    if (game.settings.get("co", "displayChatDamageButtonsToAll")) {
+    if (game.settings.get("co2", "displayChatDamageButtonsToAll")) {
       html.querySelectorAll(".apply-dmg").forEach((btn) => {
         btn.addEventListener("click", (ev) => Hitpoints.onClickChatMessageApplyButton(ev, html, context))
       })
@@ -49,7 +49,7 @@ export default function registerHooks() {
     }
 
     // Affiche ou non la difficulté
-    const displayDifficulty = game.settings.get("co", "displayDifficulty")
+    const displayDifficulty = game.settings.get("co2", "displayDifficulty")
     if (displayDifficulty === "none" || (displayDifficulty === "gm" && !game.user.isGM)) {
       html.querySelectorAll(".display-difficulty").forEach((elt) => {
         elt.remove()
@@ -136,7 +136,7 @@ export default function registerHooks() {
           await actor.update({ "system.resources.fortune.value": actor.system.resources.fortune.value })
         }
         // Si on a un succes et qu'en plus on est en option ou on jette automatiquement les dégats
-        if (newResult.isSuccess && game.settings.get("co", "useComboRolls")) {
+        if (newResult.isSuccess && game.settings.get("co2", "useComboRolls")) {
           const damageRoll = Roll.fromData(message.system.linkedRoll)
           await damageRoll.toMessage(
             { style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "action", system: { subtype: "damage" }, speaker: message.speaker },

@@ -989,7 +989,7 @@ export default class COActor extends Actor {
    */
   _hasEnoughFreeHands(item, bypassChecks) {
     // Si le contrôle de mains libres n'est pas demandé, renvoi true
-    let checkFreehands = game.settings.get("co", "checkFreeHandsBeforeEquip")
+    let checkFreehands = game.settings.get("co2", "checkFreeHandsBeforeEquip")
     if (!checkFreehands || checkFreehands === "none") return true
 
     // Si le contrôle est ignoré ponctuellement avec la touche MAJ, on renvoi Vrai
@@ -1500,7 +1500,7 @@ export default class COActor extends Actor {
 
     // Gestion de la difficulté
     const difficultyTooltip = difficulty
-    const displayDifficulty = game.settings.get("co", "displayDifficulty")
+    const displayDifficulty = game.settings.get("co2", "displayDifficulty")
     if (useDifficulty === undefined) {
       if (displayDifficulty === "none") {
         useDifficulty = false
@@ -1659,7 +1659,7 @@ export default class COActor extends Actor {
       rollMode = undefined,
       auto = false,
       type = "attack",
-      useComboRolls = game.settings.get("co", "useComboRolls"),
+      useComboRolls = game.settings.get("co2", "useComboRolls"),
       actionName = "",
       actionType = SYSTEM.ACTION_TYPES.melee.id,
       chatFlavor = "",
@@ -1757,7 +1757,7 @@ export default class COActor extends Actor {
     const difficultyTooltip = difficulty
     let oppositeRoll = false
     if (!auto && useDifficulty === undefined) {
-      const displayDifficulty = game.settings.get("co", "displayDifficulty")
+      const displayDifficulty = game.settings.get("co2", "displayDifficulty")
       if (displayDifficulty === "none") {
         useDifficulty = false
       } else {
@@ -1967,7 +1967,7 @@ export default class COActor extends Actor {
       )
 
       // Affichage du jet de dommages dans le cas d'un jet combiné, si ce n'est pas un jet opposé et que l'attaque est un succès
-      if (game.settings.get("co", "useComboRolls") && !rolls[0].options.oppositeRoll && results[0].isSuccess) {
+      if (game.settings.get("co2", "useComboRolls") && !rolls[0].options.oppositeRoll && results[0].isSuccess) {
         if (rolls[1])
           await rolls[1].toMessage(
             { style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "action", system: { subtype: "damage", targets: targetsUuid }, speaker },

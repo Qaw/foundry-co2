@@ -1,5 +1,7 @@
 # 1.0.7
 - Amélioration de la qualité de l'image du logo
+- Correction de la suppression des capacités liées (issue [#313](https://github.com/BlackBookEditions/foundry-co2/issues/313))
+- Correction des settings (suite changement id)
 
 # 1.0.6
 - Correctif sur les liens des compendiums

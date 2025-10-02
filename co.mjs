@@ -100,7 +100,7 @@ Hooks.once("init", async function () {
   }
 
   // Combat tracker
-  if (game.settings.get("co", "usevarInit")) {
+  if (game.settings.get("co2", "usevarInit")) {
     CONFIG.Combat.initiative = {
       formula: "1d6x + @combat.init.value",
       decimals: 0,
@@ -175,7 +175,7 @@ function registerWorldCount(registerKey) {
 
 Hooks.once("ready", async function () {
   if (!CONFIG.debug.co) {
-    if (game.settings.get("co", "debugMode")) {
+    if (game.settings.get("co2", "debugMode")) {
       CONFIG.debug.co = {
         hooks: true,
         resolvers: true,

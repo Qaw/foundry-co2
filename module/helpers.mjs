@@ -44,7 +44,7 @@ export default function registerHandlebarsHelpers() {
     return value >= 0
   })
   Handlebars.registerHelper("isEnabled", function (configKey) {
-    const value = game.settings.get("co", configKey)
+    const value = game.settings.get("co2", configKey)
     if (value === false || value === "none") return false
     return true
   })

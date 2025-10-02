@@ -108,7 +108,7 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
   async _prepareContext() {
     const context = await super._prepareContext()
 
-    context.debugMode = game.settings.get("co", "debugMode")
+    context.debugMode = game.settings.get("co2", "debugMode")
     context.fields = this.document.schema.fields
     context.systemFields = this.document.system.schema.fields
     context.systemSource = this.document.system._source
