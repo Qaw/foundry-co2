@@ -272,7 +272,7 @@ export const CUSTOM_STATUS_EFFECT = [
   {
     id: "fullDef",
     name: "CO.customStatus.fullDef",
-    img: "systems/co/ui/effects/totalDef.webp",
+    img: "systems/co/ui/effects/totaldef.webp",
     changes: [
       {
         key: "system.combat.def.bonuses.effects",
