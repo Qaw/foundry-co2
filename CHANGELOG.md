@@ -1,3 +1,6 @@
+# 1.0.7
+- Amélioration de la qualité de l'image du logo
+
 # 1.0.6
 - Correctif sur les liens des compendiums
 
