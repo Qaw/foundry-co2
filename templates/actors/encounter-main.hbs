@@ -1,5 +1,5 @@
 {{!-- Encounter Main Tab Template --}}
-{{log "Chroniques Oubliées | Encounter main" this}}
+{{!log "Chroniques Oubliées | Encounter main" this}}
 <section class="tab standard-form main{{#if tabs.main.active}} active{{/if}}" data-group="primary" data-tab="main">
     <!-- ATTACKS -->
     <div class="section-container attacks">
@@ -31,7 +31,7 @@
 
             <ol class="attacks-list strikes-list item-list">
                 {{#each attacks as |attack id|}}
-                    {{log "Chroniques Oubliées | attack" attack id}}
+                    {{!log "Chroniques Oubliées | attack" attack id}}
                     <li class="item attack flexrow" data-item-type="attack" data-item-uuid="{{attack.uuid}}"
                         data-item-id="{{attack.id}}" draggable="false">
                         <div class="attack-header">
