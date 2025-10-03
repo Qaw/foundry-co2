@@ -196,7 +196,7 @@ Hooks.once("ready", async function () {
   }
 
   // Statistics
-  registerWorldCount("co")
+  registerWorldCount("co2")
 
   console.info(Utils.log(game.i18n.localize("CO.notif.ready")))
 })
