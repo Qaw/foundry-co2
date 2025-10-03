@@ -1,3 +1,7 @@
+# 1.0.8
+- Modifiers : correction de l'évaluation pour des formules plus complexes
+- Correction de la clé du système pour les statistiques
+
 # 1.0.7
 - Amélioration de la qualité de l'image du logo
 - Correction de la suppression des capacités liées (issue [#313](https://github.com/BlackBookEditions/foundry-co2/issues/313))

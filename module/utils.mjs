@@ -45,17 +45,18 @@ export default class Utils {
    */
   static evaluateCoModifier(actor, formula, source) {
     if (formula === "" || formula.match("\\d+[d|D]\\d+")) return 0
+
+    let newFormula = formula
     // Formule avec des raccourcis
     if (formula.includes("@")) {
-      let newFormula = Utils.evaluateFormulaCustomValues(actor, formula, source)
+      newFormula = Utils.evaluateFormulaCustomValues(actor, formula, source)
       newFormula = Roll.replaceFormulaData(newFormula, actor.getRollData())
-      return eval(newFormula)
     }
 
-    // Un simple chiffre
-    const resultat = parseInt(formula)
-    if (isNaN(resultat)) return 0
-    return resultat
+    // Evalue le résultat final : la formule évaluée peut être "1" ou "--1+2"
+    const resultat = new Roll(newFormula).evaluateSync().total
+    if (resultat) return resultat
+    return 0
   }
 
   /**
