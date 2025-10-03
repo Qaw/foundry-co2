@@ -1,6 +1,7 @@
 # 1.0.8
 - Modifiers : correction de l'évaluation pour des formules plus complexes
 - Correction de la clé du système pour les statistiques
+- Amélioration pour permettre l'édition de l'image des acteurs par le module Tokenizer
 
 # 1.0.7
 - Amélioration de la qualité de l'image du logo

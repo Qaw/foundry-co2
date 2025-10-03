@@ -1,7 +1,7 @@
 {{!log "Chroniques Oubliées | Encounter header" this}}
 <header class="sheet-header">
   <div class="image-container">
-    <img class="actor-img {{#if unlocked}}resetImage{{/if}}"src="{{actor.img}}" {{#if unlocked}}data-action="editImage"{{/if}} data-tooltip="{{actor.name}}" />
+    <img class="actor-img {{#if unlocked}}resetImage{{/if}}"src="{{actor.img}}" {{#if unlocked}}data-action="editImage" data-edit="img"{{/if}} data-tooltip="{{actor.name}}" />
   </div>
   {{#if unlocked}}
     <input class="name" name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'CO.label.long.name'}}" spellcheck="false" />
