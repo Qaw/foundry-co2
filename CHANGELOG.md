@@ -1,3 +1,6 @@
+# 1.0.9
+- Correction des id des flags (suite changement id)
+
 # 1.0.8
 - Modifiers : correction de l'évaluation pour des formules plus complexes
 - Correction de la clé du système pour les statistiques

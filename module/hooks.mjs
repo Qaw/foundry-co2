@@ -264,10 +264,10 @@ export default function registerHooks() {
       // Si déjà affaibli le statut est supprimé
       if (document.statuses.has("weakened")) {
         document.toggleStatusEffect("weakened", { active: false })
-        document.unsetFlag("co", "statuses.weakenedFromOneHP")
+        document.unsetFlag("co2", "statuses.weakenedFromOneHP")
       }
       document.toggleStatusEffect("unconscious", { active: true })
-      document.setFlag("co", "statuses.unconsciousFromZeroHP", true)
+      document.setFlag("co2", "statuses.unconsciousFromZeroHP", true)
       document.system.spendDR(1)
     }
 
