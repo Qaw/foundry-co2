@@ -31,7 +31,7 @@
             <div class="capacity-list list-3col foldable">
                 {{#each capacities as |item id|}}
                     {{!log 'capacity' item id}}
-                    <div class="cell center item" data-uuid="{{item.uuid}}" data-item-type="capacity">
+                    <div class="cell center item" data-action="editItem" data-uuid="{{item.uuid}}" data-item-type="capacity">
                         <a class="item-control item-edit"><img class="inline-img" src="{{item.img}}" data-tooltip="{{item.name}}" /></a>
                     </div>
                     <div class="cell left">
@@ -54,7 +54,7 @@
             <div class="path-list list-3col foldable">
                 {{#each paths as |item id|}}
                     {{!log 'path' item id}}
-                    <div class="cell center item" data-uuid="{{item.uuid}}" data-item-type="path">
+                    <div class="cell center item" data-action="editItem" data-uuid="{{item.uuid}}" data-item-type="path">
                         <a class="item-control item-edit"><img class="inline-img" src="{{item.img}}" data-tooltip="{{item.name}}" /></a>
                     </div>
                     <div class="cell left">

@@ -48,7 +48,7 @@
             <div class="path-list list-3col foldable">
                 {{#each paths as |path id|}}
                     {{!log 'path' path id}}
-                    <div class="cell center item" data-uuid="{{path.uuid}}" data-item-type="path">
+                    <div class="cell center item" data-action="editItem" data-uuid="{{path.uuid}}" data-item-type="path">
                         <a class="item-control item-edit"><img class="inline-img" src="{{path.img}}" data-tooltip="{{localize 'CO.label.long.edit'}}" /></a>
                     </div>
                     <div class="cell left">
