@@ -753,7 +753,11 @@
       "rechargeable": "Charges et Munitions",
       "PoidsValeur": "Poids et Valeur",
       "equip": "Équipé ?",
-      "noneModif": "Aucun modificateur"
+      "noneModif": "Aucun modificateur",
+      "decrease": "Diminuer",
+      "increase": "Augmenter",
+      "increaseQuantity": "Augmenter la quantité",
+      "increaseCharges": "Augmenter les charges/munitions"
     },
     "properties": {
       "attack": "Attaque",
@@ -944,8 +948,10 @@
       "unequip": "Déséquiper",
       "consume": "Consommer",
       "noConsume": "Rien à consommer",
-      "charge": "Il reste {charges} charge(s)/munition(s)",
-      "noCharge": "Plus de charges/munitions"
+      "charge": "Il reste {charges} charge(s)/munition(s) sur {maxCharges}",
+      "noCharge": "Plus de charges/munitions",
+      "quantity": "Il reste {quantity} objet(s) sur {maxQuantity}",
+      "noQuantity": "Plus d'objets"
     },
     "condition": {
       "objects": {

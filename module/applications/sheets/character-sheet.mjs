@@ -22,8 +22,10 @@ export default class COCharacterSheet extends COBaseActorSheet {
       attack: COCharacterSheet.#onUseAction,
       damage: COCharacterSheet.#onUseAction,
       inventoryEquip: COCharacterSheet.#onEquippedToggle,
-      consumeItem: COCharacterSheet.#onConsume,
-      consumeCharge: COCharacterSheet.#onConsume,
+      decreaseItem: COCharacterSheet.#onDecrease,
+      decreaseCharge: COCharacterSheet.#onDecrease,
+      increaseItem: COCharacterSheet.#onIncrease,
+      increaseCharge: COCharacterSheet.#onIncrease,
       useRecovery: COCharacterSheet.#onUseRecovery,
       openMiniSheet: COCharacterSheet.#onOpenMiniSheet,
       rollFortune: COCharacterSheet.#onRollFortune,
@@ -125,19 +127,36 @@ export default class COCharacterSheet extends COBaseActorSheet {
   }
 
   /**
-   * Action de consommation de charge ou de ressource
+   * Action de diminution de charge ou de quantité
    * @param {PointerEvent} event The originating click event
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
-  static async #onConsume(event, target) {
+  static async #onDecrease(event, target) {
     event.preventDefault()
     const item = this.document.items.get(target.dataset.itemId)
-    if (target.dataset.action === "consumeItem") {
+    if (target.dataset.action === "decreaseItem") {
       item.system.quantity.current -= 1
       await item.update({ "system.quantity.current": item.system.quantity.current })
-    } else if (target.dataset.action === "consumeCharge") {
-        item.system.charges.current -= 1
-        await item.update({ "system.charges.current": item.system.charges.current })
+    } else if (target.dataset.action === "decreaseCharge") {
+      item.system.charges.current -= 1
+      await item.update({ "system.charges.current": item.system.charges.current })
+    }
+  }
+
+  /**
+   * Action d'augmentation de charge ou de ressource
+   * @param {PointerEvent} event The originating click event
+   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
+   */
+  static async #onIncrease(event, target) {
+    event.preventDefault()
+    const item = this.document.items.get(target.dataset.itemId)
+    if (target.dataset.action === "increaseItem") {
+      item.system.quantity.current += 1
+      await item.update({ "system.quantity.current": item.system.quantity.current })
+    } else if (target.dataset.action === "increaseCharge") {
+      item.system.charges.current += 1
+      await item.update({ "system.charges.current": item.system.charges.current })
     }
   }
 
