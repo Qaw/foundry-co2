@@ -269,19 +269,6 @@ export default class COCharacterSheet extends COBaseActorSheet {
   }
 
   /**
-   * Deletes a feature from the actor.
-   *
-   * @param {PointerEvent} event The originating click event
-   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
-   * @param {string} itemUuid The UUID of the item to be deleted.
-   * @returns {Promise<void>} A promise that resolves when the feature is deleted.
-   */
-  static async #onDeleteFeature(event, target, itemUuid) {
-    event.preventDefault()
-    await this.document.deleteFeature(itemUuid)
-  }
-
-  /**
    * Edit Abilities event handler
    * @param {PointerEvent} event The originating click event
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
