@@ -143,23 +143,23 @@
                 <div class="flexrow">
                     {{#if (or isWeapon isArmor isShield isMisc)}}
                         <label>
-                            <input type="checkbox" name="system.properties.equipable" {{checked systemSource.properties.equipable}} {{#if @root.locked}}disabled{{/if}}/>
+                            <input type="checkbox" name="system.properties.equipable" {{checked systemSource.properties.equipable}} {{#if @root.locked}}readonly{{/if}}/>
                             {{systemFields.properties.fields.equipable.label}}
                         </label>
                     {{/if}}
                     {{#if isWeapon}}
                         <label>
-                            <input type="checkbox" name="system.properties.reloadable" {{checked systemSource.properties.reloadable}} {{#if @root.locked}}disabled{{/if}}/>
+                            <input type="checkbox" name="system.properties.reloadable" {{checked systemSource.properties.reloadable}} {{#if @root.locked}}readonly{{/if}}/>
                             {{systemFields.properties.fields.reloadable.label}}
                         </label>
                         <label>
-                            <input type="checkbox" name="system.properties.stackable" {{checked systemSource.properties.stackable}} {{#if @root.locked}}disabled{{/if}}/>
+                            <input type="checkbox" name="system.properties.stackable" {{checked systemSource.properties.stackable}} {{#if @root.locked}}readonly{{/if}}/>
                             {{systemFields.properties.fields.stackable.label}}
                         </label>
                     {{/if}}
                     {{#if (or isConsumable isMisc)}}
                         <label>
-                            <input type="checkbox" name="system.properties.stackable" {{checked systemSource.properties.stackable}} {{#if @root.locked}}disabled{{/if}}/>
+                            <input type="checkbox" name="system.properties.stackable" {{checked systemSource.properties.stackable}} {{#if @root.locked}}readonly{{/if}}/>
                             {{systemFields.properties.fields.stackable.label}}
                         </label>
                     {{/if}}
@@ -172,11 +172,11 @@
                     <legend>{{localize "CO.ui.usage"}}</legend>
                     <div class="flexrow">
                         <label>
-                            <input type="checkbox" name="system.usage.oneHand" {{checked systemSource.usage.oneHand}} {{#if @root.locked}}disabled{{/if}}/>
+                            <input type="checkbox" name="system.usage.oneHand" {{checked systemSource.usage.oneHand}} {{#if @root.locked}}readonly{{/if}}/>
                             {{systemFields.usage.fields.oneHand.label}}
                         </label>
                         <label>
-                            <input type="checkbox" name="system.usage.twoHand" {{checked systemSource.usage.twoHand}} {{#if @root.locked}}disabled{{/if}}/>
+                            <input type="checkbox" name="system.usage.twoHand" {{checked systemSource.usage.twoHand}} {{#if @root.locked}}readonly{{/if}}/>
                             {{systemFields.usage.fields.twoHand.label}}
                         </label>
                     </div>

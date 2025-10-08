@@ -69,27 +69,27 @@
                                     {{#if @root.debugMode}}
                                     <div class="flexrow">
                                         <label>
-                                            <input type="checkbox" name="{{concat 'system.actions.' idx '.properties.visible'}}" {{checked action.properties.visible}} {{#if @root.locked}}disabled{{/if}}/>
+                                            <input type="checkbox" name="{{concat 'system.actions.' idx '.properties.visible'}}" {{checked action.properties.visible}} {{#if @root.locked}}readonly{{/if}}/>
                                             {{action.schema.fields.properties.fields.visible.label}}
                                         </label>
                                         <label>
-                                            <input type="checkbox" name="{{concat 'system.actions.' idx '.properties.enabled'}}" {{checked action.properties.enabled}} {{#if @root.locked}}disabled{{/if}} />
+                                            <input type="checkbox" name="{{concat 'system.actions.' idx '.properties.enabled'}}" {{checked action.properties.enabled}} {{#if @root.locked}}readonly{{/if}} />
                                             {{action.schema.fields.properties.fields.enabled.label}}
                                         </label>
                                     </div>
                                     {{/if}}
                                     <div class="flexrow">
                                         <label>
-                                            <input type="checkbox" name="{{concat 'system.actions.' idx '.properties.activable'}}" {{checked action.properties.activable}} {{#if @root.locked}}disabled{{/if}} />
+                                            <input type="checkbox" name="{{concat 'system.actions.' idx '.properties.activable'}}" {{checked action.properties.activable}} {{#if @root.locked}}readonly{{/if}} />
                                             {{action.schema.fields.properties.fields.activable.label}}
                                         </label>
                                         <label>
-                                            <input type="checkbox" name="{{concat 'system.actions.' idx '.properties.temporary'}}" {{checked action.properties.temporary}} {{#if @root.locked}}disabled{{/if}} />
+                                            <input type="checkbox" name="{{concat 'system.actions.' idx '.properties.temporary'}}" {{checked action.properties.temporary}} {{#if @root.locked}}readonly{{/if}} />
                                             {{action.schema.fields.properties.fields.temporary.label}}
                                         </label>
                                         {{#if (and (eq ../itemType 'capacity') ../system.isSpell) }}
                                         <label>
-                                            <input type="checkbox" name="{{concat 'system.actions.' idx '.properties.noManaCost'}}" {{checked action.properties.noManaCost}} {{#if @root.locked}}disabled{{/if}} />
+                                            <input type="checkbox" name="{{concat 'system.actions.' idx '.properties.noManaCost'}}" {{checked action.properties.noManaCost}} {{#if @root.locked}}readonly{{/if}} />
                                             {{action.schema.fields.properties.fields.noManaCost.label}}
                                         </label>
                                         {{/if}}
