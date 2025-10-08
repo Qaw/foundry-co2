@@ -51,6 +51,30 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
    */
   _sheetMode = this.constructor.SHEET_MODES.PLAY
 
+  /**
+   * Is the sheet currently in 'Play' mode?
+   * @type {boolean}
+   */
+  get isPlayMode() {
+    return this._sheetMode === this.constructor.SHEET_MODES.PLAY
+  }
+
+  /**
+   * Is the sheet currently in 'Edit' mode?
+   * @type {boolean}
+   */
+  get isEditMode() {
+    return this._sheetMode === this.constructor.SHEET_MODES.EDIT
+  }
+
+  get isLimitedView() {
+    return this.document.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED)
+  }
+
+  get isObserverView() {
+    return this.document.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)
+  }
+
   /** @inheritDoc */
   async _onRender(context, options) {
     await super._onRender(context, options)
@@ -88,22 +112,6 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     }
   }
 
-  /**
-   * Is the sheet currently in 'Play' mode?
-   * @type {boolean}
-   */
-  get isPlayMode() {
-    return this._sheetMode === this.constructor.SHEET_MODES.PLAY
-  }
-
-  /**
-   * Is the sheet currently in 'Edit' mode?
-   * @type {boolean}
-   */
-  get isEditMode() {
-    return this._sheetMode === this.constructor.SHEET_MODES.EDIT
-  }
-
   /** @override */
   async _prepareContext() {
     const context = await super._prepareContext()
@@ -118,6 +126,11 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     context.darkVisionActivation = this.document.system.hasDarkVisionActivated
     context.darkVisionShow = this.document.system.hasDarkVisionModifier
     context.isCharacter = this.document.type === "character"
+
+    context.unlocked = this.isEditMode
+    context.locked = this.isPlayMode
+    context.viewLimited = this.isLimitedView
+    context.viewObserver = this.isObserverView
 
     context.abilities = this.document.system.abilities
     context.combat = this.document.system.combat
@@ -178,8 +191,6 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
       currenciesExpanded = true
     }
     context.currenciesExpanded = currenciesExpanded
-    context.unlocked = this.isEditMode
-    context.locked = this.isPlayMode
 
     context.visibleActions = await this.document.getVisibleActions()
     context.visibleActivableActions = await this.document.getVisibleActivableActions()
@@ -196,6 +207,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseActorSheet - context`), context)
     return context
   }
+
+  // #region Actions
 
   /**
    * Active desactive la vision dans le noir
@@ -300,11 +313,10 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
    * Manage the lock/unlock button on the sheet
    * @param {PointerEvent} event   The originating click event
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
-   * @param {COBaseActorSheet} sheet The sheet instance
    */
   static async #onSheetChangeLock(event, target) {
     event.preventDefault()
-    const modes = sheet.constructor.SHEET_MODES
+    const modes = this.constructor.SHEET_MODES
     this._sheetMode = this.isEditMode ? modes.PLAY : modes.EDIT
     this.render()
   }
@@ -545,6 +557,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     if (!hasEffect && state === true) return await this.actor.toggleStatusEffect(effect, state)
   }
 
+  // #endregion
+
   // #region Drag-and-Drop Workflow
 
   /** @inheritDoc */
@@ -554,6 +568,7 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
 
   // #endregion
 
+  // #region Lock/unlock button
   /**
    * Manage the lock/unlock button on the sheet
    * @param {Event} event
@@ -590,4 +605,6 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
       toggle.remove()
     }
   }
+
+  // #endregion
 }

@@ -41,7 +41,6 @@ export class Modifier extends foundry.abstract.DataModel {
    * @returns {int|string} The result of the evaluation.
    */
   evaluate(actor, withDiceValue = false) {
-    console.log("evaluate dice ? ", withDiceValue)
     return withDiceValue ? Utils.evaluateCoModifierWithDiceValue(actor, this.value, this.source) : Utils.evaluateCoModifier(actor, this.value, this.source)
   }
 
