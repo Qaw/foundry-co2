@@ -2992,6 +2992,12 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor.character-mini .window-content .mini-sidebar .fa-heart-broken {
   color: var(--color-damages);
 }
+.co select.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+  background-color: #847E87;
+  cursor: not-allowed;
+}
 #interface #ui-left {
   padding: 0;
 }
