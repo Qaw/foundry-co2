@@ -67,11 +67,10 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     return this._sheetMode === this.constructor.SHEET_MODES.EDIT
   }
 
-  get isLimitedView() {
-    return this.document.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED)
-  }
+  // Nativement isVisible teste le droit LIMITED
+  // Nativement isEditable teste le droit OWNER
 
-  get isObserverView() {
+  get isObserver() {
     return this.document.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)
   }
 
@@ -129,8 +128,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
 
     context.unlocked = this.isEditMode
     context.locked = this.isPlayMode
-    context.viewLimited = this.isLimitedView
-    context.viewObserver = this.isObserverView
+    context.viewLimited = this.isVisible && !this.isObserver && !this.isEditable
+    context.viewObserver = this.isObserver
 
     context.abilities = this.document.system.abilities
     context.combat = this.document.system.combat
