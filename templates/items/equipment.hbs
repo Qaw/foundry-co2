@@ -80,7 +80,7 @@
                 <div class="form-group">
                     <label>{{localize "CO.label.long.subtype"}}</label>
                     <div class="form-fields">
-                        <select name="system.subtype" data-type="String" {{#if @root.locked}}disabled{{/if}}>
+                        <select name="system.subtype" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
                             {{selectOptions @root.choiceEquipmentSubTypes selected=system.subtype localize=true disabled=locked}}
                         </select>
                     </div>
@@ -92,15 +92,15 @@
                         <label>{{localize "CO.label.long.martialCategory"}}</label>
                         <div class="form-fields">
                             {{#if isWeapon}}
-                            <select name="system.martialCategory" data-type="String" {{#if @root.locked}}disabled{{/if}}>
+                            <select name="system.martialCategory" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
                                 {{selectOptions martialTrainingsWeaponsList selected=systemSource.martialCategory localize=true disabled=locked}}
                             </select>
                             {{else if isArmor}}
-                            <select name="system.martialCategory" data-type="String" {{#if @root.locked}}disabled{{/if}}>
+                            <select name="system.martialCategory" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
                                 {{selectOptions martialTrainingsArmorsList selected=systemSource.martialCategory localize=true disabled=locked}}
                             </select>
                             {{else if isShield}}
-                            <select name="system.martialCategory" data-type="String" {{#if @root.locked}}disabled{{/if}}>
+                            <select name="system.martialCategory" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
                                 {{selectOptions martialTrainingsShieldsList selected=systemSource.martialCategory localize=true disabled=locked}}
                             </select>
                             {{/if}}
@@ -113,7 +113,7 @@
                     <div class="form-group">
                         <label>{{localize "CO.label.long.damagetype"}}</label>
                         <div class="form-fields">
-                            <select name="system.damagetype" data-type="String" {{#if @root.locked}}disabled{{/if}}>
+                            <select name="system.damagetype" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
                                 {{selectOptions choiceDamageType selected=systemSource.damagetype localize=true disabled=locked}}
                             </select>
                         </div>

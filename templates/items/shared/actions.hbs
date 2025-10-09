@@ -48,7 +48,7 @@
                                 <div class="form-group">
                                     <label>{{localize "CO.ui.type"}}</label>
                                     <div class="form-fields">
-                                        <select name="system.actions.{{idx}}.type" data-type="String" style="width:100%" {{#if @root.locked}}disabled{{/if}}>
+                                        <select name="system.actions.{{idx}}.type" data-type="String" style="width:100%" class="{{#if @root.locked}}disabled{{/if}}">
                                             {{selectOptions @root.choiceActionTypes selected=action.type localize=true}}
                                         </select>
                                     </div>
@@ -56,7 +56,7 @@
                                 <div class="form-group">
                                     <label>{{localize "CO.ui.typeFrequencyShort"}}</label>
                                     <div class="form-fields">
-                                        <select name="system.actions.{{idx}}.actionType" data-type="String" style="width:100%" {{#if @root.locked}}disabled{{/if}}>
+                                        <select name="system.actions.{{idx}}.actionType" data-type="String" style="width:100%" class="{{#if @root.locked}}disabled{{/if}}">
                                             {{selectOptions @root.choiceActionFrequency selected=action.actionType localize=true}}
                                         </select>
                                     </div>
