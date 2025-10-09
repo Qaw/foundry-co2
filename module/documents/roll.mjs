@@ -166,7 +166,8 @@ export class COSkillRoll extends CORoll {
       formula = `${rollContext.formula}`
       if (parseInt(rollContext.bonus) > 0) formula += `+${parseInt(rollContext.bonus)}`
       if (parseInt(rollContext.malus) !== 0) formula += `-${parseInt(Math.abs(rollContext.malus))}`
-      if (parseInt(rollContext.totalSkillBonuses) !== 0) formula += `+${parseInt(rollContext.totalSkillBonuses)}`
+      const totalSkillBonuses = parseInt(rollContext.totalSkillBonuses)
+      if (totalSkillBonuses) formula += `${totalSkillBonuses > 0 ? "+" : ""}${totalSkillBonuses}`
     }
     // Pas de prompt
     else {
@@ -176,8 +177,9 @@ export class COSkillRoll extends CORoll {
       else if (dice === "malus") diceFormula = "2d20kl"
       formula = `${diceFormula}+${parseInt(dialogContext.skillValue)}`
       if (parseInt(dialogContext.bonus) !== 0) formula += `+${parseInt(dialogContext.bonus)}`
-      if (parseInt(dialogContext.malus) !== 0) formula += `+${parseInt(Math.abs(dialogContext.malus))}`
-      if (parseInt(dialogContext.totalSkillBonuses) !== 0) formula += `+${parseInt(dialogContext.totalSkillBonuses)}`
+      if (parseInt(dialogContext.malus) !== 0) formula += `-${parseInt(Math.abs(dialogContext.malus))}`
+      const totalSkillBonuses = parseInt(dialogContext.totalSkillBonuses)
+      if (totalSkillBonuses) formula += `${totalSkillBonuses > 0 ? "+" : ""}${totalSkillBonuses}`
     }
 
     formula = Utils.evaluateFormulaCustomValues(dialogContext.actor, formula)
@@ -212,7 +214,7 @@ export class COSkillRoll extends CORoll {
     let item = event.currentTarget.closest(".bonus-item")
     item.classList.toggle("checked")
     let total = this._calculateTotalSkillBonus(event)
-    document.querySelector("#totalSkillBonuses").value = `+${total}`
+    document.querySelector("#totalSkillBonuses").value = `${total >= 0 ? "+" : ""}${total}`
   }
 
   static _calculateTotalSkillBonus(event) {
