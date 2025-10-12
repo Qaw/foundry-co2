@@ -15,7 +15,7 @@
             <div class="form-group">
                 <label>{{localize "CO.label.long.subtype"}}</label>
                 <div class="form-fields">
-                    <select name="system.subtype" data-type="String" style="width:100%" {{#if locked}}disabled{{/if}}>
+                    <select name="system.subtype" data-type="String" style="width:100%" class="{{#if locked}}disabled{{/if}}">
                         {{selectOptions @root.choicePathSubtypes selected=system.subtype localize=true}}
                     </select>
                 </div>

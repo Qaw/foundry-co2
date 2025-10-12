@@ -46,7 +46,7 @@
         <div class="form-group">
             <label>{{localize "CO.ui.size"}}</label>
             <div class="form-fields">
-                <select data-action="sizeChange" name="system.details.size" data-type="String" {{#unless unlocked}}disabled{{/unless}} style="width:100%" >
+                <select data-action="sizeChange" name="system.details.size" data-type="String" class="{{#unless unlocked}}disabled{{/unless}}" style="width:100%" >
                     {{selectOptions choiceSize selected=details.size localize=true}}
                 </select>
             </div>

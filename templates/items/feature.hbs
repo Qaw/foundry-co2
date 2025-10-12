@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <label>{{localize "CO.label.long.subtype"}}</label>
                     <div class="form-fields">
-                        <select name="system.subtype" data-type="String" {{#if locked}}disabled{{/if}}>
+                        <select name="system.subtype" data-type="String" class="{{#if locked}}disabled{{/if}}">
                             {{selectOptions choiceFeatureSubtypes selected=systemSource.subtype localize=true}}
                         </select>
                     </div>
@@ -88,10 +88,10 @@
                 <input name="system.modifiers.{{id}}.type" type="hidden" value="{{m.type}}" data-dtype="String" {{#if @root.locked}}readonly{{/if}}/>
                 <input name="system.modifiers.{{id}}.source" type="hidden" value="{{m.source}}" data-dtype="String" {{#if @root.locked}}readonly{{/if}}/>
                 <div class="form-fields modifier flexrow" data-item-id="{{id}}" data-item-type="modifier">
-                    <select name="system.modifiers.{{id}}.subtype" data-type="String" {{#if @root.locked}}disabled{{/if}}>
+                    <select name="system.modifiers.{{id}}.subtype" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
                         {{selectOptions @root.choiceModifierSubtypes selected=m.subtype localize=true}}
                     </select>
-                    <select name="system.modifiers.{{id}}.target" data-type="String" {{#if @root.locked}}disabled{{/if}}>
+                    <select name="system.modifiers.{{id}}.target" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
                         {{#if (eq m.subtype 'ability')}}
                             {{selectOptions @root.choiceModifierAbilityTargets selected=m.target localize=true}}
                         {{/if}}
