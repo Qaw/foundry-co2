@@ -3,7 +3,7 @@
   <div class="form-group-stacked type">
     <label>{{localize "CO.ui.type"}}</label>
     <div class="form-fields">
-      <select name="system.actions.{{idx}}.resolvers.{{id}}.type" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
+      <select name="system.actions.{{idx}}.resolvers.{{id}}.type" data-type="String" {{#if @root.locked}}class="disabled"{{/if}}>
         {{selectOptions @root.choiceResolverTypes selected=r.type localize=true}}
       </select>
       {{#if (eq r.type @root.choiceResolverTypes.attack.id)}}
@@ -61,14 +61,14 @@
         <span>{{localize "CO.ui.target"}}</span>
       </label>
       <div class="form-fields">
-        <select name="system.actions.{{idx}}.resolvers.{{id}}.target.type" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
+        <select name="system.actions.{{idx}}.resolvers.{{id}}.target.type" data-type="String" {{#if @root.locked}}class="disabled"{{/if}}>
           {{selectOptions @root.choiceResolverTargets selected=r.target.type localize=true}}
         </select>
         {{#if (eq r.target.type "multiple")}}
           <input class="center-input" name="system.actions.{{idx}}.resolvers.{{id}}.target.number" type="text" value="{{r.target.number}}" data-dtype="String" data-tooltip={{localize "CO.resolver.target.number"}} {{#if @root.locked}}readonly{{/if}}>
         {{/if}}
         {{#if (or (eq r.target.type "single") (eq r.target.type "multiple"))}}
-          <select name="system.actions.{{idx}}.resolvers.{{id}}.target.scope" data-type="String" data-tooltip={{localize "CO.resolver.scope.title"}} class="{{#if @root.locked}}disabled{{/if}}">
+          <select name="system.actions.{{idx}}.resolvers.{{id}}.target.scope" data-type="String" data-tooltip={{localize "CO.resolver.scope.title"}} {{#if @root.locked}}class="disabled"{{/if}}>
             {{selectOptions @root.choiceResolverScopes selected=r.target.scope localize=true}}
           </select>
         {{/if}}
@@ -79,13 +79,13 @@
 {{#unless (eq r.type @root.choiceResolverTypes.consumable.id)}}
     <div class="form-group effects">
       <label class="checkbox">
-        <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.active" {{checked r.additionalEffect.active}} {{#if @root.locked}}disabled{{/if}}/>
+        <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.active" {{checked r.additionalEffect.active}} {{#if @root.locked}}class="disabled"{{/if}}/>
         {{localize "CO.resolver.additionalEffect.active"}}
       </label>
       <div class="form-fields">
         {{#if r.additionalEffect.active}}
           <span>{{localize "CO.resolver.additionalEffect.applyOn"}}</span>
-          <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.applyOn" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
+          <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.applyOn" data-type="String" {{#if @root.locked}}class="disabled"{{/if}}>
             {{#if (eq r.type @root.choiceResolverTypes.attack.id)}}
               {{selectOptions @root.choiceResolverApplyOn selected=r.additionalEffect.applyOn localize=true}}
             {{else}}
@@ -117,11 +117,11 @@
           </span>
         </label>
         <div class="form-fields">
-          <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.formulaType" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
+          <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.formulaType" data-type="String" {{#if @root.locked}}class="disabled"{{/if}}>
             {{selectOptions @root.choiceResolverEffectFormulaTypes selected=r.additionalEffect.formulaType localize=true}}
           </select>
           <input class="center-input" name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.formula" type="text" value="{{r.additionalEffect.formula}}" data-dtype="String" {{#if @root.locked}}readonly{{/if}} />
-          <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.elementType" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
+          <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.elementType" data-type="String" {{#if @root.locked}}class="disabled"{{/if}}>
             {{selectOptions @root.choiceResolverEffectElementTypes selected=r.additionalEffect.elementType localize=true blank=""}}
           </select>
         </div>
@@ -154,7 +154,7 @@
             data-dtype="String"
             {{#if @root.locked}}readonly{{/if}}
           />
-          <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.unit" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
+          <select name="system.actions.{{idx}}.resolvers.{{id}}.additionalEffect.unit" data-type="String" {{#if @root.locked}}class="disabled"{{/if}}>
             {{selectOptions @root.choiceResolverEffectDurationUnit selected=r.additionalEffect.unit localize=true}}
           </select>
         </div>

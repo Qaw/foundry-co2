@@ -8,7 +8,7 @@
         <div class="form-group-stacked">
             {{#each action.conditions as |c id|}}
                 <div class="form-fields condition" data-item-id="{{id}}" data-action-id="{{../idx}}" data-item-type="condition">
-                    <select name="system.actions.{{../idx}}.conditions.{{id}}.predicate" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
+                    <select name="system.actions.{{../idx}}.conditions.{{id}}.predicate" data-type="String" {{#if @root.locked}}class="disabled"{{/if}}>
                         {{selectOptions @root.choiceConditionPredicates selected=c.predicate localize=true}}
                     </select>
                 {{#if (eq c.predicate "isLinkedActionActivated")}}

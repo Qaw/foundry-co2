@@ -644,6 +644,7 @@
       "customEffects": "Personnalisés",
       "visible": "Visible",
       "conditions": "Conditions",
+      "conditionLiee": "Indice de l'action à l'origine (commence à 0)",
       "subject": "Sujet",
       "predicate": "Prédicat",
       "target": "Cible",

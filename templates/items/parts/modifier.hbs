@@ -4,12 +4,12 @@
 
 <div class="modifier" data-item-id="{{id}}" data-action-id="{{idx}}" data-item-type="modifier">
   <div class="form-group">
-    <select name="system.actions.{{idx}}.modifiers.{{id}}.subtype" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
+    <select name="system.actions.{{idx}}.modifiers.{{id}}.subtype" data-type="String" {{#if @root.locked}}class="disabled"{{/if}}>
       {{selectOptions @root.choiceModifierSubtypes selected=m.subtype localize=true}}
     </select>
   </div>
   <div class="form-group">
-    <select name="system.actions.{{idx}}.modifiers.{{id}}.target" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
+    <select name="system.actions.{{idx}}.modifiers.{{id}}.target" data-type="String" {{#if @root.locked}}class="disabled"{{/if}}>
       {{#if (eq m.subtype "ability")}}
         {{selectOptions @root.choiceModifierAbilityTargets selected=m.target localize=true}}
       {{/if}}
@@ -41,7 +41,7 @@
   </div>
   <div class="form-group">
     <label>{{localize "CO.ui.target"}}</label>
-    <select name="system.actions.{{idx}}.modifiers.{{id}}.apply" data-type="String" class="{{#if @root.locked}}disabled{{/if}}">
+    <select name="system.actions.{{idx}}.modifiers.{{id}}.apply" data-type="String" {{#if @root.locked}}class="disabled"{{/if}}>
       {{selectOptions @root.choiceModifierApplies selected=m.apply localize=true}}
     </select>
   </div>
