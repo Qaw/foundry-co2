@@ -45,7 +45,7 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
       addCondition: COBaseItemSheet.#onAddCondition,
       deleteCondition: COBaseItemSheet.#onDeleteCondition,
       addAction: COBaseItemSheet.#onAddAction,
-      deleteAction: COBaseItemSheet._onDeleteAction,
+      deleteAction: COBaseItemSheet.#onDeleteAction,
       selectActionIcon: COBaseItemSheet.#onSelectActionIcon,
     },
   }
@@ -223,7 +223,9 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
    * @returns {Promise} - A promise that resolves once the item has been updated.
    */
-  static #onDeleteItem(event, target) {
+  static async #onDeleteItem(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const li = target.closest(".item")
     const itemType = li.dataset.itemType
@@ -240,7 +242,7 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
         break
     }
 
-    return this.item.update(data)
+    return await this.item.update(data)
   }
 
   // eslint-disable-next-line jsdoc/require-returns-check
@@ -283,6 +285,8 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
    * @returns {Promise} - A promise that resolves once the item has been updated.
    */
   static async #onAddAction(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     let newActions = foundry.utils.deepClone(this.document.actions)
     if (newActions.length !== 0 && this.document.type === SYSTEM.ITEM_TYPE.attack.id) {
@@ -306,7 +310,9 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    * @returns {Promise} - A promise that resolves once the item has been updated.
    */
-  static async _onDeleteAction(event, target) {
+  static async #onDeleteAction(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const actionRootElement = target.closest(".action")
     const actionIndex = actionRootElement.dataset.itemId
@@ -322,6 +328,8 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
    * @returns {Promise} - A promise that resolves once the item has been updated.
    */
   static async #onAddCondition(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const li = target.closest(".action")
     const actionId = li.dataset.itemId
@@ -339,6 +347,8 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
    * @returns {Promise} - A promise that resolves once the item has been updated.
    */
   static async #onDeleteCondition(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const li = target.closest(".condition")
     const actionId = li.dataset.actionId
@@ -357,6 +367,8 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
    * @returns {Promise} - A promise that resolves once the item has been updated.
    */
   static async #onAddActionModifier(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const li = target.closest(".action")
     const actionId = li.dataset.itemId
@@ -374,6 +386,8 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
    * @returns {Promise} - A promise that resolves once the item has been updated.
    */
   static async #onDeleteActionModifier(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const li = target.closest(".modifier")
     const actionId = li.dataset.actionId
@@ -392,6 +406,8 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
    * @returns {Promise} - A promise that resolves when the item is updated.
    */
   static async #onAddResolver(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const li = target.closest(".action")
     const actionId = li.dataset.itemId
@@ -422,6 +438,8 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
    * @returns {Promise} - A promise that resolves when the item update is complete.
    */
   static async #onDeleteResolver(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const li = target.closest(".resolver")
     const actionId = li.dataset.actionId
@@ -439,7 +457,9 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
    * @returns {Promise} - A promise that resolves when the item is updated.
    */
-  static #onAddModifier(event, target) {
+  static async #onAddModifier(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const currentModifiers = this.item.modifiers
     currentModifiers.push(new Modifier({ source: this.item.uuid, type: this.item.type }))
@@ -455,6 +475,8 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
    * @returns {Promise} - A promise that resolves when the item is updated.
    */
   static #onDeleteModifier(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
 
     const li = target.closest(".modifier")
