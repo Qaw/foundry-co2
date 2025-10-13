@@ -114,22 +114,6 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
         await this.constructor._onResetImage.call(this, event, event.target)
       })
     }
-
-    // Affichage selon les permissions
-    if (!this.isLimitedView) return
-
-    const bioTab = this.element?.querySelector('.tab[data-tab="biography"]')
-    if (bioTab) bioTab.classList.add("active")
-
-    const bioPart = this.element?.querySelector('[data-application-part="biography"]')
-    if (bioPart) bioPart.style.removeProperty("display")
-  }
-
-  /** @override */
-  _configureRenderParts(options) {
-    const parts = super._configureRenderParts(options)
-    if (!this.isLimitedView) return parts
-    return parts
   }
 
   /** @override */

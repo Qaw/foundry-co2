@@ -53,11 +53,29 @@ export default class COCharacterSheet extends COBaseActorSheet {
     },
   }
 
+  /** @inheritDoc */
+  async _onRender(context, options) {
+    await super._onRender(context, options)
+
+    // Affichage selon les permissions
+    if (!this.isLimitedView) return
+
+    const bioTab = this.element?.querySelector('.tab[data-tab="biography"]')
+    if (bioTab) bioTab.classList.add("active")
+
+    const bioPart = this.element?.querySelector('[data-application-part="biography"]')
+    if (bioPart) bioPart.style.removeProperty("display")
+  }
+
   /** @override */
   _configureRenderParts(options) {
     const parts = super._configureRenderParts(options)
-    const allowedParts = ["header", "sidebar", "tabs", "biography"]
-    return Object.fromEntries(allowedParts.filter((partName) => parts[partName]).map((partName) => [partName, parts[partName]]))
+    console.log("COCharacterSheet - _configureRenderParts - parts", parts, "isLimitedView", this.isLimitedView)
+    if (!this.isLimitedView) return parts
+    const allowedParts = ["header", "sidebar", "biography"]
+    const finalParts = Object.fromEntries(allowedParts.filter((partName) => parts[partName]).map((partName) => [partName, parts[partName]]))
+    console.log("COCharacterSheet - _configureRenderParts - finalParts", finalParts)
+    return finalParts
   }
 
   /** @override */

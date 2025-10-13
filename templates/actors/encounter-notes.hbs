@@ -10,13 +10,13 @@
         </div>
     </div>
     {{#unless (or viewLimited viewObserver)}}
-    <div class="notes foldable">
-        <div class="notes-section private-notes">
-            <label class="details-label">{{localize "CO.ui.private"}}</label>
-            <div class="notes-text">
-                {{formInput systemFields.details.fields.notes.fields.private enriched=enrichedNotesPrivate value=system.details.notes.private name="system.details.notes.private" toggled=true}}
+        <div class="notes foldable">
+            <div class="notes-section private-notes">
+                <label class="details-label">{{localize "CO.ui.private"}}</label>
+                <div class="notes-text">
+                    {{formInput systemFields.details.fields.notes.fields.private enriched=enrichedNotesPrivate value=system.details.notes.private name="system.details.notes.private" toggled=true}}
+                </div>
             </div>
         </div>
-    </div>
     {{/unless}}
 </section>

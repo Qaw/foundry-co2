@@ -40,11 +40,29 @@ export default class COEncounterSheet extends COBaseActorSheet {
     },
   }
 
+  /** @inheritDoc */
+  async _onRender(context, options) {
+    await super._onRender(context, options)
+
+    // Affichage selon les permissions
+    if (!this.isLimitedView) return
+
+    const notesTab = this.element?.querySelector('.tab[data-tab="notes"]')
+    if (notesTab) notesTab.classList.add("active")
+
+    const notesPart = this.element?.querySelector('[data-application-part="notes"]')
+    if (notesPart) notesPart.style.removeProperty("display")
+  }
+
   /** @override */
   _configureRenderParts(options) {
     const parts = super._configureRenderParts(options)
-    const allowedParts = ["header", "sidebar", "tabs", "notes"]
-    return Object.fromEntries(allowedParts.filter((partName) => parts[partName]).map((partName) => [partName, parts[partName]]))
+    console.log("COEncounterSheet - _configureRenderParts - parts", parts, "isLimitedView", this.isLimitedView)
+    if (!this.isLimitedView) return parts
+    const allowedParts = ["header", "sidebar", "notes"]
+    const finalParts = Object.fromEntries(allowedParts.filter((partName) => parts[partName]).map((partName) => [partName, parts[partName]]))
+    console.log("COEncounterSheet - _configureRenderParts - finalParts", finalParts)
+    return finalParts
   }
 
   /** @override */
