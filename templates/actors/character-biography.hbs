@@ -88,7 +88,7 @@
                 {{formInput systemFields.details.fields.biography.fields.public enriched=enrichedBiographyPublic value=system.details.biography.public name="system.details.biography.public" toggled=true}}
             </div>
         </div>
-        {{#unless viewLimited}}
+        {{#unless (or viewLimited viewObserver)}}
         <div class="notes-section">
             <label class="details-label">{{localize "CO.ui.private"}}</label>
             <div class="notes-text">
@@ -106,7 +106,7 @@
                  {{formInput systemFields.details.fields.appearance.fields.public enriched=enrichedAppearancePublic value=system.details.appearance.public name="system.details.appearance.public" toggled=true}}
             </div>
         </div>
-        {{#unless viewLimited}} 
+        {{#unless (or viewLimited viewObserver)}} 
         <div class="notes-section">
             <label class="details-label">{{localize "CO.ui.private"}}</label>
             <div class="notes-text">

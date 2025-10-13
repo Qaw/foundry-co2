@@ -9,7 +9,7 @@
             </div>
         </div>
     </div>
-    {{#unless viewLimited}} 
+    {{#unless (or viewLimited viewObserver)}}
     <div class="notes foldable">
         <div class="notes-section private-notes">
             <label class="details-label">{{localize "CO.ui.private"}}</label>
