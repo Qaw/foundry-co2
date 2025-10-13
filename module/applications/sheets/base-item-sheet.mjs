@@ -57,6 +57,33 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
   _sheetMode = this.constructor.SHEET_MODES.PLAY
 
   /**
+   * Is the sheet currently in 'Play' mode?
+   * @type {boolean}
+   */
+  get isPlayMode() {
+    return this._sheetMode === this.constructor.SHEET_MODES.PLAY
+  }
+
+  /**
+   * Is the sheet currently in 'Edit' mode?
+   * @type {boolean}
+   */
+  get isEditMode() {
+    return this._sheetMode === this.constructor.SHEET_MODES.EDIT
+  }
+
+  // Nativement isVisible teste le droit LIMITED
+  // Nativement isEditable teste le droit OWNER
+
+  get isObserver() {
+    return this.document.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)
+  }
+
+  get isLimitedView() {
+    return this.isVisible && !this.isObserver && !this.isEditable
+  }
+
+  /**
    * Le choix fait sur la selection des statuts
    * @type {string}
    */
@@ -65,6 +92,7 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
   /** @inheritDoc */
   async _onRender(context, options) {
     await super._onRender(context, options)
+
     new DragDrop.implementation({
       dragSelector: ".draggable",
       permissions: {
@@ -80,22 +108,33 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
 
     // Set toggle state and add status class to frame
     this._renderModeToggle(this.element)
+
+    // Affichage selon les permissions
+    if (!this.isLimitedView) return
+
+    const descTab = this.element?.querySelector('.tab[data-tab="description"]')
+    if (descTab) descTab.classList.add("active")
+
+    const descPart = this.element?.querySelector('[data-application-part="description"]')
+    if (descPart) descPart.style.removeProperty("display")
   }
 
-  /**
-   * Is the sheet currently in 'Play' mode?
-   * @type {boolean}
-   */
-  get isPlayMode() {
-    return this._sheetMode === this.constructor.SHEET_MODES.PLAY
+  /** @override */
+  _configureRenderParts(options) {
+    const parts = super._configureRenderParts(options)
+    if (!this.isLimitedView) return parts
+
+    const allowedParts = ["header", "sidebar", "description"]
+    return Object.fromEntries(allowedParts.filter((partName) => parts[partName]).map((partName) => [partName, parts[partName]]))
   }
 
-  /**
-   * Is the sheet currently in 'Edit' mode?
-   * @type {boolean}
-   */
-  get isEditMode() {
-    return this._sheetMode === this.constructor.SHEET_MODES.EDIT
+  /** @override */
+  _configureRenderOptions(options) {
+    super._configureRenderOptions(options)
+
+    if (this.isLimitedView) {
+      delete options.tabs
+    }
   }
 
   /** @override */
@@ -153,6 +192,8 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
     return context
   }
 
+  // #region Actions
+
   /**
    * Handles the toggle action for a section.
    * Prevents the default event action, finds the next foldable section,
@@ -173,67 +214,6 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
       slideToggle(foldable)
     }
     return true
-  }
-
-  /**
-   * SlideToggle: anime l'ouverture ou la fermeture d'un élément
-   * @param {HTMLElement} el L'élément à animer
-   * @param {number} duration Durée de l'animation en ms
-   */
-  slideToggle(el, duration = 200) {
-    // Si déjà en cours d'animation, on ignore
-    if (el._sliding) return
-    el._sliding = true
-
-    // Calcul des styles initiaux
-    const computedStyle = window.getComputedStyle(el)
-    const isHidden = computedStyle.display === "none"
-
-    // Préparation pour slideDown
-    if (isHidden) {
-      el.style.removeProperty("display")
-      let display = window.getComputedStyle(el).display
-      if (display === "none") display = "block"
-      el.style.display = display
-      const height = el.scrollHeight + "px"
-
-      el.style.overflow = "hidden"
-      el.style.height = "0"
-      el.offsetHeight // force repaint
-
-      // Animation vers la hauteur naturelle
-      el.style.transition = `height ${duration}ms ease`
-      el.style.height = height
-
-      setTimeout(() => {
-        // Nettoyage
-        el.style.removeProperty("height")
-        el.style.removeProperty("overflow")
-        el.style.removeProperty("transition")
-        el._sliding = false
-      }, duration)
-    }
-    // Préparation pour slideUp
-    else {
-      const height = el.scrollHeight + "px"
-
-      el.style.overflow = "hidden"
-      el.style.height = height
-      el.offsetHeight // force repaint
-
-      // Animation vers 0
-      el.style.transition = `height ${duration}ms ease`
-      el.style.height = "0"
-
-      setTimeout(() => {
-        // On masque complètement et nettoie
-        el.style.display = "none"
-        el.style.removeProperty("height")
-        el.style.removeProperty("overflow")
-        el.style.removeProperty("transition")
-        el._sliding = false
-      }, duration)
-    }
   }
 
   /**
@@ -500,6 +480,19 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
     sheet.render()
   }
 
+  static #onSelectActionIcon(event, target) {
+    const input = target.nextElementSibling
+    const path = input.value
+    const options = {
+      type: "image",
+      current: path,
+      field: input,
+    }
+    return new foundry.applications.apps.FilePicker(options).browse()
+  }
+
+  // #endregion
+
   // #region Drag-and-Drop Workflow
 
   /**
@@ -627,16 +620,7 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
 
   // #endregion
 
-  static #onSelectActionIcon(event, target) {
-    const input = target.nextElementSibling
-    const path = input.value
-    const options = {
-      type: "image",
-      current: path,
-      field: input,
-    }
-    return new foundry.applications.apps.FilePicker(options).browse()
-  }
+  // #region Lock/unlock button
 
   /**
    * Manage the lock/unlock button on the sheet
@@ -674,4 +658,6 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
       toggle.remove()
     }
   }
+
+  // #endregion
 }

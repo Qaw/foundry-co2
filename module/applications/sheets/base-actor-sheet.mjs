@@ -74,9 +74,14 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     return this.document.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)
   }
 
+  get isLimitedView() {
+    return this.isVisible && !this.isObserver && !this.isEditable
+  }
+
   /** @inheritDoc */
   async _onRender(context, options) {
     await super._onRender(context, options)
+
     new DragDrop.implementation({
       dragSelector: ".draggable",
       permissions: {
@@ -108,6 +113,33 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
         event.preventDefault()
         await this.constructor._onResetImage.call(this, event, event.target)
       })
+    }
+
+    // Affichage selon les permissions
+    if (!this.isLimitedView) return
+
+    const bioTab = this.element?.querySelector('.tab[data-tab="biography"]')
+    if (bioTab) bioTab.classList.add("active")
+
+    const bioPart = this.element?.querySelector('[data-application-part="biography"]')
+    if (bioPart) bioPart.style.removeProperty("display")
+  }
+
+  /** @override */
+  _configureRenderParts(options) {
+    const parts = super._configureRenderParts(options)
+    if (!this.isLimitedView) return parts
+
+    const allowedParts = ["header", "sidebar", "biography"]
+    return Object.fromEntries(allowedParts.filter((partName) => parts[partName]).map((partName) => [partName, parts[partName]]))
+  }
+
+  /** @override */
+  _configureRenderOptions(options) {
+    super._configureRenderOptions(options)
+
+    if (this.isLimitedView) {
+      delete options.tabs
     }
   }
 
@@ -226,6 +258,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
   static async #onUseAction(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const shiftKey = !!event.shiftKey
     const dataset = target.dataset
@@ -330,6 +364,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
   static async #onSendToChat(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     // Dataset has tooltip, chatType and if it's an action there are also indice and source
     const dataset = target.dataset
@@ -370,6 +406,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
   static #onCreateItem(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const type = target.dataset.type
 
@@ -469,6 +507,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
    * @returns {Promise<void>} A promise that resolves when the capacity has been marked as learned.
    */
   static async #onLearnCapacity(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const capacityId = target.closest(".item").dataset.itemId
     if (capacityId) await this.actor.toggleCapacityLearned(capacityId, true)
@@ -482,6 +522,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
    * @returns {Promise<void>} A promise that resolves when the capacity has been unlearned.
    */
   static async #onUnlearnCapacity(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const capacityId = target.closest(".item").dataset.itemId
     if (capacityId) await this.actor.toggleCapacityLearned(capacityId, false)
@@ -494,6 +536,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
   static async #onDeleteCustomEffect(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     let effectname = target.dataset.ceName
 
@@ -513,6 +557,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
    * @private
    */
   static async #onEditImage(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     const current = foundry.utils.getProperty(this.document, "img")
     const { img } = this.document.constructor.getDefaultArtwork?.(this.document.toObject()) ?? {}
     const fp = new foundry.applications.apps.FilePicker.implementation({
@@ -529,11 +575,15 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
   }
 
   static async #onActivateDef(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     const effect = target.dataset.effect
     this._handleDef(effect, true)
   }
 
   static async #onDeactivateDef(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     const effect = target.dataset.effect
     this._handleDef(effect, false)
   }

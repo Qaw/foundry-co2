@@ -120,11 +120,7 @@ export default class COCharacterSheet extends COBaseActorSheet {
     return context
   }
 
-  /** @override */
-  async _onRender(context, options) {
-    await super._onRender(context, options)
-    // Additional character-specific render logic can go here
-  }
+  // #region Actions
 
   /**
    * Action de diminution de charge ou de quantité
@@ -132,6 +128,8 @@ export default class COCharacterSheet extends COBaseActorSheet {
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
   static async #onDecrease(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const item = this.document.items.get(target.dataset.itemId)
     if (target.dataset.action === "decreaseItem") {
@@ -149,6 +147,8 @@ export default class COCharacterSheet extends COBaseActorSheet {
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
   static async #onIncrease(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const item = this.document.items.get(target.dataset.itemId)
     if (target.dataset.action === "increaseItem") {
@@ -166,6 +166,8 @@ export default class COCharacterSheet extends COBaseActorSheet {
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
   static async #onUseAction(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const shiftKey = !!event.shiftKey
     const dataset = target.dataset
@@ -187,6 +189,8 @@ export default class COCharacterSheet extends COBaseActorSheet {
    * @param {HTMLElement} target
    */
   static async #onOpenMiniSheet(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const miniSheet = new COMiniCharacterSheet({ document: this.document })
     return miniSheet.render(true)
@@ -200,6 +204,8 @@ export default class COCharacterSheet extends COBaseActorSheet {
    * @returns {Promise<void>} A promise that resolves when the effect activation is complete.
    */
   static async #onUseEffect(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const dataset = target.dataset
     const effectid = dataset.effect
@@ -219,6 +225,8 @@ export default class COCharacterSheet extends COBaseActorSheet {
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
   static #onUseRecovery(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const dataset = target.dataset
     let isFullRest = false
@@ -232,6 +240,8 @@ export default class COCharacterSheet extends COBaseActorSheet {
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
   static async #onEquippedToggle(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const itemId = $(target).parents(".item").data("itemId")
     const bypassChecks = event.shiftKey
@@ -244,6 +254,8 @@ export default class COCharacterSheet extends COBaseActorSheet {
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
   static async #onDeleteItem(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     const li = target.closest(".item")
     const id = li.dataset.itemId
@@ -274,6 +286,8 @@ export default class COCharacterSheet extends COBaseActorSheet {
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
   static async #onEditAbilities(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     event.preventDefault()
     return new CoEditAbilitiesDialog({ actor: this.document }).render(true)
   }
@@ -284,6 +298,8 @@ export default class COCharacterSheet extends COBaseActorSheet {
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
   static #onRoll(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
     const dataset = target.dataset
     const type = dataset.rollType
     const rollTarget = dataset.rollTarget
@@ -300,6 +316,27 @@ export default class COCharacterSheet extends COBaseActorSheet {
         break
     }
   }
+
+  // #endregion
+
+  /**
+   * Handles the "roll fortune" event for the character sheet.
+   * Prevents the default event behavior and triggers the actor's fortune roll.
+   *
+   * @private
+   * @static
+   * @param {Event} event The event object triggered by the user interaction.
+   * @param {HTMLElement} target The target element associated with the event.
+   * @returns {Promise<void>} Resolves when the fortune roll is complete.
+   */
+  static async #onRollFortune(event, target) {
+    // Vérification du droit Owner
+    if (!this.isEditable) return
+    event.preventDefault()
+    await this.actor.system.rollFortune()
+  }
+
+  // #region Drag-and-Drop Workflow
 
   /** @override */
   _onDragStart(event) {
@@ -462,19 +499,5 @@ export default class COCharacterSheet extends COBaseActorSheet {
     }
     return false
   }
-
-  /**
-   * Handles the "roll fortune" event for the character sheet.
-   * Prevents the default event behavior and triggers the actor's fortune roll.
-   *
-   * @private
-   * @static
-   * @param {Event} event The event object triggered by the user interaction.
-   * @param {HTMLElement} target The target element associated with the event.
-   * @returns {Promise<void>} Resolves when the fortune roll is complete.
-   */
-  static async #onRollFortune(event, target) {
-    event.preventDefault()
-    await this.actor.system.rollFortune()
-  }
+  // #endregion
 }

@@ -79,12 +79,6 @@ export default class COEncounterSheet extends COBaseActorSheet {
     return Object.values(wealth).some((currency) => currency?.value && currency.value > 0)
   }
 
-  /** @override */
-  async _onRender(context, options) {
-    await super._onRender(context, options)
-    // Additional encounter-specific render logic can go here
-  }
-
   /**
    * Delete the selected item
    * @param {PointerEvent} event The originating click event

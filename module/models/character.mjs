@@ -794,7 +794,7 @@ export default class CharacterData extends ActorData {
     // Récupération rapide
     if (!isFullRest) {
       if (rp.value <= 0) return ui.notifications.warn(game.i18n.localize("CO.notif.warningNoMoreRecoveryPoints"))
-        // On propose d'utiliser un point de DR
+      // On propose d'utiliser un point de DR
       const proceedFastRest = await foundry.applications.api.DialogV2.confirm({
         window: { title: game.i18n.localize("CO.dialogs.fastRest.title") },
         content: game.i18n.localize("CO.dialogs.fastRest.content"),
@@ -814,9 +814,9 @@ export default class CharacterData extends ActorData {
       // Récupération des charges des capacités
       await this.recoverCapacityCharges(isFullRest)
 
-      //Dépense du DR
+      // Dépense du DR
       newRp.value = rp.value - 1
-      await this.parent.update({ "system.resources.recovery": newRp })      
+      await this.parent.update({ "system.resources.recovery": newRp })
     }
     // Récupération complète
     else {
@@ -833,7 +833,6 @@ export default class CharacterData extends ActorData {
         }
       }
 
-     
       const proceedFullRestRollDice = await foundry.applications.api.DialogV2.confirm({
         window: { title: game.i18n.localize("CO.dialogs.spendRecoveryPoint.title") },
         content: game.i18n.localize("CO.dialogs.spendRecoveryPoint.content"),
@@ -846,9 +845,9 @@ export default class CharacterData extends ActorData {
         const level = Math.round(this.attributes.level / 2) // +1/2 niveau
         let formula
         if (rp.max === 0) {
-          formula = `${hd} + ${level}` 
+          formula = `${hd} + ${level}`
         } else {
-          formula = `${this.hd.replace("d", "")} + ${level}`                   
+          formula = `${this.hd.replace("d", "")} + ${level}`
         }
 
         const labelTooltip = game.i18n.format("CO.ui.fullRestLabelTooltip", { formula: formula })
@@ -856,12 +855,12 @@ export default class CharacterData extends ActorData {
 
         // On aurait dû gagner 1 DR mais si on l'utilise pour la récup on va pas faire +1 et -1.
       } else {
-         // Récupération d'un DR puisqu'on en dépense pas
+        // Récupération d'un DR puisqu'on en dépense pas
         if (rp.value < rp.max) {
           newRp.value = rp.value + 1
           await this.parent.update({ "system.resources.recovery.value": newRp.value })
         }
-      }      
+      }
     }
   }
 
