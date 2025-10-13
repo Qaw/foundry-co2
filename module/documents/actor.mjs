@@ -2267,6 +2267,9 @@ export default class COActor extends Actor {
         const roll = new Roll(effect.formula)
         await roll.evaluate()
         formulaResult = roll.total
+      } else {
+        const roll = new Roll(effect.formula)
+        formulaResult = roll.evaluateSync().total
       }
       if (effect.formulaType === "damage") await this.applyDamage(formulaResult)
       if (effect.formulaType === "heal") await this.applyHeal(formulaResult)
