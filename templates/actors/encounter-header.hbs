@@ -55,12 +55,12 @@
           {{#if ../viewLimited}}
             <div class="ability-mod">??</div>
           {{else}}
-            {{#if ../viewObserver}}
-              <div class="ability-mod">{{numberFormat ability.value decimals=0 sign=true}}</div>
-            {{else}}
+            {{#if ../editable}}
               <a class="ability-mod" data-action="roll" data-roll-type="skillcheck" data-roll-target="{{id}}" data-tooltip="{{ability.tooltipValue}}">
                 {{numberFormat ability.value decimals=0 sign=true}}
-              </a>
+              </a>              
+            {{else}}
+              <div class="ability-mod">{{numberFormat ability.value decimals=0 sign=true}}</div>
             {{/if}}
           {{/if}}  
         {{/if}}

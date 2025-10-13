@@ -47,18 +47,18 @@
         <div class="ability-id draggable" data-roll-target="{{id}}" data-tooltip="{{localize (concat 'CO.abilities.long.' id)}}" data-tooltip-direction="UP">
           {{localize (concat "CO.abilities.short." id)}}
           {{#unless ../viewLimited}} 
-          {{#if ability.superior}}<i class="fas fa-asterisk"></i>{{/if}}
+            {{#if ability.superior}}<i class="fas fa-asterisk"></i>{{/if}}
           {{/unless}}
         </div>        
         {{#if ../viewLimited}}
           <div class="ability-mod">??</div>
         {{else}}
-          {{#if ../viewObserver}}
-            <div class="ability-mod">{{numberFormat ability.value decimals=0 sign=true}}</div>
-          {{else}}
+          {{#if ../editable}}
             <a class="ability-mod" data-action="roll" data-roll-type="skillcheck" data-roll-target="{{id}}" data-tooltip="{{ability.tooltipValue}}">
-              {{numberFormat ability.value decimals=0 sign=true}}
-            </a>
+                {{numberFormat ability.value decimals=0 sign=true}}
+              </a>            
+          {{else}}
+             <div class="ability-mod">{{numberFormat ability.value decimals=0 sign=true}}</div>
           {{/if}}
         {{/if}}        
       </li>
