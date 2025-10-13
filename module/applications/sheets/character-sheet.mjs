@@ -54,6 +54,13 @@ export default class COCharacterSheet extends COBaseActorSheet {
   }
 
   /** @override */
+  _configureRenderParts(options) {
+    const parts = super._configureRenderParts(options)
+    const allowedParts = ["header", "sidebar", "tabs", "biography"]
+    return Object.fromEntries(allowedParts.filter((partName) => parts[partName]).map((partName) => [partName, parts[partName]]))
+  }
+
+  /** @override */
   async _prepareContext() {
     const context = await super._prepareContext()
 

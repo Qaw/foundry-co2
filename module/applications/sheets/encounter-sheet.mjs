@@ -41,6 +41,13 @@ export default class COEncounterSheet extends COBaseActorSheet {
   }
 
   /** @override */
+  _configureRenderParts(options) {
+    const parts = super._configureRenderParts(options)
+    const allowedParts = ["header", "sidebar", "tabs", "notes"]
+    return Object.fromEntries(allowedParts.filter((partName) => parts[partName]).map((partName) => [partName, parts[partName]]))
+  }
+
+  /** @override */
   async _prepareContext() {
     const context = await super._prepareContext()
     context.attacks = this.actor.system.attacks

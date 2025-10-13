@@ -129,9 +129,7 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
   _configureRenderParts(options) {
     const parts = super._configureRenderParts(options)
     if (!this.isLimitedView) return parts
-
-    const allowedParts = ["header", "sidebar", "biography"]
-    return Object.fromEntries(allowedParts.filter((partName) => parts[partName]).map((partName) => [partName, parts[partName]]))
+    return parts
   }
 
   /** @override */
