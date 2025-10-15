@@ -154,6 +154,8 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
     context.tags = this.document.tags
     context.unlocked = this.isEditMode
     context.locked = this.isPlayMode
+    context.isOwned = this.document.isOwned
+    context.isNotOwned = !this.document.isOwned
 
     // Select options
     context.choiceActionTypes = SYSTEM.ACTION_TYPES

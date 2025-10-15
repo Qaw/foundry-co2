@@ -1,3 +1,7 @@
+# 1.1.1
+## Améliorations
+- Empêche la suppression dans le cas où l'objet est possédé par un acteur
+
 # 1.1.0
 ## Améliorations
 - Profil : Editer une voie, Trait : Editer une voie et Editer une capacité

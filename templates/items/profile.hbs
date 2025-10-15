@@ -55,7 +55,7 @@
                         <div class="field-label ellipse">{{path.name}}</div>
                     </div>
                     <div class="cell right item item-controls" data-uuid="{{path.uuid}}" data-item-type="path">
-                        {{#if @root.unlocked}}
+                        {{#if (and @root.unlocked @root.isNotOwned)}}
                             <button type="button" class="item-control" data-action="deleteItem" data-tooltip="{{localize 'CO.label.long.deleteItem'}}"><i class="fas fa-trash"></i></button>
                         {{/if}}
                     </div>
