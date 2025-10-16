@@ -67,7 +67,7 @@
             {{#if system.properties.equipable}}
                 <fieldset class="equip">
                     <legend>{{localize "CO.ui.equip"}}</legend>    
-                    {{formGroup systemFields.equipped value=systemSource.equipped localize=true disabled=locked}}
+                    {{formGroup systemFields.equipped value=systemSource.equipped localize=true disabled=isNotGmInDebugUnlock}}
                 </fieldset>
             {{/if}}
             

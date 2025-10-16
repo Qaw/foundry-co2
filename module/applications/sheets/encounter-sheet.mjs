@@ -57,11 +57,9 @@ export default class COEncounterSheet extends COBaseActorSheet {
   /** @override */
   _configureRenderParts(options) {
     const parts = super._configureRenderParts(options)
-    console.log("COEncounterSheet - _configureRenderParts - parts", parts, "isLimitedView", this.isLimitedView)
     if (!this.isLimitedView) return parts
     const allowedParts = ["header", "sidebar", "notes"]
     const finalParts = Object.fromEntries(allowedParts.filter((partName) => parts[partName]).map((partName) => [partName, parts[partName]]))
-    console.log("COEncounterSheet - _configureRenderParts - finalParts", finalParts)
     return finalParts
   }
 

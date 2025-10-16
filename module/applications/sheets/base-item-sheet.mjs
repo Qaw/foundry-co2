@@ -140,7 +140,9 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
   /** @override */
   async _prepareContext() {
     const context = await super._prepareContext()
-    context.debugMode = game.settings.get("co2", "debugMode")
+
+    const debugMode = game.settings.get("co2", "debugMode")
+    context.debugMode = debugMode
     context.fields = this.document.schema.fields
     context.systemFields = this.document.system.schema.fields
     context.systemSource = this.document.system._source
@@ -152,10 +154,13 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
     context.modifiers = this.document.system.modifiers
     context.enrichedDescription = await foundry.applications.ux.TextEditor.implementation.enrichHTML(this.document.system.description, { async: true })
     context.tags = this.document.tags
+
     context.unlocked = this.isEditMode
     context.locked = this.isPlayMode
     context.isOwned = this.document.isOwned
     context.isNotOwned = !this.document.isOwned
+    context.isGmDebugUnlock = game.user.isGM && debugMode && this.isEditMode
+    context.isNotGmInDebugUnlock = !game.user.isGM || !debugMode || this.isPlayMode
 
     // Select options
     context.choiceActionTypes = SYSTEM.ACTION_TYPES

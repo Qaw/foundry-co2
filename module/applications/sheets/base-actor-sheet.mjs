@@ -129,7 +129,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
   async _prepareContext() {
     const context = await super._prepareContext()
 
-    context.debugMode = game.settings.get("co2", "debugMode")
+    const debugMode = game.settings.get("co2", "debugMode")
+    context.debugMode = debugMode
     context.fields = this.document.schema.fields
     context.systemFields = this.document.system.schema.fields
     context.systemSource = this.document.system._source
@@ -144,6 +145,8 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     context.locked = this.isPlayMode
     context.viewLimited = this.isVisible && !this.isObserver && !this.isEditable
     context.viewObserver = this.isObserver
+    context.isGmDebugUnlock = game.user.isGM && debugMode && this.isEditMode
+    context.isNotGmInDebugUnlock = !game.user.isGM || !debugMode || this.isPlayMode
 
     context.abilities = this.document.system.abilities
     context.combat = this.document.system.combat

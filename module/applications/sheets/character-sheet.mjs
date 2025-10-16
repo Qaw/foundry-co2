@@ -70,11 +70,9 @@ export default class COCharacterSheet extends COBaseActorSheet {
   /** @override */
   _configureRenderParts(options) {
     const parts = super._configureRenderParts(options)
-    console.log("COCharacterSheet - _configureRenderParts - parts", parts, "isLimitedView", this.isLimitedView)
     if (!this.isLimitedView) return parts
     const allowedParts = ["header", "sidebar", "biography"]
     const finalParts = Object.fromEntries(allowedParts.filter((partName) => parts[partName]).map((partName) => [partName, parts[partName]]))
-    console.log("COCharacterSheet - _configureRenderParts - finalParts", finalParts)
     return finalParts
   }
 
