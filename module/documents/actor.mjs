@@ -757,7 +757,7 @@ export default class COActor extends Actor {
     // Action instantanée
     else {
       if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction - Action instantanée`), state, source, indice, type, shiftKey, item)
-      const action = foundry.utils.deepClone(item.system.actions[indice])
+      const action = foundry.utils.deepClone(item.system.actions[indice])    
       // Recherche des resolvers de l'action
       let resolvers = Object.values(action.resolvers).map((r) => foundry.utils.deepClone(r))
       // Résolution de tous les resolvers avant de continuer

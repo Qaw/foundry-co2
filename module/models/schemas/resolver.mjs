@@ -78,7 +78,6 @@ export class Resolver extends foundry.abstract.DataModel {
    */
   async attack(actor, item, action, type) {
     if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver attack`), actor, item, action, type)
-
     let skillFormula = this.skill.formula
     skillFormula = Utils.evaluateFormulaCustomValues(actor, skillFormula, item.uuid)
     let skillFormulaEvaluated = Roll.replaceFormulaData(skillFormula, actor.getRollData())
@@ -112,7 +111,6 @@ export class Resolver extends foundry.abstract.DataModel {
       customEffect,
       additionalEffect: this.additionalEffect,
     })
-    console.log("resolver - customEffet - attack result", customEffect, this.additionalEffect, result)
     if (result === null) return false
 
     // Gestion des effets supplémentaires
