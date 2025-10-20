@@ -99,16 +99,10 @@ export default class CoChat {
     }
 
     let speaker = ChatMessage.getSpeaker({ actor: this.actor.id })
-
     // Create the chat data
     const data = {
       user: game.user.id,
-      speaker: {
-        actor: this.actor.id,
-        alias: this.actor.name,
-        scene: null,
-        token: null,
-      },
+      speaker: speaker,
       content: this.content,
     }
 

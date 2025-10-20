@@ -369,11 +369,11 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     }
 
     let itemChatData = item.getChatData(item, this.actor, chatType, indice)
-
     await new CoChat(this.actor)
       .withTemplate("systems/co2/templates/chat/item-card.hbs")
       .withData({
         actorId: this.actor.id,
+        actorUuid: this.actor.uuid,        
         id: itemChatData.id,
         uuid: itemChatData.uuid,
         name: itemChatData.name,
