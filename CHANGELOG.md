@@ -7,6 +7,8 @@
 - Empêche la suppression dans le cas où l'objet est possédé par un acteur
 - La case Apprise d'une capacité est modifiable uniquement en mode Edition, par un MJ, et si l'option Debug est activée (issue [#325](https://github.com/BlackBookEditions/foundry-co2/issues/325))
 - La case Equipé d'un équipement est modifiable uniquement en mode Edition, par un MJ, et si l'option Debug est activée
+## Corrections
+- Effets supplémentaires : correction de la gestion de la durée (issue [#320](https://github.com/BlackBookEditions/foundry-co2/issues/320))
 
 # 1.1.0
 ## Améliorations
