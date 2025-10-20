@@ -98,4 +98,8 @@ export class Modifier extends foundry.abstract.DataModel {
   get isState() {
     return this.subtype === SYSTEM.MODIFIERS_SUBTYPE.state.id
   }
+
+  get isTargetDamage() {
+    return Utils.isDamageType(this.target)
+  }
 }
