@@ -1,3 +1,7 @@
+# 1.1.2
+## Améliorations
+- Capacité et Equipement : pour le modifier d'une action, la saisie d'un dé (dx ou Dx) n'est possible que pour les dommages
+
 # 1.1.1
 ## Améliorations
 - Empêche la suppression dans le cas où l'objet est possédé par un acteur

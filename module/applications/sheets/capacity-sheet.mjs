@@ -40,10 +40,15 @@ export default class CoCapacitySheet extends CoBaseItemSheet {
 
   #actionTabSelected = null
 
+  /** @inheritDoc */
+  async _onRender(context, options) {
+    await super._onRender(context, options)
+    await this._filterInputDiceValue()
+  }
+
   /** @override */
   async _prepareContext() {
     const context = await super._prepareContext()
-
     context.resolverSystemFields = this.document.system.schema.fields.actions.element.fields.resolvers.element.fields
     return context
   }
@@ -97,5 +102,44 @@ export default class CoCapacitySheet extends CoBaseItemSheet {
   /* Sauvegarde l'onglet d'action sélectionné */
   #onChangeActionTab(tab) {
     this.#actionTabSelected = tab
+  }
+
+  _filterInputDiceValue() {
+    const inputFields = this.element?.querySelectorAll("input[data-filter-type]")
+
+    if (inputFields)
+      inputFields.forEach((input) => {
+        input.removeEventListener("input", this._applyInputFilter)
+        input.addEventListener("input", this._applyInputFilter)
+      })
+  }
+
+  /**
+   * Applies an input filter to remove unwanted patterns from user input.
+   * Currently supports removing dice formula patterns (e.g., "2d6", "1D20") from input fields.
+   *
+   * @async
+   * @param {Event} event The input event triggered by user interaction on the input field.
+   * @param {HTMLInputElement} event.currentTarget The input element that triggered the event.
+   * @param {HTMLInputElement} event.target Alternative reference to the input element.
+   * @param {Object} event.currentTarget.dataset The dataset object containing filter configuration.
+   * @param {string} event.currentTarget.dataset.filterType The type of filter to apply (e.g., "no-dice-formula").
+   * @returns {Promise<void>}
+   * @private
+   */
+  async _applyInputFilter(event) {
+    // The existing filter (no filter apply on damage input but filterType exist (dice-formula)
+    const FILTER_RULES = {
+      "no-dice-formula": /([+-]?\s*\d*\s*[dD]\s*\d+\s*°?)/g,
+    }
+    const inputField = event.currentTarget || event.target
+    const filterType = inputField.dataset.filterType
+    const regex = FILTER_RULES[filterType] // Check if filter type exist in list
+
+    if (regex) {
+      let currentValue = inputField.value
+      // Apply filter and remove value
+      inputField.value = currentValue.replaceAll(regex, "")
+    }
   }
 }
