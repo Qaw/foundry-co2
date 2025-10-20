@@ -40,6 +40,12 @@ export default class CoEquipmentSheet extends CoBaseItemSheet {
 
   #actionTabSelected = null
 
+  /** @inheritDoc */
+  async _onRender(context, options) {
+    await super._onRender(context, options)
+    await this._filterInputDiceValue()
+  }
+
   /** @override */
   async _prepareContext() {
     const context = await super._prepareContext()
@@ -132,16 +138,26 @@ export default class CoEquipmentSheet extends CoBaseItemSheet {
     this.#actionTabSelected = tab
   }
 
+  async _filterInputDiceValue() {
+    const inputFields = this.element?.querySelectorAll("input[data-filter-type]")
+
+    if (inputFields)
+      inputFields.forEach((input) => {
+        input.removeEventListener("input", this._applyInputFilter)
+        input.addEventListener("input", this._applyInputFilter)
+      })
+  }
+
   /**
    * Filter dice value on equipment input (trigger by a hook)
-   * @param event the triggered event
+   * * @param event the triggered event
    * @returns {Promise<void>}
    * @private
    */
   async _applyInputFilter(event) {
     // The existing filter (no filter apply on damage input but filterType exist (dice-formula)
     const FILTER_RULES = {
-      "no-dice-formula": /([+-]?\s*\d*\s*[dD]\s*\d+\s*°)/g,
+      "no-dice-formula": /([+-]?\s*\d*\s*[dD]\s*\d+\s*°?)/g,
     }
     const inputField = event.currentTarget || event.target
     const filterType = inputField.dataset.filterType
