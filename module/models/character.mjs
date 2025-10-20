@@ -275,7 +275,7 @@ export default class CharacterData extends ActorData {
       total = withDice ? evaluatedModifiers.join(" ") : evaluatedModifiers.reduce((acc, curr) => acc + curr, 0)
     }
 
-    let tooltip = ""
+    let tooltip = ""    
     for (const modifier of modifiersByTarget) {
       let partialTooltip = modifier.getTooltip(this.parent, withDice)
       if (partialTooltip !== null) tooltip += partialTooltip
@@ -506,7 +506,13 @@ export default class CharacterData extends ActorData {
       }
     }
   }
-
+/**
+ * Calcul les scores de combat melee/distance/magique
+ * @param {*} key clef dans la table des attributs : 'melee', 'ranged', 'magic'
+ * @param {*} skill Element pour lequel on calcul la valeur et le tooltip (ex : combat.melee combat.ranged, combat.magic)
+ * @param {*} abilityBonus Bonus accordé par l'attribut (ex : bonus d'agilité)
+ * @param {*} bonuses Autres bonus (customeffect par ex)
+ */
   _prepareAttack(key, skill, abilityBonus, bonuses) {
     // Le bonus de niveau est limité à 10
     const levelBonus = Math.min(this.attributes.level, 10)

@@ -52,11 +52,13 @@ export class Modifier extends foundry.abstract.DataModel {
    * @returns {string|undefined} The generated tooltip string or undefined if the item is not found.
    */
   getTooltip(actor, withDiceValue = false) {
-    const id = foundry.utils.parseUuid(this.source)?.id
+    const id = foundry.utils.parseUuid(this.source)?.id    
     if (!id) return
     let item = actor.items.get(id)
-    if (!item) return
-    let name = item.name
+    let name = "Autre"
+    if (item){
+      name = item.name
+    }    
     let value = this.evaluate(actor, withDiceValue)
     return Utils.getTooltip(name, value)
   }
