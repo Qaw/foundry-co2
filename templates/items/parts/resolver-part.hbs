@@ -8,11 +8,11 @@
       </select>
       {{#if (eq r.type @root.choiceResolverTypes.attack.id)}}
         <label class="checkbox">
-          <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.bonusDiceAdd" {{checked r.bonusDiceAdd}} {{#if @root.locked}}readonly{{/if}}/>
+          <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.bonusDiceAdd" {{checked r.bonusDiceAdd}} {{#if @root.locked}}class="disabled"{{/if}}/>
           {{localize "CO.modifier.subtype.bonusDice"}}
         </label>
         <label class="checkbox">
-          <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.malusDiceAdd" {{checked r.malusDiceAdd}} {{#if @root.locked}}readonly{{/if}}/>
+          <input type="checkbox" name="system.actions.{{idx}}.resolvers.{{id}}.malusDiceAdd" {{checked r.malusDiceAdd}} {{#if @root.locked}}class="disabled"{{/if}}/>
           {{localize "CO.modifier.subtype.malusDice"}}
         </label>
       {{/if}}

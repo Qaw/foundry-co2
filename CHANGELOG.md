@@ -1,3 +1,7 @@
+# 1.2.1
+## Corrections
+- Les cases à cocher des propriétés d'une capacité ne sont plus perdues lors de l'édition quand on est pas en mode DEBUG
+
 # 1.2.0
 ## Améliorations
 - Capacité et Equipement : pour le modifier d'une action, la saisie d'un dé (dx ou Dx) n'est possible que pour les dommages

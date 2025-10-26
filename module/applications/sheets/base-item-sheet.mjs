@@ -143,6 +143,7 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
 
     const debugMode = game.settings.get("co2", "debugMode")
     context.debugMode = debugMode
+    context.notDebugMode = !debugMode
     context.fields = this.document.schema.fields
     context.systemFields = this.document.system.schema.fields
     context.systemSource = this.document.system._source

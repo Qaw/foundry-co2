@@ -174,9 +174,9 @@ function registerWorldCount(registerKey) {
 }
 
 Hooks.once("ready", async function () {
-  if (!CONFIG.debug.co) {
+  if (!CONFIG.debug.co2) {
     if (game.settings.get("co2", "debugMode")) {
-      CONFIG.debug.co = {
+      CONFIG.debug.co2 = {
         hooks: true,
         resolvers: true,
         rolls: true,
@@ -186,7 +186,7 @@ Hooks.once("ready", async function () {
         combat: true,
       }
     } else
-      CONFIG.debug.co = {
+      CONFIG.debug.co2 = {
         hooks: false,
         resolvers: false,
         rolls: false,

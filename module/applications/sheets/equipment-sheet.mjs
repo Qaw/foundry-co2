@@ -95,6 +95,7 @@ export default class CoEquipmentSheet extends CoBaseItemSheet {
         context.subtabs = this._prepareActionsTabs()
         break
     }
+    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoEquipmentSheet - context`), context)
     return context
   }
 
