@@ -178,6 +178,7 @@ export default class COCharacterSheet extends COBaseActorSheet {
       item.system.quantity.current += 1
       await item.update({ "system.quantity.current": item.system.quantity.current })
     } else if (target.dataset.action === "increaseCharge") {
+      if (item.system.charges.current >= item.system.charges.max) return
       item.system.charges.current += 1
       await item.update({ "system.charges.current": item.system.charges.current })
     }

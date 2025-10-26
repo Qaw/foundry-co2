@@ -478,7 +478,7 @@
         "skillMalus": "Malus à l'attaque",
         "damageBonus": "Bonus aux dommages",
         "damageMalus": "Malus aux dommages",
-        "needCharges": "Vous devez vous reposer pour récupérer des utilisations",
+        "needCharges": "Vous n'avez plus de charges ou de munitions",
         "tempHP": "DM temporaires",
         "diceType": "Type de jet",
         "tactical": "Option tactique",
