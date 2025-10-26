@@ -655,6 +655,7 @@
       "modifiers": "Modificateurs",
       "resolvers": "Résolutions",
       "skill": "Compétence",
+      "skillUsed" :  "Compétence(s) utilisée(s)",
       "formula": "Formule",
       "oppositeRoll": "Jet opposé",
       "skillformula": "Formule de compétence",

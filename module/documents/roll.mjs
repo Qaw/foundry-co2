@@ -106,7 +106,16 @@ export class COSkillRoll extends CORoll {
                 if (input.name) obj[input.name] = input.value
                 return obj
               }, {})
-              if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll prompt - Output`), output)
+              if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll prompt - Output`), output)               
+              // Récupère tous les éléments bonus-item checked pour l'afficher en chat message apres
+              const checkedBonuses = dialog.element.querySelectorAll(".bonus-item.checked");
+              const skillUsed = Array.from(checkedBonuses).map(item => {
+                return {
+                  name: item.querySelector(".bonus-name").textContent.trim(),
+                  value: parseInt(item.dataset.value)
+                };
+              });
+              dialogContext.skillUsed = skillUsed;
               /* 
                 {
                     "rollMode": "publicroll",
@@ -203,6 +212,7 @@ export class COSkillRoll extends CORoll {
       showDifficulty: dialogContext.showDifficulty,
       difficulty: withDialog ? rollContext.difficulty : dialogContext.difficulty,
       toolTip,
+      skillUsed: dialogContext.skillUsed,
       ...options,
     }
 
@@ -212,10 +222,10 @@ export class COSkillRoll extends CORoll {
 
   static _onToggleCheckSkillBonus(event) {
     let item = event.currentTarget.closest(".bonus-item")
-    item.classList.toggle("checked")
+    item.classList.toggle("checked")  
     let total = this._calculateTotalSkillBonus(event)
     document.querySelector("#totalSkillBonuses").value = `${total >= 0 ? "+" : ""}${total}`
-  }
+}
 
   static _calculateTotalSkillBonus(event) {
     let parent = event.currentTarget.closest(".skill-bonuses")
@@ -241,6 +251,7 @@ export class COSkillRoll extends CORoll {
       hasLuckyPoints: this.options.hasLuckyPoints,
       total: isPrivate ? "?" : Math.round(this.total * 100) / 100,
       tooltip: isPrivate ? "" : await this.getTooltip(),
+      skillUsed: this.options.skillUsed,
       user: game.user.id,
     }
   }

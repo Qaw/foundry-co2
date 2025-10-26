@@ -1528,6 +1528,7 @@ export default class COActor extends Actor {
       showDifficulty,
       withDialog,
       targets,
+      skillUsed: []
     }
     /**
      * A hook event that fires before the roll is made.
@@ -1656,11 +1657,13 @@ export default class COActor extends Actor {
       targets,
       hasTargets: targets?.length > 0,
       hasLuckyPoints,
+      skillUsed: [] //tableau de clef valeur pour stocker les nom de skill activé et leur bonus
     }
 
     let roll = await COSkillRoll.prompt(dialogContext, { withDialog: withDialog })
     if (!roll) return null
 
+    console.log("rollSkill",dialogContext )
     /**
      * A hook event that fires after the roll is made.
      * @function co.postRollSkill
@@ -1690,7 +1693,7 @@ export default class COActor extends Actor {
 
     let targetsUuid = targets?.map((target) => target.uuid)
 
-    await roll.toMessage({ style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "skill", system: { targets: targetsUuid, result: result }, speaker }, { rollMode: roll.options.rollMode })
+    await roll.toMessage({ style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "skill", system: { targets: targetsUuid, result: result}, speaker }, { rollMode: roll.options.rollMode })
   }
 
   /**
