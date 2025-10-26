@@ -183,6 +183,7 @@ Hooks.once("ready", async function () {
         sheets: true,
         actions: true,
         chat: true,
+        combat: true,
       }
     } else
       CONFIG.debug.co = {
@@ -192,6 +193,7 @@ Hooks.once("ready", async function () {
         sheets: false,
         actions: false,
         chat: false,
+        combat: false,
       }
   }
 

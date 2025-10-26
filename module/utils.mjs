@@ -35,7 +35,7 @@ export default class Utils {
     return game.i18n.localize(`CO.abilities.long.${ability}`)
   }
 
-  static isDamageType(target){
+  static isDamageType(target) {
     return [SYSTEM.MODIFIERS_TARGET.damMelee.id, SYSTEM.MODIFIERS_TARGET.damRanged.id, SYSTEM.MODIFIERS_TARGET.damMagic.id].includes(target)
   }
 
@@ -68,7 +68,6 @@ export default class Utils {
    * @param {Object} actor L'objet acteur contenant les données pertinentes.
    * @param {string} formula La formule à évaluer.
    * @param {Object} source L'objet source pour les valeurs personnalisées.
-   * @param {boolean} withDiceValue Le type cible à évaluer.
    * @returns {string} Le résultat de la formule évaluée.
    */
   static evaluateCoModifierWithDiceValue(actor, formula, source) {
@@ -102,7 +101,7 @@ export default class Utils {
   static evaluateFormulaCustomValues(actor, formula, sourceUuid = null) {
     let replacedFormula = foundry.utils.duplicate(formula)
 
-    //@nivmod[niv, mod] permet de dire par exemple +1 au niveau 10
+    // @nivmod[niv, mod] permet de dire par exemple +1 au niveau 10
     if (replacedFormula.includes("@nivmod")) {
       replacedFormula = this._replaceLevelModValue(actor, replacedFormula)
     }
@@ -287,14 +286,14 @@ export default class Utils {
   }
 
   /**
-   * Retourne un texte dans lequel on a remplacé @modniv[niv,modificateur] par le modificateur si le niveau du PJ est égale ou supérieur à cette valeur
+   * Retourne un texte dans lequel on a remplacé @modniv[niv,modificateur] par le modificateur si le niveau du PJ est égal ou supérieur à cette valeur
    * @param {*} actor : acteur concerné
    * @param {*} content : le texte contenant une référence à un rang
    */
   static _replaceLevelModValue(actor, content) {
     if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`Utils - _replaceLevelModValue `), actor, content)
     if (content === "" || content.match("@nivmod'[[0-9]{1,},[0-9]{1,}']")) {
-      return content //Vérifie le formatage de la variable on sort si pas bien formaté
+      return content // Vérifie le formatage de la variable on sort si pas bien formaté
     }
 
     let startNiv = content.substring(content.indexOf("@nivmod"))
@@ -304,9 +303,9 @@ export default class Utils {
     let targetMod = targetNivMod.substring(targetNivMod.indexOf(",") + 1)
 
     if (actor.system.attributes.level >= Number(targetNiv))
-      //si on est supérieur ou égale on ajoute le modificateurs
+      // Si on est supérieur ou égal on ajoute le modificateur
       content = content.replace(`@nivmod[${targetNiv},${targetMod}]`, targetMod)
-    else content = content.replace(`@nivmod[${targetNiv},${targetMod}]`, "0") //sinon on retire la variable dela formule
+    else content = content.replace(`@nivmod[${targetNiv},${targetMod}]`, "0") // Sinon on retire la variable dela formule
     return content
   }
 

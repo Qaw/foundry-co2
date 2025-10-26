@@ -373,7 +373,7 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
       .withTemplate("systems/co2/templates/chat/item-card.hbs")
       .withData({
         actorId: this.actor.id,
-        actorUuid: this.actor.uuid,        
+        actorUuid: this.actor.uuid,
         id: itemChatData.id,
         uuid: itemChatData.uuid,
         name: itemChatData.name,

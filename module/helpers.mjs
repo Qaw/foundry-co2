@@ -69,8 +69,4 @@ export default function registerHandlebarsHelpers() {
     if (!subtabs || !subtabs[id]) return false
     return subtabs[id] && subtabs[id].active
   })
-
-  Handlebars.registerHelper("isEqual", function (value1, value2) {    
-    return value1 === value2  
-  })
 }

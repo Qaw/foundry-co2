@@ -874,7 +874,9 @@
       "putrid": "Putréfaction",
       "putridDescription": "Applique des dommages de type putréfaction",
       "sacred": "Sacré",
-      "sacredDescription": "Applique des dommages/soins de type sacré"
+      "sacredDescription": "Applique des dommages/soins de type sacré",
+      "heal":"Soins",
+      "damage":"Dommages"
     },
     "tabs": {
       "main": "Principal",

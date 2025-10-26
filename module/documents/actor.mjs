@@ -681,7 +681,7 @@ export default class COActor extends Actor {
    * @param {*} source uuid of the embedded item which is the source of the action
    * @param {*} indice indice of the action in the array of actions
    * @param {*} shiftKey true if the shift key is pressed
-     @param {string("attack","damage")} type  define if it's an attack or just a damage
+   * @param {string("attack","damage")} type  define if it's an attack or just a damage
    */
   async activateAction({ state, source, indice, type, shiftKey = null } = {}) {
     const item = await fromUuid(source)
@@ -757,7 +757,7 @@ export default class COActor extends Actor {
     // Action instantanée
     else {
       if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction - Action instantanée`), state, source, indice, type, shiftKey, item)
-      const action = foundry.utils.deepClone(item.system.actions[indice])    
+      const action = foundry.utils.deepClone(item.system.actions[indice])
       // Recherche des resolvers de l'action
       let resolvers = Object.values(action.resolvers).map((r) => foundry.utils.deepClone(r))
       // Résolution de tous les resolvers avant de continuer
@@ -2282,32 +2282,31 @@ export default class COActor extends Actor {
    * Asynchronously expires effects from the current system's effects list.
    * Iterates through all current effects and deletes any custom effect
    * whose `remainingTurn` matches the current combat round.
-   * @param {Boolean} endCombat True si le combat se termine, false dans le cas contraire
    * @async
    * @returns {Promise<void>} Resolves when all applicable effects have been processed.
    */
-  async expireEffects(endCombat) {
+  async expireEffects() {
     for (const effect of this.system.currentEffects) {
-      if (effect.remainingTurn <= 0 && effect.unit !== SYSTEM.COMBAT_UNITE.combat ) await this.deleteCustomEffect(effect)
+      if (effect.remainingTurn <= 0 && effect.unit !== SYSTEM.COMBAT_UNITE.combat) await this.deleteCustomEffect(effect)
     }
   }
 
   /**
-   * Diminue la durée des effets de manière asynchrone pour chaqu eeffets dans la liste.   * 
+   * Diminue la durée des effets de manière asynchrone pour chaqu eeffets dans la liste.   *
    *
    * @async
    * @returns {Promise<void>} Se termine lorsque tous le seffets ont été traité
    */
   async decreaseEffectsDuration() {
-    const updatedEffects = this.system.currentEffects.map(effet => {
-      const newEffet = foundry.utils.duplicate(effet);
+    const updatedEffects = this.system.currentEffects.map((effet) => {
+      const newEffet = foundry.utils.duplicate(effet)
       if ("remainingTurn" in newEffet) {
-        newEffet.remainingTurn = Math.max(0, newEffet.remainingTurn - 1);
+        newEffet.remainingTurn = Math.max(0, newEffet.remainingTurn - 1)
       }
-      return newEffet;
-    });
+      return newEffet
+    })
 
-    await this.update({"system.currentEffects": updatedEffects});
+    await this.update({ "system.currentEffects": updatedEffects })
   }
 
   /**

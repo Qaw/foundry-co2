@@ -1,3 +1,4 @@
+import Utils from "../utils.mjs"
 /**
  * Propriétés de baseCombat
  * _id: new fields.DocumentIdField(),
@@ -35,48 +36,30 @@
 export default class CombatCO extends Combat {
   /** @override */
   async _onStartTurn(combatant) {
-    console.log(`Début du tour de ${combatant.actor?.name} !`)
+    if (CONFIG.debug.co?.combat) console.debug(Utils.log(`Début du tour de ${combatant.actor?.name} !`))
     await super._onStartTurn(combatant)
-     //On diminue de 1 le nombre de round restant
-     if (combatant.actor?.system.currentEffects.length > 0) await combatant.actor.decreaseEffectsDuration()
-    if (combatant.actor?.system.currentEffects.length > 0) await combatant.actor.applyEffectOverTime()
-    
+    // On diminue de 1 le nombre de rounds restants
+    if (combatant.actor?.system.currentEffects.length > 0) {
+      await combatant.actor.decreaseEffectsDuration()
+      await combatant.actor.applyEffectOverTime()
+    }
   }
 
   /** @override */
   async _onEndTurn(combatant) {
     await super._onEndTurn(combatant)
-     // Retire les custom Effect qui se terminent ce tour-ci. #Fix 320 supprime l'effet avant que le nouveau tour commence
+    // Retire les custom Effect qui se terminent ce tour-ci. #Fix 320 supprime l'effet avant que le nouveau tour commence
     if (combatant.actor?.system.currentEffects.length > 0) await combatant.actor.expireEffects()
-    console.log(`Fin du tour de ${combatant.actor?.name} !`)
+    if (CONFIG.debug.co?.combat) console.debug(Utils.log(`Fin du tour de ${combatant.actor?.name} !`))
   }
 
   /** @override */
   async _onDelete(options, userId) {
-    super._onDelete(options, userId)  
-    if ( game.user.isActiveGM ) {
-      for ( const combatant of this.combatants ) combatant.actor.deleteEffects()
+    await super._onDelete(options, userId)
+    if (game.user.isActiveGM) {
+      for (const combatant of this.combatants) combatant.actor.deleteEffects()
     }
   }
-
-  /** @override 
-  async _onStartRound() {
-    await super._onStartRound()
-    if (this.turns.length < 2) return
-
-    // Identify the first combatant to act in the round
-    const firstCombatant = this.turns[0]
-    const firstActor = firstCombatant?.actor
-
-    // Identify the last non-incapacitated combatant to act in the round
-    let lastCombatant
-    for (let i = this.turns.length - 1; i > 0; i--) {
-      if (this.turns[i].actor?.isIncapacitated !== true) {
-        lastCombatant = this.turns[i]
-        break
-      }
-    }
-  }*/
 
   /**
    * Define how the array of Combatants is sorted in the displayed list of the tracker.
