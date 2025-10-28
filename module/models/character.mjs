@@ -595,7 +595,7 @@ export default class CharacterData extends ActorData {
 
     if (critModifiers.total > 0) {
       this.combat.crit.value = Math.max(16, SYSTEM.BASE_CRITICAL - critModifiers.total)
-      this.combat.crit.tooltipValue += Utils.getTooltip("Bonus", critModifiers.tooltip)
+      this.combat.crit.tooltipValue += "<br />" +  Utils.getTooltip("Bonus", critModifiers.tooltip)
     } else {
       this.combat.crit.value = this.combat.crit.base
     }
