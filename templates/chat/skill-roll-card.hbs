@@ -82,6 +82,14 @@
         {{{tooltip}}}
       </div>
     </div>
+    {{#if skillUsed}}
+    <div class="skill-used">
+      <span>{{localize "CO.ui.skillUsed"}} :</span><br />
+       {{#each skillUsed as |skill id|}}
+        <span>{{skill.name}} : {{skill.value}}</span><br />
+       {{/each}}
+    </div>
+    {{/if}}
   </footer>
 
 </div>
