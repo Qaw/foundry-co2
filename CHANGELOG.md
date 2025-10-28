@@ -1,6 +1,7 @@
 # 1.3.0
 ## Améliorations
-- Ajout d'une infobulle précisant le calcul du critique dans la fenêtre d'attaque
+- Ajout d'une infobulle précisant le calcul du critique dans la fenêtre d'attaque (issue [#222](https://github.com/BlackBookEditions/foundry-co2/issues/222))
+- Ajout des compétences utilisées dans le message de tchat (issue [#257](https://github.com/BlackBookEditions/foundry-co2/issues/257))
 
 # 1.2.1
 ## Corrections
