@@ -587,13 +587,15 @@ export default class CharacterData extends ActorData {
    */
   _prepareCrit() {
     this.combat.crit.base = SYSTEM.BASE_CRITICAL
+    this.combat.crit.tooltipValue = Utils.getTooltip("Base", this.combat.crit.base)
+
 
     // Somme des bonus des modifiers
     const critModifiers = this.computeTotalModifiersByTarget(this.combatModifiers, SYSTEM.COMBAT.crit.id)
 
     if (critModifiers.total > 0) {
       this.combat.crit.value = Math.max(16, SYSTEM.BASE_CRITICAL - critModifiers.total)
-      this.combat.crit.tooltipValue = Utils.getTooltip("Bonus", critModifiers.total)
+      this.combat.crit.tooltipValue += Utils.getTooltip("Bonus", critModifiers.tooltip)
     } else {
       this.combat.crit.value = this.combat.crit.base
     }

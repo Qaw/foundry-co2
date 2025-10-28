@@ -1714,6 +1714,7 @@ export default class COActor extends Actor {
       damageBonus = 0,
       damageMalus = 0,
       critical = undefined,
+      criticalTooltip = "",
       bonusDice = undefined,
       malusDice = undefined,
       difficulty = undefined,
@@ -1743,6 +1744,7 @@ export default class COActor extends Actor {
       damageBonus,
       damageMalus,
       critical,
+      criticalTooltip,
       bonusDice,
       malusDice,
       difficulty,
@@ -1850,6 +1852,10 @@ export default class COActor extends Actor {
       critical = Math.max(16, parseInt(critical) - (SYSTEM.BASE_CRITICAL - this.system.combat.crit.value))
     }
 
+    //on recupere le tooltip du critique
+    criticalTooltip = this.system.combat.crit.tooltipValue
+
+
     // Gestion des dés bonus et malus
     let bonusDices = 0
     let malusDices = 0
@@ -1946,6 +1952,7 @@ export default class COActor extends Actor {
       damageBonus,
       damageMalus,
       critical,
+      criticalTooltip,
       difficulty,
       difficultyTooltip,
       useDifficulty,
