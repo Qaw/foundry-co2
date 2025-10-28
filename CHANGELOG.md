@@ -1,3 +1,7 @@
+# 1.3.0
+## Améliorations
+- Ajout d'une infobulle précisant le calcul du critique dans la fenêtre d'attaque
+
 # 1.2.1
 ## Corrections
 - Les cases à cocher des propriétés d'une capacité ne sont plus perdues lors de l'édition quand on est pas en mode DEBUG
