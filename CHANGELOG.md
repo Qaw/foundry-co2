@@ -3,6 +3,7 @@
 - Ajout d'une infobulle précisant le calcul du critique dans la fenêtre d'attaque (issue [#222](https://github.com/BlackBookEditions/foundry-co2/issues/222))
 - Ajout des compétences utilisées dans le message de tchat (issue [#257](https://github.com/BlackBookEditions/foundry-co2/issues/257))
 - Voie : pour désapprendre une capacité, il faut que les capacités de rang supérieur aient été désapprises
+- Capacité : le coût en charges peut être mis à 0 au niveau de l'action (issue [#339](https://github.com/BlackBookEditions/foundry-co2/issues/339))
 
 ## Corrections
 - Corrige un bug qui pouvait empêcher l'ouverture d'une fiche de personnage qui avait un effet lui infligeant des dommages périodiques en combat
