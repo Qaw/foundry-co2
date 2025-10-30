@@ -26,7 +26,12 @@ export class CORoll extends Roll {
    */
   static analyseRollResult(roll) {
     let result = {}
-    if ((roll instanceof COAttackRoll && roll.options.type === "attack") || roll instanceof COSkillRoll) {
+
+    // Vérification du type de roll
+    const isAttackRoll = roll?.constructor?.name === "COAttackRoll" && roll.options?.type === "attack"
+    const isSkillRoll = roll?.constructor?.name === "COSkillRoll"
+
+    if (isAttackRoll || isSkillRoll) {
       // On récupère le résultat du dé conservé
       const diceResult = roll.terms[0].results.find((r) => r.active).result
       const total = Math.ceil(roll.total)
@@ -106,16 +111,16 @@ export class COSkillRoll extends CORoll {
                 if (input.name) obj[input.name] = input.value
                 return obj
               }, {})
-              if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll prompt - Output`), output)               
+              if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll prompt - Output`), output)
               // Récupère tous les éléments bonus-item checked pour l'afficher en chat message apres
-              const checkedBonuses = dialog.element.querySelectorAll(".bonus-item.checked");
-              const skillUsed = Array.from(checkedBonuses).map(item => {
+              const checkedBonuses = dialog.element.querySelectorAll(".bonus-item.checked")
+              const skillUsed = Array.from(checkedBonuses).map((item) => {
                 return {
                   name: item.querySelector(".bonus-name").textContent.trim(),
-                  value: parseInt(item.dataset.value)
-                };
-              });
-              dialogContext.skillUsed = skillUsed;
+                  value: parseInt(item.dataset.value),
+                }
+              })
+              dialogContext.skillUsed = skillUsed
               /* 
                 {
                     "rollMode": "publicroll",
@@ -222,10 +227,10 @@ export class COSkillRoll extends CORoll {
 
   static _onToggleCheckSkillBonus(event) {
     let item = event.currentTarget.closest(".bonus-item")
-    item.classList.toggle("checked")  
+    item.classList.toggle("checked")
     let total = this._calculateTotalSkillBonus(event)
     document.querySelector("#totalSkillBonuses").value = `${total >= 0 ? "+" : ""}${total}`
-}
+  }
 
   static _calculateTotalSkillBonus(event) {
     let parent = event.currentTarget.closest(".skill-bonuses")

@@ -3,6 +3,9 @@
 - Ajout d'une infobulle précisant le calcul du critique dans la fenêtre d'attaque (issue [#222](https://github.com/BlackBookEditions/foundry-co2/issues/222))
 - Ajout des compétences utilisées dans le message de tchat (issue [#257](https://github.com/BlackBookEditions/foundry-co2/issues/257))
 
+## Corrections
+- Correction de la formule des dommages dans le cas du dé évolutif (issue [#341](https://github.com/BlackBookEditions/foundry-co2/issues/341))
+
 # 1.2.1
 ## Corrections
 - Les cases à cocher des propriétés d'une capacité ne sont plus perdues lors de l'édition quand on est pas en mode DEBUG
