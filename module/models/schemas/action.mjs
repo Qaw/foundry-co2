@@ -232,7 +232,7 @@ export class Action extends foundry.abstract.DataModel {
   /**
    * Permet de récupérer la lettre représentant le nombre d'actions que prend une.. action : "","m","a","l","f"
    */
-  get actionTypeShort() {
+  get actionTypeShortLabel() {
     if (this.hasActionType) return game.i18n.localize(`CO.capacity.action.short.${SYSTEM.CAPACITY_ACTION_TYPE[this.actionType].id}`)
     return ""
   }
@@ -241,7 +241,10 @@ export class Action extends foundry.abstract.DataModel {
    * Renvoi true si on est sur un type attaque. Utile si on veux utiliser un sort avec concentration
    */
   get isActionTypeAttack() {
-    if (this.hasActionType) return this.actionType === "a"
+    // L'action peut avoir son propre type d'action
+    if (this.hasActionType) return this.actionType === SYSTEM.CAPACITY_ACTION_TYPE.a.id
+    // Ou hériter de celui de la capacité parente
+    if (this.parent.hasActionType) return this.parent.actionType === SYSTEM.CAPACITY_ACTION_TYPE.a.id
     return false
   }
 
@@ -249,7 +252,7 @@ export class Action extends foundry.abstract.DataModel {
    * Renvoi true si on a une durée d'action indiquée
    */
   get hasActionType() {
-    return this.actionType !== "none"
+    return this.actionType !== SYSTEM.CAPACITY_ACTION_TYPE.none.id
   }
 
   /**
