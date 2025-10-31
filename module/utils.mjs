@@ -83,7 +83,6 @@ export default class Utils {
       newFormula = Utils._replaceEvolvingDice(actor, newFormula)
     }
     return newFormula
-      .replaceAll(/(?<!\d)([dD])/g, "1$1")
       .replaceAll(/\+-/g, " - ")
       .replaceAll(/\+\+/g, " + ")
       .replaceAll(/([+-])/g, " $1 ")
