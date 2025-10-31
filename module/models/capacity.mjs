@@ -61,18 +61,18 @@ export default class CapacityData extends ItemData {
     return this.properties.spell
   }
 
-  get actionTypeShort() {
+  get actionTypeShortLabel() {
     if (this.hasActionType) return game.i18n.localize(`CO.capacity.action.short.${SYSTEM.CAPACITY_ACTION_TYPE[this.actionType].id}`)
     return ""
   }
 
   get isActionTypeAttack() {
-    if (this.hasActionType) return this.actionType === "a"
+    if (this.hasActionType) return this.actionType === SYSTEM.CAPACITY_ACTION_TYPE.a.id
     return false
   }
 
   get hasActionType() {
-    return this.actionType !== "none"
+    return this.actionType !== SYSTEM.CAPACITY_ACTION_TYPE.none.id
   }
 
   get isLearned() {

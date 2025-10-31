@@ -19,8 +19,8 @@ export default class COCharacterSheet extends COBaseActorSheet {
       editAbilities: COCharacterSheet.#onEditAbilities,
       deleteItem: COCharacterSheet.#onDeleteItem,
       roll: COCharacterSheet.#onRoll,
-      attack: COCharacterSheet.#onUseAction,
-      damage: COCharacterSheet.#onUseAction,
+      attack: COCharacterSheet._onUseAction,
+      damage: COCharacterSheet._onUseAction,
       inventoryEquip: COCharacterSheet.#onEquippedToggle,
       decreaseItem: COCharacterSheet.#onDecrease,
       decreaseCharge: COCharacterSheet.#onDecrease,
@@ -181,29 +181,6 @@ export default class COCharacterSheet extends COBaseActorSheet {
       if (item.system.charges.current >= item.system.charges.max) return
       item.system.charges.current += 1
       await item.update({ "system.charges.current": item.system.charges.current })
-    }
-  }
-
-  /**
-   * Action d'utiliser : active ou désactive une action
-   * @param {PointerEvent} event The originating click event
-   * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
-   */
-  static async #onUseAction(event, target) {
-    // Vérification du droit Owner
-    if (!this.isEditable) return
-    event.preventDefault()
-    const shiftKey = !!event.shiftKey
-    const dataset = target.dataset
-    const action = dataset.actionType
-    const type = dataset.type
-    const source = dataset.source
-    const indice = dataset.indice
-    let activation
-    if (action === "activate") {
-      activation = await this.document.activateAction({ state: true, source, indice, type, shiftKey })
-    } else if (action === "unactivate") {
-      activation = await this.document.activateAction({ state: false, source, indice, type })
     }
   }
 

@@ -33,7 +33,7 @@
                                         {{#if (and (isNotNull capacity.system.linkedCapacity) (isNotNull capacity.linkedCapacityItem))}}
                                             <div class="item-name flexrow">                                            
                                                     <a class="item-img" data-action="editItem" style="background-image: url('{{capacity.linkedCapacityImg}}')" data-tooltip="{{capacity.linkedCapacityItem.system.description}}"></a>
-                                                    <h4>{{capacity.linkedCapacityItem.name}}{{#if capacity.linkedCapacityItem.system.isSpell}} * {{/if}}{{#if capacity.linkedCapacityItem.system.hasActionType}} ({{capacity.linkedCapacityItem.system.actionTypeShort}}){{/if}}</h4>
+                                                    <h4>{{capacity.linkedCapacityItem.name}}{{#if capacity.linkedCapacityItem.system.isSpell}} * {{/if}}{{#if capacity.linkedCapacityItem.system.hasActionType}} ({{capacity.linkedCapacityItem.system.actionTypeShortLabel}}){{/if}}</h4>
                                             </div>
                                             <div class="item-controls-3">
                                                 <a class="chat" data-action="sendToChat" data-tooltip="{{localize 'CO.label.long.sendToChat'}}" data-chat-type="item"><i class="fas fa-fw fa-comment-alt"></i></a>
