@@ -145,7 +145,7 @@ export default class COActor extends Actor {
   }
 
   /**
-   * Retourne  un tableau d'objets comprenant les voies et les capacités associées
+   * Retourne un tableau d'objets comprenant les voies et les capacités associées
    */
   async getPathGroups() {
     let pathGroups = []
@@ -811,7 +811,8 @@ export default class COActor extends Actor {
     let capacity = this.items.get(capacityId)
     if (!capacity) return
 
-    const { id } = foundry.utils.parseUuid(capacity.system.path)
+    if (capacity.system.path === null) return
+    const { id } = foundry.utils.parseUuid(capacity.system?.path)
     if (!id) return
     let path = this.items.get(id)
     if (!path) return
@@ -823,16 +824,15 @@ export default class COActor extends Actor {
       if (!this.canLearnCapacity(capacity, path)) return
     }
 
+    if (!state && currentRank !== capacity.system.rank) {
+      ui.notifications.warn(game.i18n.localize("CO.notif.warningTargetCapacityRankLowerThanPathRank").replace("{capacityName}", capacity.name))
+      return
+    }
     // Mise à jour de la capacité et de ses actions
     await this._toggleItemFieldAndActions(capacity, "learned", state)
 
     // Mise à jour du rang de la voie correspondante
-    if (state) {
-      await path.update({ "system.rank": currentRank + 1 })
-    } else {
-      // Mise à jour du rang de la voie correspondante
-      await path.update({ "system.rank": currentRank - 1 })
-    }
+    await path.update({ "system.rank": path.system.numberLearnedCapacities })
 
     // Gestion d'une éventuelle capacité liée
     if (capacity.system.allowLinkedCapacity && capacity.system.linkedCapacity) {
@@ -843,6 +843,12 @@ export default class COActor extends Actor {
     }
   }
 
+  /**
+   * Permet de déterminer si une capacité peut etre apprise en suivant les règles standard
+   * @param {CapacityData} capacity la capacité à apprendre
+   * @param {PathData} path la voie de la capacité
+   * @param {boolean} notify active / désactive les notification utilisateur
+   */
   canLearnCapacity(capacity, path) {
     // RULE : Pour obtenir une capacité, il faut avoir un niveau minimal
     // Les capacités de rang 6 à 8 sont réservées aux voies de prestige
