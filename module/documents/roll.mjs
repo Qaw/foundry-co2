@@ -45,7 +45,8 @@ export class CORoll extends Roll {
       if (roll.options.useDifficulty && difficulty && difficulty !== "") {
         if (!roll.options.oppositeRoll) {
           if (typeof difficulty === "string") {
-            difficulty = parseInt(difficulty)
+            // On doit pouvoir avoir une formule dans la difficulté : ex : 10 + @cible.con
+            difficulty = parseInt(eval(difficulty))
           }
           isSuccess = roll.total >= difficulty
           isFailure = roll.total < difficulty

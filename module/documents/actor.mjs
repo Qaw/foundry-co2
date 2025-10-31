@@ -1990,7 +1990,6 @@ export default class COActor extends Actor {
     if (Hooks.call("co.postRollAttack", item, options, rolls) === false) return
 
     let results = rolls.map((roll) => CORoll.analyseRollResult(roll))
-
     /**
      * A hook event that fires before the results of the roll.
      * @function co.resultRollAttack

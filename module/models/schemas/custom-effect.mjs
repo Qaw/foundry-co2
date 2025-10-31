@@ -38,7 +38,7 @@ export class CustomEffectData extends foundry.abstract.DataModel {
     let tip = `${game.i18n.localize("CO.ui.duration")} : ${this.duration} ${this.unit}<br />`
     if (this.unit !== SYSTEM.COMBAT_UNITE.combat) tip += `${game.i18n.localize("CO.ui.remainingRound")} : ${this.remainingTurn}<br />`
     if (this.formula && this.formula !== "") {
-      if (this.formulaType === "damage") ip += `${game.i18n.localize("CO.customEffect.damage")} : ${this.formula}`
+      if (this.formulaType === "damage") tip += `${game.i18n.localize("CO.customEffect.damage")} : ${this.formula}`
       else if (this.formulaType === "heal") tip += `${game.i18n.localize("CO.customEffect.heal")} : ${this.formula}`
     }
     if (this.elementType && this.elementType !== "") tip += `${this.elementType}`
