@@ -39,7 +39,7 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
       learnCapacity: COBaseActorSheet.#onLearnCapacity,
       unlearnCapacity: COBaseActorSheet.#onUnlearnCapacity,
       deleteCustomEffect: COBaseActorSheet.#onDeleteCustomEffect,
-      toggleAction: COBaseActorSheet.#onUseAction,
+      toggleAction: COBaseActorSheet._onUseAction,
       toggleEffect: COBaseActorSheet.#onUseEffect,
       toggleDarkVision: COBaseActorSheet.#onToggleDarkVision,
     },
@@ -242,7 +242,7 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
    * @param {PointerEvent} event The originating click event
    * @param {HTMLElement} target The capturing HTML element which defined a [data-action]
    */
-  static async #onUseAction(event, target) {
+  static async _onUseAction(event, target) {
     // Vérification du droit Owner
     if (!this.isEditable) return
     event.preventDefault()
