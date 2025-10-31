@@ -4,8 +4,8 @@
 - Ajout des compétences utilisées dans le message de tchat (issue [#257](https://github.com/BlackBookEditions/foundry-co2/issues/257))
 
 ## Corrections
-- Corrige un bug qui pouvait empêcher l'ouverture d'une fiche de personnage qui avait un effets lui infligeant des dégats périodique en combat
-- Corrige un bug qui empêchait le calcul d'une difficulté si il y avait une formule dedans (ex : 10 + 1) [#335](https://github.com/BlackBookEditions/foundry-co2/issues/335))
+- Corrige un bug qui pouvait empêcher l'ouverture d'une fiche de personnage qui avait un effet lui infligeant des dommages périodiques en combat
+- Corrige un bug qui empêchait le calcul d'une difficulté s'il y avait une formule dedans (ex : 10 + 1) [#335](https://github.com/BlackBookEditions/foundry-co2/issues/335))
 
 # 1.2.1
 ## Corrections
