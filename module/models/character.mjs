@@ -275,7 +275,7 @@ export default class CharacterData extends ActorData {
       total = withDice ? evaluatedModifiers.join(" ") : evaluatedModifiers.reduce((acc, curr) => acc + curr, 0)
     }
 
-    let tooltip = ""    
+    let tooltip = ""
     for (const modifier of modifiersByTarget) {
       let partialTooltip = modifier.getTooltip(this.parent, withDice)
       if (partialTooltip !== null) tooltip += partialTooltip
@@ -343,7 +343,7 @@ export default class CharacterData extends ActorData {
     // Un personnage a 3 points de capacités au niveau 1, et 2 points de capacités par niveau supplémentaire
     // Un personnage avec un profil de la famille des mages a un point de capacité supplémentaire au niveau 1
     this.attributes.xp.max = 3 + 2 * (this.attributes.level - 1) + (this.hasProfileMageFamily ? 1 : 0)
-    //his._prepareVision()
+    // His._prepareVision()
   }
 
   /**
@@ -462,7 +462,7 @@ export default class CharacterData extends ActorData {
 
   /**
    * On regarde si un modifier modifie la vision et on l'active / désactive selon l'appuie sur le bouton toggle de la fiche de perso
-   * @param {Boolean} active Active (tue) ou désactive (false) la vision dans le noir
+   * @param {boolean} active Active (tue) ou désactive (false) la vision dans le noir
    */
   async toggleDarkVision(active) {
     const modifiers = this.stateModifiers
@@ -506,13 +506,14 @@ export default class CharacterData extends ActorData {
       }
     }
   }
-/**
- * Calcul les scores de combat melee/distance/magique
- * @param {*} key clef dans la table des attributs : 'melee', 'ranged', 'magic'
- * @param {*} skill Element pour lequel on calcul la valeur et le tooltip (ex : combat.melee combat.ranged, combat.magic)
- * @param {*} abilityBonus Bonus accordé par l'attribut (ex : bonus d'agilité)
- * @param {*} bonuses Autres bonus (customeffect par ex)
- */
+
+  /**
+   * Calcul les scores de combat melee/distance/magique
+   * @param {*} key clef dans la table des attributs : 'melee', 'ranged', 'magic'
+   * @param {*} skill Element pour lequel on calcul la valeur et le tooltip (ex : combat.melee combat.ranged, combat.magic)
+   * @param {*} abilityBonus Bonus accordé par l'attribut (ex : bonus d'agilité)
+   * @param {*} bonuses Autres bonus (customeffect par ex)
+   */
   _prepareAttack(key, skill, abilityBonus, bonuses) {
     // Le bonus de niveau est limité à 10
     const levelBonus = Math.min(this.attributes.level, 10)
@@ -589,13 +590,12 @@ export default class CharacterData extends ActorData {
     this.combat.crit.base = SYSTEM.BASE_CRITICAL
     this.combat.crit.tooltipValue = Utils.getTooltip("Base", this.combat.crit.base)
 
-
     // Somme des bonus des modifiers
     const critModifiers = this.computeTotalModifiersByTarget(this.combatModifiers, SYSTEM.COMBAT.crit.id)
 
     if (critModifiers.total > 0) {
       this.combat.crit.value = Math.max(16, SYSTEM.BASE_CRITICAL - critModifiers.total)
-      this.combat.crit.tooltipValue += "<br />" +  Utils.getTooltip("Bonus", critModifiers.tooltip)
+      this.combat.crit.tooltipValue += `<br />${Utils.getTooltip("Bonus", critModifiers.tooltip)}`
     } else {
       this.combat.crit.value = this.combat.crit.base
     }

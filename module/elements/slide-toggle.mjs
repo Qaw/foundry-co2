@@ -18,11 +18,11 @@ export default function slideToggle(el, duration = 200) {
     let display = window.getComputedStyle(el).display
     if (display === "none") display = "block"
     el.style.display = display
-    const height = el.scrollHeight + "px"
+    const height = `${el.scrollHeight}px`
 
     el.style.overflow = "hidden"
     el.style.height = "0"
-    el.offsetHeight // force repaint
+    el.offsetHeight // Force repaint
 
     // Animation vers la hauteur naturelle
     el.style.transition = `height ${duration}ms ease`
@@ -38,11 +38,11 @@ export default function slideToggle(el, duration = 200) {
   }
   // Préparation pour slideUp
   else {
-    const height = el.scrollHeight + "px"
+    const height = `${el.scrollHeight}px`
 
     el.style.overflow = "hidden"
     el.style.height = height
-    el.offsetHeight // force repaint
+    el.offsetHeight // Force repaint
 
     // Animation vers 0
     el.style.transition = `height ${duration}ms ease`

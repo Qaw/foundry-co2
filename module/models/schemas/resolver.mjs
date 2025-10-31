@@ -307,8 +307,8 @@ export class Resolver extends foundry.abstract.DataModel {
     // Evaluation de la formule à partir de l'acteur à l'origine de l'effet
     let evaluatedFormula = ""
     if (this.additionalEffect.formula) {
-      evaluatedFormula =Utils.evaluateFormulaCustomValues(actor, this.additionalEffect.formula)
-      evaluatedFormula = Roll.replaceFormulaData(evaluatedFormula, actor.getRollData())    
+      evaluatedFormula = Utils.evaluateFormulaCustomValues(actor, this.additionalEffect.formula)
+      evaluatedFormula = Roll.replaceFormulaData(evaluatedFormula, actor.getRollData())
     }
 
     // Les modifiers qui s'appliquent (avec apply égal à others ou both)

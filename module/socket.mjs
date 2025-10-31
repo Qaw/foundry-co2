@@ -25,11 +25,11 @@ export function handleSocketEvent({ action = null, data = {} } = {}) {
   }
 }
 
-/** * @description
- * //Fonction qui va proposer dans le chat d'appliquer des soins
+/**
+ * Fonction qui va proposer dans le chat d'appliquer des soins
  * @param {*} targets : Liste d'uuid d'acteur cible
- * @param {int} Quantité de PV restaurés
- * @param {string} id de l'acteur à l'origine du soin
+ * @param {int} healAmount : Quantité de PV restaurés
+ * @param {string} fromUserId : Id de l'acteur à l'origine du soin
  */
 export async function _heal({ targets, healAmount, fromUserId }) {
   if (game.user.isGM) {

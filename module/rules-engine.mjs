@@ -50,7 +50,7 @@ export default class RulesEngine {
         else return false
       },
     },
-    /*{
+    /* {
       name: "isTagged",
       parameters: ["item", "tag"],
       expression: (object, item, tag) => item.tags && item.tags.includes(tag),

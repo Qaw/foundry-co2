@@ -847,7 +847,6 @@ export default class COActor extends Actor {
    * Permet de déterminer si une capacité peut etre apprise en suivant les règles standard
    * @param {CapacityData} capacity la capacité à apprendre
    * @param {PathData} path la voie de la capacité
-   * @param {boolean} notify active / désactive les notification utilisateur
    */
   canLearnCapacity(capacity, path) {
     // RULE : Pour obtenir une capacité, il faut avoir un niveau minimal
@@ -1534,7 +1533,7 @@ export default class COActor extends Actor {
       showDifficulty,
       withDialog,
       targets,
-      skillUsed: []
+      skillUsed: [],
     }
     /**
      * A hook event that fires before the roll is made.
@@ -1663,13 +1662,13 @@ export default class COActor extends Actor {
       targets,
       hasTargets: targets?.length > 0,
       hasLuckyPoints,
-      skillUsed: [] //tableau de clef valeur pour stocker les nom de skill activé et leur bonus
+      skillUsed: [], // Tableau de clef valeur pour stocker les noms des skill activés et leur bonus
     }
 
     let roll = await COSkillRoll.prompt(dialogContext, { withDialog: withDialog })
     if (!roll) return null
 
-    console.log("rollSkill",dialogContext )
+    console.log("rollSkill", dialogContext)
     /**
      * A hook event that fires after the roll is made.
      * @function co.postRollSkill
@@ -1699,7 +1698,7 @@ export default class COActor extends Actor {
 
     let targetsUuid = targets?.map((target) => target.uuid)
 
-    await roll.toMessage({ style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "skill", system: { targets: targetsUuid, result: result}, speaker }, { rollMode: roll.options.rollMode })
+    await roll.toMessage({ style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "skill", system: { targets: targetsUuid, result: result }, speaker }, { rollMode: roll.options.rollMode })
   }
 
   /**
@@ -1861,9 +1860,8 @@ export default class COActor extends Actor {
       critical = Math.max(16, parseInt(critical) - (SYSTEM.BASE_CRITICAL - this.system.combat.crit.value))
     }
 
-    //on recupere le tooltip du critique
+    // Récupération du tooltip du critique
     criticalTooltip = this.system.combat.crit.tooltipValue
-
 
     // Gestion des dés bonus et malus
     let bonusDices = 0

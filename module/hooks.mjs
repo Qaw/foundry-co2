@@ -68,8 +68,7 @@ export default function registerHooks() {
         const source = dataset.source
         const indice = dataset.indice
         let actor = game.actors.get(actorId)
-        if(actor.type === "encounter")
-          actor = await fromUuid(actorUuid)
+        if (actor.type === "encounter") actor = await fromUuid(actorUuid)
         let activation
         if (action === "activate") {
           activation = await actor.activateAction({ state: true, source, indice, type, shiftKey })

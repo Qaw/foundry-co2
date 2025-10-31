@@ -34,9 +34,9 @@ export default class ToggleSwitchElement extends CheckboxElement {
    */
   _buildElements() {
     const track = document.createElement("track")
-    //track.classList.add("track")
+    // Track.classList.add("track")
     const thumb = document.createElement("thumb")
-    //thumb.classList.add("thumb")
+    // Thumb.classList.add("thumb")
     track.append(thumb)
     return [track]
   }

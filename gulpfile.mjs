@@ -8,6 +8,9 @@ const LESS_SRC = "./styles/co.less"
 const CSS_DEST = "./css"
 const LESS_WATCH = ["./styles/**/*.less"]
 
+/**
+ *
+ */
 function compileLESS() {
   console.log("Compiling LESS files from:", LESS_SRC, "to:", CSS_DEST)
   return gulp
@@ -25,6 +28,9 @@ const css = gulp.series(compileLESS)
 /* ----------------------------------------- */
 /*  Watch Updates
 /* ----------------------------------------- */
+/**
+ *
+ */
 function watchUpdates() {
   gulp.watch(LESS_WATCH, css)
 }
