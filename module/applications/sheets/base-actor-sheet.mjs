@@ -342,7 +342,7 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
   /**
    * Send the item details to the chat
    * Chat Type are :
-   * - item : to display an item and all its actions
+   * - item : to display the item and all its actions
    * - action : to display the item and the action
    * - loot : to only display informations on the item
    * @param {PointerEvent} event The originating click event
@@ -356,33 +356,19 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     const dataset = target.dataset
     const chatType = dataset.chatType
 
-    let item
-    let id
+    let itemId
     let indice = null
     if (chatType === "item" || chatType === "loot") {
-      id = target.closest(".item").dataset.itemId
-      item = this.actor.items.get(id)
+      itemId = target.closest(".item")?.dataset.itemId
     } else if (chatType === "action") {
       const { id } = foundry.utils.parseUuid(dataset.source)
-      item = this.actor.items.get(id)
+      itemId = id
       indice = dataset.indice
     }
 
-    let itemChatData = item.getChatData(item, this.actor, chatType, indice)
-    await new CoChat(this.actor)
-      .withTemplate("systems/co2/templates/chat/item-card.hbs")
-      .withData({
-        actorId: this.actor.id,
-        actorUuid: this.actor.uuid,
-        id: itemChatData.id,
-        uuid: itemChatData.uuid,
-        name: itemChatData.name,
-        img: itemChatData.img,
-        description: itemChatData.description,
-        actions: itemChatData.actions,
-      })
-      .withWhisper(ChatMessage.getWhisperRecipients("GM").map((u) => u.id))
-      .create()
+    if (!itemId) return
+
+    await this.actor.sendItemToChat({ chatType, itemId, indice })
   }
 
   /**

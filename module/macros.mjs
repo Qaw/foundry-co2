@@ -60,43 +60,18 @@ export default class Macros {
     const { item, actor } = await Macros.getMacroTarget(itemUuid, itemName, "Item")
     if (item instanceof COItem) {
       if (indice === null) {
-        let itemChatData = item.getChatData(null)
-        if (item.type === SYSTEM.ITEM_TYPE.capacity.id && !item.system.learned) return ui.notifications.warn(game.i18n.format("CO.macro.capacityNotLearned", { name: itemName }))
+        await actor.sendItemToChat({ chatType: "item", itemId: item.id, indice })
+        /*if (item.type === SYSTEM.ITEM_TYPE.capacity.id && !item.system.learned) return ui.notifications.warn(game.i18n.format("CO.macro.capacityNotLearned", { name: itemName }))
         if (item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.properties.equipable && !item.system.equipped)
           return ui.notifications.warn(game.i18n.format("CO.macro.itemNotEquipped", { name: itemName }))
-        new CoChat(actor)
-          .withTemplate("systems/co2/templates/chat/item-card.hbs")
-          .withData({
-            actorId: actor.id,
-            actorUuid: actor.uuid,
-            id: itemChatData.id,
-            uuid: itemChatData.uuid,
-            name: itemChatData.name,
-            img: itemChatData.img,
-            description: itemChatData.description,
-            actions: itemChatData.actions,
-          })
-          .withWhisper(ChatMessage.getWhisperRecipients("GM").map((u) => u.id))
-          .create()
+        */
       } else {
-        let itemChatData = item.getChatData(item, actor, "action", indice)
-        if (item.type === SYSTEM.ITEM_TYPE.capacity.id && !item.system.learned) return ui.notifications.warn(game.i18n.format("CO.macro.capacityNotLearned", { name: itemName }))
+        await actor.sendItemToChat({ chatType: "action", itemId: item.id, indice })
+
+        /*if (item.type === SYSTEM.ITEM_TYPE.capacity.id && !item.system.learned) return ui.notifications.warn(game.i18n.format("CO.macro.capacityNotLearned", { name: itemName }))
         if (item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.properties.equipable && !item.system.equipped)
           return ui.notifications.warn(game.i18n.format("CO.macro.itemNotEquipped", { name: itemName }))
-        new CoChat(actor)
-          .withTemplate("systems/co2/templates/chat/item-card.hbs")
-          .withData({
-            actorId: actor.id,
-            actorUuid: actor.uuid,
-            id: itemChatData.id,
-            uuid: itemChatData.uuid,
-            name: itemChatData.name,
-            img: itemChatData.img,
-            description: itemChatData.description,
-            actions: itemChatData.actions,
-          })
-          .withWhisper(ChatMessage.getWhisperRecipients("GM").map((u) => u.id))
-          .create()
+        */
       }
     }
   }

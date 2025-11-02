@@ -2335,5 +2335,26 @@ export default class COActor extends Actor {
     }
   }
 
+  async sendItemToChat({ chatType, itemId, indice = null }) {
+    const item = this.items.get(itemId)
+    if (!item) return
+
+    let itemChatData = item.getChatData(item, this, chatType, indice)
+    new CoChat(this)
+      .withTemplate("systems/co2/templates/chat/item-card.hbs")
+      .withData({
+        actorId: this.id,
+        actorUuid: this.uuid,
+        id: itemChatData.id,
+        uuid: itemChatData.uuid,
+        name: itemChatData.name,
+        img: itemChatData.img,
+        description: itemChatData.description,
+        actions: itemChatData.actions,
+      })
+      .withWhisper(ChatMessage.getWhisperRecipients("GM").map((u) => u.id))
+      .create()
+  }
+
   // #endregion
 }
