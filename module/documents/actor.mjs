@@ -451,6 +451,7 @@ export default class COActor extends Actor {
   /**
    * Retourne Toutes les actions visibles des capacités et des équipements
    * Pour les capacités, ne retourne pas les actions des capacités dont l'armure est trop élevée
+   * La liste est triée par nom d'item puis par nom d'action
    */
   async getVisibleActions() {
     let allActions = []
@@ -466,7 +467,11 @@ export default class COActor extends Actor {
         allActions.push(...itemActions)
       }
     }
-    return allActions
+    // Tri par nom d'item puis par nom d'action pour garantir un ordre cohérent
+    return allActions.sort((a, b) => {
+      const itemCompare = a.itemName.localeCompare(b.itemName)
+      return itemCompare !== 0 ? itemCompare : a.label.localeCompare(b.label)
+    })
   }
 
   /**
@@ -493,10 +498,10 @@ export default class COActor extends Actor {
   }
 
   /**
-   * Retourne une Map des actions visibles groupées par type d'action de la capacité
+   * Retourne une Map des actions visibles groupées par type d'action de la capacité (l, a, m, f)
    * @returns {Promise<Map<string, Array>>} Map avec les id des types d'actions comme clés et les tableaux d'actions comme valeurs
    */
-  async getVisibleActivableActionsBCapacityActionType() {
+  async getVisibleActivableActionsByCapacityActionType() {
     const allActions = await this.getVisibleActivableActions()
     const actionsByCapacityType = new Map()
 
@@ -519,15 +524,15 @@ export default class COActor extends Actor {
    * Retourne Toutes les actions visibles et activables des capacités et des équipements
    */
   async getVisibleActivableActions() {
-    const actions = await this.getVisibleActions(this)
-    return actions.filter((a) => a.properties.activable)
+    const actions = await this.getVisibleActions()
+    return actions.filter((a) => a.properties.activable) // .sort((a, b) => a.actionName.localeCompare(b.actionName))
   }
 
   /**
    * Retourne Toutes les actions visibles, activables et temporaires des capacités et des équipements
    */
   async getVisibleActivableTemporaireActions() {
-    const actions = await this.getVisibleActions(this)
+    const actions = await this.getVisibleActions()
     return actions.filter((a) => a.properties.activable && a.properties.temporary)
   }
 
@@ -535,7 +540,7 @@ export default class COActor extends Actor {
    * Retourne Toutes les actions visibles et non activables des capacités et des équipements
    */
   async getVisibleNonActivableActions() {
-    const actions = await this.getVisibleActions(this)
+    const actions = await this.getVisibleActions()
     return actions.filter((a) => !a.properties.activable)
   }
 
@@ -543,7 +548,7 @@ export default class COActor extends Actor {
    * Retourne Toutes les actions visibles, non activables et non temporaires des capacités et des équipements
    */
   async getVisibleNonActivableNonTemporaireActions() {
-    const actions = await this.getVisibleActions(this)
+    const actions = await this.getVisibleActions()
     return actions.filter((a) => !a.properties.activable && !a.properties.temporary)
   }
 
@@ -708,7 +713,7 @@ export default class COActor extends Actor {
     const item = await fromUuid(source)
     if (!item) return
 
-    if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction`), state, source, indice, type, item)
+    if (CONFIG.debug.co2?.actions) console.debug(Utils.log(`COActor - activateAction`), state, source, indice, type, item)
 
     // Si l'arme a la propriété "reloadable", on vérifie si l'arme a encore des munitions
     if (state && item.type === SYSTEM.ITEM_TYPE.equipment.id && item.system.properties.reloadable && !item.system.hasCharges) {
@@ -762,7 +767,7 @@ export default class COActor extends Actor {
     const action = foundry.utils.deepClone(item.system.actions[indice])
     // Action avec une durée : changement de l'état de l'action
     if (action.properties.temporary) {
-      if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction - Action avec une durée`), state, source, indice, type, shiftKey, item)
+      if (CONFIG.debug.co2?.actions) console.debug(Utils.log(`COActor - activateAction - Action avec une durée`), state, source, indice, type, shiftKey, item)
 
       // L'activation de l'action déclenche tous les resolvers
       if (state) {
@@ -779,7 +784,7 @@ export default class COActor extends Actor {
     }
     // Action instantanée
     else {
-      if (CONFIG.debug.co?.actions) console.debug(Utils.log(`COActor - activateAction - Action instantanée`), state, source, indice, type, shiftKey, item)
+      if (CONFIG.debug.co2?.actions) console.debug(Utils.log(`COActor - activateAction - Action instantanée`), state, source, indice, type, shiftKey, item)
 
       // Recherche des resolvers de l'action
       let resolvers = Object.values(action.resolvers).map((r) => foundry.utils.deepClone(r))

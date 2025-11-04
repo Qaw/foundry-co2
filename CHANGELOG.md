@@ -8,6 +8,7 @@
 - Prise en compte du dé malus pour l'état préjudiciable Affaibli
 - Ajout des Effets d'état (statusEffects, visibles depuis le token) dans la partie Etats de la sidebar
 - Equipement : Le changement de sous-type réinitialise tous les champs de Type d'équipement, Propriétés et Usage
+- Tri des actions sur l'écran principal : Tri par défaut par nom, tri par rang de capacité, tri par type, tri par temps d'action
 
 ## Corrections
 - Corrige un bug qui pouvait empêcher l'ouverture d'une fiche de personnage qui avait un effet lui infligeant des dommages périodiques en combat

@@ -42,6 +42,11 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
       toggleAction: COBaseActorSheet._onUseAction,
       toggleEffect: COBaseActorSheet.#onUseEffect,
       toggleDarkVision: COBaseActorSheet.#onToggleDarkVision,
+      sortActionsByDefault: COBaseActorSheet.#onSortActionsByDefault,
+      sortActionsByName: COBaseActorSheet.#onSortActionsByName,
+      sortActionsByRank: COBaseActorSheet.#onSortActionsByRank,
+      sortActionsByType: COBaseActorSheet.#onSortActionsByType,
+      sortActionsByActionType: COBaseActorSheet.#onSortActionsByActionType,
     },
   }
 
@@ -50,6 +55,9 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
    * @type {number}
    */
   _sheetMode = this.constructor.SHEET_MODES.PLAY
+
+  // The selected sorting of actions : byName, byType, byActionType
+  actionsSorting = "default"
 
   /**
    * Is the sheet currently in 'Play' mode?
@@ -209,7 +217,17 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     context.currenciesExpanded = currenciesExpanded
 
     context.visibleActions = await this.document.getVisibleActions()
+
+    // Actions activables affichées dans l'onglet Principal
     context.visibleActivableActions = await this.document.getVisibleActivableActions()
+    context.actionsSorting = this.actionsSorting
+    context.isActionsSortedByDefault = this.actionsSorting === "default"
+    context.isActionsSortedByRank = this.actionsSorting === "byRank"
+    context.isActionsSortedByType = this.actionsSorting === "byType"
+    context.isActionsSortedByActionType = this.actionsSorting === "byActionType"
+
+    this.#applySorting(context.visibleActivableActions)
+
     context.visibleNonActivableActions = await this.document.getVisibleNonActivableActions()
     context.visibleActivableTemporaireActions = await this.document.getVisibleActivableTemporaireActions()
     context.visibleNonActivableNonTemporaireActions = await this.document.getVisibleNonActivableNonTemporaireActions()
@@ -233,8 +251,42 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     // Select options
     context.choiceMoveUnit = SYSTEM.MOVEMENT_UNIT
 
-    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseActorSheet - context`), context)
+    if (CONFIG.debug.co2?.sheets) console.debug(Utils.log(`CoBaseActorSheet - context`), context)
     return context
+  }
+
+  /**
+   * Applique le tri sélectionné sur les actions.
+   * @param {Array} actions - Tableau des actions à trier
+   * @private
+   */
+  #applySorting(actions) {
+    switch (this.actionsSorting) {
+      case "byRank":
+        actions.sort((a, b) => {
+          const rankDiff = a.rank - b.rank
+          if (rankDiff !== 0) return rankDiff
+          const nameDiff = a.itemName.localeCompare(b.itemName)
+          return nameDiff !== 0 ? nameDiff : a.label.localeCompare(b.label)
+        })
+        break
+
+      case "byType":
+        actions.sort((a, b) => {
+          const typeDiff = a.type.localeCompare(b.type)
+          return typeDiff !== 0 ? typeDiff : a.itemName.localeCompare(b.itemName)
+        })
+        break
+
+      case "byActionType":
+        actions.sort((a, b) => {
+          const actionTypeShortLabelDiff = a.actionTypeShortLabel.localeCompare(b.actionTypeShortLabel)
+          if (actionTypeShortLabelDiff !== 0) return actionTypeShortLabelDiff
+          const nameDiff = a.itemName.localeCompare(b.itemName)
+          return nameDiff !== 0 ? nameDiff : a.label.localeCompare(b.label)
+        })
+        break
+    }
   }
 
   // #region Actions
@@ -588,6 +640,36 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
     const hasEffect = this.actor.statuses.has(effect)
     if (hasEffect && state === false) return await this.actor.toggleStatusEffect(effect, state)
     if (!hasEffect && state === true) return await this.actor.toggleStatusEffect(effect, state)
+  }
+
+  static #onSortActionsByDefault(event) {
+    event.preventDefault()
+    this.actionsSorting = "default"
+    this.render()
+  }
+
+  static #onSortActionsByName(event) {
+    event.preventDefault()
+    this.actionsSorting = "byName"
+    this.render()
+  }
+
+  static #onSortActionsByRank(event) {
+    event.preventDefault()
+    this.actionsSorting = "byRank"
+    this.render()
+  }
+
+  static #onSortActionsByType(event) {
+    event.preventDefault()
+    this.actionsSorting = "byType"
+    this.render()
+  }
+
+  static #onSortActionsByActionType(event) {
+    event.preventDefault()
+    this.actionsSorting = "byActionType"
+    this.render()
   }
 
   // #endregion
