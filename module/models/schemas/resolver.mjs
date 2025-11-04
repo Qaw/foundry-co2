@@ -77,7 +77,7 @@ export class Resolver extends foundry.abstract.DataModel {
    * @param {("attack"|"damage")} type : type de resolver
    */
   async attack(actor, item, action, type) {
-    if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver attack`), actor, item, action, type)
+    if (CONFIG.debug.co2?.resolvers) console.debug(Utils.log(`Resolver attack`), actor, item, action, type)
     let skillFormula = this.skill.formula
     skillFormula = Utils.evaluateFormulaCustomValues(actor, skillFormula, item.uuid)
     let skillFormulaEvaluated = Roll.replaceFormulaData(skillFormula, actor.getRollData())
@@ -137,7 +137,7 @@ export class Resolver extends foundry.abstract.DataModel {
    * @param {Action} action : l'action
    */
   async auto(actor, item, action) {
-    if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver auto`), actor, item, action)
+    if (CONFIG.debug.co2?.resolvers) console.debug(Utils.log(`Resolver auto`), actor, item, action)
     let damageFormula = this.dmg.formula
     damageFormula = Utils.evaluateFormulaCustomValues(actor, damageFormula, item.uuid)
     let damageFormulaEvaluated = Roll.replaceFormulaData(damageFormula, actor.getRollData())
@@ -170,14 +170,14 @@ export class Resolver extends foundry.abstract.DataModel {
    * @param {Action} action : l'action.
    */
   async heal(actor, item, action) {
-    if (CONFIG.debug.co?.resolvers) console.debug(Utils.log(`Resolver heal`), actor, item, action)
+    if (CONFIG.debug.co2?.resolvers) console.debug(Utils.log(`Resolver heal`), actor, item, action)
 
     let healFormula = this.skill.formula
     healFormula = Utils.evaluateFormulaCustomValues(actor, healFormula, item.uuid)
     let healFormulaEvaluated = Roll.replaceFormulaData(healFormula, actor.getRollData())
 
     const targets = actor.acquireTargets(this.target.type, this.target.scope, this.target.number, action.actionName)
-    if (CONFIG.debug.co?.resolvers) console.debug(Utils.log("Heal Targets", targets))
+    if (CONFIG.debug.co2?.resolvers) console.debug(Utils.log("Heal Targets", targets))
 
     await actor.rollHeal(item, { actionName: action.label, healFormula: healFormulaEvaluated, targetType: this.target.type, targets: targets })
 

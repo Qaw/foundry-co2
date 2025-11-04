@@ -138,7 +138,7 @@ export default class COCharacterSheet extends COBaseActorSheet {
     context.choiceAbilities = SYSTEM.ABILITIES
     context.choiceSize = SYSTEM.SIZES
 
-    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`COCharacterSheet - context`), context)
+    if (CONFIG.debug.co2?.sheets) console.debug(Utils.log(`COCharacterSheet - context`), context)
 
     return context
   }

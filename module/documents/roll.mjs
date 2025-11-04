@@ -107,12 +107,12 @@ export class COSkillRoll extends CORoll {
             icon: "fas fa-check",
             default: true,
             callback: (event, button, dialog) => {
-              if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll prompt - Callback`), event, button, dialog)
+              if (CONFIG.debug.co2?.rolls) console.debug(Utils.log(`COSkillRoll prompt - Callback`), event, button, dialog)
               const output = Array.from(button.form.elements).reduce((obj, input) => {
                 if (input.name) obj[input.name] = input.value
                 return obj
               }, {})
-              if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll prompt - Output`), output)
+              if (CONFIG.debug.co2?.rolls) console.debug(Utils.log(`COSkillRoll prompt - Output`), output)
               // Récupère tous les éléments bonus-item checked pour l'afficher en chat message apres
               const checkedBonuses = dialog.element.querySelectorAll(".bonus-item.checked")
               const skillUsed = Array.from(checkedBonuses).map((item) => {
@@ -176,7 +176,7 @@ export class COSkillRoll extends CORoll {
 
       if (!rollContext) return
       rollContext.label = dialogContext.label
-      if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll - rollContext`), rollContext)
+      if (CONFIG.debug.co2?.rolls) console.debug(Utils.log(`COSkillRoll - rollContext`), rollContext)
 
       formula = `${rollContext.formula}`
       if (parseInt(rollContext.bonus) > 0) formula += `+${parseInt(rollContext.bonus)}`
@@ -222,7 +222,7 @@ export class COSkillRoll extends CORoll {
       ...options,
     }
 
-    if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COSkillRoll - roll`), roll)
+    if (CONFIG.debug.co2?.rolls) console.debug(Utils.log(`COSkillRoll - roll`), roll)
     return roll
   }
 
@@ -294,7 +294,7 @@ export class COAttackRoll extends CORoll {
             icon: "fas fa-check",
             default: true,
             callback: (event, button, dialog) => {
-              if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll prompt - Callback`), event, button, dialog)
+              if (CONFIG.debug.co2?.rolls) console.debug(Utils.log(`COAttackRoll prompt - Callback`), event, button, dialog)
               const output = Array.from(button.form.elements).reduce((obj, input) => {
                 if (input.name) {
                   if (input.type === "checkbox") {
@@ -310,7 +310,7 @@ export class COAttackRoll extends CORoll {
                 }
                 return obj
               }, {})
-              if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll prompt - Output`), output)
+              if (CONFIG.debug.co2?.rolls) console.debug(Utils.log(`COAttackRoll prompt - Output`), output)
               /* Output exemple
                 {
                     "rollMode": "publicroll",
@@ -407,7 +407,7 @@ export class COAttackRoll extends CORoll {
       if (!rollContext) return
 
       rollContext.flavor = dialogContext.flavor
-      if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll - rollContext`), rollContext)
+      if (CONFIG.debug.co2?.rolls) console.debug(Utils.log(`COAttackRoll - rollContext`), rollContext)
     }
 
     if (dialogContext.type === "attack") {
@@ -486,13 +486,13 @@ export class COAttackRoll extends CORoll {
       rolls.push(roll)
     }
 
-    if (CONFIG.debug.co?.rolls) console.debug(Utils.log(`COAttackRoll - rolls`), rolls)
+    if (CONFIG.debug.co2?.rolls) console.debug(Utils.log(`COAttackRoll - rolls`), rolls)
     return rolls
   }
 
   async _getChatCardData(flavor, isPrivate) {
     const rollResults = CORoll.analyseRollResult(this)
-    if (CONFIG.debug.co?.chat) console.debug(Utils.log(`COAttackRoll - _getChatCardData options`), this.options)
+    if (CONFIG.debug.co2?.chat) console.debug(Utils.log(`COAttackRoll - _getChatCardData options`), this.options)
 
     // Type de jet
     const hasDice = this.options.dice === "bonus" || this.options.dice === "malus"

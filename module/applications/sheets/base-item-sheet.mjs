@@ -196,7 +196,7 @@ export default class COBaseItemSheet extends HandlebarsApplicationMixin(sheets.I
       Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.id !== "all" && (value.subtype === "ability" || value.subtype === "attack")),
     )
 
-    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoBaseItemSheet - context`), context)
+    if (CONFIG.debug.co2?.sheets) console.debug(Utils.log(`CoBaseItemSheet - context`), context)
     return context
   }
 

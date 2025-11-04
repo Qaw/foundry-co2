@@ -252,7 +252,7 @@ export default function registerHooks() {
 
   Hooks.on("hotbarDrop", (bar, data, slot) => {
     if (["Item", "co.action", "co.ability"].includes(data.type)) {
-      if (CONFIG.debug.co?.hooks) console.debug(Utils.log(`HotbarDrop`), bar, data, slot)
+      if (CONFIG.debug.co2?.hooks) console.debug(Utils.log(`HotbarDrop`), bar, data, slot)
       createCOMacro(data, slot)
       return false
     }

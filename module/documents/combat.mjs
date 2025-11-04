@@ -36,7 +36,7 @@ import Utils from "../utils.mjs"
 export default class CombatCO extends Combat {
   /** @override */
   async _onStartTurn(combatant) {
-    if (CONFIG.debug.co?.combat) console.debug(Utils.log(`Début du tour de ${combatant.actor?.name} !`))
+    if (CONFIG.debug.co2?.combat) console.debug(Utils.log(`Début du tour de ${combatant.actor?.name} !`))
     await super._onStartTurn(combatant)
     // On diminue de 1 le nombre de rounds restants
     if (combatant.actor?.system.currentEffects.length > 0) {
@@ -50,7 +50,7 @@ export default class CombatCO extends Combat {
     await super._onEndTurn(combatant)
     // Retire les custom Effect qui se terminent ce tour-ci. #Fix 320 supprime l'effet avant que le nouveau tour commence
     if (combatant.actor?.system.currentEffects.length > 0) await combatant.actor.expireEffects()
-    if (CONFIG.debug.co?.combat) console.debug(Utils.log(`Fin du tour de ${combatant.actor?.name} !`))
+    if (CONFIG.debug.co2?.combat) console.debug(Utils.log(`Fin du tour de ${combatant.actor?.name} !`))
   }
 
   /** @override */

@@ -86,7 +86,7 @@ export default class COEncounterSheet extends COBaseActorSheet {
     context.choiceBossRanks = SYSTEM.ENCOUNTER_BOSS_RANKS
     context.choiceSizes = SYSTEM.SIZES
 
-    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`COEncounterSheet - context`), context)
+    if (CONFIG.debug.co2?.sheets) console.debug(Utils.log(`COEncounterSheet - context`), context)
     return context
   }
 

@@ -50,7 +50,7 @@ export default class CoProfileSheet extends CoBaseItemSheet {
     // Select options
     context.choiceProfileFamily = Object.fromEntries(Object.entries(SYSTEM.FAMILIES).map(([key, value]) => [key, value.label]))
 
-    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoProfileSheet - context`), context)
+    if (CONFIG.debug.co2?.sheets) console.debug(Utils.log(`CoProfileSheet - context`), context)
     return context
   }
 }

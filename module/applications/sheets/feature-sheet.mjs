@@ -51,7 +51,7 @@ export default class CoFeatureSheet extends CoBaseItemSheet {
     }
     context.paths = infosPaths
 
-    if (CONFIG.debug.co?.sheets) console.debug(Utils.log(`CoFeatureSheet - context`), context)
+    if (CONFIG.debug.co2?.sheets) console.debug(Utils.log(`CoFeatureSheet - context`), context)
     return context
   }
 
