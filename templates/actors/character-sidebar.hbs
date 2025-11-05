@@ -597,6 +597,11 @@
               {{/if}}
             </li>
           {{/each}}
+          {{#each statusEffects as |effect|}}
+            <li class="status-effect" data-tooltip="{{#if effect.description}}{{effect.name}} : {{effect.description}}{{/if}}" data-tooltip-direction="RIGHT">
+              <img src="{{effect.img}}" alt="{{effect.name}}" /> {{effect.name}} 
+            </li>
+          {{/each}}
         </ul>
       </div>
     </div>

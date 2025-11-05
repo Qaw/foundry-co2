@@ -5,7 +5,8 @@
 - Voie : pour désapprendre une capacité, il faut que les capacités de rang supérieur aient été désapprises
 - Capacité : le coût en charges peut être mis à 0 au niveau de l'action (issue [#339](https://github.com/BlackBookEditions/foundry-co2/issues/339))
 - Prise en compte du dé bonus pour une caractéristique supérieure
-- PRise en compte du dé malus pour l'état préjudiciable Affaibli
+- Prise en compte du dé malus pour l'état préjudiciable Affaibli
+- Ajout des Effets d'état (statusEffects, visibles depuis le token) dans la partie Etats de la sidebar
 
 ## Corrections
 - Corrige un bug qui pouvait empêcher l'ouverture d'une fiche de personnage qui avait un effet lui infligeant des dommages périodiques en combat

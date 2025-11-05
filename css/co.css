@@ -2634,6 +2634,23 @@ co-toggle-switch[checked] thumb {
   margin-left: 5px;
   color: var(--color-background-grey);
 }
+.co.application.sheet.actor.character .window-content .sheet-sidebar .state-name img {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+.co.application.sheet.actor.character .window-content .sheet-sidebar .status-effect {
+  margin-left: 5px;
+  display: flex;
+}
+.co.application.sheet.actor.character .window-content .sheet-sidebar .status-effect img {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  margin-left: 5px;
+  margin-right: 5px;
+}
 .co.application.sheet.actor.character .window-content .sheet-sidebar input.vision-slider:not(:checked)::before {
   color: var(--color-background-grey);
 }

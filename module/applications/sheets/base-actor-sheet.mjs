@@ -217,6 +217,19 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
 
     context.stateModifiers = this.document.system.stateModifiers
 
+    // Status Effects
+    const statusEffects = this.actor.statuses
+    context.statusEffects = statusEffects.map((effectid) => {
+      const effectConfig = CONFIG.statusEffects.find((se) => se.id === effectid)
+      return {
+        id: effectConfig.id,
+        name: effectConfig.name,
+        img: effectConfig.img,
+        hasDescription: effectConfig.description && effectConfig.description.length > 0,
+        description: effectConfig.description,
+      }
+    })
+
     // Select options
     context.choiceMoveUnit = SYSTEM.MOVEMENT_UNIT
 
