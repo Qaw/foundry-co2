@@ -44,6 +44,7 @@ export default class CoEquipmentSheet extends CoBaseItemSheet {
   async _onRender(context, options) {
     await super._onRender(context, options)
     this._filterInputDiceValue()
+    this._equipmentTypeUpdateListener()
   }
 
   /** @override */
@@ -173,5 +174,36 @@ export default class CoEquipmentSheet extends CoBaseItemSheet {
       // Apply filter and remove value
       inputField.value = currentValue.replaceAll(regex, "")
     }
+  }
+
+  _equipmentTypeUpdateListener() {
+    const subTypeSelector = this.element.querySelector('select[name="system.subtype"]')
+    if (subTypeSelector) {
+      subTypeSelector.removeEventListener("change", this._onChangeEquipmentType.bind(this))
+      subTypeSelector.addEventListener("change", this._onChangeEquipmentType.bind(this))
+    }
+  }
+
+  async _onChangeEquipmentType(event) {
+    event.preventDefault()
+    if (!this.isEditable) return
+    const oldEquipmentType = event.target.value
+    const newEquipmentType = this.item.system.subtype
+    if (oldEquipmentType === newEquipmentType) return
+
+    await this.item.update({
+      system: {
+        properties: {
+          equipable: false,
+          reloadable: false,
+          stackable: false,
+        },
+        usage: {
+          oneHand: false,
+          twoHand: false,
+        },
+        range: null,
+      },
+    })
   }
 }
