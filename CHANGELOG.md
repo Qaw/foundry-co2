@@ -4,11 +4,14 @@
 - Ajout des compétences utilisées dans le message de tchat (issue [#257](https://github.com/BlackBookEditions/foundry-co2/issues/257))
 - Voie : pour désapprendre une capacité, il faut que les capacités de rang supérieur aient été désapprises
 - Capacité : le coût en charges peut être mis à 0 au niveau de l'action (issue [#339](https://github.com/BlackBookEditions/foundry-co2/issues/339))
+- Prise en compte du dé bonus pour une caractéristique supérieure
+- PRise en compte du dé malus pour l'état préjudiciable Affaibli
 
 ## Corrections
 - Corrige un bug qui pouvait empêcher l'ouverture d'une fiche de personnage qui avait un effet lui infligeant des dommages périodiques en combat
 - Corrige un bug qui empêchait le calcul d'une difficulté s'il y avait une formule dedans (ex : 10 + 1) (issue [#335](https://github.com/BlackBookEditions/foundry-co2/issues/335))
 - Correction de la formule des dommages dans le cas du dé évolutif (issue [#341](https://github.com/BlackBookEditions/foundry-co2/issues/341))
+- Correction des statusEffects : Immobilisé, Paralysé et affaibli
 
 # 1.2.1
 ## Corrections

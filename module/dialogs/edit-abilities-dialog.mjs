@@ -130,6 +130,7 @@ export class CoEditAbilitiesDialog extends foundry.applications.api.DialogV2 {
   }
 
   static async #onToggleSuperior(event, target) {
+    event.preventDefault()
     const ability = target.dataset.ability
     const { actor } = this
     const value = !actor.system.abilities[ability].superior

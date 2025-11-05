@@ -1,17 +1,41 @@
 /*
-    Pour mémoire : ACTIVE_EFFECT_MODES : CUSTOM = 0, MULTIPLY = 1, ADD = 2, DOWNGRADE = 3, UPGRADE = 4, OVERRIDE = 5
-    C:\Program Files\Foundry Virtual Tabletop\resources\app\common\constants.mjs
+ACTIVE_EFFECT_MODES : CUSTOM = 0, MULTIPLY = 1, ADD = 2, DOWNGRADE = 3, UPGRADE = 4, OVERRIDE = 5
 
- 
-    Liste des specialStatusEffects
-    {
-        "DEFEATED": "dead",
-        "INVISIBLE": "invisible",
-        "BLIND": "blind",
-        "BURROW": "burrow",
-        "HOVER": "hover",
-        "FLY": "fly"
-    }
+États préjudiciables
+  Aveuglé : -5 en Init., attaque et DEF, -10 en attaque à distance. Les attaques magiques nécessitant de voir la cible sont impossibles.
+  Affaibli : Dé malus à tous les tests.
+  Essoufflé : Le déplacement est limité à 5 m par action de mouvement.
+  Étourdi : Aucune action possible et -5 en DEF.
+  Immobilisé : Pas de déplacement et dé malus aux tests d’attaque.
+  Invalide : Le déplacement est limité à 5 m par action de mouvement.
+  Paralysé : Aucune action possible, en cas d’attaque touché automatiquement et subit un critique.
+  Ralenti : Une seule action par round (action d’attaque ou de mouvement).
+  Renversé : -5 en attaque et DEF, nécessite une action d’attaque pour se relever.
+  Surpris : Pas d’action et ‑5 en DEF au premier round de combat.
+
+  Aveuglé : blind
+  Affaibli : weakened
+  Essoufflé : outOfBreath
+  Étourdi : stun
+  Immobilisé : immobilized
+  Invalide : invalid
+  Paralysé : paralysis
+  Ralenti : slowed
+  Renversé : overturned
+  Surpris : surprised
+
+Autres états
+  dead : Mort
+  confused : Confus
+  silence : Réduit au silence
+  bleeding : En train de saigner
+  poison : Empoisonné
+  invisible : Invisible
+  unconscious : Inconscient
+  partialDef : En défense partielle (A)
+  fullDef : En défense totale (B)
+  customEffect : Subit des effets additionnels
+
 */
 
 /**
@@ -44,7 +68,17 @@ export const CUSTOM_STATUS_EFFECT = [
     img: "systems/co2/ui/effects/immobilized.webp",
     changes: [
       {
-        key: "system.attribute.movment.base",
+        key: "system.attributes.movement.base",
+        mode: 5,
+        value: 0,
+      },
+      {
+        key: "system.attributes.movement.bonuses.sheet",
+        mode: 5,
+        value: 0,
+      },
+      {
+        key: "system.attributes.movement.bonuses.effects",
         mode: 5,
         value: 0,
       },
@@ -71,6 +105,16 @@ export const CUSTOM_STATUS_EFFECT = [
     changes: [
       {
         key: "system.attributes.movement.base",
+        mode: 5,
+        value: 0,
+      },
+      {
+        key: "system.attributes.movement.bonuses.sheet",
+        mode: 5,
+        value: 0,
+      },
+      {
+        key: "system.attributes.movement.bonuses.effects",
         mode: 5,
         value: 0,
       },
@@ -207,43 +251,6 @@ export const CUSTOM_STATUS_EFFECT = [
     id: "weakened",
     name: "CO.customStatus.weakened",
     img: "icons/svg/downgrade.svg",
-    changes: [
-      {
-        key: "system.abilities.agi.superior",
-        mode: 5,
-        value: false,
-      },
-      {
-        key: "system.abilities.con.superior",
-        mode: 5,
-        value: false,
-      },
-      {
-        key: "system.abilities.for.superior",
-        mode: 5,
-        value: false,
-      },
-      {
-        key: "system.abilities.per.superior",
-        mode: 5,
-        value: false,
-      },
-      {
-        key: "system.abilities.cha.superior",
-        mode: 5,
-        value: false,
-      },
-      {
-        key: "system.abilities.int.superior",
-        mode: 5,
-        value: false,
-      },
-      {
-        key: "system.abilities.vol.superior",
-        mode: 5,
-        value: false,
-      },
-    ],
     description: "CO.customStatus.weakenedDescription",
   },
   {

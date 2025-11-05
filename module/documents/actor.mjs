@@ -197,6 +197,19 @@ export default class COActor extends Actor {
     return pathGroups
   }
 
+  /**
+   * Gets the inventory organized by equipment categories.
+   *
+   * Retrieves all equipment items grouped by their subtypes (weapon, armor, shield, consumable, misc),
+   * sorted by their sort property. For each category, it also retrieves the expanded state from
+   * localStorage to remember the user's UI preferences.
+   *
+   * @returns {Array<{category: string, nbItems: number, items: Array, expanded: boolean}>} An array of inventory categories, where each object contains:
+   *   - category: The equipment subtype identifier
+   *   - nbItems: The number of items in this category
+   *   - items: Array of equipment items in this category, sorted by their sort value
+   *   - expanded: Boolean indicating whether the category should be displayed as expanded in the UI (retrieved from localStorage)
+   */
   get inventory() {
     let inventory = []
     const categories = [
@@ -235,6 +248,10 @@ export default class COActor extends Actor {
     return inventory
   }
 
+  /**
+   * Retourne toutes les capacités apprises de l'acteur.
+   * @returns {Array} Un tableau de capacités dont la propriété system.learned est à true
+   */
   get learnedCapacities() {
     return this.items.filter((item) => item.type === SYSTEM.ITEM_TYPE.capacity.id && item.system.learned)
   }
@@ -421,6 +438,10 @@ export default class COActor extends Actor {
    */
   hasEffect(effectid) {
     return this.statuses.has(effectid)
+  }
+
+  get isWeakened() {
+    return this.hasEffect("weakened")
   }
 
   // #endregion
@@ -1495,6 +1516,7 @@ export default class COActor extends Actor {
    * @param {number} [options.critical=20] Le seuil critique pour le test.
    * @param {number} [options.bonusDice] Le nombre de dés bonus à ajouter au jet.
    * @param {number} [options.malusDice] Le nombre de dés malus à soustraire du jet.
+  
    * @param {number} [options.difficulty] La difficulté du test.
    * @param {boolean} [options.oppositeRoll=false] Si le test est un jet opposé.
    * @param {boolean} [options.useDifficulty] Si la difficulté doit être utilisée : dépend de l'option du système displayDifficulty
@@ -1602,6 +1624,14 @@ export default class COActor extends Actor {
     let bonusDices = 0
     let malusDices = 0
 
+    // Prise en compte des caractéristiques supérieures
+    const isSuperior = this.system.abilities[skillId].superior
+    if (isSuperior) bonusDices += 1
+
+    // Prise en compte de l'état affaibli
+    if (this.isWeakened) malusDices += 1
+
+    // Gestion des dés bonus et malus
     if (bonusDice) bonusDices += bonusDice
     if (malusDice) malusDices += malusDice
 
