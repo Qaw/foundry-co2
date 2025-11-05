@@ -177,11 +177,10 @@ export default class CoEquipmentSheet extends CoBaseItemSheet {
   }
 
   _equipmentTypeUpdateListener() {
-    const $html = $(this.element)
-    const subTypeSelector = $html.find("select[name='system.subtype']")
-    if (subTypeSelector.length > 0) {
-      subTypeSelector.off("change")
-      subTypeSelector.on("change", this._onChangeEquipmentType.bind(this))
+    const subTypeSelector = this.element.querySelector('select[name="system.subtype"]')
+    if (subTypeSelector) {
+      subTypeSelector.removeEventListener("change", this._onChangeEquipmentType.bind(this))
+      subTypeSelector.addEventListener("change", this._onChangeEquipmentType.bind(this))
     }
   }
 
