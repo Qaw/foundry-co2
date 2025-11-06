@@ -855,7 +855,12 @@ export default class COActor extends Actor {
     await this._toggleItemFieldAndActions(capacity, "learned", state)
 
     // Mise à jour du rang de la voie correspondante
-    await path.update({ "system.rank": path.system.numberLearnedCapacities })
+    // Cas particulier de la voie de prestige où le rang commence à 4
+    if (path.system.subtype === "prestige") {
+      await path.update({ "system.rank": 3 + path.system.numberLearnedCapacities })
+    } else {
+      await path.update({ "system.rank": path.system.numberLearnedCapacities })
+    }
 
     // Gestion d'une éventuelle capacité liée
     if (capacity.system.allowLinkedCapacity && capacity.system.linkedCapacity) {
