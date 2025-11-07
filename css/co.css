@@ -2712,6 +2712,26 @@ co-toggle-switch[checked] thumb {
 .co.application.sheet.actor.character section.biography .appearance.folded {
   display: none;
 }
+.co.application.sheet.actor.character .btn-sort-items-default,
+.co.application.sheet.actor.character .btn-sort-items-rank,
+.co.application.sheet.actor.character .btn-sort-items-type,
+.co.application.sheet.actor.character .btn-sort-items-action-type {
+  border: none;
+  background: none;
+  color: white;
+  padding: 0;
+}
+.co.application.sheet.actor.character .btn-sort-items-default.active,
+.co.application.sheet.actor.character .btn-sort-items-rank.active,
+.co.application.sheet.actor.character .btn-sort-items-type.active,
+.co.application.sheet.actor.character .btn-sort-items-action-type.active {
+  color: var(--color-characterSheet);
+  outline: none;
+  box-shadow: none;
+}
+.co.application.sheet.actor.character .btn-sort-items-action-type {
+  margin-right: 30px;
+}
 .co.application.sheet.actor.encounter:not(.minimized) {
   min-width: 725px;
 }

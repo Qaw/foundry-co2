@@ -764,7 +764,12 @@
       "decrease": "Diminuer",
       "increase": "Augmenter",
       "increaseQuantity": "Augmenter la quantité",
-      "increaseCharges": "Augmenter les charges/munitions"
+      "increaseCharges": "Augmenter les charges/munitions",
+      "sortByDefault": "Tri par défaut",
+      "sortByName": "Tri par nom",
+      "sortByRank": "Tri par rang",
+      "sortByType": "Tri par type",
+      "sortByActionType": "Trier par temps d'action"
     },
     "properties": {
       "attack": "Attaque",
@@ -943,7 +948,7 @@
     },
     "action": {
       "types": {
-        "spell": "Sort",
+        "spell": "Sorts",
         "melee": "Attaque de contact",
         "ranged": "Attaque à distance",
         "magical": "Attaque magique",

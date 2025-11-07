@@ -20,4 +20,8 @@ export default class ItemData extends foundry.abstract.TypeDataModel {
   prepareBaseData() {
     this.slug = this.parent.name.slugify({ strict: true })
   }
+
+  get isCapacity() {
+    return this.parent?.type === "capacity"
+  }
 }

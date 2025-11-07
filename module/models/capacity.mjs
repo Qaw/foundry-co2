@@ -62,8 +62,7 @@ export default class CapacityData extends ItemData {
   }
 
   get actionTypeShortLabel() {
-    if (this.hasActionType) return game.i18n.localize(`CO.capacity.action.short.${SYSTEM.CAPACITY_ACTION_TYPE[this.actionType].id}`)
-    return ""
+    return game.i18n.localize(`CO.capacity.action.short.${SYSTEM.CAPACITY_ACTION_TYPE[this.actionType].id}`)
   }
 
   get isActionTypeAttack() {

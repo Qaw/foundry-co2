@@ -68,33 +68,6 @@ export class Action extends foundry.abstract.DataModel {
 
   /**
    * Gets the Font Awesome icon class based on the action type.
-   * The icon is used on the actions list as the first icon
-   * @returns {string} The Font Awesome icon class.
-   */
-  get icon() {
-    switch (this.type) {
-      case "spell":
-        return '<i class="fas fa-fw fa-hand-sparkles"></i>'
-      case "melee":
-        return '<i class="fas fa-fw fa-sword"></i>'
-      case "ranged":
-        return '<i class="fas fa-fw fa-bow-arrow"></i>'
-      case "magical":
-        return '<i class="fa-solid fa-bolt"></i>'
-      case "heal":
-        return '<i class="fas fa-fw fa-hand-holding-medical"></i>'
-      case "buff":
-        return '<i class="fa-solid fa-thumbs-up"></i>'
-      case "debuff":
-        return '<i class="fa-solid fa-thumbs-down"></i>'
-      case "consumable":
-        return '<i class="fa-solid fa-bottle-droplet"></i>'
-    }
-    return ""
-  }
-
-  /**
-   * Gets the Font Awesome icon class based on the action type.
    * The icon is used on the actions list to display the action icon
    * @returns {string} The Font Awesome icon class.
    */
@@ -120,36 +93,55 @@ export class Action extends foundry.abstract.DataModel {
     return ""
   }
 
+  get iconTypeLabel() {
+    return game.i18n.localize(`CO.action.types.${this.type}`)
+  }
+
   /**
-   * Determines the icon color based on the type and properties of the parent object.
+   * Détermine la couleur de l'icône en fonction du type d'item parent et de ses propriétés.
    *
-   * @returns {string} The color of the icon. Possible values are:
-   * - "blue": If the parent type is "capacity", has frequency, and has charges.
-   * - "gray": If the parent type is "capacity", has frequency, but does not have charges,
-   *   or if no specific conditions are met.
-   * - "green": If the parent type is "capacity" without frequency, or if the parent type is "equipment".
+   * @returns {string} La couleur de l'icône :
+   * - "blue" : charges disponibles
+   * - "gray" : charges épuisées ou rechargeable sans charges
+   * - "green" : capacité sans fréquence ou équipement standard
    */
   get iconColor() {
-    // Capacity
-    if (this.parent.parent.type === SYSTEM.ITEM_TYPE.capacity.id) {
-      if (this.hasFrequency) {
-        if (this.hasCharges) return "blue"
-        else return "gray"
-      } else {
-        return "green"
-      }
+    const parentType = this.parent?.parent?.type
+
+    // Validation : pas de parent ou type inconnu
+    if (!parentType) return "gray"
+
+    // Gestion des capacités
+    if (parentType === SYSTEM.ITEM_TYPE.capacity.id) {
+      return this.#getCapacityIconColor()
     }
 
-    // Equipment
-    if (this.parent.parent.type === SYSTEM.ITEM_TYPE.equipment.id) {
-      if (this.isReloadable) {
-        if (this.hasCharges) return "blue"
-        return "gray"
-      }
-      return "green"
+    // Gestion des équipements
+    if (parentType === SYSTEM.ITEM_TYPE.equipment.id) {
+      return this.#getEquipmentIconColor()
     }
 
     return "gray"
+  }
+
+  /**
+   * Détermine la couleur d'icône pour une capacité.
+   * @returns {string} "blue", "gray" ou "green"
+   * @private
+   */
+  #getCapacityIconColor() {
+    if (!this.hasFrequency) return "green"
+    return this.hasCharges ? "blue" : "gray"
+  }
+
+  /**
+   * Détermine la couleur d'icône pour un équipement.
+   * @returns {string} "blue", "gray" ou "green"
+   * @private
+   */
+  #getEquipmentIconColor() {
+    if (!this.isReloadable) return "green"
+    return this.hasCharges ? "blue" : "gray"
   }
 
   get autoAttack() {
@@ -174,7 +166,21 @@ export class Action extends foundry.abstract.DataModel {
    * @returns {string} The name of the item.
    */
   get itemName() {
-    return this.parent.parent.name
+    if (this.parent?.parent?.name) return this.parent?.parent.name
+    return ""
+  }
+
+  get isFromCapacity() {
+    return this.parent?.parent?.type === SYSTEM.ITEM_TYPE.capacity.id
+  }
+
+  get rank() {
+    if (this.isFromCapacity && this.parent.rank !== undefined) return this.parent.rank
+    return 0
+  }
+
+  get hasRank() {
+    return this.rank > 0
   }
 
   /**
@@ -195,7 +201,7 @@ export class Action extends foundry.abstract.DataModel {
    */
   get actionImg() {
     if (this.img !== "icons/svg/d20-highlight.svg") return this.img
-    else return this.parent.parent.img
+    else return this.parent.parent?.img
   }
 
   get hasQuantity() {
@@ -218,7 +224,7 @@ export class Action extends foundry.abstract.DataModel {
 
   get chargesUsed() {
     if (this.properties.noChargesUsed) return 0
-    if (this.parent.parent.type === SYSTEM.ITEM_TYPE.capacity.id) return 1
+    if (this.parent?.parent.type === SYSTEM.ITEM_TYPE.capacity.id) return 1
     return 0
   }
 
@@ -237,26 +243,36 @@ export class Action extends foundry.abstract.DataModel {
   }
 
   /**
-   * Permet de récupérer la lettre représentant le nombre d'actions que prend une.. action : "","m","a","l","f"
+   * Permet de récupérer le libellé court du temps d'action : "","L","A","M","G"
    */
   get actionTypeShortLabel() {
     if (this.hasActionType) return game.i18n.localize(`CO.capacity.action.short.${SYSTEM.CAPACITY_ACTION_TYPE[this.actionType].id}`)
+    if (this.parent?.hasActionType) return game.i18n.localize(`CO.capacity.action.short.${SYSTEM.CAPACITY_ACTION_TYPE[this.parent.actionType].id}`)
     return ""
   }
 
   /**
-   * Renvoi true si on est sur un type attaque. Utile si on veux utiliser un sort avec concentration
+   * Permet de récupérer le libellé long du temps d'action : "","L","A","M","G"
+   */
+  get actionTypeLongLabel() {
+    if (this.hasActionType) return game.i18n.localize(`CO.capacity.action.type.${SYSTEM.CAPACITY_ACTION_TYPE[this.actionType].id}`)
+    if (this.parent?.hasActionType) return game.i18n.localize(`CO.capacity.action.type.${SYSTEM.CAPACITY_ACTION_TYPE[this.parent.actionType].id}`)
+    return ""
+  }
+
+  /**
+   * Renvoie true si on est sur un type attaque. Utile si on veux utiliser un sort avec concentration
    */
   get isActionTypeAttack() {
     // L'action peut avoir son propre type d'action
     if (this.hasActionType) return this.actionType === SYSTEM.CAPACITY_ACTION_TYPE.a.id
     // Ou hériter de celui de la capacité parente
-    if (this.parent.hasActionType) return this.parent.actionType === SYSTEM.CAPACITY_ACTION_TYPE.a.id
+    if (this.parent?.hasActionType) return this.parent.actionType === SYSTEM.CAPACITY_ACTION_TYPE.a.id
     return false
   }
 
   /**
-   * Renvoi true si on a une durée d'action indiquée
+   * Renvoie true s'il y a un temps d'action défini
    */
   get hasActionType() {
     return this.actionType !== SYSTEM.CAPACITY_ACTION_TYPE.none.id
