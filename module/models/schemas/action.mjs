@@ -278,6 +278,14 @@ export class Action extends foundry.abstract.DataModel {
     return this.actionType !== SYSTEM.CAPACITY_ACTION_TYPE.none.id
   }
 
+  get actionTypeFinal() {
+    // L'action peut avoir son propre type d'action
+    if (this.hasActionType) return this.actionType
+    // Ou hériter de celui de la capacité parente
+    if (this.parent?.hasActionType) return this.parent.actionType
+    return SYSTEM.CAPACITY_ACTION_TYPE.none.id
+  }
+
   /**
    * Crée un nouvel objet Action basé sur un objet Action existant.
    * @param {Action} existingAction L'objet Action existant à partir duquel créer le nouvel objet.

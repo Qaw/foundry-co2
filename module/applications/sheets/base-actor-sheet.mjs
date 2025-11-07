@@ -278,9 +278,14 @@ export default class COBaseActorSheet extends HandlebarsApplicationMixin(sheets.
         break
 
       case "byActionType":
+        // Ordre personnalisé : L, A, M, G, puis none (vide)
+        const actionTypeOrder = ["l", "a", "m", "f", "none"]
         actions.sort((a, b) => {
-          const actionTypeShortLabelDiff = a.actionTypeShortLabel.localeCompare(b.actionTypeShortLabel)
-          if (actionTypeShortLabelDiff !== 0) return actionTypeShortLabelDiff
+          const indexA = actionTypeOrder.indexOf(a.actionTypeFinal)
+          const indexB = actionTypeOrder.indexOf(b.actionTypeFinal)
+          // Si les types sont différents, trier selon l'ordre défini
+          if (indexA !== indexB) return indexA - indexB
+
           const nameDiff = a.itemName.localeCompare(b.itemName)
           return nameDiff !== 0 ? nameDiff : a.label.localeCompare(b.label)
         })
