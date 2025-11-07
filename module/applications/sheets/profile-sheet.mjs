@@ -1,4 +1,5 @@
 import CoBaseItemSheet from "./base-item-sheet.mjs"
+import Utils from "../../utils.mjs"
 
 export default class CoProfileSheet extends CoBaseItemSheet {
   /** @override */
