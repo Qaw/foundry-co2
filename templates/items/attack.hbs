@@ -16,7 +16,7 @@
                 <div class="form-group">
                     <label>{{localize "CO.label.long.subtype"}}</label>
                     <div class="form-fields">
-                        <select name="system.subtype" data-type="String" style="width:100%">
+                        <select name="system.subtype" data-type="String" {{#if @root.locked}}class="disabled"{{/if}}>
                             {{selectOptions @root.choiceAttackType selected=system.subtype localize=true}}
                         </select>
                     </div>
@@ -32,13 +32,13 @@
                     <div class="form-group">
                         <label>{{localize "CO.ui.range"}}</label>
                         <div class="form-fields border-right">
-                            <input class="field-value" name="system.range.value" type="number" value="{{system.range.value}}" data-dtype="Number">
-                            <input class="field-value" name="system.range.unit" type="text" value="{{system.range.unit}}" placeholder="{{localize 'CO.ui.unit'}}" data-dtype="String">                
+                            <input class="field-value" name="system.range.value" type="number" value="{{system.range.value}}" data-dtype="Number" {{#if @root.locked}}readonly{{/if}}>
+                            <input class="field-value" name="system.range.unit" type="text" value="{{system.range.unit}}" placeholder="{{localize 'CO.ui.unit'}}" data-dtype="String" {{#if @root.locked}}readonly{{/if}}>                
                         </div>
                     </div>    
                 {{/if}}
                 <label>
-                    <input type="checkbox" name="system.properties.reloadable" {{checked systemSource.properties.reloadable}} />
+                    <input type="checkbox" name="system.properties.reloadable" {{checked systemSource.properties.reloadable}} {{#if @root.locked}}class="disabled"{{/if}}/>
                     {{systemFields.properties.fields.reloadable.label}}
                 </label>   
 

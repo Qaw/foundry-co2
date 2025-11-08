@@ -16,6 +16,7 @@
 - Correction de la formule des dommages dans le cas du dé évolutif (issue [#341](https://github.com/BlackBookEditions/foundry-co2/issues/341))
 - Correction des statusEffects : Immobilisé, Paralysé et affaibli
 - Correction de la vision des rencontres qui à la création avaient la vision activée par défaut (issue [#347](https://github.com/BlackBookEditions/foundry-co2/issues/347))
+- Rencontre : correction de l'affichage de la portée de l'attaque (issue [#352](https://github.com/BlackBookEditions/foundry-co2/issues/352))
 
 # 1.2.1
 ## Corrections

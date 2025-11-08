@@ -41,7 +41,7 @@
                                     <strong>{{attack.name}}</strong>
                                 </span>
                                 {{#if (and attack.system.isReloadable attack.system.hasCharges)}}<span data-tooltip="{{localize "CO.ui.remainingQuantity"}}" data-tooltip-direction="UP">({{attack.system.charges.current}})</span>{{/if}}
-                                {{#if attack.system.hasRange}} ({{attack.system.range}}){{/if}}
+                                {{#if attack.system.hasRange}} ({{attack.system.range.value}} {{attack.system.range.unit}}){{/if}}
                                 {{attack.system.displayValues.attack}} <strong>  DM </strong>{{attack.system.displayValues.damage}}
                             </h4>
                             <div class="attack-controls controls">
