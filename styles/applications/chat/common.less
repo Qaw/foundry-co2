@@ -2,6 +2,7 @@
   .theme-dark & {
     background: #0b0a13e6;
     color: var(--color-textLight);
+    --color-abilities: #2a83b9;
     span,
     label {
       color: var(--color-textLight);
@@ -10,6 +11,7 @@
   .theme-light & {
     background-color: var(--color-light-3);
     color: #222;
+    --color-abilities: #084f7b;
     span,
     label {
       color: #222;
@@ -201,12 +203,7 @@
     }
     .type-card {
       label {
-        .theme-dark & {
-          color: #d11111;
-        }
-        .theme-light & {
-          color: #5d142b;
-        }
+        color: var(--color-abilities);
       }
     }
     .type-card-skill {
@@ -349,6 +346,25 @@
     .dice-roll {
       margin-top: 8px;
       font-weight: bold;
+    }
+    .skill-used {
+      font-size: 16px;
+      margin-top: 8px;
+      border-top: 1px solid var(--color-abilities);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      .skill-used-title {
+        font-style: italic;
+        font-weight: bold;
+      }
+      .skill-used-bonus {
+        font-size: 20px;
+        padding-left: 5px;
+        font-weight: bold;
+        color: var(--color-abilities);
+      }
     }
   }
 }

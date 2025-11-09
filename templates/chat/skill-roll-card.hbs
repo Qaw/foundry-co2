@@ -71,8 +71,14 @@
         {{/if}}
       {{/if}}
     </section>
-
-    
+    {{#if skillUsed}}
+    <div class="skill-used">
+      <span class="skill-used-title">{{localize "CO.ui.skillUsed"}} :</span><br />
+       {{#each skillUsed as |skill id|}}
+        <span class="skill-used-bonus" >{{numberFormat skill.value decimals=0 sign=true}}</span><span> : {{skill.name}}</span><br />
+       {{/each}}
+    </div>
+    {{/if}}
   </div>
 
   <footer class="card-footer">
@@ -82,14 +88,5 @@
         {{{tooltip}}}
       </div>
     </div>
-    {{#if skillUsed}}
-    <div class="skill-used">
-      <span>{{localize "CO.ui.skillUsed"}} :</span><br />
-       {{#each skillUsed as |skill id|}}
-        <span>{{skill.name}} : {{skill.value}}</span><br />
-       {{/each}}
-    </div>
-    {{/if}}
   </footer>
-
 </div>
