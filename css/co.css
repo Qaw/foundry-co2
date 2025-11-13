@@ -3099,6 +3099,7 @@ co-toggle-switch[checked] thumb {
 .theme-dark #interface #ui-right-column-1 .chat-message {
   background: #0b0a13e6;
   color: var(--color-textLight);
+  --color-abilities: #2a83b9;
 }
 .theme-dark #interface #sidebar .chat-message span,
 .theme-dark #interface #ui-right-column-1 .chat-message span,
@@ -3110,6 +3111,7 @@ co-toggle-switch[checked] thumb {
 .theme-light #interface #ui-right-column-1 .chat-message {
   background-color: var(--color-light-3);
   color: #222;
+  --color-abilities: #084f7b;
 }
 .theme-light #interface #sidebar .chat-message span,
 .theme-light #interface #ui-right-column-1 .chat-message span,
@@ -3335,13 +3337,9 @@ co-toggle-switch[checked] thumb {
   font-weight: bold;
   font-variant: small-caps;
 }
-.theme-dark #interface #sidebar .chat-message .message-content .type-card label,
-.theme-dark #interface #ui-right-column-1 .chat-message .message-content .type-card label {
-  color: #d11111;
-}
-.theme-light #interface #sidebar .chat-message .message-content .type-card label,
-.theme-light #interface #ui-right-column-1 .chat-message .message-content .type-card label {
-  color: #5d142b;
+#interface #sidebar .chat-message .message-content .type-card label,
+#interface #ui-right-column-1 .chat-message .message-content .type-card label {
+  color: var(--color-abilities);
 }
 .theme-dark #interface #sidebar .chat-message .message-content .type-card-skill label,
 .theme-dark #interface #ui-right-column-1 .chat-message .message-content .type-card-skill label {
@@ -3500,6 +3498,27 @@ co-toggle-switch[checked] thumb {
 #interface #ui-right-column-1 .chat-message .message-content .dice-roll {
   margin-top: 8px;
   font-weight: bold;
+}
+#interface #sidebar .chat-message .message-content .skill-used,
+#interface #ui-right-column-1 .chat-message .message-content .skill-used {
+  font-size: 16px;
+  margin-top: 8px;
+  border-top: 1px solid var(--color-abilities);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#interface #sidebar .chat-message .message-content .skill-used .skill-used-title,
+#interface #ui-right-column-1 .chat-message .message-content .skill-used .skill-used-title {
+  font-style: italic;
+  font-weight: bold;
+}
+#interface #sidebar .chat-message .message-content .skill-used .skill-used-bonus,
+#interface #ui-right-column-1 .chat-message .message-content .skill-used .skill-used-bonus {
+  font-size: 20px;
+  padding-left: 5px;
+  font-weight: bold;
+  color: var(--color-abilities);
 }
 .icon.co {
   background-image: url('/systems/co2/ui/icone_co.webp');
