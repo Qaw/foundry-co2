@@ -368,6 +368,17 @@ co-toggle-switch[checked] thumb {
   margin: 0;
   padding: 0;
 }
+.co.application .editor-content li {
+  list-style: "\25C6";
+  margin-left: 25px;
+  padding-left: 6px;
+}
+.co.application .editor-content li p {
+  margin: 0;
+}
+.co.application .editor-content ol li {
+  list-style: auto;
+}
 .co.application .item-img {
   background-size: 28px;
   cursor: pointer;
