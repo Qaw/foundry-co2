@@ -147,14 +147,10 @@
                             {{systemFields.properties.fields.equipable.label}}
                         </label>
                     {{/if}}
-                    {{#if isWeapon}}
+                    {{#if (or isWeapon isMisc)}}
                         <label>
                             <input type="checkbox" name="system.properties.reloadable" {{checked systemSource.properties.reloadable}} {{#if @root.locked}}readonly{{/if}}/>
                             {{systemFields.properties.fields.reloadable.label}}
-                        </label>
-                        <label>
-                            <input type="checkbox" name="system.properties.stackable" {{checked systemSource.properties.stackable}} {{#if @root.locked}}readonly{{/if}}/>
-                            {{systemFields.properties.fields.stackable.label}}
                         </label>
                     {{/if}}
                     {{#if (or isConsumable isMisc)}}

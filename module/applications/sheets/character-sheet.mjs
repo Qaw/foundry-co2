@@ -173,8 +173,10 @@ export default class COCharacterSheet extends COBaseActorSheet {
     // Vérification du droit Owner
     if (!this.isEditable) return
     event.preventDefault()
-    const item = this.document.items.get(target.dataset.itemId)
+    const item = this.document.items.get(target.dataset.itemId)    
     if (target.dataset.action === "increaseItem") {
+      // Si l'objet n'est pas empilable, on ne peut pas augmenter la quantité
+      if (!item.system.properties.stackable) return
       item.system.quantity.current += 1
       await item.update({ "system.quantity.current": item.system.quantity.current })
     } else if (target.dataset.action === "increaseCharge") {

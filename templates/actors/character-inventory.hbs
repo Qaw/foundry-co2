@@ -61,7 +61,7 @@
           <!-- Quantité -->      
           <div class="item-detail">
             <a class="item-control inventory-qty">
-              <span data-action="increaseItem" data-item-id="{{item.id}}" data-tooltip="{{localize 'CO.ui.increaseQuantity'}}" data-tooltip-direction="UP">{{item.system.quantity.current}}</span>
+              <span {{#if system.properties.stackable}}data-action="increaseItem" data-item-id="{{item.id}}" data-tooltip="{{localize 'CO.ui.increaseQuantity'}}" data-tooltip-direction="UP"{{/if}}>{{item.system.quantity.current}}</span>
               {{#if system.properties.stackable}}
                 {{#if (gt item.system.quantity.max 0)}}
                   <span data-tooltip="{{localize 'CO.action.quantity' quantity=item.system.quantity.current maxQuantity=item.system.quantity.max}}">/ {{item.system.quantity.max}}</span>

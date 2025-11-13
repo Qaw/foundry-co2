@@ -3,6 +3,8 @@
 - Changement du logo de la pause
 - Messages de tchat : amélioration du CSS des compétences utilisées
 - Journaux : les puces des listes sont des losanges
+- Un équipement de sous-type Divers a maintenant la propriété Rechargeable
+- Inventaire : Le bouton Augmenter la quantité n'est proposé que si l'équipement est empilable
 
 # 1.3.0
 ## Améliorations
