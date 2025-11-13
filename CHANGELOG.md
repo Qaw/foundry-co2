@@ -1,3 +1,9 @@
+# 1.3.1
+## Améliorations
+- Changement du logo de la pause
+- Messages de tchat : amélioration du CSS des compétences utilisées
+- Journaux : les puces des listes sont des losanges
+
 # 1.3.0
 ## Améliorations
 - Ajout d'une infobulle précisant le calcul du critique dans la fenêtre d'attaque (issue [#222](https://github.com/BlackBookEditions/foundry-co2/issues/222))

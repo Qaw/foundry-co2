@@ -3594,3 +3594,10 @@ co-toggle-switch[checked] thumb {
   gap: 1.5rem;
   overflow-y: auto;
 }
+#pause > img {
+  content: url("/systems/co2/ui/pause_co.webp");
+  height: 192px;
+  width: 192px;
+  top: -45px;
+  left: calc(50% - 96px);
+}
