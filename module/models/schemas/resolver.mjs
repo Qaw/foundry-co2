@@ -3,6 +3,7 @@ import Utils from "../../utils.mjs"
 import COActor from "../../documents/actor.mjs"
 import { CustomEffectData } from "./custom-effect.mjs"
 import { CORoll } from "../../documents/roll.mjs"
+import CoChat from "../../chat.mjs"
 
 /**
  * Resolver
@@ -262,6 +263,11 @@ export class Resolver extends foundry.abstract.DataModel {
     if (this.target.type === SYSTEM.RESOLVER_TARGET.none.id || this.target.type === SYSTEM.RESOLVER_TARGET.self.id) await actor.applyCustomEffect(ce)
     else {
       const targets = actor.acquireTargets(this.target.type, this.target.scope, this.target.number, action.name)
+      if (targets.length > 0) {
+        const targetNames = targets.map((t) => t.name).join(", ")
+        const message = `${actor.name} lance ${item.name} sur ${targetNames}`
+        await new CoChat(actor).withContent(message).create()
+      }
       const uuidList = targets.map((t) => t.uuid)
       if (game.user.isGM) await Promise.all(targets.map((target) => target.actor.applyCustomEffect(ce)))
       else {
