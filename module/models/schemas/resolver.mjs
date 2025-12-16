@@ -255,34 +255,58 @@ export class Resolver extends foundry.abstract.DataModel {
       return false
     }
 
-    const ce = await this._createCustomEffect(actor, item, action)
+    // Effet sur soi-même
+    const selfCE = await this._createCustomEffect(actor, item, action, "self")
+    if (selfCE) {
+      await actor.applyCustomEffect(selfCE)
+    }
 
-    // Application de l'effet en fonction de la gestion des cibles
-    // Aucune cible ou soi-même : le MJ ou un joueur peut appliquer l'effet
-    if (this.target.type === SYSTEM.RESOLVER_TARGET.none.id || this.target.type === SYSTEM.RESOLVER_TARGET.self.id) await actor.applyCustomEffect(ce)
-    else {
-      const targets = actor.acquireTargets(this.target.type, this.target.scope, this.target.number, action.name)
-      const uuidList = targets.map((t) => t.uuid)
-      if (game.user.isGM) await Promise.all(targets.map((target) => target.actor.applyCustomEffect(ce)))
-      else {
-        game.socket.emit(`system.${SYSTEM.ID}`, {
-          action: "customEffect",
-          data: {
-            userId: game.user.id,
-            ce,
-            targets: uuidList,
-          },
-        })
+    // Effet sur les autres
+    if (this.target.type !== SYSTEM.RESOLVER_TARGET.none.id && this.target.type !== SYSTEM.RESOLVER_TARGET.self.id) {
+      const othersCE = await this._createCustomEffect(actor, item, action, "others")
+      if (othersCE) {
+        const targets = actor.acquireTargets(this.target.type, this.target.scope, this.target.number, action.name)
+        const uuidList = targets.map((t) => t.uuid)
+        if (game.user.isGM) {
+          await Promise.all(targets.map((target) => target.actor.applyCustomEffect(othersCE)))
+        } else {
+          game.socket.emit(`system.${SYSTEM.ID}`, {
+            action: "customEffect",
+            data: {
+              userId: game.user.id,
+              ce: othersCE,
+              targets: uuidList,
+            },
+          })
+        }
       }
     }
+
     return true
   }
 
-  async _createCustomEffect(actor, item, action) {
+  async _createCustomEffect(actor, item, action, targetType = "self") {
     if (!game.combat || game.combat.round === null) {
       ui.notifications.warn(game.i18n.localize("CO.label.long.customEffectInCombat"))
       return
     }
+
+    // Filtre les modificateurs en fonction du type de cible
+    let modifiers = []
+    if (action.modifiers?.length) {
+      if (targetType === "self") {
+        modifiers = action.modifiers.filter((m) => m.apply === SYSTEM.MODIFIERS_APPLY.self.id || m.apply === SYSTEM.MODIFIERS_APPLY.both.id)
+      } else {
+        // others
+        modifiers = action.modifiers.filter((m) => m.apply === SYSTEM.MODIFIERS_APPLY.others.id || m.apply === SYSTEM.MODIFIERS_APPLY.both.id)
+      }
+    }
+
+    // Si aucun modificateur pour ce type de cible, on ne fait rien
+    if (modifiers.length === 0) {
+      return
+    }
+
     let ce
     // Evaluation de la durée si besoin
     let evaluatedDuration = Utils.evaluateFormulaCustomValues(actor, this.additionalEffect.duration)
@@ -309,12 +333,6 @@ export class Resolver extends foundry.abstract.DataModel {
     if (this.additionalEffect.formula) {
       evaluatedFormula = Utils.evaluateFormulaCustomValues(actor, this.additionalEffect.formula)
       evaluatedFormula = Roll.replaceFormulaData(evaluatedFormula, actor.getRollData())
-    }
-
-    // Les modifiers qui s'appliquent (avec apply égal à others ou both)
-    let modifiers = []
-    if (action.modifiers?.length) {
-      modifiers = action.modifiers.filter((m) => m.apply === SYSTEM.MODIFIERS_APPLY.others.id || m.apply === SYSTEM.MODIFIERS_APPLY.both.id)
     }
 
     // Création de l'effet
