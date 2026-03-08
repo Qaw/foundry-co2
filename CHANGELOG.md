@@ -1,3 +1,8 @@
+# 1.6.4
+
+## Corrections
+- L'état affaibli donne maintenant un dé de malus pour les trois types d'attaque
+
 # 1.6.3
 
 ## Corrections

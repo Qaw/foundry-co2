@@ -38,9 +38,6 @@ Autres états
 
 */
 
-/**
- * TODO : Ajouter le dé malus sur melee distance et magique pour affaibli/weakened
- */
 
 export const CUSTOM_STATUS_EFFECT = [
   {

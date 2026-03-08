@@ -1997,6 +1997,9 @@ export default class COActor extends Actor {
     // Immobilisé : dé malus aux tests d'attaque
     if (this.isImmobilized) malusDices += 1
 
+    // Affaibli : dé malus à tous les tests (y compris attaque)
+    if (this.isWeakened) malusDices += 1
+
     if (bonusDice) bonusDices += bonusDice
     if (malusDice) malusDices += malusDice
 
