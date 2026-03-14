@@ -66,8 +66,12 @@ export default class CoProfileSheet extends CoBaseItemSheet {
     context.choiceModifierResourceTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "resource"))
     context.choiceModifierSkillTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "ability"))
     context.choiceModifierStateTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "state"))
-    context.choiceModifierBonusDiceTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "bonusDice"))
-    context.choiceModifierMalusDiceTargets = Object.fromEntries(Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.subtype === "malusDice"))
+    context.choiceModifierBonusDiceTargets = Object.fromEntries(
+      Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.id !== "all" && (value.subtype === "ability" || value.subtype === "attack")),
+    )
+    context.choiceModifierMalusDiceTargets = Object.fromEntries(
+      Object.entries(SYSTEM.MODIFIERS.MODIFIERS_TARGET).filter(([key, value]) => value.id !== "all" && (value.subtype === "ability" || value.subtype === "attack")),
+    )
     context.choiceModifierApplies = SYSTEM.MODIFIERS.MODIFIERS_APPLY
 
     if (CONFIG.debug.co2?.sheets) console.debug(Utils.log(`CoProfileSheet - context`), context)

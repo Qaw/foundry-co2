@@ -3,6 +3,9 @@
 ## Améliorations
 - Tooltip des formules dans le chat : les messages d'attaque et de dégâts affichent maintenant un tooltip sur la ligne de formule dans le footer, permettant au MJ de vérifier les formules utilisées par les joueurs (bonus, malus, capacités activées). ([#395](https://github.com/BlackBookEditions/foundry-co2/issues/395))
 
+## Corrections
+- Modificateurs Dé Bonus et Dé Malus pour les jets d'attaque : les modificateurs de type Dé Bonus/Malus ne s'appliquaient pas aux jets d'attaque. Trois causes corrigées : le dropdown de cible était vide sur les fiches de profil et de trait (filtre incorrect), le type d'attaque magique n'était pas reconnu (mismatch "magical" vs "magic"), et la formule d'attaque était écrasée par le tooltip avant la détection du type d'attaque.
+
 # 1.6.4
 
 ## Corrections

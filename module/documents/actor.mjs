@@ -1973,6 +1973,9 @@ export default class COActor extends Actor {
     // Récupération du tooltip du critique
     criticalTooltip = this.system.combat.crit.tooltipValue
 
+    // Sauvegarde de la formule originale avant écrasement par le tooltip
+    const originalSkillFormula = skillFormulaTooltip
+
     // Enrichissement du tooltip d'attaque avec les modificateurs de combat
     if (this.type === "character") {
       const attackSkillKey = actionType === SYSTEM.ACTION_TYPES.spell.id || actionType === SYSTEM.ACTION_TYPES.magical.id ? "magic" : actionType
@@ -1985,10 +1988,10 @@ export default class COActor extends Actor {
     let malusDices = 0
 
     if (this.type === "character") {
-      // Gestion du dé bonus : en fonction de la formule (skillFormulaTooltip contient la formule d'origine), on déduit le type d'attaque et on cherche dans les modifiers
-      if (this.system.hasBonusDiceForAttack(Utils.getAttackTypeFromFormula(skillFormulaTooltip, actionType))) bonusDices += 1
-      // Gestion du dé malus : en fonction de la formule (skillFormulaTooltip contient la formule d'origine), on déduit le type d'attaque et on cherche dans les modifiers
-      if (this.system.hasMalusDiceForAttack(Utils.getAttackTypeFromFormula(skillFormulaTooltip, actionType))) malusDices += 1
+      // Gestion du dé bonus : en fonction de la formule originale, on déduit le type d'attaque et on cherche dans les modifiers
+      if (this.system.hasBonusDiceForAttack(Utils.getAttackTypeFromFormula(originalSkillFormula, actionType))) bonusDices += 1
+      // Gestion du dé malus : en fonction de la formule originale, on déduit le type d'attaque et on cherche dans les modifiers
+      if (this.system.hasMalusDiceForAttack(Utils.getAttackTypeFromFormula(originalSkillFormula, actionType))) malusDices += 1
     } else if (this.type === "encounter") {
       // Gestion du dé bonus : en fonction de la formule, on déduit le type d'attaque et on cherche dans les modifiers
       if (this.system.hasBonusDiceForAttack(actionType)) bonusDices += 1
