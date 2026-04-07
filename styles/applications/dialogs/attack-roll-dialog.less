@@ -27,7 +27,7 @@
     padding: 10px;
     .attack-roll-1 {
       display: grid;
-      grid-template-columns: 0.5fr 1.5fr 0.3fr 1.7fr 0.3fr 1.5fr;
+      grid-template-columns: 0.5fr 1.3fr 0.3fr 1.4fr 0.3fr 2.5fr;
       padding-bottom: 6px;
       border-bottom: 2px solid #ad0606;
       gap: 0;
@@ -96,7 +96,11 @@
     }
 
     .form-group.rollMode {
-      padding-left: 0px 0px 0px 10px;
+      padding: 0px 0px 0px 10px;
+      .form-fields,
+      select {
+        width: 100%;
+      }
     }
     .form-fields-radio {
       display: flex;

@@ -972,6 +972,7 @@
       "healTooltip": "Le soin est appliqué directement sur la cible"
     },
     "roll": {
+      "visibility": "Jet visible par",
       "skillcheck": "Test de compétence",
       "attackcheck": "Jet d'Attaque",
       "damagecheck": "Jet de Dommages",

@@ -757,7 +757,7 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.dialog.skill-roll .window-content .skill-roll-1 {
   display: grid;
-  grid-template-columns: 0.5fr 1.5fr 0.3fr 1.7fr 0.3fr 1.5fr;
+  grid-template-columns: 0.5fr 1.3fr 0.3fr 1.4fr 0.3fr 2.2fr;
   padding-bottom: 6px;
   border-bottom: 2px solid #5d142b;
 }
@@ -832,6 +832,10 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.dialog.skill-roll .form-group.rollMode {
   padding: 0px 0px 0px 10px;
+}
+.co.application.dialog.skill-roll .form-group.rollMode .form-fields,
+.co.application.dialog.skill-roll .form-group.rollMode select {
+  width: 100%;
 }
 .co.application.dialog.skill-roll .form-fields-radio {
   display: flex;
@@ -945,7 +949,7 @@ co-toggle-switch[checked] thumb {
 }
 .co.application.dialog.attack-roll .window-content .attack-roll-1 {
   display: grid;
-  grid-template-columns: 0.5fr 1.5fr 0.3fr 1.7fr 0.3fr 1.5fr;
+  grid-template-columns: 0.5fr 1.3fr 0.3fr 1.4fr 0.3fr 2.5fr;
   padding-bottom: 6px;
   border-bottom: 2px solid #ad0606;
   gap: 0;
@@ -1013,7 +1017,11 @@ co-toggle-switch[checked] thumb {
   padding-right: 30px;
 }
 .co.application.dialog.attack-roll .window-content .form-group.rollMode {
-  padding-left: 0px 0px 0px 10px;
+  padding: 0px 0px 0px 10px;
+}
+.co.application.dialog.attack-roll .window-content .form-group.rollMode .form-fields,
+.co.application.dialog.attack-roll .window-content .form-group.rollMode select {
+  width: 100%;
 }
 .co.application.dialog.attack-roll .window-content .form-fields-radio {
   display: flex;
