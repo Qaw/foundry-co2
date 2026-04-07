@@ -18,6 +18,7 @@ export default class ItemData extends foundry.abstract.TypeDataModel {
 
   /** @override */
   prepareBaseData() {
+    super.prepareBaseData()
     this.slug = this.parent.name.slugify({ strict: true })
   }
 

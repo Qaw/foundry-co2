@@ -1722,7 +1722,7 @@ export default class COActor extends Actor {
 
     const dialogContext = {
       rollMode,
-      rollModes: CONFIG.Dice.rollModes,
+      rollModes: CONFIG.ChatMessage.modes,
       dice,
       formula,
       skillValue,
@@ -1800,7 +1800,7 @@ export default class COActor extends Actor {
             targets: targetsUuid,
           },
         },
-        { rollMode: roll.options.rollMode },
+        { messageMode: roll.options.rollMode },
       )
     } else {
       return { roll, result }
@@ -2085,7 +2085,7 @@ export default class COActor extends Actor {
 
     const dialogContext = {
       rollMode,
-      rollModes: CONFIG.Dice.rollModes,
+      rollModes: CONFIG.ChatMessage.modes,
       actor: this,
       auto,
       type,
@@ -2177,7 +2177,7 @@ export default class COActor extends Actor {
           type: "action",
           system: { subtype: "attack", targets: targetsUuid, result: results[0], linkedRoll, customEffect: effectiveCustomEffect, additionalEffect, selectedStatuses },
         },
-        { rollMode: rolls[0].options.rollMode },
+        { messageMode: rolls[0].options.rollMode },
       )
 
       // Affichage du jet de dommages dans le cas d'un jet combiné, si ce n'est pas un jet opposé et si l'attaque est un succès
@@ -2190,7 +2190,7 @@ export default class COActor extends Actor {
           if (rolls[1]) {
             await rolls[1].toMessage(
               { style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "action", system: { subtype: "damage", targets: targetsUuid }, speaker },
-              { rollMode: rolls[1].options.rollMode },
+              { messageMode: rolls[1].options.rollMode },
             )
           }
         }
@@ -2201,7 +2201,7 @@ export default class COActor extends Actor {
     else if (type === "damage") {
       await rolls[0].toMessage(
         { style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "action", system: { subtype: "damage", targets: targetsUuid }, speaker },
-        { rollMode: rolls[0].options.rollMode },
+        { messageMode: rolls[0].options.rollMode },
       )
     }
 
@@ -2273,7 +2273,7 @@ export default class COActor extends Actor {
           targets: targetUuids,
         },
       },
-      { rollMode },
+      { messageMode: rollMode },
     )
 
     // Si le soin est pour soi-même ou sans cible, on applique directement le soin

@@ -107,7 +107,7 @@ export default class CheckMessageData extends BaseMessageData {
               ...(shouldDefer ? { pendingConsequences: consequences } : {}),
             },
           },
-          { rollMode: rollResult.roll.options.rollMode },
+          { messageMode: rollResult.roll.options.rollMode },
         )
 
         // If not deferred, apply consequences immediately

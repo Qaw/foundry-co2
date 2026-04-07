@@ -170,7 +170,7 @@ export default class SkillMessageData extends BaseMessageData {
           const damageRoll = Roll.fromData(message.system.linkedRoll)
           await damageRoll.toMessage(
             { style: CONST.CHAT_MESSAGE_STYLES.OTHER, type: "action", system: { subtype: "damage" }, speaker: message.speaker },
-            { rollMode: rolls[0].options.rollMode },
+            { messageMode: rolls[0].options.rollMode },
           )
         }
 
