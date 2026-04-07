@@ -57,7 +57,7 @@ export default class CombatCO extends Combat {
   async _onDelete(options, userId) {
     await super._onDelete(options, userId)
     if (game.user.isActiveGM) {
-      for (const combatant of this.combatants) combatant.actor.deleteEffects()
+      for (const combatant of this.combatants) combatant.actor?.deleteEffects()
     }
   }
 
@@ -72,7 +72,7 @@ export default class CombatCO extends Combat {
   _sortCombatants(a, b) {
     const ia = Number.isNumeric(a.initiative) ? a.initiative : -Infinity
     const ib = Number.isNumeric(b.initiative) ? b.initiative : -Infinity
-    if (ia === ib) {
+    if (ia === ib && a.actor && b.actor) {
       let blevel = b.actor.system.currentLevel
       let alevel = a.actor.system.currentLevel
       if (blevel > alevel) return 1
