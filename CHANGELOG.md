@@ -1,3 +1,6 @@
+# 2.0.1
+- game.settings.get("core", "rollMode") remplacé par game.settings.get("core", "messageMode")
+
 # 2.0.0
 - Compatibilité Foundry V14
 

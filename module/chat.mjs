@@ -148,7 +148,7 @@ export default class CoChat {
 
     // If the whisper has not been defined, set the whisper and blind parameters according to the player roll mode settings
     if (this.whisper === null) {
-      switch (game.settings.get("core", "rollMode")) {
+      switch (game.settings.get("core", "messageMode") ) {
         case "gmroll":
           dataMessage.whisper = ChatMessage.getWhisperRecipients("GM").map((u) => u.id)
           break

@@ -1612,7 +1612,7 @@ export default class COActor extends Actor {
 
     // Gestion de la visibilité du jet
     if (rollMode === undefined) {
-      rollMode = game.settings.get("core", "rollMode")
+      rollMode = game.settings.get("core", "messageMode") 
     }
 
     // Gestion de la difficulté
@@ -1916,7 +1916,7 @@ export default class COActor extends Actor {
 
     // Gestion de la visibilité du jet
     if (rollMode === undefined) {
-      rollMode = game.settings.get("core", "rollMode")
+      rollMode = game.settings.get("core", "messageMode") 
     }
 
     // Gestion de la difficulté
@@ -2256,7 +2256,7 @@ export default class COActor extends Actor {
       return false
     }
 
-    const rollMode = roll.options.rollMode ?? game.settings.get("core", "rollMode")
+    const rollMode = roll.options.rollMode ?? game.settings.get("core", "messageMode") 
 
     await roll.toMessage(
       {
@@ -2358,7 +2358,7 @@ export default class COActor extends Actor {
       return false
     }
 
-    const rollMode = game.settings.get("core", "rollMode")
+    const rollMode = game.settings.get("core", "messageMode") 
 
     const contentData = {
       ability: ability,
