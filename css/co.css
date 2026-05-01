@@ -29,25 +29,17 @@ prose-mirror .editor-menu,
 .prosemirror .editor-menu {
   padding: 4px;
 }
-prose-mirror .editor-content,
-.prosemirror .editor-content {
-  overflow: hidden;
-  position: relative;
-  white-space: wrap;
-}
 prose-mirror:hover:not([open]) > button,
 .prosemirror:hover:not([open]) > button {
   display: flex;
 }
-prose-mirror .editor-container,
-.prosemirror .editor-container {
-  height: clamp(25px, 100%, 50vh);
-  padding: 0 0 8px 8px;
-  overflow: hidden scroll;
+.co prose-mirror .editor-content,
+.co .prosemirror .editor-content {
+  position: relative;
 }
-prose-mirror .editor-container .editor-content,
-.prosemirror .editor-container .editor-content {
-  padding: 0;
+.co prose-mirror .editor-container,
+.co .prosemirror .editor-container {
+  overflow: hidden auto;
 }
 multi-select {
   margin-bottom: 4px;

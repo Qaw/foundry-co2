@@ -14,25 +14,22 @@ prose-mirror,
     padding: 4px;
   }
 
-  .editor-content {
-    overflow: hidden;
-    position: relative;
-    white-space: wrap;
-  }
-
   &:hover:not([open]) {
     >button {
       display: flex;
     }
   }
+}
 
-  .editor-container {
-    height: clamp(25px, 100%, 50vh);
-    padding: 0 0 8px 8px;
-    overflow: hidden scroll;
-
-    .editor-content { 
-      padding: 0;
-    }
+// Sur les fiches CO2, les éditeurs inline (biographie, propriétés) restent dans le flux
+// plutôt qu'en position absolue (comportement V14 pour les journaux)
+.co {
+  prose-mirror .editor-content,
+  .prosemirror .editor-content {
+    position: relative;
+  }
+  prose-mirror .editor-container,
+  .prosemirror .editor-container {
+    overflow: hidden auto;
   }
 }
