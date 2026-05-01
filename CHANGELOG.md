@@ -1,3 +1,7 @@
+# 2.0.2
+## Corrections
+- Corrige le retour à la ligne automatique manquant dans les descriptions
+
 # 2.0.1
 ## Corrections
 - Compatibilité V14 : game.settings.get("core", "rollMode") remplacé par game.settings.get("core", "messageMode")

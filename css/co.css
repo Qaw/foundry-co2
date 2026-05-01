@@ -36,6 +36,7 @@ prose-mirror:hover:not([open]) > button,
 .co prose-mirror .editor-content,
 .co .prosemirror .editor-content {
   position: relative;
+  white-space: wrap;
 }
 .co prose-mirror .editor-container,
 .co .prosemirror .editor-container {
