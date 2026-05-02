@@ -689,20 +689,19 @@ export default class ActionMessageData extends BaseMessageData {
         <div class="target-info">
           ${img ? `<img class="target-portrait" src="${img}" alt="${actor.name}" height="28" width="28" />` : ""}
           <span class="target-name">${actor.name}</span>
-          <label class="target-dr-label" data-tooltip="${drTooltip}" data-tooltip-direction="UP">
-            ${drLabel}
-            <input type="checkbox" class="target-dr" checked />
-          </label>
           <span class="target-damage" data-multiplier="1">-${initialDamage}</span>
         </div>
         <div class="target-controls">
-          <span class="multiplier-label">&times;</span>
           <div class="damage-multipliers">
-            <button type="button" class="multiplier-btn" data-multiplier="-1" data-tooltip="${game.i18n.localize("CO.ui.applyHealing")}" data-tooltip-direction="UP">-1</button>
-            <button type="button" class="multiplier-btn" data-multiplier="0" data-tooltip="${game.i18n.localize("CO.ui.noDamage")}" data-tooltip-direction="UP">0</button>
-            <button type="button" class="multiplier-btn" data-multiplier="0.5" data-tooltip="${game.i18n.localize("CO.ui.applyHalfDamage")}" data-tooltip-direction="UP">&frac12;</button>
-            <button type="button" class="multiplier-btn active" data-multiplier="1" data-tooltip="${game.i18n.localize("CO.ui.applyDamage")}" data-tooltip-direction="UP">1</button>
-            <button type="button" class="multiplier-btn" data-multiplier="2" data-tooltip="${game.i18n.localize("CO.ui.applyDoubleDamage")}" data-tooltip-direction="UP">2</button>
+            <label class="target-dr-label" data-tooltip="${drTooltip}" data-tooltip-direction="UP">
+              ${drLabel}
+              <input type="checkbox" class="target-dr" checked />
+            </label>
+            <button type="button" class="multiplier-btn btn-heal" data-multiplier="-1" data-tooltip="${game.i18n.localize("CO.ui.applyHealing")}" data-tooltip-direction="DOWN"><i class="fa-solid fa-heart"></i></button>
+            <button type="button" class="multiplier-btn" data-multiplier="0" data-tooltip="${game.i18n.localize("CO.ui.noDamage")}" data-tooltip-direction="DOWN">0</button>
+            <button type="button" class="multiplier-btn" data-multiplier="0.5" data-tooltip="${game.i18n.localize("CO.ui.applyHalfDamage")}" data-tooltip-direction="DOWN">x&frac12;</button>
+            <button type="button" class="multiplier-btn active" data-multiplier="1" data-tooltip="${game.i18n.localize("CO.ui.applyDamage")}" data-tooltip-direction="DOWN">x1</button>
+            <button type="button" class="multiplier-btn" data-multiplier="2" data-tooltip="${game.i18n.localize("CO.ui.applyDoubleDamage")}" data-tooltip-direction="DOWN">x2</button>
           </div>
         </div>
       `
