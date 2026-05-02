@@ -264,9 +264,12 @@ export class COSkillRoll extends CORoll {
     // Si la difficulté est visible par tous, on n'affiche le bouton que sur un échec
     const displayDifficulty = game.settings.get("co2", "displayDifficulty")
     const canUseLuckyPoints = this.options.hasLuckyPoints && !rollResults.isCritical && (displayDifficulty === "gm" || rollResults.isFailure)
-    // Libellé de la caractéristique opposée (ex : "Constitution")
+    // Libellé de la caractéristique opposée (ex : "Constitution", "Attaque de contact")
     const oppositeAbilityId = this.options.oppositeValue?.startsWith("@oppose.") ? this.options.oppositeValue.replace("@oppose.", "") : null
-    const oppositeAbilityLabel = oppositeAbilityId ? game.i18n.localize(`CO.abilities.long.${oppositeAbilityId}`) : null
+    const COMBAT_STAT_MAP = { atc: "melee", atd: "ranged", atm: "magic" }
+    const oppositeAbilityLabel = oppositeAbilityId
+      ? game.i18n.localize(COMBAT_STAT_MAP[oppositeAbilityId] ? `CO.combat.long.${COMBAT_STAT_MAP[oppositeAbilityId]}` : `CO.abilities.long.${oppositeAbilityId}`)
+      : null
     return {
       formula: isPrivate ? "???" : this.formula,
       flavor: this.options.flavor,
@@ -614,7 +617,10 @@ export class COAttackRoll extends CORoll {
     const rollResults = CORoll.analyseRollResult(this, this.options.hasAttackSuccessThreshold, this.options.attackSuccessThreshold)
     if (CONFIG.debug.co2?.chat) console.debug(Utils.log(`COAttackRoll - _getAttackChatCardData options`), this.options)
     const oppositeAbilityId = this.options.difficulty?.startsWith("@oppose.") ? this.options.difficulty.replace("@oppose.", "") : null
-    const oppositeAbilityLabel = oppositeAbilityId ? game.i18n.localize(`CO.abilities.long.${oppositeAbilityId}`) : null
+    const COMBAT_STAT_MAP = { atc: "melee", atd: "ranged", atm: "magic" }
+    const oppositeAbilityLabel = oppositeAbilityId
+      ? game.i18n.localize(COMBAT_STAT_MAP[oppositeAbilityId] ? `CO.combat.long.${COMBAT_STAT_MAP[oppositeAbilityId]}` : `CO.abilities.long.${oppositeAbilityId}`)
+      : null
 
     // Gestion des dés bonus/malus
     const hasDice = this.options.dice === "bonus" || this.options.dice === "malus"
