@@ -98,10 +98,18 @@ export default class SkillMessageData extends BaseMessageData {
 
     // Click sur le bouton de jet opposé
     const oppositeButton = html.querySelector(".opposite-roll")
-    const hasTargets = this.targets?.length > 0
-    const displayOppositeButton = game.user.isGM || !hasTargets || this.isActorTargeted
 
-    if (oppositeButton && displayOppositeButton) {
+    if (oppositeButton) {
+      const targetUuid = oppositeButton.dataset.oppositeTarget
+      const targetActor = targetUuid ? fromUuidSync(targetUuid) : null
+      const hasTargets = this.targets?.length > 0
+      const canClick = game.user.isGM || !hasTargets || (targetActor && targetActor.isOwner)
+
+      if (!canClick) {
+        oppositeButton.style.visibility = "hidden"
+        return
+      }
+
       oppositeButton.addEventListener("click", async (event) => {
         event.preventDefault()
         event.stopPropagation()
