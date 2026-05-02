@@ -16,6 +16,27 @@ export default class Utils {
   }
 
   /**
+   * Joins an array of evaluated modifier formula terms into a valid Roll formula fragment.
+   * Each term is normalized to always start with an explicit operator (+ or -).
+   * @param {Array<string|number>} terms Evaluated modifier values (e.g. ["+ 1d6", "2d6", "- 2"])
+   * @returns {string} A valid formula fragment (e.g. "+ 1d6 + 2d6 - 2") or "0" if no valid terms
+   */
+  static joinFormulaTerms(terms) {
+    const normalized = []
+    for (const term of terms) {
+      const str = String(term).trim()
+      if (!str || str === "0") continue
+      if (str.startsWith("+") || str.startsWith("-")) {
+        normalized.push(str)
+      } else {
+        normalized.push(`+ ${str}`)
+      }
+    }
+    if (normalized.length === 0) return "0"
+    return normalized.join(" ")
+  }
+
+  /**
    * Logs a message with the system description.
    *
    * @param {string} message The message to log.
