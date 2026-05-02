@@ -2,6 +2,8 @@ import BaseMessageData from "./base-message.mjs"
 import CustomEffectData from "./schemas/custom-effect.mjs"
 import { CORoll } from "../documents/roll.mjs"
 import { Resolver } from "./schemas/resolver.mjs"
+import Utils from "../helpers/utils.mjs"
+import SaveRollHandler from "../helpers/save-roll.mjs"
 
 export default class SaveMessageData extends BaseMessageData {
   static defineSchema() {
@@ -9,6 +11,7 @@ export default class SaveMessageData extends BaseMessageData {
     return foundry.utils.mergeObject(super.defineSchema(), {
       ability: new fields.StringField({ required: true }),
       difficulty: new fields.StringField({ required: true }),
+      difficultyFormula: new fields.StringField({ required: false, nullable: true, blank: true }),
       result: new fields.ObjectField(),
       customEffect: new fields.EmbeddedDataField(CustomEffectData),
       additionalEffect: new fields.SchemaField({
@@ -23,6 +26,24 @@ export default class SaveMessageData extends BaseMessageData {
         elementType: new fields.StringField({ required: false }),
       }),
       showButton: new fields.BooleanField({ initial: true }),
+      targetResults: new fields.ArrayField(
+        new fields.SchemaField({
+          uuid: new fields.StringField({ required: false, nullable: true, blank: true }),
+          name: new fields.StringField({ required: false, nullable: true, blank: true }),
+          img: new fields.StringField({ required: false, nullable: true, blank: true }),
+          needsSaveRoll: new fields.BooleanField({ initial: true }),
+          total: new fields.NumberField({ required: false, nullable: true, integer: true }),
+          isSuccess: new fields.BooleanField({ initial: false }),
+          isFailure: new fields.BooleanField({ initial: false }),
+          isCritical: new fields.BooleanField({ initial: false }),
+          isFumble: new fields.BooleanField({ initial: false }),
+          saveActorId: new fields.StringField({ required: false, nullable: true, blank: true }),
+          saveHasLuckyPoints: new fields.BooleanField({ initial: false }),
+          rollFormula: new fields.StringField({ required: false, nullable: true, blank: true }),
+          rollTooltip: new fields.StringField({ required: false, nullable: true, blank: true }),
+        }),
+        { required: false, initial: [] },
+      ),
     })
   }
 
@@ -30,11 +51,18 @@ export default class SaveMessageData extends BaseMessageData {
    * Modifie le contenu HTML d'un message
    * @async
    * @param {COChatMessage} message Le document ChatMessage en cours de rendu.
-   * @param {HTMLElement} html Élément HTML représentant le message à modifier.
-   * @returns {Promise<void>} Résout lorsque le HTML a été mis à jour.
+   * @param {HTMLElement} html Element HTML representant le message a modifier.
+   * @returns {Promise<void>} Resout lorsque le HTML a ete mis a jour.
    */
   async alterMessageHTML(message, html) {
-    // Affichage des cibles
+    const hasTargetResults = (message.system.targetResults?.length ?? 0) > 0
+
+    if (hasTargetResults) {
+      this._buildMultiTargetHTML(message, html)
+      return
+    }
+
+    // Legacy (single target)
     const targetsSection = html.querySelector(".targets")
     if (!targetsSection) return
 
@@ -47,18 +75,14 @@ export default class SaveMessageData extends BaseMessageData {
           const actor = fromUuidSync(actorUuid)
           if (!actor) return
           const listItem = document.createElement("li")
-          // Ajouter l'image de l'acteur avant le nom
           const img = document.createElement("img")
           img.src = actor.img
           img.classList.add("target-actor-img")
           listItem.appendChild(img)
-          // Ajouter le nom de l'acteur après l'image
           const name = document.createElement("span")
           name.textContent = actor.name
           name.classList.add("name-stacked")
           listItem.appendChild(name)
-
-          // ----- on insère le <li> dans la <ul> -----
           targetList.appendChild(listItem)
         })
         targetsSection.appendChild(targetList)
@@ -67,36 +91,22 @@ export default class SaveMessageData extends BaseMessageData {
       targetsSection.remove()
     }
 
-    // Affiche ou non la difficulté
     const displayDifficulty = game.settings.get("co2", "displayDifficulty")
     if (displayDifficulty === "gm" && !game.user.isGM) {
       const element = html.querySelector(".display-difficulty")
-      if (element) {
-        element.remove()
-      }
+      if (element) element.remove()
     }
 
-    // Affiche le bouton de jet de sauvegarde
     if (this.showButton) {
       const totalDiv = html.querySelector(".save-total")
-      if (totalDiv) {
-        totalDiv.innerHTML = `<i class="fa-solid fa-square-question"></i>`
-      }
+      if (totalDiv) totalDiv.innerHTML = `<i class="fa-solid fa-square-question"></i>`
       const footer = html.querySelector(".card-footer")
-      if (footer) {
-        footer.remove()
-      }
+      if (footer) footer.remove()
       const luckyPointsDiv = html.querySelector(".lucky-points")
-      if (luckyPointsDiv) {
-        luckyPointsDiv.remove()
-      }
-    }
-    // Affiche le résultat du jet de sauvegarde
-    else {
+      if (luckyPointsDiv) luckyPointsDiv.remove()
+    } else {
       const button = html.querySelector(".save-roll")
-      if (button) {
-        button.remove()
-      }
+      if (button) button.remove()
       const totalDiv = html.querySelector(".save-total")
       if (totalDiv) {
         totalDiv.innerHTML = `<div>${this.result.total}</div>`
@@ -104,24 +114,17 @@ export default class SaveMessageData extends BaseMessageData {
         totalDiv.setAttribute("data-tooltip-direction", "LEFT")
       }
       const footerFormula = html.querySelector(".footer-formula")
-      if (footerFormula) {
-        footerFormula.innerText = this.parent.rolls[0].formula
-      }
+      if (footerFormula) footerFormula.innerText = this.parent.rolls[0].formula
       const footerTooltip = html.querySelector(".footer-tooltip")
-      if (footerTooltip) {
-        footerTooltip.innerHTML = this.parent.rolls[0].options.toolTip
-      }
+      if (footerTooltip) footerTooltip.innerHTML = this.parent.rolls[0].options.toolTip
 
-      // Affichage de la div de gestion des points de chance si ce n'est pas un critique et uniquement dans le cas d'un personnage avec des points de chance
       const targetUuid = this.targets[0]
       const currentUserActor = game.user.character
       const currentUserActorUuid = currentUserActor ? currentUserActor.uuid : null
       const hasLuckyPoints = currentUserActor?.system?.resources?.fortune?.value > 0
       if (this.result.isCritical || currentUserActorUuid !== targetUuid || currentUserActor?.type !== "character" || !hasLuckyPoints) {
         const luckyPointsDiv = html.querySelector(".lucky-points")
-        if (luckyPointsDiv) {
-          luckyPointsDiv.remove()
-        }
+        if (luckyPointsDiv) luckyPointsDiv.remove()
       }
     }
   }
@@ -129,10 +132,282 @@ export default class SaveMessageData extends BaseMessageData {
   /**
    * Ajoute les listeners du message
    * @async
-   * @param {HTMLElement} html Élément HTML représentant le message à modifier.
+   * @param {HTMLElement} html Element HTML representant le message a modifier.
    */
   async addListeners(html) {
-    // Click sur le bouton de chance (disponible même sans difficulté, sauf si critique)
+    const hasTargetResults = (this.targetResults?.length ?? 0) > 0
+
+    if (hasTargetResults) {
+      this._addMultiTargetListeners(html)
+      return
+    }
+
+    this._addLegacyListeners(html)
+  }
+
+  // ----------------------------------------------------------------
+  //  Multi-cible : construction du HTML des lignes cibles
+  // ----------------------------------------------------------------
+
+  _buildMultiTargetHTML(message, html) {
+    const displayDifficulty = game.settings.get("co2", "displayDifficulty")
+    const showDifficulty = displayDifficulty === "all" || (displayDifficulty === "gm" && game.user.isGM)
+
+    if (displayDifficulty === "gm" && !game.user.isGM) {
+      html.querySelectorAll(".display-difficulty").forEach((el) => el.remove())
+    }
+
+    const targetsSection = html.querySelector(".targets")
+    if (!targetsSection) return
+
+    targetsSection.innerHTML = ""
+
+    const targetResults = message.system.targetResults ?? []
+    if (targetResults.length === 0) return
+
+    const details = document.createElement("details")
+    details.classList.add("targets-collapsible")
+    details.open = true
+
+    const summary = document.createElement("summary")
+    summary.classList.add("targets-header")
+    summary.innerHTML = `<i class="fa-solid fa-bullseye-arrow"></i> ${game.i18n.localize("CO.ui.targets")}`
+    details.appendChild(summary)
+
+    const ul = document.createElement("ul")
+    ul.classList.add("target-list")
+
+    for (const tr of targetResults) {
+      const li = document.createElement("li")
+      li.classList.add("target-row")
+      li.dataset.targetUuid = tr.uuid
+
+      // Icone d'etat
+      if (showDifficulty) {
+        const outcomeSpan = document.createElement("span")
+        if (tr.needsSaveRoll) {
+          outcomeSpan.className = "target-outcome pending"
+          outcomeSpan.dataset.tooltip = game.i18n.localize("CO.ui.saves")
+          outcomeSpan.dataset.tooltipDirection = "LEFT"
+          outcomeSpan.innerHTML = `<i class="fas fa-question"></i>`
+        } else if (tr.isCritical) {
+          outcomeSpan.className = "target-outcome success critical"
+          outcomeSpan.dataset.tooltip = game.i18n.localize("CO.roll.critical")
+          outcomeSpan.dataset.tooltipDirection = "LEFT"
+          outcomeSpan.innerHTML = `<i class="fas fa-check-double"></i>`
+        } else if (tr.isFumble) {
+          outcomeSpan.className = "target-outcome failure fumble"
+          outcomeSpan.dataset.tooltip = game.i18n.localize("CO.roll.fumble")
+          outcomeSpan.dataset.tooltipDirection = "LEFT"
+          outcomeSpan.innerHTML = `<i class="fas fa-skull-crossbones"></i>`
+        } else if (tr.isSuccess) {
+          outcomeSpan.className = "target-outcome success"
+          outcomeSpan.dataset.tooltip = game.i18n.localize("CO.roll.success")
+          outcomeSpan.dataset.tooltipDirection = "LEFT"
+          outcomeSpan.innerHTML = `<i class="fas fa-check"></i>`
+        } else if (tr.isFailure) {
+          outcomeSpan.className = "target-outcome failure"
+          outcomeSpan.dataset.tooltip = game.i18n.localize("CO.roll.failure")
+          outcomeSpan.dataset.tooltipDirection = "LEFT"
+          outcomeSpan.innerHTML = `<i class="fas fa-times"></i>`
+        }
+        li.appendChild(outcomeSpan)
+      }
+
+      // Portrait
+      if (tr.img) {
+        const img = document.createElement("img")
+        img.classList.add("target-portrait")
+        img.src = tr.img
+        img.dataset.tooltip = tr.name
+        img.height = 32
+        img.width = 32
+        li.appendChild(img)
+      }
+
+      // Nom
+      const nameSpan = document.createElement("span")
+      nameSpan.classList.add("target-name")
+      nameSpan.textContent = tr.name
+      li.appendChild(nameSpan)
+
+      if (tr.needsSaveRoll) {
+        // Bouton de jet de sauvegarde
+        const btn = document.createElement("button")
+        btn.classList.add("save-roll")
+        btn.dataset.saveTarget = tr.uuid
+        btn.dataset.saveAbility = message.system.ability
+        btn.dataset.saveDifficulty = message.system.difficulty
+        const abilityLabel = game.i18n.localize(`CO.abilities.long.${message.system.ability}`)
+        btn.dataset.tooltip = `${game.i18n.localize("CO.ui.saves")} : ${abilityLabel}`
+        btn.dataset.tooltipDirection = "UP"
+        btn.textContent = game.i18n.localize("CO.ui.saves")
+        li.appendChild(btn)
+      } else {
+        // Total du jet
+        if (showDifficulty) {
+          const totalSpan = document.createElement("span")
+          totalSpan.classList.add("target-total")
+          const abilityLabel = game.i18n.localize(`CO.abilities.long.${message.system.ability}`)
+          const tooltipParts = [`${game.i18n.localize("CO.ui.saves")} : ${abilityLabel}`]
+          if (tr.rollFormula) tooltipParts.push(tr.rollFormula)
+          totalSpan.dataset.tooltip = tooltipParts.join(" — ")
+          totalSpan.dataset.tooltipDirection = "UP"
+          totalSpan.innerHTML = `<i class="fas fa-shield-exclamation"></i> ${tr.total}`
+          li.appendChild(totalSpan)
+        }
+
+        // Bouton point de chance
+        if (tr.saveHasLuckyPoints && !tr.isCritical) {
+          const lpLink = document.createElement("a")
+          lpLink.classList.add("lp-button-save-target")
+          lpLink.dataset.targetUuid = tr.uuid
+          lpLink.dataset.actorId = tr.saveActorId
+          lpLink.innerHTML = `<i class="fa-regular fa-clover" data-tooltip="${game.i18n.localize("CO.dialogs.spendLuckyPoint")}" data-tooltip-direction="UP"></i>`
+          li.appendChild(lpLink)
+        }
+      }
+
+      ul.appendChild(li)
+    }
+
+    details.appendChild(ul)
+    targetsSection.appendChild(details)
+  }
+
+  // ----------------------------------------------------------------
+  //  Multi-cible : listeners
+  // ----------------------------------------------------------------
+
+  _addMultiTargetListeners(html) {
+    // Boutons de jet de sauvegarde par cible
+    const saveButtons = html.querySelectorAll(".target-row .save-roll")
+    saveButtons.forEach((btn) => {
+      const targetUuid = btn.dataset.saveTarget
+      const targetActor = fromUuidSync(targetUuid)
+      if (!targetActor) return
+
+      const canClick = game.user.isGM || targetActor.isOwner
+      if (!canClick) {
+        btn.style.visibility = "hidden"
+        return
+      }
+
+      btn.addEventListener("click", async (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        const messageId = event.currentTarget.closest(".message").dataset.messageId
+        if (!messageId) return
+        const message = game.messages.get(messageId)
+        if (!message) return
+
+        const saveAbility = btn.dataset.saveAbility
+        const difficulty = btn.dataset.saveDifficulty
+
+        const resolved = await SaveRollHandler.resolveSaveRoll({ targetActor, saveAbility, difficulty })
+        if (!resolved) return
+
+        const currentTargetResults = message.system.targetResults ?? []
+        const newTargetResults = currentTargetResults.map((tr) => {
+          if (tr.uuid !== targetUuid) return tr
+          return {
+            ...tr,
+            needsSaveRoll: false,
+            total: resolved.rollResult.total,
+            isSuccess: resolved.rollResult.isSuccess ?? false,
+            isFailure: resolved.rollResult.isFailure ?? false,
+            isCritical: resolved.rollResult.isCritical ?? false,
+            isFumble: resolved.rollResult.isFumble ?? false,
+            saveActorId: resolved.actorId,
+            saveHasLuckyPoints: resolved.saveHasLuckyPoints,
+            rollFormula: resolved.roll.formula,
+            rollTooltip: resolved.roll.options?.toolTip ?? "",
+          }
+        })
+
+        const rolls = [...this.parent.rolls, resolved.roll]
+
+        await SaveRollHandler.applyEffects({
+          customEffect: message.system.customEffect,
+          additionalEffect: message.system.additionalEffect,
+          result: resolved.rollResult,
+          targetActor,
+        })
+
+        await SaveRollHandler.updateMessage({ message, updateData: { rolls, "system.targetResults": newTargetResults } })
+      })
+    })
+
+    // Boutons de points de chance par cible
+    const luckyButtons = html.querySelectorAll(".lp-button-save-target")
+    luckyButtons.forEach((btn) => {
+      const actorId = btn.dataset.actorId
+      const saverActor = actorId ? game.actors.get(actorId) : null
+      if (!saverActor || (!game.user.isGM && !saverActor.isOwner)) return
+
+      btn.addEventListener("click", async (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        const messageId = event.currentTarget.closest(".message").dataset.messageId
+        if (!messageId) return
+        const message = game.messages.get(messageId)
+        if (!message) return
+
+        const targetUuid = btn.dataset.targetUuid
+        await SaveRollHandler.spendSaverLuckyPoint({ saverActor, message, targetUuid })
+      })
+    })
+
+    // Interactions hover/click sur les lignes cibles (highlight token)
+    const associatedActor = this.parent.getAssociatedActor?.()
+    const canInteractWithTargets = game.user.isGM || this.parent.isAuthor || associatedActor?.isOwner
+    let highlightedTargetToken = null
+    const targetRows = html.querySelectorAll(".target-row[data-target-uuid]")
+    targetRows.forEach((targetRow) => {
+      if (!canInteractWithTargets) return
+
+      targetRow.classList.add("is-interactive")
+
+      targetRow.addEventListener("click", async (event) => {
+        if (event.target.closest("button, a")) return
+        event.preventDefault()
+        event.stopPropagation()
+
+        const targetReference = Utils.resolveChatTargetReference(targetRow.dataset.targetUuid)
+        const targetToken = targetReference?.token
+        if (!targetReference?.canLocate || !targetToken || !canvas?.ready) return
+
+        if (targetReference.canControl) {
+          targetToken.control({ releaseOthers: !event.shiftKey })
+        }
+        await canvas.animatePan(targetToken.center)
+      })
+
+      targetRow.addEventListener("pointerover", (event) => {
+        const targetReference = Utils.resolveChatTargetReference(targetRow.dataset.targetUuid)
+        const targetToken = targetReference?.token
+        if (!targetReference?.canLocate || !targetToken?.isVisible || targetToken.controlled) return
+        targetToken._onHoverIn(event, { hoverOutOthers: true })
+        highlightedTargetToken = targetToken
+      })
+
+      targetRow.addEventListener("pointerout", (event) => {
+        const targetReference = Utils.resolveChatTargetReference(targetRow.dataset.targetUuid)
+        const targetToken = targetReference?.token
+        if (!targetToken || highlightedTargetToken !== targetToken) return
+        targetToken._onHoverOut(event)
+        highlightedTargetToken = null
+      })
+    })
+  }
+
+  // ----------------------------------------------------------------
+  //  Legacy (single target) : listeners
+  // ----------------------------------------------------------------
+
+  _addLegacyListeners(html) {
     const luckyButton = html.querySelector(".lp-button-save")
     const targetUuid = this.targets[0]
     const currentUserActor = game.user.character
@@ -156,7 +431,6 @@ export default class SaveMessageData extends BaseMessageData {
 
         let newResult = CORoll.analyseRollResult(rolls[0])
 
-        // L'acteur consomme son point de chance
         const actorId = rolls[0].options.actorId
         const actor = game.actors.get(actorId)
         if (actor.system.resources.fortune.value > 0) {
@@ -164,7 +438,6 @@ export default class SaveMessageData extends BaseMessageData {
           await actor.update({ "system.resources.fortune.value": actor.system.resources.fortune.value })
         }
 
-        // Gestion des custom effects
         const customEffect = message.system.customEffect
         const additionalEffect = message.system.additionalEffect
         if (customEffect && additionalEffect && additionalEffect.active && Resolver.shouldManageAdditionalEffect(newResult, additionalEffect)) {
@@ -178,20 +451,14 @@ export default class SaveMessageData extends BaseMessageData {
           }
         }
 
-        // Mise à jour du message de chat
-        // Le MJ peut mettre à jour le message de chat
         if (game.user.isGM) {
           await message.update({ rolls: rolls, "system.result": newResult })
-        }
-        // Sinon on émet un message pour mettre à jour le message de chat
-        else {
+        } else {
           await game.users.activeGM.query("co2.updateMessageAfterLuck", { existingMessageId: message.id, rolls: rolls, result: newResult })
         }
       })
     }
 
-    // Click sur le bouton de jet de sauvegarde
-    // Jet de compétence basé sur la difficulté récupérée dans le contexte du message et envoi du résultat au GM pour mise à jour du message et application du résultat
     const saveButton = html.querySelector(".save-roll")
     const displaySaveButton = game.user.isGM || this.isActorTargeted
 
@@ -200,45 +467,30 @@ export default class SaveMessageData extends BaseMessageData {
         event.preventDefault()
         event.stopPropagation()
         const messageId = event.currentTarget.closest(".message").dataset.messageId
-        if (!messageId) {
-          console.error("Evenement de click sur le bouton de jet de sauvegarde : erreur dans la récupération de l'ID du message")
-          return
-        }
+        if (!messageId) return
         const message = game.messages.get(messageId)
-        if (!message || !message.system) {
-          console.error("Evenement de click sur le bouton de jet de sauvegarde : erreur dans la récupération du message ou de son context")
-          return
-        }
+        if (!message || !message.system) return
 
         const dataset = event.currentTarget.dataset
         const targetUuid = message.system.targets[0]
-        if (!targetUuid) {
-          console.error("Evenement de click sur le bouton de jet de sauvegarde : erreur dans la récupération de l'UUID de la cible")
-          return
-        }
+        if (!targetUuid) return
 
         const saveAbility = dataset.saveAbility
         const difficulty = dataset.saveDifficulty
 
         const targetActor = fromUuidSync(targetUuid)
-        if (!targetActor) {
-          console.error("Evenement de click sur le bouton de jet de sauvegarde : erreur dans la récupération de l'acteur cible")
-          return
-        }
+        if (!targetActor) return
 
-        // L'acteur cible effectue son jet de compétence et retourne {roll, result}
-        const targetRollSkill = await targetActor.rollSkill(saveAbility, { difficulty: difficulty, showResult: false, showOppositeRoll: false })
+        const targetRollSkill = await targetActor.rollSkill(saveAbility, { difficulty, showResult: false, showOppositeRoll: false })
+        if (!targetRollSkill) return
+
         message.system.result = targetRollSkill.result
         message.system.linkedRoll = targetRollSkill.roll
-        let opposeResultAnalyse = CORoll.analyseRollResult(targetRollSkill.roll)
 
         let rolls = this.parent.rolls
         rolls[0] = targetRollSkill.roll
         rolls[0].options.oppositeRoll = false
 
-        // TODO Doit on prévoir autre chose qu'un effet supplémentaire ? genre des dés de degat bonus appliqué si jet raté ? A voir...
-
-        // Doit on appliquer l'effet s'il y en a
         const customEffect = message.system.customEffect
         const additionalEffect = message.system.additionalEffect
         if (customEffect && additionalEffect && additionalEffect.active && Resolver.shouldManageAdditionalEffect(targetRollSkill.result, additionalEffect)) {
@@ -248,13 +500,9 @@ export default class SaveMessageData extends BaseMessageData {
           }
         }
 
-        // Mise à jour du message de chat
-        // Le MJ peut mettre à jour le message de chat
         if (game.user.isGM) {
           await message.update({ rolls: rolls, "system.showButton": false, "system.result": targetRollSkill.result })
-        }
-        // Sinon on émet un message pour mettre à jour le message de chat
-        else {
+        } else {
           await game.users.activeGM.query("co2.updateMessageAfterSavedRoll", { existingMessageId: message.id, rolls: rolls, result: targetRollSkill.result })
         }
       })

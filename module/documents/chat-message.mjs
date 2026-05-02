@@ -115,10 +115,16 @@ export default class COChatMessage extends ChatMessage {
    * @static
    * @async
    */
-  static async _handleQueryUpdateMessageAfterSavedRoll({ existingMessageId, rolls, result } = {}) {
+  static async _handleQueryUpdateMessageAfterSavedRoll({ existingMessageId, rolls, result, targetResults } = {}) {
     const message = game.messages.get(existingMessageId)
     if (!message) return
-    await message.update({ rolls: rolls, "system.result": result, "system.showButton": false })
+    const updateData = { rolls }
+    if (targetResults !== undefined) updateData["system.targetResults"] = targetResults
+    if (result !== undefined) {
+      updateData["system.result"] = result
+      updateData["system.showButton"] = false
+    }
+    await message.update(updateData)
   }
 
   /**

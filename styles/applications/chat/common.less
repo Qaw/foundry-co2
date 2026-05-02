@@ -348,7 +348,7 @@
 
 // --- Styles partagés d'en-tête item card (attaque / dommages) ---
 .co.chat-card.roll-card .card-header {
-  .attack-item-card {
+  .card-item-card {
     display: flex;
     align-items: center;
     gap: 9px;
@@ -366,7 +366,7 @@
       0 1px 2px rgba(45, 29, 12, 0.14);
   }
 
-  .attack-item-image {
+  .card-item-image {
     width: 42px;
     height: 42px;
     flex: 0 0 42px;
@@ -380,7 +380,7 @@
       0 1px 1px rgba(56, 35, 14, 0.08);*/
   }
 
-  .attack-item-text {
+  .card-item-text {
     min-width: 0;
     display: flex;
     flex-direction: column;
@@ -389,7 +389,7 @@
     width: stretch;
   }
 
-  .attack-item-name {
+  .card-item-name {
     color: #31261a;
     font-size: 1.18rem;
     font-weight: bold;
@@ -400,7 +400,7 @@
     text-overflow: ellipsis;
   }
 
-  .attack-item-subtitle {
+  .card-item-subtitle {
     color: #655846;
     font-size: var(--font-size-14);
     line-height: 1.2;
@@ -411,7 +411,7 @@
     -webkit-line-clamp: 2;
   }
 
-  .attack-details {
+  .card-details {
     summary {
       list-style: none;
       cursor: pointer;
@@ -420,7 +420,7 @@
       }
     }
 
-    .attack-item-card {
+    .card-item-card {
       position: relative;
       padding-right: 28px;
 
@@ -441,7 +441,7 @@
       }
     }
 
-    &[open] > summary .attack-item-card {
+    &[open] > summary .card-item-card {
       border-radius: 3px 3px 0 0;
 
       &::after {
@@ -449,22 +449,22 @@
       }
     }
 
-    .attack-item-icon {
+    .card-item-icon {
       margin-left: auto;
       font-size: var(--font-size-15);
       opacity: 0.7;
       //flex-shrink: 0;
     }
-    .attack-item-icon-block {
+    .card-item-icon-block {
       display: grid;
       grid-template-rows: 1fr 1fr;
     }
 
-    &[open] .attack-item-icon {
+    &[open] .card-item-icon {
       display: none;
     }
 
-    .attack-details-content {
+    .card-details-content {
       padding: 6px 11px 8px;
       border: 1px solid #8f7656;
       border-top: none;
@@ -494,7 +494,7 @@
   }
 
   .theme-dark & {
-    .attack-item-card {
+    .card-item-card {
       border-color: #7f6748;
       background: linear-gradient(180deg, rgba(91, 72, 50, 0.78) 0%, rgba(63, 48, 34, 0.9) 100%);
       box-shadow:
@@ -504,21 +504,21 @@
         0 1px 2px rgba(0, 0, 0, 0.2);
     }
 
-    .attack-item-image {
+    .card-item-image {
       border-color: rgba(193, 163, 124, 0.35);
       background: linear-gradient(180deg, rgba(95, 79, 61, 0.92) 0%, rgba(68, 53, 38, 0.96) 100%);
     }
 
-    .attack-item-name {
+    .card-item-name {
       color: #f0e4d4;
       text-shadow: none;
     }
 
-    .attack-item-subtitle {
+    .card-item-subtitle {
       color: #cebda5;
     }
 
-    .attack-details .attack-details-content {
+    .card-details .card-details-content {
       border-color: #7f6748;
       background: linear-gradient(180deg, rgba(63, 48, 34, 0.85) 0%, rgba(50, 38, 26, 0.9) 100%);
     }

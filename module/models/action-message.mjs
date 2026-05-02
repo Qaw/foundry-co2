@@ -30,6 +30,7 @@ export default class ActionMessageData extends BaseMessageData {
           needsOppositeRoll: new fields.BooleanField({ initial: false }),
           opposeActorId: new fields.StringField({ required: false, nullable: true, blank: true }),
           opposeHasLuckyPoints: new fields.BooleanField({ initial: false }),
+          opposeRollFormula: new fields.StringField({ required: false, nullable: true, blank: true }),
           appliedMultiplier: new fields.NumberField({ required: false, nullable: true, initial: null }),
           appliedDrChecked: new fields.BooleanField({ initial: true }),
         }),
@@ -350,6 +351,7 @@ export default class ActionMessageData extends BaseMessageData {
                   needsOppositeRoll: false,
                   opposeActorId: opposed.actorId,
                   opposeHasLuckyPoints: opposed.hasLuckyPoints,
+                  opposeRollFormula: opposed.roll.formula,
                 }
               })
               rolls[0].options.targetResults = newTargetResults
@@ -433,6 +435,7 @@ export default class ActionMessageData extends BaseMessageData {
           targetRow.classList.add("is-interactive")
 
           targetRow.addEventListener("click", async (event) => {
+            if (event.target.closest("button, a")) return
             event.preventDefault()
             event.stopPropagation()
 
@@ -474,7 +477,7 @@ export default class ActionMessageData extends BaseMessageData {
         if (!damageCard) return
         const total = parseInt(damageCard.dataset.total) || 0
         const actorId = damageCard.dataset.actorId
-        const flavor = damageCard.querySelector(".attack-item-name")?.textContent || ""
+        const flavor = damageCard.querySelector(".card-item-name")?.textContent || ""
         const targetList = html.querySelector(".apply-target-list")
         const applyBtn = html.querySelector(".apply-damage-btn")
 

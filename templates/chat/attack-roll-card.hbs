@@ -1,29 +1,29 @@
 {{log "Chroniques Oubliées | hbs | attack-card" this}}
 <div class="co chat-card roll-card attack-card" data-actor-id="{{actorId}}">
   <header class="card-header flexcol">
-    <details class="attack-details">
+    <details class="card-details">
       <summary>
-        <div class="attack-item-card" data-tooltip="{{flavor}}" data-tooltip-direction="LEFT">
+        <div class="card-item-card" data-tooltip="{{flavor}}" data-tooltip-direction="LEFT">
           {{#if itemImg}}
-            <img class="attack-item-image" src="{{itemImg}}" alt="{{itemName}}" />
+            <img class="card-item-image" src="{{itemImg}}" alt="{{itemName}}" />
           {{/if}}
-          <div class="attack-item-text">
-            <div class="attack-item-name">{{itemName}}</div>
+          <div class="card-item-text">
+            <div class="card-item-name">{{itemName}}</div>
             {{#if actionName}}
-              <div class="attack-item-subtitle">{{actionName}}</div>
+              <div class="card-item-subtitle">{{actionName}}</div>
             {{/if}}
           </div>
-          <div class="attack-item-icon-block">
+          <div class="card-item-icon-block">
             {{#if hasDice}}
-              <span class="attack-item-icon" data-tooltip="{{diceType}}" data-tooltip-direction="UP"><i class="fa-solid fa-dice"></i></span>
+              <span class="card-item-icon" data-tooltip="{{diceType}}" data-tooltip-direction="UP"><i class="fa-solid fa-dice"></i></span>
             {{/if}}
             {{#if hasTactical}}
-              <span class="attack-item-icon" data-tooltip="{{tactical}}" data-tooltip-direction="UP"><i class="fa-solid fa-sliders-up"></i></span>
+              <span class="card-item-icon" data-tooltip="{{tactical}}" data-tooltip-direction="UP"><i class="fa-solid fa-sliders-up"></i></span>
             {{/if}}
           </div>
         </div>
       </summary>
-      <div class="attack-details-content">
+      <div class="card-details-content">
         <section class="options">
           {{#if hasDice}}
             <strong class="display-dice-type"><i class="fa-solid fa-dice"></i> {{diceType}}&nbsp;&nbsp;</strong>
@@ -54,9 +54,6 @@
     <section class="bloc-result{{#if hasTargetResults}} has-target-results{{/if}}">
       <section class="result">
         <div class="attack-total-group">
-          <div class="form-group total-text">
-            <div>{{localize 'CO.ui.total'}} : </div>
-          </div>
           <div class="form-group total-result">
             <div data-tooltip="{{localize 'CO.ui.total'}}" data-tooltip-direction="UP">{{total}}</div>
           </div>
@@ -139,7 +136,11 @@
                   <button class="opposite-roll" data-opposite-value="{{../oppositeValue}}" data-opposite-target="{{target.uuid}}" data-tooltip="{{localize 'CO.ui.oppositeRoll'}}{{#if @root.oppositeAbilityLabel}} : {{@root.oppositeAbilityLabel}}{{/if}}" data-tooltip-direction="UP">{{localize "CO.ui.oppositeRoll"}}</button>
                 {{else}}
                   {{#if @root.showDifficulty}}
-                    <span class="target-difficulty display-difficulty" data-tooltip="{{localize 'CO.label.long.difficulty'}}" data-tooltip-direction="UP"><i class="fas fa-shield-halved"></i> {{target.difficulty}}</span>
+                    {{#if target.opposeActorId}}
+                      <span class="target-difficulty display-difficulty" data-tooltip="{{localize 'CO.ui.oppositeRoll'}}{{#if @root.oppositeAbilityLabel}} : {{@root.oppositeAbilityLabel}}{{/if}}{{#if target.opposeRollFormula}} — {{target.opposeRollFormula}}{{/if}}" data-tooltip-direction="UP"><i class="fas fa-scale-balanced"></i> {{target.difficulty}}</span>
+                    {{else}}
+                      <span class="target-difficulty display-difficulty" data-tooltip="{{localize 'CO.ui.defense'}}" data-tooltip-direction="UP"><i class="fas fa-shield-halved"></i> {{target.difficulty}}</span>
+                    {{/if}}
                   {{/if}}
                   {{#if target.opposeHasLuckyPoints}}
                     {{#if target.isSuccess}}

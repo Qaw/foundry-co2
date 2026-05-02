@@ -2343,6 +2343,7 @@ export default class COActor extends Actor {
       actionName = "",
       ability = undefined,
       difficulty = undefined,
+      difficultyFormula = undefined,
       showDifficulty = false,
       targetType = SYSTEM.RESOLVER_TARGET.none.id,
       targets = [],
@@ -2354,6 +2355,7 @@ export default class COActor extends Actor {
       actionName,
       ability,
       difficulty,
+      difficultyFormula,
       showDifficulty,
       targetType,
       targets,
@@ -2396,21 +2398,53 @@ export default class COActor extends Actor {
       return false
     }
 
-    const rollMode = game.settings.get("core", "messageMode") 
+    const rollMode = game.settings.get("core", "messageMode")
+
+    // Construction des targetResults pour le multi-ciblage
+    const targetResults = []
+    if (targetUuids.length > 0 && targetType !== SYSTEM.RESOLVER_TARGET.none.id && targetType !== SYSTEM.RESOLVER_TARGET.self.id) {
+      targets.forEach((target) => {
+        targetResults.push({
+          uuid: target.actor?.uuid ?? target.uuid,
+          name: target.name ?? target.actor?.name,
+          img: target.token?.document?.texture?.src ?? target.actor?.img ?? null,
+          needsSaveRoll: true,
+          total: null,
+          isSuccess: false,
+          isFailure: false,
+          isCritical: false,
+          isFumble: false,
+          saveActorId: null,
+          saveHasLuckyPoints: false,
+          rollFormula: null,
+          rollTooltip: null,
+        })
+      })
+    }
+    const hasTargetResults = targetResults.length > 0
 
     const contentData = {
       ability: ability,
       difficulty: difficulty,
-      showButton: true,
+      difficultyFormula: difficultyFormula ?? null,
+      showButton: !hasTargetResults,
+      showDifficulty,
+      hasTargetResults,
+      targetResults,
       flavor: flavor,
+      itemImg: item?.img ?? null,
+      itemName: item?.name ?? "",
+      actionName: actionName ?? "",
     }
 
     const messageSystem = {
       ability: ability,
       difficulty: difficulty,
+      difficultyFormula: difficultyFormula ?? null,
       targetType,
       targets: targetUuids,
-      showButton: true,
+      showButton: !hasTargetResults,
+      targetResults,
       customEffect,
       additionalEffect,
     }

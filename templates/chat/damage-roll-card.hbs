@@ -1,21 +1,21 @@
 {{log "Chroniques Oubliées | hbs | damage-card" this}}
 <div class="co chat-card roll-card damage-card" data-actor-id="{{actorId}}" data-total="{{total}}">
   <header class="card-header flexcol">
-    <details class="attack-details damage-details">
+    <details class="card-details damage-details">
       <summary>
-        <div class="attack-item-card damage-item-card" data-tooltip="{{flavor}}" data-tooltip-direction="LEFT">
+        <div class="card-item-card damage-item-card" data-tooltip="{{flavor}}" data-tooltip-direction="LEFT">
           {{#if itemImg}}
-            <img class="attack-item-image" src="{{itemImg}}" alt="{{itemName}}" />
+            <img class="card-item-image" src="{{itemImg}}" alt="{{itemName}}" />
           {{/if}}
-          <div class="attack-item-text">
-            <div class="attack-item-name">{{itemName}}</div>
+          <div class="card-item-text">
+            <div class="card-item-name">{{itemName}}</div>
             {{#if actionName}}
-              <div class="attack-item-subtitle">{{actionName}}</div>
+              <div class="card-item-subtitle">{{actionName}}</div>
             {{/if}}
           </div>
         </div>
       </summary>
-      <div class="attack-details-content">
+      <div class="card-details-content">
         <div class="dice-roll" data-action="expandRoll">
           <div class="dice-result">
             <div class="dice-formula" data-tooltip="{{formulaDamageTooltip}}" data-tooltip-direction="UP">{{localize "CO.ui.formula"}} : {{formula}}</div>

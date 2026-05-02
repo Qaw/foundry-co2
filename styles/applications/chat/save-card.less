@@ -1,23 +1,39 @@
 .co.chat-card.roll-card.save-card {
   .card-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    border-top: 1px solid var(--color-chatSave);
-    color: var(--color-chatSave);
-    border-bottom: 1px dashed var(--color-chatSave);
+    border-top: none;
+    color: inherit;
+    padding: 2px 0 4px;
     label {
       color: var(--color-chatSave);
       text-shadow: 0 0px 2px var(--color-chatShadow);
     }
   }
   .card-content {
+    .bloc-result.has-target-results {
+      display: flex;
+      justify-content: center;
+    }
     section.result {
       display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
+    }
+    .difficulty-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 0;
+      .difficulty-icon {
+        font-size: var(--font-size-20);
+        color: var(--color-chatSave);
+        opacity: 0.8;
+      }
+      .difficulty-value {
+        font-size: var(--font-size-28);
+        font-weight: bold;
+      }
     }
     .save-roll {
       display: flex;
@@ -39,6 +55,32 @@
       .save-skill {
         font-weight: bold;
         text-transform: uppercase;
+      }
+    }
+    .target-row {
+      button.save-roll {
+        margin-left: auto;
+        font-size: var(--font-size-13);
+        height: 26px;
+        --button-size: 1rem;
+        flex-direction: row;
+        gap: 4px;
+        padding: 0 8px;
+        box-shadow: none;
+        margin: 0;
+      }
+      .target-total {
+        font-size: var(--font-size-16);
+        font-weight: bold;
+        min-width: 28px;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        i {
+          opacity: 0.7;
+        }
       }
     }
   }

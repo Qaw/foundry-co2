@@ -317,6 +317,7 @@ export class Resolver extends foundry.abstract.DataModel {
       actionName: action.label,
       ability: saveAbility,
       difficulty: difficultyFormulaEvaluated,
+      difficultyFormula: this.saveDifficulty,
       showDifficulty,
       targetType: this.hasOptionalTargets() ? SYSTEM.RESOLVER_TARGET.none.id : this.target.type,
       targets: targets,
